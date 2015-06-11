@@ -1,0 +1,1 @@
+Cache component===============This component provides common wrappers for cache engines@TODO: * in SQL ArrayCache need to adhere to SRP * Memcached wrapper * Move out the hash provider  * Redis wrapper 
