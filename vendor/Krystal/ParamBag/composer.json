@@ -1,0 +1,18 @@
+{
+    "name": "krystalframework/krystal-parambag",
+    "description" : "Provides a simply utility for managing parameters",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "krystal",
+        "parambag"
+	],
+    "autoload": {
+        "psr-0": {
+            "Krystal\\ParamBag\\" : ""
+        }
+	},
+    "target-dir": "Krystal/ParamBag",
+    "require": {
+        "php": ">=5.3.0"
+    }
+}

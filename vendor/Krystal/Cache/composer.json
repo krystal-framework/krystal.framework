@@ -1,0 +1,18 @@
+{
+    "name" : "krystalframework/krystal-cache",
+    "description": "Provides cache adapters and wrappers around common native cache tools",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "krystal",
+        "cache"
+    ],
+    "autoload": {
+        "psr-0": {
+            "Krystal\\Cache\\": ""
+        }
+    },
+    "target-dir": "Krystal/Cache",
+    "require": {
+        "php": ">=5.3.0"
+    },
+}

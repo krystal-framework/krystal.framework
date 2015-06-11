@@ -1,0 +1,1 @@
+CREATE TABLE `cache_table` (  `key` char(254) PRIMARY KEY, `value` text, `ttl` int, `created_on` int(10) /* UNIX Timestamp */ ) DEFAULT CHARSET=UTF8;

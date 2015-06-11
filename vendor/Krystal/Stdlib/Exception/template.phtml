@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+ <title>Execution aborted</title>
+</head>
+<body>
+ <div class="container">
+   <header>
+      <p><?php echo $class; ?> exception has been thrown (<?php echo date('d-y-m', time()); ?>)</p>
+   </header>
+   
+   <section>
+	   <div class="summary">
+		 <h2>Exception details</h2>
+		 <p><strong>Message:</strong> <?php echo $message; ?></p>
+		 <p><strong>File:</strong> <?php echo $file; ?></p>
+		 <p><strong>Line:</strong> <?php echo $line; ?></p>
+	   </div>
+	   
+	   <div class="trace">
+			<h3>Current stack trace:</h3>
+			
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+					  <th>#</th>
+					  <th>File</th>
+					  <th>Line</th>
+					  <th>Method</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<?php foreach ($trace as $index => $array): ?>
+					<?php if (isset($array['file'])): ?>
+					<tr>
+					 <td><?php echo $index; ?></td>
+					 <td><?php echo $array['file']; ?></td>
+					 <td><?php echo $array['line']; ?></td>
+					 <td><?php echo $array['function']; ?>()</td>
+					</tr>
+					<?php endif; ?>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+	   </div>
+	   
+	   <footer>
+		 <p>PHP Version : <?php echo PHP_VERSION; ?> Framework version : 1.1</p>
+	   </footer>
+	   
+   </section>
+ </div>
+ <style>
+
+	body {
+	 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	 font-size: 13px;
+	}
+
+	section {
+	 padding: 10px;
+	 display: block;
+	}
+	
+	div.container {
+	 border: 1px solid #DEDEDE;
+	 border-radius: 3px;
+	 margin-top: 10px;
+	 margin-bottom: 10px;
+	 box-shadow: 0 0 10px #BDBDBD;
+	}
+	
+	header {
+	 display: block;
+	 border-bottom: 1px solid #DEDEDE;
+	 min-height: 12px;
+	 padding: 4px 12px 2px 12px;
+	 background-color: rgba(0, 0, 0, 0.69);
+	}
+
+	header > p {
+	 color: white;
+	 font-size: 15px;
+	 font-weight: bold;
+	}
+
+	.table th, .table td {
+	 padding: 8px;
+	 line-height: 20px;
+	 text-align: left;
+	 vertical-align: top;
+	 border-top: 1px solid #DDD;
+	}
+
+	table > thead > th {
+	 vertical-align: bottom;
+	}
+
+	table > th {
+		font-weight: bold;
+	}
+
+	.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
+	 background-color: rgba(0, 0, 0, 0.69);
+	 color: white;
+	}
+	
+	table {
+	 max-width: 100%;
+	 background-color: transparent;
+	 border-collapse: collapse;
+	 border-spacing: 0;
+	 width: 100%;
+	 margin-bottom: 20px;
+	}
+
+	div.summary {
+	 position: relative;
+	 background-color: rgba(0, 0, 0, 0.69);
+	 color: white;
+	}
+
+	div.summary > h2 {
+	 font-size: 1.3em;
+	 margin-bottom: 12px;
+	}
+
+	div.summary, div.trace {
+	 border: 1px solid #D7D7D7;
+	 padding: 12px;
+	 font-size: 1.2em;
+	 margin-bottom: 12px;
+	}
+	
+	footer {
+	 margin-top: 21px;
+	}
+	
+	footer > p {
+	 font-size: 12px;
+	}
+	
+ </style>
+</body>
+</html>

@@ -1,0 +1,19 @@
+
+
+* Query count - guesser [DONE]
+* Shortcut for findByPk(), findAll(), deleteByPk()[DONE]
+* filters for where [NEED A TEST, DONE]
+* Fix paginate initialization [DONE]
+* Query logger [DONE]
+
+* Connectors
+
+* increment\decrement
+* Where IN
+* Relations
+* QB for Migrations
+* Some methods in QueryBuilder absent in DB
+* Improved order by for zeros
+* Ask question about dates
+
+* RAW INSERTS
