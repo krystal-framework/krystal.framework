@@ -17,62 +17,63 @@ interface MimeTypeGuesserInterface
 	 * Finds associated type by its extension
 	 * 
 	 * @param string $extension
-	 * @retun string
+	 * @throws \RuntimeException if unknown extension supplied
+	 * @return string
 	 */
 	public function getTypeByExtension($extension);
-	
+
 	/**
 	 * Finds associated extension by its type
 	 * 
 	 * @param string $type
+	 * @throws \RuntimeException if unknown type supplied
 	 * @return string
 	 */
 	public function getExtensionByType($type);
-	
+
 	/**
 	 * Returns full list
 	 * 
-	 * @param boolean $do_flip
+	 * @param boolean $flip Whether to flip the returning array or not
 	 * @return array
 	 */
-	public function getList($do_flip = false);
-	
+	public function getList($flip = false);
+
 	/**
 	 * Return extensions only
 	 * 
 	 * @return array
 	 */
 	public function getExtensions();
-	
+
 	/**
 	 * Return types only
 	 * 
 	 * @return array
 	 */
 	public function getTypes();
-	
+
 	/**
-	 * Check whether extension is valid
+	 * Check whether extension is known
 	 * 
 	 * @param string $extension
-	 * @return boolean TRUE if valid, FALSE if not
+	 * @return boolean
 	 */
 	public function isValidExtension($extension);
-	
+
 	/**
-	 * Check whether type is valid
+	 * Check whether type is known
 	 * 
 	 * @param string $type
-	 * @return boolean TRUE if valid, FALSE if not
+	 * @return boolean
 	 */
 	public function isValidType($type);
-	
+
 	/**
 	 * Appends pair to the end of the stack
 	 * 
 	 * @param array $pair
-	 * @return vod
+	 * @return void
 	 */
 	public function append(array $pair);
 }
-
