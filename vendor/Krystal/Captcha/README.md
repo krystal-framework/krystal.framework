@@ -1,18 +1,8 @@
 CAPTCHA Component
 =================
 
-Can be used as a standalone library as well.
+A CAPTCHA (an acronym for "Completely Automated Public Turing test to tell Computers and Humans Apart") 
+is a type of challenge-response test used in computing to determine whether or not the user is human.
 
- - Make pre-defined service [DONE]
- - Handle Fonts[DONE]
- - Make pre-defined controller? No
- - Add view helpers? No
- - Add Asset and write basic jquery plugin? No
- - Abstract image response [DONE]
- - After user's code is valid, do we need to clear the storage? [YES, DONE]
- - Division in Math adapter [DEPRECATED]
-
-TODO:
-
- - Make default color gray
- - Overall test
+The component provides its own implementation. To learn about its usage please refer to documentation.
+The component can be used as a standalone library as well.
