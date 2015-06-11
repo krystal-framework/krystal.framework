@@ -1,1 +1,1 @@
-Session=======Session component abstract session access. Plus add several features like Session hijack protection. Rename to SessionBag [DONE] CookieBag needs to be injected in Constructor[DONE]@TODO -Fix some garbage 
+Session component=================Session component abstract session access. Plus adds several useful features, like protection and adapter supporters.
