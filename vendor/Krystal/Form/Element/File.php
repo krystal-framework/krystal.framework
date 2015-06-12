@@ -12,25 +12,36 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
+use Krystal\Form\InputInterface;
 
 final class File implements FormElementInterface
 {
 	/**
-	 * @return 
+	 * Builds the element
+	 * 
+	 * @param \Krystal\Form\InputInterface $input
+	 * @param string $name
+	 * @param array $options
+	 * @return \Krystal\Form\Element\File
 	 */
-	public static function factory($input, $name, array $options)
+	public static function factory(InputInterface $input, $name, array $options)
 	{
-		//@TODO
+		$element = new self();
+
+		$options['element']['attributes']['name'] = $input->guessName($name);
+		return $element->render($options['element']['attributes']);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getElement(array $attrs)
+	public function render(array $attrs)
 	{
+		$attrs['type'] = 'file';
+
 		$node = new NodeElement();
 
-		return $node->openTag('file')
+		return $node->openTag('input')
 					->addAttributes($attrs)
 					->finalize(true)
 					->render();

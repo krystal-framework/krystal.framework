@@ -159,8 +159,45 @@ abstract class AbstractForm
 			if (isset($options['element'])) {
 
 				$options = $this->getDefaultAttributes($options);
-				
+
+				// @TODO That needs to be abstracted, definitely
 				switch ($options['element']['type']) {
+					
+					case 'radio':
+						$this->stack[$name] = Element\Radio::factory($this->input, $name, $options);
+					break;
+					
+					case 'date':
+						$this->stack[$name] = Element\Date::factory($this->input, $name, $options);
+					break;
+					
+					case 'file':
+						$this->stack[$name] = Element\File::factory($this->input, $name, $options);
+					break;
+					
+					case 'color':
+						$this->stack[$name] = Element\Color::factory($this->input, $name, $options);
+					break;
+					
+					case 'email':
+						$this->stack[$name] = Element\Email::factory($this->input, $name, $options);
+					break;
+					
+					case 'image':
+						$this->stack[$name] = Element\Image::factory($this->input, $name, $options);
+					break;
+					
+					case 'range':
+						$this->stack[$name] = Element\Range::factory($this->input, $name, $options);
+					break;
+					
+					case 'number':
+						$this->stack[$name] = Element\Number::factory($this->input, $name, $options);
+					break;
+					
+					case 'url':
+						$this->stack[$name] = Element\Url::factory($this->input, $name, $options);
+					break;
 
 					case 'text':
 						$this->stack[$name] = Element\Text::factory($this->input, $name, $options);
@@ -217,7 +254,6 @@ abstract class AbstractForm
 	 */
 	public function getErrors()
 	{
-		
 	}
 
 	/**
@@ -227,7 +263,6 @@ abstract class AbstractForm
 	 */
 	public function isValid()
 	{
-		
 	}
 
 	/**
@@ -237,7 +272,6 @@ abstract class AbstractForm
 	 */
 	public function get()
 	{
-		
 	}
 
 	/**

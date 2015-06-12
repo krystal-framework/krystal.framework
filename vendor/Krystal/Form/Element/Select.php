@@ -15,7 +15,7 @@ use Krystal\Form\NodeElement;
 use Krystal\Form\InputInterface;
 
 /* @TODO Add visitor for option elements */
-final class Select
+final class Select implements FormElementInterface
 {
 	/**
 	 * List data
@@ -174,10 +174,7 @@ final class Select
 	}
 
 	/**
-	 * Returns an element
-	 * 
-	 * @param array $attrs
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)
 	{
@@ -185,7 +182,7 @@ final class Select
 		$select->openTag('select')
 			   ->addAttributes($attrs)
 			   ->finalize();
-		
+
 		// First of all lets look if we have defaults
 		if (!empty($this->defaults)) {
 			foreach ($this->createDefaultOptionNodes() as $node) {

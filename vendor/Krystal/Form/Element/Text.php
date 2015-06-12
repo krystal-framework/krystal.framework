@@ -14,12 +14,15 @@ namespace Krystal\Form\Element;
 use Krystal\Form\NodeElement;
 use Krystal\Form\InputInterface;
 
-final class Text
+final class Text implements FormElementInterface
 {
 	/**
 	 * Builds an element
 	 * 
-	 * @return 
+	 * @param \Krystal\Form\InputInterface $input
+	 * @param string $name
+	 * @param array $options
+	 * @return \Krystal\Form\Element\Text
 	 */
 	public static function factory(InputInterface $input, $name, array $options)
 	{
@@ -41,6 +44,8 @@ final class Text
 	public function render(array $attrs)
 	{
 		$node = new NodeElement();
+
+		$attrs['type'] = 'text';
 
 		return $node->openTag('input')
 					->addAttributes($attrs)

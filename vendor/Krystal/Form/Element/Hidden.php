@@ -12,13 +12,14 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
+use Krystal\Form\InputInterface;
 
-class Hidden
+final class Hidden implements FormElementInterface
 {
 	/**
 	 * Builds an instance
 	 * 
-	 * @param $input
+	 * @param \Krystal\Form\InputInterface $input
 	 * @param string $name
 	 * @param array $options
 	 * @return \Krystal\Form\Element\Hidden
@@ -42,25 +43,13 @@ class Hidden
 	 */
 	public function render(array $attrs)
 	{
-		// Default hidden-specific attributes
-		$defaults = array(
-			'type' => 'hidden',
-			//'value' => '0'
-		);
+		$attrs['type'] = 'hidden';
 
-		// Now allowing to override the type
-		if (isset($attrs['type'])) {
-			unset($attrs['type']);
-		}
+		$node = new NodeElement();
+		$node->openTag('input')
+			 ->addAttributes($attrs)
+			 ->finalize(true);
 
-		// Finally merge defaults with user-defined attributes
-		$attrs = array_merge($attrs, $defaults);
-
-		$hidden = new NodeElement();
-		$hidden->openTag('input')
-			   ->addAttributes($attrs)
-			   ->finalize(true);
-
-		return $hidden->render();
+		return $node->render();
 	}
 }

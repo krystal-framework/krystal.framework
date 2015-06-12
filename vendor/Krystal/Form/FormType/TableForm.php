@@ -18,12 +18,10 @@ final class TableForm extends AbstractForm
 	 */
 	public function __render($element, $id = null)
 	{
-		
 	}
 	
 	
 	protected function getAttrs(array $attrs)
 	{
-		
 	}
 }

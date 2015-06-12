@@ -9,7 +9,47 @@
  * the license file that was distributed with this source code.
  */
 
-class Range
+namespace Krystal\Form\Element;
+
+use Krystal\Form\NodeElement;
+use Krystal\Form\InputInterface;
+
+final class Range implements FormElementInterface
 {
-	
+	/**
+	 * Builds an element
+	 * 
+	 * @param \Krystal\Form\InputInterface $input
+	 * @param string $name
+	 * @param array $options
+	 * @return \Krystal\Form\Element\Range
+	 */
+	public static function factory(InputInterface $input, $name, array $options)
+	{
+		$element = new self();
+
+		// Guess a name
+		$options['element']['attributes']['name'] = $input->guessName($name);
+
+		if ($input->has($name)) {
+			$options['element']['attributes']['value'] = $input->get($name);
+		}
+
+		return $element->render($options['element']['attributes']);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function render(array $attrs)
+	{
+		$attrs['type'] = 'range';
+
+		$node = new NodeElement();
+
+		return $node->openTag('input')
+					->addAttributes($attrs)
+					->finalize(true)
+					->render();
+	}
 }

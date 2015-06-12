@@ -12,16 +12,17 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
+use Krystal\Form\InputInterface;
 
-class Textarea
+final class Textarea implements FormElementInterface
 {
 	/**
-	 * Content
+	 * Current content
 	 * 
 	 * @var string
 	 */
 	private $text;
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -36,12 +37,12 @@ class Textarea
 	/**
 	 * Builds the element
 	 * 
-	 * @param $input
+	 * @param \Krystal\Form\InputInterface $input
 	 * @param string $name
-	 * @param array $option
+	 * @param array $options
 	 * @return \Krystal\Form\Element\Textarea
 	 */
-	public static function factory($input, $name, array $options)
+	public static function factory(InputInterface $input, $name, array $options)
 	{
 		$text = '';
 
@@ -58,10 +59,7 @@ class Textarea
 	}
 
 	/**
-	 * Returns an element
-	 * 
-	 * @param array $attrs
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)
 	{
