@@ -1,5 +1,5 @@
 
+FileSystem component
+====================
 
-FileSystem helpers
-
-
+This component provides common utilities for working with file systems.
