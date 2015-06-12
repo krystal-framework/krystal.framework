@@ -21,12 +21,12 @@ class ObjectContainer
 	 * @var array
 	 */
 	protected $deps = array();
-	
+
 	/**
 	 * @var array
 	 */
 	protected $cache = array();
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -84,26 +84,24 @@ class ObjectContainer
 	{
 		$namespace = rtrim($namespace, '\\');
 		$namespace = str_replace('/', '\\', $namespace);
-		
-		// Attempt to autoload a namespace
+
+		// Attempt to autoload by namespace
 		if (class_exists($namespace)) {
-			
+
 			if (!array_key_exists($namespace, $this->cache)) {
-				
+
 				$reflection = new ReflectionClass($namespace);
 				$instance = $reflection->newInstanceArgs($this->deps);
-				
+
 				$this->cache[$namespace] = $instance;
-				
+
 				return $instance;
-				
+
 			} else {
-				
-				echo 'from cache';
-				
+
 				return $this->cache[$namespace];
 			}
-			
+
 		} else {
 			trigger_error(sprintf('Attempted to read non-existing class "%s"', $namespace));
 		}
