@@ -11,7 +11,6 @@
 
 namespace Krystal\Form\FormType;
 
-use Krystal\Form\Element;
 use Krystal\Form\Input;
 
 abstract class AbstractForm
@@ -149,6 +148,44 @@ abstract class AbstractForm
 	}
 
 	/**
+	 * Attempts to build an instance
+	 * 
+	 * @param string $name Element's name
+	 * @param array $options Attached options
+	 * @return mixed
+	 */
+	protected function getElementInstance($name, array $options)
+	{
+		$options = $this->getDefaultAttributes($options);
+
+		// Since classes follow PSR-2, the first letter must be always upper cased
+		// And it would be better to avoid cases, to avoid conflicts
+		$type = ucfirst(strtolower($options['element']['type']));
+
+		// Shared namespace for all elements
+		$namespace = '\Krystal\Form\Element\\';
+
+		// The name of a factory method each element must implement
+		$method = 'factory';
+
+		// Build compliant class name
+		$class = $namespace.$type;
+
+		if (class_exists($class)) {
+
+			// Build invokable method name
+			$invokable = $namespace . $type . '::' . $method;
+
+			// Invoke a factory returning element
+			return call_user_func($invokable, $this->input, $name, $options);
+
+		} else {
+
+			return null;
+		}
+	}
+
+	/**
 	 * Registers all defined elements to the stack
 	 * 
 	 * @return void
@@ -156,68 +193,15 @@ abstract class AbstractForm
 	protected function register()
 	{
 		foreach ($this->getElements() as $name => $options) {
-			if (isset($options['element'])) {
+			if (isset($options['element']['type'])) {
 
-				$options = $this->getDefaultAttributes($options);
+				$instance = $this->getElementInstance($name, $options);
 
-				// @TODO That needs to be abstracted, definitely
-				switch ($options['element']['type']) {
-					
-					case 'radio':
-						$this->stack[$name] = Element\Radio::factory($this->input, $name, $options);
-					break;
-					
-					case 'date':
-						$this->stack[$name] = Element\Date::factory($this->input, $name, $options);
-					break;
-					
-					case 'file':
-						$this->stack[$name] = Element\File::factory($this->input, $name, $options);
-					break;
-					
-					case 'color':
-						$this->stack[$name] = Element\Color::factory($this->input, $name, $options);
-					break;
-					
-					case 'email':
-						$this->stack[$name] = Element\Email::factory($this->input, $name, $options);
-					break;
-					
-					case 'image':
-						$this->stack[$name] = Element\Image::factory($this->input, $name, $options);
-					break;
-					
-					case 'range':
-						$this->stack[$name] = Element\Range::factory($this->input, $name, $options);
-					break;
-					
-					case 'number':
-						$this->stack[$name] = Element\Number::factory($this->input, $name, $options);
-					break;
-					
-					case 'url':
-						$this->stack[$name] = Element\Url::factory($this->input, $name, $options);
-					break;
+				// The call returns null if can not register
+				if ($instance !== null) {
 
-					case 'text':
-						$this->stack[$name] = Element\Text::factory($this->input, $name, $options);
-					break;
-
-					case 'select':
-						$this->stack[$name] = Element\Select::factory($this->input, $name, $options);
-					break;
-
-					case 'checkbox':
-						$this->stack[$name] = Element\Checkbox::factory($this->input, $name, $options);
-					break;
-
-					case 'hidden':
-						$this->stack[$name] = Element\Hidden::factory($this->input, $name, $options);
-					break;
-
-					case 'textarea':
-						$this->stack[$name] = Element\Textarea::factory($this->input, $name, $options);
-					break;
+					// Do register now, since its safe
+					$this->stack[$name] = $instance;
 				}
 			}
 		}
