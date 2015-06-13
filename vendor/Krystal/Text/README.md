@@ -1,1 +1,1 @@
-Text component==============Utilities to work with text.@TODO:Rename Foreign Chars to Romanization
+Text component==============Utilities to work with text
