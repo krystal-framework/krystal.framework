@@ -1,7 +1,5 @@
 
+Standard library
+================
 
-
-VirtualBag
-
- - should validate setFoo (Foo must start from upper case)
- - Should be renamed to Entity
+That's not a component, but low-level utilities for internal usage.
