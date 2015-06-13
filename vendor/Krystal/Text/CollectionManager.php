@@ -49,7 +49,7 @@ final class CollectionManager implements CollectionManagerInterface
 	}
 
 	/**
-	 * Return options from collection
+	 * Return options from the collection
 	 * 
 	 * @param string $filteringOption Can be optionally filtered by one option
 	 * @return array
@@ -75,7 +75,7 @@ final class CollectionManager implements CollectionManagerInterface
 	}
 
 	/**
-	 * Returns current container
+	 * Returns current data container
 	 * 
 	 * @return array
 	 */
@@ -99,7 +99,7 @@ final class CollectionManager implements CollectionManagerInterface
 	 * 
 	 * @param string $key
 	 * @param mixed $value
-	 * @param mixed $default Value to be returned when if option doesn't exist
+	 * @param mixed $default Value to be returned if option doesn't exist
 	 * @return mixed
 	 */
 	public function getWithOption($key, $option, $default = false)
@@ -112,7 +112,7 @@ final class CollectionManager implements CollectionManagerInterface
 	}
 
 	/**
-	 * Checks whether provided key an option
+	 * Checks whether provided key has an option
 	 * 
 	 * @param string $key
 	 * @param string $option
@@ -150,11 +150,11 @@ final class CollectionManager implements CollectionManagerInterface
 	}
 
 	/**
-	 * Updates key's associated option
+	 * Updates an option by its associated key
 	 *
-	 * @param string $key
-	 * @param string $option
-	 * @param mixed $value
+	 * @param string $key Target key
+	 * @param string $option Option's name
+	 * @param mixed $value New value
 	 * @return void
 	 */
 	public function updateWithOption($key, $option, $value)
@@ -167,7 +167,7 @@ final class CollectionManager implements CollectionManagerInterface
 	}
 
 	/**
-	 * Removes an option by associated id
+	 * Removes an option by its associated key
 	 * 
 	 * @param string $key Target key
 	 * @param string $option Option to be removed
@@ -194,7 +194,7 @@ final class CollectionManager implements CollectionManagerInterface
 	}
 
 	/**
-	 * Removes a key and everything associated with it
+	 * Removes all data by its associated key
 	 * 
 	 * @param string $key Key to be removed
 	 * @return boolean
@@ -203,24 +203,27 @@ final class CollectionManager implements CollectionManagerInterface
 	{
 		if ($this->hasKey($key)) {
 			unset($this->container[$key]);
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	/**
-	 * Adds a key and its options
+	 * Adds a key with its options
 	 * 
 	 * @param string $key
 	 * @param array $options
-	 * @return 
+	 * @return \Krystal\Text\CollectionManager
 	 */
 	public function add($key, array $options)
 	{
 		$this->container[$key] = $options;
 		return $this;
 	}
-	
+
 	/**
-	 * Updates a key by associated options
+	 * Updates a key with new options
 	 * 
 	 * @param string $key
 	 * @param array $options
@@ -230,7 +233,7 @@ final class CollectionManager implements CollectionManagerInterface
 	{
 		$this->container[$key] = $options;
 	}
-	
+
 	/**
 	 * Resets the container
 	 * 

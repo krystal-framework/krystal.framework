@@ -102,7 +102,7 @@ final class CsvLimitedTool implements CsvLimitedToolInterface
 	/**
 	 * Returns values
 	 * 
-	 * @param boolean $implode
+	 * @param boolean $implode Whether result must be an array or a string separated by comma
 	 * @return string|array
 	 */
 	public function getValues($implode = true)
@@ -159,7 +159,7 @@ final class CsvLimitedTool implements CsvLimitedToolInterface
 	 * Removes a value from the stack
 	 * 
 	 * @param string $value
-	 * @return boolean
+	 * @return void
 	 */
 	public function remove($value)
 	{
@@ -189,7 +189,7 @@ final class CsvLimitedTool implements CsvLimitedToolInterface
 	}
 
 	/**
-	 * Prepends a value to the beginning
+	 * Prepends a value to the beginning of the stack
 	 * 
 	 * @param string $value
 	 * @return boolean
@@ -200,7 +200,7 @@ final class CsvLimitedTool implements CsvLimitedToolInterface
 	}
 
 	/**
-	 * Appends a value
+	 * Appends a value to the beginning of the stack
 	 * 
 	 * @param string $value Target value to be appended
 	 * @return boolean
