@@ -48,7 +48,7 @@ final class Input implements InputInterface
 	 */
 	private function hasName()
 	{
-		return $this->name !== null;
+		return $this->name != null;
 	}
 
 	/**
@@ -60,9 +60,9 @@ final class Input implements InputInterface
 	public function has($key)
 	{
 		if ($this->hasName()) {
-			return isset($this->input[$this->name][$key]);
+			return isset($this->data[$this->name][$key]);
 		} else {
-			return isset($this->input[$key]);
+			return isset($this->data[$key]);
 		}
 	}
 
@@ -78,9 +78,9 @@ final class Input implements InputInterface
 		if ($this->has($key)) {
 
 			if ($this->hasName()) {
-				return $this->input[$this->name][$key];
+				return $this->data[$this->name][$key];
 			} else {
-				return $this->input[$key];
+				return $this->data[$key];
 			}
 
 		} else {
@@ -98,9 +98,9 @@ final class Input implements InputInterface
 	public function setInput(array $input)
 	{
 		if ($this->hasName()) {
-			$this->input[$this->name] = $input;
+			$this->data[$this->name] = $input;
 		} else {
-			$this->input = $input;
+			$this->data = $input;
 		}
 	}
 
