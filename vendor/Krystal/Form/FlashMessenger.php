@@ -12,7 +12,7 @@
 namespace Krystal\Form;
 
 use Krystal\Session\Manager as SessionManager;
-use Krystal\I18n\Translator;
+use Krystal\I18n\TranslatorInterface;
 use Krystal\Http\PersistentStorageInterface;
 use RuntimeException;
 
@@ -28,7 +28,7 @@ final class FlashMessenger implements FlashMessengerInterface
 	/**
 	 * Translator to translate messages
 	 * 
-	 * @var \Krystal\I18n\Translator
+	 * @var \Krystal\I18n\TranslatorInterface
 	 */
 	private $translator;
 
@@ -43,10 +43,10 @@ final class FlashMessenger implements FlashMessengerInterface
 	 * State initialization
 	 * 
 	 * @param \Krystal\Http\PersistentStorageInterface $storage
-	 * @param \Krystal\I18n\Translator $translator
+	 * @param \Krystal\I18n\TranslatorInterface $translator
 	 * @return void
 	 */
-	public function __construct(PersistentStorageInterface $storage, Translator $translator = null)
+	public function __construct(PersistentStorageInterface $storage, TranslatorInterface $translator = null)
 	{
 		$this->storage = $storage;
 		$this->translator = $translator;
@@ -122,12 +122,16 @@ final class FlashMessenger implements FlashMessengerInterface
 	public function get($key)
 	{
 		if ($this->has($key)) {
-			
+
 			$flashMessages = $this->storage->get(self::FLASH_KEY);
 			$message = $flashMessages[$key];
-			
+
 			$this->remove($key);
-			
+
+			if ($this->translator instanceof TranslatorInterface) {
+				$message = $this->translator->translate($message);
+			}
+
 			return $message;
 			
 		} else {
