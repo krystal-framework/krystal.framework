@@ -15,18 +15,6 @@ use RuntimeException;
 use Krystal\Paginate\Style\StyleInterface;
 use Krystal\Paginate\PaginatorInterface;
 
-/**
- * Order of the execution:
- * 
- * 1. Define total amount of records
- *    $paginator->setTotalAmount();
- * 
- * 2. Set items per page
- *    $paginator->setItemsPerPage();
- * 
- * 3. Use $paginator->countOffset() when building SQL query
- * 
- */
 class Paginator implements PaginatorInterface
 {
 	/**
@@ -69,7 +57,23 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Defines a permanent url
+	 * Tweaks the paginator before it can be used
+	 * 
+	 * @param integer $totalAmount Total amount of records
+	 * @param integer $itemsPerPage Per page count
+	 * @param integer $page Current page
+	 * @return void
+	 */
+	public function tweak($totalAmount, $itemsPerPage, $page)
+	{
+		// Order is this
+		$this->totalAmount = (int) $totalAmount;
+		$this->itemsPerPage = (int) $itemsPerPage;
+		$this->setCurrentPage($page);
+	}
+
+	/**
+	 * Defines a permanent URL
 	 * 
 	 * @param string $url
 	 * @return void
@@ -87,18 +91,17 @@ class Paginator implements PaginatorInterface
 	 */
 	public function getUrl($page)
 	{
-		//@TODO Replace placeholder sign
 		if (strpos($this->url, '%s') === false) {
 			throw new \Exception('Page URL must contain one placeholder');
 		}
-		
+
+		//@TODO Improve this ugly hack
 		$page = (string) $page;
-		
 		return str_replace('%s', $page, $this->url);
 	}
 
 	/**
-	 * Returns first page i.e always 1
+	 * Returns the first page i.e always 1
 	 * 
 	 * @return integer
 	 */
@@ -115,11 +118,11 @@ class Paginator implements PaginatorInterface
 	public function getLastPage()
 	{
 		$pages = $this->getPageNumbers();
-		return array_pop($pages);
+		return (int) array_pop($pages);
 	}
 
 	/**
-	 * Returns an offset
+	 * Counts the offset
 	 * 
 	 * @return integer
 	 */
@@ -164,7 +167,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Resets paginator instance
+	 * Resets the paginator's instance
 	 * 
 	 * @return void
 	 */
@@ -188,7 +191,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Checks whether we have at least one page to paginate
+	 * Checks whether there's at least one page before doing pagination
 	 * 
 	 * @return boolean
 	 */
@@ -198,7 +201,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Checks whether we have a style adapter
+	 * Checks whether there's a  style adapter
 	 * 
 	 * @return boolean
 	 */
@@ -208,7 +211,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Return total page numbers
+	 * Returns total page numbers
 	 * Style-adapter aware method
 	 * 
 	 * @return array
@@ -226,7 +229,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Checks whether we have a next page
+	 * Checks if next page number is available
 	 * 
 	 * @return boolean
 	 */
@@ -236,7 +239,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Checks if we have a previous page
+	 * Checks if previous page number is available
 	 * 
 	 * @return boolean
 	 */
@@ -280,7 +283,7 @@ class Paginator implements PaginatorInterface
 	 * @param boolean $fixRange Whether page range should be fixed if wrong one supplied
 	 * @return \Krystal\Paginate\Paginator
 	 */
-	public function setCurrentPage($currentPage, $fixRange = true)
+	private function setCurrentPage($currentPage, $fixRange = true)
 	{
 		if ($fixRange === true) {
 			if (!$this->pageInRange($currentPage)) {
@@ -293,7 +296,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Returns current page
+	 * Returns current page number
 	 * 
 	 * @throws \RuntimeException If current page hasn't been defined
 	 * @return integer
@@ -312,7 +315,7 @@ class Paginator implements PaginatorInterface
 	 * 
 	 * @return integer
 	 */
-	public function getPagesCount()
+	private function getPagesCount()
 	{
 		if ($this->getItemsPerPage() != 0) {
 			return (int) abs(ceil($this->getTotalAmount() / $this->getItemsPerPage()));
@@ -334,19 +337,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Set items per page
-	 * 
-	 * @param string|integer $itemsPerPage
-	 * @return \Krystal\Paginate\Paginator
-	 */
-	public function setItemsPerPage($itemsPerPage)
-	{
-		$this->itemsPerPage = $itemsPerPage;
-		return $this;
-	}
-
-	/**
-	 * Return items per page
+	 * Returns defined per page count
 	 * 
 	 * @throws \RuntimeException if items per page were not defined
 	 * @return integer
@@ -361,19 +352,7 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Defines total amount of records
-	 * 
-	 * @param string|integer $totalAmount
-	 * @return \Krystal\Paginate\Paginator
-	 */
-	public function setTotalAmount($totalAmount)
-	{
-		$this->totalAmount = (int) $totalAmount;
-		return $this;
-	}
-
-	/**
-	 * Return total amount of pages
+	 * Returns total amount of pages
 	 * 
 	 * @throws \RuntimeException if amount of items was not defined
 	 * @return integer
