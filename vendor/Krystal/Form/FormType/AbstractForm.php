@@ -12,6 +12,7 @@
 namespace Krystal\Form\FormType;
 
 use Krystal\Form\Input;
+use Krystal\I18n\TranslatorInterface;
 
 abstract class AbstractForm
 {
@@ -51,16 +52,43 @@ abstract class AbstractForm
 	protected $registered = false;
 
 	/**
+	 * Form attribute names that must be translated
+	 * 
+	 * @var array
+	 */
+	protected $translatable = array('placeholder');
+
+	/**
+	 * Attribute translator
+	 * 
+	 * @var \Krystal\I18n\TranslatorInterface
+	 */
+	protected $translator;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param array $input
+	 * @param \Krystal\I18n\TranslatorInterface $translator
 	 * @return void
 	 */
-	public function __construct(array $input = array())
+	public function __construct(array $input = array(), TranslatorInterface $translator = null)
 	{
 		// Get form name
 		$name = method_exists($this, 'getName') ? $this->getName() : null;
 		$this->input = new Input($input, $name);
+		$this->translator = $translator;
+	}
+
+	/**
+	 * Adds an attribute that must be translatable
+	 * 
+	 * @param string $attribute
+	 * @return void
+	 */
+	public function addTranslateableAttr($attribute)
+	{
+		array_push($this->translatable, $attribute);
 	}
 
 	/**
@@ -176,6 +204,9 @@ abstract class AbstractForm
 			// Build invokable method name
 			$invokable = $namespace . $type . '::' . $method;
 
+			// Translate attributes on demand
+			$options = $this->translateAttributes($options);
+
 			// Invoke a factory returning element
 			return call_user_func($invokable, $this->input, $name, $options);
 
@@ -183,6 +214,28 @@ abstract class AbstractForm
 
 			return null;
 		}
+	}
+
+	/**
+	 * Translates form attributes
+	 * 
+	 * @param array $attributes
+	 * @return array
+	 */
+	protected function translateAttributes(array $options)
+	{
+		if (isset($options['element']['attributes']) && is_array($options['element']['attributes']) && is_object($this->translator)) {
+
+			foreach ($options['element']['attributes'] as $attribute => $value) {
+				// Do translate in case the attribute belongs to a map we defined
+				if (in_array($attribute, $this->translatable)) {
+					$options['element']['attributes'][$attribute] = $this->translator->translate($value);
+				}
+			}
+		}
+
+		// Always return the array regarding success or failure
+		return $options;
 	}
 
 	/**
