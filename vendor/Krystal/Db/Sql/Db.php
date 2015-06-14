@@ -181,12 +181,9 @@ final class Db implements DbInterface
 		$count = $this->getCount();
 
 		// Alter paginator's state
-		$this->paginator->setItemsPerPage($itemsPerPage)
-						->setTotalAmount($count)
-						->setCurrentPage($page);
-
+		$this->paginator->tweak($count, $itemsPerPage, $page);
 		$this->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
-		
+
 		return $this;
 	}
 
