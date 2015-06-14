@@ -2,12 +2,4 @@
 Pagination component
 ====================
 
-Provides pagination tools
-
-
-@TODO
-====
-
- * There's a need for ready-to-use pagination blocks. Blocks need to be implemented later.
- * Add Infinity scrolling style
- * Add route support
+Provides pagination tools. It can be used as a standalone library as well since its not coupled to any storage engine nor to another framework components.
