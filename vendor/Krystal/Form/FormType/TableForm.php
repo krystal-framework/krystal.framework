@@ -13,15 +13,45 @@ namespace Krystal\Form\FormType;
 
 final class TableForm extends AbstractForm
 {
+	private $value;
+	
+	protected function register()
+	{
+		foreach ($this->getElements() as $name => $options) {
+			if (isset($options['element']['type'])) {
+
+				$element = $this->renderElement(sprintf('%s[%s]', $name, $this->value), $options);
+
+				// The call returns null if can not register
+				if ($element !== null) {
+					// Do register now, since its safe
+					$this->stack[$name] = $element;
+				}
+			}
+		}
+
+		$this->registered = true;
+	}
+	
+	/**
+	 * Renders an element providing custom name
+	 * 
+	 * @return string
+	 */
+	public function render($element, $value)
+	{
+		$this->value = $value;
+		
+		$this->register();
+
+		return $this->stack[$element];
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __render($element, $id = null)
+	protected function getAttrs(array $options)
 	{
-	}
-	
-	
-	protected function getAttrs(array $attrs)
-	{
+		return $options;
 	}
 }

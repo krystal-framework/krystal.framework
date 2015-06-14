@@ -67,7 +67,7 @@ final class Input implements InputInterface
 	}
 
 	/**
-	 * Returns input's name
+	 * Returns input's value by its associated key
 	 * 
 	 * @param string $key
 	 * @param mixed $default Default value to be returned in case requested one doesn't exist
@@ -113,9 +113,20 @@ final class Input implements InputInterface
 	public function guessName($key)
 	{
 		if ($this->hasName()) {
-			return sprintf('%s[%s]', $this->name, $key);
+			return $this->getWithValue($key);
 		} else {
 			return $key;
 		}
+	}
+
+	/**
+	 * Returns input's name with provided value
+	 * 
+	 * @param string $value
+	 * @return string
+	 */
+	public function getWithValue($value)
+	{
+		return sprintf('%s[%s]', $this->name, $value);
 	}
 }

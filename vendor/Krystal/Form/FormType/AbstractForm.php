@@ -152,9 +152,9 @@ abstract class AbstractForm
 	 * 
 	 * @param string $name Element's name
 	 * @param array $options Attached options
-	 * @return mixed
+	 * @return string
 	 */
-	protected function getElementInstance($name, array $options)
+	final protected function renderElement($name, array $options)
 	{
 		$options = $this->getDefaultAttributes($options);
 
@@ -195,13 +195,12 @@ abstract class AbstractForm
 		foreach ($this->getElements() as $name => $options) {
 			if (isset($options['element']['type'])) {
 
-				$instance = $this->getElementInstance($name, $options);
+				$element = $this->renderElement($name, $options);
 
 				// The call returns null if can not register
-				if ($instance !== null) {
-
+				if ($element !== null) {
 					// Do register now, since its safe
-					$this->stack[$name] = $instance;
+					$this->stack[$name] = $element;
 				}
 			}
 		}

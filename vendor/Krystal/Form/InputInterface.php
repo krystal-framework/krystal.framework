@@ -20,4 +20,37 @@ interface InputInterface
 	 * @return boolean
 	 */
 	public function has($key);
+
+	/**
+	 * Returns input's value by its associated key
+	 * 
+	 * @param string $key
+	 * @param mixed $default Default value to be returned in case requested one doesn't exist
+	 * @return string
+	 */
+	public function get($key, $default = false);
+
+	/**
+	 * Overdress the input array
+	 * 
+	 * @param array $input
+	 * @return void
+	 */
+	public function setInput(array $input);
+
+	/**
+	 * Guesses input's name
+	 * 
+	 * @param string $key
+	 * @return string
+	 */
+	public function guessName($key);
+
+	/**
+	 * Returns input's name with provided value
+	 * 
+	 * @param string $value
+	 * @return string
+	 */
+	public function getWithValue($value);
 }
