@@ -1,11 +1,10 @@
 Things need to be done
 ======================
 
- * Connectors
+ * More connectors
  * increment\decrements
  * Where IN - support
  * Relations - very common types at least
  * QB for Migrations
- * Some methods in QueryBuilder absent in DB
- * Improved order by for zeros (which is aware of if / then)
- * RAW INSERTS
+ * Improved order by for zeros (which is aware of `if / then`)
+ * Raw DB Expressions support
