@@ -345,6 +345,30 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends increment condition
+	 * 
+	 * @param string $table
+	 * @param string $column
+	 * @param integer $step
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function increment($table, $column, $step = 1)
+	{
+	}
+
+	/**
+	 * Appends decrement condition
+	 * 
+	 * @param string $table
+	 * @param string $column
+	 * @param integer $step
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function decrement($table, $column, $step = 1)
+	{
+	}
+
+	/**
 	 * Appends COUNT() expression
 	 * 
 	 * @param string $target
@@ -363,12 +387,12 @@ final class Db implements DbInterface
 	 * @param string $type
 	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function orderBy($type)
+	public function orderBy($type = null)
 	{
 		$this->queryBuilder->orderBy($type);
 		return $this;
 	}
-	
+
 	/**
 	 * Appends MAX() aggregate function
 	 * 
@@ -376,9 +400,74 @@ final class Db implements DbInterface
 	 * @param string $alias
 	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function max($target, $alias = null)
+	public function max($column, $alias = null)
 	{
-		$this->queryBuilder->max($target, $alias);
+		$this->queryBuilder->max($column, $alias);
+		return $this;
+	}
+
+	/**
+	 * Appends MIN() aggregate function
+	 * 
+	 * @param string $column
+	 * @param string $alias
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function min($column, $alias = null)
+	{
+		$this->queryBuilder->max($column, $alias);
+		return $this;
+	}
+
+	/**
+	 * Appends AVG() aggregate function
+	 * 
+	 * @param string $column Column name
+	 * @param string $alias Alias
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function avg($column, $alias = null)
+	{
+		$this->queryBuilder->avg($column, $alias);
+		return $this;
+	}
+
+	/**
+	 * Appends SUM() aggregate function
+	 * 
+	 * @param string $column Column name
+	 * @param string $alias Alias
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function sum($column, $alias = null)
+	{
+		$this->queryBuilder->sum($column, $alias);
+		return $this;
+	}
+
+	/**
+	 * Appends LEN() aggregate function
+	 * 
+	 * @param string $column Column name
+	 * @param string $alias Optional alias
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function len($column, $alias = null)
+	{
+		$this->queryBuilder->len($column, $alias);
+		return $this;
+	}
+
+	/**
+	 * Appends ROUND() function
+	 * 
+	 * @param string $column The column to round
+	 * @param float $decimals Specifies the number of decimals to be returned
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function round($column, $column)
+	{
+		$this->queryBuilder->len($column, $column);
 		return $this;
 	}
 
@@ -394,12 +483,23 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends DISTINCT expression
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function distinct()
+	{
+		$this->queryBuilder->distinct();
+		return $this;
+	}
+
+	/**
 	 * Appends FROM expression
 	 * 
 	 * @param string $table
 	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function from($table)
+	public function from($table = null)
 	{
 		$this->queryBuilder->from($table);
 		return $this;
@@ -521,7 +621,84 @@ final class Db implements DbInterface
 	{
 		return $this->where($column, '=', $value, $filter);
 	}
+
+	/**
+	 * Appends where clause with equality operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by empty value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function whereNotEquals($column, $value, $filter = false)
+	{
+		return $this->where($column, '!=', $value, $filter);
+	}
+
+	/**
+	 * Appends WHERE clause with > operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function whereGreaterThan($column, $value, $filter = false)
+	{
+		return $this->where($column, '>', $value, $filter);
+	}
+
+	/**
+	 * Appends WHERE clause with < operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function whereLessThan($column, $value, $filter = false)
+	{
+		return $this->where($column, '<', $value, $filter);
+	}
 	
+	/**
+	 * Appends WHERE clause with "less than" operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereLessThan($column, $value, $filter = false)
+	{
+		return $this->orWhere($column, '<', $value, $filter);
+	}
+	
+	/**
+	 * Appends WHERE with "like" operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereLike($column, $value, $filter = false)
+	{
+		return $this->andWhere($column, 'LIKE', $value, $filter);
+	}
+	
+	/**
+	 * Appends OR WHERE LIKE condition
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereLike($column, $value, $filter = false)
+	{
+		return $this->orWhere($column, 'LIKE', $value, $filter);
+	}
 	
 	public function whereLike($column, $value, $filter = false)
 	{
@@ -552,6 +729,62 @@ final class Db implements DbInterface
 	public function andWhereNotEquals($column, $value, $filter = false)
 	{
 		return $this->andWhere($column, '!=', $value, $filter);
+	}
+
+	/**
+	 * Opens a bracket 
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function openBracket()
+	{
+		$this->queryBuilder->openBracket();
+		return $this;
+	}
+
+	/**
+	 * Closes the bracket
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function closeBracket()
+	{
+		$this->queryBuilder->closeBracket();
+		return $this;
+	}
+
+	/**
+	 * Appends UNION
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function union()
+	{
+		$this->queryBuilder->union();
+		return $this;
+	}
+
+	/**
+	 * Appends UNION ALL
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function unionAll()
+	{
+		$this->queryBuilder->unionAll();
+		return $this;
+	}
+
+	/**
+	 * Appends AS with provided alias
+	 * 
+	 * @param string $alias
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function asAlias($alias)
+	{
+		$this->queryBuilder->asAlias($alias);
+		return $this;
 	}
 
 	/**

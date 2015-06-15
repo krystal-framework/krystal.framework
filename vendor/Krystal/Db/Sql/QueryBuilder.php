@@ -13,6 +13,7 @@ namespace Krystal\Db\Sql;
 
 use Krystal\Stdlib\ArrayUtils;
 use InvalidArgumentException;
+use LogicException;
 
 /**
  * This class is only responsible for building query strings.
@@ -155,7 +156,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 * @param string $table
 	 * @param array $data Simply key value pair (without placeholders)
 	 * @param boolean $ignore Whether to ignore when PK collisions occur
-	 * @throws LogicException if $data array is empty
+	 * @throws \LogicException if $data array is empty
 	 * @return boolean
 	 */
 	public function insert($table, array $data, $ignore = false)
@@ -184,7 +185,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends UPDATE expression
+	 * Builds UPDATE query
 	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
@@ -213,7 +214,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function increment($table, $column, $step = 1)
 	{
-		//return $this->update($table, array($column => $column . ' + ' . $step));
 	}
 
 	/**
@@ -226,7 +226,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function decrement($table, $column, $step = 1)
 	{
-		//return $this->update($table, array($column => $column . ' - ' . $step));
 	}
 
 	/**
@@ -302,17 +301,20 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * TODO
+	 * Appends ROUND() function
+	 * 
+	 * @param string $column The column to round
+	 * @param float $decimals Specifies the number of decimals to be returned
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
 	public function round($column, $decimals)
 	{
-		$this->append(sprintf(' ROUND(%s) ', $this->wrap($column)));
+		$this->append(sprintf(' ROUND(%s, %s) ', $this->wrap($column), $decimals));
 		return $this;
 	}
 
 	/**
-	 * Appends sort
+	 * Appends sorting condition
 	 * 
 	 * @param string $sort
 	 * @return \Krystal\Db\Sql\QueryBuilder
@@ -390,7 +392,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends LIMIT expression to query string
+	 * Appends LIMIT expression
 	 * 
 	 * @param integer $offset
 	 * @param integer $amount Amount of rows to be returned
@@ -408,7 +410,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends FROM statement
+	 * Appends FROM expression
 	 * 
 	 * @param string $table Optional table name
 	 * @return \Krystal\Db\Sql\QueryBuilder
@@ -531,7 +533,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends WHERE clause with > operator
+	 * Appends WHERE clause with < operator
 	 * 
 	 * @param string $column
 	 * @param string $value
@@ -684,17 +686,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		return $this;
 	}
 	
-	
 	public function having()
 	{
 		//@TODO
 	}
-	
+
 	public function groupBy()
 	{
 		//@TODO
 	}
-	
+
 	/**
 	 * Appends ORDER BY expression
 	 * 
@@ -708,12 +709,12 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		} else {
 			$this->append(' ORDER BY '.$this->wrap($type));
 		}
-		
+
 		return $this;
 	}
 
 	/**
-	 * Descending order
+	 * Appends DESC condition
 	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
@@ -746,7 +747,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
 	public function whereBetween($key, array $pair)
@@ -756,7 +756,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
 	public function whereNotBetween($key, array $pair)
@@ -777,20 +776,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Sets data for UPDATE expression
-	 * 
-	 * @param array $data
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function set(array $data)
-	{
-		//@TODO Deprecate this
-		$this->append(' SET ' . implode(', ', $data));
-		
-		return $this;
-	}
-	
-	/**
 	 * Opens a bracket 
 	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder
@@ -800,7 +785,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		$this->append('(');
 		return $this;
 	}
-	
+
 	/**
 	 * Closes the bracket
 	 * 
@@ -847,7 +832,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 	
 	/**
-	 * Appends Truncate table statement
+	 * Appends TRUNCATE statement
 	 * 
 	 * @param string $table
 	 * @return \Krystal\Db\Sql\QueryBuilder
