@@ -56,20 +56,6 @@ abstract class AbstractMapper
 	{
 	}
 	
-	protected function fetchWithPagination($table, $page, $itemsPerPage, array $conditions)
-	{
-		$this->paginator->tweak($this->guessCountQuery(), $page, $itemsPerPage);
-	}
-
-	/**
-	 * Tries to guess count query
-	 * 
-	 * @return string
-	 */
-	final protected function guessCountQuery()
-	{
-	}
-
 	/**
 	 * Fetches one column
 	 * 
