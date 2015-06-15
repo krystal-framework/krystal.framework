@@ -171,7 +171,7 @@ class ImageFile implements ImageFileInterface
 	 * Loads an image into the memory from a file-system or URL
 	 * 
 	 * @param string $file
-	 * @throws LogicException When attempting to create from unsupported format
+	 * @throws \LogicException When attempting to create from unsupported format
 	 * @return resource
 	 */
 	final protected function createImageFromFile($file, $type)
@@ -225,20 +225,20 @@ class ImageFile implements ImageFileInterface
 	final protected function load($file)
 	{
 		$info = $this->getImageInfo($file);
-		
+
 		if ($info !== false) {
-			
+
 			$this->image = $this->createImageFromFile($file, $info['type']);
-			
+
 			$this->width = $info['width'];
 			$this->height = $info['height'];
 			$this->type = $info['type'];
 			$this->mime = $info['mime'];
-			
+
 			return true;
-			
+
 		} else {
-			
+
 			return false;
 		}
 	}
@@ -260,7 +260,7 @@ class ImageFile implements ImageFileInterface
 	 * @param string $path Full absolute path on the file system to save the image
 	 * @param integer $quality Image quality Medium quality by default
 	 * @param string $format Can be optionally saved in another format
-	 * @return boolean Depending on success
+	 * @return boolean
 	 */
 	final public function save($path, $quality = 75, $type = null)
 	{
@@ -268,28 +268,28 @@ class ImageFile implements ImageFileInterface
 		if ($type === null) {
 			$type = $this->type;
 		}
-		
+
 		switch ($type) {
 			case \IMAGETYPE_GIF:
 				$result = imagegif($this->image, $path);
 			break;
-			
+
 			case \IMAGETYPE_JPEG:
 				$result = imagejpeg($this->image, $path, $quality);
 			break;
-			
+
 			case \IMAGETYPE_PNG:
 				$result = imagepng($this->image, $path, 9);
 			break;
-			
+
 			default:
 				throw new LogicException(sprintf(
 					'Can not save image format (%s) to %s', $type, $path
 				));
 		}
-		
+
 		$this->done();
-		
+
 		// Returns boolean value indicating success or failure
 		return $result;
 	}
@@ -313,24 +313,24 @@ class ImageFile implements ImageFileInterface
 	final public function render($quality = 75)
 	{
 		header("Content-type: ".image_type_to_mime_type($this->type));
-		
+
 		switch ($this->type) {
 			case \IMAGETYPE_GIF:
 				imagegif($this->image, null);
 			break;
-			
+
 			case \IMAGETYPE_JPEG:
 				imagejpeg($this->image, null, $quality);
 			break;
-			
+
 			case \IMAGETYPE_PNG:
 				imagepng($this->image, null, 9);
 			break;
-			
+
 			default:
 				throw new LogicException(sprintf('Can not create image from "%s"', $this->file));
 		}
-		
+
 		$this->done();
 		exit(1);
 	}
@@ -344,26 +344,26 @@ class ImageFile implements ImageFileInterface
 	final protected function preserveTransparency($image)
 	{
 		$transparencyColor = array(0, 0, 0);
-		
+
 		switch ($this->type) {
 			case \IMAGETYPE_GIF:
-				
+
 				$color = imagecolorallocate($image, $transparencyColor[0], $transparencyColor[1], $transparencyColor[2]);
-				
+
 				imagecolortransparent($image, $color);
 				imagetruecolortopalette($image, false, 256);
-				
+
 			break;
-            
+
 			case \IMAGETYPE_PNG:
-				
+
 				imagealphablending($image, false);
-				
+
 				$color = imagecolorallocatealpha($image, $transparencyColor[0], $transparencyColor[1], $transparencyColor[2], 0);
-				
+
 				imagefill($image, 0, 0, $color);
 				imagesavealpha($image, true);
-				
+
 			break;
 		}
 	}

@@ -14,44 +14,13 @@ namespace Krystal\Image\Processor;
 /* API for Image Processor implementation */
 interface ImageProcessorInterface
 {
-	/**
-	 * @const integer
-	 */
 	const IMG_RIGHT_TOP = 1;
-
-	/**
-	 * @const integer
-	 */
 	const IMG_LEFT_CORNER = 2;
-
-	/**
-	 * @const integer
-	 */
 	const IMG_LEFT_BOTTOM_CORNER = 3;
-
-	/**
-	 * @const integer
-	 */
 	const IMG_RIGHT_BOTTOM_CORNER = 4;
-
-	/**
-	 * @const integer
-	 */
 	const IMG_CENTER_CORNER = 5;
-
-	/**
-	 * @const integer
-	 */
 	const IMG_FLIP_HORIZONTAL = 6;
-
-	/**
-	 * @const integer
-	 */
 	const IMG_FLIP_VERTICAL = 7;
-
-	/**
-	 * @const integer
-	 */
 	const IMG_FLIP_BOTH = 8;
 
 	/**
