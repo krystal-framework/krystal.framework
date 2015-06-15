@@ -27,7 +27,7 @@ final class ThumbFactory
 		if (isset($options['quality'])) {
 			$quality = $options['quality'];
 		}
-		
+
 		return new Thumb($dir, $options['dimensions'], $quality);
 	}
 }

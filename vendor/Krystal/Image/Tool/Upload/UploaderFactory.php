@@ -31,11 +31,11 @@ abstract class UploaderFactory
 		if (count($plugins) == 0) {
 			throw new InvalidArgumentException('There must be at least one provided plugin for image uploader');
 		}
-		
+
 		// Default image's quality
 		$quality = 75;
 		$collection = array();
-		
+
 		foreach ($plugins as $plugin => $options) {
 			switch ($plugin) {
 				case 'thumb':
@@ -43,7 +43,7 @@ abstract class UploaderFactory
 					$collection[] = $thumb->build($dir, $quality, $options);
 					
 				break;
-				
+
 				case 'original':
 					$original = new OriginalSizeFactory();
 					$collection[] = $original->build($dir, $quality, $options);
@@ -51,7 +51,7 @@ abstract class UploaderFactory
 				break;
 			}
 		}
-		
+
 		return new UploadChain($collection);
 	}
 }

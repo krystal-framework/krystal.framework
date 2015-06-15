@@ -89,28 +89,28 @@ final class Thumb implements UploaderAwareInterface
 		foreach ($files as $file) {
 			if ($file instanceof FileInfo) {
 				foreach ($this->dimensions as $index => $dimension) {
-					
+
 					$width = (int) $dimension[0];
 					$height = (int) $dimension[1];
-					
+
 					$destination = $this->makeDestination($id, $width, $height);
-					
+
 					// Ensure that destination actually exists
 					if (!is_dir($destination)) {
 						mkdir($destination, 0777, true);
 					}
-					
+
 					$to = sprintf('%s/%s', $destination, $file->getName());
-					
+
 					$imageProcessor = new ImageProcessor($file->getTmpName());
 					$imageProcessor->thumb($width, $height);
-					
+
 					// This might fail sometimes
 					$imageProcessor->save($to, $this->quality);
 				}
 			}
 		}
-		
+
 		return true;
 	}
 }
