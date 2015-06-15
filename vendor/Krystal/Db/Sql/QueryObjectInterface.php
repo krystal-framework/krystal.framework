@@ -14,6 +14,14 @@ namespace Krystal\Db\Sql;
 interface QueryObjectInterface
 {
 	/**
+	 * Sets query raw string
+	 * 
+	 * @param string $queryString
+	 * @return void
+	 */
+	public function setQueryString($queryString);
+
+	/**
 	 * Returns current query string
 	 * 
 	 * @return string
