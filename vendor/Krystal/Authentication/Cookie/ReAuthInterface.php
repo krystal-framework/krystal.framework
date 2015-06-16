@@ -13,5 +13,33 @@ namespace Krystal\Authentication\Cookie;
 
 interface ReAuthInterface
 {
-	//@TODO
+	/**
+	 * Returns user bag
+	 * 
+	 * @return \Krystal\Authentication\Cookie\UserBag
+	 */
+	public function getUserBag();
+
+	/**
+	 * Checks whether data is stored
+	 * 
+	 * @return boolean
+	 */
+	public function isStored();
+
+	/**
+	 * Clears all related data from cookies
+	 * 
+	 * @return boolean
+	 */
+	public function clear();
+
+	/**
+	 * Stores auth data on client machine
+	 * 
+	 * @param string $login
+	 * @param string $passwordHash
+	 * @return void
+	 */
+	public function store($login, $passwordHash);
 }

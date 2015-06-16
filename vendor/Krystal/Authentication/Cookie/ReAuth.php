@@ -17,33 +17,9 @@ use Krystal\Authentication\UserBag;
 
 final class ReAuth implements ReAuthInterface
 {
-	/**
-	 * Login key representing login
-	 * 
-	 * @const string
-	 */
 	const CLIENT_LOGIN_KEY = 'bl';
-
-	/**
-	 * Key representing password hash
-	 * 
-	 * @const string
-	 */
 	const CLIENT_LOGIN_PASSWORD_HASH_KEY = 'bph';
-
-	/**
-	 * Key representing secure token
-	 * 
-	 * @const string
-	 */
 	const CLIENT_TOKEN_KEY = 'btk';
-
-	/**
-	 * Lifetime for remember me functionality in seconds
-	 * By default is set to 20 years
-	 * 
-	 * @const integer
-	 */
 	const CLIENT_LIFETIME = 630720000;
 
 	/**
@@ -156,7 +132,7 @@ final class ReAuth implements ReAuthInterface
 	}
 
 	/**
-	 * Clears auth data from cookies
+	 * Clears all related data from cookies
 	 * 
 	 * @return boolean
 	 */
