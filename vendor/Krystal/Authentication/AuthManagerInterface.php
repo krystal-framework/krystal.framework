@@ -14,12 +14,49 @@ namespace Krystal\Authentication;
 interface AuthManagerInterface
 {
 	/**
-	 * Returns stored data
+	 * Stores user's id
 	 * 
-	 * @param array $key Optionally returned data can be filtered by a key
-	 * @return array|boolean False if nothing stored
+	 * @param string $id
+	 * @return \Krystal\Authentication\AuthManager
 	 */
-	//public function getData($key = null);
+	public function storeId($id);
+
+	/**
+	 * Returns user's id
+	 * 
+	 * @return string
+	 */
+	public function getId();
+
+	/**
+	 * Stores a role
+	 * 
+	 * @param string $role
+	 * @return \Krystal\Authentication\AuthManager
+	 */
+	public function storeRole($role);
+
+	/**
+	 * Returns stored role
+	 * 
+	 * @return string
+	 */
+	public function getRole();
+
+	/**
+	 * Sets whether AuthManager must be active or not
+	 * 
+	 * @param boolean $active The state
+	 * @return void
+	 */
+	public function setActive($active);
+
+	/**
+	 * Tells whether authentication is active
+	 * 
+	 * @return boolean
+	 */
+	public function isActive();
 
 	/**
 	 * Checks whether user is logged in
@@ -27,6 +64,16 @@ interface AuthManagerInterface
 	 * @return boolean
 	 */
 	public function isLoggedIn();
+
+	/**
+	 * Logins a user
+	 * 
+	 * @param string $login
+	 * @param string $passwordHash
+	 * @param boolean Whether to enable "remember me" functionality
+	 * @return void
+	 */
+	public function login($login, $passwordHash, $remember = false);
 
 	/**
 	 * Erases all credentials

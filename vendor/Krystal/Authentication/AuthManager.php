@@ -76,6 +76,17 @@ final class AuthManager implements AuthManagerInterface
 	}
 
 	/**
+	 * Defines match visitor
+	 * 
+	 * @param \Krystal\Authentication\UserAuthServiceInterface $authService
+	 * @return void
+	 */
+	public function setAuthService(UserAuthServiceInterface $authService)
+	{
+		$this->authService = $authService;
+	}
+
+	/**
 	 * Stores user's id
 	 * 
 	 * @param string $id
@@ -120,7 +131,7 @@ final class AuthManager implements AuthManagerInterface
 	}
 	
 	/**
-	 * Sets whether AuthManager is active or not
+	 * Sets whether AuthManager must be active or not
 	 * 
 	 * @param boolean $active The state
 	 * @return void
@@ -141,23 +152,25 @@ final class AuthManager implements AuthManagerInterface
 	}
 
 	/**
-	 * Defines match visitor
+	 * Stores the data into persistent storage
 	 * 
-	 * @param \Krystal\Authentication\UserAuthServiceInterface $authService
+	 * @param string $key
+	 * @param mixed $value
 	 * @return void
 	 */
-	public function setAuthService(UserAuthServiceInterface $authService)
-	{
-		$this->authService = $authService;
-	}
-
-	public function storeData($key, $value)
+	private function storeData($key, $value)
 	{
 		$this->sessionBag->set($key, $value);
-		return $this;
 	}
-	
-	public function getData($key, $default = false)
+
+	/**
+	 * Returns session data
+	 * 
+	 * @param string $key
+	 * @param mixed $default Default value to be returned in case requested key doesn't exist
+	 * @return mixed
+	 */
+	private function getData($key, $default = false)
 	{
 		if ($this->sessionBag->has($key)){
 			return $this->sessionBag->get($key);
