@@ -15,7 +15,7 @@ use Krystal\Session\SessionBag as Component;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
-final class SessionManager implements ComponentInterface
+final class SessionBag implements ComponentInterface
 {
 	/**
 	 * {@inheritDoc}
@@ -25,6 +25,7 @@ final class SessionManager implements ComponentInterface
 		$cookieBag = $container->get('request')->getCookieBag();
 
 		$sessionBag = new Component($cookieBag);
+		//@TODO Inject cookie options
 		$sessionBag->start();
 
 		return $sessionBag;
@@ -35,6 +36,6 @@ final class SessionManager implements ComponentInterface
 	 */
 	public function getName()
 	{
-		return 'sessionManager';
+		return 'sessionBag';
 	}
 }

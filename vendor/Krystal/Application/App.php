@@ -102,7 +102,7 @@ final class App implements AppInterface
 			new Component\Paginator(),
 			new Component\Db(),
 			new Component\MapperFactory(),
-			new Component\SessionManager(),
+			new Component\SessionBag(),
 			new Component\AuthManager(),
 			new Component\AppConfig(),
 			new Component\ModuleManager(),

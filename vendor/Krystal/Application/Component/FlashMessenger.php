@@ -22,7 +22,7 @@ final class FlashMessenger implements ComponentInterface
 	 */
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
-		return new Component($container->get('sessionManager'));
+		return new Component($container->get('sessionBag'));
 	}
 
 	/**

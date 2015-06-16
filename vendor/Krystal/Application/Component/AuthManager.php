@@ -25,12 +25,12 @@ final class AuthManager implements ComponentInterface
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
 		$cookieBag = $container->get('request')->getCookieBag();
-		$session = $container->get('sessionManager');
+		$sessionBag = $container->get('sessionBag');
 
 		$hashProvider = new HashProvider();
 		$reAuth = new ReAuth($cookieBag, $hashProvider);
 
-		return new Component($session, $reAuth, $hashProvider);
+		return new Component($sessionBag, $reAuth, $hashProvider);
 	}
 
 	/**

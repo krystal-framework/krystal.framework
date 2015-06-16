@@ -11,7 +11,6 @@
 
 namespace Krystal\Form;
 
-use Krystal\Session\Manager as SessionManager;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Http\PersistentStorageInterface;
 use RuntimeException;

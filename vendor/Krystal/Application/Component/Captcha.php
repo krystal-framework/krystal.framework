@@ -23,7 +23,7 @@ final class Captcha implements ComponentInterface
 	 */
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
-		$sessionBag = $container->get('sessionManager');
+		$sessionBag = $container->get('sessionBag');
 
 		if (isset($config['components']['captcha']['type'])) {
 
