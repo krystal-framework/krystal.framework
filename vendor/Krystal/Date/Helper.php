@@ -16,33 +16,10 @@ namespace Krystal\Date;
  */
 abstract class Helper
 {
-	/**
-	 * @const integer
-	 */
 	const MINUTE = 60; 
-
-	/**
-	 * @const integer
-	 */
 	const SECOND = 1;
-
-	/**
-	 * @const integer
-	 */
 	const DAY = 86400;
-
-	/**
-	 * @const integer
-	 */
 	const WEEK = 604800;
-
-	/**
-	 * @const integer
-	 */
 	const MONTH = 2592000;
-
-	/**
-	 * @const integer
-	 */
 	const YEAR = 31536000;
 }
