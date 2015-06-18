@@ -60,6 +60,18 @@ abstract class AbstractController
 	}
 
 	/**
+	 * A shortcut for grabbing services
+	 * 
+	 * @param string $module
+	 * @param string $service
+	 * @return object
+	 */
+	final protected function getService($module, $service)
+	{
+		return $this->moduleManager->getModule($module)->getService($service);
+	}
+
+	/**
 	 * Builds a form. That's just a shortcut
 	 * 
 	 * @param string $class PSR-0 compliant class name
