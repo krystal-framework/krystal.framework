@@ -705,10 +705,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	public function orderBy($type = null)
 	{
 		if ($type === null) {
-			$this->append(' ORDER BY ');
+			$target = null;
+
+		} elseif ($type instanceof RawSqlFragmentInterface) {
+			$target = $type->getFragment();
+			
 		} else {
-			$this->append(' ORDER BY '.$this->wrap($type));
+			$target = $this->wrap($type);
 		}
+
+		$this->append(' ORDER BY '.$target);
 
 		return $this;
 	}
