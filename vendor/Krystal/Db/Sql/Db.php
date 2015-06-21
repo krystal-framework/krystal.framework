@@ -753,6 +753,80 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends OR WHERE IN (..) expression
+	 * 
+	 * @param string $column
+	 * @param array $values
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereIn($column, array $values, $filter = false)
+	{
+		return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+	}
+
+	/**
+	 * Appends OR WHERE IN (..) expression
+	 * 
+	 * @param string $column
+	 * @param array $values
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereIn($column, array $values, $filter = false)
+	{
+		return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+	}
+
+	/**
+	 * Appends WHERE IN (..) expression
+	 * 
+	 * @param string $column
+	 * @param array $values
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function whereIn($column, array $values, $filter = false)
+	{
+		return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+	}
+
+	/**
+	 * Internal method to handle WHERE IN methods
+	 * 
+	 * @param string $method
+	 * @param string $column
+	 * @param array $values
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	private function whereInValues($method, $column, array $values, $filter)
+	{
+		if ($filter == true && empty($values)) {
+			return $this;
+		}
+
+		// Prepare bindings, firstly
+		$bindings = array();
+
+		foreach ($values as $value) {
+			// Generate unique placeholder
+			$placeholder = $this->toPlaceholder(uniqid('', true));
+			// Append to collection
+			$bindings[$placeholder] = $value;
+		}
+
+		call_user_func(array($this->queryBuilder, $method), $column, array_keys($bindings), $filter);
+
+		// Now bind what we have so far
+		foreach ($bindings as $key => $value) {
+			$this->bind($key, $value);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Adds where clause
 	 * 
 	 * @param string $column

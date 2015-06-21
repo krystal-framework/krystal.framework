@@ -819,24 +819,64 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends WHERE IN expression
+	 * Appends OR WHERE IN (..) expression
 	 * 
+	 * @param string $column
+	 * @param array $values
+	 * @param boolean $filter Whether to rely on filter
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	public function whereIn($key, array $set)
+	public function andWhereIn($column, array $values, $filter = false)
 	{
-		//@TODO
-		return $this;
+		return $this->whereInValues($column, $values, 'AND', $filter);
 	}
 
 	/**
-	 * @param string $key
-	 * @param array $set
+	 * Appends OR WHERE IN (..) expression
+	 * 
+	 * @param string $column
+	 * @param array $values
+	 * @param boolean $filter Whether to rely on filter
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	public function whereNotIn($key, array $set)
+	public function orWhereIn($column, array $values, $filter = false)
 	{
-		//@TODO 
+		return $this->whereInValues($column, $values, 'OR', $filter);
+	}
+
+	/**
+	 * Appends WHERE IN (..) expression
+	 * 
+	 * @param string $column
+	 * @param array $values
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function whereIn($column, array $values, $filter = false)
+	{
+		return $this->whereInValues($column, $values, null, $filter);
+	}
+
+	/**
+	 * Internal method to build WHERE IN ()
+	 * 
+	 * @param string $key
+	 * @param array $values
+	 * @param string $operator Optional operator to be prep-ended before WHERE clause
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	private function whereInValues($column, array $values, $operator = null, $filter)
+	{
+		if ($filter == true && empty($values)) {
+			return $this;
+		}
+
+		if ($operator !== null) {
+			$operator = sprintf(' %s', $operator);
+		}
+
+		$this->append($operator.sprintf(' WHERE IN (%s)', implode(', ', $values)));
 		return $this;
 	}
 
