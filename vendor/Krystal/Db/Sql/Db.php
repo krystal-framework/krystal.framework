@@ -195,7 +195,7 @@ final class Db implements DbInterface
 	 * Binds a value
 	 * 
 	 * @param string $placeholder
-	 * @oaram string $value
+	 * @param string $value
 	 * @return void
 	 */
 	private function bind($placeholder, $value)
@@ -219,7 +219,7 @@ final class Db implements DbInterface
 	 * 
 	 * @param string $query
 	 * @param array $bindings
-	 * @return \Krystal\Db\Sql
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function raw($query, array $bindings = array())
 	{
