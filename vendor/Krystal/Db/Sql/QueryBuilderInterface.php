@@ -276,6 +276,46 @@ interface QueryBuilderInterface
 	public function rand();
 
 	/**
+	 * Appends INNER JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function innerJoin($table, $left, $right);
+
+	/**
+	 * Appends LEFT JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function leftJoin($table, $left, $right);
+
+	/**
+	 * Appends RIGHT JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function rightJoin($table, $left, $right);
+
+	/**
+	 * Append FULL OUTER JOIN
+	 *
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function fullJoin($table, $left, $right);
+
+	/**
 	 * Appends ORDER BY expression
 	 * 
 	 * @param string|array $type

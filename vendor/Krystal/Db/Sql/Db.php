@@ -546,7 +546,63 @@ final class Db implements DbInterface
 	}
 
 	/**
-	 * Adds a constraint to q query
+	 * Appends INNER JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function innerJoin($table, $left, $right)
+	{
+		$this->queryBuilder->innerJoin($table, $left, $right);
+		return $this;
+	}
+
+	/**
+	 * Appends LEFT JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function leftJoin($table, $left, $right)
+	{
+		$this->queryBuilder->leftJoin($table, $left, $right);
+		return $this;
+	}
+
+	/**
+	 * Appends RIGHT JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function rightJoin($table, $left, $right)
+	{
+		$this->queryBuilder->rightJoin($table, $left, $right);
+		return $this;
+	}
+
+	/**
+	 * Append FULL OUTER JOIN
+	 *
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function fullJoin($table, $left, $right)
+	{
+		$this->queryBuilder->fullJoin($table, $left, $right);
+		return $this;
+	}
+
+	/**
+	 * Adds a constraint to the query
 	 * 
 	 * @param string $method
 	 * @param string $column

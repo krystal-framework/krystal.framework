@@ -685,6 +685,72 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		$this->append(' RAND() ');
 		return $this;
 	}
+
+	/**
+	 * Appends JOIN statement
+	 * 
+	 * @param string $type JOIN type
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 */
+	private function join($type, $table, $left, $right)
+	{
+		$this->append(sprintf(' %s JOIN %s ON %s=%s', $type, $table, $left, $right));
+		return $this;
+	}
+
+	/**
+	 * Appends INNER JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function innerJoin($table, $left, $right)
+	{
+		return $this->join('INNER', $table, $left, $right);
+	}
+
+	/**
+	 * Appends LEFT JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function leftJoin($table, $left, $right)
+	{
+		return $this->join('LEFT', $table, $left, $right);
+	}
+
+	/**
+	 * Appends RIGHT JOIN
+	 * 
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function rightJoin($table, $left, $right)
+	{
+		return $this->join('RIGHT', $table, $left, $right);
+	}
+
+	/**
+	 * Append FULL OUTER JOIN
+	 *
+	 * @param string $table Right table (second)
+	 * @param string $left A column from the left table (first)
+	 * @param string $right A column from the right table
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function fullJoin($table, $left, $right)
+	{
+		return $this->join('FULL OUTER', $table, $left, $right);
+	}
 	
 	public function having()
 	{
