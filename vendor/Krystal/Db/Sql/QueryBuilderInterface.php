@@ -316,6 +316,15 @@ interface QueryBuilderInterface
 	public function fullJoin($table, $left, $right);
 
 	/**
+	 * Appends GROUP BY statement
+	 * 
+	 * @param string|array $target
+	 * @throws \InvalidArgumentException If $target isn't either a string or an array
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function groupBy($target);
+
+	/**
 	 * Appends ORDER BY expression
 	 * 
 	 * @param string|array|\Krystal\Db\Sql\RawSqlFragmentInterface $type

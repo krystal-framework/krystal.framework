@@ -382,6 +382,19 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends GROUP BY statement
+	 * 
+	 * @param string|array $target
+	 * @throws \InvalidArgumentException If $target isn't either a string or an array
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function groupBy($target)
+	{
+		$this->queryBuilder->groupBy($target);
+		return $this;
+	}
+
+	/**
 	 * Appends ORDER BY
 	 * 
 	 * @param string|array|\Krystal\Db\Sql\RawSqlFragmentInterface $type

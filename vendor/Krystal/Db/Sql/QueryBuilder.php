@@ -757,9 +757,31 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		//@TODO
 	}
 
-	public function groupBy()
+	/**
+	 * Appends GROUP BY statement
+	 * 
+	 * @param string|array $target
+	 * @throws \InvalidArgumentException If $target isn't either a string or an array
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function groupBy($target)
 	{
-		//@TODO
+		$columns = null;
+
+		if (is_string($target)) {
+			$columns = $target;
+
+		} elseif (is_array($target)) {
+			$columns = implode(', ', $target);
+
+		} else {
+			throw new InvalidArgumentException(sprintf(
+				'groupBy() accepts only an array of columns or a plain column name. You supplied "%s"', gettype($target)
+			));
+		}
+
+		$this->append(sprintf(' GROUP BY %s ', $columns));
+		return $this;
 	}
 
 	/**
