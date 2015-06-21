@@ -14,6 +14,15 @@ namespace Krystal\Db\Sql;
 interface QueryObjectInterface
 {
 	/**
+	 * Guesses count query
+	 * 
+	 * @param string $column Column to be selected
+	 * @param string $alias
+	 * @return string Guessed query
+	 */
+	public function guessCountQuery($column, $alias);
+
+	/**
 	 * Sets query raw string
 	 * 
 	 * @param string $queryString

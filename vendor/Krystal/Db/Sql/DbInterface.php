@@ -14,6 +14,16 @@ namespace Krystal\Db\Sql;
 interface DbInterface extends QueryBuilderInterface
 {
 	/**
+	 * Automatically paginates result-set
+	 * 
+	 * @param integer $page
+	 * @param integer $itemsPerPage
+	 * @param string $column Column to be selected when counting
+	 * @return \Krystal\Db\QueryBuilder
+	 */
+	public function paginate($page, $itemsPerPage, $column = '1');
+
+	/**
 	 * Returns PDO instance
 	 * 
 	 * @return \PDO
