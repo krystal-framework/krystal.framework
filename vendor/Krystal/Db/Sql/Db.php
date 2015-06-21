@@ -944,7 +944,7 @@ final class Db implements DbInterface
 	{
 		return $this->andWhere($column, 'LIKE', $value, $filter);
 	}
-	
+
 	/**
 	 * Appends OR WHERE LIKE condition
 	 * 
@@ -957,12 +957,20 @@ final class Db implements DbInterface
 	{
 		return $this->orWhere($column, 'LIKE', $value, $filter);
 	}
-	
+
+	/**
+	 * Appends WHERE LIKE condition
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
 	public function whereLike($column, $value, $filter = false)
 	{
 		return $this->where($column, 'LIKE', $value, $filter);
 	}
-	
+
 	/**
 	 * Appends AND for where clause with equality operator
 	 * 
