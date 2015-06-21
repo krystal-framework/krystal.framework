@@ -307,7 +307,7 @@ final class Db implements DbInterface
 		$this->queryBuilder->rand();
 		return $this;
 	}
-	
+
 	/**
 	 * Appends DESC
 	 * 
@@ -918,7 +918,7 @@ final class Db implements DbInterface
 	{
 		return $this->where($column, '<', $value, $filter);
 	}
-	
+
 	/**
 	 * Appends WHERE clause with "less than" operator
 	 * 
@@ -931,7 +931,7 @@ final class Db implements DbInterface
 	{
 		return $this->orWhere($column, '<', $value, $filter);
 	}
-	
+
 	/**
 	 * Appends WHERE with "like" operator
 	 * 
