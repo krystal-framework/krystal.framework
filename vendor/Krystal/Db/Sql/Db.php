@@ -384,7 +384,7 @@ final class Db implements DbInterface
 	/**
 	 * Appends ORDER BY
 	 * 
-	 * @param string $type
+	 * @param string|array|\Krystal\Db\Sql\RawSqlFragmentInterface $type
 	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function orderBy($type = null)

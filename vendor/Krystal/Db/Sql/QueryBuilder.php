@@ -765,7 +765,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	/**
 	 * Appends ORDER BY expression
 	 * 
-	 * @param string|array $type
+	 * @param string|array|\Krystal\Db\Sql\RawSqlFragmentInterface $type
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */ 
 	public function orderBy($type = null)
