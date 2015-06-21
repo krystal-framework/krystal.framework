@@ -48,11 +48,14 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	/**
 	 * Guesses count query
 	 * 
+	 * @param string $column Column to be selected
+	 * @param string $alias
 	 * @return string Guessed query
 	 */
-	public function guessCountQuery()
+	public function guessCountQuery($column, $alias)
 	{
-		return str_replace($this->selected, 'COUNT(1) AS `count`', $this->getQueryString());
+		$target = sprintf('COUNT(%s) AS `%s`', $column, $alias);
+		return str_replace($this->selected, $target, $this->getQueryString());
 	}
 
 	/**

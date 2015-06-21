@@ -127,28 +127,6 @@ final class Db implements DbInterface
 	}
 
 	/**
-	 * Returns count for pagination
-	 * 
-	 * @return integer
-	 */
-	private function getCount()
-	{
-		// Save initial state
-		$original = clone $this->queryBuilder;
-		$bindings = $this->bindings;
-
-		// Set guessed query and execute it
-		$this->queryBuilder->setQueryString($this->queryBuilder->guessCountQuery());
-		$count = $this->query('count');
-
-		// And finally restore initial state
-		$this->queryBuilder = $original;
-		$this->bindings = $bindings;
-
-		return $count;
-	}
-
-	/**
 	 * Logs a query
 	 * 
 	 * @return void
@@ -170,15 +148,41 @@ final class Db implements DbInterface
 	}
 
 	/**
-	 * Automatically paginates result
+	 * Returns count for pagination
+	 * 
+	 * @param string $column Column to be selected when counting
+	 * @return integer
+	 */
+	private function getCount($column)
+	{
+		$alias = 'count';
+
+		// Save initial state
+		$original = clone $this->queryBuilder;
+		$bindings = $this->bindings;
+
+		// Set guessed query and execute it
+		$this->queryBuilder->setQueryString($this->queryBuilder->guessCountQuery($column, $alias));
+		$count = $this->query($alias);
+
+		// And finally restore initial state
+		$this->queryBuilder = $original;
+		$this->bindings = $bindings;
+
+		return $count;
+	}
+
+	/**
+	 * Automatically paginates result-set
 	 * 
 	 * @param integer $page
 	 * @param integer $itemsPerPage
+	 * @param string $column Column to be selected when counting
 	 * @return \Krystal\Db\QueryBuilder
 	 */
-	public function paginate($page, $itemsPerPage)
+	public function paginate($page, $itemsPerPage, $column = '1')
 	{
-		$count = $this->getCount();
+		$count = $this->getCount($column);
 
 		// Alter paginator's state
 		$this->paginator->tweak($count, $itemsPerPage, $page);
