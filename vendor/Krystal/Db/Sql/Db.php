@@ -615,6 +615,120 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends OR WHERE with BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function orWhereBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between(__FUNCTION__, $column, $a, $b, $filter);
+	}
+
+	/**
+	 * Appends AND WHERE with BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function andWhereBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between(__FUNCTION__, $column, $a, $b, $filter);
+	}
+
+	/**
+	 * Appends WHERE with BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function whereBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between(__FUNCTION__, $column, $a, $b, $filter);
+	}
+
+	/**
+	 * Appends AND WHERE with NOT BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function andWhereNotBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between(__FUNCTION__, $column, $a, $b, $filter);
+	}
+
+	/**
+	 * Appends AND WHERE with NOT BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function orWhereNotBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between(__FUNCTION__, $column, $a, $b, $filter);
+	}
+
+	/**
+	 * Appends WHERE with NOT BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function whereNotBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between(__FUNCTION__, $column, $a, $b, $filter);
+	}
+
+	/**
+	 * Adds WHERE with BETWEEN operator 
+	 * 
+	 * @param string $method Method to be called from query builder
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	private function between($method, $column, $a, $b, $filter)
+	{
+		if ($filter == true && (empty($a) || empty($b))) {
+			return $this;
+		}
+
+		// When doing betweens, unique placeholders come in handy
+		$x = $this->toPlaceholder(uniqid('', true));
+		$y = $this->toPlaceholder(uniqid('', true));
+
+		// Prepare query string
+		call_user_func(array($this->queryBuilder, $method), $column, $x, $y, $filter);
+
+		// And finally bind values
+		$this->bind($x, $a);
+		$this->bind($y, $b);
+
+		return $this;
+	}
+
+	/**
 	 * Adds a constraint to the query
 	 * 
 	 * @param string $method
@@ -622,6 +736,7 @@ final class Db implements DbInterface
 	 * @param string $operator
 	 * @param string $value
 	 * @param boolean $filter Whether to filter by empty value
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	private function constraint($method, $column, $operator, $value, $filter)
 	{

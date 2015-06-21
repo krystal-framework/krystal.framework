@@ -841,21 +841,120 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Appends WHERE with BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $not Whether it must be NOT BETWEEN or not
+	 * @param string $operator Optional operator to be prep-ended before WHERE clause
+	 * @param boolean $filter Whether to rely on filter
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	public function whereBetween($key, array $pair)
+	private function between($column, $a, $b, $not = false, $operator = null, $filter = false)
 	{
-		//@TODO
+		if ($filter == true && (empty($a) || empty($b))) {
+			return $this;
+		}
+
+		if ($operator !== null) {
+			// A space before the operator is preferred
+			$operator = sprintf(' %s', $operator);
+		}
+
+		// Handle NOT prefix
+		if ($not === true) {
+			$not = 'NOT';
+		} else {
+			$not = '';
+		}
+
+		$this->append($operator.sprintf(' WHERE `%s` %s BETWEEN %s AND %s ', $column, $not, $a, $b));
 		return $this;
 	}
 
 	/**
+	 * Appends OR WHERE with BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	public function whereNotBetween($key, array $pair)
+	public function orWhereBetween($column, $a, $b, $filter = false)
 	{
-		//@TODO
-		return $this;
+		return $this->between($column, $a, $b, false, 'OR');
+	}
+
+	/**
+	 * Appends AND WHERE with BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between($column, $a, $b, false, 'AND');
+	}
+
+	/**
+	 * Appends WHERE with BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function whereBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between($column, $a, $b);
+	}
+
+	/**
+	 * Appends AND WHERE with NOT BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereNotBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between($column, $a, $b, true, 'AND');
+	}
+
+	/**
+	 * Appends AND WHERE with NOT BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereNotBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between($column, $a, $b, true, 'OR');
+	}
+
+	/**
+	 * Appends WHERE with NOT BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function whereNotBetween($column, $a, $b, $filter = false)
+	{
+		return $this->between($column, $a, $b, true);
 	}
 
 	/**

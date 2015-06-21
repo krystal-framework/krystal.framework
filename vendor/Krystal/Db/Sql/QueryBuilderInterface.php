@@ -333,6 +333,72 @@ interface QueryBuilderInterface
 	public function orderBy($type = null);
 
 	/**
+	 * Appends OR WHERE with BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereBetween($column, $a, $b, $filter = false);
+
+	/**
+	 * Appends AND WHERE with BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereBetween($column, $a, $b, $filter = false);
+
+	/**
+	 * Appends WHERE with BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function whereBetween($column, $a, $b, $filter = false);
+
+	/**
+	 * Appends AND WHERE with NOT BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereNotBetween($column, $a, $b, $filter = false);
+
+	/**
+	 * Appends AND WHERE with NOT BETWEEN operator
+	 * 
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereNotBetween($column, $a, $b, $filter = false);
+
+	/**
+	 * Appends WHERE with NOT BETWEEN operator
+	 *
+	 * @param string $column
+	 * @param string $a First value
+	 * @param string $b Second value
+	 * @param boolean $filter Whether to rely on filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function whereNotBetween($column, $a, $b, $filter = false);
+
+	/**
 	 * Appends DESC condition
 	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder
