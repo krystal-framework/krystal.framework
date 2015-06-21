@@ -1,8 +1,7 @@
 Things need to be done
 ======================
 
- * More connectors
- * increment\decrements
- * Where IN - Implement its support
+ * Need more connectors
+ * increments\decrements
  * Relations - Implement very common types at least
- * QB for Migrations
+ * Methods in QA for migrations
