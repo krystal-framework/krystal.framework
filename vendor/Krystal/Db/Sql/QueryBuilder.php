@@ -178,7 +178,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		} else {
 			$ignore = '';
 		}
-		
+
 		// Build and append query we made
 		$this->append(sprintf('INSERT %s INTO `%s` (%s) VALUES (%s)', $ignore, $table, implode(', ', $keys), implode(', ', $values)));
 		return $this;
@@ -751,7 +751,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	{
 		return $this->join('FULL OUTER', $table, $left, $right);
 	}
-	
+
 	public function having()
 	{
 		//@TODO
@@ -797,7 +797,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 
 		} elseif ($type instanceof RawSqlFragmentInterface) {
 			$target = $type->getFragment();
-			
+
 		} else {
 			$target = $this->wrap($type);
 		}
@@ -817,7 +817,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		$this->append(' DESC ');
 		return $this;
 	}
-	
+
 	/**
 	 * Appends WHERE IN expression
 	 * 
@@ -1023,7 +1023,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		$this->append(sprintf(' AS %s', $this->wrap($alias)));
 		return $this;
 	}
-	
+
 	/**
 	 * Appends TRUNCATE statement
 	 * 
