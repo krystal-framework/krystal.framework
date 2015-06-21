@@ -50,12 +50,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 * 
 	 * @param string $column Column to be selected
 	 * @param string $alias
-	 * @return string Guessed query
+	 * @return string Guessed count query
 	 */
 	public function guessCountQuery($column, $alias)
 	{
-		$target = sprintf('COUNT(%s) AS `%s`', $column, $alias);
-		return str_replace($this->selected, $target, $this->getQueryString());
+		return str_replace($this->selected, $this->getFunction('COUNT', $column, $alias), $this->getQueryString());
 	}
 
 	/**
@@ -69,6 +68,23 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Generates SQL function fragment
+	 * 
+	 * @param string $func Function name
+	 * @param string $column Column name to be passed as an argument to a function
+	 * @param string $alias 
+	 * @return string
+	 */
+	private function getFunction($func, $column, $alias = null)
+	{
+		if (is_null($alias)) {
+			return sprintf(' %s(%s) ', $func, $this->wrap($column));
+		} else {
+			return sprintf(' %s(%s) AS %s ', $func, $this->wrap($column), $this->wrap($alias));
+		}
+	}
+
+	/**
 	 * Appends SQL function
 	 * 
 	 * @param string $func Function name
@@ -78,12 +94,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	private function func($func, $column, $alias = null)
 	{
-		if (is_null($alias)) {
-			$this->append(sprintf(' %s(%s) ', $func, $this->wrap($column)));
-		} else {
-			$this->append(sprintf(' %s(%s) AS %s ', $func, $this->wrap($column), $this->wrap($alias)));
-		}
-
+		$this->append($this->getFunction($func, $column, $alias));
 		return $this;
 	}
 
@@ -119,6 +130,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	private function wrap($target)
 	{
+		// Don't wrap numeric values
+		if (is_numeric($target)) {
+			return $target;
+		}
+
 		$wrapper = function($column) {
 			return sprintf('`%s`', $column);
 		};
