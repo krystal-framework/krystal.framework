@@ -60,6 +60,17 @@ abstract class AbstractController
 	}
 
 	/**
+	 * Returns a service of current module
+	 * 
+	 * @param string $service
+	 * @return object
+	 */
+	final protected function getModuleService($service)
+	{
+		return $this->getService($this->moduleName, $service);
+	}
+
+	/**
 	 * A shortcut for grabbing services
 	 * 
 	 * @param string $module
