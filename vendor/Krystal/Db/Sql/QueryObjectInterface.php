@@ -14,6 +14,15 @@ namespace Krystal\Db\Sql;
 interface QueryObjectInterface
 {
 	/**
+	 * Checks whether it's worth filtering
+	 * 
+	 * @param boolean $state
+	 * @param string|array $target
+	 * @return boolean
+	 */
+	public function isFilterable($state, $target);
+
+	/**
 	 * Guesses count query
 	 * 
 	 * @param string $column Column to be selected

@@ -714,13 +714,13 @@ final class Db implements DbInterface
 	 */
 	private function between($method, $column, $a, $b, $filter)
 	{
-		if ($filter == true && (empty($a) || empty($b))) {
+		if (!$this->queryBuilder->isFilterable($filter, array($a, $b))) {
 			return $this;
 		}
 
 		// When doing betweens, unique placeholders come in handy
-		$x = $this->toPlaceholder(uniqid('', true));
-		$y = $this->toPlaceholder(uniqid('', true));
+		$x = $this->toPlaceholder(uniqid());
+		$y = $this->toPlaceholder(uniqid());
 
 		// Prepare query string
 		call_user_func(array($this->queryBuilder, $method), $column, $x, $y, $filter);
@@ -744,7 +744,7 @@ final class Db implements DbInterface
 	 */
 	private function constraint($method, $column, $operator, $value, $filter)
 	{
-		if ($filter == true && empty($value)) {
+		if (!$this->queryBuilder->isFilterable($filter, $value)) {
 			return $this;
 		}
 
@@ -806,7 +806,7 @@ final class Db implements DbInterface
 	 */
 	private function whereInValues($method, $column, array $values, $filter)
 	{
-		if ($filter == true && empty($values)) {
+		if (!$this->queryBuilder->isFilterable($filter, $values)) {
 			return $this;
 		}
 
@@ -815,7 +815,7 @@ final class Db implements DbInterface
 
 		foreach ($values as $value) {
 			// Generate unique placeholder
-			$placeholder = $this->toPlaceholder(uniqid('', true));
+			$placeholder = $this->toPlaceholder(uniqid());
 			// Append to collection
 			$bindings[$placeholder] = $value;
 		}

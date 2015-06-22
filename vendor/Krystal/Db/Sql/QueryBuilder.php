@@ -68,6 +68,50 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Checks whether it's worth filtering
+	 * 
+	 * @param boolean $state
+	 * @param string|array $target
+	 * @return boolean
+	 */
+	public function isFilterable($state, $target)
+	{
+		$result = false;
+
+		if ($state === false) {
+			$result = true;
+		} else {
+
+			if (is_string($target) && $target != '0' && !empty($target)) {
+				$result = true;
+			}
+
+			if (is_array($target)) {
+				// If empty array is passed, that means it's time to stop right here
+				if (empty($target)) {
+					$result = false;
+				} else {
+					// Otherwise go on
+					$count = 0;
+
+					foreach ($target as $value) {
+						if (!empty($value)) {
+							$count++;
+						}
+					}
+
+					// All values must not be empty
+					if ($count == count($target)) {
+						$result = true;
+					}
+				}
+			}
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Generates SQL function fragment
 	 * 
 	 * @param string $func Function name
@@ -466,7 +510,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function where($column, $operator, $value, $filter = false)
 	{
-		if ($filter === true && empty($value)) {
+		if (!$this->isFilterable($filter, $value)) {
 			return $this;
 		}
 
@@ -485,7 +529,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function andWhere($key, $operator, $value, $filter = false)
 	{
-		if ($filter === true && empty($value)) {
+		if (!$this->isFilterable($filter, $value)) {
 			return $this;
 		}
 
@@ -504,7 +548,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function orWhere($key, $operator, $value, $filter = false)
 	{
-		if ($filter === true && empty($value)) {
+		if (!$this->isFilterable($filter, $value)) {
 			return $this;
 		}
 
@@ -887,7 +931,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	private function whereInValues($column, array $values, $operator = null, $filter)
 	{
-		if ($filter == true && empty($values)) {
+		if (!$this->isFilterable($filter, $values)) {
 			return $this;
 		}
 
@@ -895,7 +939,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 			$operator = sprintf(' %s', $operator);
 		}
 
-		$this->append($operator.sprintf(' WHERE IN (%s)', implode(', ', $values)));
+		$this->append($operator.sprintf(' WHERE `%s` IN (%s)', $column, implode(', ', $values)));
 		return $this;
 	}
 
@@ -912,7 +956,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	private function between($column, $a, $b, $not = false, $operator = null, $filter = false)
 	{
-		if ($filter == true && (empty($a) || empty($b))) {
+		if (!$this->isFilterable($filter, array($a, $b))) {
 			return $this;
 		}
 
