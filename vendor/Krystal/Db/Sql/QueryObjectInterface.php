@@ -14,6 +14,14 @@ namespace Krystal\Db\Sql;
 interface QueryObjectInterface
 {
 	/**
+	 * Prepares a wildcard
+	 * 
+	 * @param string $value
+	 * @return string
+	 */
+	public function prepareWildcard($value);
+
+	/**
 	 * Checks whether it's worth filtering
 	 * 
 	 * @param boolean $state

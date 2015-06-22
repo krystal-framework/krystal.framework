@@ -930,6 +930,7 @@ final class Db implements DbInterface
 	 */
 	public function andWhereLike($column, $value, $filter = false)
 	{
+		$value = $this->queryBuilder->prepareWildcard($value);
 		return $this->andWhere($column, 'LIKE', $value, $filter);
 	}
 
@@ -943,6 +944,7 @@ final class Db implements DbInterface
 	 */
 	public function orWhereLike($column, $value, $filter = false)
 	{
+		$value = $this->queryBuilder->prepareWildcard($value);
 		return $this->orWhere($column, 'LIKE', $value, $filter);
 	}
 
@@ -956,6 +958,7 @@ final class Db implements DbInterface
 	 */
 	public function whereLike($column, $value, $filter = false)
 	{
+		$value = $this->queryBuilder->prepareWildcard($value);
 		return $this->where($column, 'LIKE', $value, $filter);
 	}
 
