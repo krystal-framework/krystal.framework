@@ -882,32 +882,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends OR WHERE IN (..) expression
-	 * 
-	 * @param string $column
-	 * @param array $values
-	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function andWhereIn($column, array $values, $filter = false)
-	{
-		return $this->whereInValues($column, $values, 'AND', $filter);
-	}
-
-	/**
-	 * Appends OR WHERE IN (..) expression
-	 * 
-	 * @param string $column
-	 * @param array $values
-	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function orWhereIn($column, array $values, $filter = false)
-	{
-		return $this->whereInValues($column, $values, 'OR', $filter);
-	}
-
-	/**
 	 * Appends WHERE IN (..) expression
 	 * 
 	 * @param string $column
@@ -917,7 +891,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function whereIn($column, array $values, $filter = false)
 	{
-		return $this->whereInValues($column, $values, null, $filter);
+		return $this->whereInValues($column, $values, $filter);
 	}
 
 	/**
@@ -925,21 +899,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 * 
 	 * @param string $key
 	 * @param array $values
-	 * @param string $operator Optional operator to be prep-ended before WHERE clause
 	 * @param boolean $filter Whether to rely on filter
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	private function whereInValues($column, array $values, $operator = null, $filter)
+	private function whereInValues($column, array $values, $filter)
 	{
 		if (!$this->isFilterable($filter, $values)) {
 			return $this;
 		}
 
-		if ($operator !== null) {
-			$operator = sprintf(' %s', $operator);
-		}
-
-		$this->append($operator.sprintf(' WHERE `%s` IN (%s)', $column, implode(', ', $values)));
+		$this->append(sprintf(' WHERE `%s` IN (%s)', $column, implode(', ', $values)));
 		return $this;
 	}
 

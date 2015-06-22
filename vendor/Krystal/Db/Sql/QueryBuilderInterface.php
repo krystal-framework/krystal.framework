@@ -269,26 +269,6 @@ interface QueryBuilderInterface
 	public function orWhereLike($column, $value, $filter = false);
 
 	/**
-	 * Appends OR WHERE IN (..) expression
-	 * 
-	 * @param string $column
-	 * @param array $values
-	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function andWhereIn($column, array $values, $filter = false);
-
-	/**
-	 * Appends OR WHERE IN (..) expression
-	 * 
-	 * @param string $column
-	 * @param array $values
-	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function orWhereIn($column, array $values, $filter = false);
-
-	/**
 	 * Appends WHERE IN (..) expression
 	 * 
 	 * @param string $column

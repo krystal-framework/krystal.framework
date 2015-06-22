@@ -148,6 +148,16 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Returns unique placeholder
+	 * 
+	 * @return string
+	 */
+	private function getUniqPlaceholder()
+	{
+		return $this->toPlaceholder(uniqid());
+	}
+
+	/**
 	 * Returns count for pagination
 	 * 
 	 * @param string $column Column to be selected when counting
@@ -719,8 +729,8 @@ final class Db implements DbInterface
 		}
 
 		// When doing betweens, unique placeholders come in handy
-		$x = $this->toPlaceholder(uniqid());
-		$y = $this->toPlaceholder(uniqid());
+		$x = $this->getUniqPlaceholder();
+		$y = $this->getUniqPlaceholder();
 
 		// Prepare query string
 		call_user_func(array($this->queryBuilder, $method), $column, $x, $y, $filter);
@@ -757,32 +767,6 @@ final class Db implements DbInterface
 	}
 
 	/**
-	 * Appends OR WHERE IN (..) expression
-	 * 
-	 * @param string $column
-	 * @param array $values
-	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function andWhereIn($column, array $values, $filter = false)
-	{
-		return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
-	}
-
-	/**
-	 * Appends OR WHERE IN (..) expression
-	 * 
-	 * @param string $column
-	 * @param array $values
-	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function orWhereIn($column, array $values, $filter = false)
-	{
-		return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
-	}
-
-	/**
 	 * Appends WHERE IN (..) expression
 	 * 
 	 * @param string $column
@@ -815,7 +799,7 @@ final class Db implements DbInterface
 
 		foreach ($values as $value) {
 			// Generate unique placeholder
-			$placeholder = $this->toPlaceholder(uniqid());
+			$placeholder = $this->getUniqPlaceholder();
 			// Append to collection
 			$bindings[$placeholder] = $value;
 		}
