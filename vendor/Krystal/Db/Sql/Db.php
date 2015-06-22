@@ -369,6 +369,8 @@ final class Db implements DbInterface
 	 */
 	public function increment($table, $column, $step = 1)
 	{
+		$this->queryBuilder->increment($table, $column, $step);
+		return $this;
 	}
 
 	/**
@@ -381,6 +383,8 @@ final class Db implements DbInterface
 	 */
 	public function decrement($table, $column, $step = 1)
 	{
+		$this->queryBuilder->decrement($table, $column, $step);
+		return $this;
 	}
 
 	/**

@@ -297,6 +297,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function increment($table, $column, $step = 1)
 	{
+		return $this->update($table, array($column => $column.' + '.$step));
 	}
 
 	/**
@@ -309,6 +310,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function decrement($table, $column, $step = 1)
 	{
+		return $this->update($table, array($column => $column.' - '.$step));
 	}
 
 	/**
