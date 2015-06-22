@@ -110,6 +110,7 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Prepared raw data before a command is executed
 	 * 
 	 * @param array $data
 	 * @return array
