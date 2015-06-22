@@ -270,14 +270,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	/**
 	 * Builds UPDATE query
 	 * 
+	 * @param string $table
+	 * @param array $data Data to be updated
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
 	public function update($table, array $data)
 	{
 		$conditions = array();
 
-		// Prepare conditions for SET
 		foreach ($data as $key => $value) {
+			// Wrap column names into back-ticks
 			$conditions[] = sprintf('`%s` = %s', $key, $value);
 		}
 
