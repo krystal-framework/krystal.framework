@@ -835,9 +835,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		return $this->join('FULL OUTER', $table, $left, $right);
 	}
 
-	public function having()
+	/**
+	 * Appends HAVING() clause
+	 * 
+	 * @param string $function Aggregate function
+	 * @param string $column
+	 * @param string $operator
+	 * @param string $value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function having($function, $column, $operator, $value)
 	{
-		//@TODO
+		$this->append(sprintf(' HAVING %s(%s) %s %s ', $function, $column, $operator, $value));
+		return $this;
 	}
 
 	/**

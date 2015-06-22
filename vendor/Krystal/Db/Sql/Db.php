@@ -629,6 +629,25 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends HAVING() clause
+	 * 
+	 * @param string $function Aggregate function
+	 * @param string $column
+	 * @param string $operator
+	 * @param string $value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function having($function, $column, $operator, $value)
+	{
+		$placeholder = $this->getUniqPlaceholder();
+
+		$this->queryBuilder->having($function, $column, $operator, $placeholder);
+		$this->bind($placeholder, $value);
+
+		return $this;
+	}
+
+	/**
 	 * Appends OR WHERE with BETWEEN operator
 	 *
 	 * @param string $column

@@ -326,6 +326,17 @@ interface QueryBuilderInterface
 	public function fullJoin($table, $left, $right);
 
 	/**
+	 * Appends HAVING() clause
+	 * 
+	 * @param string $function Aggregate function
+	 * @param string $column
+	 * @param string $operator
+	 * @param string $value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function having($function, $column, $operator, $value);
+
+	/**
 	 * Appends GROUP BY statement
 	 * 
 	 * @param string|array $target
