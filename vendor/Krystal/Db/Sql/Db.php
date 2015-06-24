@@ -248,7 +248,7 @@ final class Db implements DbInterface
 	 * Queries for all result-set
 	 * 
 	 * @param string $column Optionally can be filtered by a column
-	 * @return array
+	 * @return mixed
 	 */
 	public function queryAll($column = null)
 	{
@@ -266,7 +266,12 @@ final class Db implements DbInterface
 			$result = array();
 
 			foreach ($resultset as $row) {
-				$result[] = $row[$column];
+
+				if (isset($row[$column])) {
+					$result[] = $row[$column];
+				} else {
+					return false;
+				}
 			}
 
 			return $result;
@@ -277,7 +282,7 @@ final class Db implements DbInterface
 	 * Queries for a single result-set
 	 * 
 	 * @param string $column Optionally can be filtered by a column
-	 * @return array|string
+	 * @return mixed
 	 */
 	public function query($column = null)
 	{
@@ -290,7 +295,13 @@ final class Db implements DbInterface
 		$result = $stmt->fetch();
 
 		if ($column !== null) {
-			return $result[$column];
+
+			if (isset($result[$column])) {
+				return $result[$column];
+			} else {
+				return false;
+			}
+
 		} else {
 			return $result;
 		}
