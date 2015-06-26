@@ -77,7 +77,7 @@ abstract class AbstractMapper
 	final protected function deleteByPk($pk)
 	{
 		$this->validateShortcutData();
-		return $this->deleteByColumn(static::getTableName(), $this->getPk(), $pk);
+		return $this->deleteByColumn($this->getPk(), $pk);
 	}
 
 	/**
@@ -89,7 +89,7 @@ abstract class AbstractMapper
 	final protected function findByPk($pk)
 	{
 		$this->validateShortcutData();
-		return $this->fetchByColumn(static::getTableName(), $this->getPk(), $pk);
+		return $this->fetchByColumn($this->getPk(), $pk);
 	}
 
 	/**
@@ -102,11 +102,22 @@ abstract class AbstractMapper
 	final protected function findColumnByPk($id, $column)
 	{
 		$this->validateShortcutData();
+		return $this->fetchOneColumn($column, $this->getPk(), $id);
+	}
+	
+	/**
+	 * Returns last primary key
+	 * 
+	 * @return integer
+	 */
+	final protected function getLastPk()
+	{
+		$this->validateShortcutData();
 
-		return $this->db->select($column)
-						->from($this->table)
-						->whereEquals($this->getPk(), $id)
-						->query($column);
+		return $this->db->select()
+						->max($this->getPk(), 'last')
+						->from(static::getTableName())
+						->query('last');
 	}
 
 	/**
@@ -155,33 +166,70 @@ abstract class AbstractMapper
 	/**
 	 * Fetches one column
 	 * 
-	 * @param string $table
 	 * @param string $column
 	 * @param string $key
 	 * @param string $value
 	 * @return array
 	 */
-	final protected function fetchOneColumn($table, $column, $key, $value)
+	final protected function fetchOneColumn($column, $key, $value)
 	{
+		$this->validateShortcutData();
+
 		return $this->db->select($column)
-						->from($table)
+						->from(static::getTableName())
 						->whereEquals($key, $value)
 						->query($column);
 	}
 
 	/**
+	 * Fetches columns. Unlike fetchOneColumn() it queries for all
+	 * 
+	 * @param string $column
+	 * @param string $key
+	 * @param string $value
+	 * @return array
+	 */
+	final protected function fetchColumns($column, $key, $value)
+	{
+		$this->validateShortcutData();
+
+		return $this->db->select($column)
+						->from(static::getTableName())
+						->whereEquals($key, $value)
+						->queryAll($column);
+	}
+
+	/**
+	 * Finds all records filtering by column's value
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @return array
+	 */
+	final protected function findAllByColumn($column, $value)
+	{
+		$this->validateShortcutData();
+
+		return $this->db->select('*')
+						->from(static::getTableName())
+						->whereEquals($column, $value)
+						->queryAll();
+	}
+
+	/**
 	 * Fetches all row data by column's value
 	 * 
-	 * @param string $table
 	 * @param string $column
 	 * @param string $value
 	 * @param mixed $select
 	 * @return array
 	 */
-	final protected function fetchAllByColumn($table, $column, $value, $select = '*')
+	final protected function fetchAllByColumn($column, $value, $select = '*')
 	{
+		$this->validateShortcutData();
+
 		return $this->db->select($select)
-						->from($table)
+						->from(static::getTableName())
 						->whereEquals($column, $value)
 						->queryAll();
 	}
@@ -189,16 +237,17 @@ abstract class AbstractMapper
 	/**
 	 * Fetches single row a column
 	 * 
-	 * @param string $table Table name
 	 * @param string $column The name of PK column
 	 * @param string $value The value of PK
 	 * @param mixed $select Data to be selected. By default all columns are selected
 	 * @return array
 	 */
-	final protected function fetchByColumn($table, $column, $value, $select = '*')
+	final protected function fetchByColumn($column, $value, $select = '*')
 	{
+		$this->validateShortcutData();
+
 		return $this->db->select($select)
-						->from($table)
+						->from(static::getTableName())
 						->whereEquals($column, $value)
 						->query();
 	}
@@ -206,15 +255,16 @@ abstract class AbstractMapper
 	/**
 	 * Deletes a row by its associated PK
 	 * 
-	 * @param string $table
 	 * @param string PK's column
 	 * @param string PK's value
 	 * @return boolean
 	 */
-	final protected function deleteByColumn($table, $column, $value)
+	final protected function deleteByColumn($column, $value)
 	{
+		$this->validateShortcutData();
+
 		return $this->db->delete()
-						->from($table)
+						->from(static::getTableName())
 						->whereEquals($column, $value)
 						->execute();
 	}
