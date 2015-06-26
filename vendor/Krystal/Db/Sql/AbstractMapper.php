@@ -57,6 +57,102 @@ abstract class AbstractMapper
 	}
 	
 	/**
+	 * Checks whether shortcut data
+	 * 
+	 * @return void
+	 */
+	final protected function validateShortcutData()
+	{
+		if (!method_exists($this, 'getPk') || !method_exists($this, 'getTableName')) {
+			throw new LogicException('To use shortcut methods you have to implement one protected getPk() and one public static getTableName() methods');
+		}
+	}
+
+	/**
+	 * Deletes a row by associated PK's value
+	 * 
+	 * @param string $pk PK's value
+	 * @return boolean
+	 */
+	final protected function deleteByPk($pk)
+	{
+		$this->validateShortcutData();
+		return $this->deleteByColumn(static::getTableName(), $this->getPk(), $pk);
+	}
+
+	/**
+	 * Finds a row by associated PK's value
+	 * 
+	 * @param string $pk PK's value
+	 * @return array
+	 */
+	final protected function findByPk($pk)
+	{
+		$this->validateShortcutData();
+		return $this->fetchByColumn(static::getTableName(), $this->getPk(), $pk);
+	}
+
+	/**
+	 * Returns column's value by provided PK
+	 * 
+	 * @param string $id PK's value
+	 * @param string $column
+	 * @return boolean
+	 */
+	final protected function findColumnByPk($id, $column)
+	{
+		$this->validateShortcutData();
+
+		return $this->db->select($column)
+						->from($this->table)
+						->whereEquals($this->getPk(), $id)
+						->query($column);
+	}
+
+	/**
+	 * Inserts or updates a record
+	 * 
+	 * @param array $data
+	 * @return boolean
+	 */
+	final protected function persist(array $data)
+	{
+		$this->validateShortcutData();
+
+		if (isset($data[$this->getPk()]) && $data[$this->getPk()]) {
+
+			return $this->db->update(static::getTableName(), $data)
+							->whereEquals($this->getPk(), $data[$this->getPk()])
+							->execute();
+		} else {
+
+			if (array_key_exists($data, $this->getPk())) {
+				unset($data[$this->getPk()]);
+			}
+
+			return $this->db->insert(static::getTableName(), $data)
+							->execute();
+		}
+	}
+
+	/**
+	 * Updates column's value by a primary key
+	 * 
+	 * @param string $pk
+	 * @param string $column
+	 * @param string $value
+	 * @return boolean
+	 */
+	final protected function updateColumnByPk($pk, $column, $value)
+	{
+		$this->validateShortcutData();
+
+		return $this->db->update(static::getTableName(), array($column => $value))
+						->whereEquals($this->getPk(), $pk)
+						->execute();
+	}
+
+	/**
 	 * Fetches one column
 	 * 
 	 * @param string $table
