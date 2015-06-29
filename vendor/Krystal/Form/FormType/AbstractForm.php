@@ -56,7 +56,7 @@ abstract class AbstractForm
 	 * 
 	 * @var array
 	 */
-	protected $translatable = array('placeholder');
+	protected $translatable = array('placeholder', 'title');
 
 	/**
 	 * Attribute translator
