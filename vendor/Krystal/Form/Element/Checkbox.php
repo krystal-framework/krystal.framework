@@ -61,8 +61,10 @@ final class Checkbox implements FormElementInterface
 			$checked = $input->get($name);
 		}
 
-		// Guess name
-		$options['element']['attributes']['name'] = $input->guessName($name);
+		// If a name isn't set explicitly, then guess it
+		if (!isset($options['element']['attributes']['name'])) {
+			$options['element']['attributes']['name'] = $input->guessName($name);
+		}
 
 		// Determine if it must be serialize-able
 		$serialize = isset($options['element']['serialize']) ? (bool) $options['element']['serialize'] : true;

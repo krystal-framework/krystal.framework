@@ -72,8 +72,10 @@ final class Select implements FormElementInterface
 			$active = $options['element']['active'];
 		}
 
-		// Guess name
-		$options['element']['attributes']['name'] = $input->guessName($name);
+		// If a name isn't set explicitly, then guess it
+		if (!isset($options['element']['attributes']['name'])) {
+			$options['element']['attributes']['name'] = $input->guessName($name);
+		}
 
 		if (!isset($options['element']['list'])) {
 			$options['element']['list'] = array();

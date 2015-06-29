@@ -28,8 +28,10 @@ final class Date implements FormElementInterface
 	{
 		$element = new self();
 
-		// Guess a name
-		$options['element']['attributes']['name'] = $input->guessName($name);
+		// If a name isn't set explicitly, then guess it
+		if (!isset($options['element']['attributes']['name'])) {
+			$options['element']['attributes']['name'] = $input->guessName($name);
+		}
 
 		if ($input->has($name)) {
 			$options['element']['attributes']['value'] = $input->get($name);

@@ -28,8 +28,10 @@ final class Image implements FormElementInterface
 	{
 		$element = new self();
 
-		// Guess a name
-		$options['element']['attributes']['name'] = $input->guessName($name);
+		// If a name isn't set explicitly, then guess it
+		if (!isset($options['element']['attributes']['name'])) {
+			$options['element']['attributes']['name'] = $input->guessName($name);
+		}
 
 		return $element->render($options['element']['attributes']);
 	}
