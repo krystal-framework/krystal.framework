@@ -270,6 +270,29 @@ abstract class AbstractMapper
 	}
 
 	/**
+	 * Counts by provided column's value
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @return integer
+	 */
+	final protected function countByColumn($column, $value, $field = null)
+	{
+		$this->validateShortcutData();
+		$alias = 'count';
+
+		if ($field === null) {
+			$field = $this->getPk();
+		}
+
+		return (int) $this->db->select()
+							->count($field, $alias)
+							->from(static::getTableName())
+							->whereEquals($column, $value)
+							->query($alias);
+	}
+
+	/**
 	 * Returns last id
 	 * 
 	 * @return integer
