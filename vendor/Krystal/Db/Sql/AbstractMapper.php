@@ -137,7 +137,7 @@ abstract class AbstractMapper
 							->execute();
 		} else {
 
-			if (array_key_exists($data, $this->getPk())) {
+			if (array_key_exists($this->getPk(), $data)) {
 				unset($data[$this->getPk()]);
 			}
 
