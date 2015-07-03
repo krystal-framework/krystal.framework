@@ -12,7 +12,6 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
-use Krystal\Form\InputInterface;
 
 final class Radio implements FormElementInterface
 {
@@ -37,25 +36,10 @@ final class Radio implements FormElementInterface
 	/**
 	 * Builds radio element
 	 * 
-	 * @param \Krystal\Form\Element\InputInterface $input
-	 * @param string $name
-	 * @param array $options
 	 * @return \Krystal\Form\Element\Radio
 	 */
-	public function factory(InputInterface $input, $name, array $options)
+	public function factory()
 	{
-		$element = new self();
-
-		// If a name isn't set explicitly, then guess it
-		if (!isset($options['element']['attributes']['name'])) {
-			$options['element']['attributes']['name'] = $input->guessName($name);
-		}
-
-		if ($input->has($name)) {
-			$options['element']['attributes']['value'] = $input->get($name);
-		}
-
-		return $element->render($options['element']['attributes']);
 	}
 
 	/**

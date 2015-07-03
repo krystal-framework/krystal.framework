@@ -12,7 +12,6 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
-use Krystal\Form\InputInterface;
 
 /* @TODO Add visitor for option elements */
 final class Select implements FormElementInterface
@@ -56,37 +55,10 @@ final class Select implements FormElementInterface
 	/**
 	 * Builds an element
 	 * 
-	 * @param \Krystal\Form\Element\InputInterface $input
-	 * @param string $name
-	 * @param array $options
 	 * @return \Krystal\Form\Element\Select
 	 */
-	public static function factory(InputInterface $input, $name, array $options)
+	public static function factory()
 	{
-		$active = null;
-
-		// Pick up active element
-		if ($input->has($name)) {
-			$active = $input->get($name);
-		} else if (isset($options['element']['active'])) {
-			$active = $options['element']['active'];
-		}
-
-		// If a name isn't set explicitly, then guess it
-		if (!isset($options['element']['attributes']['name'])) {
-			$options['element']['attributes']['name'] = $input->guessName($name);
-		}
-
-		if (!isset($options['element']['list'])) {
-			$options['element']['list'] = array();
-		}
-
-		// Default first options
-		$defaults = isset($options['element']['defaults']) ? $options['element']['defaults'] : array();
-		$element = new self($options['element']['list'], $active, $defaults);
-
-		// Push it to the stack
-		return $element->render($options['element']['attributes']);
 	}
 
 	/**

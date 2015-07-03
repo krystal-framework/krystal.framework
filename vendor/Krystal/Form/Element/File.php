@@ -12,28 +12,16 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
-use Krystal\Form\InputInterface;
 
 final class File implements FormElementInterface
 {
 	/**
 	 * Builds the element
 	 * 
-	 * @param \Krystal\Form\InputInterface $input
-	 * @param string $name
-	 * @param array $options
 	 * @return \Krystal\Form\Element\File
 	 */
-	public static function factory(InputInterface $input, $name, array $options)
+	public static function factory()
 	{
-		$element = new self();
-
-		// If a name isn't set explicitly, then guess it
-		if (!isset($options['element']['attributes']['name'])) {
-			$options['element']['attributes']['name'] = $input->guessName($name);
-		}
-
-		return $element->render($options['element']['attributes']);
 	}
 
 	/**

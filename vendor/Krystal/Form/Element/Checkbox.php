@@ -12,7 +12,6 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
-use Krystal\Form\InputInterface;
 
 final class Checkbox implements FormElementInterface
 {
@@ -46,32 +45,10 @@ final class Checkbox implements FormElementInterface
 	/**
 	 * Builds an element
 	 * 
-	 * @param \Krystal\Form\InputInterface $input
-	 * @param string $name
-	 * @param array $options
 	 * @return \Krystal\Form\Element\Checkbox
 	 */
-	public static function factory(InputInterface $input, $name, array $options)
+	public static function factory()
 	{
-		// By default, it's not checked
-		$checked = false;
-
-		// Pick up active element
-		if ($input->has($name)) {
-			$checked = $input->get($name);
-		}
-
-		// If a name isn't set explicitly, then guess it
-		if (!isset($options['element']['attributes']['name'])) {
-			$options['element']['attributes']['name'] = $input->guessName($name);
-		}
-
-		// Determine if it must be serialize-able
-		$serialize = isset($options['element']['serialize']) ? (bool) $options['element']['serialize'] : true;
-
-		$element = new self($serialize, $checked);
-
-		return $element->render($options['element']['attributes']);
 	}
 
 	/**

@@ -12,7 +12,6 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
-use Krystal\Form\InputInterface;
 
 final class Textarea implements FormElementInterface
 {
@@ -37,27 +36,10 @@ final class Textarea implements FormElementInterface
 	/**
 	 * Builds the element
 	 * 
-	 * @param \Krystal\Form\InputInterface $input
-	 * @param string $name
-	 * @param array $options
 	 * @return \Krystal\Form\Element\Textarea
 	 */
-	public static function factory(InputInterface $input, $name, array $options)
+	public static function factory()
 	{
-		$text = '';
-
-		// If a name isn't set explicitly, then guess it
-		if (!isset($options['element']['attributes']['name'])) {
-			$options['element']['attributes']['name'] = $input->guessName($name);
-		}
-
-		if ($input->has($name)) {
-			$text = $input->get($name);
-		}
-
-		$element = new self($text);
-
-		return $element->render($options['element']['attributes']);
 	}
 
 	/**
