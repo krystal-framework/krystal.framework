@@ -83,18 +83,6 @@ abstract class AbstractController
 	}
 
 	/**
-	 * Builds a form. That's just a shortcut
-	 * 
-	 * @param string $class PSR-0 compliant class name
-	 * @param array $input
-	 * @return \Bono\Form\FormType\AbstractForm
-	 */
-	final protected function makeForm($class, array $input = array())
-	{
-		return new $class($input, $this->translator);
-	}
-
-	/**
 	 * Handle calls to undefined class properties
 	 * 
 	 * The point of this magic method is simple - avoid calling $this->serviceLocator->whatever, but call $this->whatever instead
