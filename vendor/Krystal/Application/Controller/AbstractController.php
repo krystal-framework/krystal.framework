@@ -13,6 +13,7 @@ namespace Krystal\Application\Controller;
 
 use Krystal\InstanceManager\ServiceLocatorInterface;
 use Krystal\Application\View\Resolver\Module as Resolver;
+use Krystal\Db\Filter\FilterableServiceInterface;
 
 abstract class AbstractController
 {
@@ -57,6 +58,37 @@ abstract class AbstractController
 		$this->serviceLocator = $serviceLocator;
 		$this->moduleName = $moduleName;
 		$this->options = $options;
+	}
+
+	/**
+	 * Applies filtering method from the service that implements corresponding interface
+	 * That's just a shortcut method
+	 * 
+	 * @param string $ns Query namespace
+	 * @param \Krystal\Db\Filter\FilterableServiceInterface $service A service which implement this interface
+	 * @param integer $perPageCount Items per page to display
+	 * @return array
+	 */
+	final protected function getQueryFilter($ns, FilterableServiceInterface $service, $perPageCount)
+	{
+		if ($this->request->hasQueryVals($ns)) {
+			$data = $this->request->getQuery($ns);
+
+			// Get page number
+			$page = $this->request->getQueryNs($ns, 'page', 1);
+
+			$records = $service->filter($data, $page, $perPageCount);
+
+			// Alter paginator's state
+			$paginator = $service->getPaginator();
+			$paginator->setUrl($this->request->getWithNsQuery($ns, array('page' => '%s')));
+
+			return $records;
+
+		} else {
+
+			return false;
+		}
 	}
 
 	/**
