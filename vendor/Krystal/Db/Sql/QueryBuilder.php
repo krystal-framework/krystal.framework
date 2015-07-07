@@ -96,6 +96,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function isFilterable($state, $target)
 	{
+		// Start checking from very common usage case
+		if ($state == true && $target == '0') {
+			return true;
+		}
+
 		$result = false;
 
 		if ($state === false) {
