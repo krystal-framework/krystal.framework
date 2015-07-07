@@ -39,14 +39,16 @@ final class QueryContainer implements QueryContainerInterface
 	 */
 	public function get($key)
 	{
+		$default = false;
+
 		if (!is_array($this->data)) {
-			return null;
+			return $default;
 		}
 
-		if (array_key_exists($key, $this->data)) {
+		if (isset($this->data[$key])) {
 			return $this->data[$key];
 		} else {
-			return null;
+			return $default;
 		}
 	}
 }
