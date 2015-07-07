@@ -53,15 +53,6 @@ final class Select implements FormElementInterface
 	}
 
 	/**
-	 * Builds an element
-	 * 
-	 * @return \Krystal\Form\Element\Select
-	 */
-	public static function factory()
-	{
-	}
-
-	/**
 	 * Creates default option node
 	 * 
 	 * @return \Krystal\Form\NodeElement
@@ -79,6 +70,18 @@ final class Select implements FormElementInterface
 
 		return $nodes;
 	}
+	
+	/**
+	 * Determines whether node is active
+	 * 
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function isActiveNode($value)
+	{
+		// Without type-casting it's error-prone
+		return (string) $this->active == (string) $value;
+	}
 
 	/**
 	 * Creates option node
@@ -94,14 +97,14 @@ final class Select implements FormElementInterface
 			   ->addAttribute('value', $value);
 
 		// Mark as selected on demand
-		if ($value == $this->active) {
+		if ($this->isActiveNode($value)) {
 			$option->addProperty('selected');
 		}
 
 		$option->finalize()
 			   ->setText($text)
 			   ->closeTag();
-		
+
 		return $option;
 	}
 
@@ -132,7 +135,6 @@ final class Select implements FormElementInterface
 	 * Returns a collection of prepared option elements
 	 * 
 	 * @param array $list
-	 * @param string $active Node to be marked as selected
 	 * @return array
 	 */
 	private function getOptions(array $list)
