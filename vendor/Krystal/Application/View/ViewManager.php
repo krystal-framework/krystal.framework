@@ -107,6 +107,16 @@ final class ViewManager implements ViewManagerInterface
 	}
 
 	/**
+	 * Returns translator's instance
+	 * 
+	 * @return \Krystal\I18n\Translator $translator
+	 */
+	public function getTranslator()
+	{
+		return $this->translator;
+	}
+
+	/**
 	 * Returns form helper
 	 * 
 	 * @return \Krystal\Form\HtmlHelper

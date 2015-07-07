@@ -16,6 +16,13 @@ use Krystal\Application\View\Resolver\ResolverInterface;
 interface ViewManagerInterface
 {
 	/**
+	 * Returns translator's instance
+	 * 
+	 * @return \Krystal\I18n\Translator $translator
+	 */
+	public function getTranslator();
+
+	/**
 	 * Returns plugin bag
 	 * 
 	 * @return \Krystal\Application\View\PluginBag
