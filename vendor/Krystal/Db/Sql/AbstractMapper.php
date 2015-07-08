@@ -293,6 +293,36 @@ abstract class AbstractMapper
 	}
 
 	/**
+	 * Increments column's value by associated PK's value
+	 * 
+	 * @param string $pk PK's value
+	 * @param string $column Target column
+	 * @param integer $step
+	 * @return boolean
+	 */
+	final protected function incrementColumnByPk($pk, $column, $step = 1)
+	{
+		return $this->db->increment(static::getTableName(), $column, $step)
+						->whereEquals($this->getPk(), $pk)
+						->execute();
+	}
+
+	/**
+	 * Decrements column's value by associated PK's value
+	 * 
+	 * @param string $pk PK's value
+	 * @param string $column Target column
+	 * @param integer $step
+	 * @return boolean
+	 */
+	final protected function decrementColumnByPk($pk, $column, $step = 1)
+	{
+		return $this->db->decrement(static::getTableName(), $column, $step)
+						->whereEquals($this->getPk(), $pk)
+						->execute();
+	}
+
+	/**
 	 * Returns last id
 	 * 
 	 * @return integer
