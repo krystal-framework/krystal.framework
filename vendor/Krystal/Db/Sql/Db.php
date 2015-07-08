@@ -458,7 +458,7 @@ final class Db implements DbInterface
 	 */
 	public function min($column, $alias = null)
 	{
-		$this->queryBuilder->max($column, $alias);
+		$this->queryBuilder->min($column, $alias);
 		return $this;
 	}
 
