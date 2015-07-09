@@ -11,26 +11,33 @@
 
 namespace Krystal\Form;
 
-final class HtmlHelper
+class HtmlHelper
 {
 	/**
-	 * Returns $property
+	 * Returns property in case a condition is true
 	 * 
-	 * @return void
+	 * @param boolean $condition
+	 * @param string $property
+	 * @return string
 	 */
-	private function getOnDemand($condition, $property)
+	private static function getOnDemand($condition, $property)
 	{
 		if ($condition == true) {
 			return sprintf(' %s ', $property);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Wraps content into a tag on demand
 	 * 
+	 * @param boolean $condition
+	 * @param string $tag
+	 * @param string $content
 	 * @return void
 	 */
-	public function wrapOnDemand($condition, $tag, $content)
+	public static function wrapOnDemand($condition, $tag, $content)
 	{
 		if ($condition) {
 			echo sprintf('<%s>%s</%s>', $tag, $content, $tag);
@@ -45,9 +52,9 @@ final class HtmlHelper
 	 * @param boolean $condition
 	 * @return void
 	 */
-	public function makeReadOnlyOnDemand($condition)
+	public static function makeReadOnlyOnDemand($condition)
 	{
-		echo $this->getOnDemand($condition, 'readonly');
+		echo self::getOnDemand($condition, 'readonly');
 	}
 
 	/**
@@ -56,9 +63,9 @@ final class HtmlHelper
 	 * @param boolean $condition
 	 * @return void
 	 */
-	public function selectOnDemand($condition)
+	public static function selectOnDemand($condition)
 	{
-		echo $this->getOnDemand($condition, 'selected');
+		echo self::getOnDemand($condition, 'selected');
 	}
 
 	/**
@@ -67,9 +74,9 @@ final class HtmlHelper
 	 * @param string $condition
 	 * @return void
 	 */
-	public function checkOnDemand($condition)
+	public static function checkOnDemand($condition)
 	{
-		echo $this->getOnDemand($condition, 'checked');
+		echo self::getOnDemand($condition, 'checked');
 	}
 
 	/**
@@ -80,7 +87,7 @@ final class HtmlHelper
 	 * @param string $value
 	 * @return string
 	 */
-	private function getAttrOnDemand($condition, $attr, $value)
+	private static function getAttrOnDemand($condition, $attr, $value)
 	{
 		if ($condition) {
 			return sprintf(' %s="%s" ', $attr, $value);
@@ -88,12 +95,16 @@ final class HtmlHelper
 	}
 
 	/**
+	 * Adds raw text in case $condition is true
+	 * 
+	 * @param boolean $condition
+	 * @param string $text
 	 * @return void
 	 */
-	public function addOnDemand($condition, $value)
+	public static function addOnDemand($condition, $text)
 	{
 		if ((bool) $condition) {
-			echo $value;
+			echo $text;
 		}
 	}
 
@@ -104,8 +115,8 @@ final class HtmlHelper
 	 * @param string $value
 	 * @return void
 	 */
-	public function addClassOnDemand($condition, $value)
+	public static function addClassOnDemand($condition, $value)
 	{
-		echo $this->getAttrOnDemand($condition, 'class', $value);
+		echo self::getAttrOnDemand($condition, 'class', $value);
 	}
 }

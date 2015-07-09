@@ -15,7 +15,6 @@ use RuntimeException;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Application\View\Resolver\Theme as StandardResolver;
 use Krystal\Application\View\Resolver\ResolverInterface;
-use Krystal\Form\HtmlHelper;
 use Krystal\Form\Navigation\Breadcrumbs\BreadcrumbBag;
 use Krystal\Application\Route\UrlBuilderInterface;
 
@@ -114,22 +113,6 @@ final class ViewManager implements ViewManagerInterface
 	public function getTranslator()
 	{
 		return $this->translator;
-	}
-
-	/**
-	 * Returns form helper
-	 * 
-	 * @return \Krystal\Form\HtmlHelper
-	 */
-	public function getHelper()
-	{
-		static $helper = null;
-
-		if ($helper == null) {
-			$helper = new HtmlHelper();
-		}
-
-		return $helper;
 	}
 
 	/**
