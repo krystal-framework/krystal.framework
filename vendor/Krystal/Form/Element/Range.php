@@ -16,15 +16,6 @@ use Krystal\Form\NodeElement;
 final class Range implements FormElementInterface
 {
 	/**
-	 * Builds an element
-	 * 
-	 * @return \Krystal\Form\Element\Range
-	 */
-	public static function factory()
-	{
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)

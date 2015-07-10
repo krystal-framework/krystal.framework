@@ -34,15 +34,6 @@ final class Radio implements FormElementInterface
 	}
 
 	/**
-	 * Builds radio element
-	 * 
-	 * @return \Krystal\Form\Element\Radio
-	 */
-	public function factory()
-	{
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)

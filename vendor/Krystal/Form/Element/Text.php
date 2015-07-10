@@ -16,21 +16,11 @@ use Krystal\Form\NodeElement;
 final class Text implements FormElementInterface
 {
 	/**
-	 * Builds an element
-	 * 
-	 * @return \Krystal\Form\Element\Text
-	 */
-	public static function factory()
-	{
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)
 	{
 		$node = new NodeElement();
-
 		$attrs['type'] = 'text';
 
 		return $node->openTag('input')

@@ -34,15 +34,6 @@ final class Textarea implements FormElementInterface
 	}
 
 	/**
-	 * Builds the element
-	 * 
-	 * @return \Krystal\Form\Element\Textarea
-	 */
-	public static function factory()
-	{
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)

@@ -43,15 +43,6 @@ final class Checkbox implements FormElementInterface
 	}
 
 	/**
-	 * Builds an element
-	 * 
-	 * @return \Krystal\Form\Element\Checkbox
-	 */
-	public static function factory()
-	{
-	}
-
-	/**
 	 * Creates hidden node
 	 * 
 	 * @param array $attrs

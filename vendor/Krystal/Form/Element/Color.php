@@ -16,21 +16,11 @@ use Krystal\Form\NodeElement;
 final class Color implements FormElementInterface
 {
 	/**
-	 * Builds an element
-	 * 
-	 * @return \Krystal\Form\Element\Text
-	 */
-	public static function factory()
-	{
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)
 	{
 		$attrs['type'] = 'color';
-
 		$node = new NodeElement();
 
 		return $node->openTag('input')

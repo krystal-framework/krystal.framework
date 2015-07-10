@@ -16,15 +16,6 @@ use Krystal\Form\NodeElement;
 final class File implements FormElementInterface
 {
 	/**
-	 * Builds the element
-	 * 
-	 * @return \Krystal\Form\Element\File
-	 */
-	public static function factory()
-	{
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)

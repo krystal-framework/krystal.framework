@@ -16,15 +16,6 @@ use Krystal\Form\NodeElement;
 final class Hidden implements FormElementInterface
 {
 	/**
-	 * Builds an instance
-	 * 
-	 * @return \Krystal\Form\Element\Hidden
-	 */
-	public static function factory()
-	{
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function render(array $attrs)
