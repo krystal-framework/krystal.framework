@@ -61,6 +61,19 @@ abstract class AbstractController
 	}
 
 	/**
+	 * Forwards to another controller's action
+	 * Just a shortcut to dispatcher's method
+	 * 
+	 * @param string $controller
+	 * @param array $args Optional arguments
+	 * @return string
+	 */
+	final protected function forward($controller, array $args = array())
+	{
+		return $this->dispatcher->forward($controller, $args);
+	}
+
+	/**
 	 * Applies filtering method from the service that implements corresponding interface
 	 * That's just a shortcut method
 	 * 
