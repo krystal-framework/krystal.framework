@@ -229,6 +229,16 @@ interface QueryBuilderInterface
 	public function orWhereLike($column, $value, $filter = false);
 
 	/**
+	 * Appends OR WHERE with >= operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereGreaterThanOrEquals($column, $value, $filter = false);
+
+	/**
 	 * Appends WHERE expression with equality operator
 	 * 
 	 * @param string $column
