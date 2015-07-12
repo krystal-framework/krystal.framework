@@ -917,6 +917,19 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends OR WHERE with <= operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function orWhereLessThanOrEquals($column, $value, $filter = false)
+	{
+		return $this->orWhere($column, '<=', $value, $filter);
+	}
+
+	/**
 	 * Appends AND for WHERE clause
 	 * 
 	 * @param string $column
