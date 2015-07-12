@@ -28,3 +28,12 @@ Features
  - Query logging
 
 This component can be used as a standalone library as well. To do so, you can simply register PSR-0 compliant autoloader, that points to Krystal's directory.
+
+
+
+TODO
+====
+
+ * Need SQL more connectors
+ * SQL Table Relations - Implement very common types at least
+ * Methods in SQL\Qb for migrations
