@@ -841,6 +841,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Appends AND WHERE with <= operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereEqualsOrLessThan($column, $value, $filter = false)
+	{
+		return $this->andWhere($column, '<=', $value, $filter);
+	}
+
+	/**
 	 * Appends RAND() function
 	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder
