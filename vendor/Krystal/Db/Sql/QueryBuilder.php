@@ -607,6 +607,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Appends OR WHERE with != operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereNotEquals($column, $value, $filter = false)
+	{
+		return $this->orWhere($key, '!=', $value, $filter);
+	}
+
+	/**
 	 * Appends WHERE expression with equality operator
 	 * 
 	 * @param string $column

@@ -189,6 +189,16 @@ interface QueryBuilderInterface
 	public function orWhere($key, $operator, $value, $filter = false);
 
 	/**
+	 * Appends OR WHERE with != operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereNotEquals($column, $value, $filter = false);
+
+	/**
 	 * Appends OR WHERE expressions
 	 * 
 	 * @param string $column
