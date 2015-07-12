@@ -864,7 +864,7 @@ final class Db implements DbInterface
 	}
 
 	/**
-	 * Appends OR for WHERE clause
+	 * Appends OR WHERE expression
 	 * 
 	 * @param string $column
 	 * @param string $operator
@@ -875,6 +875,19 @@ final class Db implements DbInterface
 	public function orWhere($column, $operator, $value, $filter = false)
 	{
 		return $this->constraint(__FUNCTION__, $column, $operator, $value, $filter);
+	}
+
+	/**
+	 * Appends OR WHERE expression with equality operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function orWhereEquals($column, $value, $filter = false)
+	{
+		return $this->orWhere($column, '=', $value, $filter);
 	}
 
 	/**

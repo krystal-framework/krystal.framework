@@ -178,7 +178,7 @@ interface QueryBuilderInterface
 	public function andWhere($key, $operator, $value, $filter = false);
 
 	/**
-	 * Appends AND WHERE expression
+	 * Appends OR WHERE expression with equality operator
 	 * 
 	 * @param string $key
 	 * @param string $operator
@@ -187,6 +187,16 @@ interface QueryBuilderInterface
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
 	public function orWhere($key, $operator, $value, $filter = false);
+
+	/**
+	 * Appends OR WHERE expressions
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereEquals($column, $value, $filter = false);
 
 	/**
 	 * Appends WHERE expression with equality operator
