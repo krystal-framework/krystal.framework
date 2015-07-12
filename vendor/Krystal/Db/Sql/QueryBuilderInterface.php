@@ -209,6 +209,26 @@ interface QueryBuilderInterface
 	public function orWhereEquals($column, $value, $filter = false);
 
 	/**
+	 * Appends WHERE clause with "less than" operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereLessThan($column, $value, $filter = false);
+
+	/**
+	 * Appends OR WHERE LIKE condition
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereLike($column, $value, $filter = false);
+
+	/**
 	 * Appends WHERE expression with equality operator
 	 * 
 	 * @param string $column
@@ -249,16 +269,6 @@ interface QueryBuilderInterface
 	public function whereLessThan($column, $value, $filter = false);
 
 	/**
-	 * Appends WHERE clause with "less than" operator
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @param boolean $filter Whether to filter by value
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function orWhereLessThan($column, $value, $filter = false);
-
-	/**
 	 * Appends AND WHERE clause with equality operator
 	 * 
 	 * @param string $column
@@ -277,16 +287,6 @@ interface QueryBuilderInterface
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
 	public function andWhereLike($column, $value, $filter = false);
-
-	/**
-	 * Appends OR WHERE LIKE condition
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @param boolean $filter Whether to filter by value
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function orWhereLike($column, $value, $filter = false);
 
 	/**
 	 * Appends WHERE IN (..) expression

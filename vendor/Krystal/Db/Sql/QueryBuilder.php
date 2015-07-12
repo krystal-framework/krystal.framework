@@ -620,6 +620,45 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Appends OR WHERE LIKE condition
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereLike($column, $value, $filter = false)
+	{
+		return $this->orWhere($column, 'LIKE', $value, $filter);
+	}
+
+	/**
+	 * Appends OR WHERE clause with "greater than" operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereGreaterThan($column, $value, $filter = false)
+	{
+		return $this->orWhere($column, '>', $value, $filter);
+	}
+
+	/**
+	 * Appends WHERE clause with "less than" operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereLessThan($column, $value, $filter = false)
+	{
+		return $this->orWhere($column, '<', $value, $filter);
+	}
+
+	/**
 	 * Appends WHERE expression with equality operator
 	 * 
 	 * @param string $column
@@ -724,19 +763,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends OR WHERE LIKE condition
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @param boolean $filter Whether to filter by value
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function orWhereLike($column, $value, $filter = false)
-	{
-		return $this->orWhere($column, 'LIKE', $value, $filter);
-	}
-
-	/**
 	 * Appends WHERE clause with "greater than" operator
 	 * 
 	 * @param string $column
@@ -750,19 +776,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends OR WHERE clause with "greater than" operator
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @param boolean $filter Whether to filter by value
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function orWhereGreaterThan($column, $value, $filter = false)
-	{
-		return $this->orWhere($column, '>', $value, $filter);
-	}
-
-	/**
 	 * Appends WHERE clause with less than operator
 	 * 
 	 * @param string $column
@@ -773,19 +786,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	public function andWhereLessThan($column, $value, $filter = false)
 	{
 		return $this->andWhere($column, '<', $value, $filter);
-	}
-
-	/**
-	 * Appends WHERE clause with "less than" operator
-	 * 
-	 * @param string $column
-	 * @param string $value
-	 * @param boolean $filter Whether to filter by value
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function orWhereLessThan($column, $value, $filter = false)
-	{
-		return $this->orWhere($column, '<', $value, $filter);
 	}
 
 	/**
