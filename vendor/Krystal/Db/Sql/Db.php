@@ -1076,6 +1076,19 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends AND WHERE with >= operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function andWhereEqualsOrGreaterThan($column, $value, $filter = false)
+	{
+		return $this->andWhere($column, '>=', $value, $filter);
+	}
+
+	/**
 	 * Appends WHERE clause with != operator
 	 * 
 	 * @param string $column
