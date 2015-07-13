@@ -65,6 +65,77 @@ To get started, you need to create some data mapper class, that extends `\Krysta
         }
     }
 
+As you noted, there's an instance, which is `db` that builds a query and then queries a database. Now let's take a look, what methods query build offers.
+
+Available query methods
+====================
+
+# select()
+
+    \Krystal\Db\Sql\Db::select ( array|string )
+
+This method builds `SELECT` query fragment. It may accept an array or a string. If you supply an array, then you have two options:
+
+    $this->db->select(array('name', 'email'))
+
+That would build a fragment like this: `SELECT name, email`, wrapping them in back-ticks also.
+
+You can use array values to specify an alias to a column, like this:
+
+    $this->db->select(array('foo' => 'bar'))
+
+That would build a fragment which would look like as:
+
+    SELECT foo as bar
+
+
+And lastly, you can pass a string, like this
+
+    $this->db->select('*')
+
+That would build a fragment like this one:
+
+`SELECT *`
+
+
+# from()
+
+    \Krystal\Db\Sql\Db::from($table = null)
+
+This method specific a source to be used. It most cases that would be a table, but sometimes you might want to use several tables when bulding `UNION` queries. This method is usually gets called right after `select()`, like this:
+
+    $this->db->select('*')
+             ->from('some_table')
+
+That would build a fragment like this:
+
+    SELECT * FROM some_table
+
+# where()
+
+    \Krystal\Db\Sql\Db::where($column, $operator, $value, $filter = false)
+
+This method simply appends `WHERE` clause and usually gets called right after `from()`. For instance, this call:
+
+    $this->db->select('*')
+             ->from('some_table')
+             ->where('id', '=', '1')
+
+Would build a query like this;
+
+    SELECT * FROM some_table WHERE id = '1'
+
+Lastly, there's a 4-th argument which is called `$filter`. If you set it to `true`, then `WHERE` clause is appended only case its `$value` it not empty.
+
+There are several shortcuts for `where()` operators.
+
+    whereLike($column, $value, $filter = false)
+    whereEquals($column, $value, $filter = false)
+    whereLessThan($column, $value, $filter = false)
+    whereLessThanOrEquals($column, $value, $filter = false)
+    whereGreaterThan($column, $value, $filter = false)
+    whereGreaterThanOrEquals($column, $value, $filter = false)
+
 
 TODO
 ====
@@ -72,4 +143,10 @@ TODO
  * Need more SQL connectors
  * SQL Table Relations - Implement very common types at least
  * Methods in SQL\Qb for migrations
+
+
+
+
+
+
 
