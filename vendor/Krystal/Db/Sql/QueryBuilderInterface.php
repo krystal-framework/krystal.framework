@@ -219,6 +219,16 @@ interface QueryBuilderInterface
 	public function orWhereLessThan($column, $value, $filter = false);
 
 	/**
+	 * Appends OR WHERE clause with "greater than" operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function orWhereGreaterThan($column, $value, $filter = false);
+
+	/**
 	 * Appends OR WHERE LIKE condition
 	 * 
 	 * @param string $column
