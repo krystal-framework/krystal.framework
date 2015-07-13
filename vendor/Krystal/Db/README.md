@@ -72,7 +72,7 @@ Available query methods
 
 # select()
 
-    \Krystal\Db\Sql\Db::select ( array|string )
+    \Krystal\Db\Sql\Db::select ( array|string = $type, $distinct = false)
 
 This method builds `SELECT` query fragment. It may accept an array or a string. If you supply an array, then you have two options:
 
@@ -97,6 +97,7 @@ That would build a fragment like this one:
 
 `SELECT *`
 
+If you pass a second argument as true, the it would append `DISTINCT` right after `SELECT`
 
 # from()
 
@@ -127,9 +128,10 @@ Would build a query like this;
 
 Lastly, there's a 4-th argument which is called `$filter`. If you set it to `true`, then `WHERE` clause is appended only case its `$value` it not empty.
 
-There are several shortcuts for `where()` operators.
+There are several shortcut methods for `where()`, that substitute operators.
 
     whereLike($column, $value, $filter = false)
+    whereNotEquals($column, $value, $filter = false)
     whereEquals($column, $value, $filter = false)
     whereLessThan($column, $value, $filter = false)
     whereLessThanOrEquals($column, $value, $filter = false)
@@ -137,16 +139,121 @@ There are several shortcuts for `where()` operators.
     whereGreaterThanOrEquals($column, $value, $filter = false)
 
 
+# andWhere()
+
+
+    \Krystal\Db\Sql\Db::andWhere($column, $operator, $value, $filter = false)
+
+This method appends `AND WHERE` fragment. It should not be used as a first `WHERE` clause, but should be used as a second. Just like this:
+
+    $this->db->select('*')
+             ->from('users')
+             ->where('name', '=', 'John')
+             ->andWhere('lastname', '=', 'Doe');
+
+That would build the following query:
+
+    SELECT * FROM users WHERE name = 'Jonh' AND WHERE lastname = 'Doe'
+
+There are also several shortcut methods, that substitute an operator accordingly:
+
+    andWhereLike($column, $value, $filter = false)
+    andWhereEquals($column, $value, $filter = false)
+    andNotWhereEquals($column, $value, $filter = false)
+    andWhereLessThan($column, $value, $filter = false)
+    andWhereGreaterThan($column, $value, $filter = false)
+    andWhereEqualsOrGreaterThan($column, $value, $filter = false);
+    andWhereEqualsOrLessThan($column, $value, $filter = false)
+
+
+# orWhere()
+
+    \Krystal\Db\Sql\Db::orWhere($column, $operator, $value, $filter = false)
+
+This methods appends `OR WHERE` fragment. Just like `andWhere()` it should be used as a second `WHERE` clause. Like this:
+
+    $this->db->select('*')
+             ->from('users')
+             ->where('name', '=', 'Dave')
+             ->orWhere('name', '=', 'Jason')
+
+This call will produce the following query:
+
+    SELECT * FROM users WHERE name = 'Dave' OR WHERE name = 'Jason'
+
+Just like two previous methods it has shortcut methods as well. Here they are:
+
+    orWhereEquals($column, $value, $filter = false)
+    orWhereNotEquals($column, $value, $filter = false)
+    orWhereLike($column, $value, $filter = false)
+    orWhereGreaterThanOrEquals($column, $value, $filter = false)
+    orWhereLessThanOrEquals($column, $value, $filter = false)
+    orWhereLessThan($column, $value, $filter = false)
+    orWhereGreaterThan($column, $value, $filter = false)
+
+# whereIn()
+
+    \Krystal\Db\Sql\Db::whereIn($column, array $values, $filter = false)
+
+This method appends `WHERE IN` fragment. It's used like this
+
+    $this->db->select('*')
+             ->from('products')
+             ->whereIn('price', array('200', 300))
+
+This will produce the following query:
+
+    SELECT * FROM products WHERE price IN (200, 300)
+
+
+# whereBetween()
+
+    \Krystal\Db\Sql\Db::whereBetween($column, $a, $b, $filter = false)
+
+This method appends `WHERE column BETWEEN value1 AND value2` clause. It's used like this:
+
+    $this->db->select('*')
+             ->from('products')
+             ->whereBetween('price', 200, 500)
+
+This call will produce the following query:
+
+    SELECT * FROM products WHERE price BETWEEN 200 AND 500
+
+# limit()
+
+    \Krystal\Db\Sql\Db::limit($offset, $amount = null)
+
+This method appends `LIMIT` fragment. Since `LIMIT` itself can be written in two ways, either with or without offset, you can omit second argument, which is about amount of records to be returned. 
+
+An example,
+
+    $this->db->select('*')
+             ->from('products')
+             ->limit(10);
+
+This call will product the following query:
+
+    SELECT * FROM products LIMIT 10
+
+If you pass a second argument, then it would append its value after a comma. For example:
+
+    $this->db->select('*')
+             ->from('products')
+             ->limit(0, 10);
+
+Will produce:
+
+    SELECT * FROM products LIMIT 0, 10
+
+But wait!
+In most cases, you don't need to use the `limit()`  to build pagination logic. There's a built-in method, which is called `paginate()` that does all pagination tweaks and calls `limit()` internally.
+
 TODO
 ====
 
  * Need more SQL connectors
  * SQL Table Relations - Implement very common types at least
  * Methods in SQL\Qb for migrations
-
-
-
-
-
 
 
