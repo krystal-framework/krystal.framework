@@ -149,13 +149,6 @@ interface QueryBuilderInterface
 	public function from($table = null);
 
 	/**
-	 * Appends distinct constraint to select
-	 * 
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function distinct();
-
-	/**
 	 * Appends WHERE expression
 	 * 
 	 * @param string $column

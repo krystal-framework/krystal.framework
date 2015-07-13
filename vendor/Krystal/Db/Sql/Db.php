@@ -526,17 +526,6 @@ final class Db implements DbInterface
 	}
 
 	/**
-	 * Appends DISTINCT expression
-	 * 
-	 * @return \Krystal\Db\Sql\Db
-	 */
-	public function distinct()
-	{
-		$this->queryBuilder->distinct();
-		return $this;
-	}
-
-	/**
 	 * Appends FROM expression
 	 * 
 	 * @param string $table

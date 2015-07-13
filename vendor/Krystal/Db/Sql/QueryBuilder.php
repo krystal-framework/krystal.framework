@@ -526,17 +526,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
-	 * Appends distinct constraint to select
-	 * 
-	 * @return \Krystal\Db\Sql\QueryBuilder
-	 */
-	public function distinct()
-	{
-		$this->append(' DISTINCT ');
-		return $this;
-	}
-
-	/**
 	 * Appends WHERE expression
 	 * 
 	 * @param string $column
