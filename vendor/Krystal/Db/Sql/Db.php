@@ -993,6 +993,19 @@ final class Db implements DbInterface
 	{
 		return $this->andWhere($column, '>', $value, $filter);
 	}
+	
+	/**
+	 * Appends AND WHERE clause with < operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function andWhereLessThan($column, $value, $filter = false)
+	{
+		return $this->andWhere($column, '<', $value, $filter);
+	}
 
 	/**
 	 * Appends WHERE clause with < operator

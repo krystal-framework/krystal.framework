@@ -299,6 +299,26 @@ interface QueryBuilderInterface
 	public function andWhereEquals($column, $value, $filter = false);
 
 	/**
+	 * Appends AND WHERE clause with "greater than" operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereGreaterThan($column, $value, $filter = false);
+
+	/**
+	 * Appends AND WHERE clause with less than operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function andWhereLessThan($column, $value, $filter = false);
+
+	/**
 	 * Appends AND WHERE with >= operator
 	 * 
 	 * @param string $column
