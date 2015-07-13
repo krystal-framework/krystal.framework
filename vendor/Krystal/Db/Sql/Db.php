@@ -508,9 +508,9 @@ final class Db implements DbInterface
 	 * @param float $decimals Specifies the number of decimals to be returned
 	 * @return \Krystal\Db\Sql\Db
 	 */
-	public function round($column, $column)
+	public function round($column, $decimals)
 	{
-		$this->queryBuilder->len($column, $column);
+		$this->queryBuilder->len($column, $decimals);
 		return $this;
 	}
 
