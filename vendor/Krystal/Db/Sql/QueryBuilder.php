@@ -199,8 +199,8 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	private function wrap($target)
 	{
-		// Don't wrap numeric values
-		if (is_numeric($target)) {
+		// Don't wrap numeric values or values that contain a dot
+		if (is_numeric($target) || strpos($target, '.') !== false) {
 			return $target;
 		}
 
