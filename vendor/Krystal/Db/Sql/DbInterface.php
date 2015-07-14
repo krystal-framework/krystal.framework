@@ -19,7 +19,7 @@ interface DbInterface extends QueryBuilderInterface
 	 * @param integer $page
 	 * @param integer $itemsPerPage
 	 * @param string $column Column to be selected when counting
-	 * @return \Krystal\Db\QueryBuilder
+	 * @return \Krystal\Db\Db
 	 */
 	public function paginate($page, $itemsPerPage, $column = '1');
 
