@@ -213,7 +213,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 				$column = $wrapper($column);
 			}
 
-		} else if (is_string($target) || is_integer($target)) {
+		} else if (is_string($target)) {
 			$target = $wrapper($target);
 
 		} else {
