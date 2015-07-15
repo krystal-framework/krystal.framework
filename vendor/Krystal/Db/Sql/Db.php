@@ -118,10 +118,16 @@ final class Db implements DbInterface
 	private function asData(array $data)
 	{
 		foreach ($data as $key => $value) {
-			$placeholder = $this->toPlaceholder($key);
+			if ($value instanceof RawSqlFragmentInterface) {
+				$data[$key] = $value->getFragment();
 
-			$data[$key] = $placeholder;
-			$this->bind($placeholder, $value);
+			} else {
+
+				$placeholder = $this->toPlaceholder($key);
+
+				$data[$key] = $placeholder;
+				$this->bind($placeholder, $value);
+			}
 		}
 
 		return $data;
