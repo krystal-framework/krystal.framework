@@ -404,10 +404,10 @@ The same  signature applies to `decrement()`, but it does `-` instead of `+`, as
 
 There are 4 methods that generate join queries. Usually the get called right after `from()` method. Here they are:
 
-    innerJoin($table, $left, $right)
-    leftJoin($table, $left, $right)
-    rightJoin($table, $left, $right)
-    fullJoin($table, $left, $right)
+    innerJoin($table, $a, $b)
+    leftJoin($table, $a, $b)
+    rightJoin($table, $a, $b)
+    fullJoin($table, $a, $b)
     
 
 They all do append a fragment, which is`%TYPE% JOIN second_table ON first_table.column = second_table.column` , where `%TYPE%`  is just a type of join call.

@@ -382,41 +382,41 @@ interface QueryBuilderInterface
 	 * Appends INNER JOIN
 	 * 
 	 * @param string $table Right table (second)
-	 * @param string $left A column from the left table (first)
-	 * @param string $right A column from the right table
+	 * @param string $a A column from the left table (first)
+	 * @param string $b A column from the right table (second)
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	public function innerJoin($table, $left, $right);
+	public function innerJoin($table, $a, $b);
 
 	/**
 	 * Appends LEFT JOIN
 	 * 
 	 * @param string $table Right table (second)
-	 * @param string $left A column from the left table (first)
-	 * @param string $right A column from the right table
+	 * @param string $a A column from the left table (first)
+	 * @param string $b A column from the right table (second)
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	public function leftJoin($table, $left, $right);
+	public function leftJoin($table, $a, $b);
 
 	/**
 	 * Appends RIGHT JOIN
 	 * 
 	 * @param string $table Right table (second)
-	 * @param string $left A column from the left table (first)
-	 * @param string $right A column from the right table
+	 * @param string $a A column from the left table (first)
+	 * @param string $b A column from the right table (second)
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	public function rightJoin($table, $left, $right);
+	public function rightJoin($table, $a, $b);
 
 	/**
 	 * Append FULL OUTER JOIN
 	 *
 	 * @param string $table Right table (second)
-	 * @param string $left A column from the left table (first)
-	 * @param string $right A column from the right table
+	 * @param string $a A column from the left table (first)
+	 * @param string $b A column from the right table (second)
 	 * @return \Krystal\Db\Sql\QueryBuilder
 	 */
-	public function fullJoin($table, $left, $right);
+	public function fullJoin($table, $a, $b);
 
 	/**
 	 * Appends HAVING() clause
