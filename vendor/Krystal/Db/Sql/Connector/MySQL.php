@@ -16,8 +16,7 @@ use PDO;
 final class MySQL extends PDO
 {
 	/**
-	 * State initialization
-	 * This makes PDO work more comfortable with MySQL
+	 * Initializes the PDO for MySQL
 	 * 
 	 * @param array $params
 	 * @return void
