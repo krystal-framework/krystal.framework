@@ -605,6 +605,23 @@ Decrements a value of a numeric column. This is an equivalent to:
     		->execute();
 
 
+# Debugging
+
+Sometimes you might want to determine what queries were executed or how a current query looks like.
+
+# Current query
+
+To view current query, you can simply do `echo $this->db`, since the database object implements `__toString()` method.
+
+# Query logger
+
+Query logger can be accessed like, `$this->db->getQueryLogger()` and it has two available methods.
+
+    getAll()
+    getCount()
+
+`getAll()` returns all executed queries, and `getCount()` returns an amount of executed queries.
+
 # Using raw PDO
 
 Query builder can not totally abstract SQL language, especially since it might be DB-vendor specific. Therefore, you might encounter scenarios where you would want to write plain SQL queries.
@@ -616,7 +633,8 @@ To access raw PDO instance, just call `getPdo()`, like this:
 
 @TODO
 
- - Sections in doc: Non-pk specific shortcuts, connection, query logger & debug, relations
+ - Sections in doc: Non-pk specific shortcuts, connection, relations
  * Need more SQL connectors
  * SQL Table Relations - Implement very common types at least
  * Methods in SQL\Qb for migrations
+
