@@ -437,6 +437,7 @@ There are also several methods, that generate functions. Let's take a peek at th
     \Krystal\Db\Sql\Db::len($column, $alias = null)
     \Krystal\Db\Sql\Db::round($column, $decimals)
     \Krystal\Db\Sql\Db::rand()
+    \Krystal\Db\Sql\Db::now()
 
 
 As you might already guessed, they all do append `$function($column)` fragment. in case its second argument`$alias` isn't `null`, then it uses its name as an alias and generates `$function($column) AS $alias` instead.

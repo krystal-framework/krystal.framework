@@ -372,6 +372,13 @@ interface QueryBuilderInterface
 	public function whereIn($column, array $values, $filter = false);
 
 	/**
+	 * Appends NOW() function
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function now();
+
+	/**
 	 * Appends RAND() function
 	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder

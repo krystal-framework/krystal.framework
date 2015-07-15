@@ -199,30 +199,14 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	private function wrap($target)
 	{
-		// Don't wrap numeric values or values that contain a dot
-		if (is_numeric($target) || strpos($target, '.') !== false) {
-			return $target;
+		// Lazy initialization
+		static $wrapper = null;
+		
+		if (is_null($wrapper)) {
+			$wrapper = new ColumnWrapper();
 		}
-
-		$wrapper = function($column) {
-			return sprintf('`%s`', $column);
-		};
-
-		if (is_array($target)) {
-			foreach($target as &$column) {
-				$column = $wrapper($column);
-			}
-
-		} else if (is_string($target)) {
-			$target = $wrapper($target);
-
-		} else {
-			throw new InvalidArgumentException(sprintf(
-				'Unknown type for wrapping supplied "%s"', gettype($target)
-			));
-		}
-
-		return $target;
+		
+		return $wrapper->wrap($target);
 	}
 
 	/**
@@ -853,6 +837,17 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	public function andWhereEqualsOrLessThan($column, $value, $filter = false)
 	{
 		return $this->andWhere($column, '<=', $value, $filter);
+	}
+
+	/**
+	 * Appends NOW() function
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function now()
+	{
+		$this->append(' NOW() ');
+		return $this;
 	}
 
 	/**

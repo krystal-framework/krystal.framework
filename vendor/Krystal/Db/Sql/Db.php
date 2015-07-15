@@ -328,6 +328,17 @@ final class Db implements DbInterface
 	 * 
 	 * @return \Krystal\Db\Sql\Db
 	 */
+	public function now()
+	{
+		$this->queryBuilder->now();
+		return $this;
+	}
+
+	/**
+	 * Appends RAND() function
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
 	public function rand()
 	{
 		$this->queryBuilder->rand();
