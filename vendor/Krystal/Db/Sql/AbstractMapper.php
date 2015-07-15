@@ -338,7 +338,7 @@ abstract class AbstractMapper
 	 * @param \Krystal\Paginate\PaginatorInterface $paginator
 	 * @return $this
 	 */
-	public function setPaginator(PaginatorInterface $paginator)
+	final public function setPaginator(PaginatorInterface $paginator)
 	{
 		$this->paginator = $paginator;
 		return $this;
@@ -349,7 +349,7 @@ abstract class AbstractMapper
 	 * 
 	 * @return object
 	 */
-	public function getPaginator()
+	final public function getPaginator()
 	{
 		return $this->paginator;
 	}
