@@ -24,16 +24,7 @@ class Factory
 	protected $namespace;
 
 	/**
-	 * Class initialization
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-	}
-
-	/**
-	 * Defines class pseudo namespace
+	 * Defines a namespace
 	 * 
 	 * @param string $namespace
 	 * @return void
@@ -65,23 +56,22 @@ class Factory
 		$className = sprintf('%s/%s', $this->getNamespace(), $filename);
 		// Normalize it
 		$className = str_replace(array('//', '/', '\\'), '\\', $className);
-		
+
 		return $className;
 	}
 
 	/**
 	 * Builds an instance according to the class name with its pseudo-namespace
 	 * 
-	 * @param string $className including preudo-namespace (PSR-0 compliant)
+	 * @param string $className including pseudo-namespace (PSR-0 compliant)
 	 * @param array $arguments Optionally
 	 * @return object
 	 */
 	final protected function buildInstance($className, array $arguments)
 	{
-		// TODO: Make hack to avoid reflection is most cases
-		
+		// @TODO: Make hack to avoid reflection is most cases
 		$reflector = new ReflectionClass($className);
-		
+
 		if ($reflector->hasMethod('__construct')) {
 			return $reflector->newInstanceArgs($arguments);
 		} else {
@@ -100,12 +90,11 @@ class Factory
 	 */
 	final public function build()
 	{
-		// Manage arguments
 		$arguments = func_get_args();
 		$filename = array_shift($arguments);
-		
+
 		$className = $this->buildClassNameByFileName($filename);
-		
+
 		/**
 		 * This heavily relies on PSR-0 autoloader
 		 * Checks whether a class has been loaded before,
@@ -113,11 +102,10 @@ class Factory
 		 */
 		if (class_exists($className, true)) {
 			return $this->buildInstance($className, $arguments);
-			
 		} else {
 			// Couldn't load a class
 			throw new RuntimeException(sprintf(
-				'Could not load a class %s via registred autoloader', $className
+				'Could not load a class %s via registered autoloader', $className
 			));
 		}
 	}
