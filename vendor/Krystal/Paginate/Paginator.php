@@ -296,21 +296,6 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Returns current page number
-	 * 
-	 * @throws \RuntimeException If current page hasn't been defined
-	 * @return integer
-	 */
-	public function getCurrentPage()
-	{
-		if (is_null($this->currentPage)) {
-			throw new RuntimeException('Define current page first');
-		}
-
-		return $this->currentPage;
-	}
-
-	/**
 	 * Count total amount of pages
 	 * 
 	 * @return integer
@@ -337,32 +322,32 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
+	 * Returns current page number
+	 * 
+	 * @return integer
+	 */
+	public function getCurrentPage()
+	{
+		return $this->currentPage;
+	}
+
+	/**
 	 * Returns defined per page count
 	 * 
-	 * @throws \RuntimeException if items per page were not defined
 	 * @return integer
 	 */
 	public function getItemsPerPage()
 	{
-		if (is_null($this->itemsPerPage)) {
-			throw new RuntimeException('Define items to show per page first');
-		}
-		
 		return $this->itemsPerPage;
 	}
 
 	/**
 	 * Returns total amount of pages
 	 * 
-	 * @throws \RuntimeException if amount of items was not defined
 	 * @return integer
 	 */
 	public function getTotalAmount()
 	{
-		if (is_null($this->totalAmount)) {
-			throw new RuntimeException('Define total amount of records first');
-		}
-
 		return $this->totalAmount;
 	}
 }
