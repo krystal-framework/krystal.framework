@@ -14,33 +14,25 @@ namespace Krystal\Validate\Constraint;
 use Krystal\Validate\Constraint\AbstractConstraint;
 
 /**
- * Checks whether given string in particular charset
+ * Checks whether given charset is supported
  */
 final class Charset extends AbstractConstraint
 {
 	/**
-	 * The target charset
-	 * 
-	 * @var string
+	 * {@inheritDoc}
 	 */
-	private $charset;
-
-	/**
-	 * State initialization
-	 * 
-	 * @param string $charset
-	 * @return void
-	 */
-	public function __construct($charset)
-	{
-		$this->charset = $charset;
-	}
+	protected $message = 'Unknown charset supplied';
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		//todo
+		if (in_array($target, mb_list_encodings())) {
+			return true;
+		} else {
+			$this->violate($this->message);
+			return false;
+		}
 	}
 }
