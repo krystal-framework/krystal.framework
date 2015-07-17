@@ -14,7 +14,7 @@ namespace Krystal\Validate\Constraint;
 use Krystal\Validate\Constraint\AbstractConstraint;
 
 /**
- * This checks whether given string is a callback function
+ * Checks whether given string is a callback function
  */
 final class Callable extends AbstractConstraint
 {
@@ -22,16 +22,19 @@ final class Callable extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = 'Given string is not callable';
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
 		if (is_callable($target)) {
-			
+			return true;
+
 		} else {
-			
+
+			$this->violate($this->message);
+			return false;
 		}
 	}
 }
