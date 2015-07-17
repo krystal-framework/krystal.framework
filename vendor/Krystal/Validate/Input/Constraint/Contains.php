@@ -26,6 +26,11 @@ final class Contains extends AbstractConstraint
 	private $charlist = array();
 
 	/**
+	 * {@inheritDoc}
+	 */
+	protected $message = 'Given string does not contain required character';
+
+	/**
 	 * State initialization
 	 * 
 	 * @param mixed $charlist
@@ -36,7 +41,7 @@ final class Contains extends AbstractConstraint
 		if (!is_array($charlist)) {
 			$charlist = (array) $charlist;
 		}
-		
+
 		$this->charlist = $charlist;
 	}
 
@@ -47,8 +52,12 @@ final class Contains extends AbstractConstraint
 	{
 		foreach ($this->charlist as $char) {
 			if (mb_strpos($char, $target, 'UTF-8') !== false) {
-				//@TODO
+				return true;
 			}
 		}
+
+		// By default
+		$this->violate($this->message);
+		return false;
 	}
 }
