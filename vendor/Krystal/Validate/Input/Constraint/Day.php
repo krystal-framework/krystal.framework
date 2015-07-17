@@ -19,20 +19,22 @@ use Krystal\Validate\Constraint\AbstractConstraint;
 final class Day extends AbstractConstraint
 {
 	/**
-	 * State initialization
-	 * 
-	 * @return void
+	 * {@inheritDoc}
 	 */
-	public function __construct()
-	{
-		
-	}
+	protected $message = 'Given string is out of day range';
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		
+		if ($target > 31) {
+
+			$this->violate($this->message);
+			return false;
+
+		} else {
+			return true;
+		}
 	}
 }
