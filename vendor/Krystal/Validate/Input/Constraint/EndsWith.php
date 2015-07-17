@@ -16,19 +16,40 @@ use Krystal\Validate\Constraint\AbstractConstraint;
 final class EndsWith extends AbstractConstraint
 {
 	/**
-	 * State initialization
+	 * A character that needs to be found
 	 * 
-	 * @return void
+	 * @var string
 	 */
-	public function __construct()
-	{
-	}
-	
+	private $needle;
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isValid($target)
+	protected $message = 'Given string does not end with a required character';
+
+	/**
+	 * State initialization
+	 * 
+	 * @param string $needle
+	 * @return void
+	 */
+	public function __construct($needle)
 	{
-		//@TODO
+		$this->needle = $needle;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function isValid($haystack)
+	{
+		if ($this->needle === '' || substr_compare($haystack, $this->needle, -strlen($this->needle)) === 0) {
+			return true;
+
+		} else {
+
+			$this->violate($this->message);
+			return false;
+		}
 	}
 }
