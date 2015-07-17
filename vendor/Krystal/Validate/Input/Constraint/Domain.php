@@ -14,25 +14,30 @@ namespace Krystal\Validate\Constraint;
 use Krystal\Validate\Constraint\AbstractConstraint;
 
 /**
- * Checks whether domain exists by looking-up
+ * Checks whether domain format is valid
  */
 final class Domain extends AbstractConstraint
 {
 	/**
-	 * State initialization
-	 * 
-	 * @return void
+	 * {@inheritDoc}
 	 */
-	public function __construct()
-	{
-		
-	}
-	
+	protected $message = 'Given string does not look like a domain name';
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		
+		// Got the pattern itself from here: http://stackoverflow.com/a/16491074/1208233
+		$pattern = '^(?!\-)(?:[a-zA-Z\d\-]{0,62}[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$^';
+
+		if (preg_match($pattern, $target)) {
+			return true;
+
+		} else {
+
+			$this->violate($this->message);
+			return false;
+		}
 	}
 }
