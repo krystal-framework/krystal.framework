@@ -13,13 +13,13 @@ namespace Krystal\Validate\Constraint;
 
 use Krystal\Validate\Constraint\AbstractConstraint;
 
-final class FileReadaable extends AbstractConstraint
+final class FileReadable extends AbstractConstraint
 {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $message = '';
-	
+	protected $message = 'Given file path does not point to readable file';
+
 	/**
 	 * {@inheritDoc}
 	 */
