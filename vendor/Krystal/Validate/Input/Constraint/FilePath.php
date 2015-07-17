@@ -11,24 +11,12 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 final class FilePath extends AbstractConstraint
 {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $message = '';
-
-	/**
-	 * State initialization
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-		
-	}
+	protected $message = 'Given string does not point to valid file path';
 
 	/**
 	 * {@inheritDoc}
