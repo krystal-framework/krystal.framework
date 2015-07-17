@@ -32,17 +32,16 @@ final class NoChar extends AbstractConstraint
 	public function __construct($chars)
 	{
 		if (is_array($chars)) {
-			$char = (array) $chars;
+			$chars = (array) $chars;
 		}
-		
-		$this->char = $char;
+
+		$this->chars = $chars;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		
 	}
 }

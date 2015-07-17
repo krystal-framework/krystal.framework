@@ -19,12 +19,12 @@ final class LessOrEqual extends AbstractConstraint
 	 * Target value
 	 */
 	private $value;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	protected $message = 'Value must be less or equal';
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -42,12 +42,11 @@ final class LessOrEqual extends AbstractConstraint
 	public function isValid($target)
 	{
 		if ($target >= $this->value) {
-			
 			return true;
-			
+
 		} else {
-			
-			$this->setError($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

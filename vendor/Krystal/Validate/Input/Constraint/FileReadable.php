@@ -26,12 +26,11 @@ final class FileReadaable extends AbstractConstraint
 	public function isValid($target)
 	{
 		if (is_file($target) && is_readable($target)) {
-			
 			return true;
-			
+
 		} else {
-			
-			$this->appendError($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

@@ -25,6 +25,5 @@ final class StartsWith extends AbstractConstraint
 	 */
 	public function isValid($target)
 	{
-		
 	}
 }

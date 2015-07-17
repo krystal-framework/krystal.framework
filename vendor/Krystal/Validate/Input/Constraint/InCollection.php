@@ -22,7 +22,7 @@ final class InCollection extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = 'A value does not belong to the collection';
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -33,19 +33,18 @@ final class InCollection extends AbstractConstraint
 	{
 		$this->collection = $collection;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
 		if (in_array($target, $this->collection)) {
-			
 			return true;
 			
 		} else {
-			
-			$this->setError($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

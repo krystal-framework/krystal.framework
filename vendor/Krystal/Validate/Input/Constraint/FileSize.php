@@ -19,12 +19,12 @@ final class FileSize extends AbstractConstraint
 	 * @var int
 	 */
 	private $target;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	protected $message = '';
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -35,18 +35,18 @@ final class FileSize extends AbstractConstraint
 	{
 		$this->target = (int) $target;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
 		if (filesize($target) == $this->target) {
-			
 			return true;
-			
+
 		} else {
-			
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

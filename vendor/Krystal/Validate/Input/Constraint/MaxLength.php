@@ -16,15 +16,15 @@ final class MaxLength extends AbstractConstraint
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $message = 'A value should contain at least';
+	protected $message = 'A value should exceeds its maximal length';
 
 	/**
 	 * Target maximal length we're comparing against
 	 * 
-	 * @var int
+	 * @var integer
 	 */
 	private $length;
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -35,7 +35,7 @@ final class MaxLength extends AbstractConstraint
 	{
 		$this->length = $length;
 	}
-	
+
 	/**
 	 * Checks whether target is valid
 	 * 
@@ -45,12 +45,12 @@ final class MaxLength extends AbstractConstraint
 	public function isValid($target)
 	{
 		if (mb_strlen($target, $this->charset) > $this->length) {
-			
-			$this->violate();
+
+			$this->violate($this->message);
 			return false;
-			
+
 		} else {
-			
+
 			return true;
 		}
 	}

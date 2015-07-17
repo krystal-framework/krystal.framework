@@ -25,6 +25,5 @@ final class Odd extends AbstractConstraint
 	 */
 	public function isValid($target)
 	{
-		
 	}
 }

@@ -19,12 +19,12 @@ final class GreaterThan extends AbstractConstraint
 	 * @var int
 	 */
 	private $value;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	protected $message = 'A value must be greater';
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -44,8 +44,8 @@ final class GreaterThan extends AbstractConstraint
 		if ($target > $this->value) {
 			return true;
 		} else {
-			
-			$this->setMessage($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

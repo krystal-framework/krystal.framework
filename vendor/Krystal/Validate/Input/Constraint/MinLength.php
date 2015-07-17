@@ -45,11 +45,12 @@ final class MinLength extends AbstractConstraint
 	public function isValid($target)
 	{
 		if (mb_strlen($target, $this->charset) < $this->length) {
-			
+
 			$this->violate(sprintf($this->message, $this->length));
 			return false;
+
 		} else {
-			
+
 			return true;
 		}
 	}

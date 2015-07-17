@@ -19,7 +19,7 @@ final class FilePath extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = '';
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -29,19 +29,18 @@ final class FilePath extends AbstractConstraint
 	{
 		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
 		if (is_file($target)) {
-			
 			return true;
-			
+
 		} else {
-			
-			$this->appendError($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

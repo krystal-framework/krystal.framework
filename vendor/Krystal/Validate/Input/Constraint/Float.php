@@ -25,9 +25,9 @@ final class Float extends AbstractConstraint
 	{
 		if (filter_var($target, \FILTER_VALIDATE_FLOAT)) {
 			return true;
-			
+
 		} else {
-			$this->setMessage($this->message);
+			$this->violate($this->message);
 			return false;
 		}
 	}

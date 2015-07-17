@@ -24,7 +24,7 @@ final class Charset extends AbstractConstraint
 	 * @var string
 	 */
 	private $charset;
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -35,7 +35,7 @@ final class Charset extends AbstractConstraint
 	{
 		$this->charset = $charset;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

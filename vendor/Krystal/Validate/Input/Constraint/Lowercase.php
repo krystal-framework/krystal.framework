@@ -25,8 +25,10 @@ final class Lowercase extends AbstractConstraint
 	{
 		if (strtolower($target) === $target) {
 			return true;
+
 		} else {
-			$this->setMessage($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

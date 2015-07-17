@@ -27,7 +27,7 @@ final class Day extends AbstractConstraint
 	{
 		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

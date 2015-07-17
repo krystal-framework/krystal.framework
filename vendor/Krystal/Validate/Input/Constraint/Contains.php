@@ -19,12 +19,12 @@ use Krystal\Validate\Constraint\AbstractConstraint;
 final class Contains extends AbstractConstraint
 {
 	/**
-	 * Target charlist to compare against
+	 * Target char-list to compare against
 	 * 
 	 * @var array
 	 */
 	private $charlist = array();
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -39,7 +39,7 @@ final class Contains extends AbstractConstraint
 		
 		$this->charlist = $charlist;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

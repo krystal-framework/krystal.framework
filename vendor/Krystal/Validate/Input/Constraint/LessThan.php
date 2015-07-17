@@ -22,14 +22,12 @@ final class LessThan extends AbstractConstraint
 	 */
 	public function __construct()
 	{
-		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		
 	}
 }

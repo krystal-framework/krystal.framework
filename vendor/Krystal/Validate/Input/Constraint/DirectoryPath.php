@@ -22,7 +22,7 @@ final class DirectoryPath extends AbstractConstraint
 	 * @var string
 	 */
 	protected $message = 'Given string is not a directory';
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -31,8 +31,8 @@ final class DirectoryPath extends AbstractConstraint
 		if (is_dir($target)) {
 			return true;
 		} else {
-			
-			$this->setMessage($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

@@ -22,12 +22,11 @@ final class RegEx extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = '';
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		
 	}
 }

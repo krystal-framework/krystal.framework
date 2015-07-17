@@ -21,12 +21,12 @@ final class Uppercase extends AbstractConstraint
 	 * @var string
 	 */
 	private $charset;
-	
+
 	/**
-	 * Target message
+	 * {@inheritDoc}
 	 */
 	protected $message = 'A string must be in uppercase';
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -37,19 +37,18 @@ final class Uppercase extends AbstractConstraint
 	{
 		$this->charset = $charset;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
 		if (mb_strtouuper($target, $this->charset) === $target) {
-			
 			return true;
-		
+
 		} else {
-			
-			$this->setError($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

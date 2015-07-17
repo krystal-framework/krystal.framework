@@ -28,8 +28,9 @@ final class EmailPattern extends AbstractConstraint
 	{
 		if (filter_var($target, \FILTER_VALIDATE_EMAIL)) {
 			return true;
-			
+
 		} else {
+
 			$this->violate($this->message);
 			return false;
 		}

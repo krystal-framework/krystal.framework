@@ -29,7 +29,7 @@ final class Integer extends AbstractConstraint
 	{
 		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

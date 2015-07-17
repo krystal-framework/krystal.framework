@@ -11,15 +11,13 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 final class MacAddress extends AbstractConstraint
 {
 	/**
 	 * {@inheritDoc}
 	 */
 	protected $message = '';
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -27,9 +25,8 @@ final class MacAddress extends AbstractConstraint
 	 */
 	public function __construct()
 	{
-		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

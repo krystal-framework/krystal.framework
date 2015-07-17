@@ -38,6 +38,6 @@ final class Extension extends AbstractConstraint
 	 */
 	public function isValid($target)
 	{
-		pathinfo($target, \PATHINFO_EXTENSION);
+		//@TODO pathinfo($target, \PATHINFO_EXTENSION);
 	}
 }

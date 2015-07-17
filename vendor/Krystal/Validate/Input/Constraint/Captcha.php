@@ -46,7 +46,7 @@ final class Captcha extends AbstractConstraint
 		if ($this->captcha->isValid($input)) {
 			return true;
 		} else {
-			
+
 			$this->violate($this->message);
 			return false;
 		}

@@ -22,7 +22,7 @@ final class Csv extends AbstractConstraint
 	 * @var string
 	 */
 	private $separator;
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -32,7 +32,7 @@ final class Csv extends AbstractConstraint
 	{
 		$this->separator = $separator;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

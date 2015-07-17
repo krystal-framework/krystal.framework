@@ -22,12 +22,12 @@ final class Serialized extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	private $adapter;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	protected $message = 'Given string is not serialized';
-	
+
 	/**
 	 * State initialization
 	 * 
@@ -38,19 +38,18 @@ final class Serialized extends AbstractConstraint
 	{
 		$this->adapter = $adapter;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
 		if ($this->adapter->isSerialized($target)) {
-			
 			return true;
-			
+
 		} else {
-			
-			$this->setError($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}

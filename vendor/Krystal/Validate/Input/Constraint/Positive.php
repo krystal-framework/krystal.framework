@@ -19,12 +19,11 @@ final class Positive extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = 'A number must be positive';
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		
 	}
 }

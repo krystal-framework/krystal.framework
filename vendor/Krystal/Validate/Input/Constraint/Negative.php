@@ -16,24 +16,16 @@ use Krystal\Validate\Constraint\AbstractConstraint;
 class Negative extends AbstractConstraint
 {
 	/**
-	 * State initialization
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-		
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
 		If ((-1 * $target) * (-1) === $target) {
 			return true;
+
 		} else {
-			
+
+			$this->violate('A value must be negative');
 			return false;
 		}
 	}

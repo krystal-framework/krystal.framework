@@ -18,7 +18,7 @@ final class XDigit extends AbstractConstraint
 	/**
 	 * {@inheritDoc}
 	 */
-	private $error = 'A value must be X-Digit';
+	protected $message = 'A value must be X-Digit';
 
 	/**
 	 * {@inheritDoc}
@@ -27,9 +27,9 @@ final class XDigit extends AbstractConstraint
 	{
 		if (ctype_xdigit($target)) {
 			return true;
-		
+
 		} else {
-			$this->setError($this->error);
+			$this->violate($this->message);
 			return false;
 		}
 	}

@@ -21,11 +21,11 @@ final class Timestamp extends AbstractConstraint
 	public function isValid($target)
 	{
 		if (is_numeric($target) && strlen($target) < 11) {
-			
 			return true;
+
 		} else {
-			
-			$this->setError($this->message);
+
+			$this->violate($this->message);
 			return false;
 		}
 	}
