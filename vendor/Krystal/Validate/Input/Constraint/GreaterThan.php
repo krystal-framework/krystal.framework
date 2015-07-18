@@ -11,24 +11,24 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 final class GreaterThan extends AbstractConstraint
 {
 	/**
-	 * @var int
+	 * {@inheritDoc}
+	 */
+	protected $message = 'A value must be greater than %s';
+
+	/**
+	 * Target value
+	 * 
+	 * @var integer|float
 	 */
 	private $value;
 
 	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value must be greater';
-
-	/**
 	 * State initialization
 	 * 
-	 * @param string|int $value
+	 * @param integer|float $value
 	 * @return void
 	 */
 	public function __construct($value)
@@ -45,7 +45,7 @@ final class GreaterThan extends AbstractConstraint
 			return true;
 		} else {
 
-			$this->violate($this->message);
+			$this->violate(sprintf($this->message, $this->value));
 			return false;
 		}
 	}
