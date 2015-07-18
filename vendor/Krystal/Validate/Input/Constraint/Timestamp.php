@@ -11,10 +11,13 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 final class Timestamp extends AbstractConstraint
 {
+	/**
+	 * {@inheritDoc}
+	 */
+	protected $message = 'Given string does not look like a valid UNIX-timestamp';
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -22,12 +25,9 @@ final class Timestamp extends AbstractConstraint
 	{
 		if (is_numeric($target) && strlen($target) < 11) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}
 	}
 }
-
