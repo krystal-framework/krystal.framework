@@ -11,9 +11,7 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
-class Negative extends AbstractConstraint
+final class Negative extends AbstractConstraint
 {
 	/**
 	 * {@inheritDoc}
@@ -30,4 +28,3 @@ class Negative extends AbstractConstraint
 		}
 	}
 }
-
