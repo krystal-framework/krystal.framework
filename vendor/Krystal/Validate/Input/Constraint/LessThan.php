@@ -11,17 +11,29 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 final class LessThan extends AbstractConstraint
 {
 	/**
+	 * {@inheritDoc}
+	 */
+	protected $message = 'A value must be less than %s';
+
+	/**
+	 * Target value
+	 * 
+	 * @var integer|float
+	 */
+	private $value;
+
+	/**
 	 * State initialization
 	 * 
+	 * @param float|integer $value
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct($value)
 	{
+		$this->value = $value;
 	}
 
 	/**
@@ -29,5 +41,12 @@ final class LessThan extends AbstractConstraint
 	 */
 	public function isValid($target)
 	{
+		if ($target < $this->value) {
+			return true;
+
+		} else {
+			$this->violate(sprintf($this->message, $this->value));
+			return false;
+		}
 	}
 }
