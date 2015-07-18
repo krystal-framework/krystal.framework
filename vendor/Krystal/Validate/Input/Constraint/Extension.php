@@ -11,33 +11,45 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 /**
- * Checks for an extension
+ * If a path contains required extension
  */
 final class Extension extends AbstractConstraint
 {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $message = '';
-	
+	protected $message = 'Given path does not contain required extension';
+
+	/**
+	 * Desired extension
+	 * 
+	 * @var string
+	 */
+	private $extension;
+
 	/**
 	 * State initialization
 	 * 
+	 * @param string $extension
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct($extension)
 	{
-		
+		$this->extension = $extension;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		//@TODO pathinfo($target, \PATHINFO_EXTENSION);
+		if ($this->extension == pathinfo($target, \PATHINFO_EXTENSION)) {
+			return true;
+		} else {
+
+			$this->violate($this->message);
+			return false;
+		}
 	}
 }
