@@ -11,22 +11,28 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 /**
- * Checks whether regex is valid
+ * Checks whether RegEx is valid
  */
 final class RegEx extends AbstractConstraint
 {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $message = '';
+	protected $message = 'Given string is not a valid RegEx';
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
+		// @ - intentionally
+		if (@preg_match($target, ' ')) {
+			return true;
+		} else {
+
+			$this->violate($this->message);
+			return false;
+		}
 	}
 }
