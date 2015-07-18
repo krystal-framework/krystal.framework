@@ -11,30 +11,24 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 final class Integer extends AbstractConstraint
 {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected $message = '';
-	
-	/**
-	 * State initialization
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-		
-	}
+	protected $message = 'A value should represent an integer';
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		
+		if (filter_var($target, \FILTER_VALIDATE_INT)) {
+			return true;
+
+		} else {
+			$this->violate($this->message);
+			return false;
+		}
 	}
 }
