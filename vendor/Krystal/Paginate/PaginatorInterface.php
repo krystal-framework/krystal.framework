@@ -148,6 +148,20 @@ interface PaginatorInterface
 	public function getPreviousPage();
 
 	/**
+	 * Returns the URL of the next page
+	 * 
+	 * @return string
+	 */
+	public function getNextPageUrl();
+
+	/**
+	 * Return the URL of the previous page
+	 * 
+	 * @return string
+	 */
+	public function getPreviousPageUrl();
+
+	/**
 	 * Returns current page number
 	 * 
 	 * @throws \RuntimeException If current page hasn't been defined

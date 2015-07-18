@@ -322,6 +322,26 @@ class Paginator implements PaginatorInterface
 	}
 
 	/**
+	 * Returns the URL of the next page
+	 * 
+	 * @return string
+	 */
+	public function getNextPageUrl()
+	{
+		return $this->getUrl($this->getNextPage());
+	}
+
+	/**
+	 * Return the URL of the previous page
+	 * 
+	 * @return string
+	 */
+	public function getPreviousPageUrl()
+	{
+		return $this->getUrl($this->getPreviousPage());
+	}
+
+	/**
 	 * Returns current page number
 	 * 
 	 * @return integer
