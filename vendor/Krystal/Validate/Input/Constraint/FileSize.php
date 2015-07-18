@@ -11,29 +11,29 @@
 
 namespace Krystal\Validate\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 final class FileSize extends AbstractConstraint
 {
 	/**
-	 * @var int
-	 */
-	private $target;
-
-	/**
 	 * {@inheritDoc}
 	 */
-	protected $message = '';
+	protected $message = 'Given file path does not match required size';
+
+	/**
+	 * Desired file size in bytes
+	 * 
+	 * @var integer
+	 */
+	private $size;
 
 	/**
 	 * State initialization
 	 * 
-	 * @param string $target
+	 * @param string $size
 	 * @return void
 	 */
-	public function __construct($target)
+	public function __construct($size)
 	{
-		$this->target = (int) $target;
+		$this->size = (int) $size;
 	}
 
 	/**
@@ -41,7 +41,7 @@ final class FileSize extends AbstractConstraint
 	 */
 	public function isValid($target)
 	{
-		if (filesize($target) == $this->target) {
+		if (filesize($target) == $this->size) {
 			return true;
 
 		} else {
