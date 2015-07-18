@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Validate\Constraint;
+namespace Krystal\Validate\Input\Constraint;
 
 final class GreaterThan extends AbstractConstraint
 {

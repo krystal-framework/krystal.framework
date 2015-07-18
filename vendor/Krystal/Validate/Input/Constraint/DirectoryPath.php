@@ -9,9 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Validate\Constraint;
-
-use Krystal\Validate\Constraint\AbstractConstraint;
+namespace Krystal\Validate\Input\Constraint;
 
 /**
  * Checks whether given string is a directory on the local file system
@@ -19,7 +17,7 @@ use Krystal\Validate\Constraint\AbstractConstraint;
 final class DirectoryPath extends AbstractConstraint
 {
 	/**
-	 * @var string
+	 * {@inheritDoc}
 	 */
 	protected $message = 'Given string is not a directory';
 

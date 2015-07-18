@@ -9,9 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Validate\Constraint;
-
-use Krystal\Validate\Constraint\AbstractConstraint;
+namespace Krystal\Validate\Input\Constraint;
 
 /**
  * Checks whether given string exists in array

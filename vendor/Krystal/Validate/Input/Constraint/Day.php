@@ -11,8 +11,6 @@
 
 namespace Krystal\Validate\Input\Constraint;
 
-use Krystal\Validate\Constraint\AbstractConstraint;
-
 /**
  * Checks whether given string is in a range between 1 and 31
  */

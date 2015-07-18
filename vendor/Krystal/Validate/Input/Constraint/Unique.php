@@ -9,10 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Validate\Constraint;
-
-use Krystal\Validate\Constraint\AbstractConstraint;
-use InvalidArgumentException;
+namespace Krystal\Validate\Input\Constraint;
 
 final class Unique extends AbstractConstraint
 {
