@@ -57,6 +57,23 @@ abstract class AbstractMapper
 	}
 	
 	/**
+	 * Executes raw SQL from a file
+	 * 
+	 * @param string $file
+	 * @return boolean
+	 */
+	final protected function executeSqlFromFile($file)
+	{
+		$builder = new TableBuilder($this->db->getPdo());
+
+		if ($builder->loadFromFile($file)) {
+			return $builder->run();
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Checks whether shortcut data
 	 * 
 	 * @return void
