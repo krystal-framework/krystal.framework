@@ -17,11 +17,10 @@ interface TableBuilderInterface
 	 * Loads data from file
 	 * 
 	 * @param string $filename
-	 * @throws InvalidArgumentException if $filename isn't string
-	 * @return void
+	 * @return boolean
 	 */
 	public function loadFromFile($filename);
-	
+
 	/**
 	 * Build tables
 	 * 

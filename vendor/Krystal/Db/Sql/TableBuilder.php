@@ -47,20 +47,20 @@ final class TableBuilder implements TableBuilderInterface
 	 * Loads data from file
 	 * 
 	 * @param string $filename
-	 * @throws \InvalidArgumentException if $filename isn't string
-	 * @return void
+	 * @return boolean
 	 */
 	public function loadFromFile($filename)
 	{
 		if (is_file($filename)) {
 
 			$content = file_get_contents($filename);
-			$this->queries	= $this->parse($content, ';', $this->charset);
+			$this->queries	= $this->parse($content, $this->charset);
+
+			return true;
 
 		} else {
-			throw new InvalidArgumentException(sprintf(
-				'Invalid argument supplied "%s" it must be a regular file', $filename
-			));
+
+			return false;
 		}
 	}
 
@@ -68,13 +68,12 @@ final class TableBuilder implements TableBuilderInterface
 	 * Parses SQL (that would be full of statements) string and returns an array
 	 * 
 	 * @param string $sql SQL string with all queries
-	 * @param string $delimiter That breaks into strins
 	 * @param string $charset The charset to be used while parsing
 	 * @return array
 	 */
-	private function parse($sql, $delimiter, $charset)
+	private function parse($sql, $charset)
 	{
-		$queries = explode($delimiter, $sql);
+		$queries = explode(';', $sql);
 		$result  = array();
 
 		foreach ($queries as $query) {
