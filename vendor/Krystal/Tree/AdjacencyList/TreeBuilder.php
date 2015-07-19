@@ -104,10 +104,6 @@ final class TreeBuilder implements TreeInterface
 				// Current found node
 				$node = $relations['items'][$id][$key];
 
-				if (!isset($node[$key])) {
-					throw new \Exception();
-				}
-
 				$result = array_merge($result, $this->findChildNodeWithKey($id, $key));
 				$result[] = $node;
 			}
