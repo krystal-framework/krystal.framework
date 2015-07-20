@@ -30,16 +30,25 @@ abstract class AbstractMapper
 	protected $db;
 
 	/**
+	 * Optional table prefix
+	 * 
+	 * @var string
+	 */
+	protected static $prefix;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param \Krystal\Db\Sql\Db
 	 * @param \Krystal\Paginate\PaginatorInterface $paginator
+	 * @param string $prefix
 	 * @return void
 	 */
-	public function __construct(Db $db, PaginatorInterface $paginator)
+	public function __construct(Db $db, PaginatorInterface $paginator, $prefix = null)
 	{
 		$this->db = $db;
 		$this->setPaginator($paginator);
+		static::$prefix = $prefix;
 	}
 
 	/**
@@ -55,7 +64,25 @@ abstract class AbstractMapper
 	protected function oneToOne()
 	{
 	}
-	
+
+	/**
+	 * Returns table name with a prefix
+	 * 
+	 * @param string $table
+	 * @return string
+	 */
+	protected static function getWithPrefix($table)
+	{
+		$prefix = static::$prefix;
+
+		if (is_null($prefix)) {
+			// If prefix is null, then no need to prepend a reduntant _
+			return $table;
+		}
+
+		return sprintf('%s_%s', $prefix, $table);
+	}
+
 	/**
 	 * Executes raw SQL from a file
 	 * 
