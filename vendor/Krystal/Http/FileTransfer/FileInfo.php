@@ -13,16 +13,44 @@ namespace Krystal\Http\FileTransfer;
 
 use Krystal\Http\FileTransfer\FileInfoInterface;
 
-// TODO: rename to FileBag
+//@TODO: rename to FileEntity
 final class FileInfo implements FileInfoInterface
 {
 	/**
-	 * Files reference
+	 * Detected MIMI-type
 	 * 
-	 * @var array
+	 * @var string
 	 */
-	private $container = array();
+	private $type;
 
+	/**
+	 * Original file name
+	 * 
+	 * @var string
+	 */
+	private $name;
+
+	/**
+	 * Auto-generated path to temporary file
+	 * 
+	 * @var string
+	 */
+	private $tmpName;
+
+	/**
+	 * Error code if present
+	 * 
+	 * @var string
+	 */
+	private $error;
+
+	/**
+	 * File size in bytes
+	 * 
+	 * @var integer
+	 */
+	private $size;
+	
 	/**
 	 * Defines type for a file
 	 * 
@@ -31,7 +59,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function setType($type)
 	{
-		$this->container['type'] = $type;
+		$this->type = $type;
 		return $this;
 	}
 
@@ -42,7 +70,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function getType()
 	{
-		return $this->container['type'];
+		return $this->type;
 	}
 
 	/**
@@ -53,7 +81,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function setName($name)
 	{
-		$this->container['name'] = $name;
+		$this->name = $name;
 		return $this;
 	}
 
@@ -64,7 +92,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function getName()
 	{
-		return $this->container['name'];
+		return $this->name;
 	}
 
 	/**
@@ -75,7 +103,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function setTmpName($tmpName)
 	{
-		$this->container['tmpName'] = $tmpName;
+		$this->tmpName = $tmpName;
 		return $this;
 	}
 
@@ -86,7 +114,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function getTmpName()
 	{
-		return $this->container['tmpName'];
+		return $this->tmpName;
 	}
 
 	/**
@@ -97,7 +125,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function setError($error)
 	{
-		$this->container['error'] = $error;
+		$this->error = $error;
 		return $this;
 	}
 
@@ -108,7 +136,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function getError()
 	{
-		return $this->container['error'];
+		return $this->error;
 	}
 
 	/**
@@ -119,7 +147,7 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function setSize($size)
 	{
-		$this->container['size'] = $size;
+		$this->size = $size;
 		return $this;
 	}
 
@@ -130,6 +158,6 @@ final class FileInfo implements FileInfoInterface
 	 */
 	public function getSize()
 	{
-		return $this->container['size'];
+		return $this->size;
 	}
 }
