@@ -14,7 +14,7 @@ namespace Krystal\Image\Processor\GD;
 use RuntimeException;
 
 if (!extension_loaded('gd')) {
-	throw new RuntimeException('GD library is not installed');
+	throw new RuntimeException('Image processor requires GD library');
 }
 
 use LogicException;
