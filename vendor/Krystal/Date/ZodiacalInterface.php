@@ -32,6 +32,14 @@ namespace Krystal\Date;
 interface ZodiacalInterface
 {
 	/**
+	 * Manualy checks whether $sign equals to calculated one
+	 * 
+	 * @param string $sign
+	 * @return boolean
+	 */
+	public function is($sign);
+
+	/**
 	 * Gets a zodiacal sign based on a month and a day
 	 * 
 	 * @return string|boolean The name, false on failure

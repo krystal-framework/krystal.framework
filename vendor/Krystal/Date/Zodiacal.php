@@ -41,8 +41,7 @@ final class Zodiacal implements ZodiacalInterface
 	 */
 	public function __construct($month, $day)
 	{
-		// Normalize the month's name
-		$month = ucfirst(strtolower($month));
+		$month = $this->normalize($month);
 		$day = (int) $day;
 
 		if (!$this->isValidMonth($month)) {
@@ -55,6 +54,17 @@ final class Zodiacal implements ZodiacalInterface
 
 		$this->month = $month;
 		$this->day = $day;
+	}
+
+	/**
+	 * Manualy checks whether $sign equals to calculated one
+	 * 
+	 * @param string $sign
+	 * @return boolean
+	 */
+	public function is($sign)
+	{
+		return $this->getSign() === $this->normalize($sign);
 	}
 
 	/**
@@ -135,6 +145,17 @@ final class Zodiacal implements ZodiacalInterface
 			'Aquarius' => 'isAquarius',
 			'Pisces' => 'isPisces',
 		);
+	}
+
+	/**
+	 * Normalizes a month
+	 * 
+	 * @param string $month
+	 * @return string
+	 */
+	private function normalize($month)
+	{
+		return ucfirst(strtolower($month));
 	}
 
 	/**
