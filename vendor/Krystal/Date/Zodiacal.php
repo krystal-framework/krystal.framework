@@ -101,7 +101,7 @@ final class Zodiacal implements ZodiacalInterface
 			'March', 
 			'April', 
 			'May', 
-			'Juny',
+			'June',
 			'July', 
 			'August', 
 			'September', 
