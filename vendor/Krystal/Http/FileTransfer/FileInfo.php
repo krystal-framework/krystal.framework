@@ -50,12 +50,12 @@ final class FileInfo implements FileInfoInterface
 	 * @var integer
 	 */
 	private $size;
-	
+
 	/**
 	 * Defines type for a file
 	 * 
 	 * @param string $type
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileInfo
 	 */
 	public function setType($type)
 	{
@@ -77,7 +77,7 @@ final class FileInfo implements FileInfoInterface
 	 * Defines a name
 	 * 
 	 * @param string $name
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileInfo
 	 */
 	public function setName($name)
 	{
@@ -99,7 +99,7 @@ final class FileInfo implements FileInfoInterface
 	 * Defines a temporary name
 	 * 
 	 * @param string $tmpName
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileInfo
 	 */
 	public function setTmpName($tmpName)
 	{
@@ -121,7 +121,7 @@ final class FileInfo implements FileInfoInterface
 	 * Defines an error
 	 * 
 	 * @param string $error
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileInfo
 	 */
 	public function setError($error)
 	{
@@ -143,7 +143,7 @@ final class FileInfo implements FileInfoInterface
 	 * Defines a size
 	 * 
 	 * @param string $size
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileInfo
 	 */
 	public function setSize($size)
 	{
