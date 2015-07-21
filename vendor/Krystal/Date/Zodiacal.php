@@ -11,6 +11,9 @@
 
 namespace Krystal\Date;
 
+use UnexpectedValueException;
+use OutOfRangeException;
+
 final class Zodiacal implements ZodiacalInterface
 {
 	/**
@@ -32,10 +35,24 @@ final class Zodiacal implements ZodiacalInterface
 	 * 
 	 * @param string $month
 	 * @param integer $day
+	 * @throws \UnexpectedValueException If unknown month supplied
+	 * @throws \OutOfRangeException If a day is out of range
 	 * @return void
 	 */
 	public function __construct($month, $day)
 	{
+		// Normalize the month's name
+		$month = ucfirst(strtolower($month));
+		$day = (int) $day;
+
+		if (!$this->isValidMonth($month)) {
+			throw new UnexpectedValueException(sprintf('Uknown month supplied "%s"', $month));
+		}
+
+		if (!$this->dayInRange($day)) {
+			throw new OutOfRangeException(sprintf('A day must be in rage of 1-31. Invalid number supplied "%s"'));
+		}
+
 		$this->month = $month;
 		$this->day = $day;
 	}
@@ -47,23 +64,27 @@ final class Zodiacal implements ZodiacalInterface
 	 */
 	public function getSign()
 	{
-		// Normalize the month's name
-		$month = ucfirst(strtolower($this->month));
-
-		if (!$this->isValidMonth($month)) {
-			return false;
-		}
-
 		foreach ($this->getMap() as $name => $method) {
 
 			// Call associated method dynamically
-			if (call_user_func(array($this, $method), $month, $this->day)) {
+			if (call_user_func(array($this, $method))) {
 				return $name;
 			}
 		}
 
 		// On failure
 		return false;
+	}
+
+	/**
+	 * Checks whether day is in range
+	 * 
+	 * @param integer $day
+	 * @return boolean
+	 */
+	private function dayInRange($day)
+	{
+		return (1 <= $day && $day <= 31);
 	}
 
 	/**
@@ -119,144 +140,120 @@ final class Zodiacal implements ZodiacalInterface
 	/**
 	 * Checks whether the sign is Aries
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isAries($month, $day)
+	public function isAries()
 	{
-		return ($month === 'March') && ($day >= 21) && ($day <= 31) || ($month === 'April') && ($day <= 20);
+		return ($this->month === 'March') && ($this->day >= 21) && ($this->day <= 31) || ($this->month === 'April') && ($this->day <= 20);
 	}
 
 	/**
 	 * Checks whether the sign is Taurus
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isTaurus($month, $day)
+	public function isTaurus()
 	{
-		return ($month === 'April') && ($day >= 21) && ($day <= 30) || ($month === 'May') && ($day <= 21);
+		return ($this->month === 'April') && ($this->day >= 21) && ($this->day <= 30) || ($this->month === 'May') && ($this->day <= 21);
 	}
 
 	/**
 	 * Checks whether the sign is Gemini
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isGemini($month, $day)
+	public function isGemini()
 	{
-		return ($month === 'May') && ($day >= 22) && ($day <= 31) || ($month === 'July') && ($day <= 21);
+		return ($this->month === 'May') && ($this->day >= 22) && ($this->day <= 31) || ($this->month === 'July') && ($this->day <= 21);
 	}
 
 	/**
 	 * Checks whether the sign is Cancer
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isCancer($month, $day)
+	public function isCancer()
 	{
-		return ($month === 'June') && ($day >= 22) && ($day <= 30) || ($month === 'July') && ($day <= 22);
+		return ($this->month === 'June') && ($this->day >= 22) && ($this->day <= 30) || ($this->month === 'July') && ($this->day <= 22);
 	}
 
 	/**
 	 * Checks whether the sign is Leo
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isLeo($month, $day)
+	public function isLeo()
 	{
-		return ($month === 'July') && ($day >= 23) && ($day <= 30) || ($month === 'May') && ($day <= 22);
+		return ($this->month === 'July') && ($this->day >= 23) && ($this->day <= 30) || ($this->month === 'May') && ($this->day <= 22);
 	}
 
 	/**
 	 * Checks whether the sign is Virgo
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isVirgo($month, $day)
+	public function isVirgo()
 	{
-		return ($month === 'August') && ($day >= 23) && ($day <= 30) || ($month === 'September') && ($day <= 23);
+		return ($this->month === 'August') && ($this->day >= 23) && ($this->day <= 30) || ($this->month === 'September') && ($this->day <= 23);
 	}
 
 	/**
 	 * Checks whether the sign is Scorpio
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isScorpio($month, $day)
+	public function isScorpio()
 	{
-		return ($month === 'October') && ($day >= 24) && ($day <= 30) || ($month === 'November') && ($day <= 22);
+		return ($this->month === 'October') && ($this->day >= 24) && ($this->day <= 30) || ($this->month === 'November') && ($this->day <= 22);
 	}
 
 	/**
 	 * Checks whether the sign is Libra
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isLibra($month, $day)
+	public function isLibra()
 	{
-		return ($month === 'September') && ($day >= 24) && ($day <= 30) || ($month === 'October') && ($day <= 23);
+		return ($this->month === 'September') && ($this->day >= 24) && ($this->day <= 30) || ($this->month === 'October') && ($this->day <= 23);
 	}
 
 	/**
 	 * Checks whether the sign is Sagittarius
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isSagittarius($month, $day)
+	public function isSagittarius()
 	{
-		return ($month === 'November') && ($day >= 23) && ($day <= 30) || ($month === 'December') && ($day <= 21);
+		return ($this->month === 'November') && ($this->day >= 23) && ($this->day <= 30) || ($this->month === 'December') && ($this->day <= 21);
 	}
 
 	/**
 	 * Checks whether the sign is Capricorn
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isCapricorn($month, $day)
+	public function isCapricorn()
 	{
-		return ($month === 'December') && ($day >= 22) && ($day <= 30) || ($month === 'January') && ($day <= 20);
+		return ($this->month === 'December') && ($this->day >= 22) && ($this->day <= 30) || ($this->month === 'January') && ($this->day <= 20);
 	}
 
 	/**
 	 * Checks whether the sign is Aquarius
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isAquarius($month, $day)
+	public function isAquarius()
 	{
-		return ($month === 'January') && ($day >= 21) && ($day <= 30) || ($month === 'February') && ($day <= 19);
+		return ($this->month === 'January') && ($this->day >= 21) && ($this->day <= 30) || ($this->month === 'February') && ($this->day <= 19);
 	}
 
 	/**
 	 * Checks whether the sign is Pisces
 	 * 
-	 * @param string $month Month name
-	 * @param integer $day
 	 * @return boolean
 	 */
-	private function isPisces($month, $day)
+	public function isPisces()
 	{
-		return ($month === 'February') && ($day >= 20) && ($day <= 30) || ($month === 'March') && ($day <= 20);
+		return ($this->month === 'February') && ($this->day >= 20) && ($this->day <= 30) || ($this->month === 'March') && ($this->day <= 20);
 	}
 }
