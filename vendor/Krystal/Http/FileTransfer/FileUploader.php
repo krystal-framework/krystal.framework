@@ -48,14 +48,17 @@ final class FileUploader implements FileUploaderInterface
 	 * 
 	 * @param string $destination
 	 * @param array $files
+	 * @throws \LogicException if at least one value in $files is not an instance of \Krystal\Http\FileTransfer\FileInfoInterface
 	 * @return boolean
 	 */
 	public function upload($destination, array $files)
 	{
 		foreach ($files as $file) {
 			if (!($file instanceof FileInfo)) {
-				// This should never occur, but in theory we have to do that because of framework users
-				throw new LogicException();
+				// This should never occur, but it's always better not to rely on framework users
+				throw new LogicException(sprintf(
+					'Each file entity must be an instance of \Krystal\Http\FileTransfer\FileInfoInterface, but received "%s"', gettype($file)
+				));
 			}
 
 			// Gotta ensure again, UPLOAD_ERR_OK means there are no errors
