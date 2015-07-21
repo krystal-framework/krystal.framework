@@ -11,12 +11,10 @@
 
 namespace Krystal\Http\FileTransfer;
 
-use Krystal\Http\FileTransfer\Uploader;
-
 final class UploadChain implements ChainInterface
 {
 	/**
-	 * Target uploaders
+	 * Collection of uploaders
 	 * 
 	 * @var array
 	 */
@@ -38,8 +36,8 @@ final class UploadChain implements ChainInterface
 	/**
 	 * Adds an uploader that implements UploaderAwareInterface
 	 * 
-	 * @param UploaderAwareInterface $uploader
-	 * @return UploadChain
+	 * @param \Krystal\Http\FileTransfer\UploaderAwareInterface $uploader
+	 * @return \Krystal\Http\FileTransfer\UploadChain
 	 */
 	public function addUploader(UploaderAwareInterface $uploader)
 	{
@@ -50,24 +48,24 @@ final class UploadChain implements ChainInterface
 	/**
 	 * Add more uploaders
 	 * 
-	 * @param array $uploaders
-	 * @return UploadChain
+	 * @param array $uploaders An array of \Krystal\Http\FileTransfer\UploaderAwareInterface instances
+	 * @return \Krystal\Http\FileTransfer\UploadChain
 	 */
 	public function addUploaders(array $uploaders)
 	{
 		foreach ($uploaders as $uploader) {
 			$this->addUploader($uploader);
 		}
-		
+
 		return $this;
 	}
 
 	/**
 	 * Uploads via all defined uploaders
 	 * 
-	 * @param string $id
-	 * @param array $files
-	 * @return void
+	 * @param string $id Nested directory's id
+	 * @param array $files An array of file entities
+	 * @return boolean
 	 */
 	public function upload($id, array $files)
 	{
@@ -76,7 +74,7 @@ final class UploadChain implements ChainInterface
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 }
