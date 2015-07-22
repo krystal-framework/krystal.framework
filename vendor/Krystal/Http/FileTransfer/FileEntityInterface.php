@@ -17,7 +17,7 @@ interface FileEntityInterface
 	 * Defines type for a file
 	 * 
 	 * @param string $type
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setType($type);
 	
@@ -32,7 +32,7 @@ interface FileEntityInterface
 	 * Defines a name
 	 * 
 	 * @param string $name
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setName($name);
 	
@@ -47,7 +47,7 @@ interface FileEntityInterface
 	 * Defines a temporary name
 	 * 
 	 * @param string $tmpName
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setTmpName($tmpName);
 	
@@ -62,7 +62,7 @@ interface FileEntityInterface
 	 * Defines an error
 	 * 
 	 * @param string $error
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setError($error);
 	
@@ -77,7 +77,7 @@ interface FileEntityInterface
 	 * Defines a size
 	 * 
 	 * @param string $size
-	 * @return object $this
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setSize($size);
 

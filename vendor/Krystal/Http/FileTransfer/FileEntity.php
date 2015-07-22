@@ -52,7 +52,7 @@ final class FileEntity implements FileEntityInterface
 	 * Defines type for a file
 	 * 
 	 * @param string $type
-	 * @return \Krystal\Http\FileTransfer\FileInfo
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setType($type)
 	{
@@ -74,7 +74,7 @@ final class FileEntity implements FileEntityInterface
 	 * Defines a name
 	 * 
 	 * @param string $name
-	 * @return \Krystal\Http\FileTransfer\FileInfo
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setName($name)
 	{
@@ -96,7 +96,7 @@ final class FileEntity implements FileEntityInterface
 	 * Defines a temporary name
 	 * 
 	 * @param string $tmpName
-	 * @return \Krystal\Http\FileTransfer\FileInfo
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setTmpName($tmpName)
 	{
@@ -118,7 +118,7 @@ final class FileEntity implements FileEntityInterface
 	 * Defines an error
 	 * 
 	 * @param string $error
-	 * @return \Krystal\Http\FileTransfer\FileInfo
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setError($error)
 	{
@@ -140,7 +140,7 @@ final class FileEntity implements FileEntityInterface
 	 * Defines a size
 	 * 
 	 * @param string $size
-	 * @return \Krystal\Http\FileTransfer\FileInfo
+	 * @return \Krystal\Http\FileTransfer\FileEntity
 	 */
 	public function setSize($size)
 	{
