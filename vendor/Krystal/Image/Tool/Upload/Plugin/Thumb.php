@@ -11,7 +11,7 @@
 
 namespace Krystal\Image\Tool\Upload\Plugin;
 
-use Krystal\Http\FileTransfer\FileInfo;
+use Krystal\Http\FileTransfer\FileEntity;
 use Krystal\Http\FileTransfer\UploaderAwareInterface;
 use Krystal\Image\Processor\GD\ImageProcessor;
 
@@ -87,7 +87,7 @@ final class Thumb implements UploaderAwareInterface
 	public function upload($id, array $files)
 	{
 		foreach ($files as $file) {
-			if ($file instanceof FileInfo) {
+			if ($file instanceof FileEntity) {
 				foreach ($this->dimensions as $index => $dimension) {
 
 					$width = (int) $dimension[0];

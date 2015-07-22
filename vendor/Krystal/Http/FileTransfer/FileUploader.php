@@ -11,7 +11,6 @@
 
 namespace Krystal\Http\FileTransfer;
 
-use Krystal\Http\FileTransfer\FileInfo;
 use LogicException;
 
 final class FileUploader implements FileUploaderInterface
@@ -48,13 +47,13 @@ final class FileUploader implements FileUploaderInterface
 	 * 
 	 * @param string $destination
 	 * @param array $files
-	 * @throws \LogicException if at least one value in $files is not an instance of \Krystal\Http\FileTransfer\FileInfoInterface
+	 * @throws \LogicException if at least one value in $files is not an instance of \Krystal\Http\FileTransfer\FileEntityInterface
 	 * @return boolean
 	 */
 	public function upload($destination, array $files)
 	{
 		foreach ($files as $file) {
-			if (!($file instanceof FileInfo)) {
+			if (!($file instanceof FileEntity)) {
 				// This should never occur, but it's always better not to rely on framework users
 				throw new LogicException(sprintf(
 					'Each file entity must be an instance of \Krystal\Http\FileTransfer\FileInfoInterface, but received "%s"', gettype($file)

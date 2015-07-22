@@ -11,7 +11,7 @@
 
 namespace Krystal\Validate\File\Constraint;
 
-use Krystal\Http\FileTransfer\FileInfo;
+use Krystal\Http\FileTransfer\FileEntity;
 use UnexpectedValueException;
 
 final class FileSize extends AbstractConstraint
@@ -72,13 +72,13 @@ final class FileSize extends AbstractConstraint
 	 * Matches against
 	 * 
 	 * @param string $operator
-	 * @param FileInfo $file
+	 * @param \Krystal\Http\FileTransfer\FileEntity $file
 	 * @return boolean
 	 */
-	private function match($operator, FileInfo $file)
+	private function match($operator, FileEntity $file)
 	{
 		$error = false;
-		
+
 		switch ($operator) {
 			case '==':
 				if ($file->getSize() == $this->value) {
@@ -126,12 +126,11 @@ final class FileSize extends AbstractConstraint
 	public function isValid(array $files)
 	{
 		foreach ($files as $file) {
-			
 			if (!$this->match($this->operator, $file)) {
 				$this->violate(sprintf($this->message, $file->getName()));
 			}
 		}
-		
+
 		return !$this->hasErrors();
 	}
 }

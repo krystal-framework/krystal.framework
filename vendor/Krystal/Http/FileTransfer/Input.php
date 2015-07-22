@@ -11,8 +11,6 @@
 
 namespace Krystal\Http\FileTransfer;
 
-use Krystal\Http\FileTransfer\FileInfo;
-use Krystal\Http\FileTransfer\InputInterface;
 use LogicException;
 use InvalidArgumentException;
 use UnexpectedValueException;
@@ -192,20 +190,20 @@ final class Input implements InputInterface
 	 */
 	private function toObject(array $files)
 	{
-		$result = array();
+		$entities = array();
 
 		foreach ($files as $index => $array) {
-			$fileInfo = new FileInfo();
-			$fileInfo->setType($array['type'])
-					 ->setName($array['name'])
-					 ->setTmpName($array['tmp_name'])
-					 ->setSize($array['size'])
-					 ->setError($array['error']);
+			$entity = new FileEntity();
+			$entity->setType($array['type'])
+				   ->setName($array['name'])
+				   ->setTmpName($array['tmp_name'])
+				   ->setSize($array['size'])
+				   ->setError($array['error']);
 
-			array_push($result, $fileInfo);
+			array_push($entities, $entity);
 		}
 
-		return $result;
+		return $entities;
 	}
 
 	/**

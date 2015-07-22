@@ -11,7 +11,7 @@
 
 namespace Krystal\Http\FileTransfer;
 
-interface FileInfoInterface
+interface FileEntityInterface
 {
 	/**
 	 * Defines type for a file

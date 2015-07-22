@@ -11,10 +11,7 @@
 
 namespace Krystal\Http\FileTransfer;
 
-use Krystal\Http\FileTransfer\FileInfoInterface;
-
-//@TODO: rename to FileEntity
-final class FileInfo implements FileInfoInterface
+final class FileEntity implements FileEntityInterface
 {
 	/**
 	 * Detected MIMI-type
