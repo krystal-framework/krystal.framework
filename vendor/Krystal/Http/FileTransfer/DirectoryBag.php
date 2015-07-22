@@ -45,7 +45,7 @@ final class DirectoryBag implements DirectoryBagInterface
 		if (is_null($file)) {
 			return sprintf('%s/%s/', $this->baseDir, $id);
 		} else {
-			return sprintf('%s/$s/$s', $this->baseDir, $id, $file);
+			return sprintf('%s/%s/%s', $this->baseDir, $id, $file);
 		}
 	}
 
@@ -89,7 +89,7 @@ final class DirectoryBag implements DirectoryBagInterface
 			return $fm->rmdir($this->getPath($id));
 
 		} else {
-			return $fm->rmfile($file);
+			return $fm->rmfile($this->getPath($id, $filename));
 		}
 	}
 }
