@@ -19,7 +19,7 @@ final class FilenameRegEx extends AbstractConstraint
 	 * @var string
 	 */
 	private $pattern;
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -35,7 +35,7 @@ final class FilenameRegEx extends AbstractConstraint
 	{
 		$this->pattern = $pattern;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -47,7 +47,7 @@ final class FilenameRegEx extends AbstractConstraint
 				$this->violate(sprintf($this->message, $file->getName()));
 			}
 		}
-		
+
 		return !$this->hasErrors();
 	}
 }

@@ -45,12 +45,12 @@ final class FileSize extends AbstractConstraint
 	public function __construct($value, $operator)
 	{
 		if ($this->isOperator($operator)) {
-			
+
 			$this->value = $value;
 			$this->oprator = $operator;
-		
+
 		} else {
-			
+
 			throw new UnexpectedValueException(
 				sprintf('File size constraint requires valid operator, not the one you provided', $operator
 			));
@@ -85,41 +85,41 @@ final class FileSize extends AbstractConstraint
 					$error = true;
 				}
 			break;
-			
+
 			case '>':
 				if ($file->getSize() > $this->value) {
 					$error = true;
 				}
 			break;
-			
+
 			case '<':
 				if ($file->getSize() < $this->value) {
 					$error = true;
 				}
 			break;
-			
+
 			case '!=':
 				if ($file->getSize() != $this->value) {
 					$error = true;
 				}
 			break;
-			
+
 			case '<=':
 				if ($file->getSize() <= $this->value) {
 					$error = true;
 				}
 			break;
-			
+
 			case '>=':
 				if ($file->getSize() >= $this->value) {
 					$error = true;
 				}
 			break;
 		}
-		
+
 		return $error;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

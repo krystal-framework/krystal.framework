@@ -42,7 +42,6 @@ final class Extension extends AbstractConstraint
 	public function isValid(array $files)
 	{
 		foreach ($files as $file) {
-			
 			if (!$this->hasValidExtension($file->getName())) {
 				$this->violate(sprintf($this->message, $file->getName()));
 				return false;
@@ -62,12 +61,12 @@ final class Extension extends AbstractConstraint
 	{
 		// Current extension
 		$extension = mb_strtolower(pathinfo($filename, \PATHINFO_EXTENSION), 'UTF-8');
-		
+
 		// Make sure all extensions are in lowercase
 		foreach ($this->validExtensions as &$expected) {
 			$expected = mb_strtolower($expected, 'UTF-8');
 		}
-		
+
 		return in_array($extension, $this->validExtensions);
 	}
 }

@@ -31,7 +31,7 @@ final class TmpDir extends AbstractConstraint
 				$this->violate(sprintf($this->message, $file->getName()));
 			}
 		}
-		
+
 		return !$this->hasErrors();
 	}
 }

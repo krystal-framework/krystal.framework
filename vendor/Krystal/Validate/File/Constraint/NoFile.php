@@ -20,7 +20,7 @@ final class NoFile extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = 'No file was uploaded during the process';
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

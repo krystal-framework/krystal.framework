@@ -20,7 +20,7 @@ final class FormSize extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = 'File %s exceeds maximal allowed form size';
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -31,7 +31,7 @@ final class FormSize extends AbstractConstraint
 				$this->violate(sprintf($this->message, $file->getName()));
 			}
 		}
-		
+
 		return !$this->hasErrors();
 	}
 }
