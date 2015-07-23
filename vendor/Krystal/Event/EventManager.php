@@ -32,15 +32,6 @@ final class EventManager implements EventManagerInterface
 	private $arguments = array();
 
 	/**
-	 * State initialization
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-	}
-
-	/**
 	 * Method overloading : Handle undefined method calls
 	 * 
 	 * Instead of doing this,
