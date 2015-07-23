@@ -14,6 +14,8 @@ namespace Krystal\Validate\File\Constraint;
 final class UploadAmount extends AbstractConstraint
 {
 	/**
+	 * Amount of allowed files to be uploaded
+	 * 
 	 * @var integer
 	 */
 	private $amount;
@@ -24,7 +26,7 @@ final class UploadAmount extends AbstractConstraint
 	protected $message = 'Exceeds maximal allowed amount (%s) of files to be uploaded';
 
 	/**
-	 * Class initialization
+	 * State initialization
 	 * 
 	 * @param integer $amount
 	 * @return void
