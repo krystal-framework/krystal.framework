@@ -11,7 +11,7 @@
 
 namespace Krystal\Authentication;
 
-final class UserBag implements UserBagInterface 
+final class UserBag implements UserBagInterface
 {
 	/**
 	 * User's login
@@ -26,8 +26,6 @@ final class UserBag implements UserBagInterface
 	 * @var string
 	 */
 	private $passwordHash;
-	
-	private $id;
 
 	/**
 	 * Returns a login
