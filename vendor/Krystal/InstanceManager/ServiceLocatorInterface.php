@@ -23,7 +23,8 @@ interface ServiceLocatorInterface
 	/**
 	 * Returns service's instance by its name
 	 * 
-	 * @param string $service
+	 * @param string $service Service name
+	 * @throws \RuntimeException if attempted to return non-existing service
 	 * @return object
 	 */
 	public function get($service);

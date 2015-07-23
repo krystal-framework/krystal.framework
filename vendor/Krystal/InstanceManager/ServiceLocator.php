@@ -17,7 +17,7 @@ use InvalidArgumentException;
 final class ServiceLocator implements ServiceLocatorInterface
 {
 	/**
-	 * Service container
+	 * Availabe service instances
 	 * 
 	 * @var array
 	 */
@@ -26,7 +26,7 @@ final class ServiceLocator implements ServiceLocatorInterface
 	/**
 	 * State initialization
 	 * 
-	 * @param array $services
+	 * @param array $services Services can be optinally registered on instantiation
 	 * @return void
 	 */
 	public function __construct(array $services = array())
@@ -49,7 +49,8 @@ final class ServiceLocator implements ServiceLocatorInterface
 	/**
 	 * Returns service's instance by its name
 	 * 
-	 * @param string $service
+	 * @param string $service Service name
+	 * @throws \RuntimeException if attempted to return non-existing service
 	 * @return object
 	 */
 	public function get($service)
@@ -102,7 +103,7 @@ final class ServiceLocator implements ServiceLocatorInterface
 	 * Check whether service has been registered
 	 * 
 	 * @param string $service
-	 * @throws \InvalidArgumentException if $service wasn't string
+	 * @throws \InvalidArgumentException if service's name wasn't a string
 	 * @return boolean
 	 */
 	public function has($service)
@@ -128,12 +129,11 @@ final class ServiceLocator implements ServiceLocatorInterface
 		if ($this->exists($serviceName)) {
 			unset($this->container[$serviceName]);
 			return true;
-			
 		} else {
 			trigger_error(sprintf(
 				'Attempted to un-register non-existing service "%s"', $service
 			));
-			
+
 			return false;
 		}
 	}
