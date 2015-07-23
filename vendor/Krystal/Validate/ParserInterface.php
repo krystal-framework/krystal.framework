@@ -18,7 +18,6 @@ interface ParserInterface
 	 * Array structure specific, that looks like this:
 	 * 
 	 *	array(
-	 *	
 	 *		'input' => array(
 	 *		'required' => true,
 	 * 		'rules' => array(
@@ -30,7 +29,7 @@ interface ParserInterface
 	 * 
 	 * @param array $source Target source input. For example $_POST. It should not be multidimensional!
 	 * @param array $definitions An array of definitions for that $_POST keys
-	 * @throws RuntimeExeption if there's a key definition for non-existing corresponding $source key
+	 * @throws \RuntimeExeption if there's a key definition for non-existing corresponding $source key
 	 * @return array It represents: source key name and values in array with prepared constraints
 	 */
 	public function parse(array $source, array $definitions);

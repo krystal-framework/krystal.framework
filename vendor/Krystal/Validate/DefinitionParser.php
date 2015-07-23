@@ -13,6 +13,7 @@ namespace Krystal\Validate;
 
 use RuntimeException;
 use InvalidArgumentException;
+use Krystal\InstanceManager\Factory;
 
 /**
  * The point of Definition parser is to turn array configuration into something like this
@@ -31,17 +32,17 @@ final class DefinitionParser implements ParserInterface
 	/**
 	 * Factory that build constraints
 	 * 
-	 * @var ConstraintFactory
+	 * @var \Krystal\InstanceManager\Factory
 	 */
 	private $constraintFactory;
 
 	/**
 	 * State initialization
 	 * 
-	 * @param ConstraintFactory $constraintFactory
+	 * @param \Krystal\InstanceManager\Factory $constraintFactory
 	 * @return void
 	 */
-	public function __construct($constraintFactory)
+	public function __construct(Factory $constraintFactory)
 	{
 		$this->constraintFactory = $constraintFactory;
 	}
