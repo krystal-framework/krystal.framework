@@ -98,7 +98,7 @@ final class ReAuth implements ReAuthInterface
 		$userBag = new UserBag();
 		$userBag->setLogin($this->cookieBag->get(self::CLIENT_LOGIN_KEY))
 				->setPasswordHash($this->cookieBag->get(self::CLIENT_LOGIN_PASSWORD_HASH_KEY));
-		
+
 		return $userBag;
 	}
 
@@ -109,11 +109,7 @@ final class ReAuth implements ReAuthInterface
 	 */
 	public function isStored()
 	{
-		// Keys we want to check for existence
-		$keys = $this->getKeys();
-		
-		// Now let's check if all of those keys exist
-		foreach ($keys as $key) {
+		foreach ($this->getKeys() as $key) {
 			if (!$this->cookieBag->has($key)) {
 				return false;
 			}
@@ -162,7 +158,7 @@ final class ReAuth implements ReAuthInterface
 			self::CLIENT_LOGIN_PASSWORD_HASH_KEY => $passwordHash,
 			self::CLIENT_TOKEN_KEY => $this->makeToken($login, $passwordHash)
 		);
-		
+
 		foreach ($data as $key => $value) {
 			$this->cookieBag->set($key, $value, self::CLIENT_LIFETIME);
 		}
