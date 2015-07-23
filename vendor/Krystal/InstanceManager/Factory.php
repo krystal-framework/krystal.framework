@@ -11,9 +11,6 @@
 
 namespace Krystal\InstanceManager;
 
-use RuntimeException;
-use ReflectionClass;
-
 class Factory
 {
 	/**
@@ -61,25 +58,6 @@ class Factory
 	}
 
 	/**
-	 * Builds an instance according to the class name with its pseudo-namespace
-	 * 
-	 * @param string $className including pseudo-namespace (PSR-0 compliant)
-	 * @param array $arguments Optionally
-	 * @return object
-	 */
-	final protected function buildInstance($className, array $arguments)
-	{
-		// @TODO: Make hack to avoid reflection is most cases
-		$reflector = new ReflectionClass($className);
-
-		if ($reflector->hasMethod('__construct')) {
-			return $reflector->newInstanceArgs($arguments);
-		} else {
-			return $reflector->newInstance();
-		}
-	}
-
-	/**
 	 * Builds an instance
 	 * Heavily relies on PSR-0 autoloader
 	 * 
@@ -95,18 +73,7 @@ class Factory
 
 		$className = $this->buildClassNameByFileName($filename);
 
-		/**
-		 * This heavily relies on PSR-0 autoloader
-		 * Checks whether a class has been loaded before,
-		 * If not, then attempts to load it via registered autoloader
-		 */
-		if (class_exists($className, true)) {
-			return $this->buildInstance($className, $arguments);
-		} else {
-			// Couldn't load a class
-			throw new RuntimeException(sprintf(
-				'Could not load a class %s via registered autoloader', $className
-			));
-		}
+		$ib = new InstanceBuilder();
+		return $ib->build($className, $arguments);
 	}
 }
