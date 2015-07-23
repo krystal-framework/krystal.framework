@@ -58,7 +58,7 @@ final class ParamBag implements ParamBagInterface
 	}
 
 	/**
-	 * Returns parameter's key
+	 * Returns parameter's value
 	 * 
 	 * @param string $param
 	 * @param mixed $default Default value to be returned in case $param doesn't exist
