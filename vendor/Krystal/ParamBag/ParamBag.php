@@ -11,15 +11,13 @@
 
 namespace Krystal\ParamBag;
 
-use RuntimeException;
-
 /**
  * The service used to read static configuration from "params" section in configuration array
  */
 final class ParamBag implements ParamBagInterface
 {
 	/**
-	 * Default parameters
+	 * All available parameters
 	 * 
 	 * @var array
 	 */
@@ -63,13 +61,15 @@ final class ParamBag implements ParamBagInterface
 	 * Returns parameter's key
 	 * 
 	 * @param string $param
+	 * @param mixed $default Default value to be returned in case $param doesn't exist
 	 * @return mixed
 	 */
-	public function get($param)
+	public function get($param, $default = false)
 	{
-		if ($this->exists($param)){
+		if ($this->exists($param)) {
 			return $this->params[$param];
+		} else {
+			return $default;
 		}
-		throw new RuntimeException(sprintf('Attempted to read non-existing param %s', $param));
 	}
 }

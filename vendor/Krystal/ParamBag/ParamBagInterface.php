@@ -25,7 +25,8 @@ interface ParamBagInterface
 	 * Returns parameter's key
 	 * 
 	 * @param string $param
+	 * @param mixed $default Default value to be returned in case $param doesn't exist
 	 * @return mixed
 	 */
-	public function get($param);
+	public function get($param, $default = false);
 }
