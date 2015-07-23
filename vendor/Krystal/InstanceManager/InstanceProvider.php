@@ -13,8 +13,16 @@ namespace Krystal\InstanceManager;
 
 use ReflectionClass;
 
-final class InstanceProvider
+/* Gets a list of class names and returns only available ones */
+final class InstanceProvider implements InstanceProviderInterface
 {
+	/**
+	 * A pair of class name => arguments
+	 * 
+	 * @var array
+	 */
+	private $data;
+
 	/**
 	 * State initialization
 	 * 
@@ -27,9 +35,9 @@ final class InstanceProvider
 	}
 
 	/**
-	 * Returns all instances of class which has been loaded before
+	 * Returns all instances that are available
 	 * 
-	 * @return array Array of instances
+	 * @return array
 	 */
 	public function getAll()
 	{
