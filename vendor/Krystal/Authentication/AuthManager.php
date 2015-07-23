@@ -228,7 +228,7 @@ final class AuthManager implements AuthManagerInterface
 			// If session namespace is filled up and at the same time data stored in cookies
 			if (($this->has() && $this->reAuth->isStored()) || $this->has()) {
 				$data = $this->sessionBag->get(self::AUTH_NAMESPACE);
-				
+
 				$userBag = new UserBag();
 				$userBag->setLogin($data['login'])
 						->setPasswordHash($data['passwordHash']);
@@ -249,9 +249,9 @@ final class AuthManager implements AuthManagerInterface
 			}
 
 			return false;
-			
+
 		} else {
-			
+
 			return true;
 		}
 	}
