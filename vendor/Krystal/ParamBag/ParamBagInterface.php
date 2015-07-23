@@ -22,6 +22,15 @@ interface ParamBagInterface
 	public function exists($param);
 
 	/**
+	 * Appends a parameter
+	 * 
+	 * @param string $key
+	 * @param mixed $value
+	 * @return void
+	 */
+	public function set($key, $value);
+
+	/**
 	 * Returns parameter's key
 	 * 
 	 * @param string $param

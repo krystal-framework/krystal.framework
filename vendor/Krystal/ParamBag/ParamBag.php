@@ -46,7 +46,7 @@ final class ParamBag implements ParamBagInterface
 	}
 
 	/**
-	 * Defines a parameter
+	 * Appends a parameter
 	 * 
 	 * @param string $key
 	 * @param mixed $value
