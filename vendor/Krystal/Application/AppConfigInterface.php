@@ -164,6 +164,14 @@ interface AppConfigInterface
 	public function getModulesDir();
 
 	/**
+	 * Returns a directory path on file-system of particular module
+	 * 
+	 * @param string $module
+	 * @return string
+	 */
+	public function getModuleUploadsDir($module);
+
+	/**
 	 * Defines application's default charset
 	 * 
 	 * @param string $charset

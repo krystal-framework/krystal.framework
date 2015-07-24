@@ -325,6 +325,29 @@ final class AppConfig implements AppConfigInterface
 	}
 
 	/**
+	 * Returns a path to uploads directory of particular module
+	 * 
+	 * @param string $base
+	 * @param string $module
+	 * @return string
+	 */
+	private function getModuleUploadsPath($base, $module)
+	{
+		return sprintf('%s/uploads/%s', $base, $module);
+	}
+
+	/**
+	 * Returns a directory path on file-system of particular module
+	 * 
+	 * @param string $module
+	 * @return string
+	 */
+	public function getModuleUploadsDir($module)
+	{
+		return $this->getModuleUploadsPath($this->getUploadsDir(), $module);
+	}
+
+	/**
 	 * Defines application's default charset
 	 * 
 	 * @param string $charset
