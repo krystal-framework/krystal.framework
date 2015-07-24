@@ -50,7 +50,7 @@ final class DirectoryBag implements DirectoryBagInterface
 	}
 
 	/**
-	 * Uploads a file
+	 * Uploads a file into a directory by its id
 	 * 
 	 * @param string $id Nested directory's id
 	 * @param array $files An array of file bags
