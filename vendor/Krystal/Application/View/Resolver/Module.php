@@ -14,27 +14,35 @@ namespace Krystal\Application\View\Resolver;
 final class Module implements ResolverInterface
 {
 	/**
+	 * The name of module directory
+	 * 
 	 * @var string
 	 */
 	private $moduleDir;
 
 	/**
+	 * Target module the theme belongs to
+	 * 
 	 * @var string
 	 */
 	private $module;
 
 	/**
+	 * Theme name
+	 * 
 	 * @var string
 	 */
 	private $theme;
 
 	/**
+	 * Base directory
+	 * 
 	 * @var string
 	 */
 	private $baseDir;
-	
+
 	/**
-	 * Files extension
+	 * An extension for view templates
 	 * 
 	 * @var string
 	 */
@@ -43,6 +51,11 @@ final class Module implements ResolverInterface
 	/**
 	 * State initialization
 	 * 
+	 * @param $request
+	 * @param string $moduleDir
+	 * @param string $module
+	 * @param string $theme Theme name
+	 * @param string $baseDir
 	 * @return void
 	 */
 	public function __construct($request, $moduleDir, $module, $theme, $baseDir = 'View/Template')
@@ -101,13 +114,29 @@ final class Module implements ResolverInterface
 	}
 
 	/**
-	 * Resolves a base path
+	 * Returns a theme path appeding required filename
 	 * 
+	 * @param string $filename
 	 * @return string
 	 */
-	public function resolve()
+	public function getWithThemePath($filename)
 	{
-		return sprintf('%s/%s/%s/%s', $this->moduleDir, $this->module, $this->baseDir, $this->theme);
+		return sprintf('%s/%s', $this->resolve(), $filename);
+	}
+	
+	/**
+	 * Resolves a base path
+	 * 
+	 * @param string $theme Optinally a theme can be overriden
+	 * @return string
+	 */
+	public function resolve($theme = null)
+	{
+		if (is_null($theme)) {
+			$theme = $this->theme;
+		}
+
+		return sprintf('%s/%s/%s/%s', $this->moduleDir, $this->module, $this->baseDir, $theme);
 	}
 
 	/**
@@ -167,14 +196,6 @@ final class Module implements ResolverInterface
 		return sprintf('%s/%s', $this->resolveAsUrl($module), $path);
 	}
 
-	/**
-	 *
-	 */
-	private function resolveAsBaseWith()
-	{
-		
-	}
-	
 	/**
 	 * Resolves with a path
 	 * 
