@@ -166,6 +166,7 @@ final class Db implements DbInterface
 
 	/**
 	 * Returns count for pagination
+	 * This is the implementation of Memento pattern
 	 * 
 	 * @param string $column Column to be selected when counting
 	 * @return integer
