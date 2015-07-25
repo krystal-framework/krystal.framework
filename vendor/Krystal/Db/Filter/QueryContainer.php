@@ -32,6 +32,16 @@ final class QueryContainer implements QueryContainerInterface
 	}
 
 	/**
+	 * Checks whether a filter has been applied
+	 * 
+	 * @return boolean
+	 */
+	public function isApplied()
+	{
+		return !empty($this->data);
+	}
+
+	/**
 	 * Returns key's value if exists
 	 * 
 	 * @param string $key

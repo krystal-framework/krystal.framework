@@ -14,6 +14,13 @@ namespace Krystal\Db\Filter;
 interface QueryContainerInterface
 {
 	/**
+	 * Checks whether a filter has been applied
+	 * 
+	 * @return boolean
+	 */
+	public function isApplied();
+
+	/**
 	 * Returns key's value if exists
 	 * 
 	 * @param string $key
