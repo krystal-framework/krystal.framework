@@ -333,7 +333,7 @@ final class AppConfig implements AppConfigInterface
 	 */
 	private function getModuleUploadsPath($base, $module)
 	{
-		return sprintf('%s/uploads/%s', $base, $module);
+		return sprintf('%s/module/%s', $base, $module);
 	}
 
 	/**

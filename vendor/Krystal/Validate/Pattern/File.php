@@ -11,8 +11,6 @@
 
 namespace Krystal\Validate\Pattern;
 
-//DOESNT WORK!!
-
 /**
  * Provides all required validation rules for a file
  */
