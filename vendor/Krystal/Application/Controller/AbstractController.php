@@ -195,7 +195,7 @@ abstract class AbstractController
 			$module = $this->moduleName;
 		}
 
-		return sprintf('/module/%s/View/Template/%s/%s', $module, $this->appConfig->getTheme(), $path);
+		return sprintf('/module/%s/View/Template/%s/%s', $module, $this->getResolverThemeName(), $path);
 	}
 
 	/**
