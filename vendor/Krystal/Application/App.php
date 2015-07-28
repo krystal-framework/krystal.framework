@@ -109,7 +109,7 @@ final class App implements AppInterface
 			new Component\Translator(),
 			new Component\ParamBag(),
 			new Component\Response(),
-			new Component\FlashMessenger(),
+			new Component\FlashBag(),
 			new Component\ValidatorFactory(),
 			new Component\UrlBuilder(),
 			new Component\View(),

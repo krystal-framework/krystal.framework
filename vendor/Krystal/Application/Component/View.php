@@ -44,7 +44,7 @@ final class View implements ComponentInterface
 		}
 
 		// Add flash messenger, so that it's available in templates
-		$viewManager->addVariable('flashMessenger', $container->get('flashMessenger'));
+		$viewManager->addVariable('flashBag', $container->get('flashBag'));
 
 		return $viewManager;
 	}

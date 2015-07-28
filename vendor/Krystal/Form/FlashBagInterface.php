@@ -11,7 +11,7 @@
 
 namespace Krystal\Form;
 
-interface FlashMessengerInterface
+interface FlashBagInterface
 {
 	/**
 	 * Checks whether message key exists

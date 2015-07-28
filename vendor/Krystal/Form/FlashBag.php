@@ -15,7 +15,7 @@ use Krystal\I18n\TranslatorInterface;
 use Krystal\Http\PersistentStorageInterface;
 use RuntimeException;
 
-final class FlashMessenger implements FlashMessengerInterface
+final class FlashBag implements FlashBagInterface
 {
 	/**
 	 * Any compliant storage adapter

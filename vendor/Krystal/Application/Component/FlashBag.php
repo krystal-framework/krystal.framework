@@ -11,11 +11,11 @@
 
 namespace Krystal\Application\Component;
 
-use Krystal\Form\FlashMessenger as Component;
+use Krystal\Form\FlashBag as Component;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
-final class FlashMessenger implements ComponentInterface
+final class FlashBag implements ComponentInterface
 {
 	/**
 	 * {@inheritDoc}
@@ -30,6 +30,6 @@ final class FlashMessenger implements ComponentInterface
 	 */
 	public function getName()
 	{
-		return 'flashMessenger';
+		return 'flashBag';
 	}
 }
