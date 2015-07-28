@@ -68,6 +68,30 @@ final class Module implements ResolverInterface
 	}
 
 	/**
+	 * Overrides default theme
+	 * 
+	 * @param string $theme
+	 * @return \Krystal\Application\View\Resolver\Module
+	 */
+	public function setTheme($theme)
+	{
+		$this->theme = $theme;
+		return $this;
+	}
+
+	/**
+	 * Overrides default module
+	 * 
+	 * @param string $module
+	 * @return \Krystal\Application\View\Resolver\Module
+	 */
+	public function setModule($module)
+	{
+		$this->module = $module;
+		return $this;
+	}
+
+	/**
 	 * Overrides default extension
 	 * 
 	 * @param string $extension
