@@ -115,6 +115,7 @@ final class App implements AppInterface
 			new Component\View(),
 			new Component\Profiler(),
 			new Component\Cache(),
+			new Component\CsrfProtector()
 		);
 
 		// Captcha is optional component, so we would include it in case it has been defined in configuration
