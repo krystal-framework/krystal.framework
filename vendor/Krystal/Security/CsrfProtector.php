@@ -24,13 +24,6 @@ final class CsrfProtector implements CsrfProtectorInterface
 	private $sessionBag;
 
 	/**
-	 * Secret token
-	 * 
-	 * @var string
-	 */
-	private $token;
-
-	/**
 	 * Time to live in seconds for the token
 	 * 
 	 * @var integer
@@ -67,11 +60,10 @@ final class CsrfProtector implements CsrfProtectorInterface
 	 */
 	public function prepare()
 	{
-		$token = $this->generateToken();
-		$this->token = $token;
-
-		$this->sessionBag->set(self::CSRF_TKN_NAME, $token);
-		$this->sessionBag->set(self::CSRF_TKN_TIME, time());
+		if (!$this->sessionBag->has(self::CSRF_TKN_NAME)) {
+			$this->sessionBag->set(self::CSRF_TKN_NAME, $this->generateToken());
+			$this->sessionBag->set(self::CSRF_TKN_TIME, time());
+		}
 
 		$this->prepared = true;
 	}
@@ -84,7 +76,7 @@ final class CsrfProtector implements CsrfProtectorInterface
 	public function getToken()
 	{
 		$this->validatePrepared();
-		return $this->token;
+		return $this->sessionBag->get(self::CSRF_TKN_NAME);
 	}
 
 	/**
