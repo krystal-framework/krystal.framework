@@ -33,7 +33,7 @@ final class Captcha implements CaptchaInterface
 	private $generator;
 
 	/**
-	 * Storage
+	 * A service that stores CAPTCHA's answer
 	 * 
 	 * @var \Krystal\Captcha\Standard\StorageInterface
 	 */
@@ -51,7 +51,7 @@ final class Captcha implements CaptchaInterface
 	 * 
 	 * @param \Krystal\Captcha\Standard\Image\ImageGeneratorInterface $imageGenerator
 	 * @param \Krystal\Captcha\Standard\Text\AbstractGenerator $generator Any compatible text generator
-	 * @param \Krystal\Captcha\Standard\StorageInterface $storage
+	 * @param \Krystal\Captcha\Standard\StorageInterface $storage A service that stores CAPTCHA's answer
 	 * @return void
 	 */
 	public function __construct(ImageGeneratorInterface $imageGenerator, AbstractGenerator $generator, StorageInterface $storage)
