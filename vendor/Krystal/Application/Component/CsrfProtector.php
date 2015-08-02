@@ -23,9 +23,13 @@ final class CsrfProtector implements ComponentInterface
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
 		$sessionBag = $container->get('sessionBag');
+		$view = $container->get('view');
 
 		$component = new Component($sessionBag);
 		$component->prepare();
+
+		// Append global $csrfToken variable to all templates
+		$view->addVariable('csrfToken', $component->getToken());
 
 		return $component;
 	}
