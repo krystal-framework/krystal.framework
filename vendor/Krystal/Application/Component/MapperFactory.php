@@ -14,6 +14,7 @@ namespace Krystal\Application\Component;
 use Krystal\Db\Sql\MapperFactory as Component;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
+use RuntimeException;
 
 final class MapperFactory implements ComponentInterface
 {
@@ -29,9 +30,18 @@ final class MapperFactory implements ComponentInterface
 			return;
 		}
 
-		$queryBuilder = $connections['mysql'];
+		// Defined connection name in configuration. Grab it
+		$current = $config['components']['mapperFactory']['connection'];
 
-		$factory = new Component($queryBuilder);
+		if (!in_array($current, array_keys($connections))) {
+			throw new RuntimeException(sprintf(
+				'The connection for the mapper factory "%s" was not defined in database configuration section', $current
+			));
+		} else {
+			$db = $connections[$current];
+		}
+
+		$factory = new Component($db);
 		$factory->setPaginator($container->get('paginator'));
 
 		return $factory;
