@@ -23,14 +23,32 @@ final class Paginator implements ComponentInterface
 	 */
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
-		//$mapperFactory = $container->get('mapperFactory');
-		//@TODO Read configuration
-		$style = new Style\DiggStyle();
+		$options = $config['components']['paginator'];
 
-		$paginator = new Component($style);
-		//$mapperFactory->setPaginator($paginator);
+		// By default there's no style adapter
+		$style = null;
 
-		return $paginator;
+		if (isset($options['style'])) {
+			switch (strtolower($options['style'])) {
+				case 'digg':
+					$style = new Style\DiggStyle();
+				break;
+
+				case 'slide':
+					// By default SlideStyle requires more than 5 items to be activated
+					$amount = 5;
+
+					// Alter default value if specified explicitly in configuration array
+					if (isset($options['options']['amount']) && is_numeric($options['options']['amount'])) {
+						$amount = (int) $options['options']['amount'];
+					}
+
+					$style = new Style\SlideStyle($amount);
+				break;
+			}
+		}
+
+		return new Component($style);
 	}
 
 	/**
