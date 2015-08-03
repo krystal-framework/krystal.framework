@@ -190,6 +190,17 @@ final class AuthManager implements AuthManagerInterface
 	}
 
 	/**
+	 * Checks whether at least one role belongs to current session
+	 * 
+	 * @param array $roles
+	 * @return boolean
+	 */
+	public function isAllowed(array $roles)
+	{
+		return $this->isLoggedIn() && in_array($this->getRole(), $roles);
+	}
+
+	/**
 	 * Logins a user
 	 * 
 	 * @param string $login
