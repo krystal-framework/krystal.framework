@@ -11,7 +11,8 @@
 
 namespace Krystal\Application\Component;
 
-use Krystal\Http\Response\Standard as Component;
+use Krystal\Http\Response\HttpResponse as Component;
+use Krystal\Http\HeaderBag;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
@@ -22,7 +23,7 @@ final class Response implements ComponentInterface
 	 */
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
-		return new Component();
+		return new Component(new HeaderBag());
 	}
 
 	/**
