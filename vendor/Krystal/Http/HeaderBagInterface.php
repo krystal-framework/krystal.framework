@@ -14,6 +14,14 @@ namespace Krystal\Http;
 interface HeaderBagInterface
 {
 	/**
+	 * Clears all previous headers and adds a new one
+	 * 
+	 * @param string $header
+	 * @return void
+	 */
+	public function set($header);
+
+	/**
 	 * Appends a header
 	 * 
 	 * @param string $header
