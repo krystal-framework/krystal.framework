@@ -242,7 +242,7 @@ final class App implements AppInterface
 				));
 			}
 
-			$response->setNotFound();
+			$response->setStatusCode(404);
 		}
 
 		$response->send($content);
