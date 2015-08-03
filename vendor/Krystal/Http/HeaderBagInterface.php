@@ -17,7 +17,7 @@ interface HeaderBagInterface
 	 * Clears all previous headers and adds a new one
 	 * 
 	 * @param string $header
-	 * @return void
+	 * @return \Krystal\Http\HeaderBag
 	 */
 	public function set($header);
 
@@ -25,7 +25,7 @@ interface HeaderBagInterface
 	 * Appends a header
 	 * 
 	 * @param string $header
-	 * @return void
+	 * @return \Krystal\Http\HeaderBag
 	 */
 	public function append($header);
 
@@ -40,7 +40,7 @@ interface HeaderBagInterface
 	/**
 	 * Clears the stack
 	 * 
-	 * @return array
+	 * @return \Krystal\Http\HeaderBag
 	 */
 	public function clear();
 
