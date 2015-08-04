@@ -14,6 +14,7 @@ namespace Krystal\Application\Controller;
 use Krystal\InstanceManager\ServiceLocatorInterface;
 use Krystal\Application\View\Resolver\Module as Resolver;
 use Krystal\Db\Filter\FilterableServiceInterface;
+use RuntimeException;
 
 abstract class AbstractController
 {
@@ -58,6 +59,24 @@ abstract class AbstractController
 		$this->serviceLocator = $serviceLocator;
 		$this->moduleName = $moduleName;
 		$this->options = $options;
+	}
+
+	/**
+	 * Redirects to given route
+	 * 
+	 * @param string $route Target route
+	 * @throws \RuntimeException if unknown route supplied
+	 * @return void
+	 */
+	final protected function redirectToRoute($route)
+	{
+		$url = $this->urlBuilder->build($route);
+
+		if ($url !== null) {
+			$this->response->redirect($url);
+		} else {
+			throw new RuntimeException(sprintf('Unknown route supplied for redirection "%s"', $route));
+		}
 	}
 
 	/**
