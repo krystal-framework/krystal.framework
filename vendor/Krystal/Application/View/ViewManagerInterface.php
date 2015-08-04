@@ -139,6 +139,14 @@ interface ViewManagerInterface
 	public function hasLayout();
 
 	/**
+	 * Checks whether framework-compliant template file exists
+	 * 
+	 * @param string $template
+	 * @return boolean
+	 */
+	public function templateExists($template);
+
+	/**
 	 * Passes variables and renders a template. If there's attached layout, then renders it with that layout
 	 * 
 	 * @param string $template Template's name without extension in themes directory

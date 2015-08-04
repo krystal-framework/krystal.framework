@@ -305,6 +305,17 @@ final class ViewManager implements ViewManagerInterface
 	}
 
 	/**
+	 * Checks whether framework-compliant template file exists
+	 * 
+	 * @param string $template
+	 * @return boolean
+	 */
+	public function templateExists($template)
+	{
+		return is_file($this->resolver->getFilePathByName($template));
+	}
+
+	/**
 	 * Passes variables and renders a template. If there's attached layout, then renders it with that layout
 	 * 
 	 * @param string $template Template's name without extension in themes directory
@@ -314,12 +325,12 @@ final class ViewManager implements ViewManagerInterface
 	 */
 	public function render($template, array $vars = array())
 	{
-		// Template file
-		$file = $this->resolver->getFilePathByName($template);
-
-		if (!is_file($file)) {
+		if (!$this->templateExists($template)) {
 			throw new RuntimeException(sprintf('Invalid template path provided : %s', $file));
 		}
+
+		// Template file
+		$file = $this->resolver->getFilePathByName($template);
 
 		$this->addVariables($vars);
 		$templateView = new TemplateView($this, $this->variables);
