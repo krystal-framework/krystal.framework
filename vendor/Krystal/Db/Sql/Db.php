@@ -19,7 +19,7 @@ final class Db implements DbInterface
 {
 	/**
 	 * Query builder
-	 * 
+	 *   
 	 * @var \Krystal\Db\Sql\QueryBuilderInterface
 	 */
 	private $queryBuilder;
@@ -553,6 +553,111 @@ final class Db implements DbInterface
 	{
 		$this->queryBuilder->from($table);
 		return $this;
+	}
+
+	/**
+	 * Appends a raw comparison
+	 * 
+	 * @param string $column
+	 * @param string $operator
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function compare($column, $operator, $value, $filter = false)
+	{
+		return $this->constraint(__FUNCTION__, $column, $operator, $value, $filter);
+	}
+
+	/**
+	 * Appends a raw comparison with = operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function equals($column, $value, $filter = false)
+	{
+		return $this->compare($column, '=', $value, $filter);
+	}
+
+	/**
+	 * Appends a raw comparison with != operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function notEquals($column, $value, $filter = false)
+	{
+		return $this->compare($column, '!=', $value, $filter);
+	}
+
+	/**
+	 * Appends a raw comparison with LIKE operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function like($column, $value, $filter = false)
+	{
+		return $this->compare($column, 'LIKE', $value, $filter);
+	}
+
+	/**
+	 * Appends a raw comparison with > operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function greaterThan($column, $value, $filter = false)
+	{
+		return $this->compare($column, '>', $value, $filter);
+	}
+
+	/**
+	 * Appends a raw comparison with < operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function lessThan($column, $value, $filter = false)
+	{
+		return $this->compare($column, '<', $value, $filter);
+	}
+
+	/**
+	 * Appends a raw comparison with >= operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function greaterThanOrEquals($column, $value, $filter = false)
+	{
+		return $this->compare($column, '>=', $value, $filter);
+	}
+
+	/**
+	 * Appends a raw comparison with >= operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function lessThanOrEquals($column, $value, $filter = false)
+	{
+		return $this->compare($column, '<=', $value, $filter);
 	}
 
 	/**

@@ -149,6 +149,87 @@ interface QueryBuilderInterface
 	public function from($table = null);
 
 	/**
+	 * Appends a raw comparison
+	 * 
+	 * @param string $column
+	 * @param string $operator
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function compare($column, $operator, $value, $filter = false);
+
+	/**
+	 * Appends a raw comparison with = operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function equals($column, $value, $filter = false);
+
+	/**
+	 * Appends a raw comparison with != operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function notEquals($column, $value, $filter = false);
+
+	/**
+	 * Appends a raw comparison with LIKE operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function like($column, $value, $filter = false);
+
+	/**
+	 * Appends a raw comparison with > operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function greaterThan($column, $value, $filter = false);
+
+	/**
+	 * Appends a raw comparison with < operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function lessThan($column, $value, $filter = false);
+
+	/**
+	 * Appends a raw comparison with >= operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function greaterThanOrEquals($column, $value, $filter = false);
+
+	/**
+	 * Appends a raw comparison with >= operator
+	 * 
+	 * @param string $column
+	 * @param string $value
+	 * @param boolean $filter Whether to filter by value
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function lessThanOrEquals($column, $value, $filter = false);
+
+	/**
 	 * Appends WHERE expression
 	 * 
 	 * @param string $column
