@@ -14,6 +14,7 @@ namespace Krystal\Authentication;
 use Krystal\Session\SessionBagInterface;
 use Krystal\Authentication\Cookie\ReAuthInterface;
 use InvalidArgumentException;
+use LogicException;
 
 final class AuthManager implements AuthManagerInterface
 {
@@ -225,10 +226,15 @@ final class AuthManager implements AuthManagerInterface
 	/**
 	 * Checks whether user is logged in
 	 * 
+	 * @throws \LogicException If authorization service was not injected
 	 * @return boolean
 	 */
 	public function isLoggedIn()
 	{
+		if (!($this->authService instanceof UserAuthServiceInterface)) {
+			throw new LogicException('Authorization service was not injected');
+		}
+
 		if (!$this->has()) {
 
 			// Now try to find only in cookies, if found prepare a bag
