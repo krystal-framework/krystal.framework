@@ -257,10 +257,10 @@ This method appends `GROUP BY` statement. As its argument it may accept either a
 
 For example, this call
 
-$this->db->select('*')
-               ->from('products')
-               ->whereLessThan('price', 1000)
-               ->groupBy('name')
+    $this->db->select('*')
+                   ->from('products')
+                   ->whereLessThan('price', 1000)
+                   ->groupBy('name')
 
 Will generate the following query:
 
@@ -423,6 +423,31 @@ Will generate the following query:
     SELECT * FROM products
     INNER JOIN orders
     ON products.order_id = orders.id;
+
+# Low-level comparison methods
+
+Sometimes, when writing complex SQL queries, you might encounter a situation that available methods can't help you to write a desired query. Here come so-called low-level comparison methods. Let's take a look at available ones:
+
+    openBracket()
+    closeBracket()
+
+They open and close brackets respectively.
+
+    rawAnd()
+    rawOr()
+    
+They append `AND` and `OR` respectively. And the reason they were named with `raw` prefix is because, `and` and `or` are reserved names in PHP and cannot be to name methods.
+
+    compare($column, $operator, $value, $filter = false)
+    equals($column, $value, $filter = false)
+    notEquals($column, $value, $filter = false)
+    like($column, $value, $filter = false)
+    greaterThan($column, $value, $filter = false)
+    lessThan($column, $value, $filter = false)
+    greaterThanOrEquals($column, $value, $filter = false)
+    lessThanOrEquals($column, $value, $filter = false)
+
+And finally these methods are similar to previous ones, except that they don't add `WHERE` to expressions.
 
 
 # SQL functions
@@ -637,4 +662,5 @@ To access raw PDO instance, just call `getPdo()`, like this:
  * Need more SQL connectors
  * SQL Table Relations - Implement very common types at least
  * Methods in SQL\Qb for migrations
+
 
