@@ -196,7 +196,7 @@ final class Db implements DbInterface
 	 * @param integer $page
 	 * @param integer $itemsPerPage
 	 * @param string $column Column to be selected when counting
-	 * @return \Krystal\Db\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function paginate($page, $itemsPerPage, $column = '1')
 	{
@@ -814,7 +814,7 @@ final class Db implements DbInterface
 	 * @param string $column
 	 * @param array $values
 	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function whereIn($column, array $values, $filter = false)
 	{
@@ -828,7 +828,7 @@ final class Db implements DbInterface
 	 * @param string $column
 	 * @param array $values
 	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	private function whereInValues($method, $column, array $values, $filter)
 	{
@@ -1046,7 +1046,7 @@ final class Db implements DbInterface
 	 * @param string $column
 	 * @param string $value
 	 * @param boolean $filter Whether to filter by value
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function orWhereGreaterThan($column, $value, $filter = false)
 	{
@@ -1059,7 +1059,7 @@ final class Db implements DbInterface
 	 * @param string $column
 	 * @param string $value
 	 * @param boolean $filter Whether to filter by value
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function andWhereLike($column, $value, $filter = false)
 	{
@@ -1073,7 +1073,7 @@ final class Db implements DbInterface
 	 * @param string $column
 	 * @param string $value
 	 * @param boolean $filter Whether to filter by value
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function orWhereLike($column, $value, $filter = false)
 	{
@@ -1087,7 +1087,7 @@ final class Db implements DbInterface
 	 * @param string $column
 	 * @param string $value
 	 * @param boolean $filter Whether to rely on filter
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function whereLike($column, $value, $filter = false)
 	{
@@ -1172,7 +1172,7 @@ final class Db implements DbInterface
 	/**
 	 * Appends UNION
 	 * 
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function union()
 	{
@@ -1183,7 +1183,7 @@ final class Db implements DbInterface
 	/**
 	 * Appends UNION ALL
 	 * 
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function unionAll()
 	{
@@ -1195,7 +1195,7 @@ final class Db implements DbInterface
 	 * Appends AS with provided alias
 	 * 
 	 * @param string $alias
-	 * @return \Krystal\Db\Sql\QueryBuilder
+	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function asAlias($alias)
 	{
