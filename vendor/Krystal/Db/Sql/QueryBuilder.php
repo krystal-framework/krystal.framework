@@ -1220,6 +1220,28 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Appends raw AND
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function rawAnd()
+	{
+		$this->append(' AND ');
+		return $this;
+	}
+
+	/**
+	 * Appends raw OR
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function rawOr()
+	{
+		$this->append(' OR ');
+		return $this;
+	}
+
+	/**
 	 * Appends TRUNCATE statement
 	 * 
 	 * @param string $table

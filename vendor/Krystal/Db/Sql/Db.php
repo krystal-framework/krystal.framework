@@ -1204,6 +1204,28 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends raw AND
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function rawAnd()
+	{
+		$this->queryBuilder->rawAnd();
+		return $this;
+	}
+
+	/**
+	 * Appends raw OR
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function rawOr()
+	{
+		$this->queryBuilder->rawOr();
+		return $this;
+	}
+
+	/**
 	 * Appends truncate statement
 	 * 
 	 * @param string $table Table name to be truncated

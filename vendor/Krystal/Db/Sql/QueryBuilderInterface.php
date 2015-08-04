@@ -549,6 +549,20 @@ interface QueryBuilderInterface
 	public function asAlias($alias);
 
 	/**
+	 * Appends raw AND
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function rawAnd();
+
+	/**
+	 * Appends raw OR
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function rawOr();
+
+	/**
 	 * Appends TRUNCATE statement
 	 * 
 	 * @param string $table
