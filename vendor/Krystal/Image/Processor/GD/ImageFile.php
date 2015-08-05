@@ -308,6 +308,7 @@ class ImageFile implements ImageFileInterface
 	 * Renders the image in a browser directly
 	 * 
 	 * @param integer $quality Image quality
+	 * @throws \LogicException If can't render from the target image's type
 	 * @return void
 	 */
 	final public function render($quality = 75)
