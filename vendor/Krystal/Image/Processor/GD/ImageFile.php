@@ -153,13 +153,12 @@ class ImageFile implements ImageFileInterface
 
 		if ($image !== false) {
 
-			$data = array();
-			$data['width'] = $image[0];
-			$data['height'] = $image[1];
-			$data['type'] = $image[2];
-			$data['mime'] = $image['mime'];
-
-			return $data;
+			return array(
+				'width' => $image[0],
+				'height' => $image[1],
+				'type' => $image[2],
+				'mime' => $image['mime']
+			);
 
 		} else {
 
