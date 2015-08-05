@@ -71,7 +71,7 @@ class ImageFile implements ImageFileInterface
 	 * @throws \RuntimeException If can't create image from provided $file
 	 * @return void
 	 */
-	public function __construct($file)
+	final public function __construct($file)
 	{
 		if (!$this->load($file)) {
 			throw new RuntimeException(sprintf('Can not load image from "%s"', $file));
@@ -85,7 +85,7 @@ class ImageFile implements ImageFileInterface
 	 * 
 	 * @return void
 	 */
-	public function __destruct()
+	final public function __destruct()
 	{
 		$this->done();
 	}
@@ -95,7 +95,7 @@ class ImageFile implements ImageFileInterface
 	 * 
 	 * @return string
 	 */
-	public function getMime()
+	final public function getMime()
 	{
 		return $this->mime;
 	}
@@ -105,7 +105,7 @@ class ImageFile implements ImageFileInterface
 	 * 
 	 * @return string
 	 */
-	public function getType()
+	final public function getType()
 	{
 		return $this->type;
 	}
@@ -115,7 +115,7 @@ class ImageFile implements ImageFileInterface
 	 * 
 	 * @return float|integer
 	 */
-	public function getWidth()
+	final public function getWidth()
 	{
 		return $this->width;
 	}
@@ -125,7 +125,7 @@ class ImageFile implements ImageFileInterface
 	 * 
 	 * @return float|integer
 	 */
-	public function getHeight()
+	final public function getHeight()
 	{
 		return $this->height;
 	}
@@ -135,7 +135,7 @@ class ImageFile implements ImageFileInterface
 	 * 
 	 * @return resource
 	 */
-	public function getImage()
+	final public function getImage()
 	{
 		return $this->image;
 	}
