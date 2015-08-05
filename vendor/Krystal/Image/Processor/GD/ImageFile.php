@@ -259,6 +259,7 @@ class ImageFile implements ImageFileInterface
 	 * @param string $path Full absolute path on the file system to save the image
 	 * @param integer $quality Image quality Medium quality by default
 	 * @param string $format Can be optionally saved in another format
+	 * @throws \LogicException if can't save to the target format
 	 * @return boolean
 	 */
 	final public function save($path, $quality = 75, $type = null)
