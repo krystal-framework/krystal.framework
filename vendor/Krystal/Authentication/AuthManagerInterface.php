@@ -59,7 +59,7 @@ interface AuthManagerInterface
 	public function isActive();
 
 	/**
-	 * Checks whether user is logged in
+	 * Checks whether user is logged in, only once
 	 * 
 	 * @return boolean
 	 */

@@ -191,6 +191,56 @@ final class AuthManager implements AuthManagerInterface
 	}
 
 	/**
+	 * Checks whether user is logged in
+	 * 
+	 * @throws \LogicException If authorization service was not injected
+	 * @return boolean
+	 */
+	private function loggenIn()
+	{
+		if (!($this->authService instanceof UserAuthServiceInterface)) {
+			throw new LogicException('Authorization service was not injected');
+		}
+
+		if (!$this->has()) {
+
+			// Now try to find only in cookies, if found prepare a bag
+			if ($this->reAuth->isStored() && (!$this->has())) {
+				$userBag = $this->reAuth->getUserBag();
+			}
+
+			// If session namespace is filled up and at the same time data stored in cookies
+			if (($this->has() && $this->reAuth->isStored()) || $this->has()) {
+				$data = $this->sessionBag->get(self::AUTH_NAMESPACE);
+
+				$userBag = new UserBag();
+				$userBag->setLogin($data['login'])
+						->setPasswordHash($data['passwordHash']);
+			}
+
+			// If $userBag wasn't created so far, that means user isn't logged at all
+			if (!isset($userBag)) {
+				return false;
+			}
+
+			// Now let's invoke our defined match visitor
+			$authResult = $this->authService->authenticate($userBag->getLogin(), $userBag->getPasswordHash(), false, false);
+
+			if ($authResult == true) {
+				// Remember success, in order not to query on each request
+				$this->login($userBag->getLogin(), $userBag->getPasswordHash());
+				return true;
+			}
+
+			return false;
+
+		} else {
+
+			return true;
+		}
+	}
+
+	/**
 	 * Checks whether at least one role belongs to current session
 	 * 
 	 * @param array $roles
@@ -224,53 +274,19 @@ final class AuthManager implements AuthManagerInterface
 	}
 
 	/**
-	 * Checks whether user is logged in
+	 * Checks whether user is logged in, only once
 	 * 
-	 * @throws \LogicException If authorization service was not injected
 	 * @return boolean
 	 */
 	public function isLoggedIn()
 	{
-		if (!($this->authService instanceof UserAuthServiceInterface)) {
-			throw new LogicException('Authorization service was not injected');
+		static $result = null;
+
+		if (is_null($result)) {
+			$result = $this->loggenIn();
 		}
 
-		if (!$this->has()) {
-
-			// Now try to find only in cookies, if found prepare a bag
-			if ($this->reAuth->isStored() && (!$this->has())) {
-				$userBag = $this->reAuth->getUserBag();
-			}
-
-			// If session namespace is filled up and at the same time data stored in cookies
-			if (($this->has() && $this->reAuth->isStored()) || $this->has()) {
-				$data = $this->sessionBag->get(self::AUTH_NAMESPACE);
-
-				$userBag = new UserBag();
-				$userBag->setLogin($data['login'])
-						->setPasswordHash($data['passwordHash']);
-			}
-			
-			// If $userBag wasn't created so far, that means user isn't logged at all
-			if (!isset($userBag)) {
-				return false;
-			}
-
-			// Now let's invoke our defined match visitor
-			$authResult = $this->authService->authenticate($userBag->getLogin(), $userBag->getPasswordHash(), false, false);
-
-			if ($authResult == true) {
-				// Remember success, in order not to query on each request
-				$this->login($userBag->getLogin(), $userBag->getPasswordHash());
-				return true;
-			}
-
-			return false;
-
-		} else {
-
-			return true;
-		}
+		return $result;
 	}
 
 	/**
