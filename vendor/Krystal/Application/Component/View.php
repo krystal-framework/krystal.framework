@@ -12,6 +12,8 @@
 namespace Krystal\Application\Component;
 
 use Krystal\Application\View\ViewManager;
+use Krystal\Application\View\AssetPath;
+use Krystal\Application\View\PluginBag;
 use Krystal\Application\View\Resolver\Module as Resolver;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
@@ -23,10 +25,6 @@ final class View implements ComponentInterface
 	 */
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
-		$translator = $container->get('translator');
-		$appConfig = $container->get('appConfig');
-		$urlBuilder = $container->get('urlBuilder');
-
 		if (isset($config['components']['view']['obfuscate']) && is_bool($config['components']['view']['obfuscate'])) {
 			$compress = $config['components']['view']['obfuscate'];
 		} else {
@@ -34,8 +32,10 @@ final class View implements ComponentInterface
 			$compress = false;
 		}
 
+		$pluginBag = new PluginBag(new AssetPath($container->get('moduleManager')->getLoadedModuleNames()));
+
 		// Resolver will be injected later
-		$viewManager = new ViewManager($translator, $urlBuilder, $compress);
+		$viewManager = new ViewManager($pluginBag, $container->get('translator'), $container->get('urlBuilder'), $compress);
 
 		if (isset($config['components']['view'])) {
 			if (isset($config['components']['view']['plugins'])) {

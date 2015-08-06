@@ -146,6 +146,16 @@ final class ModuleManager implements ModuleManagerInterface
 	}
 
 	/**
+	 * Returns an array of loaded module names
+	 * 
+	 * @return array
+	 */
+	public function getLoadedModuleNames()
+	{
+		return array_keys($this->loaded);
+	}
+
+	/**
 	 * Returns collection of loaded modules
 	 * 
 	 * @return array
@@ -201,19 +211,16 @@ final class ModuleManager implements ModuleManagerInterface
 	{
 		// Prepare PSR-0 compliant name
 		$moduleNamespace = sprintf('%s\%s', $name, self::MODULE_CONFIG_FILE);
-		
+
 		// Ensure a module exists
 		if (!class_exists($moduleNamespace)) {
 			throw new RuntimeException(sprintf(
 				'A %s module was not registered or its missing its base definition', $moduleNamespace
 			));
 		}
-		
+
 		$pathProvider = new PathProvider($this->appConfig->getModulesDir(), $name);
-		//$r= $pathProvider->getConfigDir();
-		
-		//d($r);
-		
+
 		$sl = new ServiceLocator();
 		$sl->registerArray($this->services);
 

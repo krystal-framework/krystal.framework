@@ -93,13 +93,15 @@ final class ViewManager implements ViewManagerInterface
 	/**
 	 * State initialization
 	 * 
+	 * @param \Krystal\Application\View\PluginBagInterface $pluginBag
 	 * @param \Krystal\I18n\TranslatorInterface $translator
 	 * @param \Krystal\Application\Route\UrlBuilderInterface $urlBuilder
 	 * @param $compress Whether to compress an output
 	 * @return void
 	 */
-	public function __construct(TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, $compress = true)
+	public function __construct(PluginBagInterface $pluginBag, TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, $compress = true)
 	{
+		$this->pluginBag = $pluginBag;
 		$this->translator = $translator;
 		$this->urlBuilder = $urlBuilder;
 		$this->setCompress($compress);
@@ -122,10 +124,6 @@ final class ViewManager implements ViewManagerInterface
 	 */
 	public function getPluginBag()
 	{
-		if ($this->pluginBag == null) {
-			$this->pluginBag = new PluginBag();
-		}
-
 		return $this->pluginBag;
 	}
 
