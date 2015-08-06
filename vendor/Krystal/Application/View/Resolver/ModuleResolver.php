@@ -11,8 +11,17 @@
 
 namespace Krystal\Application\View\Resolver;
 
+use Krystal\Http\RequestInterface;
+
 final class ModuleResolver implements ResolverInterface
 {
+	/**
+	 * Request service
+	 * 
+	 * @var \Krystal\Http\RequestInterface
+	 */
+	private $request;
+
 	/**
 	 * The name of module directory
 	 * 
@@ -51,14 +60,14 @@ final class ModuleResolver implements ResolverInterface
 	/**
 	 * State initialization
 	 * 
-	 * @param $request
+	 * @param \Krystal\Http\RequestInterface $request
 	 * @param string $moduleDir
 	 * @param string $module
 	 * @param string $theme Theme name
 	 * @param string $baseDir
 	 * @return void
 	 */
-	public function __construct($request, $moduleDir, $module, $theme, $baseDir = 'View/Template')
+	public function __construct(RequestInterface $request, $moduleDir, $module, $theme, $baseDir = 'View/Template')
 	{
 		$this->request = $request;
 		$this->moduleDir = $moduleDir;
@@ -71,7 +80,7 @@ final class ModuleResolver implements ResolverInterface
 	 * Overrides default theme
 	 * 
 	 * @param string $theme
-	 * @return \Krystal\Application\View\Resolver\Module
+	 * @return \Krystal\Application\View\Resolver\ModuleResolver
 	 */
 	public function setTheme($theme)
 	{
@@ -83,7 +92,7 @@ final class ModuleResolver implements ResolverInterface
 	 * Overrides default module
 	 * 
 	 * @param string $module
-	 * @return \Krystal\Application\View\Resolver\Module
+	 * @return \Krystal\Application\View\Resolver\ModuleResolver
 	 */
 	public function setModule($module)
 	{
@@ -95,7 +104,7 @@ final class ModuleResolver implements ResolverInterface
 	 * Overrides default extension
 	 * 
 	 * @param string $extension
-	 * @return \Krystal\Application\View\Resolver\Module
+	 * @return \Krystal\Application\View\Resolver\ModuleResolver
 	 */
 	public function setExtension($extension)
 	{
@@ -138,7 +147,7 @@ final class ModuleResolver implements ResolverInterface
 	}
 
 	/**
-	 * Returns a theme path appeding required filename
+	 * Returns a theme path appending required filename
 	 * 
 	 * @param string $filename
 	 * @return string
@@ -147,11 +156,11 @@ final class ModuleResolver implements ResolverInterface
 	{
 		return sprintf('%s/%s', $this->resolve(), $filename);
 	}
-	
+
 	/**
 	 * Resolves a base path
 	 * 
-	 * @param string $theme Optinally a theme can be overriden
+	 * @param string $theme Optionally a theme can be overridden
 	 * @return string
 	 */
 	public function resolve($theme = null)
