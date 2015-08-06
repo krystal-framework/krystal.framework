@@ -14,6 +14,14 @@ namespace Krystal\Db\Filter;
 interface QueryContainerInterface
 {
 	/**
+	 * Returns grouped element name
+	 * 
+	 * @param string $name
+	 * @return string
+	 */
+	public function getElementName($name);
+
+	/**
 	 * Checks whether a filter has been applied
 	 * 
 	 * @return boolean

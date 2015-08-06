@@ -21,14 +21,37 @@ final class QueryContainer implements QueryContainerInterface
 	private $data = array();
 
 	/**
+	 * A group name for all elements
+	 * 
+	 * @var string
+	 */
+	private $group;
+
+	/**
 	 * State initialization
 	 * 
-	 * @param mixed $data
+	 * @param array $request All GET-request data
+	 * @param string $group Group name
 	 * @return void
 	 */
-	public function __construct($data = array())
+	public function __construct(array $request, $group)
 	{
-		$this->data = $data;
+		if (isset($request[$group]) && is_array($request[$group])) {
+			$this->data = $request[$group];
+		}
+
+		$this->group = $group;
+	}
+
+	/**
+	 * Returns grouped element name
+	 * 
+	 * @param string $name
+	 * @return string
+	 */
+	public function getElementName($name)
+	{
+		return sprintf('%s[%s]', $this->group, $name);
 	}
 
 	/**
