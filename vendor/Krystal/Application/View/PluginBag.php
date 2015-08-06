@@ -60,7 +60,7 @@ final class PluginBag implements PluginBagInterface
 	}
 
 	/**
-	 * Append style sheet
+	 * Appends a collection of stylesheets
 	 * 
 	 * @param array $stylesheets
 	 * @return \Krystal\Application\View\PluginBag
@@ -75,7 +75,7 @@ final class PluginBag implements PluginBagInterface
 	}
 
 	/**
-	 * Return all stylesheets
+	 * Returns registered all stylesheets
 	 * 
 	 * @return array
 	 */
@@ -99,7 +99,7 @@ final class PluginBag implements PluginBagInterface
 	}
 
 	/**
-	 * Append scripts
+	 * Appends a collection of scripts
 	 * 
 	 * @param array $scripts
 	 * @return \Krystal\Application\View\PluginBag
@@ -114,7 +114,7 @@ final class PluginBag implements PluginBagInterface
 	}
 
 	/**
-	 * Return scripts
+	 * Returns all registered scripts
 	 * 
 	 * @return array
 	 */
@@ -122,13 +122,7 @@ final class PluginBag implements PluginBagInterface
 	{
 		return $this->scripts;
 	}
-	
-	//
-	public function clear()
-	{
-		
-	}
-	
+
 	/**
 	 * Registers plugin collection
 	 * 
