@@ -12,7 +12,7 @@
 namespace Krystal\Application\Controller;
 
 use Krystal\InstanceManager\ServiceLocatorInterface;
-use Krystal\Application\View\Resolver\Module as Resolver;
+use Krystal\Application\View\Resolver\ModuleResolver;
 use Krystal\Db\Filter\FilterableServiceInterface;
 use RuntimeException;
 
@@ -327,7 +327,7 @@ abstract class AbstractController
 		$this->haltOnDemand();
 
 		// Now tweak the view
-		$resolver = new Resolver($this->request, $this->appConfig->getModulesDir(), $this->getResolverModuleName(), $this->getResolverThemeName());
+		$resolver = new ModuleResolver($this->request, $this->appConfig->getModulesDir(), $this->getResolverModuleName(), $this->getResolverThemeName());
 		$this->view->setResolver($resolver);
 
 		if (method_exists($this, 'bootstrap')) {

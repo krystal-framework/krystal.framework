@@ -11,7 +11,7 @@
 
 namespace Krystal\Application\View\Resolver;
 
-final class Module implements ResolverInterface
+final class ModuleResolver implements ResolverInterface
 {
 	/**
 	 * The name of module directory
