@@ -124,7 +124,7 @@ final class ModuleManager implements ModuleManagerInterface
 	 * Returns module instance by its name
 	 * 
 	 * @param object $name
-	 * @return object
+	 * @return \Krystal\Application\Module\AbstractModule
 	 */
 	public function getModule($name)
 	{
@@ -138,7 +138,7 @@ final class ModuleManager implements ModuleManagerInterface
 	/**
 	 * Checks whether module is loaded
 	 * 
-	 * @param string $name Target module name
+	 * @param string $name Module name to be checked
 	 * @return boolean
 	 */
 	public function isLoaded($name)
@@ -157,7 +157,7 @@ final class ModuleManager implements ModuleManagerInterface
 	}
 
 	/**
-	 * Returns collection of loaded modules
+	 * Returns a collection of loaded module instances
 	 * 
 	 * @return array
 	 */
@@ -261,7 +261,7 @@ final class ModuleManager implements ModuleManagerInterface
 	}
 
 	/**
-	 * Append routes
+	 * Append routes to the global stack
 	 * 
 	 * @param array $routes
 	 * @return void
@@ -274,7 +274,7 @@ final class ModuleManager implements ModuleManagerInterface
 	}
 
 	/**
-	 * Return routes
+	 * Returns all routes
 	 * 
 	 * @return array
 	 */
@@ -284,7 +284,7 @@ final class ModuleManager implements ModuleManagerInterface
 	}
 
 	/**
-	 * Returns translations
+	 * Returns all merged translations
 	 * 
 	 * @return array
 	 */
