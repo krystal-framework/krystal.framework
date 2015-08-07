@@ -94,6 +94,7 @@ final class ModuleManager implements ModuleManagerInterface
 	/**
 	 * Initializes the module manager
 	 * 
+	 * @throws \RuntimeException If no modules found
 	 * @return void
 	 */
 	public function initialize()
