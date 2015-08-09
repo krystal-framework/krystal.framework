@@ -113,7 +113,7 @@ interface HeaderBagInterface
 	 * Send headers
 	 * 
 	 * @param boolean $replace Whether to override a header on collision
-	 * @return void
+	 * @return \Krystal\Http\HeaderBag
 	 */
 	public function send($replace = true);
 }
