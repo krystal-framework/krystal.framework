@@ -34,6 +34,22 @@ final class HttpResponse implements HttpResponseInterface
 	}
 
 	/**
+	 * Downloads a file
+	 * 
+	 * @param string $filename A path to the target file
+	 * @param string $alias Basename name can be optionally changed
+	 * @return void
+	 */
+	public function download($filename, $alias = null)
+	{
+		$fileDowloader = new FileDownloader($this->headerBag);
+		$fileDowloader->download($filename, $alias);
+
+		// Terminate the script with success
+		exit(1);
+	}
+
+	/**
 	 * Prepared and appends HTTP status message to the queue by associated code
 	 * 
 	 * @param integer $code
