@@ -49,7 +49,7 @@ class FileManager
 	public function getMimeType($file)
 	{
 		$mimeType = new MimeTypeGuesser();
-		$extension = $this->fetchExtension($file);
+		$extension = $this->getExtension($file);
 		
 		return $mimeType->getTypeByExtension($file);
 	}
