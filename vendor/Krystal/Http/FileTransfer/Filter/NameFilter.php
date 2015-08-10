@@ -16,14 +16,16 @@ use Krystal\Http\FileTransfer\Filter\Type\FilterTypeInterface;
 final class NameFilter implements FileInputFilerInterface
 {
 	/**
-	 * @var FilterTypeInterface
+	 * Any compliant filter
+	 * 
+	 * @var \Krystal\Http\FileTransfer\Filter\Type\FilterTypeInterface
 	 */
 	private $filter;
 
 	/**
 	 * State initialization
 	 * 
-	 * @param FilterTypeInterface $files
+	 * @param \Krystal\Http\FileTransfer\Filter\Type\FilterTypeInterface $filter
 	 * @return void
 	 */
 	public function __construct(FilterTypeInterface $filter)
