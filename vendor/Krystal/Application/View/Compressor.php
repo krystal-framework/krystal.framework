@@ -21,41 +21,56 @@ final class Compressor implements CompressorInterface
 	 */
 	public function compress($content)
 	{
+		// Increment recursion level only before doing a compression
+		ini_set('pcre.recursion_limit', '16777');
+
 		$content = $this->removeSpaces($content);
 		$content = $this->removeComments($content);
-		$content = $this->removeBreaks($content);
 
 		return $content;
 	}
 
 	/**
-	 * @param string $document
-	 * @return string
-	 */
-	private function removeSpaces($document)
-	{
-		return preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $document);
-	}
-	
-	/**
-	 * Removes comments from the document
+	 * Removes all spaces from a string
 	 * 
-	 * @param string $document
+	 * @param string $content
 	 * @return string
 	 */
-	private function removeComments($document)
+	private function removeSpaces($content)
 	{
-		return preg_replace('/<!--(.*)-->/Uis', '', $document);
+		// The pattern itself taken from here: http://stackoverflow.com/a/5324014/1208233
+		// With minor modifications to support unicode and <code> tag
+		$pattern = '%# Collapse whitespace everywhere but in blacklisted elements.
+        (?>             # Match all whitespans other than single space.
+          [^\S ]\s*     # Either one [\t\r\n\f\v] and zero or more ws,
+        | \s{2,}        # or two or more consecutive-any-whitespace.
+        ) # Note: The remaining regex consumes no text at all...
+        (?=             # Ensure we are not in a blacklist tag.
+          [^<]*+        # Either zero or more non-"<" {normal*}
+          (?:           # Begin {(special normal*)*} construct
+            <           # or a < starting a non-blacklist tag.
+            (?!/?(?:textarea|pre|script|code)\b)
+            [^<]*+      # more non-"<" {normal*}
+          )*+           # Finish "unrolling-the-loop"
+          (?:           # Begin alternation group.
+            <           # Either a blacklist start tag.
+            (?>textarea|pre|script|code)\b
+          | \z          # or end of file.
+          )             # End alternation group.
+        )  # If we made it here, we are not in a blacklist tag.
+        %Sixu';
+
+		return preg_replace($pattern, '', $content);
 	}
 
 	/**
-	 * Removes spaces, tables and line breaks
+	 * Removes comments from the document, excluding IE's conditional ones
 	 * 
 	 * @param string $document
 	 * @return string
 	 */
-	private function removeBreaks($document)
+	private function removeComments($content)
 	{
-		return str_replace(array("\r\n", "\r", "\n", "\t", '  ', '  ', '    ', '    '), '', $document);
+		return preg_replace('#<!--(?!\[).*?(?!<\])-->#', '', $content);
 	}
 }
