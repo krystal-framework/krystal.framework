@@ -527,6 +527,34 @@ OK, now what?
 Done, that's it!
 Now you can simply call `getPaginator()` on a mapper, since `paginate()` method internally tweaks paginator behind the scenes. After all you you'd pass paginator's instance to a view from a service later.
 
+# Transactions
+
+There are four methods to handle transaction. In case you use MySQL, remember that transactions aren't supported by MyISAM engine. If you plain to use them, make sure your tables are managed by InnoDB engine.
+
+# beginTransaction()
+
+    \Krystal\Db\Sql\Db\beginTransaction()
+
+Initiates a new transaction. Returns true on success, false on failure
+
+# inTransaction()
+
+    \Krystal\Db\Sql\Db\inTransaction()
+
+Checks if inside a transaction. Returns true if inside, false if not
+
+# commit()
+
+    \Krystal\Db\Sql\Db\commit()
+
+Commits a transaction. Returns true on success, false on failure.
+
+# rollBack()
+
+    \Krystal\Db\Sql\Db\rollBack()
+
+Rolls back a transaction. If no transaction is active, then it would throw `\PDOException`. Returns true on success, false on failure.
+
 # Shortcuts
 
 A shortcut is a method that does some very common thing. Take as example these things:
@@ -662,5 +690,6 @@ To access raw PDO instance, just call `getPdo()`, like this:
  * Need more SQL connectors
  * SQL Table Relations - Implement very common types at least
  * Methods in SQL\Qb for migrations
+
 
 
