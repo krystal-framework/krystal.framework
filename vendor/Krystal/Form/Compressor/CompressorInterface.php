@@ -9,9 +9,15 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Application\View;
+namespace Krystal\Form\Compressor;
 
 interface CompressorInterface
 {
-	//@TODO
+	/**
+	 * Compresses the string
+	 * 
+	 * @param string $content
+	 * @return string 
+	 */
+	public function compress($content);
 }

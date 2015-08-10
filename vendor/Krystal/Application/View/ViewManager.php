@@ -16,6 +16,7 @@ use Krystal\I18n\TranslatorInterface;
 use Krystal\Application\View\Resolver\Theme as StandardResolver;
 use Krystal\Application\View\Resolver\ResolverInterface;
 use Krystal\Form\Navigation\Breadcrumbs\BreadcrumbBag;
+use Krystal\Form\Compressor\HtmlCompressor;
 use Krystal\Application\Route\UrlBuilderInterface;
 
 final class ViewManager implements ViewManagerInterface
@@ -343,7 +344,7 @@ final class ViewManager implements ViewManagerInterface
 
 		// Compress if needed
 		if ($this->compress === true) {
-			$compressor = new Compressor();
+			$compressor = new HtmlCompressor();
 			$content = $compressor->compress($content);
 		}
 

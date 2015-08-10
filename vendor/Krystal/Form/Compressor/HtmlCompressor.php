@@ -9,12 +9,12 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Application\View;
+namespace Krystal\Form\Compressor;
 
-final class Compressor implements CompressorInterface
+final class HtmlCompressor implements CompressorInterface
 {
 	/**
-	 * Compresses content string
+	 * Compresses the string
 	 * 
 	 * @param string $content
 	 * @return string 
@@ -72,5 +72,5 @@ final class Compressor implements CompressorInterface
 	private function removeComments($content)
 	{
 		return preg_replace('#<!--(?!\[).*?(?!<\])-->#', '', $content);
-	}
+	}	
 }
