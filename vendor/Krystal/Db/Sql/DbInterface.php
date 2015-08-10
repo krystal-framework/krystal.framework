@@ -14,6 +14,35 @@ namespace Krystal\Db\Sql;
 interface DbInterface extends QueryBuilderInterface
 {
 	/**
+	 * Initiates a transaction
+	 * 
+	 * @return boolean
+	 */
+	public function beginTransaction();
+
+	/**
+	 * Checks if inside a transaction
+	 * 
+	 * @return boolean
+	 */
+	public function inTransaction();
+
+	/**
+	 * Commits a transaction
+	 * 
+	 * @return boolean
+	 */
+	public function commit();
+
+	/**
+	 * Rolls back a transaction
+	 * 
+	 * @throws \PDOException if no transaction is active
+	 * @return boolean
+	 */
+	public function rollBack();
+
+	/**
 	 * Automatically paginates result-set
 	 * 
 	 * @param integer $page

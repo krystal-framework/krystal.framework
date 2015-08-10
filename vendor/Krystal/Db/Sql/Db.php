@@ -110,6 +110,47 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Initiates a transaction
+	 * 
+	 * @return boolean
+	 */
+	public function beginTransaction()
+	{
+		return $this->pdo->beginTransaction();
+	}
+
+	/**
+	 * Checks if inside a transaction
+	 * 
+	 * @return boolean
+	 */
+	public function inTransaction()
+	{
+		return $this->pdo->inTransaction();
+	}
+
+	/**
+	 * Commits a transaction
+	 * 
+	 * @return boolean
+	 */
+	public function commit()
+	{
+		return $this->pdo->commit();
+	}
+
+	/**
+	 * Rolls back a transaction
+	 * 
+	 * @throws \PDOException if no transaction is active
+	 * @return boolean
+	 */
+	public function rollBack()
+	{
+		return $this->pdo->rollBack();
+	}
+
+	/**
 	 * Prepared raw data before a command is executed
 	 * 
 	 * @param array $data
