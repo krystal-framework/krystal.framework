@@ -274,12 +274,12 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 	{
 		// Cast to the int, in case we got a numeric string
 		$degrees = (int) $degrees;
-		
+
 		$this->image = imagerotate($this->image, $degrees, 0);
-		
+
 		$this->width = imagesx($this->image);
 		$this->height = imagesy($this->image);
-		
+
 		return $this;
 	}
 }
