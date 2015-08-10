@@ -12,6 +12,8 @@
 namespace Krystal\Http\FileTransfer\Filter;
 
 use Krystal\Http\FileTransfer\Filter\Type\FilterTypeInterface;
+use Krystal\Http\FileTransfer\Filter\Type;
+use LogicException;
 
 final class NameFilter implements FileInputFilerInterface
 {
@@ -37,13 +39,18 @@ final class NameFilter implements FileInputFilerInterface
 	 * Builds an instance
 	 * 
 	 * @param string $filter
+	 * @throws \LogicException If Unknown filter supplied
+	 * @return \Krystal\Http\FileTransfer\Filter\NameFilter
 	 */
 	public static function factory($type = 'unique')
 	{
 		switch ($type) {
 			case 'unique':
-				$filter = new \Krystal\Http\FileTransfer\Filter\Type\Unique();
+				$filter = new Type\Unique();
 			break;
+
+			default:
+				throw new LogicException(sprintf('Unknown filter supplied "%s"', $type));
 		}
 
 		return new self($filter);
