@@ -49,6 +49,17 @@ final class FileEntity implements FileEntityInterface
 	private $size;
 
 	/**
+	 * Returns unique name for uploaded file
+	 * 
+	 * @return string
+	 */
+	public function getUniqueName()
+	{
+		$extension = strtolower(pathinfo($this->getName(), \PATHINFO_EXTENSION));
+		return sprintf('%s.%s', uniqid(), $extension);
+	}
+
+	/**
 	 * Defines type for a file
 	 * 
 	 * @param string $type

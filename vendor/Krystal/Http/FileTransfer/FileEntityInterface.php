@@ -14,6 +14,13 @@ namespace Krystal\Http\FileTransfer;
 interface FileEntityInterface
 {
 	/**
+	 * Returns unique name for uploaded file
+	 * 
+	 * @return string
+	 */
+	public function getUniqueName();
+
+	/**
 	 * Defines type for a file
 	 * 
 	 * @param string $type
