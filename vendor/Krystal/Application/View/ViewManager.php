@@ -13,7 +13,6 @@ namespace Krystal\Application\View;
 
 use RuntimeException;
 use Krystal\I18n\TranslatorInterface;
-use Krystal\Application\View\Resolver\Theme as StandardResolver;
 use Krystal\Application\View\Resolver\ResolverInterface;
 use Krystal\Form\Navigation\Breadcrumbs\BreadcrumbBag;
 use Krystal\Form\Compressor\HtmlCompressor;
