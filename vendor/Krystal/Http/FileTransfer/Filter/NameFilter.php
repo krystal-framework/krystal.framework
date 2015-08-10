@@ -57,19 +57,17 @@ final class NameFilter implements FileInputFilerInterface
 	}
 
 	/**
-	 * Filter names. This can be useful if we want to handle all names
-	 * This is basically used to solve UTF-8 problems when files are broken right after uploading if they contain UTF-8 characters
-	 * By applying some callback function that operates on all 'name' keys and returns modified value
+	 * Filter names inside each file entity applying defined filter
 	 * 
 	 * @param array $files
 	 * @return void
 	 */
 	public function filter(array $files)
 	{
-		foreach ($files as $fileBag) {
-			
-			$name = $this->filter->filter($fileBag->getName());
-			$fileBag->setName($name);
+		foreach ($files as $fileEntity) {
+
+			$name = $this->filter->filter($fileEntity->getName());
+			$fileEntity->setName($name);
 		}
 	}
 }
