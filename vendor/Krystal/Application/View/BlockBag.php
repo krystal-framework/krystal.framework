@@ -124,7 +124,7 @@ final class BlockBag implements BlockBagInterface
 	}
 
 	/**
-	 * Returns block directory
+	 * Returns block directory path
 	 * 
 	 * @return string
 	 */
@@ -132,9 +132,9 @@ final class BlockBag implements BlockBagInterface
 	{
 		return $this->blockDir;
 	}
-	
+
 	/**
-	 * Defines block directory
+	 * Defines block directory path
 	 * 
 	 * @param string $blockDir
 	 * @return \Krystal\Application\View\BlockBag
