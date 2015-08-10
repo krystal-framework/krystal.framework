@@ -11,6 +11,8 @@
 
 namespace Krystal\Application\View;
 
+use LogicException;
+
 final class BlockBag implements BlockBagInterface
 {
 	/**
@@ -37,7 +39,7 @@ final class BlockBag implements BlockBagInterface
 	/**
 	 * State initialization
 	 * 
-	 * @param string $extension
+	 * @param string $extension Default is phtml
 	 * @return void
 	 */
 	public function __construct($extension = 'phtml')
@@ -49,6 +51,7 @@ final class BlockBag implements BlockBagInterface
 	 * Attempts to return block's file path
 	 * 
 	 * @param string $name Block's name
+	 * @throws \LogicException If can't find a block's file by its name
 	 * @return string
 	 */
 	public function getBlockFile($name)
@@ -62,7 +65,7 @@ final class BlockBag implements BlockBagInterface
 			return $this->getStaticFile($name);
 
 		} else {
-			throw new \Exception(sprintf('Could not find a registered block called %s', $name));
+			throw new LogicException(sprintf('Could not find a registered block called %s', $name));
 		}
 	}
 
@@ -83,6 +86,7 @@ final class BlockBag implements BlockBagInterface
 	 * 
 	 * @param string $name
 	 * @param string $baseDir
+	 * @throws \LogicException if wrong data supplied
 	 * @return \Krystal\Application\View\BlockBag
 	 */
 	public function addStaticBlock($baseDir, $name)
@@ -90,7 +94,7 @@ final class BlockBag implements BlockBagInterface
 		$file = $this->getPathWithBaseDir($baseDir, $name);
 
 		if (!is_file($file)) {
-			throw new \Exception('Invalid base directory or file name provided');
+			throw new LogicException(sprintf('Invalid base directory or file name provided "%s"', $file));
 		}
 
 		$this->staticBlocks[$name] = $file;
