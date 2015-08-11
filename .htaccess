@@ -1,7 +1,22 @@
 
-php_value memory_limit 512M
+# Warning: If your Apache server doesn't support php.ini directives, then it might cause 500 Internal Server Error
+
+# Better performance
 php_value realpath_cache_size 2M
 
+# Configuration for file uploading
+
+# memory_limit should be larger than post_max_size
+php_value memory_limit 512M
+
+# php.ini configuration for better file uploading
+php_value max_input_time 90000000000
+php_value max_execution_time 90000000000
+
+# To upload large files, post_max_size value must be larger than upload_max_filesize
+php_value post_max_size 100M
+php_value upload_max_filesize 50M
+php_value max_file_uploads 10
 
 # We don't want this var to be readable
 ServerSignature Off
