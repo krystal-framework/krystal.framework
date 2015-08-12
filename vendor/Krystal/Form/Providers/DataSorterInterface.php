@@ -11,5 +11,25 @@
 
 interface DataSorterInterface
 {
-	//@TODO
+	/**
+	 * Returns sorting options
+	 * 
+	 * @return array
+	 */
+	public function getSortingOptions();
+
+	/**
+	 * Returns current sort option
+	 * 
+	 * @return string
+	 */
+	public function getSortOption();
+
+	/**
+	 * Stores sorting option
+	 * 
+	 * @param string $sort
+	 * @return boolean
+	 */
+	public function setSortOption($sort);
 }
