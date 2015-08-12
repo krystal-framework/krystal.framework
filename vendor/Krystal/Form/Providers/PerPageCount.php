@@ -12,19 +12,21 @@
 namespace Krystal\Form\Providers;
 
 use LogicException;
+use Krystal\Http\PersistentStorageInterface;
 
 class PerPageCount extends AbstractProvider implements PerPageCountInterface
 {
 	/**
 	 * State initialization
 	 * 
+	 * @param \Krystal\Http\PersistentStorageInterface $storage
 	 * @param string $ns Unique namespace (i.e array key in storage)
 	 * @param integer $default value to select if doesn't exist in storage
 	 * @param array $values Values
 	 * @throws LogicException If $default doesn't belong to $values
 	 * @return void
 	 */
-	public function __construct($ns, $default = 3, array $values = array(3, 5, 10, 15, 20, 25))
+	public function __construct(PersistentStorageInterface $storage, $ns, $default = 3, array $values = array(3, 5, 10, 15, 20, 25))
 	{
 		if (!in_array($default, $values)) {
 			throw new LogicException(sprintf(
@@ -32,6 +34,7 @@ class PerPageCount extends AbstractProvider implements PerPageCountInterface
 			));
 		}
 
+		$this->storage = $storage;
 		$this->ns = $ns;
 		$this->default = $default;
 		$this->values = $values;
@@ -42,7 +45,7 @@ class PerPageCount extends AbstractProvider implements PerPageCountInterface
 	 * 
 	 * @return array Array of option entities
 	 */
-	final public function getPerPageCountValues()
+	public function getPerPageCountValues()
 	{
 		return $this->getAllPrepared();
 	}
@@ -52,7 +55,7 @@ class PerPageCount extends AbstractProvider implements PerPageCountInterface
 	 * 
 	 * @return integer
 	 */
-	final public function getPerPageCount()
+	public function getPerPageCount()
 	{
 		return $this->getData();
 	}
@@ -63,7 +66,7 @@ class PerPageCount extends AbstractProvider implements PerPageCountInterface
 	 * @param integer $count Current count
 	 * @return boolean
 	 */
-	final public function setPerPageCount($count)
+	public function setPerPageCount($count)
 	{
 		return $this->setData((int) $count);
 	}

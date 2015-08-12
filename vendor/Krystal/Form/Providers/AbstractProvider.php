@@ -12,9 +12,9 @@
 namespace Krystal\Form\Providers;
 
 use Krystal\Form\Selectbox\OptionBox;
+use Krystal\Http\PersistentStorageInterface;
 use LogicException;
 
-//@TODO: Get rid of session's global state
 abstract class AbstractProvider
 {
 	/**
@@ -39,15 +39,24 @@ abstract class AbstractProvider
 	protected $values = array();
 
 	/**
+	 * Persistent storage service
+	 * 
+	 * @var \Krystal\Http\PersistentStorageInterface
+	 */
+	protected $storage;
+
+	/**
 	 * State initialization
 	 * 
-	 * @param string $ns
-	 * @param string $default
+	 * @param \Krystal\Http\PersistentStorageInterface $storage
+	 * @param string $ns Namespace to be taken in a storage
+	 * @param string $default Default value to return in case requested isn't persisted
 	 * @param array $data
 	 * @return void
 	 */
-	public function __construct($ns, $default, array $values)
+	public function __construct(PersistentStorageInterface $storage, $ns, $default, array $values)
 	{
+		$this->storage = $storage;
 		$this->ns = $ns;
 		$this->default = $default;
 		$this->values = $values;
@@ -71,34 +80,28 @@ abstract class AbstractProvider
 	/**
 	 * Defines data's key
 	 * 
-	 * @return boolean
+	 * @param string $value A value to be written in provided namespace
+	 * @return void
 	 */
 	final protected function setData($value)
 	{
-		//@TODO FIX: $this->has($value)
-		if (1) {
-			$_SESSION[$this->ns] = $value;
-			return true;
-			
-		} else {
-			// Could not set, $sort sort doesn't belong to values
-			return false;
-		}
+		$this->storage->set($this->ns, $value);
 	}
 
 	/**
-	 * Returns data
+	 * Returns data from a storage if present
+	 * If not returns default value
 	 * 
 	 * @return mixed
 	 */
 	final public function getData()
 	{
-		if (isset($_SESSION[$this->ns])) {
-			return $_SESSION[$this->ns];
+		if ($this->storage->has($this->ns)) {
+			return $this->storage->get($this->ns);
+		} else {
+			// If can't find in storage, then return default
+			return $this->default;
 		}
-
-		// If can't find in storage, then return default
-		return $this->default;
 	}
 
 	/**

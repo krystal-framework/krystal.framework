@@ -18,7 +18,7 @@ class DataSorter extends AbstractProvider
 	 * 
 	 * @return array
 	 */
-	final public function getSortingOptions()
+	public function getSortingOptions()
 	{
 		return $this->getAllPrepared();
 	}
@@ -28,7 +28,7 @@ class DataSorter extends AbstractProvider
 	 * 
 	 * @return string
 	 */
-	final public function getSortOption()
+	public function getSortOption()
 	{
 		return $this->getData();
 	}
@@ -39,7 +39,7 @@ class DataSorter extends AbstractProvider
 	 * @param string $sort
 	 * @return boolean
 	 */
-	final public function setSortOption($sort)
+	public function setSortOption($sort)
 	{
 		return $this->setData($sort);
 	}
