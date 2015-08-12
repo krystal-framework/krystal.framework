@@ -12,6 +12,7 @@
 namespace Krystal\Application\Component;
 
 use Krystal\Session\SessionBag as Component;
+use Krystal\Session\SessionValidator;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 use Krystal\Session\Adapter;
@@ -72,7 +73,7 @@ final class SessionBag implements ComponentInterface
 		}
 
 		$cookieBag = $container->get('request')->getCookieBag();
-		$sessionBag = new Component($cookieBag, $handler);
+		$sessionBag = new Component($cookieBag, new SessionValidator($input->getServer()), $handler);
 
 		$sessionBag->start($cookieParams);
 		return $sessionBag;
