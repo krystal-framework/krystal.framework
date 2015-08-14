@@ -32,6 +32,17 @@ final class SlugGenerator implements SlugGeneratorInterface
 	}
 
 	/**
+	 * Removes extra dashes
+	 * 
+	 * @param string $string
+	 * @return string
+	 */
+	private function removeExtraDashes($string)
+	{
+		return str_replace(array('--'), '', $string);
+	}
+
+	/**
 	 * Removes undesired characters from a string
 	 * 
 	 * @param string $string
@@ -98,6 +109,7 @@ final class SlugGenerator implements SlugGeneratorInterface
 		$string = $this->lowercase($string);
 		$string = $this->removeUndesiredChars($string);
 		$string = $this->replaceWt($string);
+		$string = $this->removeExtraDashes($string);
 
 		return $string;
 	}
