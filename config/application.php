@@ -1,6 +1,5 @@
 <?php
 
-
 /* Most options are already set by default, therefore they are hidden */
 return array(
 	
@@ -11,6 +10,32 @@ return array(
 	 * Framework components configuration
 	 */
 	'components' => array(
+		
+		/**
+		 * Session component
+		 */
+		'session' => array(
+			'handler' => 'sql',
+			'options' => array(
+				'connection' => 'mysql',
+				'table' => 'sessions'
+			),
+			'cookie_params' => array(
+				// Session cookie parameters can be set set
+			)
+		),
+		
+		/**
+		 * Configuration service
+		 */
+		'config' => array(
+			'adapter' => 'sql',
+			'options' => array(
+				'connection' => 'mysql',
+				'table' => 'config'
+			)
+		),
+		
 		/**
 		 * Cache component
 		 */
@@ -83,14 +108,12 @@ return array(
 		/**
 		 * Database component provider
 		 * It needs to be configured here and accessed in mappers
-		 * 
-		 * Like this: $this->db->...
 		 */
 		'db' => array(
 			'mysql' => array(
 				'connection' => array(
 					'host' => '127.0.0.1',
-					'dbname' => 'Your_db_name_here',
+					'dbname' => 'test',
 					'username' => 'root',
 					'password' => '',
 				),
@@ -98,40 +121,24 @@ return array(
 				'events' => array(
 					'fail' => function($exception) {
 						// You would want to change this in production
-						//die($exception->getMessage());
+						#die($exception->getMessage());
 					}
 				)
 			),
 		),
 		
 		/**
-		 * MapperFactory
+		 * MapperFactory which relies on previous db section
 		 */
 		'mapperFactory' => array(
-			'mysql' => array(
-			),
+			'connection' => 'mysql'
 		),
 		
 		/**
 		 * Pagination component used in data mappers. 
-		 * It's completely independent from a storage layer (be it SQL, or No-SQL, or pure array)
-		 * and can be used as a standalone component as well.
-		 * 
-		 * You can configure default style (@see Styles)
-		 * And items per page count default value, when its not specified explicitly
 		 */
 		'paginator' => array(
 			'style' => 'Digg',
-			'itemsPerPage' => 10
-		),
-		
-		// Cookie component
-		'cookie' => array(
-			'ttl' => 1000,
-		),
-		
-		// Session component
-		'session' => array(
 		)
 	)
 );
