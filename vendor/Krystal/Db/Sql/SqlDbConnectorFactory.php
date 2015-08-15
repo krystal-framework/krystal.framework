@@ -35,7 +35,8 @@ final class SqlDbConnectorFactory implements SqlDbConnectorFactoryInterface
 	 */
 	private $map = array(
 		'mysql' => '\Krystal\Db\Sql\Connector\MySQL',
-		'postgresql' => '\Krystal\Db\Sql\Connector\PostgreSQL'
+		'postgresql' => '\Krystal\Db\Sql\Connector\PostgreSQL',
+		'sqlite' => '\Krystal\Db\Sql\Connector\SQLite'
 	);
 
 	/**
