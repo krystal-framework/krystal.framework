@@ -29,13 +29,13 @@ final class MySQL extends PDO
 			$dsn .= ';dbname='.$params['dbname'];
 		}
 
-		$options = array(
+		$attrs = array(
 			parent::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
 			parent::ATTR_ERRMODE => parent::ERRMODE_EXCEPTION,
 			parent::ATTR_EMULATE_PREPARES => true,
 			parent::ATTR_DEFAULT_FETCH_MODE => parent::FETCH_ASSOC,
 		);
 
-		parent::__construct($dsn, $params['username'], $params['password'], $options);
+		parent::__construct($dsn, $params['username'], $params['password'], $attrs);
 	}
 }
