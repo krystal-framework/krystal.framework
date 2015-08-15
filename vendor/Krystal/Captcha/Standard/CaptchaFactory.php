@@ -23,8 +23,8 @@ final class CaptchaFactory
 	/**
 	 * Glues everything and builds prepared CAPTCHA's instance
 	 * 
-	 * @param \Krystal\Session\SessionBag $sessionBag
 	 * @param array $options Optional option overrides
+	 * @param \Krystal\Session\SessionBag $sessionBag Session service
 	 * @return \Krystal\Captcha\Standard\Captcha
 	 */
 	public static function build(array $options = array(), $sessionBag = null)
@@ -35,7 +35,7 @@ final class CaptchaFactory
 
 		// Default fonts directory
 		$fontsDir = __DIR__ . '/Fonts/';
-		$font = isset($options['font']) ? $options['font'] : 'Arimo.ttf';
+		$fontFile = isset($options['font']) ? $options['font'] : 'Arimo.ttf';
 
 		$paramBag = new ParamBag();
 		$paramBag->setWidth(isset($options['width']) ? $options['width'] : 120)
@@ -45,8 +45,8 @@ final class CaptchaFactory
 				 ->setBackgroundColor(isset($options['background_color']) ? $options['background_color'] : 0xFFFFFF) // white by default
 				 ->setTextColor(isset($options['text_color']) ? $options['text_color'] : 0x3440A0) // blue by default
 				 ->setOffset(isset($options['offset']) ? $options['offset'] :  -3)
-				 ->setFontFile($fontsDir . $font);
-		
+				 ->setFontFile($fontsDir . $fontFile);
+
 		$image = new ImageGenerator($paramBag);
 
 		if (isset($options['text'])) {
