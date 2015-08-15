@@ -116,13 +116,6 @@ return array(
 					'dbname' => 'test',
 					'username' => 'root',
 					'password' => '',
-				),
-				
-				'events' => array(
-					'fail' => function($exception) {
-						// You would want to change this in production
-						#die($exception->getMessage());
-					}
 				)
 			),
 		),
