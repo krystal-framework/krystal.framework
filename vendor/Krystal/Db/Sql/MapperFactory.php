@@ -49,19 +49,8 @@ final class MapperFactory implements MapperFactoryInterface
 		$this->db = $db;
 
 		if (!is_null($paginator)) {
-			$this->setPaginator($paginator);
+			$this->paginator = $paginator;
 		}
-	}
-
-	/**
-	 * Defines paginator's instance
-	 * 
-	 * @param \Krystal\Paginate\PaginatorInterface $paginator
-	 * @return void
-	 */
-	public function setPaginator(PaginatorInterface $paginator)
-	{
-		$this->paginator = $paginator;
 	}
 
 	/**

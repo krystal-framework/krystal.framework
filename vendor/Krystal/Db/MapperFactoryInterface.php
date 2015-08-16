@@ -17,14 +17,6 @@ use Krystal\Paginate\PaginatorInterface;
 interface MapperFactoryInterface
 {
 	/**
-	 * Defines paginator's instance
-	 * 
-	 * @param \Krystal\Paginate\PaginatorInterface $paginator
-	 * @return void
-	 */
-	public function setPaginator(PaginatorInterface $paginator);
-
-	/**
 	 * Builds a mapper
 	 * 
 	 * @param string $namespace PSR-0 compliant mapper

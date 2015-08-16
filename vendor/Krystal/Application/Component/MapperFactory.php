@@ -41,10 +41,7 @@ final class MapperFactory implements ComponentInterface
 			$db = $connections[$current];
 		}
 
-		$factory = new Component($db);
-		$factory->setPaginator($container->get('paginator'));
-
-		return $factory;
+		return new Component($db, $container->get('paginator'));
 	}
 
 	/**
