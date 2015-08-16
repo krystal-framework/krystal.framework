@@ -23,11 +23,11 @@ final class ParamBag implements ComponentInterface
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
 		$params = array();
-		
+
 		if (isset($config['components']['paramBag'])) {
 			$params = $config['components']['paramBag'];
 		}
-		
+
 		return new Component($params);
 	}
 
