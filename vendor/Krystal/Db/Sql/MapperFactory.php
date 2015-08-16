@@ -17,14 +17,14 @@ use Krystal\Db\MapperFactoryInterface;
 final class MapperFactory implements MapperFactoryInterface
 {
 	/**
-	 * Database handler
+	 * Database service
 	 * 
 	 * @var \Krystal\Db\Sql\Db
 	 */
 	private $db;
 
 	/**
-	 * Data paginator
+	 * Optional pagination service
 	 * 
 	 * @var \Krystal\Paginate\PaginatorInterface
 	 */
@@ -40,11 +40,11 @@ final class MapperFactory implements MapperFactoryInterface
 	/**
 	 * State initialization
 	 * 
-	 * @param \Krystal\Db\Sql\Db $db
+	 * @param \Krystal\Db\Sql\DbInterface $db Database service
 	 * @param \Krystal\Paginate\PaginatorInterface $paginator
 	 * @return void
 	 */
-	public function __construct(Db $db, PaginatorInterface $paginator = null)
+	public function __construct(DbInterface $db, PaginatorInterface $paginator = null)
 	{
 		$this->db = $db;
 
@@ -70,7 +70,7 @@ final class MapperFactory implements MapperFactoryInterface
 			if (!array_key_exists($namespace, $this->cache)) {
 
 				// It's better to avoid Reflection for performance reasons
-				if ($this->paginator instanceof PaginatorInterface) {
+				if (is_object($this->paginator)) {
 					$instance = new $namespace($this->db, $this->paginator);
 				} else {
 					$instance = new $namespace($this->db);
