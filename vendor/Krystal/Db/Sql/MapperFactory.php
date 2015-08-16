@@ -48,12 +48,11 @@ final class MapperFactory implements MapperFactoryInterface
 	}
 
 	/**
-	 * Builds a mapper
+	 * Return arguments for a mapper
 	 * 
-	 * @param string $namespace PSR-0 compliant class namespace
-	 * @return \Krystal\Db\Sql\AbstractMapper
+	 * @return array
 	 */
-	public function build($namespace)
+	private function getArgs()
 	{
 		$args = array($this->db);
 
@@ -61,7 +60,18 @@ final class MapperFactory implements MapperFactoryInterface
 			array_push($args, $this->paginator);
 		}
 
+		return $args;
+	}
+
+	/**
+	 * Builds a mapper
+	 * 
+	 * @param string $namespace PSR-0 compliant class namespace
+	 * @return \Krystal\Db\Sql\AbstractMapper
+	 */
+	public function build($namespace)
+	{
 		$builder = new InstanceBuilder();
-		return $builder->build($namespace, $args);
+		return $builder->build($namespace, $this->getArgs());
 	}
 }
