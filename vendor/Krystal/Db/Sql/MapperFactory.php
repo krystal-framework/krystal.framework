@@ -11,6 +11,7 @@
 
 namespace Krystal\Db\Sql;
 
+use Krystal\InstanceManager\InstanceBuilder;
 use Krystal\Paginate\PaginatorInterface;
 use Krystal\Db\MapperFactoryInterface;
 
@@ -31,13 +32,6 @@ final class MapperFactory implements MapperFactoryInterface
 	private $paginator;
 
 	/**
-	 * Internal cache for instances
-	 * 
-	 * @var array
-	 */
-	private $cache = array();
-
-	/**
 	 * State initialization
 	 * 
 	 * @param \Krystal\Db\Sql\DbInterface $db Database service
@@ -56,38 +50,18 @@ final class MapperFactory implements MapperFactoryInterface
 	/**
 	 * Builds a mapper
 	 * 
-	 * @param string $namespace PSR-0 compliant mapper
+	 * @param string $namespace PSR-0 compliant class namespace
 	 * @return \Krystal\Db\Sql\AbstractMapper
 	 */
 	public function build($namespace)
 	{
-		// Normalize the namespace
-		$namespace = rtrim($namespace, '\\');
-		$namespace = str_replace('/', '\\', $namespace);
+		$args = array($this->db);
 
-		// Attempt to autoload a namespace
-		if (class_exists($namespace)) {
-			if (!array_key_exists($namespace, $this->cache)) {
-
-				// It's better to avoid Reflection for performance reasons
-				if (is_object($this->paginator)) {
-					$instance = new $namespace($this->db, $this->paginator);
-				} else {
-					$instance = new $namespace($this->db);
-				}
-
-				// Put to the cache for the next call
-				$this->cache[$namespace] = $instance;
-
-				return $instance;
-
-			} else {
-
-				return $this->cache[$namespace];
-			}
-
-		} else {
-			trigger_error(sprintf('Attempted to read non-existing class "%s"', $namespace));
+		if (is_object($this->paginator)) {
+			array_push($args, $this->paginator);
 		}
+
+		$builder = new InstanceBuilder();
+		return $builder->build($namespace, $args);
 	}
 }
