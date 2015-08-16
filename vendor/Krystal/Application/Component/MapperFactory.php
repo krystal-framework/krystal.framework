@@ -30,6 +30,10 @@ final class MapperFactory implements ComponentInterface
 			return;
 		}
 
+		if (!isset($config['components']['mapperFactory']['connection'])) {
+			throw new RuntimeException('Missing connection to use for building mappers');
+		}
+
 		// Defined connection name in configuration. Grab it
 		$current = $config['components']['mapperFactory']['connection'];
 
