@@ -15,6 +15,7 @@ use Krystal\Application\Module\ModuleManager as Component;
 use Krystal\Application\Module\Loader;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
+use RuntimeException;
 
 final class ModuleManager implements ComponentInterface
 {
@@ -36,23 +37,19 @@ final class ModuleManager implements ComponentInterface
 					break;
 					
 					case 'list':
-
 						if (isset($section['options']['modules']) && is_array($section['options']['modules'])) {
 							$loader = new Loader\StaticList($section['options']['modules']);
 						} else {
-							throw new \RuntimeException('No modules provided for the list');
+							throw new RuntimeException('No modules provided for the list');
 						}
-
 					break;
 				}
 
 			} else {
-
-				throw new \RuntimeException("You need to provide loader's name");
+				throw new RuntimeException("You need to provide loader's name");
 			}
 
 		} else {
-
 			// When no configuration provided, we'd stick to defaults
 			$loader = new Loader\Dir($appConfig->getModulesDir());
 		}
