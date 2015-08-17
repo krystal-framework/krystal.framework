@@ -14,33 +14,130 @@ namespace Krystal\Db\Filter;
 final class QueryContainer implements QueryContainerInterface
 {
 	/**
-	 * Query data
+	 * Query filter data
 	 * 
 	 * @var array
 	 */
 	private $data = array();
 
 	/**
-	 * A group name for all elements
+	 * Raw query data
+	 * 
+	 * @var array
+	 */
+	private $query;
+
+	/**
+	 * Base route
 	 * 
 	 * @var string
 	 */
-	private $group;
+	private $route;
 
 	/**
 	 * State initialization
 	 * 
-	 * @param array $request All GET-request data
-	 * @param string $group Group name
+	 * @param array $query Raw query data
+	 * @param string $route Base route
 	 * @return void
 	 */
-	public function __construct(array $request, $group)
+	public function __construct(array $query, $route)
 	{
-		if (isset($request[$group]) && is_array($request[$group])) {
-			$this->data = $request[$group];
+		if (isset($query[FilterInvoker::FILTER_PARAM_NS]) && is_array($query[FilterInvoker::FILTER_PARAM_NS])) {
+			$this->data = $query[FilterInvoker::FILTER_PARAM_NS];
 		}
 
-		$this->group = $group;
+		$this->route = $route;
+		$this->query = $query;
+	}
+
+	/**
+	 * Returns parameter's value from query
+	 * 
+	 * @param string $param
+	 * @param mixed $default
+	 * @return string
+	 */
+	private function getParam($param, $default = null)
+	{
+		if (isset($this->query[$param])) {
+			return $this->query[$param];
+		} else {
+			return $default;
+		}
+	}
+
+	/**
+	 * Returns current page number
+	 * 
+	 * @return integer
+	 */
+	private function getCurrentPageNumber()
+	{
+		return (int) $this->getParam(FilterInvoker::FILTER_PARAM_PAGE, 1);
+	}
+
+	/**
+	 * Determines whether a column has been sorted either by ASC or DESC method
+	 * 
+	 * @param string $column Column name
+	 * @param string $value
+	 * @return boolean
+	 */
+	private function isSortedByMethod($column, $value)
+	{
+		return $this->isSortedBy($column) && $this->getParam(FilterInvoker::FILTER_PARAM_DESC) == $value;
+	}
+
+	/**
+	 * Determines whether a column has been sorted
+	 * 
+	 * @param string $column Column name
+	 * @return boolean
+	 */
+	public function isSortedBy($column)
+	{
+		return $this->getParam(FilterInvoker::FILTER_PARAM_SORT) == $column;
+	}
+
+	/**
+	 * Determines whether a column has been sorted by ASC method
+	 * 
+	 * @param string $column Column name
+	 * @return boolean
+	 */
+	public function isSortedByAsc($column)
+	{
+		return $this->isSortedByMethod($column, '0');
+	}
+
+	/**
+	 * Determines whether a column has been sorted by DESC method
+	 * 
+	 * @param string $column Column name
+	 * @return boolean
+	 */
+	public function isSortedByDesc($column)
+	{
+		return $this->isSortedByMethod($column, '1');
+	}
+
+	/**
+	 * Returns sorting URL for a particular column
+	 * 
+	 * @param string $column Column name
+	 * @return string
+	 */
+	public function getColumnSortingUrl($column)
+	{
+		$data = array(
+			FilterInvoker::FILTER_PARAM_PAGE => $this->getCurrentPageNumber(), 
+			FilterInvoker::FILTER_PARAM_DESC => !$this->isSortedByDesc($column), 
+			FilterInvoker::FILTER_PARAM_SORT => $column
+		);
+
+		$generator = new QueryGenerator($this->route);
+		return $generator->generate(array_merge($this->query, $data));
 	}
 
 	/**
@@ -51,7 +148,7 @@ final class QueryContainer implements QueryContainerInterface
 	 */
 	public function getElementName($name)
 	{
-		return sprintf('%s[%s]', $this->group, $name);
+		return sprintf('%s[%s]', FilterInvoker::FILTER_PARAM_NS, $name);
 	}
 
 	/**
