@@ -205,7 +205,7 @@ final class ModuleManager implements ModuleManagerInterface
 	 * Loads a module by its name
 	 * 
 	 * @param string $name Module name
-	 * @return Module
+	 * @return \Krystal\Application\Module\AbstractModule|boolean
 	 */
 	private function loadModuleByName($name)
 	{
