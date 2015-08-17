@@ -205,7 +205,6 @@ final class ModuleManager implements ModuleManagerInterface
 	 * Loads a module by its name
 	 * 
 	 * @param string $name Module name
-	 * @throws \RuntimeException if attempted to load non-existing module
 	 * @return Module
 	 */
 	private function loadModuleByName($name)
@@ -215,9 +214,7 @@ final class ModuleManager implements ModuleManagerInterface
 
 		// Ensure a module exists
 		if (!class_exists($moduleNamespace)) {
-			throw new RuntimeException(sprintf(
-				'A %s module was not registered or its missing its base definition', $moduleNamespace
-			));
+			return false;
 		}
 
 		$pathProvider = new PathProvider($this->appConfig->getModulesDir(), $name);
