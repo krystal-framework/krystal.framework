@@ -15,12 +15,14 @@ namespace Krystal\Db\Filter;
 interface FilterableServiceInterface
 {
 	/**
-	 * Filters the input
+	 * Filters the raw input
 	 * 
-	 * @param array $input Raw input data
-	 * @param integer $page
-	 * @param integer $itemsPerPage
+	 * @param array|\ArrayAccess $input Raw input data
+	 * @param integer $page Current page number
+	 * @param integer $itemsPerPage Items per page to be displayed
+	 * @param string $sortingColumn Column name to be sorted
+	 * @param string $desc Whether to sort in DESC order
 	 * @return array
 	 */
-	public function filter(array $input, $page, $itemsPerPage);
+	public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc);
 }
