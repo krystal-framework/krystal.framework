@@ -11,6 +11,8 @@
 
 namespace Krystal\Db\Filter;
 
+use Krystal\Paginate\PaginatorInterface;
+
 final class FilterInvoker implements FilterInvokerInterface
 {
 	const FILTER_PARAM_PAGE = 'page';
@@ -62,9 +64,14 @@ final class FilterInvoker implements FilterInvokerInterface
 
 			$records = $service->filter($this->getData(), $page, $perPageCount, $sort, $desc);
 
-			// Now alter paginator's state
-			$paginator = $service->getPaginator();
-			$paginator->setUrl($this->getPaginationUrl($page, $sort, $desc));
+			// Tweak pagination if available
+			if (method_exists($service, 'getPaginator')) {
+				$paginator = $service->getPaginator();
+
+				if ($paginator instanceof PaginatorInterface) {
+					$paginator->setUrl($this->getPaginationUrl($page, $sort, $desc));
+				}
+			}
 
 			return $records;
 
