@@ -25,7 +25,6 @@ final class ValidatorFactory implements ComponentInterface
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
 		if (isset($config['components']['validator'])) {
-
 			// Save a reference to array key
 			$options =& $config['components']['validator'];
 
@@ -35,25 +34,38 @@ final class ValidatorFactory implements ComponentInterface
 			} else {
 				$translator = $container->get('translator');
 			}
-			
-			// @TODO Improve this
+
 			if (isset($options['render'])) {
-				
 				switch ($options['render']) {
-					case 'MessagesOnly':
+
+					case 'JsonCollection':
 						$template = isset($options['template']) ? $options['template'] : null;
 						$renderer = new Renderer\JsonCollection($template);
 					break;
-					
-					//$renderer = new \Krystal\Validate\Renderer\MessagesOnly();
+
+					case 'MessagesOnly':
+						$renderer = new Renderer\MessagesOnly();
+					break;
+
+					case 'Standard':
+						$renderer = new Renderer\Standard();
+					break;
+
+					case 'StandardJson':
+						$renderer = new Renderer\StandardJson();
+					break;
+
+					default:
+						throw new RuntimeException(sprintf('Unsupported validation renderer supplied in configuration "%s"', $options['render']));
 				}
 			}
-			
+
 			return new Component($translator, $renderer);
-			
+
 		} else {
-			
-			throw new RuntimeException('Provide configuration for validator component first');
+
+			// Component isn't defined in configuration
+			return false;
 		}
 	}
 
