@@ -14,6 +14,8 @@ namespace Krystal\Validate\Renderer;
 final class JsonCollection extends Standard
 {
 	/**
+	 * Path to template if present
+	 * 
 	 * @var string
 	 */
 	private $template;
@@ -21,7 +23,7 @@ final class JsonCollection extends Standard
 	/**
 	 * State initialization
 	 * 
-	 * @param string $template Optional template
+	 * @param string $template Optional template file
 	 * @return void
 	 */
 	public function __construct($template = null)
@@ -46,18 +48,17 @@ final class JsonCollection extends Standard
 			$result['messages'] = array_merge($messageCollection, $result['messages']);
 			array_push($result['names'], $name);
 		}
-		
+
 		if ($this->template !== null) {
-			
 			ob_start();
 			$errors = $result['messages'];
 			include($this->template);
 			$content = ob_get_clean();
-			
+
 			// Override it now
 			$result['messages'] = $content;
 		}
-		
+
 		return json_encode($result);
 	}
 }
