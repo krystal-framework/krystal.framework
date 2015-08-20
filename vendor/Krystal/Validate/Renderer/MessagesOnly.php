@@ -11,26 +11,8 @@
 
 namespace Krystal\Validate\Renderer;
 
-class MessagesOnly extends Standard
+final class MessagesOnly extends Standard
 {
-	/**
-	 * Target template
-	 * 
-	 * @var string
-	 */
-	private $template;
-
-	/**
-	 * State initialization
-	 * 
-	 * @param string $template
-	 * @return void
-	 */
-	public function __construct($template = null)
-	{
-		$this->template = $template;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
