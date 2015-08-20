@@ -23,32 +23,39 @@ final class Paginator implements ComponentInterface
 	 */
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
-		$options = $config['components']['paginator'];
+		if (isset($config['components']['paginator'])) {
+			$options =& $config['components']['paginator'];
 
-		// By default there's no style adapter
-		$style = null;
+			// By default there's no style adapter
+			$style = null;
 
-		if (isset($options['style'])) {
-			switch (strtolower($options['style'])) {
-				case 'digg':
-					$style = new Style\DiggStyle();
-				break;
+			if (isset($options['style'])) {
+				switch (strtolower($options['style'])) {
+					case 'digg':
+						$style = new Style\DiggStyle();
+					break;
 
-				case 'slide':
-					// By default SlideStyle requires more than 5 items to be activated
-					$amount = 5;
+					case 'slide':
+						// By default SlideStyle requires more than 5 items to be activated
+						$step = 5;
 
-					// Alter default value if specified explicitly in configuration array
-					if (isset($options['options']['amount']) && is_numeric($options['options']['amount'])) {
-						$amount = (int) $options['options']['amount'];
-					}
+						// Alter default value if specified explicitly in configuration array
+						if (isset($options['options']['step']) && is_numeric($options['options']['step'])) {
+							$step = (int) $options['options']['step'];
+						}
 
-					$style = new Style\SlideStyle($amount);
-				break;
+						$style = new Style\SlideStyle($step);
+					break;
+				}
 			}
-		}
 
-		return new Component($style);
+			return new Component($style);
+
+		} else {
+
+			// No configuration provided
+			return false;
+		}
 	}
 
 	/**
