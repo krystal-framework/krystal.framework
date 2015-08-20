@@ -39,11 +39,11 @@ final class HtmlCompressor implements CompressorInterface
 	private function removeSpaces($content)
 	{
 		// The pattern itself taken from here: http://stackoverflow.com/a/5324014/1208233
-		// With minor modifications to support unicode and <code> tag
+		// With minor modifications
 		$pattern = '%# Collapse whitespace everywhere but in blacklisted elements.
         (?>             # Match all whitespans other than single space.
           [^\S ]\s*     # Either one [\t\r\n\f\v] and zero or more ws,
-        | \s{2,}        # or two or more consecutive-any-whitespace.
+        | \s{3,}        # or two or more consecutive-any-whitespace.
         ) # Note: The remaining regex consumes no text at all...
         (?=             # Ensure we are not in a blacklist tag.
           [^<]*+        # Either zero or more non-"<" {normal*}
