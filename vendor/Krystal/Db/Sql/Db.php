@@ -274,6 +274,17 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends SHOW KEYS expression
+	 * 
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function showKeys()
+	{
+		$this->queryBuilder->showKeys();
+		return $this;
+	}
+
+	/**
 	 * Executes raw query
 	 * 
 	 * @param string $query
