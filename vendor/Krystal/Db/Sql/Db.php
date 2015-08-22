@@ -79,6 +79,20 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Appends one-to-many grabber to the queue
+	 * 
+	 * @param string $table Slave table name
+	 * @param string $pk Column name which is primary key
+	 * @param string $alias Alias for result-set
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function asOneToMany($table, $pk, $alias)
+	{
+		$this->relationProcessor->queue(__FUNCTION__, func_get_args());
+		return $this;
+	}
+
+	/**
 	 * Checks whether current driver is a target
 	 * 
 	 * @param string $driver
