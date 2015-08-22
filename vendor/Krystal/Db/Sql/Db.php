@@ -70,6 +70,27 @@ final class Db implements DbInterface
 	}
 
 	/**
+	 * Checks whether current driver is a target
+	 * 
+	 * @param string $driver
+	 * @return boolean
+	 */
+	public function isDriver($driver)
+	{
+		return $this->getDriver() == $driver;
+	}
+
+	/**
+	 * Returns name of current PDO driver
+	 * 
+	 * @return string
+	 */
+	public function getDriver()
+	{
+		return $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+	}
+
+	/**
 	 * Purely for quick debugging in mappers
 	 * 
 	 * @return string

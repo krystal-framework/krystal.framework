@@ -14,6 +14,21 @@ namespace Krystal\Db\Sql;
 interface DbInterface extends QueryBuilderInterface
 {
 	/**
+	 * Checks whether current driver is a target
+	 * 
+	 * @param string $driver
+	 * @return boolean
+	 */
+	public function isDriver($driver);
+
+	/**
+	 * Returns name of current PDO driver
+	 * 
+	 * @return string
+	 */
+	public function getDriver();
+
+	/**
 	 * Initiates a transaction
 	 * 
 	 * @return boolean
