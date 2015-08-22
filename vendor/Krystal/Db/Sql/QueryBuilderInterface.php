@@ -14,6 +14,13 @@ namespace Krystal\Db\Sql;
 interface QueryBuilderInterface
 {
 	/**
+	 * Appends SHOW KEYS expression
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function showKeys();
+
+	/**
 	 * Builds INSERT query
 	 * This regular insert query for most cases. It's not aware of ON DUPLICATE KEY
 	 * 

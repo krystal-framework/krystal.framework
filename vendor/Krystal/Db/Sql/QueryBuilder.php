@@ -137,6 +137,17 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Appends SHOW KEYS expression
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function showKeys()
+	{
+		$this->append(' SHOW KEYS ');
+		return $this;
+	}
+
+	/**
 	 * Generates SQL function fragment
 	 * 
 	 * @param string $func Function name
