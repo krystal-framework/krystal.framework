@@ -60,6 +60,13 @@ interface DbInterface extends QueryBuilderInterface
 	public function getPdo();
 
 	/**
+	 * Returns prepared PDO statement
+	 * 
+	 * @return \PDOStatement
+	 */
+	public function getStmt();
+
+	/**
 	 * Queries for all result-set
 	 * 
 	 * @param string $column Optionally can be filtered by a column

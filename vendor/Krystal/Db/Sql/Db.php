@@ -293,12 +293,11 @@ final class Db implements DbInterface
 	}
 
 	/**
-	 * Queries for all result-set
+	 * Returns prepared PDO statement
 	 * 
-	 * @param string $column Optionally can be filtered by a column
-	 * @return mixed
+	 * @return \PDOStatement
 	 */
-	public function queryAll($column = null)
+	public function getStmt()
 	{
 		$stmt = $this->pdo->prepare($this->queryBuilder->getQueryString());
 		$stmt->execute($this->bindings);
@@ -306,7 +305,18 @@ final class Db implements DbInterface
 		$this->log();
 		$this->clear();
 
-		$resultset = $stmt->fetchAll();
+		return $stmt;
+	}
+
+	/**
+	 * Queries for all result-set
+	 * 
+	 * @param string $column Optionally can be filtered by a column
+	 * @return mixed
+	 */
+	public function queryAll($column = null)
+	{
+		$resultset = $this->getStmt()->fetchAll();
 
 		if ($column == null) {
 			return $resultset;
@@ -334,13 +344,7 @@ final class Db implements DbInterface
 	 */
 	public function query($column = null)
 	{
-		$stmt = $this->pdo->prepare($this->queryBuilder->getQueryString());
-		$stmt->execute($this->bindings);
-
-		$this->log();
-		$this->clear();
-
-		$result = $stmt->fetch();
+		$result = $this->getStmt()->fetch();
 
 		if ($column !== null) {
 
@@ -362,12 +366,8 @@ final class Db implements DbInterface
 	 */
 	public function execute()
 	{
-		$stmt = $this->pdo->prepare($this->queryBuilder->getQueryString());
-		$stmt->execute($this->bindings);
-
-		$this->log();
-		$this->clear();
-
+		// Execute without doiing anything with returned value
+		$this->getStmt();
 		return true;
 	}
 
