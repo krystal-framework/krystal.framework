@@ -13,6 +13,7 @@ namespace Krystal\Db\Sql;
 
 use PDO;
 use Krystal\Paginate\PaginatorInterface;
+use Krystal\Db\Sql\Relations\RelationProcessor;
 
 /* This is just a bridge between PDO and QueryBuilder, that makes it all work */
 final class Db implements DbInterface
@@ -53,6 +54,13 @@ final class Db implements DbInterface
 	private $bindings = array();
 
 	/**
+	 * Processor for relational data linked across several tables
+	 * 
+	 * @var \Krystal\Db\Sql\Relations\RelationProcessor
+	 */
+	private $relationProcessor;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param \Krystal\Db\Sql\QueryBuilderInterface $queryBuilder
@@ -67,6 +75,7 @@ final class Db implements DbInterface
 		$this->pdo = $pdo;
 		$this->paginator = $paginator;
 		$this->queryLogger = $queryLogger;
+		$this->relationProcessor = new RelationProcessor($this);
 	}
 
 	/**
@@ -348,22 +357,24 @@ final class Db implements DbInterface
 	 */
 	public function queryAll($column = null)
 	{
-		$resultset = $this->getStmt()->fetchAll();
+		$result = array();
+		$rows = $this->getStmt()->fetchAll();
 
 		if ($column == null) {
-			return $resultset;
+			$result = $rows;
 		} else {
-			$result = array();
-
-			foreach ($resultset as $row) {
-
+			foreach ($rows as $row) {
 				if (isset($row[$column])) {
 					$result[] = $row[$column];
 				} else {
 					return false;
 				}
 			}
+		}
 
+		if ($this->relationProcessor->hasQueue()) {
+			return $this->relationProcessor->process($result);
+		} else {
 			return $result;
 		}
 	}
@@ -376,19 +387,26 @@ final class Db implements DbInterface
 	 */
 	public function query($column = null)
 	{
-		$result = $this->getStmt()->fetch();
+		$result = array();
+		$rows = $this->getStmt()->fetch();
 
 		if ($column !== null) {
-
-			if (isset($result[$column])) {
-				return $result[$column];
+			if (isset($rows[$column])) {
+				$result = $rows[$column];
 			} else {
-				return false;
+				$result = false;
 			}
-
 		} else {
-			return $result;
+			$result = $rows;
 		}
+
+		if ($this->relationProcessor->hasQueue()) {
+			$data = $this->relationProcessor->process(array($result));
+			return isset($data[0]) ? $data[0] : false;
+		}
+
+		// By default
+		return $result;
 	}
 
 	/**
