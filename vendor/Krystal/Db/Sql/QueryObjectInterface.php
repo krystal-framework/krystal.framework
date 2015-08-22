@@ -14,6 +14,14 @@ namespace Krystal\Db\Sql;
 interface QueryObjectInterface
 {
 	/**
+	 * Returns a name of selected table
+	 * 
+	 * @throws \LogicException if no table is selected
+	 * @return string
+	 */
+	public function getSelectedTable();
+
+	/**
 	 * Prepares a wildcard
 	 * 
 	 * @param string $value

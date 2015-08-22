@@ -35,6 +35,28 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	private $selected;
 
 	/**
+	 * Selected table name
+	 * 
+	 * @var string
+	 */
+	private $table;
+
+	/**
+	 * Returns a name of selected table
+	 * 
+	 * @throws \LogicException if no table is selected
+	 * @return string
+	 */
+	public function getSelectedTable()
+	{
+		if (is_null($this->table)) {
+			throw new LogicException('A table was not selected. Make sure you call from() passing table name as its first argument');
+		} else {
+			return $this->table;
+		}
+	}
+
+	/**
 	 * Sets query raw string
 	 * 
 	 * @param string $queryString
@@ -514,6 +536,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	{
 		if ($table !== null) {
 			$table = $this->wrap($table);
+			$this->table = $table;
 		}
 
 		$this->append(' FROM ' . $table);
