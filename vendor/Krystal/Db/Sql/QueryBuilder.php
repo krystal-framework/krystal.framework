@@ -535,8 +535,8 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	public function from($table = null)
 	{
 		if ($table !== null) {
-			$table = $this->wrap($table);
 			$this->table = $table;
+			$table = $this->wrap($table);
 		}
 
 		$this->append(' FROM ' . $table);
