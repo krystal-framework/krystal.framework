@@ -110,6 +110,18 @@ final class RelationProcessor implements RelationProcessorInterface
 					$relation = new OneToOne($this->db);
 					$rows = $relation->merge($rows, $column, $alias, $table, $link);
 				break;
+				
+				case 'asManyToMany':
+					// Grab values from arguments passed in $db->asManyToMany()
+					$alias = $args[0];
+					$junction = $args[1];
+					$column = $args[2];
+					$table = $args[3];
+					$pk = $args[4];
+
+					$relation = new ManyToMany($this->db);
+					$rows = $relation->merge($this->getMasterPkName(), $alias, $rows, $junction, $column, $table, $pk);
+				break;
 			}
 		}
 
