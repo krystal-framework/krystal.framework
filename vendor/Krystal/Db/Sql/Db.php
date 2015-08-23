@@ -14,9 +14,10 @@ namespace Krystal\Db\Sql;
 use PDO;
 use Krystal\Paginate\PaginatorInterface;
 use Krystal\Db\Sql\Relations\RelationProcessor;
+use Krystal\Db\Sql\Relations\RelationableServiceInterface;
 
 /* This is just a bridge between PDO and QueryBuilder, that makes it all work */
-final class Db implements DbInterface
+final class Db implements DbInterface, RelationableServiceInterface
 {
 	/**
 	 * Query builder
