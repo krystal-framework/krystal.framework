@@ -99,7 +99,7 @@ final class RelationProcessor implements RelationProcessorInterface
 
 					$rows = $relation->merge($this->getMasterPkName(), $rows, $alias, $slaveTable, $slaveColumnId);
 				break;
-				
+
 				case 'asOneToOne':
 					// Grab values from arguments passed in $db->asOneToOne()
 					$column = $args[0];
@@ -110,7 +110,7 @@ final class RelationProcessor implements RelationProcessorInterface
 					$relation = new OneToOne($this->db);
 					$rows = $relation->merge($rows, $column, $alias, $table, $link);
 				break;
-				
+
 				case 'asManyToMany':
 					// Grab values from arguments passed in $db->asManyToMany()
 					$alias = $args[0];
