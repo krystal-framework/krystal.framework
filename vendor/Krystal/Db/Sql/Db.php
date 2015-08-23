@@ -12,6 +12,7 @@
 namespace Krystal\Db\Sql;
 
 use PDO;
+use RuntimeException;
 use Krystal\Paginate\PaginatorInterface;
 use Krystal\Db\Sql\Relations\RelationProcessor;
 use Krystal\Db\Sql\Relations\RelationableServiceInterface;
@@ -313,15 +314,21 @@ final class Db implements DbInterface, RelationableServiceInterface
 	 * @param integer $page
 	 * @param integer $itemsPerPage
 	 * @param string $column Column to be selected when counting
+	 * @throws \RuntimeException If algorithm isn't supported for current driver
 	 * @return \Krystal\Db\Sql\Db
 	 */
 	public function paginate($page, $itemsPerPage, $column = '1')
 	{
 		$count = $this->getCount($column);
 
-		// Alter paginator's state
-		$this->paginator->tweak($count, $itemsPerPage, $page);
-		$this->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
+		if ($this->getDriver() == 'mysql' || $this->getDriver('sqlite')) {
+			// Alter paginator's state
+			$this->paginator->tweak($count, $itemsPerPage, $page);
+			$this->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
+
+		} else {
+			throw new RuntimeException('Smart pagination is currently supported only for MySQL and SQLite');
+		}
 
 		return $this;
 	}
