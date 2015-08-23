@@ -80,6 +80,22 @@ final class Db implements DbInterface, RelationableServiceInterface
 	}
 
 	/**
+	 * Appends many-to-many grabber to the queue
+	 * 
+	 * @param string $alias Alias name
+	 * @param string $junction Junction table name
+	 * @param string $column Column name from junction table to be selected
+	 * @param string $table Slave table name table
+	 * @param string $pk PK column name in slave table
+	 * @return \Krystal\Db\Sql\Db
+	 */
+	public function asManyToMany($alias, $junction, $column, $table, $pk)
+	{
+		$this->relationProcessor->queue(__FUNCTION__, func_get_args());
+		return $this;
+	}
+
+	/**
 	 * Appends one-to-one grabber to the queue
 	 * 
 	 * @param string $column Column name from the master table to be replaced by alias
