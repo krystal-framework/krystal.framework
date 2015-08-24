@@ -450,6 +450,168 @@ They append `AND` and `OR` respectively. And the reason they were named with `ra
 And finally these methods are similar to previous ones, except that they don't add `WHERE` to expressions.
 
 
+# Relations
+
+In relation databases, dealing with relation tables is a very common task. For example, if you have a blog, then its posts you'd store in one table and its comments that linked to a blog's post in another.
+
+Of course, you can do this all yourself manually, writing `JOIN` queries or you can use built-in tools, that help you to achieve the same with a one line of code.
+
+As you might already know from the theory, there are 3 common relation types: One-To-One, One-To-Many and Many-To-Many.
+
+So let's take a peek at available methods now.
+
+# One-To-One
+
+    \Krystal\Db\Sql\asOneToOne($column, $alias, $table, $link)
+
+
+### Parameters
+
+    $column
+Column name which is linked to another table
+
+    $alias
+
+Virtual column name to be created for holding results from another table
+
+    $table
+
+Slave (second) table name
+
+    $link
+
+Linking column name from second table
+
+### Example
+
+This is when you you have one master table where you store all common data about an entity linking one of its columns to a slave table.
+
+Consider this:
+
+Suppose there's a table called `books`, that looks so:
+
+     id   |       title          |   year   |   author_id
+     1    |    Learn PHP         |   2013   |       1
+     2    |    Learn Angular.js  |   2014   |       2
+ 
+ And there's a table for authors, which is `book_authors`:
+
+     id   |    name     | 
+     1    |    Daniel   |  
+     2    |    Mark     |   
+     
+To fetch a result-set in one call, you'd do something like this:
+
+    $this->db->select('*')
+             ->from('books')
+             ->asOneToOne('author_id', 'author', 'book_authors', 'id')
+             ->queryAll();
+
+
+# One-To-Many
+
+    \Krystal\Db\Sql\asOneToMany($table, $pk, $alias)
+
+### Parameters
+
+    $table
+
+Slave (second) table name
+
+    $pk
+
+Primary column name in second table
+
+    $alias
+
+Virtual column name to be appended for holding a result-set.
+
+### Example
+
+You would want to use it, when some entity might contain many attached entities. As a typical example, consider a Blog-application.  Each blog entity might contain unlimited number of comments. And that could look like this:
+
+Master table (let's call it `blog_posts`) for post entities might look like this:
+
+    id  |           title
+     1  | Comparing different CMS
+     2  | Introduction to Angular.js
+ 
+ And the second (slave) table for comments (let's call it `blog_comments`) might look like this:
+
+    blog_post_id |            comment
+         1       |  Nice comparison! Thanks for sharing!
+         2       |  Now I'm getting better with Angular! Thanks!
+
+
+Now let's query these tables using `asOneToMany()` method:
+
+    $this->db->select('*')
+             ->from('blog_posts')
+             ->asOneToMany('blog_comments', 'blog_post_id', 'comments')
+
+# Many-To-Many
+
+    \Krystal\Db\Sql\asManyToMany($alias, $junction, $column, $table, $pk)
+
+### Parameters
+
+    $alias
+Virtual column name to be created
+
+    $junction
+
+Junction table name. This table holds only relations between Primary Keys.
+
+    $column
+
+Column name from junction table to be selected.
+
+    $table
+
+Slave (second) table name.
+
+    $pk
+    
+Primary column name in slave table.
+
+
+# Example
+
+Consider a typical scenario : an actor can take part in several movies, and a movie might have several actors.
+
+Let's create 3 tables for this scenario:
+
+Table for movies (let's call it `movies`)
+
+    id  |          title
+     1  |   Girls on fire
+     2  |   How to get in America
+
+Table for actors (let's call it `actors`)
+
+    id  |    name
+     1  |  Jonhy X.Y
+     2  |  Mike T.D
+     3  |  Karla J.J
+
+And there's a 3-rd table (a.k.a junction) which is responsible for holding relations between movies and actors - `junction`.
+
+    movie_id      |  actor_id
+        2         |      1
+        2         |      2
+        1         |      3
+        1         |      1  
+
+Alright, now let's select all actors with their associate movies:
+
+    $this->db->select('*')
+             ->from('movies')
+             ->asManyToMany('actors', 'junction', 'movie_id', 'actors', 'id')
+             ->queryAll();
+
+Similarly, you can fetch all movies with associated actors substituting function arguments respectively.
+
+
 # SQL functions
 
 There are also several methods, that generate functions. Let's take a peek at them. Here they are:
