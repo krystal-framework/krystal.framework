@@ -99,8 +99,7 @@ final class Paginator implements PaginatorInterface
 			throw new RuntimeException('URL template must be defined');
 		}
 
-		// Native sprintf() placeholder
-		$placeholder = '%s';
+		$placeholder = '(:var)';
 
 		if (strpos($this->url, $placeholder) !== false) {
 			return str_replace($placeholder, $page, $this->url);
