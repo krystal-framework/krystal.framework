@@ -84,20 +84,27 @@ final class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Returns permanent URL substituting a placeholder with a page number
+	 * Returns permanent URL substituting a placeholder with current page number
 	 * 
-	 * @param integer $page
+	 * @param integer $page Current page number
+	 * @throws \RuntimeException If URL isn't defined
 	 * @return string
 	 */
 	public function getUrl($page)
 	{
-		if (strpos($this->url, '%s') === false) {
-			throw new \Exception('Page URL must contain one placeholder');
+		if (is_null($this->url)) {
+			throw new RuntimeException('URL template must be defined');
 		}
 
-		//@TODO Improve this ugly hack
-		$page = (string) $page;
-		return str_replace('%s', $page, $this->url);
+		// Native sprintf() placeholder
+		$placeholder = '%s';
+
+		if (strpos($this->url, $placeholder) !== false) {
+			return str_replace($placeholder, $page, $this->url);
+		}
+
+		// By default
+		return $this->url;
 	}
 
 	/**
