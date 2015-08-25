@@ -136,7 +136,7 @@ final class QueryContainer implements QueryContainerInterface
 			FilterInvoker::FILTER_PARAM_SORT => $column
 		);
 
-		$generator = new QueryGenerator($this->route);
+		$generator = new QueryGenerator($this->route, '(:var)');
 		return $generator->generate(array_merge($this->query, $data));
 	}
 
