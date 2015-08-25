@@ -11,7 +11,7 @@
 
 namespace Krystal\Db\Filter;
 
-final class QueryGenerator
+final class QueryGenerator implements QueryGeneratorInterface
 {
 	/**
 	 * Base route
