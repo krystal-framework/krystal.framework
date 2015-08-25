@@ -62,7 +62,7 @@ final class Paginator implements PaginatorInterface
 	 * @param integer $totalAmount Total amount of records
 	 * @param integer $itemsPerPage Per page count
 	 * @param integer $page Current page
-	 * @return void
+	 * @return \Krystal\Paginate\Paginator
 	 */
 	public function tweak($totalAmount, $itemsPerPage, $page)
 	{
@@ -70,17 +70,20 @@ final class Paginator implements PaginatorInterface
 		$this->totalAmount = (int) $totalAmount;
 		$this->itemsPerPage = (int) $itemsPerPage;
 		$this->setCurrentPage($page);
+
+		return $this;
 	}
 
 	/**
 	 * Defines a permanent URL
 	 * 
 	 * @param string $url
-	 * @return void
+	 * @return \Krystal\Paginate\Paginator
 	 */
 	public function setUrl($url)
 	{
 		$this->url = $url;
+		return $this;
 	}
 
 	/**
@@ -176,7 +179,7 @@ final class Paginator implements PaginatorInterface
 	/**
 	 * Resets the paginator's instance
 	 * 
-	 * @return void
+	 * @return \Krystal\Paginate\Paginator
 	 */
 	public function reset()
 	{
@@ -184,6 +187,8 @@ final class Paginator implements PaginatorInterface
 		$this->currentPage = null;
 		$this->totalAmount = null;
 		$this->url = null;
+
+		return $this;
 	}
 
 	/**
