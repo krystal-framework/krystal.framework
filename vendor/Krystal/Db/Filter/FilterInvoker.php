@@ -108,13 +108,15 @@ final class FilterInvoker implements FilterInvokerInterface
 	 */
 	private function getPaginationUrl($page, $sort, $desc)
 	{
+		$placeholder = '(:var)';
+
 		$data = array(
-			self::FILTER_PARAM_PAGE => '%s', 
+			self::FILTER_PARAM_PAGE => $placeholder, 
 			self::FILTER_PARAM_DESC => $desc, 
 			self::FILTER_PARAM_SORT => $sort
 		);
 
-		$generator = new QueryGenerator($this->route);
+		$generator = new QueryGenerator($this->route, $placeholder);
 		return $generator->generate(array_merge($this->input, $data));
 	}
 
