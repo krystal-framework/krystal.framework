@@ -48,7 +48,7 @@ final class Paginator implements PaginatorInterface
 	/**
 	 * State initialization
 	 * 
-	 * @param \Krystal\Paginate\Style\StyleInterface $style
+	 * @param \Krystal\Paginate\Style\StyleInterface $style Optional style adapter
 	 * @return void
 	 */
 	public function __construct(StyleInterface $style = null)
