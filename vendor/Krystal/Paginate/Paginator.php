@@ -15,35 +15,35 @@ use RuntimeException;
 use Krystal\Paginate\Style\StyleInterface;
 use Krystal\Paginate\PaginatorInterface;
 
-class Paginator implements PaginatorInterface
+final class Paginator implements PaginatorInterface
 {
 	/**
 	 * Optional pagination style adapter
 	 * 
 	 * @var \Krystal\Paginate\Style\StyleInterface
 	 */
-	protected $style;
+	private $style;
 
 	/**
 	 * Total amount of records
 	 * 
 	 * @var integer
 	 */
-	protected $totalAmount;
+	private $totalAmount;
 
 	/**
 	 * Per page count
 	 * 
 	 * @var integer
 	 */
-	protected $itemsPerPage;
+	private $itemsPerPage;
 
 	/**
 	 * Permanent page's URL
 	 * 
 	 * @var string
 	 */
-	protected $url;
+	private $url;
 
 	/**
 	 * State initialization
