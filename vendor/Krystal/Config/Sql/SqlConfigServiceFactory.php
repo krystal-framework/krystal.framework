@@ -20,6 +20,7 @@ abstract class SqlConfigServiceFactory
 	 * Builds configuration service
 	 * 
 	 * @param \PDO $pdo Prepared PDO instance
+	 * @param string $table Table name to work with
 	 * @return \Krystal\Config\Sql\SqlConfigService
 	 */
 	public static function build(PDO $pdo, $table)
