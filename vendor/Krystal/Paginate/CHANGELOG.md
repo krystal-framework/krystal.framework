@@ -3,8 +3,11 @@ CHANGELOG
 
 1.1
 ---
-
- * 
+ 
+ * Improved internal code base
+ * Added support for automatic URL generation for pages. 
+   Added getNextPageUrl() and getPreviousPageUrl() accordingly
+ * Deprecated initial tweaker methods in favour of tweak().
 
 1.0
 ---
