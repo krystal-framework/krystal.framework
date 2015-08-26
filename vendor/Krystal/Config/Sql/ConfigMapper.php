@@ -17,7 +17,7 @@ use Krystal\Serializer\AbstractSerializer;
 final class ConfigMapper implements ConfigMapperInterface
 {
 	/**
-	 * Data serializer
+	 * Serializer service
 	 * 
 	 * @var \Krystal\Serializer\AbstractSerializer
 	 */
@@ -31,7 +31,7 @@ final class ConfigMapper implements ConfigMapperInterface
 	private $pdo;
 
 	/**
-	 * Current table
+	 * Table name to work with
 	 * 
 	 * @var string
 	 */
@@ -40,9 +40,9 @@ final class ConfigMapper implements ConfigMapperInterface
 	/**
 	 * State initialization
 	 * 
-	 * @param \Krystal\Serializer\AbstractSerializer $serializer
-	 * @param \PDO $pdo
-	 * @param string $table
+	 * @param \Krystal\Serializer\AbstractSerializer $serializer Serializer service
+	 * @param \PDO $pdo Prepared PDO instance
+	 * @param string $table Table to work with
 	 * @return void
 	 */
 	public function __construct(AbstractSerializer $serializer, PDO $pdo, $table)
