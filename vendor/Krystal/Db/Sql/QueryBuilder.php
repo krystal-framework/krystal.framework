@@ -1128,12 +1128,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 		} elseif ($type instanceof RawSqlFragmentInterface) {
 			$target = $type->getFragment();
 
+		} elseif (is_array($type)) {
+			// Special case for array
+			foreach ($type as &$column) {
+				$column = $this->wrap($column);
+			}
+
+			$target = implode(', ', $type);
+
 		} else {
 			$target = $this->wrap($type);
 		}
 
 		$this->append(' ORDER BY '.$target);
-
 		return $this;
 	}
 
