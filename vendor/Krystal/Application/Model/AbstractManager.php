@@ -73,7 +73,7 @@ abstract class AbstractManager
 	 */
 	final protected function prepareResult($result)
 	{
-		if ($result) {
+		if ($result && $result !== false) {
 			return $this->toEntity($result);
 		} else {
 			return false;
