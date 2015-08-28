@@ -11,8 +11,6 @@
 
 namespace Krystal\InstanceManager;
 
-use ReflectionClass;
-
 /* Gets a list of class names and returns only available ones */
 final class InstanceProvider implements InstanceProviderInterface
 {
@@ -42,13 +40,12 @@ final class InstanceProvider implements InstanceProviderInterface
 	public function getAll()
 	{
 		$instances = array();
+		$builder = new InstanceBuilder();
 
 		foreach ($this->data as $className => $args) {
 			if (class_exists($className)) {
 
-				$reflector = new ReflectionClass($className);
-				$instance = $reflector->newInstanceArgs($args);
-
+				$instance = $builder->build($className, $args);
 				array_push($instances, $instance);
 			}
 		}
