@@ -65,6 +65,13 @@ class ImageFile implements ImageFileInterface
 	protected $mime;
 
 	/**
+	 * Required memory space for loaded image in bytes
+	 * 
+	 * @var integer
+	 */
+	protected $requiredMemorySpace;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param string $file Image file
@@ -88,6 +95,16 @@ class ImageFile implements ImageFileInterface
 	final public function __destruct()
 	{
 		$this->done();
+	}
+
+	/**
+	 * Returns required space for loaded image
+	 * 
+	 * @return integer
+	 */
+	final public function getrequiredMemorySpace()
+	{
+		return $this->requiredMemorySpace;
 	}
 
 	/**
@@ -157,7 +174,8 @@ class ImageFile implements ImageFileInterface
 				'width' => $image[0],
 				'height' => $image[1],
 				'type' => $image[2],
-				'mime' => $image['mime']
+				'mime' => $image['mime'],
+				'bits' => $image['bits']
 			);
 
 		} else {
@@ -233,6 +251,9 @@ class ImageFile implements ImageFileInterface
 			$this->height = $info['height'];
 			$this->type = $info['type'];
 			$this->mime = $info['mime'];
+
+			// Calculate required memory space in bytes
+			$this->requiredMemorySpace = $info['width'] * $info['height'] * $info['bits'];
 
 			return true;
 
