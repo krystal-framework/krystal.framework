@@ -351,6 +351,26 @@ final class ViewManager implements ViewManagerInterface
 	}
 
 	/**
+	 * Renders a template with custom Module and its theme
+	 * 
+	 * @param string $module
+	 * @param string $theme Theme directory name
+	 * @param string $template Template file to be rendered
+	 * @param array $vars Variables to be passed to a template
+	 * @return string
+	 */
+	public function renderRaw($module, $theme, $template, array $vars = array())
+	{
+		$resolver = $this->getResolver();
+		$resolver->setModule($module)
+				 ->setTheme($theme);
+
+		$this->disableLayout();
+
+		return $this->render($template, $vars);
+	}
+
+	/**
 	 * Load several blocks at once
 	 * 
 	 * @param array $blocks
