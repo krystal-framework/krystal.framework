@@ -71,7 +71,7 @@ final class InstanceBuilder implements InstanceBuilderInterface
 	 * Builds and returns an instance of a class
 	 * 
 	 * @param string $class PSR-0 compliant class name
-	 * @param array $args Arguments to be passed to class's contructor
+	 * @param array $args Arguments to be passed to class's constructor
 	 * @return object
 	 */
 	private function getInstance($class, array $args)
