@@ -52,20 +52,6 @@ abstract class AbstractMapper
 	}
 
 	/**
-	 * @TODO
-	 */
-	protected function manyToOne()
-	{
-	}
-	
-	/**
-	 * @TODO
-	 */
-	protected function oneToOne()
-	{
-	}
-
-	/**
 	 * Returns table name with a prefix
 	 * 
 	 * @param string $table
