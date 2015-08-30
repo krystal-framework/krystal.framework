@@ -173,11 +173,11 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 	public function resize($x, $y, $proportional = true)
 	{
 		// Check firstly values
-		if ($x > $this->width) {
+		if ($x === null || $x > $this->width) {
 			$x = $this->width;
 		}
 
-		if ($y > $this->height) {
+		if ($y === null || $y > $this->height) {
 			$y = $this->height;
 		}
 
@@ -222,9 +222,13 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 	 */
 	public function crop($width, $height, $startX = null, $startY = null)
 	{
-		// Ensure right types are supplied
-		$width = (int) $width;
-		$height = (int) $height;
+		if ($width === null) {
+			$width = $this->width;
+		}
+
+		if ($height === null) {
+			$height = $this->height;
+		}
 
 		if ($startX === null) {
 			$startX = floor(($this->width - $width) / 2);
