@@ -264,7 +264,9 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 	 */
 	public function thumb($width, $height)
 	{
-		$this->resize($width, $height)->crop($width, $height);
+		$this->resize($width, $height)
+			 ->crop($width, $height);
+
 		return $this;
 	}
 
