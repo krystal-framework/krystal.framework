@@ -13,10 +13,6 @@ namespace Krystal\InstanceManager;
 
 use RuntimeException;
 
-/**
- * Manual dependency injection container
- * No configuration needed
- */
 final class DependencyInjectionContainer implements DependencyInjectionContainerInterface
 {
 	/**
