@@ -47,7 +47,7 @@ final class FileDownloader implements FileDownloaderInterface
 		// Ensure that output buffering is turned off. @ - intentionally
 		@ob_end_clean();
 
-		// Special hack for leagacy IE version
+		// Special hack for legacy IE version
 		if (ini_get('zlib.output_compression')) {
 			ini_set('zlib.output_compression', 'Off');
 		}
