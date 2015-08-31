@@ -252,16 +252,6 @@ final class Db implements DbInterface, RelationableServiceInterface
 	}
 
 	/**
-	 * Logs a query
-	 * 
-	 * @return void
-	 */
-	private function log()
-	{
-		$this->queryLogger->add($this->queryBuilder->getQueryString());
-	}
-
-	/**
 	 * Converts column name to its placeholder
 	 * 
 	 * @param string $column
@@ -393,10 +383,17 @@ final class Db implements DbInterface, RelationableServiceInterface
 	 */
 	public function getStmt()
 	{
+		// Build target query before bindings are cleared purely for logging purpose
+		$log = str_replace(array_keys($this->bindings), array_values($this->bindings), $this->queryBuilder->getQueryString());
+
+		// Execute it
 		$stmt = $this->pdo->prepare($this->queryBuilder->getQueryString());
 		$stmt->execute($this->bindings);
 
-		$this->log();
+		// Log target query
+		$this->queryLogger->add($log);
+
+		// Clear the buffer
 		$this->clear();
 
 		return $stmt;
