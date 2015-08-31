@@ -25,8 +25,12 @@ final class Welcome extends SiteController
 	{
 		return 'Hello '.$name;
 	}
-	
-	
+
+	/**
+	 * This action gets executed when a request to non-existing route has been made
+	 * 
+	 * @return string
+	 */
 	public function notFoundAction()
 	{
 		return '404';
