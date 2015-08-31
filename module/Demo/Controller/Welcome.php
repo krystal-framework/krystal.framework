@@ -14,11 +14,16 @@ final class Welcome extends SiteController
 	{
 		return $this->view->render('main');
 	}
-	
-	
-	public function testAction()
+
+	/**
+	 * This dummy action demonstrates how to deal with variables in route maps
+	 * 
+	 * @param string $name
+	 * @return string
+	 */
+	public function helloAction($name)
 	{
-		return 'test';
+		return 'Hello '.$name;
 	}
 	
 	

@@ -18,8 +18,8 @@ final class Module extends AbstractModule
 				'controller' => 'Welcome@indexAction'
 			),
 
-			'/test' => array(
-				'controller' => 'Welcome@testAction',
+			'/hello/(:var)' => array(
+				'controller' => 'Welcome@helloAction',
 			)
 		);
 	}
