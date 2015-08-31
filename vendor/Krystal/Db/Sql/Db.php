@@ -321,7 +321,7 @@ final class Db implements DbInterface, RelationableServiceInterface
 	{
 		$count = $this->getCount($column);
 
-		if ($this->getDriver() == 'mysql' || $this->getDriver('sqlite')) {
+		if ($this->isDriver('mysql') || $this->isDriver('sqlite')) {
 			// Alter paginator's state
 			$this->paginator->tweak($count, $itemsPerPage, $page);
 			$this->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
