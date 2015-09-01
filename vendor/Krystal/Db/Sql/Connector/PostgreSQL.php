@@ -13,30 +13,20 @@ namespace Krystal\Db\Sql\Connector;
 
 use PDO;
 
-final class PostgreSQL extends PDO
+final class PostgreSQL implements ConnectorInterface
 {
 	/**
-	 * Initializes the PDO for PostgreSQL
-	 * 
-	 * @param array $params
-	 * @return void
+	 * {@inheritDoc}
 	 */
-	public function __construct(array $params)
+	public function getArgs(array $params)
 	{
 		// Build DSN string
 		$dsn = sprintf('pgsql:dbname=%s;host=%s;user=%s;password=%s', $params['dbname'], $params['host'], $params['user'], $params['password']);
 
-		parent::__construct($dsn);
-
-		$attrs = array(
-			parent::ATTR_ERRMODE => parent::ERRMODE_EXCEPTION,
-			parent::ATTR_EMULATE_PREPARES => true,
-			parent::ATTR_DEFAULT_FETCH_MODE => parent::FETCH_ASSOC,
-		);
-
-		// Set attributes now
-		foreach ($attrs as $attr => $value) {
-			$this->setAttribute($attr, $value);
-		}
+		return array($dsn, null, null, array(
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_EMULATE_PREPARES => true,
+			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+		));
 	}
 }

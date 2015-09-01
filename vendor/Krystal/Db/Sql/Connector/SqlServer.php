@@ -13,27 +13,18 @@ namespace Krystal\Db\Sql\Connector;
 
 use PDO;
 
-final class SqlServer extends PDO
+final class SqlServer implements ConnectorInterface
 {
 	/**
-	 * Initializes the PDO for MS SQL Server
-	 * 
-	 * @param array $params
-	 * @return void
+	 * {@inheritDoc}
 	 */
-	public function __construct(array $params)
+	public function getArgs(array $config)
 	{
-		$dsn = sprintf('sqlsrv:server=%s;Database=%s', $params['host'], $params['dbname']);
-		parent::__construct($dsn, $params['username'], $params['password']);
-
-		$attrs = array(
-			parent::ATTR_ERRMODE => parent::ERRMODE_EXCEPTION,
-			parent::ATTR_EMULATE_PREPARES => true,
-			parent::ATTR_DEFAULT_FETCH_MODE => parent::FETCH_ASSOC
-		);
-
-		foreach ($attrs as $attr => $value) {
-			$this->setAttribute($attr, $value);
-		}
+		$dsn = sprintf('sqlsrv:server=%s;Database=%s', $config['host'], $config['dbname']);
+		return array($dsn, $config['username'], $config['password'], array(
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_EMULATE_PREPARES => true,
+			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+		));
 	}
 }

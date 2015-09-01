@@ -13,29 +13,24 @@ namespace Krystal\Db\Sql\Connector;
 
 use PDO;
 
-final class MySQL extends PDO
+final class MySQL implements ConnectorInterface
 {
 	/**
-	 * Initializes the PDO for MySQL
-	 * 
-	 * @param array $params
-	 * @return void
+	 * {@inheritDoc}
 	 */
-	public function __construct(array $params)
+	public function getArgs(array $config)
 	{
-		$dsn = 'mysql:host='.$params['host'];
+		$dsn = 'mysql:host='.$config['host'];
 
-		if (isset($params['dbname'])) {
-			$dsn .= ';dbname='.$params['dbname'];
+		if (isset($config['dbname'])) {
+			$dsn .= ';dbname='.$config['dbname'];
 		}
 
-		$attrs = array(
-			parent::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
-			parent::ATTR_ERRMODE => parent::ERRMODE_EXCEPTION,
-			parent::ATTR_EMULATE_PREPARES => true,
-			parent::ATTR_DEFAULT_FETCH_MODE => parent::FETCH_ASSOC,
-		);
-
-		parent::__construct($dsn, $params['username'], $params['password'], $attrs);
+		return array($dsn, $config['username'], $config['password'], array(
+			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_EMULATE_PREPARES => true,
+			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+		));
 	}
 }
