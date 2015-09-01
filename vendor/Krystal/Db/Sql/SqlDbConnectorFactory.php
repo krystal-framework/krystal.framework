@@ -11,12 +11,12 @@
 
 namespace Krystal\Db\Sql;
 
+use Krystal\InstanceManager\InstanceBuilder;
 use Krystal\Db\InvalidDatabaseConfigurationException;
 use Krystal\Db\Sql\QueryLogger;
 use Krystal\Db\Sql\QueryBuilder;
 use Krystal\Db\Sql\Db;
 use Krystal\Paginate\PaginatorInterface;
-use PDOException;
 use RuntimeException;
 
 final class SqlDbConnectorFactory implements SqlDbConnectorFactoryInterface
@@ -52,28 +52,38 @@ final class SqlDbConnectorFactory implements SqlDbConnectorFactoryInterface
 	}
 
 	/**
+	 * Returns PDO instance
+	 * 
+	 * @param string $connector Driver name
+	 * @param array $options Options for connection, such as username and password
+	 * @throws \RuntimeException If unknown vendor name supplied
+	 * @return \Krystal\Db\Sql\LazyPDO
+	 */
+	private function getPdo($vendor, array $options)
+	{
+		// First of all, make sure it's possible to instantiate PDO instance by vendor name
+		if (isset($this->map[$vendor])) {
+			$connector = $this->map[$vendor];
+
+			$driver = new $connector();
+
+			$builder = new InstanceBuilder();
+			return $builder->build('\Krystal\Db\Sql\LazyPDO', $driver->getArgs($options));
+
+		} else {
+			throw new RuntimeException(sprintf('Unknown database vendor name supplied "%s"', $vendor));
+		}
+	}
+
+	/**
 	 * Builds database service instance
 	 * 
 	 * @param string $vendor Database vendor name
 	 * @param array $options Options for connection, such as username and password
-	 * @throws \RuntimeException If unknown vendor name supplied
 	 * @return \Krystal\Db\Sql\DbInterface
 	 */
 	public function build($vendor, array $options)
 	{
-		// First of all, make sure it's possible to instantiate PDO instance by vendor name
-		if (isset($this->map[$vendor])) {
-			$class = $this->map[$vendor];
-		} else {
-			throw new RuntimeException(sprintf('Unknown database vendor name supplied "%s"', $vendor));
-		}
-
-		try {
-			$pdo = new $class($options);
-		} catch (PDOException $e) {
-			throw new InvalidDatabaseConfigurationException(sprintf('Invalid database configuration. The driver reported "%s"', $e->getMessage()));
-		}
-
-		return new Db(new QueryBuilder(), $pdo, $this->paginator, new QueryLogger());
+		return new Db(new QueryBuilder(), $this->getPdo($vendor, $options), $this->paginator, new QueryLogger());
 	}
 }
