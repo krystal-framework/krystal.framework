@@ -45,7 +45,7 @@ final class ConfigMapper implements ConfigMapperInterface
 	 * @param string $table Table to work with
 	 * @return void
 	 */
-	public function __construct(AbstractSerializer $serializer, PDO $pdo, $table)
+	public function __construct(AbstractSerializer $serializer, $pdo, $table)
 	{
 		$this->serializer = $serializer;
 		$this->pdo = $pdo;

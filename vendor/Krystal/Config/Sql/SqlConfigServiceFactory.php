@@ -23,7 +23,7 @@ abstract class SqlConfigServiceFactory
 	 * @param string $table Table name to work with
 	 * @return \Krystal\Config\Sql\SqlConfigService
 	 */
-	public static function build(PDO $pdo, $table)
+	public static function build($pdo, $table)
 	{
 		$configMapper = new ConfigMapper(new Serializer(), $pdo, $table);
 
