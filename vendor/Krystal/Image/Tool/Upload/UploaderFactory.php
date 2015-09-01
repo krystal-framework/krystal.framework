@@ -28,7 +28,7 @@ abstract class UploaderFactory
 	 */
 	public static function build($dir, array $plugins)
 	{
-		if (count($plugins) == 0) {
+		if (count($plugins) === 0) {
 			throw new InvalidArgumentException('There must be at least one provided plugin for image uploader');
 		}
 
@@ -41,13 +41,11 @@ abstract class UploaderFactory
 				case 'thumb':
 					$thumb = new ThumbFactory();
 					$collection[] = $thumb->build($dir, $quality, $options);
-					
 				break;
 
 				case 'original':
 					$original = new OriginalSizeFactory();
 					$collection[] = $original->build($dir, $quality, $options);
-					
 				break;
 			}
 		}
