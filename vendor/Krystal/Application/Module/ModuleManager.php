@@ -223,7 +223,7 @@ final class ModuleManager implements ModuleManagerInterface
 		$sl->registerArray($this->services);
 
 		// Build module instance
-		$module = new $moduleNamespace($this, $sl, $this->appConfig, $pathProvider);
+		$module = new $moduleNamespace($this, $sl, $this->appConfig, $pathProvider, $name);
 
 		// Routes must be global, so we'd extract them
 		if (method_exists($module, 'getRoutes')) {

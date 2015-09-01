@@ -67,24 +67,44 @@ abstract class AbstractModule
 	protected $pathProvider;
 
 	/**
+	 * Name of module which is being executed
+	 * 
+	 * @var string
+	 */
+	protected $moduleName;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param \Krystal\Application\Module\ModuleManagerInterface $moduleManeger
 	 * @param \Krystal\InstanceManager\ServiceLocatorInterface $serviceLocator
 	 * @param \Krystal\Application\AppConfigInterface $appConfig
 	 * @param \Krystal\Application\Module\PathProviderInterface $pathProvider
+	 * @param string $moduleName The name of current module which is being executed
 	 * @return void
 	 */
 	public function __construct(
 		ModuleManagerInterface $moduleManager, 
 		ServiceLocatorInterface $serviceLocator, 
 		AppConfigInterface $appConfig, 
-		PathProviderInterface $pathProvider
+		PathProviderInterface $pathProvider,
+		$moduleName
 	){
 		$this->moduleManager = $moduleManager;
 		$this->serviceLocator = $serviceLocator;
 		$this->appConfig = $appConfig;
 		$this->pathProvider = $pathProvider;
+		$this->moduleName = $moduleName;
+	}
+
+	/**
+	 * Returns a name of the current module
+	 * 
+	 * @return string
+	 */
+	final protected function getCurrentModuleName()
+	{
+		return $this->moduleName;
 	}
 
 	/**
