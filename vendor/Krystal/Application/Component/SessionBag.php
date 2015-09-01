@@ -16,7 +16,7 @@ use Krystal\Session\SessionValidator;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 use Krystal\Session\Adapter;
-use RunitmeException;
+use RuntimeException;
 use LogicException;
 
 final class SessionBag implements ComponentInterface
@@ -66,8 +66,12 @@ final class SessionBag implements ComponentInterface
 
 					break;
 
+					// Do nothing for native handler
+					case 'native':
+					break;
+
 					default:
-						throw new RunitmeException(sprintf('Unsupported session handler supplied "%s"', $config['handler']));
+						throw new RuntimeException(sprintf('Unsupported session handler supplied "%s"', $config['handler']));
 				}
 			}
 		}
