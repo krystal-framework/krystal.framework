@@ -66,12 +66,12 @@ final class Db implements DbInterface, RelationableServiceInterface
 	 * State initialization
 	 * 
 	 * @param \Krystal\Db\Sql\QueryBuilderInterface $queryBuilder
-	 * @param \PDO $pdo
+	 * @param \Krystal\Db\Sql\LazyPDO $pdo
 	 * @param \Krystal\Paginate\PaginatorInterface $paginator
 	 * @param \Krystal\Db\Sql\QueryLoggerInterface $queryLogger
 	 * @return void
 	 */
-	public function __construct(QueryBuilderInterface $queryBuilder, PDO $pdo, PaginatorInterface $paginator, QueryLoggerInterface $queryLogger)
+	public function __construct(QueryBuilderInterface $queryBuilder, LazyPDO $pdo, PaginatorInterface $paginator, QueryLoggerInterface $queryLogger)
 	{
 		$this->queryBuilder = $queryBuilder;
 		$this->pdo = $pdo;
