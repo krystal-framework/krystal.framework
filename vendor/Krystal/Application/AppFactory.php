@@ -11,7 +11,7 @@
 
 namespace Krystal\Application;
 
-// Autoloader isn't ready yet, so we have to include this ones manually
+// PSR-0 autoloader isn't ready yet, so gotta include these ones manually
 require(__DIR__ . '/App.php');
 require(__DIR__ . '/InputInterface.php');
 require(__DIR__ . '/Input.php');
