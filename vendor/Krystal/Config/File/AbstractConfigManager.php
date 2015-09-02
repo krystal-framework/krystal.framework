@@ -18,7 +18,7 @@ abstract class AbstractConfigManager
 	/**
 	 * Any compliant configuration adapter
 	 * 
-	 * @var \Config\Adapter\AdapterInterface
+	 * @var \Krystal\Config\File\FileAbstract
 	 */
 	protected $adapter;
 
@@ -32,10 +32,10 @@ abstract class AbstractConfigManager
 	/**
 	 * State initialization
 	 * 
-	 * @param \Krystal\Config\Adapter\ConfigAdapterInterface $adapter
+	 * @param \Krystal\Config\File\FileAbstract $adapter
 	 * @return void
 	 */
-	public function __construct(/*ConfigAdapterInterface*/ $adapter)
+	public function __construct(FileAbstract $adapter)
 	{
 		$this->adapter = $adapter;
 	}
