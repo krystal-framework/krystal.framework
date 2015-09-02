@@ -12,14 +12,11 @@
 namespace Krystal\Config\File;
 
 use LogicException;
-//use Krystal\Config\Adapter\ConfigAdapterInterface;
 
-final class FileArray extends FileAbstract// implements ConfigAdapterInterface
+final class FileArray extends FileAbstract
 {
 	/**
-	 * Renders an array representation into a string
-	 * 
-	 * @return string
+	 * {@inheritDoc}
 	 */
 	protected function render()
 	{
@@ -27,17 +24,14 @@ final class FileArray extends FileAbstract// implements ConfigAdapterInterface
 	}
 
 	/**
-	 * Fetches configuration from a file
-	 * 
-	 * @throws \LogicException if included file didn't return an array
-	 * @return array
+	 * {@inheritDoc}
 	 */
 	protected function fetch()
 	{
 		$array = require($this->path);
-		
+
 		if (!is_array($array)) {
-			throw new LogicException('A file must return an array');
+			throw new LogicException(sprintf('Configuration file "%s" must return an array', $this->path));
 		} else {
 			return $array;
 		}
