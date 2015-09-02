@@ -12,11 +12,14 @@
 namespace Krystal\Config\File;
 
 use Krystal\Serializer\NativeSerializer as Serializer;
+use LogicException;
+use RuntimeException;
+use InvalidArgumentException;
 
 abstract class FileAbstract
 {
 	/**
-	 * File path
+	 * Target file path
 	 * 
 	 * @var string
 	 */
@@ -34,21 +37,21 @@ abstract class FileAbstract
 	protected $hash;
 
 	/**
-	 * Indicates whether config file has been loaded
+	 * Indicates whether configuration file has been loaded
 	 * 
 	 * @var boolean
 	 */
 	protected $loaded = false;
 
 	/**
-	 * Data serializer
+	 * Serialization service
 	 * 
-	 * @var object
+	 * @var \Krystal\Serializer\AbstractSerializer
 	 */
 	protected $serializer;
 
 	/**
-	 * Config representation
+	 * Current configuration representation
 	 * 
 	 * @var array
 	 */
@@ -67,34 +70,13 @@ abstract class FileAbstract
 	/**
 	 * State initialization
 	 * 
-	 * @param string $path
+	 * @param string $path Path to configuration file
 	 * @return void
 	 */
-	public function __construct($path)
+	final public function __construct($path)
 	{
 		$this->path = $path;
-		// @TODO : get rid of tight-coupling
 		$this->serializer = new Serializer();
-	}
-
-	/**
-	 * Merges one or more
-	 * 
-	 * @param array $config
-	 * @throws InvalidArgumentException 
-	 * @return void
-	 */
-	public function merge()
-	{
-		foreach (func_get_args() as $arg) {
-			if (is_array($arg)) {
-				$this->config = array_merge($this->config, $arg);
-			} else {
-				throw new InvalidArgumentException(sprintf(
-					'An argument must be an array, received "%s"', gettype($arg)
-				));
-			}
-		}
 	}
 
 	/**
@@ -112,11 +94,31 @@ abstract class FileAbstract
 	abstract protected function fetch();
 
 	/**
+	 * Merges one or more
+	 * 
+	 * @param array $config
+	 * @throws \InvalidArgumentException In case at least one argument isn't array by type
+	 * @return void
+	 */
+	final public function merge()
+	{
+		foreach (func_get_args() as $arg) {
+			if (is_array($arg)) {
+				$this->config = array_merge($this->config, $arg);
+			} else {
+				throw new InvalidArgumentException(sprintf(
+					'An argument must be an array, received "%s"', gettype($arg)
+				));
+			}
+		}
+	}
+
+	/**
 	 * Loads configuration into memory
 	 * 
 	 * @return boolean Depending on success
 	 */
-	public function load()
+	final public function load()
 	{
 		if (self::AUTO_CREATE) {
 			if (!is_file($this->path)) {
@@ -127,7 +129,7 @@ abstract class FileAbstract
 		$array = $this->fetch();
 
 		if (is_array($array)) {
-			
+
 			// Keep initial array hash
 			$this->hash = $this->serializer->buildHash($array);
 			$this->config = $array;
@@ -146,7 +148,7 @@ abstract class FileAbstract
 	 * 
 	 * @return boolean Depending on success
 	 */
-	protected function touch()
+	final protected function touch()
 	{
 		return $this->save();
 	}
@@ -156,28 +158,28 @@ abstract class FileAbstract
 	 * 
 	 * @return boolean TRUE if changed, FALSE if not
 	 */
-	protected function isChanged()
+	final protected function isChanged()
 	{
 		return $this->hash !== $this->serializer->buildHash($this->config);
 	}
 
 	/**
-	 * Returns native config array
+	 * Returns current configuration array
 	 * 
 	 * @return array
 	 */
-	public function getConfig()
+	final public function getConfig()
 	{
 		return $this->config;
 	}
 
 	/**
-	 * Define config
+	 * Overrides current configuration
 	 * 
 	 * @param array $config
 	 * @return void
 	 */
-	public function setConfig(array $config)
+	final public function setConfig(array $config)
 	{
 		$this->config = $config;
 	}
@@ -188,13 +190,13 @@ abstract class FileAbstract
 	 * @param array $array
 	 * @return boolean Depending on success
 	 */
-	public function save()
+	final public function save()
 	{
 		// Do the work in case we have only changed hash
 		if ($this->isChanged()) {
-			
+
 			@chmod($this->path, 0777);
-			
+
 			return file_put_contents($this->path, $this->render());
 		} else {
 			return true;
@@ -204,10 +206,11 @@ abstract class FileAbstract
 	/**
 	 * Writes configuration pair
 	 * 
-	 * @param array	$data The data we need to write
-	 * @return boolean Always TRUE
+	 * @param string $key
+	 * @param string $value
+	 * @return boolean
 	 */
-	public function set($key, $value)
+	final public function set($key, $value)
 	{
 		$this->config[$key] = $value;
 		return true;
@@ -219,7 +222,7 @@ abstract class FileAbstract
 	 * @param array $pair
 	 * @return boolean
 	 */
-	public function setPair(array $pair)
+	final public function setPair(array $pair)
 	{
 		foreach ($pair as $key => $value) {
 			$this->set($key, $value);
@@ -229,19 +232,19 @@ abstract class FileAbstract
 	}
 
 	/**
-	 * Determine whether keys exist
+	 * Determine whether configuration keys exist
 	 * 
 	 * @param string $key
 	 * @return boolean
 	 */
-	public function exists()
+	final public function exists()
 	{
 		foreach (func_get_args() as $argument) {
 			if (!array_key_exists($argument, $this->config)) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -252,7 +255,7 @@ abstract class FileAbstract
 	 * @param mixed $default Default value to be returned in $key doesn't exist
 	 * @return mixed
 	 */
-	public function get($key, $default = null)
+	final public function get($key, $default = null)
 	{
 		if ($this->exists($key)) {
 			return $this->config[$key];
@@ -266,19 +269,19 @@ abstract class FileAbstract
 	 * 
 	 * @return void
 	 */
-	public function flush()
+	final public function flush()
 	{
 		$this->config = array();
 	}
 
 	/**
-	 * Deletes a key
+	 * Deletes configuration value by its associated key
 	 * 
 	 * @param string $key
-	 * @throws RuntimeException
+	 * @throws \RuntimeException if attempted to remove by non-existing key
 	 * @return boolean
 	 */
-	public function delete($key)
+	final public function delete($key)
 	{
 		if ($this->exists($key)) {
 			unset($this->config[$key]);
