@@ -46,7 +46,7 @@ final class ClassMapLoader extends AbstractSplLoader
 	 * @param string $class
 	 * @return string
 	 */
-	public function getPathByClassName($class)
+	private function getPathByClassName($class)
 	{
 		if (isset($this->map[$class])) {
 			return $this->map[$class];
@@ -61,7 +61,7 @@ final class ClassMapLoader extends AbstractSplLoader
 	 * @param string $path
 	 * @return string
 	 */
-	public function getClassNameByPath($path)
+	private function getClassNameByPath($path)
 	{
 		foreach ($this->map as $key => $value) {
 			if ($value === $path) {
