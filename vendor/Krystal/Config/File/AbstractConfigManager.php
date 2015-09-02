@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Config;
+namespace Krystal\Config\File;
 
 use Krystal\Stdlib\VirtualEntity;
 
