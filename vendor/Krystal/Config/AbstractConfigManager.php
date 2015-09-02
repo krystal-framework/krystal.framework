@@ -11,13 +11,12 @@
 
 namespace Krystal\Config;
 
-use Krystal\Stdlib\VirtualEntity as ConfigEntity;
-use Krystal\Config\Adapter\ConfigAdapterInterface;
+use Krystal\Stdlib\VirtualEntity;
 
 abstract class AbstractConfigManager
 {
 	/**
-	 * Any compliant config adapter
+	 * Any compliant configuration adapter
 	 * 
 	 * @var \Config\Adapter\AdapterInterface
 	 */
@@ -26,7 +25,7 @@ abstract class AbstractConfigManager
 	/**
 	 * Configuration entity object
 	 * 
-	 * @var
+	 * @var \Krystal\Stdlib\VirtualEntity
 	 */
 	protected $entity;
 
@@ -70,27 +69,34 @@ abstract class AbstractConfigManager
 	{
 		$this->adapter->setPair($input);
 		$this->adapter->save();
-		
+
 		return true;
 	}
 
-	public function exists($key)
+	/**
+	 * Checks whether configuration key exist
+	 * 
+	 * @param string $key
+	 * @return boolean
+	 */
+	final public function exists($key)
 	{
 		return $this->adapter->exists($key);
 	}
-	
+
 	/**
 	 * Returns the entity
 	 * 
-	 * @return 
+	 * @return \Krystal\Stdlib\VirtualEntity
 	 */
-	public function getEntity()
+	final public function getEntity()
 	{
+		// Lazy initialization
 		if (is_null($this->entity)) {
-			$this->entity = new ConfigEntity();
+			$this->entity = new VirtualEntity();
 			$this->populate();
 		}
-		
+
 		return $this->entity;
 	}
 }
