@@ -251,6 +251,8 @@ final class App implements AppInterface
 	/**
 	 * Registers auto-loading. That's the very first thing that needs to be done
 	 * 
+	 * @throws \InvalidArgumentException If invalid configuration provided
+	 * @throws \RuntimeException If no auto-loading section is provided
 	 * @return void
 	 */
 	private function registerAutoload()
@@ -269,7 +271,7 @@ final class App implements AppInterface
 				$loader->addDirs($this->config['components']['autoload']['psr-0']);
 				$loader->register();
 			}
-			
+
 			if (isset($this->config['components']['autoload']['psr-4'])) {
 				if (!is_array($this->config['components']['autoload']['psr-0'])) {
 					throw new InvalidArgumentException(sprintf(
