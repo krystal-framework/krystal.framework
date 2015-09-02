@@ -27,6 +27,19 @@ final class PSR4 extends AbstractSplLoader
      */
 	private $prefixes = array();
 
+	/**
+	 * Adds a collection to the stack
+	 * 
+	 * @param array $namespaces
+	 * @return void
+	 */
+	public function addNamespaces(array $namespaces)
+	{
+		foreach ($namespaces as $prefix => $baseDir) {
+			$this->addNamespace($prefix, $baseDir);
+		}
+	}
+
     /**
      * Adds a base directory for a namespace prefix.
      *
