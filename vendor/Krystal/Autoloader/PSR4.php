@@ -118,7 +118,7 @@ final class PSR4 extends AbstractSplLoader
             // replace the namespace prefix with the base directory,
             // replace namespace separators with directory separators
             // in the relative class name, append with .php
-            $file = $base_dir . str_replace('\\', '/', $relative_class) .'.php';
+            $file = $base_dir . str_replace('\\', '/', $relative_class) .self::EXTENSTION;
 
 			// if the mapped file exists, require it
 			if ($this->includeClass($file)) {
