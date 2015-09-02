@@ -18,6 +18,7 @@ use Krystal\Cache\Sql\SqlEngineFactory;
 use Krystal\Cache\WinCache;
 use Krystal\Cache\APC;
 use Krystal\Cache\XCache;
+use RuntimeException;
 
 final class Cache implements ComponentInterface
 {
@@ -55,22 +56,28 @@ final class Cache implements ComponentInterface
 					return new XCache();
 				
 				case 'sql':
-					
+
+					if (!isset($options['table']) || !isset($options['connection'])) {
+						throw new RuntimeException('Cache SQL service request connection and table names to run');
+					}
+
 					$table = $options['table'];
-					
+
 					$db = $container->get('db');
 					$connection = $db[$options['connection']];
-					
+
 					$pdo = $connection->getPdo();
-					
+
 					return SqlEngineFactory::build($pdo, $table);
-					
+
 				default : 
-					throw new \RuntimeException(sprintf('Invalid engine provided %s', $component['engine']));
+					throw new RuntimeException(sprintf('Invalid engine provided %s', $component['engine']));
 			}
 
 		} else {
+
 			// Not defined in configuration
+			return false;
 		}
 	}
 
