@@ -33,6 +33,13 @@ final class SqlCacheEngine implements CacheEngineInterface
 	private $cache = array();
 
 	/**
+	 * Tells whether service is already initialized
+	 * 
+	 * @var boolean
+	 */
+	private $initialized = false;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param \Krystal\Cache\Sql\CacheMapperInterface $cacheMapper
@@ -44,17 +51,20 @@ final class SqlCacheEngine implements CacheEngineInterface
 	}
 
 	/**
-	 * Engine initialization
-	 * Gets called right after state initialization
+	 * Initializes the service on demand
 	 * 
 	 * @return void
 	 */
-	public function initialize()
+	private function initializeOnDemand()
 	{
-		$this->cache = $this->cacheMapper->fetchAll();
+		if ($this->initialized === false) {
 
-		// Run garbage collection on each HTTP request
-		$this->gc();
+			$this->initialized = true;
+			$this->cache = $this->cacheMapper->fetchAll();
+
+			// Run garbage collection on each HTTP request
+			$this->gc();
+		}
 	}
 
 	/**
@@ -64,6 +74,8 @@ final class SqlCacheEngine implements CacheEngineInterface
 	 */
 	public function flush()
 	{
+		$this->initializeOnDemand();
+
 		if ($this->cacheMapper->flush()) {
 
 			// Reset the current state as well
@@ -84,6 +96,8 @@ final class SqlCacheEngine implements CacheEngineInterface
 	 */
 	public function increment($key, $step = 1)
 	{
+		$this->initializeOnDemand();
+
 		if ($this->cacheMapper->increment($key, $step)) {
 
 			// Synchronize with the current state
@@ -106,6 +120,8 @@ final class SqlCacheEngine implements CacheEngineInterface
 	 */
 	public function decrement($key, $step = 1)
 	{
+		$this->initializeOnDemand();
+
 		if ($this->cacheMapper->decrement($key, $step)) {
 
 			// Synchronize with the current state
@@ -177,6 +193,8 @@ final class SqlCacheEngine implements CacheEngineInterface
 	 */
 	public function set($key, $value, $ttl)
 	{
+		$this->initializeOnDemand();
+
 		if (!is_string($key)) {
 			throw new InvalidArgumentException(sprintf('Argument #1 must be a string and only, received "%s"', gettype($key)));
 		}
@@ -206,6 +224,8 @@ final class SqlCacheEngine implements CacheEngineInterface
 	 */
 	public function getAll()
 	{
+		$this->initializeOnDemand();
+
 		$result = array();
 
 		foreach ($this->cache as $key => $options) {
@@ -223,6 +243,7 @@ final class SqlCacheEngine implements CacheEngineInterface
 	 */
 	public function has($key)
 	{
+		$this->initializeOnDemand();
 		return in_array($key, array_keys($this->cache));
 	}
 
@@ -235,6 +256,8 @@ final class SqlCacheEngine implements CacheEngineInterface
 	 */
 	public function get($key, $default = false)
 	{
+		$this->initializeOnDemand();
+
 		if ($this->has($key)) {
 			return $this->cache[$key][ConstProviderInterface::CACHE_PARAM_VALUE];
 		} else {
@@ -250,6 +273,8 @@ final class SqlCacheEngine implements CacheEngineInterface
 	 */
 	public function remove($key)
 	{
+		$this->initializeOnDemand();
+
 		if ($this->has($key) && $this->cacheMapper->delete($key)) {
 
 			unset($this->cache[$key]);

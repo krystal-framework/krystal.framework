@@ -46,7 +46,7 @@ final class CacheMapper implements CacheMapperInterface
 	 * @param string $table
 	 * @return void
 	 */
-	public function __construct(AbstractSerializer $serializer, PDO $pdo, $table)
+	public function __construct(AbstractSerializer $serializer, $pdo, $table)
 	{
 		$this->serializer = $serializer;
 		$this->pdo = $pdo;

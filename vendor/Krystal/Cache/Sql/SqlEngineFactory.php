@@ -12,7 +12,6 @@
 namespace Krystal\Cache\Sql;
 
 use Krystal\Serializer\NativeSerializer;
-use PDO;
 
 abstract class SqlEngineFactory
 {
@@ -23,13 +22,9 @@ abstract class SqlEngineFactory
 	 * @param string $table Table name
 	 * @return \Krystal\Cache\Sql\SqlCacheEngine
 	 */
-	public static function build(PDO $pdo, $table)
+	public static function build($pdo, $table)
 	{
 		$mapper = new CacheMapper(new NativeSerializer(), $pdo, $table);
-
-		$engine = new SqlCacheEngine($mapper);
-		$engine->initialize();
-
-		return $engine;
+		return new SqlCacheEngine($mapper);
 	}
 }
