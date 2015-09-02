@@ -1,6 +1,6 @@
 <?php
 
-namespace Demo;
+namespace Site;
 
 use Krystal\Application\Module\AbstractModule;
 

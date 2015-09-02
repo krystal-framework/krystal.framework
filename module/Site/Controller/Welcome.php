@@ -1,10 +1,25 @@
 <?php
 
-namespace Demo\Controller;
+namespace Site\Controller;
 
+use Krystal\Application\Controller\AbstractController;
 
-final class Welcome extends SiteController
+final class Welcome extends AbstractController
 {
+	/**
+	 * This method automatically gets called when this controller executes
+	 * 
+	 * @return void
+	 */
+	protected function bootstrap()
+	{
+		// Append required assets
+		$this->view->getPluginBag()->appendStylesheets(array(
+			'@Site//bootstrap.min.css',
+			'@Site/styles.css'
+		));
+	}
+
 	/**
 	 * Shows a home page
 	 * 
@@ -12,7 +27,7 @@ final class Welcome extends SiteController
 	 */
 	public function indexAction()
 	{
-		return $this->view->render('main');
+		return $this->view->render('layout');
 	}
 
 	/**
