@@ -270,8 +270,16 @@ final class App implements AppInterface
 				$loader->register();
 			}
 			
-			if (isset($this->config['components']['autoload']['psr-4'])){
-				//@TODO
+			if (isset($this->config['components']['autoload']['psr-4'])) {
+				if (!is_array($this->config['components']['autoload']['psr-0'])) {
+					throw new InvalidArgumentException(sprintf(
+						'PSR-4 autoloader configuration should be an associative array with vendor prefixes and base directories'
+					));
+				}
+
+				$loader = new PSR4();
+				$loader->addNamespaces($this->config['components']['autoload']['psr-4']);
+				$loader->register();
 			}
 
 			// Map auto-loading for vendors that do not follow PSR-0
