@@ -30,6 +30,13 @@ final class SqlConfigService implements ConfigServiceInterface
 	private $arrayConfig;
 
 	/**
+	 * Tells whether service is already initialized
+	 * 
+	 * @var boolean
+	 */
+	private $initialized = false;
+
+	/**
 	 * State initialization
 	 * 
 	 * @param \Krystal\Config\Sql\ConfigMapperInterface $configMapper
@@ -43,14 +50,16 @@ final class SqlConfigService implements ConfigServiceInterface
 	}
 
 	/**
-	 * Initializes the service
-	 * Gets called right after state initialization
+	 * Initializes the service on demand
 	 * 
 	 * @return void
 	 */
-	public function initialize()
+	private function initializeOnDemand()
 	{
-		$this->arrayConfig->setData($this->configMapper->fetchAll());
+		if ($this->initialized === false) {
+			$this->arrayConfig->setData($this->configMapper->fetchAll());
+			$this->initialized = true;
+		}
 	}
 
 	/**
@@ -63,6 +72,8 @@ final class SqlConfigService implements ConfigServiceInterface
 	 */
 	public function store($module, $name, $value)
 	{
+		$this->initializeOnDemand();
+
 		if (!$this->has($module, $name)) {
 			if ($this->configMapper->insert($module, $name, $value)) {
 				$this->arrayConfig->add($module, $name, $value);
@@ -89,6 +100,7 @@ final class SqlConfigService implements ConfigServiceInterface
 	 */
 	public function getAllByModule($module)
 	{
+		$this->initializeOnDemand();
 		return $this->arrayConfig->getAllByModule($module);
 	}
 
@@ -102,6 +114,7 @@ final class SqlConfigService implements ConfigServiceInterface
 	 */
 	public function get($module, $name, $default = false)
 	{
+		$this->initializeOnDemand();
 		return $this->arrayConfig->get($module, $name, $default);
 	}
 
@@ -114,6 +127,7 @@ final class SqlConfigService implements ConfigServiceInterface
 	 */
 	public function has($module, $name)
 	{
+		$this->initializeOnDemand();
 		return $this->arrayConfig->has($module, $name);
 	}
 
@@ -124,6 +138,8 @@ final class SqlConfigService implements ConfigServiceInterface
 	 */
 	public function removeAll()
 	{
+		$this->initializeOnDemand();
+
 		if ($this->configMapper->truncate()) {
 
 			$this->arrayConfig->clear();
@@ -143,6 +159,8 @@ final class SqlConfigService implements ConfigServiceInterface
 	 */
 	public function remove($module, $name)
 	{
+		$this->initializeOnDemand();
+
 		if ($this->exists($module, $name) && $this->configMapper->delete($module, $name)) {
 
 			$this->arrayConfig->remove($module, $name);
@@ -161,6 +179,8 @@ final class SqlConfigService implements ConfigServiceInterface
 	 */
 	public function removeAllByModule($module)
 	{
+		$this->initializeOnDemand();
+
 		if ($this->arrayConfig->hasModule($module) && $this->configMapper->deleteAllByModule($module)) {
 
 			$this->arrayConfig->removeAllByModule($module);

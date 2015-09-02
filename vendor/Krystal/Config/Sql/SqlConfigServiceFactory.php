@@ -26,10 +26,6 @@ abstract class SqlConfigServiceFactory
 	public static function build($pdo, $table)
 	{
 		$configMapper = new ConfigMapper(new Serializer(), $pdo, $table);
-
-		$service = new SqlConfigService($configMapper, new ArrayConfig());
-		$service->initialize();
-
-		return $service;
+		return new SqlConfigService($configMapper, new ArrayConfig());
 	}
 }
