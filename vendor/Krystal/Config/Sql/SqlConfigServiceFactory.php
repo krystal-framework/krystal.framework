@@ -11,7 +11,6 @@
 
 namespace Krystal\Config\Sql;
 
-use PDO;
 use Krystal\Serializer\NativeSerializer as Serializer;
 
 abstract class SqlConfigServiceFactory
