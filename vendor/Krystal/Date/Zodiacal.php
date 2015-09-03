@@ -45,7 +45,7 @@ final class Zodiacal implements ZodiacalInterface
 		$day = (int) $day;
 
 		if (!$this->isValidMonth($month)) {
-			throw new UnexpectedValueException(sprintf('Uknown month supplied "%s"', $month));
+			throw new UnexpectedValueException(sprintf('Unknown month supplied "%s"', $month));
 		}
 
 		if (!$this->dayInRange($day)) {
