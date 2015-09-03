@@ -11,7 +11,7 @@
 
 namespace Krystal\Event;
 
-use Krystal\Event\EventManagerInterface;
+use Closure;
 use RuntimeException;
 use InvalidArgumentException;
 
@@ -25,22 +25,7 @@ final class EventManager implements EventManagerInterface
 	private $listeners = array();
 
 	/**
-	 * Arguments for listeners
-	 * 
-	 * @var array
-	 */
-	private $arguments = array();
-
-	/**
-	 * Method overloading : Handle undefined method calls
-	 * 
-	 * Instead of doing this,
-	 * 
-	 * $eventManager->trigger('fooMethod', 'someArg');
-	 * 
-	 * We can do the same thing like this,
-	 * 
-	 * $eventManager->fooMethod('someArg')
+	 * Method overloading to treat undefined calls as triggering events
 	 * 
 	 * @param string $method
 	 * @param array $arguments
@@ -48,19 +33,18 @@ final class EventManager implements EventManagerInterface
 	 */
 	public function __call($method, array $arguments)
 	{
-		return $this->vtrigger($method, $arguments);
+		return $this->trigger($method);
 	}
 
 	/**
 	 * Attaches a new event
 	 * 
-	 * @param string $eventName
-	 * @param callable $listener
-	 * @param array $arguments Arguments to be passed to the listener
+	 * @param string $event Event name
+	 * @param \Closure $listener
 	 * @throws \InvalidArgumentException If either listener isn't callable or event name's isn't a string
 	 * @return \Krystal\Event\EventManager
 	 */
-	public function attach($eventName, $listener, array $arguments = array())
+	public function attach($event, Closure $listener)
 	{
 		if (!is_callable($listener)) {
 			throw new InvalidArgumentException(sprintf(
@@ -68,96 +52,71 @@ final class EventManager implements EventManagerInterface
 			));
 		}
 
-		if (!is_string($eventName)) {
+		if (!is_string($event)) {
 			throw new InvalidArgumentException(sprintf(
-				'First argument must be string, got "%s"', gettype($eventName)
+				'First argument must be string, got "%s"', gettype($event)
 			));
 		}
 
-		$this->listeners[$eventName] = $listener;
-		$this->arguments[$eventName] = $arguments;
-
+		$this->listeners[$event] = $listener;
 		return $this;
 	}
 
 	/**
 	 * Detaches an event
 	 * 
-	 * @param string $eventName
+	 * @param string $event Event name
 	 * @throws \RuntimeException If attempted to detach non-existing event
 	 * @return void
 	 */
-	public function detach($eventName)
+	public function detach($event)
 	{
-		if ($this->has($eventName)) {
-			unset($this->listeners[$eventName], $this->arguments[$eventName]);
+		if ($this->has($event)) {
+			unset($this->listeners[$event]);
 		} else {
 			throw new RuntimeException(sprintf(
-				'Cannot detach non-existing event "%s"', $eventName
+				'Cannot detach non-existing event "%s"', $event
 			));
 		}
 	}
 
 	/**
-	 * Detaches all attached events with their associated listeners
+	 * Detaches all events
 	 * 
 	 * @return void
 	 */
 	public function detachAll()
 	{
 		$this->listeners = array();
-		$this->events = array();
-	}
-
-	/**
-	 * Triggers an event with array of provided arguments
-	 * 
-	 * @param string $eventName
-	 * @param array $arguments Additional arguments to be passed to the listener 
-	 * @throws \RuntimeException If attempted to trigger undefined event
-	 * @return mixed
-	 */
-	public function vtrigger($eventName, $arguments = array())
-	{
-		if ($this->has($eventName)) {
-			$arguments = array_merge($this->arguments[$eventName], $arguments);
-			return call_user_func_array($this->listeners[$eventName], $arguments);
-
-		} else {
-			throw new RuntimeException(sprintf(
-				'Cannot trigger non-existing event "%s"', $eventName
-			));
-		}
 	}
 
 	/**
 	 * Triggers an event
 	 * 
-	 * @param string $eventName
-	 * @param mixed ...
+	 * @param string $event Event name to be triggered
+	 * @throws \RuntimeException If trying to trigger non-existing event
 	 * @return mixed
 	 */
-	public function trigger()
+	public function trigger($event)
 	{
-		$arguments = func_get_args();
-		$eventName = array_shift($arguments);
-
-		return $this->vtrigger($eventName, $arguments);
+		if ($this->has($event)) {
+			return call_user_func($this->listeners[$event]);
+		} else {
+			throw new RuntimeException(sprintf(
+				'Cannot trigger non-existing event "%s"', $event
+			));
+		}
 	}
 
 	/**
-	 * Checks whether event has been defined before
+	 * Checks whether an event is defined
 	 * 
-	 * @param string $eventName
+	 * @param string $event Event name to be checked for existence
 	 * @return boolean
 	 */
-	public function has($eventName)
+	public function has($event)
 	{
-		if (!isset($this->listeners[$eventName]) || !isset($this->arguments[$eventName])) {
-			return false;
-		}
-
-		return true;
+		return isset($this->listeners[$event]);
 	}
 
 	/**
@@ -167,6 +126,6 @@ final class EventManager implements EventManagerInterface
 	 */
 	public function countAll()
 	{
-		return count(array_keys($this->events));
+		return count(array_keys($this->listeners));
 	}
 }
