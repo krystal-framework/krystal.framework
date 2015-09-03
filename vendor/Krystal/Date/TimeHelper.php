@@ -14,7 +14,7 @@ namespace Krystal\Date;
 /**
  * Time related helper methods 
  */
-abstract class Helper
+abstract class TimeHelper
 {
 	const MINUTE = 60; 
 	const SECOND = 1;
