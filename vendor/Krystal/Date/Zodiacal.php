@@ -57,7 +57,7 @@ final class Zodiacal implements ZodiacalInterface
 	}
 
 	/**
-	 * Manualy checks whether $sign equals to calculated one
+	 * Manually checks whether $sign equals to calculated one
 	 * 
 	 * @param string $sign
 	 * @return boolean
