@@ -849,7 +849,6 @@ To access raw PDO instance, just call `getPdo()`, like this:
 @TODO
 
  - Sections in doc: Non-pk specific shortcuts, connection, relations
- * SQL Table Relations - Implement very common types at least
  * Methods in SQL\Qb for migrations
 
 
