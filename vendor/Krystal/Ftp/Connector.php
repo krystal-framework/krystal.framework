@@ -21,13 +21,6 @@ final class Connector implements ConnectorInterface
 	private $stream;
 
 	/**
-	 * Connections options
-	 * 
-	 * @var array
-	 */
-	private $options = array();
-   
-	/**
 	 * Whether user logged in using his username and password
 	 * 
 	 * @var boolean
@@ -35,45 +28,48 @@ final class Connector implements ConnectorInterface
 	private $loggedIn = false;
 
 	/**
-	 * Error messages regarding connection
+	 * Connection timeout
 	 * 
-	 * @var array
+	 * @var integer
 	 */
-	private $errors = array();
+	private $timeout;
+
+	/**
+	 * Connection port
+	 * 
+	 * @var integer
+	 */
+	private $port;
+	
+	/**
+	 * Connection host address
+	 * 
+	 * @var string
+	 */
+	private $host;
+	
+	/**
+	 * Whether to connect via SSL
+	 * 
+	 * @var boolean
+	 */
+	private $ssl;
 
 	/**
 	 * State initialization
 	 * 
-	 * @param array $options
+	 * @param string $host
+	 * @param integer $timeout
+	 * @param integer $port
+	 * @param boolean $ssl
 	 * @return void
 	 */
-	public function __construct(array $options)
+	public function __construct($host, $timeout = 90, $port = 21, $ssl = false)
 	{
-		$this->options = $options;
-
-		if (isset($options['timeout']) && is_numeric($options['timeout'])){
-			$this->options['timeout'] = $options['timeout'];
-		} else {
-			$this->options['timeout'] = 90;
-		}
-
-		if (isset($options['port']) && is_numeric($options['port'])){
-			$this->options['port'] = $options['port'];
-		} else {
-			$this->options['port'] = 21;
-		}
-	}
-
-	/**
-	 * Free memory up if possible
-	 * 
-	 * @return void
-	 */
-	public function __destruct()
-	{
-		if (is_resource($this->stream)) {
-			$this->disconnect();
-		}
+		$this->host = $host;
+		$this->timeout = $timeout;
+		$this->port = $port;
+		$this->ssl = $ssl;
 	}
 
 	/**
@@ -107,51 +103,19 @@ final class Connector implements ConnectorInterface
 	}
 
 	/**
-	 * Return defined options
-	 * 
-	 * @return array
-	 */
-	public function getOptions()
-	{
-		return $this->options;
-	}
-
-	/**
-	 * Retrieves various runtime behaviours of the current FTP stream
-	 * 
-	 * @param integer $option
-	 * @return boolean
-	 */
-	public function getOption($option)
-	{
-		return ftp_get_option($this->stream, $option);
-	}
-
-	/**
-	 * Return last error messages
-	 * 
-	 * @return array
-	 */
-	public function getErrors()
-	{
-		return $this->errors;
-	}
-
-	/**
 	 * Connects to the server
 	 * 
-	 * @param boolean $ssl Whether to use SSL
 	 * @return boolean Depending on success
 	 */
-	public function connect($ssl = false)
+	public function connect()
 	{
-		$arguments = array($this->options['host'], $this->options['port'], $this->options['timeout'])
-
-		if ($ssl !== false) {
-			$result = call_user_func_array('ftp_ssl_connect', $arguments);
+		if ($this->ssl !== false) {
+			$function = 'ftp_ssl_connect';
 		} else {
-			$result = call_user_func_array('ftp_connect', $arguments);
+			$function = 'ftp_connect';
 		}
+
+		$result = call_user_func_array($function, array($this->host, $this->port, $this->timeout));
 
 		if (!$result) {
 			return false;
@@ -168,22 +132,27 @@ final class Connector implements ConnectorInterface
 	 */
 	public function disconnect()
 	{
-		return ftp_close($this->stream);
+		if (is_resource($this->stream)) {
+			return ftp_close($this->stream);
+		}
 	}
 
 	/**
 	 * Logins using username and password
 	 * 
-	 * @throws \RuntimeException if missing either username or password
+	 * @param string $username
+	 * @param string $password
 	 * @return boolean Depending on success
 	 */
-	public function login()
+	public function login($username, $password)
 	{
-		if (isset($this->options['username'], $this->options['password'])) {
-			// We don't want E_WARNING
-			return @ftp_login($this->stream, $this->options['username'], $this->options['password']);
+		// @ - intentionally, because false is enough
+		if (@ftp_login($this->stream, $username, $password)) {
+			$this->loggedIn = true;
+			return true;
+
 		} else {
-			throw new RuntimeException('You did not provide username or password');
+			return false;
 		}
 	}
 }

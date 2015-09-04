@@ -32,25 +32,47 @@ final class FtpManager implements FtpManagerInterface
 	}
 
 	/**
+	 * Frees the memory
+	 * 
+	 * @return void
+	 */
+	public function __destruct()
+	{
+		$this->link->disconnect();
+	}
+
+	/**
+	 * Retrieves various runtime behaviours of the current FTP stream
+	 * 
+	 * @param integer $option
+	 * @return boolean
+	 */
+	public function getOption($option)
+	{
+		return ftp_get_option($this->stream, $option);
+	}
+
+	/**
 	 * Creates new empty directory on the server
 	 * 
-	 * @param string $dir_name
+	 * @param string $dirname
  	 * @return boolean Depending on success
 	 */
 	public function mkdir($dirname)
 	{
-		return ftp_mkdir($this->link->getStream(), $dirname) !== FALSE;
+		return ftp_mkdir($this->link->getStream(), $dirname) !== false;
 	}
 
 	/**
-	 * Returns raw list of 
+	 * Returns a detailed list of files in the given directory
 	 * 
-	 * @param boolean $recursive Whether it should be recursive or not
-	 * @return array
+	 * @param string $directory The directory path. May include arguments for the LIST command. 
+	 * @param boolean $recursive If set to TRUE, the issued command will be LIST -R.
+	 * @return array Returns an array where each element corresponds to one line of text. 
 	 */
-	public function getRawList($recursive = true)
+	public function getRawList($directory, $recursive = true)
 	{
-		return ftp_rawlist($this->link->getStream(), $recursive);
+		return ftp_rawlist($this->link->getStream(), $directory, $recursive);
 	}
 
 	/**
@@ -145,53 +167,53 @@ final class FtpManager implements FtpManagerInterface
 	 * Downloads a file from the FTP server and saves to an open file
 	 * 
 	 * @param resource $handle An open file pointer in which we store the data
-	 * @param string $remote_file The remote file path
-	 * @param integer $mode The transfer mode. Must be either FTP_ASCII or FTP_BINARY
+	 * @param string $remoteFile The remote file path
+	 * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
 	 * @param integer $resumepos The position in the remote file to start downloading from
 	 * @return boolean
 	 */
-	public function fget($handle, $remote_file, $mode, $resumepos = 0)
+	public function fget($handle, $remoteFile, $mode, $resumepos = 0)
 	{
-		return ftp_fget($this->link->getStream(), $handle, $remote_file, $mode, $resumepos);
+		return ftp_fget($this->link->getStream(), $handle, $remoteFile, $mode, $resumepos);
 	}
 
 	/**
 	 * Uploads from an open file to the FTP server
 	 * 
 	 * @param resource $handle An open file pointer on the local file. Reading stops at end of file
-	 * @param string $remote_file The remote file path
+	 * @param string $remoteFile The remote file path
 	 * @param integer $mode The transfer mode. Must be either FTP_ASCII or FTP_BINARY
 	 * @param integer $resumepos The position in the remote file to start uploading to
 	 * @return boolean
 	 */
-	public function fput($handle, $remote_file, $mode, $resumepos = 0)
+	public function fput($handle, $remoteFile, $mode, $resumepos = 0)
 	{
-		return ftp_fput($this->link->getStream(), $remote_file, $handle, $mode, $resumepos);
+		return ftp_fput($this->link->getStream(), $remoteFile, $handle, $mode, $resumepos);
 	}
 
 	/**
 	 * Downloads a file from the FTP server
 	 * 
-	 * @param string $local_file The local file path (will be overwritten if the file already exists). 
-	 * @param string $remote_file The remote file path. 
+	 * @param string $localFile The local file path (will be overwritten if the file already exists). 
+	 * @param string $remoteFile The remote file path. 
 	 * @param integer $mode The transfer mode. Must be either FTP_ASCII or FTP_BINARY
 	 * @param integer $resumepos
 	 * @return boolean Depending on success
 	 */
-	public function get($local_file, $remote_file, $mode, $resumepos = 0)
+	public function get($localFile, $remoteFile, $mode, $resumepos = 0)
 	{
-		return ftp_get($this->link->getStream(), $local_file, $remote_file, $mode, $resumepos);
+		return ftp_get($this->link->getStream(), $localFile, $remoteFile, $mode, $resumepos);
 	}
 
 	/**
 	 * Returns the last modified time of the given file
 	 * 
-	 * @param string $remote_file The file from which to extract the last modification time. 
+	 * @param string $remoteFile The file from which to extract the last modification time. 
 	 * @return integer The last modified time as a Unix timestamp on success, or -1 on error. 
 	 */
-	public function mdtm($remote_file)
+	public function mdtm($remoteFile)
 	{
-		return ftp_mdtm($this->link->getStream(), $remote_file);
+		return ftp_mdtm($this->link->getStream(), $remoteFile);
 	}
 
 	/**
@@ -208,7 +230,7 @@ final class FtpManager implements FtpManagerInterface
 	/**
 	 * Continues retrieving/sending a file (non-blocking)
 	 * 
-	 * @return integer FTP_FAILED or FTP_FINISHED or FTP_MOREDATA. 
+	 * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
 	 */
 	public function nbcontinue()
 	{
@@ -219,56 +241,56 @@ final class FtpManager implements FtpManagerInterface
 	 * Retrieves a file from the FTP server and writes it to an open file (non-blocking)
 	 * 
 	 * @param resource $handle An open file pointer in which we store the data.
-	 * @param string $remote_file The remote file path
-	 * @param integer $mode The transfer mode. Must be either FTP_ASCII or FTP_BINARY
+	 * @param string $remoteFile The remote file path
+	 * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
 	 * @param integer $resumepos The position in the remote file to start downloading from
-	 * @return integer FTP_FAILED or FTP_FINISHED or FTP_MOREDATA. 
+	 * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
 	 */
-	public function nbfget($handle, $remote_file, $mode, $resumepos = 0)
+	public function nbfget($handle, $remoteFile, $mode, $resumepos = 0)
 	{
-		return ftp_nb_fget($this->link->getStream(), $hamdle, $remote_file, $mode, $resumepos);
+		return ftp_nb_fget($this->link->getStream(), $hamdle, $remoteFile, $mode, $resumepos);
 	}
 
 	/**
 	 * Stores a file from an open file to the FTP server (non-blocking)
 	 * 
 	 * @param resource $handle An open file pointer on the local file. Reading stops at end of file
-	 * @param string $remote_file The remote file path
-	 * @param integer $mode The transfer mode. Must be either FTP_ASCII or FTP_BINARY
+	 * @param string $remoteFile The remote file path
+	 * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
 	 * @param integer $starpos The position in the remote file to start uploading to
-	 * @return integer FTP_FAILED or FTP_FINISHED or FTP_MOREDATA
+	 * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
 	 */
-	public function nbfput($handle, $remote_file, $mode, $starpos = 0)
+	public function nbfput($handle, $remoteFile, $mode, $starpos = 0)
 	{
-		return ftp_nb_fput($this->link->getStream(), $remote_file, $handle, $mode, $starpos);
+		return ftp_nb_fput($this->link->getStream(), $remoteFile, $handle, $mode, $starpos);
 	}
 
 	/**
 	 * Retrieves a file from the FTP server and writes it to a local file (non-blocking)
 	 * 
-	 * @param string $local_file The local file path (will be overwritten if the file already exists)
-	 * @param string $remote_file The remote file path
-	 * @param integer $mode The transfer mode. Must be either FTP_ASCII or FTP_BINARY
+	 * @param string $localFile The local file path (will be overwritten if the file already exists)
+	 * @param string $remoteFile The remote file path
+	 * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
 	 * @param integer $resumepos The position in the remote file to start downloading from
-	 * @return integer FTP_FAILED or FTP_FINISHED or FTP_MOREDATA
+	 * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
 	 */
-	public function nbget($local_file, $remote_file, $mode, $resumepos = 0)
+	public function nbget($localFile, $remoteFile, $mode, $resumepos = 0)
 	{
-		return ftp_nb_get($this->link->getStream(), $local_file, $remote_file, $mode, $resumepos)
+		return ftp_nb_get($this->link->getStream(), $localFile, $remoteFile, $mode, $resumepos);
 	}
 
 	/**
 	 * Stores a file on the FTP server (non-blocking)
 	 * 
-	 * @param string $remote_file The link identifier of the FTP connection
-	 * @param string $local_file The remote file path
-	 * @param integer $mode The transfer mode. Must be either FTP_ASCII or FTP_BINARY
+	 * @param string $remoteFile The link identifier of the FTP connection
+	 * @param string $localFile The remote file path
+	 * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
 	 * @param integer $starpos The position in the remote file to start uploading to
-	 * @return integer FTP_FAILED or FTP_FINISHED or FTP_MOREDATA
+	 * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
 	 */
-	public function nbput($remote_file, $local_file, $mode, $starpos = 0)
+	public function nbput($remoteFile, $localFile, $mode, $starpos = 0)
 	{
-		return ftp_nb_put($this->link->getStream(), $remote_file, $local_file, $mode, $starpos);
+		return ftp_nb_put($this->link->getStream(), $remoteFile, $localFile, $mode, $starpos);
 	}
 
 	/**
@@ -304,27 +326,15 @@ final class FtpManager implements FtpManagerInterface
 	}
 
 	/**
-	 * Returns a detailed list of files in the given directory
-	 * 
-	 * @param string $directory The directory path. May include arguments for the LIST command. 
-	 * @param boolean $recursive If set to TRUE, the issued command will be LIST -R.
-	 * @return array Returns an array where each element corresponds to one line of text. 
-	 */
-	public function getRawList($directory, $recursive = true)
-	{
-		return ftp_rawlist($this->link->getStream(), $directory, $recursive);
-	}
-
-	/**
 	 * Renames a file or a directory on the FTP server
 	 * 
-	 * @param string $old_name
-	 * @param string $new_name
+	 * @param string $oldName
+	 * @param string $newName
 	 * @return boolean Depending on success
 	 */
-	public function rename($old_name, $new_name)
+	public function rename($oldName, $newName)
 	{
-		return ftp_rename($this->link->getStream(), $old_name, $new_name);
+		return ftp_rename($this->link->getStream(), $oldName, $newName);
 	}
 
 	/**
@@ -341,11 +351,11 @@ final class FtpManager implements FtpManagerInterface
 	/**
 	 * Returns the size of the given file
 	 * 
-	 * @param string $remote_file
+	 * @param string $remoteFile
 	 * @return integer
 	 */
-	public function size($remote_file)
+	public function size($remoteFile)
 	{
-		return ftp_size($this->link->getStream(), $remote_file);
+		return ftp_size($this->link->getStream(), $remoteFile);
 	}
 }
