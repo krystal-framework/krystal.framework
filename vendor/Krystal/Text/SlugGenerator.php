@@ -56,7 +56,7 @@ final class SlugGenerator implements SlugGeneratorInterface
 							'=', '\\', '?', '"', '№', ';', 
 							':', '[', ']', '»', '«', '--', 
 							',', "'", '/');
-		
+
 		return str_replace($undesired, '', $string);
 	}
 

@@ -101,7 +101,7 @@ abstract class ForeignChars
 		'/ж/' => 'zh',
 		'/ь|ъ/'	=>	'',
 	);
-	
+
 	/**
 	 * Romanizes the string that contains foreign chars
 	 * 

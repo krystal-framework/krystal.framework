@@ -162,7 +162,7 @@ final class CollectionManager implements CollectionManagerInterface
 		if ($this->hasOption($key, $option)) {
 			$this->container[$key][$option] = $value;
 		}
-		
+
 		return $this;
 	}
 
@@ -178,7 +178,7 @@ final class CollectionManager implements CollectionManagerInterface
 		if ($this->hasOption($key, $option)) {
 			unset($this->container[$key][$option]);
 		}
-		
+
 		return $this;
 	}
 
