@@ -5,11 +5,11 @@ If you use events in you application, this component will help you to manage the
 
 # Available methods
 
-## attach(\$event, Closure \$listener)
+## attach($event, Closure $listener)
 
 Attaches a listener (callable function) to an event.
 
-## detach(\$event)
+## detach($event)
 
 Detaches an event. In case an event wasn't registered before, it'd throw `RuntimeException` indicating failure.
 
