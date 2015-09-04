@@ -4,8 +4,8 @@ CHANGELOG
 1.1
 ---
 
- * Added FtpFactory
- * Improved code base
+ * Added `\Krystal\Ftp\FtpFactory` to simplify instantiation
+ * Improved internal code base
 
 1.0
 ---
