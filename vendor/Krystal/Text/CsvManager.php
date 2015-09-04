@@ -12,6 +12,8 @@
 namespace Krystal\Text;
 
 use Krystal\Text\CsvManagerInterface;
+use RuntimeException;
+use LogicException;
 
 /**
  * Comma-separated-values manager
@@ -34,7 +36,7 @@ final class CsvManager implements CsvManagerInterface
 	 * @const string
 	 */
 	const SEPARATOR = ',';
-	
+
 	/**
 	 * Class initialization
 	 * 
@@ -77,11 +79,11 @@ final class CsvManager implements CsvManagerInterface
 	public function count($includeDuplicates = true)
 	{
 		$target = $this->collection;
-		
+
 		if ($includeDuplicates !== true) {
 			$target = array_unique($target);
 		}
-		
+
 		return count($target);
 	}
 
@@ -94,11 +96,9 @@ final class CsvManager implements CsvManagerInterface
 	{
 		return array_count_values($this->collection);
 	}
-	
+
 	/**
 	 * Checks if CSV string is valid
-	 * 
-	 * @todo Implement this
 	 * 
 	 * @param string $target
 	 * @return boolean
@@ -112,15 +112,14 @@ final class CsvManager implements CsvManagerInterface
 	 * Checks if a value has duplicates in a sequence
 	 * 
 	 * @param string $target
-	 * @throws RuntimeException if $target does not belong to the collection
+	 * @throws \RuntimeException if $target does not belong to the collection
 	 * @return boolean	 */
 	public function hasDuplicates($target)
 	{
 		if ($this->exists($target)) {
 			$duplicates = $this->getDuplicates();
-			
 			return (int) $duplicates[$target] > 1;
-			
+
 		} else {
 			throw new RuntimeException(sprintf(
 				'Attempted to read non-existing value %s', $target
@@ -132,21 +131,20 @@ final class CsvManager implements CsvManagerInterface
 	 * Returns duplicate count by a value
 	 * 
 	 * @param string $target
-	 * @throws RuntimeException if attempted to read non-existing value
+	 * @throws \RuntimeException if attempted to read non-existing value
 	 * @return integer
 	 */
 	public function getDuplicatesCount($target)
 	{
 		if ($this->exists($target)) {
 			if ($this->hasDuplicates($target)) {
-				
 				$duplicates = $this->getDuplicates();
 				return $duplicates[$target];
-				
+
 			} else {
 				return 0;
 			}
-			
+
 		} else {
 			throw new RuntimeException(sprintf(
 				'Attempted to read non-existing value %s', $target
@@ -158,15 +156,15 @@ final class CsvManager implements CsvManagerInterface
 	 * Appends one more value
 	 * 
 	 * @param string $value
-	 * @throws LogicException if $value contains a delimiter
-	 * @return object $this
+	 * @throws \LogicException if $value contains a delimiter
+	 * @return \Krystal\Text\CsvManager
 	 */
 	public function append($value)
 	{
 		if (strpos($value, self::SEPARATOR) !== false) {
 			throw new LogicException('A value cannot contain delimiter');
 		}
-		
+
 		array_push($this->collection, $value);
 		return $this;
 	}
@@ -175,14 +173,14 @@ final class CsvManager implements CsvManagerInterface
 	 * Append collection
 	 * 
 	 * @param array $collection
-	 * @return object $this
+	 * @return \Krystal\Text\CsvManager
 	 */
 	public function appendCollection(array $collection)
 	{
 		foreach ($collection as $value) {
 			$this->append($value);
 		}
-		
+
 		return $this;
 	}
 	
@@ -199,7 +197,7 @@ final class CsvManager implements CsvManagerInterface
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -214,18 +212,17 @@ final class CsvManager implements CsvManagerInterface
 	{
 		// We need a copy of $this->collection, not itself:
 		$array = $this->collection;
-		
+
 		foreach ($array as $index => $value) {
 			if ($value == $target) {
-				
 				unset($array[$index]);
-				
+
 				if ($keepDuplicates === true) {
 					break;
 				}
 			}
 		}
-		
+
 		// Now override original stack with replaced one
 		$this->collection = $array;
 	}
@@ -271,7 +268,7 @@ final class CsvManager implements CsvManagerInterface
 				}
 			}
 		}
-		
+
 		// Override with modified one
 		$this->collection = $target;
 	}
