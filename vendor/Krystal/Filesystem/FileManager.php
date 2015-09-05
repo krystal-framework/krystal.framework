@@ -15,29 +15,52 @@ use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use DirectoryIterator;
 use RuntimeException;
+use UnexpectedValueException;
 
 class FileManager
 {
 	/**
-	 * Returns base name of a file
+	 * Returns a directory name from a path
 	 * 
-	 * @param string $file
+	 * @param string $path
 	 * @return string
 	 */
-	public function getBaseName($file)
+	public function getBaseName($path)
 	{
-		return pathinfo($file, \PATHINFO_BASENAME);
+		return pathinfo($path, \PATHINFO_BASENAME);
 	}
 
 	/**
-	 * Fetches file extension
+	 * Returns a directory name from a path
 	 * 
-	 * @param string $target
+	 * @param string $path
 	 * @return string
 	 */
-	public function getExtension($file)
+	public function getExtension($path)
 	{
-		return pathinfo($file, \PATHINFO_EXTENSION);
+		return pathinfo($path, \PATHINFO_EXTENSION);
+	}
+
+	/**
+	 * Returns a directory name from a path
+	 * 
+	 * @param string $path
+	 * @return string
+	 */
+	public function getDirName($path)
+	{
+		return pathinfo($path, \PATHINFO_DIRNAME);
+	}
+
+	/**
+	 * Returns a file name from a path
+	 * 
+	 * @param string $path
+	 * @return string
+	 */
+	public function getFileName($path)
+	{
+		return pathinfo($path, \PATHINFO_FILENAME);
 	}
 
 	/**
@@ -50,7 +73,7 @@ class FileManager
 	{
 		$mimeType = new MimeTypeGuesser();
 		$extension = $this->getExtension($file);
-		
+
 		return $mimeType->getTypeByExtension($file);
 	}
 
@@ -65,7 +88,7 @@ class FileManager
 	{
 		if (is_file($file)) {
 			return chmod($file, 0777) && unlink($file);
-			
+
 		} else {
 			throw new RuntimeException(sprintf(
 				'Invalid file provided "%s"', $file
@@ -112,17 +135,22 @@ class FileManager
 	 * Counts directory size in bytes
 	 * 
 	 * @param string $dir
+	 * @throws \RuntimeException If invalid directory path supplied
 	 * @return float
 	 */
 	public function getDirSizeCount($dir)
 	{
+		if (!is_dir($dir)) {
+			throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $dir));
+		}
+
 		$count = 0.00;
 		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
-		
+
 		foreach ($iterator as $file) {
 			$count += $file->getSize(); 
 		}
-		
+
 		return $count;
 	}
 
@@ -142,50 +170,49 @@ class FileManager
 	 * 
 	 * @param string $file
 	 * @param integer $mode
-	 * @param array	$ignored Items that unreadable or unaccessable
-	 * @throws UnexpectedValueException if $file is neither a directory and a file
+	 * @param array	$ignored Items that unreadable or accessible
+	 * @throws \UnexpectedValueException if $file is neither a directory and a file
 	 * @return boolean Depending on success
 	 */
-	public function chmod($file, $mode = 0777, array &$ignored = array())
+	public function chmod($file, $mode, array &$ignored = array())
 	{
 		if (is_file($file)) {
 			if (!chmod($file, $mode)) {
 				array_push($ignored, $file);
 				return false;
 			}
-			
+
 		} else if (is_dir($file)) {
-			
 			$items = $this->getDirTree($file, true);
-			
+
 			foreach ($items as $item) {
 				if (!chmod($item, $mode)) {
 					array_push($ignored, $item);
 				}
 			}
-			
+
 		} else {
-			
+
 			throw new UnexpectedValueException(sprintf(
 				'%s expects a path to be a directory or a file as first argument', __METHOD__
 			));
 		}
-		
+
 		return true;
 	}
 
 	/**
-	 * Remove a directory (recursively)
+	 * Removes a directory (recursively)
 	 * 
 	 * @param string $dir
 	 * @param array $ignored Files that couldn't be read
-	 * @throws \UnexcpectedValueException if $dir isn't a path to directory
+	 * @throws \RuntimeException if $dir isn't a path to directory
 	 * @return boolean Depending on success
 	 */
 	public function rmdir($dir, array &$ignored = array())
 	{
 		if (!is_dir($dir)) {
-			throw new RuntimeException();
+			throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $dir));
 		}
 
 		foreach (glob($dir . '/*') as $file) {
@@ -210,20 +237,25 @@ class FileManager
 	}
 
 	/**
-	 * Copies a file to another directory
+	 * Copies a directory to another directory
 	 * 
 	 * @param string $file The path to the file
 	 * @param string $dir The dir file will be copied in
+	 * @throws \RuntimeException if $src isn't a path to directory
 	 * @return boolean Depending on success
 	 */
 	public function copy($src, $dst)
 	{
+		if (!is_dir($src)) {
+			throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $src));
+		}
+
 		$dir = opendir($src);
-		
+
 		if (!is_dir($dst)) {
 			mkdir($dst, 0777);
 		}
-		
+
 		while (false !== ($file = readdir($dir))) {
 			// We must ensure a file isn't a dot
 			if (($file != '.' ) && ($file != '..' )) {
@@ -235,7 +267,7 @@ class FileManager
 				}
 			}
 		}
-		
+
 		closedir($dir);
 		return true;
 	}
@@ -243,110 +275,49 @@ class FileManager
 	/**
 	 * Moves a directory
 	 * 
-	 * @param string $file
-	 * @param string $destination
+	 * @param string $file Target directory
+	 * @param string $to Target destination path
 	 * @return boolean
 	 */
 	public function move($from, $to)
 	{
-		if ($this->copy($from, $to)) {
-			return $this->delete($from);
-		}
+		return $this->copy($from, $to) && $this->delete($from);
 	}
 
 	/**
 	 * Checks whether file is empty
 	 * 
-	 * @param string $filename
-	 * @return boolean TRUE if $filename is empty
+	 * @param string $file
+	 * @throws \RuntimeException if invalid file path supplied
+	 * @return boolean
 	 */
-	public function isFileEmpty($filename)
+	public function isFileEmpty($file)
 	{
-		return mb_strlen(file_get_contents($filename, 2), 'UTF-8') > 0 ? false : true;
+		if (!is_file($file)) {
+			throw new RuntimeException(sprintf('Invalid file path supplied'));
+		}
+
+		return mb_strlen(file_get_contents($file, 2), 'UTF-8') > 0 ? false : true;
 	}
 
 	/**
 	 * Returns nested directories inside provided one
 	 * 
 	 * @param string $dir
+	 * @throws \UnexpectedValueException If can't open a directory
 	 * @return array
 	 */
 	public function getFirstLevelDirs($dir)
 	{
 		$iterator = new DirectoryIterator($dir);
 		$result = array();
-		
+
 		foreach ($iterator as $item) {
-			if (!$item->isDot()) {
-				if ($item->isDir()) {
-					array_push($result, $item->getFileName());
-				}
+			if (!$item->isDot() && $item->isDir()) {
+				array_push($result, $item->getFileName());
 			}
 		}
-		
+
 		return $result;
-	}
-
-	/**
-	 * Fetch directory files
-	 * 
-	 * @param string $dir
-	 * @param boolean $recursion
-	 * @return array
-	 */
-	public function getTreeFiles($dir, $recursion = true)
-	{
-		if ($recursion === true) {
-			return $this->buildDirTree($dir);
-		} else {
-			
-			$iterator = new DirectoryIterator($dir);
-			$result = array();
-			
-			foreach ($iterator as $item) {
-				if (!$item->isDot()) {
-					if ($item->isFile() || $item->isDir()) {
-						array_push($result, $item->getPathName());
-					}
-				}
-			}
-			
-			return $result;
-		}
-	}
-
-	/**
-	 * Examine files inside a directory by taking advantage of native pathinfo() function
-	 * 
-	 * @param string $dir
-	 * @param boolean $recursion
-	 * @param integer $const One of these: PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME
-	 * @return array
-	 */
-	public function fetchDirByPathInfo($dir, $const, $recursion = true)
-	{
-		$files = $this->fetchDirFiles($dir, $recursion);
-		$result = array();
-		
-		foreach ($files as $file) {
-			array_push($result, pathinfo($file, $const));
-		}
-		
-		return $result;
-	}
-
-	/**
-	 * Determines whether a directory is empty
-	 * 
-	 * @todo Add ignored extension and files, like Thumbs.db
-	 * 
-	 * @param string $dir Path to a directory
-	 * @throws RuntimeException if $dir isn't a directory
-	 * @return boolean TRUE if empty, FALSE if not
-	 */
-	public function isDirEmpty($dir)
-	{
-		// We don't need recursion here
-		return count($this->fetchDirFiles($dir, false)) === 0;
 	}
 }
