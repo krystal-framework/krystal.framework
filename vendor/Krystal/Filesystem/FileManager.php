@@ -17,7 +17,7 @@ use DirectoryIterator;
 use RuntimeException;
 use UnexpectedValueException;
 
-class FileManager
+class FileManager implements FileManagerInterface
 {
 	/**
 	 * Returns a directory name from a path
