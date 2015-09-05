@@ -49,6 +49,10 @@ Recursively applies native PHP's `chmod()` function to a given directory.  The f
 
 Removes a directory, even if it's not empty. The first argument `$dir` is a path to a directory to be removed.
 
+## rmfile($file)
+
+Safely removes a file. That means it would remove a file assigning `777` mode to it before removing it. In case supplied file doesn't exist, it'd throw `RuntimeException`.
+
 ## copy($src, $dst)
 
 Copies a directory to the destination path. The first argument `$src` is a path to a target directory, and the second `$dst` is a path to the destination directory. If `$src` is invalid directory path, then `RuntimeException` will be thrown.
