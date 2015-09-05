@@ -63,7 +63,7 @@ class Factory
 	 * 
 	 * @param string $filename (Without extension and base path)
 	 * @param mixed $arguments [...]
-	 * @throws RuntimeException if cannot load a class
+	 * @throws \RuntimeException if cannot load a class
 	 * @return object
 	 */
 	final public function build()
