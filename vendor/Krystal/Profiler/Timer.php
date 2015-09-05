@@ -66,9 +66,7 @@ final class Timer implements TimerInterface
 		$this->stop();
 
 		if ($this->start !== null) {
-
 			$summary = $this->end - $this->start;
-			
 			$summary = round($summary, 2);
 			
 			return $summary;

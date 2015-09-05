@@ -25,9 +25,8 @@ class Memory
 
 		// Count the exponent 
 		$exp = floor(log($size, 1024));
-
 		$pow = pow(1024, $exp);
 
-		return round($size / $pow, 2) . ' ' . strtoupper($unit[$exp]);
+		return round($size / $pow, 2).' '.strtoupper($unit[$exp]);
 	}
 }
