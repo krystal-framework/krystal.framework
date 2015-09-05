@@ -64,7 +64,7 @@ class FileManager
 	}
 
 	/**
-	 * Fetches mime type
+	 * Fetches mime type from a file
 	 * 
 	 * @param string $file
 	 * @return string
@@ -81,7 +81,7 @@ class FileManager
 	 * Safely removes a file
 	 * 
 	 * @param string $file
-	 * @throws RuntimeException When invalid file provided
+	 * @throws \RuntimeException When invalid file provided
 	 * @return boolean
 	 */
 	public function rmfile($file)
@@ -91,7 +91,7 @@ class FileManager
 
 		} else {
 			throw new RuntimeException(sprintf(
-				'Invalid file provided "%s"', $file
+				'Invalid file path supplied "%s"', $file
 			));
 		}
 	}
