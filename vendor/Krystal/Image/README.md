@@ -203,12 +203,12 @@ It can work along with the `thumb` plugin. So when doing an uploading it will up
 
 So far, we've learned how to instantiate and tweak the image manager. Now it's time to learn about its available methods.
 
-### upload(\$id, array \$files)
+### upload($id, array $files)
 
 Uploads a collection to the target unique id. Usually the id is the value of database's last insert id, and the `$files` collection is a returned value of `$this->request->getFiles()`
 
 
-### delete(\$id, $image = null)
+### delete($id, $image = null)
 
 Removes either a whole directory by its associated id, or a single image file (including all its dimensions) from within `$id` folder, if `$image`'s value isn't `null`
 
