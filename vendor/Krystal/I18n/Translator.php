@@ -111,7 +111,7 @@ final class Translator implements TranslatorInterface
 				break;
 			}
 
-			// Only strings and integers are supported
+			// Only strings and integers are supported to be passed as arguments
 			if (is_string($argument) || is_numeric($argument)) {
 				array_push($variables, $argument);
 			}
