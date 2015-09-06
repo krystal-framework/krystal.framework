@@ -24,6 +24,7 @@ class Dumper
 	{
 		if (false === $variable) {
 			var_dump($variable);
+			return;
 		}
 
 		$text = sprintf('<pre>%s</pre>', print_r($variable, true));
