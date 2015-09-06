@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.1
+---
+
+ * Improved code base
 
 1.0
 ---
