@@ -69,7 +69,7 @@ final class CsvManager implements CsvManagerInterface
 	{
 		$this->collection = array();
 	}
-	
+
 	/**
 	 * Count values
 	 * 
@@ -183,7 +183,7 @@ final class CsvManager implements CsvManagerInterface
 
 		return $this;
 	}
-	
+
 	/**
 	 * Checks whether value exists in a stack
 	 * 
