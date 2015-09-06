@@ -24,12 +24,11 @@ class Dumper
 	{
 		if (false === $variable) {
 			var_dump($variable);
-			return;
+		} else {
+
+			$text = sprintf('<pre>%s</pre>', print_r($variable, true));
+			print $text;
 		}
-
-		$text = sprintf('<pre>%s</pre>', print_r($variable, true));
-
-		print $text;
 
 		if ($exit === true) {
 			exit();
