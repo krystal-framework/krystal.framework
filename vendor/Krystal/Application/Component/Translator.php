@@ -23,12 +23,7 @@ final class Translator implements ComponentInterface
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
 	{
 		$moduleManager = $container->get('moduleManager');
-
-		$translator = new Component(null);
-		$translator->initialize();
-		$translator->extend($moduleManager->getTranslations());
-
-		return $translator;
+		return new Component($moduleManager->getTranslations());
 	}
 
 	/**
