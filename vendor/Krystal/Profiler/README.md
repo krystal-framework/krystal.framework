@@ -1,12 +1,24 @@
 Profiler component
-==================
+================
 
-This component is just a tool which can count script's taken time and used amount of memory. 
-The service is automatically available in controllers and all templates.
+This component has only one service, which is called `$profiler` and as its name states should be used purely for profiling purposes. It can be accessed in controllers, just like another service. It has two methods:
 
-In controllers, you can access it so : $this->profiler->...
-In view templates, there's its instance and accessible like so: $profiler->...
+## getTakenTime()
 
-If you want to use it as a standalone library, then just set-up PSR-0 auto-loading and then simply instantiate a profiler, like this:
+Returns taken time by the script. The returned value is approximated. Returns float.
 
-$profiler = new \Krystal\Profiler\Profiler();
+## getMemoryUsage()
+
+Returns used memory by the script.
+
+# Usage example
+
+Basically you'd use it like this in controllers:
+
+    public function someAction()
+    {
+          $takenTime = $this->profiler->getTakenTime();
+          $memoryUsage = $this->profiler->getMemoryUsage();
+          
+         // Now, you can pass these variables to the view service
+    }
