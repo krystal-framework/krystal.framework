@@ -22,26 +22,11 @@ interface TranslatorInterface
 	public function translateArray(array $array);
 
 	/**
-	 * Formatted translator
-	 * 
-	 * @param string $target
-	 * @return string
-	 */
-	public function ftranslate($target);
-
-	/**
 	 * Translates a string
 	 * 
 	 * @return string
 	 */
 	public function translate();
-
-	/**
-	 * Returns an array
-	 * 
-	 * @return array
-	 */
-	public function getData();
 
 	/**
 	 * Extends first language array ($data)
@@ -55,15 +40,7 @@ interface TranslatorInterface
 	 * Check whether a string exists in a stack
 	 * 
 	 * @param string $string The target string
-	 * @return boolean TRUE if exists, FALSE if not
+	 * @return boolean
 	 */
 	public function exists($string);
-
-	/**
-	 * Checks whether string has at least one placeholder
-	 * 
-	 * @param string $message The string being checked
-	 * @return integer|boolean A number of placeholder on success, FALSE if no placeholders
-	 */
-	public function hasPlaceholders($message);
 }
