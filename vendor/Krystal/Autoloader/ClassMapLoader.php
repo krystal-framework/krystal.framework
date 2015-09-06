@@ -11,6 +11,9 @@
 
 namespace Krystal\Autoloader;
 
+/* The autoloader is not ready yet*/
+require_once(__DIR__ . '/AbstractSplLoader.php');
+
 final class ClassMapLoader extends AbstractSplLoader
 {
 	/**

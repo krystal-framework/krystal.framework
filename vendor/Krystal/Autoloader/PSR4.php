@@ -11,6 +11,9 @@
 
 namespace Krystal\Autoloader;
 
+/* The autoloader is not ready yet*/
+require_once(__DIR__ . '/AbstractSplLoader.php');
+
 /**
  * PSR-4 autoloader which can be used in addition to PSR-0
  * This autoloader is based on this implementation:
