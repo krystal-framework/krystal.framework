@@ -18,6 +18,7 @@ use Krystal\Cache\Sql\SqlEngineFactory;
 use Krystal\Cache\WinCache;
 use Krystal\Cache\APC;
 use Krystal\Cache\XCache;
+use Krystal\Cache\Memcached\MemcachedFactory;
 use RuntimeException;
 
 final class Cache implements ComponentInterface
@@ -35,6 +36,14 @@ final class Cache implements ComponentInterface
 			$options =& $config['components']['cache']['options'];
 
 			switch ($component['engine']) {
+
+				case 'memcached':
+					if (!isset($options['servers']) || !is_array($options['servers'])) {
+						throw new RuntimeException('Memcached servers must be defined in configuration');
+					}
+
+					return MemcachedFactory::build($options['servers']);
+
 				case 'file' :
 					// By default, a file need to be created automatically if it doesn't exist
 					$autoCreate = true;
