@@ -60,7 +60,7 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 		$image = imagecreatetruecolor($this->width, $this->height);
 		$this->preserveTransparency($image);
 
-        imagecopyresampled($image, $this->image, 0, 0, $x, $y, $this->width, $this->height, $width, $height);
+		imagecopyresampled($image, $this->image, 0, 0, $x, $y, $this->width, $this->height, $width, $height);
 
 		// Override with new one
 		$this->setImage($image);
