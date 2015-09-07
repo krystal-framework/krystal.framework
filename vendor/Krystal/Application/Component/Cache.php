@@ -45,16 +45,16 @@ final class Cache implements ComponentInterface
 
 					return FileEngineFactory::build($options['file'], $autoCreate);
 				break;
-				
+
 				case 'wincache';
 					return new WinCache();
-				
+
 				case 'apc':
 					return new APC();
-				
+
 				case 'xcache':
 					return new XCache();
-				
+
 				case 'sql':
 
 					if (!isset($options['table']) || !isset($options['connection'])) {
