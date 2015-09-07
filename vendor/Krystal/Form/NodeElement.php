@@ -58,13 +58,15 @@ final class NodeElement implements NodeElementInterface
 	/**
 	 * Resets the state
 	 * 
-	 * @return void
+	 * @return \Krystal\Form\NodeElement
 	 */
 	public function clear()
 	{
 		$this->string = '';
 		$this->tag = '';
 		$this->finalized = false;
+
+		return $this;
 	}
 
 	/**
@@ -78,7 +80,7 @@ final class NodeElement implements NodeElementInterface
 		$this->setText($nodeElement->render());
 		return $this;
 	}
-	
+
 	/**
 	 * Appends another element after
 	 * 
@@ -103,7 +105,7 @@ final class NodeElement implements NodeElementInterface
 		if ($finalize && !$this->isFinalized()) {
 			$this->finalize();
 		}
-		
+
 		$this->append($text);
 		return $this;
 	}
@@ -163,7 +165,7 @@ final class NodeElement implements NodeElementInterface
 		if ($tag === null) {
 			$tag = $this->tag;
 		}
-		
+
 		$this->append(sprintf('</%s>', $tag));
 		return $this;
 	}
@@ -204,7 +206,7 @@ final class NodeElement implements NodeElementInterface
 		foreach ($attributes as $attribute => $value) {
 			$this->addAttribute($attribute, $value);
 		}
-		
+
 		return $this;
 	}
 }

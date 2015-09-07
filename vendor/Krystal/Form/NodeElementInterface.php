@@ -16,7 +16,7 @@ interface NodeElementInterface
 	/**
 	 * Resets the state
 	 * 
-	 * @return void
+	 * @return \Krystal\Form\NodeElement
 	 */
 	public function clear();
 
