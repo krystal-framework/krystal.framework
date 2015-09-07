@@ -100,5 +100,4 @@ interface NodeElementInterface
 	 * @return \Krystal\Form\NodeElement
 	 */
 	public function addAttributes(array $attributes);
-	
 }
