@@ -13,7 +13,11 @@ namespace Krystal\Cache\Memcached;
 
 use Memcached;
 
-abstract class Connector
+if (!class_exists('Memcached')) {
+	throw new \RuntimeException('Memcached is not installed. You have to install it before using');
+}
+
+abstract class MemcachedFactory
 {
 	/**
 	 * Builds Memcached instance
@@ -24,14 +28,8 @@ abstract class Connector
 	public static function build(array $servers)
 	{
 		$memcached = new Memcached();
-
-		foreach ($servers as $server) {
-			if (!isset($server['weight'])) {
-				$server['weight'] = 0;
-			}
-		}
-
 		$memcached->addServers($servers);
+
 		return $memcached;
 	}
 }
