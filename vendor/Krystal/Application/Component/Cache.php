@@ -53,7 +53,6 @@ final class Cache implements ComponentInterface
 					}
 
 					return FileEngineFactory::build($options['file'], $autoCreate);
-				break;
 
 				case 'wincache';
 					return new WinCache();
