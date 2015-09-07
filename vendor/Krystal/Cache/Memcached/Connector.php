@@ -26,19 +26,12 @@ abstract class Connector
 		$memcached = new Memcached();
 
 		foreach ($servers as $server) {
-
 			if (!isset($server['weight'])) {
 				$server['weight'] = 0;
 			}
 		}
 
 		$memcached->addServers($servers);
-
-		// Ping the server to ensure if it works
-		if ($memcached->getVersion() === false) {
-			
-		}
-
 		return $memcached;
 	}
 }

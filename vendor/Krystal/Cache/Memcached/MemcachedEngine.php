@@ -79,12 +79,10 @@ final class MemcachedEngine implements CacheEngineInterface
 	public function set($key, $value, $ttl)
 	{
 		if (!$this->memcached->set($key, $value, $ttl)) {
-
 			// If set() returns false, that means the key already exists,
 			return $this->memcached->replace($key, $value, $ttl);
-		
-		} else {
 
+		} else {
 			// set() returned true, so the key has been set successfully
 			return true;
 		}
@@ -117,13 +115,11 @@ final class MemcachedEngine implements CacheEngineInterface
 	public function has($key)
 	{
 		// Got help from here: http://stackoverflow.com/a/3091136/1208233
-
 		if (!$this->memcached->add($key, true, 10)) {
 			// If not possible to add, then the key exists
 			return true;
 
 		} else {
-
 			// If possible to add, then the key doesn't exist
 			$this->memcached->delete($key);
 			return false;
