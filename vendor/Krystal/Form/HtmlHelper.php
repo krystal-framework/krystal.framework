@@ -80,21 +80,6 @@ class HtmlHelper
 	}
 
 	/**
-	 * Adds an attribute on demand
-	 * 
-	 * @param boolean $condition
-	 * @param string $attr
-	 * @param string $value
-	 * @return string
-	 */
-	private static function getAttrOnDemand($condition, $attr, $value)
-	{
-		if ($condition) {
-			return sprintf(' %s="%s" ', $attr, $value);
-		}
-	}
-
-	/**
 	 * Adds raw text in case $condition is true
 	 * 
 	 * @param boolean $condition
@@ -109,6 +94,21 @@ class HtmlHelper
 	}
 
 	/**
+	 * Prints an attribute on demand
+	 * 
+	 * @param boolean $condition
+	 * @param string $attr
+	 * @param string $value
+	 * @return void
+	 */
+	public static function addAttrOnDemand($condition, $attr, $value)
+	{
+		if ($condition) {
+			echo sprintf(' %s="%s" ', $attr, $value);
+		}
+	}
+
+	/**
 	 * Prints a class on demand
 	 * 
 	 * @param boolean $condition
@@ -117,6 +117,6 @@ class HtmlHelper
 	 */
 	public static function addClassOnDemand($condition, $value)
 	{
-		echo self::getAttrOnDemand($condition, 'class', $value);
+		self::addAttrOnDemand($condition, 'class', $value);
 	}
 }
