@@ -136,4 +136,14 @@ final class MemcachedEngine implements CacheEngineInterface
 	{
 		return $this->memcached->delete($key);
 	}
+
+	/**
+	 * Returns all cache entries
+	 * 
+	 * @return array
+	 */
+	public function getAll()
+	{
+		return $this->memcached->fetchAll();
+	}
 }
