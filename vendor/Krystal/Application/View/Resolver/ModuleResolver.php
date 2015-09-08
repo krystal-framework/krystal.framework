@@ -123,7 +123,7 @@ final class ModuleResolver implements ResolverInterface
 	public function getWithAssetPath($path, $module, $absolute)
 	{
 		if ($absolute === true) {
-			$url = $this->request->getUrl();
+			$url = $this->request->getBaseUrl();
 		} else {
 			$url = null;
 		}
@@ -215,7 +215,7 @@ final class ModuleResolver implements ResolverInterface
 	 */
 	private function resolveAsUrl($module)
 	{
-		return $this->resolveWith($this->request->getUrl(), $module);
+		return $this->resolveWith($this->request->getBaseUrl(), $module);
 	}
 
 	/**
