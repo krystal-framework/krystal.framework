@@ -39,7 +39,7 @@ final class AppConfig implements ComponentInterface
 				  ->setTheme($config['components']['view']['theme'])
 				  ->setThemesDir(isset($config['themes_dir']) ? $config['themes_dir'] : $appConfig->getRootDir(). '/themes')
 				  ->setThemeDir($appConfig->getThemesDir().'/'.$appConfig->getTheme())
-				  ->setRootUrl(isset($config['root_url']) ? $config['root_url'] : $request->getUrl())
+				  ->setRootUrl(isset($config['root_url']) ? $config['root_url'] : $request->getBaseUrl())
 				  ->setTempDir(isset($config['temp_dir']) ? $config['temp_dir'] : $appConfig->getDataDir().'/tmp')
 				  ->setCacheDir(isset($config['cache_dir']) ? $config['cache_dir'] : $appConfig->getDataDir().'/cache')
 				  ->setModulesDir(isset($config['module_dir']) ? $config['module_dir'] : $appConfig->getRootDir() . '/module');
