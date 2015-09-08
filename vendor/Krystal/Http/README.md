@@ -12,31 +12,31 @@ This service is available in controllers as `request` property.
 
 ## Available methods
 
-### isIntended()
+## isIntended()
 
 Tells whether request has been made either via POST or GET request. Returns boolean value. It's called `isIntended()` because most web application only do use POST and GET requests.
 
-### getMetaCsrfToken()
+## getMetaCsrfToken()
 
 Returns CSRF token if present in headers. If not, then `null` is returned.
 
-### hasMetaCsrfToken()
+## hasMetaCsrfToken()
 
 Determines whether CSRF token is present in request headers. Returns boolean.
 
-### getCookieBag()
+## getCookieBag()
 
 Returns an instance of `CookieBag`. It has its own dedicated documentation below.
 
-### getAll($separate = true)
+## getAll($separate = true)
 
 Returns all request data, including files if they present. If its `$separate` argument is true, then it will create two standalone keys; one for data, another for files. Otherwise it will merge request and files.
 
-### buildQuery(array $params, $includeCurrent = true)
+## buildQuery(array $params, $includeCurrent = true)
 
 Builds a raw query string. The first `$params` argument is a pair itself. And the second `$includeCurrent` defines whether to merge current query data with provided params or not.
 
-### getFiles($name = null)
+## getFiles($name = null)
 
 Returns an array of `FileEnity` objects. Each file entity object has the following methods, that provide basic data about the uploaded file itself:
 
