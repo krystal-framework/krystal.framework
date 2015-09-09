@@ -49,7 +49,7 @@ final class FtpManager implements FtpManagerInterface
 	 */
 	public function getOption($option)
 	{
-		return ftp_get_option($this->stream, $option);
+		return ftp_get_option($this->link->getStream(), $option);
 	}
 
 	/**
