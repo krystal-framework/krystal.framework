@@ -11,6 +11,12 @@
 
 namespace Krystal\Http\Client;
 
+use RuntimeException;
+
+if (!function_exists('curl_init')) {
+	throw new RuntimeException('To use cURL HTTP adapter, you must have curl extension installed');
+}
+
 final class Curl implements CurlInterface
 {
 	/**
@@ -41,6 +47,29 @@ final class Curl implements CurlInterface
 	}
 
 	/**
+	 * Destructor.
+	 * Closes connection if opened 
+	 * 
+	 * @return void
+	 */
+	public function __destruct()
+	{
+		$this->close();
+	}
+
+	/**
+	 * Closes cURL connection
+	 *
+	 * @return void
+	 */
+	public function close()
+	{
+		if (is_resource($this->ch)) {
+			curl_close($this->ch);
+		}
+	}
+
+	/**
 	 * Inits the cURL
 	 * 
 	 * @param array $options
@@ -55,18 +84,6 @@ final class Curl implements CurlInterface
 		}
 	}
 
-	/**
-	 * Destructor
-	 * 
-	 * @return void
-	 */
-	public function __destruct()
-	{
-		if (is_resource($this->ch)) {
-			curl_close($this->ch);
-		}
-	}
-	
 	/**
 	 * Returns a clone 
 	 *
