@@ -30,13 +30,8 @@ final class Db implements ComponentInterface
 			$instances = array();
 			$factory = new SqlDbConnectorFactory($container->get('paginator'));
 
-			foreach ($db as $name => $data) {
-
-				if (!isset($data['connection']) || !is_array($data['connection'])) {
-					throw new RuntimeException('No database configuration provided');
-				}
-
-				$instances[$name] = $factory->build($name, $data['connection']);
+			foreach ($db as $name => $options) {
+				$instances[$name] = $factory->build($name, $options);
 			}
 
 			return $instances;
