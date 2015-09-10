@@ -278,6 +278,7 @@ final class ViewManager implements ViewManagerInterface
 	{
 		$this->layout = $layout;
 		$this->module = $module;
+
 		return $this;
 	}
 
