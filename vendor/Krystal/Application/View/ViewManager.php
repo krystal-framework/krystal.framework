@@ -159,12 +159,12 @@ final class ViewManager implements ViewManagerInterface
 	 * Adds a variable
 	 * 
 	 * @param string $name Variable name in view
-	 * @param mixed $variable A variable itself
+	 * @param mixed $value A variable itself
 	 * @return \Krystal\Application\View\ViewManager
 	 */
-	public function addVariable($name, $variable)
+	public function addVariable($name, $value)
 	{
-		$this->variables[$name] = $variable;
+		$this->variables[$name] = $value;
 		return $this;
 	}
 
@@ -176,8 +176,8 @@ final class ViewManager implements ViewManagerInterface
 	 */
 	public function addVariables(array $variables)
 	{
-		foreach ($variables as $name => $variable) {
-			$this->addVariable($name, $variable);
+		foreach ($variables as $name => $value) {
+			$this->addVariable($name, $value);
 		}
 
 		return $this;
