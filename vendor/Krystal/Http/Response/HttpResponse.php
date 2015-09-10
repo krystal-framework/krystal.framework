@@ -110,7 +110,7 @@ final class HttpResponse implements HttpResponseInterface
 	 * @param string $charset
 	 * @return \Krystal\Http\Response\HttpResponse
 	 */
-	public function setContentType($type = 'text/html', $charset = 'UTF-8')
+	public function setContentType($type, $charset)
 	{
 		$this->headerBag->appendPair('Content-Type', sprintf('%s;charset=%s', $type, $charset));
 		return $this;

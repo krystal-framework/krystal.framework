@@ -54,7 +54,7 @@ interface HttpResponseInterface
 	 * @param string $charset
 	 * @return \Krystal\Http\Response\HttpResponse
 	 */
-	public function setContentType($type = 'text/html', $charset = 'UTF-8');
+	public function setContentType($type, $charset);
 
 	/**
 	 * Sets signature
