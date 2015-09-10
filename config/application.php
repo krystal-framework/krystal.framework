@@ -111,13 +111,11 @@ return array(
 		 */
 		'db' => array(
 			'mysql' => array(
-				'connection' => array(
-					'host' => '127.0.0.1',
-					'dbname' => 'test',
-					'username' => 'root',
-					'password' => '',
-				)
-			),
+				'host' => '127.0.0.1',
+				'dbname' => 'test',
+				'username' => 'root',
+				'password' => '',
+			)
 		),
 		
 		/**
