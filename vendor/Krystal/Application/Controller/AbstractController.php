@@ -82,15 +82,14 @@ abstract class AbstractController
 
 	/**
 	 * Forwards to another controller's action
-	 * Just a shortcut to dispatcher's method
 	 * 
-	 * @param string $controller
+	 * @param string $route Framework-compliant route
 	 * @param array $args Optional arguments
 	 * @return string
 	 */
-	final protected function forward($controller, array $args = array())
+	final protected function forward($route, array $args = array())
 	{
-		return $this->dispatcher->forward($controller, $args);
+		return $this->dispatcher->forward($route, $args);
 	}
 
 	/**
