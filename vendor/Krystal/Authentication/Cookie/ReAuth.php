@@ -17,9 +17,9 @@ use Krystal\Authentication\UserBag;
 
 final class ReAuth implements ReAuthInterface
 {
-	const CLIENT_LOGIN_KEY = 'bl';
-	const CLIENT_LOGIN_PASSWORD_HASH_KEY = 'bph';
-	const CLIENT_TOKEN_KEY = 'btk';
+	const CLIENT_LOGIN_KEY = 'k_l';
+	const CLIENT_LOGIN_PASSWORD_HASH_KEY = 'k_ph';
+	const CLIENT_TOKEN_KEY = 'k_tk';
 	const CLIENT_LIFETIME = 630720000;
 
 	/**
