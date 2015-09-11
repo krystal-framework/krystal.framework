@@ -12,7 +12,7 @@
 namespace Krystal\Application\Module;
 
 /* This provider is gets instantiated in controllers only */
-final class AssetPathProvider
+final class AssetPathProvider implements AssetPathProviderInterface
 {
 	/**
 	 * @var string
