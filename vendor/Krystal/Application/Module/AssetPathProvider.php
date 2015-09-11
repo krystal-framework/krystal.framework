@@ -45,6 +45,7 @@ final class AssetPathProvider implements AssetPathProviderInterface
 	public function __construct($baseUrl = null, $assetsDirName = 'Assets')
 	{
 		$this->baseUrl = $baseUrl;
+		$this->assetsDirName = $assetsDirName;
 	}
 
 	/**
@@ -55,7 +56,7 @@ final class AssetPathProvider implements AssetPathProviderInterface
 	 */
 	public function getPathByModule($module)
 	{
-		return sprintf('/module/%s/Assets', $module);
+		return sprintf('/module/%s/%s', $module, $this->assetsDirName);
 	}
 
 	/**
