@@ -46,21 +46,4 @@ interface BlockBagInterface
 	 * @return \Krystal\Application\View\BlockBag
 	 */
 	public function setBlocksDir($blockDir);
-
-	/**
-	 * Registers a block
-	 * 
-	 * @param string $name
-	 * @param string $path
-	 * @return \Krystal\Application\View\BlockBag
-	 */
-	public function registerBlock($name, $path);
-
-	/**
-	 * Register blocks
-	 * 
-	 * @param array $blocks
-	 * @return \Krystal\Application\View\BlockBag
-	 */
-	public function registerBlocks(array $blocks);
 }

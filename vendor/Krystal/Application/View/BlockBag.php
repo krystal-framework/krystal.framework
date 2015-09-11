@@ -144,32 +144,4 @@ final class BlockBag implements BlockBagInterface
 		$this->blockDir = $blockDir;
 		return $this;
 	}
-
-	/**
-	 * Registers a block
-	 * 
-	 * @param string $name
-	 * @param string $path
-	 * @return \Krystal\Application\View\BlockBag
-	 */
-	public function registerBlock($name, $path)
-	{
-		$this->blocks[$name] = $path;
-		return $this;
-	}
-
-	/**
-	 * Register blocks
-	 * 
-	 * @param array $blocks
-	 * @return \Krystal\Application\View\BlockBag
-	 */
-	public function registerBlocks(array $blocks)
-	{
-		foreach ($blocks as $name => $path) {
-			$this->registerBlock($name, $path);
-		}
-		
-		return $this;
-	}
 }
