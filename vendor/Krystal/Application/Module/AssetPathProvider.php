@@ -11,20 +11,26 @@
 
 namespace Krystal\Application\Module;
 
-/* This provider is gets instantiated in controllers only */
+/* This provider is instantiated in controllers only */
 final class AssetPathProvider implements AssetPathProviderInterface
 {
 	/**
+	 * Base URL
+	 * 
 	 * @var string
 	 */
 	private $baseUrl;
 
 	/**
+	 * Target module name
+	 *
 	 * @var string
 	 */
 	private $moduleName;
 
 	/**
+	 * Assets directory name
+	 * 
 	 * @var string
 	 */
 	private $assetsDirName;
