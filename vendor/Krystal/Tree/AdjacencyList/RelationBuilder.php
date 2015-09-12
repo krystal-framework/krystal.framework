@@ -13,15 +13,21 @@ namespace Krystal\Tree\AdjacencyList;
 
 final class RelationBuilder
 {
+	const TREE_PARAM_ID = 'id';
+	const TREE_PARAM_PARENT_ID = 'parent_id';
+	const TREE_PARAM_NAME = 'name';
+	const TREE_PARAM_ITEMS = 'items';
+	const TREE_PARAM_PARENTS = 'parents';
+
 	/**
 	 * Target options
 	 * 
 	 * @var array
 	 */
 	private $options = array(
-		'id'	 => 'id',
-		'parent' => 'parent_id',
-		'name'	 => 'name'
+		'id' => self::TREE_PARAM_ID,
+		'parent' => self::TREE_PARAM_PARENT_ID,
+		'name' => self::TREE_PARAM_NAME
 	);
 
 	/**
@@ -41,16 +47,16 @@ final class RelationBuilder
 	public function build(array $data)
 	{
 		$relations = array(
-			'items' => array(),
-			'parents' => array()
+			self::TREE_PARAM_ITEMS => array(),
+			self::TREE_PARAM_PARENTS => array()
 		);
 		
 		foreach ($data as $row) {
 			// Append actual data
-			$relations['items'][$row['id']] = $row;
+			$relations[self::TREE_PARAM_ITEMS][$row[self::TREE_PARAM_ID]] = $row;
 			
 			// And relations now
-			$relations['parents'][$row['parent_id']][] = $row['id']; 
+			$relations[self::TREE_PARAM_PARENTS][$row[self::TREE_PARAM_PARENT_ID]][] = $row[self::TREE_PARAM_ID];
 		}
 		
 		return $relations;
