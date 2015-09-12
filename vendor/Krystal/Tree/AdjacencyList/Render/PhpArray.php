@@ -30,19 +30,22 @@ final class PhpArray extends AbstractRenderer
 	private $level = 1;
 
 	/**
+	 * Column to be used as title
+	 * 
 	 * @var string
 	 */
-	private $nameKey;
+	private $column;
 
 	/**
 	 * State initialization
 	 * 
+	 * @param string $column Title column
 	 * @param string $separator
 	 * @return void
 	 */
-	public function __construct($nameKey, $separator = '—')
+	public function __construct($column, $separator = '—')
 	{
-		$this->nameKey = $nameKey;
+		$this->column = $column;
 		$this->separator = $separator;
 	}
 
@@ -58,7 +61,7 @@ final class PhpArray extends AbstractRenderer
 				$row = $data[RelationBuilder::TREE_PARAM_ITEMS][$itemId];
 
 				// That's array's value
-				$value = sprintf('%s %s', str_repeat($this->separator, $this->level - 1), $row[$this->nameKey]);
+				$value = sprintf('%s %s', str_repeat($this->separator, $this->level - 1), $row[$this->column]);
 				$result[$row[RelationBuilder::TREE_PARAM_ID]] = $value;
 
 				// subsequent items will be indented one level
