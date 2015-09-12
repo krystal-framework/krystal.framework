@@ -143,6 +143,7 @@ abstract class AbstractRenderer
 	 * Renders adjacency list as a tree
 	 * 
 	 * @param array $data
+	 * @param mixed $active Active value to be matched against a list
 	 * @param string $parentId This should passed on recursive call only
 	 * @return string
 	 */
