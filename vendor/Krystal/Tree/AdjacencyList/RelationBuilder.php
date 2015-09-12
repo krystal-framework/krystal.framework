@@ -11,7 +11,7 @@
 
 namespace Krystal\Tree\AdjacencyList;
 
-final class RelationBuilder
+final class RelationBuilder implements RelationBuilderInterface
 {
 	const TREE_PARAM_ID = 'id';
 	const TREE_PARAM_PARENT_ID = 'parent_id';

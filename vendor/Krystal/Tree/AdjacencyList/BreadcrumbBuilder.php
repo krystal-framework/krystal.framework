@@ -13,7 +13,7 @@ namespace Krystal\Tree\AdjacencyList;
 
 use Closure;
 
-final class BreadcrumbBuilder
+final class BreadcrumbBuilder implements BreadcrumbBuilderInterface
 {
 	/**
 	 * Raw data
