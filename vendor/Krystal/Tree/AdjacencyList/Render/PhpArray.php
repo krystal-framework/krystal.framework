@@ -12,6 +12,7 @@
 namespace Krystal\Tree\AdjacencyList\Render;
 
 use Krystal\Tree\AdjacencyList\RelationBuilder;
+use RuntimeException;
 
 final class PhpArray extends AbstractRenderer
 {
@@ -59,6 +60,11 @@ final class PhpArray extends AbstractRenderer
 		if (isset($data[RelationBuilder::TREE_PARAM_PARENTS][$parentId])) {
 			foreach ($data[RelationBuilder::TREE_PARAM_PARENTS][$parentId] as $itemId) {
 				$row = $data[RelationBuilder::TREE_PARAM_ITEMS][$itemId];
+
+				// Make sure first, that valid column name is provided
+				if (!isset($row[$this->column])) {
+					throw new RuntimeException(sprintf('Missing defined column name in collection "%s"', $this->column));
+				}
 
 				// That's array's value
 				$value = sprintf('%s %s', str_repeat($this->separator, $this->level - 1), $row[$this->column]);
