@@ -26,7 +26,7 @@ abstract class AbstractRenderer
 	 * @param array $options
 	 * @return void
 	 */
-	public function __construct(array $options = null)
+	public function __construct(array $options = array())
 	{
 		$this->options = $options;
 	}
@@ -117,7 +117,6 @@ abstract class AbstractRenderer
 
 	/**
 	 * Determines whether given id has a parent
-	 * Works with target array only. No database queries are needed
 	 * 
 	 * @param string|integer $id
 	 * @param array $relationships
@@ -145,7 +144,7 @@ abstract class AbstractRenderer
 	 * 
 	 * @param array $data
 	 * @param string $parentId This should passed on recursive call only
-	 * @return stirng
+	 * @return string
 	 */
 	abstract public function render(array $data, $active = false, $parentId = 0);
 }
