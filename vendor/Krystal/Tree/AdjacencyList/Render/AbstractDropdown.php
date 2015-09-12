@@ -11,6 +11,8 @@
 
 namespace Krystal\Tree\AdjacencyList\Render;
 
+use Krystal\Tree\AdjacencyList\RelationBuilder;
+
 abstract class AbstractDropdown extends AbstractRenderer
 {
 	/**
@@ -67,7 +69,7 @@ abstract class AbstractDropdown extends AbstractRenderer
 		$fragment = '';
 
 		// Determine whether we have it in relationships
-		if (isset($menuData['parents'][$parentId])) {
+		if (isset($menuData[RelationBuilder::TREE_PARAM_PARENTS][$parentId])) {
 			// If that's just a first level, then gotta check if we need to append a class
 			if ($this->level == 1) {
 				$fragment = $this->getFirstLevelParent() . PHP_EOL;
@@ -76,11 +78,11 @@ abstract class AbstractDropdown extends AbstractRenderer
 				$fragment = $this->getNestedLevelParent() . PHP_EOL;
 			}
 
-			foreach ($menuData['parents'][$parentId] as $itemId) {
+			foreach ($menuData[RelationBuilder::TREE_PARAM_PARENTS][$parentId] as $itemId) {
 				// Target row
-				$row = $menuData['items'][$itemId];
+				$row = $menuData[RelationBuilder::TREE_PARAM_ITEMS][$itemId];
 
-				$fragment .= $this->getChildOpener($row, $menuData['parents'], $active) . PHP_EOL;
+				$fragment .= $this->getChildOpener($row, $menuData[RelationBuilder::TREE_PARAM_PARENTS], $active) . PHP_EOL;
 
 				$this->level++;
 

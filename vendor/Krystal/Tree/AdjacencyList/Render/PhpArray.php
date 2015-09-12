@@ -11,6 +11,8 @@
 
 namespace Krystal\Tree\AdjacencyList\Render;
 
+use Krystal\Tree\AdjacencyList\RelationBuilder;
+
 final class PhpArray extends AbstractRenderer
 {
 	/**
@@ -51,10 +53,10 @@ final class PhpArray extends AbstractRenderer
 	{
 		$result = array();
 		
-		if (isset($data['parents'][$parentId])) {
-			foreach ($data['parents'][$parentId] as $itemId) {
+		if (isset($data[RelationBuilder::TREE_PARAM_PARENTS][$parentId])) {
+			foreach ($data[RelationBuilder::TREE_PARAM_PARENTS][$parentId] as $itemId) {
 				
-				$row = $data['items'][$itemId];
+				$row = $data[RelationBuilder::TREE_PARAM_ITEMS][$itemId];
 				
 				// That's array's value
 				$value = sprintf('%s %s', str_repeat($this->separator, $this->level - 1), $row[$this->nameKey]);

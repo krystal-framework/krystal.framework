@@ -99,10 +99,10 @@ final class TreeBuilder implements TreeInterface
 		$result = array();
 		$relations = $this->getRelations();
 
-		if (isset($relations['parents'][$parentId])) {
-			foreach ($relations['parents'][$parentId] as $id) {
+		if (isset($relations[RelationBuilder::TREE_PARAM_PARENTS][$parentId])) {
+			foreach ($relations[RelationBuilder::TREE_PARAM_PARENTS][$parentId] as $id) {
 				// Current found node
-				$node = $relations['items'][$id][$key];
+				$node = $relations[RelationBuilder::TREE_PARAM_ITEMS][$id][$key];
 
 				$result = array_merge($result, $this->findChildNodeWithKey($id, $key));
 				$result[] = $node;
@@ -121,7 +121,7 @@ final class TreeBuilder implements TreeInterface
 	public function findChildNodeIds($parentId)
 	{
 		//@TODO Reverse order
-		return $this->findChildNodeWithKey($parentId, 'id');
+		return $this->findChildNodeWithKey($parentId, RelationBuilder::TREE_PARAM_ID);
 	}
 
 	/**
@@ -133,17 +133,17 @@ final class TreeBuilder implements TreeInterface
 	public function findParentNodesByChildId($id)
 	{
 		$rl = $this->getRelations();
-		$data = $rl['items'];
+		$data = $rl[RelationBuilder::TREE_PARAM_ITEMS];
 
 		$current = $data[$id];
-		$parent_id = $current['parent_id'];
+		$parent_id = $current[RelationBuilder::TREE_PARAM_PARENT_ID];
 		
 		$result = array();
 
 		while (isset($data[$parent_id])) {
 
 			$current = $data[$parent_id];
-			$parent_id = $current['parent_id'];
+			$parent_id = $current[RelationBuilder::TREE_PARAM_PARENT_ID];
 
 			array_push($result, $current);
 		}
@@ -181,7 +181,7 @@ final class TreeBuilder implements TreeInterface
 		$result = array();
 		$relations = $this->getRelations();
 
-		$items = $relations['items'];
+		$items = $relations[RelationBuilder::TREE_PARAM_ITEMS];
 
 		if (isset($items[$id])) {
 			return $items[$id];
