@@ -18,7 +18,7 @@ interface TreeInterface
 	/**
 	 * Renders an interface
 	 * 
-	 * @param AbstractRenderer $renderer Any renderer which extends AbstractRenderer
+	 * @param \Krystal\Tree\AdjacencyList\Render\AbstractRenderer $renderer Any renderer which extends AbstractRenderer
 	 * @param string $active
 	 * @return string
 	 */
