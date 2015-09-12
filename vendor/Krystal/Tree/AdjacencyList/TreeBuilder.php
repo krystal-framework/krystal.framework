@@ -50,7 +50,7 @@ final class TreeBuilder implements TreeInterface
 			throw new \Exception();
 		}
 	}
-	
+
 	/**
 	 * Returns relations lazily
 	 * 

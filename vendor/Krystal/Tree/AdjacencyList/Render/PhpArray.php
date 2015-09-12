@@ -52,27 +52,26 @@ final class PhpArray extends AbstractRenderer
 	public function render(array $data, $active = null, $parentId = 0)
 	{
 		$result = array();
-		
+
 		if (isset($data[RelationBuilder::TREE_PARAM_PARENTS][$parentId])) {
 			foreach ($data[RelationBuilder::TREE_PARAM_PARENTS][$parentId] as $itemId) {
-				
 				$row = $data[RelationBuilder::TREE_PARAM_ITEMS][$itemId];
-				
+
 				// That's array's value
 				$value = sprintf('%s %s', str_repeat($this->separator, $this->level - 1), $row[$this->nameKey]);
 				$result[$row['id']] = $value;
-				
+
 				// subsequent items will be indented one level
 				$this->level++;
-				
+
 				// Recursive call
 				$result = ($result + $this->render($data, $active, $itemId));
-				
+
 				// recursive call has returned, so restore a level
 				$this->level--;
 			}
 		}
-		
+
 		return $result;
 	}
 }
