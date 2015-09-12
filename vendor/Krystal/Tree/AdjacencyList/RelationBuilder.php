@@ -20,7 +20,7 @@ final class RelationBuilder
 	const TREE_PARAM_PARENTS = 'parents';
 
 	/**
-	 * Target options
+	 * Default columns
 	 * 
 	 * @var array
 	 */
@@ -42,7 +42,10 @@ final class RelationBuilder
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Builds a relational tree
+	 * 
+	 * @param array $data Raw data
+	 * @return array
 	 */
 	public function build(array $data)
 	{
@@ -50,15 +53,12 @@ final class RelationBuilder
 			self::TREE_PARAM_ITEMS => array(),
 			self::TREE_PARAM_PARENTS => array()
 		);
-		
+
 		foreach ($data as $row) {
-			// Append actual data
 			$relations[self::TREE_PARAM_ITEMS][$row[self::TREE_PARAM_ID]] = $row;
-			
-			// And relations now
 			$relations[self::TREE_PARAM_PARENTS][$row[self::TREE_PARAM_PARENT_ID]][] = $row[self::TREE_PARAM_ID];
 		}
-		
+
 		return $relations;
 	}
 }
