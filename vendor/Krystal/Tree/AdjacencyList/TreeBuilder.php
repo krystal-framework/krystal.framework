@@ -39,16 +39,11 @@ final class TreeBuilder implements TreeInterface
 	 * State initialization
 	 * 
 	 * @param array $data Raw data
-	 * @throws Exception
 	 * @return void
 	 */
 	public function __construct(array $data)
 	{
-		if ($this->isValid($data)) {
-			$this->data = $data;
-		} else {
-			throw new \Exception();
-		}
+		$this->data = $data;
 	}
 
 	/**
@@ -188,17 +183,6 @@ final class TreeBuilder implements TreeInterface
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Checks whether target array has required fields and right structure
-	 * 
-	 * @param array $data Target array to validate
-	 * @return boolean
-	 */
-	private function isValid(array $data)
-	{
-		return true;
 	}
 
 	/**
