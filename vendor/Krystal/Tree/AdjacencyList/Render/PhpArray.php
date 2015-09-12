@@ -59,7 +59,7 @@ final class PhpArray extends AbstractRenderer
 
 				// That's array's value
 				$value = sprintf('%s %s', str_repeat($this->separator, $this->level - 1), $row[$this->nameKey]);
-				$result[$row['id']] = $value;
+				$result[$row[RelationBuilder::TREE_PARAM_ID]] = $value;
 
 				// subsequent items will be indented one level
 				$this->level++;
