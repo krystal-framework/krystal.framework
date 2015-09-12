@@ -13,16 +13,19 @@ namespace Krystal\Tree\AdjacencyList;
 
 use Krystal\Tree\AdjacencyList\Render\AbstractRenderer;
 use Closure;
+use RuntimeException;
 
 final class TreeBuilder implements TreeInterface
 {
 	/**
+	 * Raw data (that usually comes from a select query)
+	 * 
 	 * @var array
 	 */
 	private $data = array();
 
 	/**
-	 * Render strategy
+	 * Render strategy implementation
 	 * 
 	 * @var \Krystal\Tree\AdjacencyList\Render\AbstractRenderer
 	 */
@@ -47,18 +50,14 @@ final class TreeBuilder implements TreeInterface
 	}
 
 	/**
-	 * Returns relations lazily
+	 * Defines global renderer strategy
 	 * 
-	 * @return array
+	 * @param \Krystal\Tree\AdjacencyList\Render\AbstractRenderer $renderer
+	 * @return void
 	 */
-	private function getRelations()
+	public function setRenderer(AbstractRenderer $renderer)
 	{
-		if (is_null($this->relations)) {
-			$rb = new RelationBuilder();
-			$this->relations = $rb->build($this->data);
-		}
-
-		return $this->relations;
+		$this->renderer = $renderer;
 	}
 
 	/**
@@ -83,31 +82,6 @@ final class TreeBuilder implements TreeInterface
 	}
 
 	/**
-	 * Finds all child nodes including a key
-	 * 
-	 * @param string $parentId
-	 * @param string $key
-	 * @return array
-	 */
-	private function findChildNodeWithKey($parentId, $key)
-	{
-		$result = array();
-		$relations = $this->getRelations();
-
-		if (isset($relations[RelationBuilder::TREE_PARAM_PARENTS][$parentId])) {
-			foreach ($relations[RelationBuilder::TREE_PARAM_PARENTS][$parentId] as $id) {
-				// Current found node
-				$node = $relations[RelationBuilder::TREE_PARAM_ITEMS][$id][$key];
-
-				$result = array_merge($result, $this->findChildNodeWithKey($id, $key));
-				$result[] = $node;
-			}
-		}
-
-		return $result;
-	}
-
-	/**
 	 * Finds all child node ids
 	 * 
 	 * @param string $id Parent id
@@ -127,18 +101,18 @@ final class TreeBuilder implements TreeInterface
 	 */
 	public function findParentNodesByChildId($id)
 	{
+		// To be returned
+		$result = array();
+
 		$rl = $this->getRelations();
 		$data = $rl[RelationBuilder::TREE_PARAM_ITEMS];
 
 		$current = $data[$id];
-		$parent_id = $current[RelationBuilder::TREE_PARAM_PARENT_ID];
-		
-		$result = array();
+		$parentId = $current[RelationBuilder::TREE_PARAM_PARENT_ID];
 
-		while (isset($data[$parent_id])) {
-
-			$current = $data[$parent_id];
-			$parent_id = $current[RelationBuilder::TREE_PARAM_PARENT_ID];
+		while (isset($data[$parentId])) {
+			$current = $data[$parentId];
+			$parentId = $current[RelationBuilder::TREE_PARAM_PARENT_ID];
 
 			array_push($result, $current);
 		}
@@ -186,31 +160,6 @@ final class TreeBuilder implements TreeInterface
 	}
 
 	/**
-	 * Defines renderer strategy
-	 * 
-	 * @param \Krystal\Tree\AdjacencyList\Render\AbstractRenderer $renderer
-	 * @return void
-	 */
-	public function setRenderer(AbstractRenderer $renderer)
-	{
-		$this->renderer = $renderer;
-	}
-
-	/**
-	 * Returns renderer strategy
-	 * 
-	 * @return \Krystal\Tree\AdjacencyList\Render\AbstractRenderer 
-	 */
-	private function getRenderer()
-	{
-		if (is_null($this->renderer)) {
-			throw new RuntimeException('You have to define a renderer');
-		}
-
-		return $this->renderer;
-	}
-
-	/**
 	 * Renders an interface
 	 * 
 	 * @param \Krystal\Tree\AdjacencyList\Render\AbstractRenderer $renderer Any renderer which extends AbstractRenderer
@@ -224,5 +173,60 @@ final class TreeBuilder implements TreeInterface
 		}
 
 		return $renderer->render($this->getRelations(), $active);
+	}
+
+	/**
+	 * Returns relations lazily
+	 * 
+	 * @return array
+	 */
+	private function getRelations()
+	{
+		if (is_null($this->relations)) {
+			$builder = new RelationBuilder();
+			$this->relations = $builder->build($this->data);
+		}
+
+		return $this->relations;
+	}
+
+	/**
+	 * Returns renderer strategy
+	 * 
+	 * @throws \RuntimeException If global renderer isn't defined
+	 * @return \Krystal\Tree\AdjacencyList\Render\AbstractRenderer 
+	 */
+	private function getRenderer()
+	{
+		if (is_null($this->renderer)) {
+			throw new RuntimeException('You have to define a renderer');
+		}
+
+		return $this->renderer;
+	}
+
+	/**
+	 * Finds all child nodes including a key
+	 * 
+	 * @param string $parentId
+	 * @param string $key
+	 * @return array
+	 */
+	private function findChildNodeWithKey($parentId, $key)
+	{
+		$result = array();
+		$relations = $this->getRelations();
+
+		if (isset($relations[RelationBuilder::TREE_PARAM_PARENTS][$parentId])) {
+			foreach ($relations[RelationBuilder::TREE_PARAM_PARENTS][$parentId] as $id) {
+				// Current found node
+				$node = $relations[RelationBuilder::TREE_PARAM_ITEMS][$id][$key];
+
+				$result = array_merge($result, $this->findChildNodeWithKey($id, $key));
+				$result[] = $node;
+			}
+		}
+
+		return $result;
 	}
 }
