@@ -20,28 +20,6 @@ final class RelationBuilder
 	const TREE_PARAM_PARENTS = 'parents';
 
 	/**
-	 * Default columns
-	 * 
-	 * @var array
-	 */
-	private $options = array(
-		'id' => self::TREE_PARAM_ID,
-		'parent' => self::TREE_PARAM_PARENT_ID,
-		'name' => self::TREE_PARAM_NAME
-	);
-
-	/**
-	 * State initialization
-	 * 
-	 * @param array $options
-	 * @return void
-	 */
-	public function __construct(array $options = array())
-	{
-		$this->options = array_merge($options, $this->options);
-	}
-
-	/**
 	 * Builds a relational tree
 	 * 
 	 * @param array $data Raw data
