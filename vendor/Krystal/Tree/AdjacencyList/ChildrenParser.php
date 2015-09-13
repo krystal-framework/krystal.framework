@@ -21,42 +21,24 @@ class ChildrenParser
 	protected $childrenKey;
 
 	/**
-	 * Id key
-	 * 
-	 * @var string
-	 */
-	protected $idKey;
-
-	/**
-	 * Parent key
-	 * 
-	 * @var string
-	 */
-	protected $parentKey;
-
-	/**
 	 * State initialization
 	 * 
 	 * @param string $childrenKey
-	 * @param string $parentKey
-	 * @param string $idKey
 	 * @return void
 	 */
-	public function __construct($childrenKey = 'children', $parentKey = 'parent_id', $idKey = 'id')
+	public function __construct($childrenKey = 'children')
 	{
 		$this->childrenKey = $childrenKey;
-		$this->parentKey = $parentKey;
-		$this->idKey = $idKey;
 	}
 
 	/**
 	 * Parses nested array with children
 	 * 
 	 * @param array $data
-	 * @param string|integer $parentID
+	 * @param string|integer $parentId
 	 * @return array
 	 */
-	final protected function parseData(array $data, $parentID = 0)
+	final protected function parseData(array $data, $parentId = 0)
 	{
 		$result = array();
 		
@@ -65,12 +47,12 @@ class ChildrenParser
 			
 			if (isset($subArray[$this->childrenKey])) {
 				// Recursive call
-				$nested = $this->parseData($subArray[$this->childrenKey], $subArray[$this->idKey]);
+				$nested = $this->parseData($subArray[$this->childrenKey], $subArray[RelationBuilder::TREE_PARAM_ID]);
 			}
 			
 			$result[] = array(
-				$this->idKey => $subArray[$this->idKey], 
-				$this->parentKey => $parentID
+				RelationBuilder::TREE_PARAM_ID => $subArray[RelationBuilder::TREE_PARAM_ID], 
+				RelationBuilder::TREE_PARAM_PARENT_ID => $parentId
 			);
 			
 			$result = array_merge($result, $nested);

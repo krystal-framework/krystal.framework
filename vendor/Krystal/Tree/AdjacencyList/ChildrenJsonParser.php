@@ -38,7 +38,7 @@ final class ChildrenJsonParser extends ChildrenParser
 
 		foreach ($array as $range => $value) {
 			if (is_array($value)) {
-				$mapper->save($value[$this->idKey], $value[$this->parentKey], $range);
+				$mapper->save($value[RelationBuilder::TREE_PARAM_ID], $value[RelationBuilder::TREE_PARAM_PARENT_ID], $range);
 			}
 		}
 
