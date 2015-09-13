@@ -41,23 +41,23 @@ class ChildrenParser
 	final protected function parseData(array $data, $parentId = 0)
 	{
 		$result = array();
-		
+
 		foreach ($data as $subArray) {
 			$nested = array();
-			
+
 			if (isset($subArray[$this->childrenKey])) {
 				// Recursive call
 				$nested = $this->parseData($subArray[$this->childrenKey], $subArray[RelationBuilder::TREE_PARAM_ID]);
 			}
-			
+
 			$result[] = array(
 				RelationBuilder::TREE_PARAM_ID => $subArray[RelationBuilder::TREE_PARAM_ID], 
 				RelationBuilder::TREE_PARAM_PARENT_ID => $parentId
 			);
-			
+
 			$result = array_merge($result, $nested);
 		}
-		
+
 		return $result;
 	}
 }
