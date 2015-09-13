@@ -15,6 +15,7 @@ use Krystal\Captcha\Standard as Component;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 use Krystal\Application\InputInterface;
 use Krystal\Captcha\Standard\CaptchaFactory;
+use RuntimeException;
 
 final class Captcha implements ComponentInterface
 {
@@ -26,7 +27,6 @@ final class Captcha implements ComponentInterface
 		$sessionBag = $container->get('sessionBag');
 
 		if (isset($config['components']['captcha']['type'])) {
-
 			// By default, no options to override
 			$options = array();
 
@@ -35,19 +35,23 @@ final class Captcha implements ComponentInterface
 				$options = $config['components']['captcha']['options'];
 			}
 
-			switch($config['components']['captcha']['type']) {
+			$type =& $config['components']['captcha']['type'];
+
+			switch($type) {
 				case 'standard';
 					$captcha = CaptchaFactory::build($options, $sessionBag);
 				break;
-				
-				//@TODO Add more
-				
-				default:
-					throw new \Exception('Unknown captcha adapter supplied');
-			}
-		}
 
-		return $captcha;
+				default:
+					throw new RuntimeException(sprintf('Unknown CAPTCHA adapter supplied "%s"', $type));
+			}
+
+			return $captcha;
+
+		} else {
+
+			return false;
+		}
 	}
 
 	/**
