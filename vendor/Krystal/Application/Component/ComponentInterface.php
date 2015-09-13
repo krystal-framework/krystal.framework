@@ -19,9 +19,9 @@ interface ComponentInterface
 	/**
 	 * Returns prepared and configured component's instance
 	 * 
-	 * @param $container
+	 * @param \Krystal\InstanceManager\DependencyInjectionContainerInterface $container
 	 * @param array $config
-	 * @param $input
+	 * @param \Krystal\Application\InputInterface $input
 	 * @return object
 	 */
 	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input);
