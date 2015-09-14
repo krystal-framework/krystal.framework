@@ -16,7 +16,7 @@ use Krystal\Captcha\CaptchaInterface;
 final class Captcha extends AbstractPattern
 {
 	/**
-	 * CAPTCHA provider
+	 * CAPTCHA service
 	 * 
 	 * @var \Krystal\Captcha\CaptchaInterface
 	 */
