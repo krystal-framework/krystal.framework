@@ -1,4 +1,4 @@
 Configuration component
 =======================
 
-Provides a tool to deal with configuration.
+This component provides a tool to deal with configuration. For details, please refer its documentation.
