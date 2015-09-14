@@ -14,11 +14,15 @@ namespace Krystal\Validate\Input\Constraint;
 final class Between extends AbstractConstraint
 {
 	/**
+	 * Starting range
+	 * 
 	 * @var integer
 	 */
 	private $start;
 
 	/**
+	 * Ending range
+	 * 
 	 * @var integer
 	 */
 	private $end;
@@ -31,8 +35,8 @@ final class Between extends AbstractConstraint
 	/**
 	 * Start initialization
 	 * 
-	 * @param integer $start
-	 * @param integer $end
+	 * @param integer $start Starting range
+	 * @param integer $end Ending range
 	 * @return void
 	 */
 	public function __construct($start, $end)
