@@ -34,11 +34,13 @@ abstract class AbstractPattern
 
 	/**
 	 * Initialization logic
+	 * 
+	 * @return void
 	 */
 	protected function init()
 	{
 	}
-	
+
 	/**
 	 * Prepares a definition
 	 * 
@@ -51,6 +53,9 @@ abstract class AbstractPattern
 	}
 
 	/**
+	 * Appends or overrides defaults
+	 * 
+	 * @param array $overrides
 	 * @return void
 	 */
 	final protected function override($overrides)
