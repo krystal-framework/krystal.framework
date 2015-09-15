@@ -26,17 +26,21 @@ final class Extension extends AbstractConstraint
 	 * 
 	 * @var string
 	 */
-	private $extension;
+	private $extensions;
 
 	/**
 	 * State initialization
 	 * 
-	 * @param string $extension
+	 * @param string|array $extensions
 	 * @return void
 	 */
-	public function __construct($extension)
+	public function __construct($extensions)
 	{
-		$this->extension = $extension;
+		if (is_string($extensions)){
+			$extensions = array($extensions);
+		}
+
+		$this->extensions = $extensions;
 	}
 
 	/**
@@ -44,11 +48,14 @@ final class Extension extends AbstractConstraint
 	 */
 	public function isValid($target)
 	{
-		if ($this->extension == pathinfo($target, \PATHINFO_EXTENSION)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
+		foreach ($this->extensions as $extension) {
+
+			if ($extension !== pathinfo($target, \PATHINFO_EXTENSION)) {
+				$this->violate($this->message);
+				return false;
+			}
 		}
+
+		return true;
 	}
 }
