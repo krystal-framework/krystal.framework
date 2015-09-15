@@ -45,12 +45,9 @@ final class MaxLength extends AbstractConstraint
 	public function isValid($target)
 	{
 		if (mb_strlen($target, $this->charset) > $this->length) {
-
 			$this->violate($this->message);
 			return false;
-
 		} else {
-
 			return true;
 		}
 	}

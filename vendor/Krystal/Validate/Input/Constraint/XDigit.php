@@ -25,7 +25,6 @@ final class XDigit extends AbstractConstraint
 	{
 		if (ctype_xdigit($target)) {
 			return true;
-
 		} else {
 			$this->violate($this->message);
 			return false;

@@ -25,9 +25,7 @@ final class Empty extends AbstractConstraint
 	{
 		if (empty($target)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

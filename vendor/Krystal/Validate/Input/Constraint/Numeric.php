@@ -25,9 +25,7 @@ final class Numeric extends AbstractConstraint
 	{
 		if (is_numeric($target)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

@@ -24,12 +24,9 @@ final class NotEmpty extends AbstractConstraint
 	public function isValid($target)
 	{
 		if (empty($target) && $target != '0') {
-
 			$this->violate($this->message);
 			return false;
-
 		} else {
-
 			return true;
 		}
 	}

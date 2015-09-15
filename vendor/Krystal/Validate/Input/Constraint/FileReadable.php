@@ -25,9 +25,7 @@ final class FileReadable extends AbstractConstraint
 	{
 		if (is_file($target) && is_readable($target)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

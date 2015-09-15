@@ -17,7 +17,7 @@ final class Year extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = 'Given string does not look like a year';
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -25,9 +25,7 @@ final class Year extends AbstractConstraint
 	{
 		if (is_numeric($target) && strlen($target) == 4) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

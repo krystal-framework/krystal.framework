@@ -44,7 +44,6 @@ final class StartsWith extends AbstractConstraint
 		if (strncmp($haystack, $this->needle, strlen($this->needle)) === 0) {
 			return true;
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

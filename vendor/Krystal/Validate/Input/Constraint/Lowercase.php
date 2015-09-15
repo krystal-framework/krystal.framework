@@ -25,7 +25,6 @@ final class Lowercase extends AbstractConstraint
 	{
 		if (mb_strtolower($target, 'UTF-8') === $target) {
 			return true;
-
 		} else {
 			$this->violate($this->message);
 			return false;

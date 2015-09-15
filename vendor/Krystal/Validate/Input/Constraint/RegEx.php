@@ -30,7 +30,6 @@ final class RegEx extends AbstractConstraint
 		if (@preg_match($target, ' ')) {
 			return true;
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

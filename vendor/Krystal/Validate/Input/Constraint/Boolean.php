@@ -28,9 +28,7 @@ final class Boolean extends AbstractConstraint
 	{
 		if (filter_var($target, \FILTER_VALIDATE_BOOLEAN)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

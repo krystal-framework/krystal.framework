@@ -20,9 +20,7 @@ final class Negative extends AbstractConstraint
 	{
 		If ((-1 * $target) * (-1) === $target) {
 			return true;
-
 		} else {
-
 			$this->violate('A value must be negative');
 			return false;
 		}

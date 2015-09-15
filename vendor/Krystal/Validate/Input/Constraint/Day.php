@@ -27,10 +27,8 @@ final class Day extends AbstractConstraint
 	public function isValid($target)
 	{
 		if ($target > 31) {
-
 			$this->violate($this->message);
 			return false;
-
 		} else {
 			return true;
 		}

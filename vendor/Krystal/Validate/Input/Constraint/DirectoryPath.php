@@ -29,7 +29,6 @@ final class DirectoryPath extends AbstractConstraint
 		if (is_dir($target)) {
 			return true;
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

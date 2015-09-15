@@ -43,9 +43,7 @@ final class Uppercase extends AbstractConstraint
 	{
 		if (mb_strtouuper($target, $this->charset) === $target) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

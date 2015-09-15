@@ -45,9 +45,7 @@ final class RegExMatch extends AbstractConstraint
 		// @ - intentionally since a regular expression might malformed
 		if (@preg_match($this->regex, $target)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

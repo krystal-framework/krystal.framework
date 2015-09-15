@@ -39,9 +39,7 @@ final class InCollection extends AbstractConstraint
 	{
 		if (in_array($target, $this->collection)) {
 			return true;
-			
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

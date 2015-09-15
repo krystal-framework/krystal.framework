@@ -25,7 +25,6 @@ final class Odd extends AbstractConstraint
 	{
 		if ($target & 1) {
 			return true;
-
 		} else {
 			$this->violate($this->message);
 			return false;

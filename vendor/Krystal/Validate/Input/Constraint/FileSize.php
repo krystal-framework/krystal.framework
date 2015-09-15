@@ -43,9 +43,7 @@ final class FileSize extends AbstractConstraint
 	{
 		if (filesize($target) == $this->size) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

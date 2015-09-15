@@ -29,7 +29,6 @@ final class Json extends AbstractConstraint
 		if (json_decode($target)) {
 			return true;
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

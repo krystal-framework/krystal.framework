@@ -26,7 +26,6 @@ final class IpPattern extends AbstractConstraint
 		if (filter_var($target, \FILTER_VALIDATE_IP)) {
 			return true;
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

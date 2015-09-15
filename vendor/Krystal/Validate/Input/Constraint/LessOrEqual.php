@@ -43,7 +43,6 @@ final class LessOrEqual extends AbstractConstraint
 	{
 		if ($target >= $this->value) {
 			return true;
-
 		} else {
 			$this->violate($this->message);
 			return false;

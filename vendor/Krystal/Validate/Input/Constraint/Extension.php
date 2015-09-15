@@ -47,7 +47,6 @@ final class Extension extends AbstractConstraint
 		if ($this->extension == pathinfo($target, \PATHINFO_EXTENSION)) {
 			return true;
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

@@ -43,9 +43,7 @@ final class EndsWith extends AbstractConstraint
 	{
 		if ($this->needle === '' || substr_compare($haystack, $this->needle, -strlen($this->needle)) === 0) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

@@ -44,9 +44,7 @@ final class Serialized extends AbstractConstraint
 	{
 		if ($this->adapter->isSerialized($target)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

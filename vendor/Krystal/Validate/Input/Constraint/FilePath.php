@@ -25,9 +25,7 @@ final class FilePath extends AbstractConstraint
 	{
 		if (is_file($target)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

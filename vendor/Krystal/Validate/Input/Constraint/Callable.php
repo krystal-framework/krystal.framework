@@ -28,9 +28,7 @@ final class Callable extends AbstractConstraint
 	{
 		if (is_callable($target)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

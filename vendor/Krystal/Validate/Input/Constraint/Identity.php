@@ -36,9 +36,7 @@ final class Identity extends AbstractConstraint
 	{
 		if ($target === $this->value) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

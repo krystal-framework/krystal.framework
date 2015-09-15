@@ -43,7 +43,6 @@ final class LessThan extends AbstractConstraint
 	{
 		if ($target < $this->value) {
 			return true;
-
 		} else {
 			$this->violate(sprintf($this->message, $this->value));
 			return false;

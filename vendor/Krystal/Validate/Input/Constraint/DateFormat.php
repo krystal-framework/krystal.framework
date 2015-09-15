@@ -19,7 +19,7 @@ final class DateFormat extends AbstractConstraint
 	 * {@inheritDoc}
 	 */
 	protected $message = 'Invalid date format supplied';
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -27,9 +27,7 @@ final class DateFormat extends AbstractConstraint
 	{
 		if (DateTime::createFromFormat($format) !== false) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

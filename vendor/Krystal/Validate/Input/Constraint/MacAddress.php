@@ -28,7 +28,6 @@ final class MacAddress extends AbstractConstraint
 		if (preg_match($pattern, $target)) {
 			return true;
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}

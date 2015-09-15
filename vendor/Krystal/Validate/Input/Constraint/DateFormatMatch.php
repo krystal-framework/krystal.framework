@@ -48,9 +48,7 @@ final class DateFormatMatch extends AbstractConstraint
 	{
 		if ($this->isValidFormat($date)) {
 			return true;
-
 		} else {
-
 			$this->violate($this->message);
 			return false;
 		}
@@ -65,7 +63,6 @@ final class DateFormatMatch extends AbstractConstraint
 	private function isValidFormat($date)
 	{
 		foreach ($this->formats as $format) {
-
 			if (date($format, strtotime($date)) == $date) {
 				return true;
 			}
