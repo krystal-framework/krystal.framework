@@ -28,12 +28,12 @@ final class FileSize extends AbstractConstraint
 	/**
 	 * State initialization
 	 * 
-	 * @param string $size
+	 * @param integer|float $size Size in bytes
 	 * @return void
 	 */
 	public function __construct($size)
 	{
-		$this->size = (int) $size;
+		$this->size = $size;
 	}
 
 	/**
