@@ -14,7 +14,7 @@ namespace Krystal\Validate\File\Constraint;
 final class FilenameRegEx extends AbstractConstraint
 {
 	/**
-	 * RegEx pattern to test against
+	 * RegEx pattern to match against
 	 * 
 	 * @var string
 	 */
@@ -26,9 +26,9 @@ final class FilenameRegEx extends AbstractConstraint
 	protected $message = 'Filename %s does not match a regex';
 
 	/**
-	 * Class initialization
+	 * State initialization
 	 * 
-	 * @param string $pattern
+	 * @param string $pattern RegEx pattern
 	 * @return void
 	 */
 	public function __construct($pattern)
@@ -42,7 +42,7 @@ final class FilenameRegEx extends AbstractConstraint
 	public function isValid(array $files)
 	{
 		foreach ($files as $file) {
-			// @ - because pattern could be wrong and an E_WARNING will be issued
+			// @ - because the RegEx pattern itself could be wrong and issue E_WARNING
 			if (!@preg_match($this->pattern, $file->getName())) {
 				$this->violate(sprintf($this->message, $file->getName()));
 			}
