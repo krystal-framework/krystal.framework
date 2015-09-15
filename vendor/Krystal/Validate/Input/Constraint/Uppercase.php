@@ -14,34 +14,16 @@ namespace Krystal\Validate\Input\Constraint;
 final class Uppercase extends AbstractConstraint
 {
 	/**
-	 * Target charset
-	 * 
-	 * @var string
-	 */
-	private $charset;
-
-	/**
 	 * {@inheritDoc}
 	 */
 	protected $message = 'A string must be in uppercase';
-
-	/**
-	 * State initialization
-	 * 
-	 * @param string $charset
-	 * @return void
-	 */
-	public function __construct($charset = 'UTF-8')
-	{
-		$this->charset = $charset;
-	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function isValid($target)
 	{
-		if (mb_strtouuper($target, $this->charset) === $target) {
+		if (mb_strtouuper($target, 'UTF-8') === $target) {
 			return true;
 		} else {
 			$this->violate($this->message);
