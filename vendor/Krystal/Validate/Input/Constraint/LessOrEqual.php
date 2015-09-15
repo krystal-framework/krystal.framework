@@ -28,12 +28,12 @@ final class LessOrEqual extends AbstractConstraint
 	/**
 	 * State initialization
 	 * 
-	 * @param string|integer $value
+	 * @param mixed $value
 	 * @return void
 	 */
 	public function __construct($value)
 	{
-		$this->value = (int) $value;
+		$this->value = $value;
 	}
 
 	/**
