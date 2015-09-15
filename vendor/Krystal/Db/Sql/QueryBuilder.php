@@ -266,12 +266,12 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	 */
 	public function insert($table, array $data, $ignore = false)
 	{
-		$keys = array();
-		$values = array_values($data);
-
 		if (empty($data)) {
 			throw new LogicException('You have not provided a data to be inserted');
 		}
+
+		$keys = array();
+		$values = array_values($data);
 
 		foreach (array_keys($data) as $key) {
 			$keys[] = $this->wrap($key);
