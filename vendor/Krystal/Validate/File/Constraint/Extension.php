@@ -18,7 +18,7 @@ final class Extension extends AbstractConstraint
 	 * 
 	 * @var array
 	 */
-	private $validExtensions = array();
+	private $extensions = array();
 
 	/**
 	 * {@inheritDoc}
@@ -28,12 +28,12 @@ final class Extension extends AbstractConstraint
 	/**
 	 * State initialization
 	 * 
-	 * @param array $validExtensions Valid extensions
+	 * @param array $extension Valid extensions
 	 * @return void
 	 */
-	public function __construct(array $validExtensions)
+	public function __construct(array $extensions)
 	{
-		$this->validExtensions  = $validExtensions;
+		$this->extensions  = $extensions;
 	}
 
 	/**
@@ -63,10 +63,10 @@ final class Extension extends AbstractConstraint
 		$extension = mb_strtolower(pathinfo($filename, \PATHINFO_EXTENSION), 'UTF-8');
 
 		// Make sure all extensions are in lowercase
-		foreach ($this->validExtensions as &$expected) {
+		foreach ($this->extensions as &$expected) {
 			$expected = mb_strtolower($expected, 'UTF-8');
 		}
 
-		return in_array($extension, $this->validExtensions);
+		return in_array($extension, $this->extensions);
 	}
 }
