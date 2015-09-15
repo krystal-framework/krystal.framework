@@ -11,13 +11,17 @@
 
 namespace Krystal\Validate\Input\Constraint;
 
+use Krystal\Serializer\AbstractSerializer;
+
 /**
  * Checks whether a string is serialized
  */
 final class Serialized extends AbstractConstraint
 {
 	/**
-	 * {@inheritDoc}
+	 * Serialization service
+	 * 
+	 * @var \Krystal\Serializer\AbstractSerializer
 	 */
 	private $adapter;
 
@@ -29,10 +33,10 @@ final class Serialized extends AbstractConstraint
 	/**
 	 * State initialization
 	 * 
-	 * @param object $adapter
+	 * @param \Krystal\Serializer\AbstractSerializer $adapter
 	 * @return void
 	 */
-	public function __construct($adapter)
+	public function __construct(AbstractSerializer $adapter)
 	{
 		$this->adapter = $adapter;
 	}
