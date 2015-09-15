@@ -234,11 +234,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	{
 		// Lazy initialization
 		static $wrapper = null;
-		
+
 		if (is_null($wrapper)) {
 			$wrapper = new ColumnWrapper();
 		}
-		
+
 		return $wrapper->wrap($target);
 	}
 
