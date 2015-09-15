@@ -21,7 +21,7 @@ final class Captcha extends AbstractConstraint
 	protected $message = 'CAPTCHA is invalid';
 
 	/**
-	 * Captcha provider
+	 * CAPTCHA service
 	 * 
 	 * @var \Krystal\Captcha\CaptchaInterface
 	 */
@@ -30,7 +30,7 @@ final class Captcha extends AbstractConstraint
 	/**
 	 * State initialization
 	 * 
-	 * @param \Krystal\Captcha\CaptchaInterface $captcha
+	 * @param \Krystal\Captcha\CaptchaInterface $captcha CAPTCHA service
 	 * @return void
 	 */
 	public function __construct(CaptchaInterface $captcha)
