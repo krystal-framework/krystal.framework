@@ -17,9 +17,16 @@ namespace Krystal\Validate\Input\Constraint;
 final class NoChar extends AbstractConstraint
 {
 	/**
+	 * Collection of forbidden characters
+	 * 
 	 * @var array
 	 */
 	private $chars = array();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected $message = 'Given value should not contain forbidden character';
 
 	/**
 	 * State initialization
@@ -29,8 +36,8 @@ final class NoChar extends AbstractConstraint
 	 */
 	public function __construct($chars)
 	{
-		if (is_array($chars)) {
-			$chars = (array) $chars;
+		if (!is_array($chars)) {
+			$chars = array($chars);
 		}
 
 		$this->chars = $chars;
@@ -41,5 +48,14 @@ final class NoChar extends AbstractConstraint
 	 */
 	public function isValid($target)
 	{
+		foreach ($this->chars as $char) {
+			if (strpos($target, $char) !== false) {
+
+				$this->vioate($this->message);
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
