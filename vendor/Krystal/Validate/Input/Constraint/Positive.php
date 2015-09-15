@@ -23,5 +23,11 @@ final class Positive extends AbstractConstraint
 	 */
 	public function isValid($target)
 	{
+		if ($target > 0) {
+			return true;
+		} else {
+			$this->violate($this->message);
+			return false;
+		}
 	}
 }
