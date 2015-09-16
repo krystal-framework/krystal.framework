@@ -36,21 +36,19 @@ final class FileSize extends AbstractConstraint
 	protected $message = 'File %s exceeds maximal allowed file size';
 
 	/**
-	 * Class initialization
+	 * State initialization
 	 * 
-	 * @param integer $max Maximal filesize
+	 * @param integer $value Maximal filesize in bytes
 	 * @param string $operator Operator to be used when comparing
+	 * @throws \UnexpectedValueException if invalid operator provided
 	 * @return void
 	 */
 	public function __construct($value, $operator)
 	{
-		if ($this->isOperator($operator)) {
-
+		if ($this->isValidOperator($operator)) {
 			$this->value = $value;
 			$this->oprator = $operator;
-
 		} else {
-
 			throw new UnexpectedValueException(
 				sprintf('File size constraint requires valid operator, not the one you provided', $operator
 			));
@@ -63,7 +61,7 @@ final class FileSize extends AbstractConstraint
 	 * @param string $operator
 	 * @return boolean
 	 */
-	private function isOperator($operator)
+	private function isValidOperator($operator)
 	{
 		return in_array($operator, array('==', '>', '<', '!=', '<=', '>='));
 	}
@@ -72,46 +70,46 @@ final class FileSize extends AbstractConstraint
 	 * Matches against
 	 * 
 	 * @param string $operator
-	 * @param \Krystal\Http\FileTransfer\FileEntity $file
+	 * @param integer|float $size The size in bytes
 	 * @return boolean
 	 */
-	private function match($operator, FileEntity $file)
+	private function match($operator, $size)
 	{
 		$error = false;
 
 		switch ($operator) {
 			case '==':
-				if ($file->getSize() == $this->value) {
+				if ($size == $this->value) {
 					$error = true;
 				}
 			break;
 
 			case '>':
-				if ($file->getSize() > $this->value) {
+				if ($size > $this->value) {
 					$error = true;
 				}
 			break;
 
 			case '<':
-				if ($file->getSize() < $this->value) {
+				if ($size < $this->value) {
 					$error = true;
 				}
 			break;
 
 			case '!=':
-				if ($file->getSize() != $this->value) {
+				if ($size != $this->value) {
 					$error = true;
 				}
 			break;
 
 			case '<=':
-				if ($file->getSize() <= $this->value) {
+				if ($size <= $this->value) {
 					$error = true;
 				}
 			break;
 
 			case '>=':
-				if ($file->getSize() >= $this->value) {
+				if ($size >= $this->value) {
 					$error = true;
 				}
 			break;
@@ -126,7 +124,7 @@ final class FileSize extends AbstractConstraint
 	public function isValid(array $files)
 	{
 		foreach ($files as $file) {
-			if (!$this->match($this->operator, $file)) {
+			if (!$this->match($this->operator, $file->getSize())) {
 				$this->violate(sprintf($this->message, $file->getName()));
 			}
 		}
