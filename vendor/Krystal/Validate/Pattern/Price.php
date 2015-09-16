@@ -26,6 +26,10 @@ final class Price extends AbstractPattern
 				),
 				'Numeric' => array(
 					'message' => 'Price must be numeric'
+				),
+				'GreaterThan' => array(
+					'value' => 0,
+					'message' => 'Price must be greater than 0'
 				)
 			)
 		));
