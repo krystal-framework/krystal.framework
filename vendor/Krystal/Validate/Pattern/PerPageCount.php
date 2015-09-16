@@ -27,8 +27,10 @@ final class PerPageCount extends AbstractPattern
 				'Numeric' => array(
 					'message' => 'Per page count must be numeric',
 				),
-				
-				//@TODO Min 1
+				'GreaterThan' => array(
+					'value' => 0,
+					'message' => 'Per page count must be greater than 0'
+				)
 			)
 		));
 	}
