@@ -24,7 +24,10 @@ final class ThemeName extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => "Theme's name can not be empty"
 				),
-				//@TODO Reg ex for [a-z]
+				'RegExMatch' => array(
+					'value' => '~[A-Za-z/]~',
+					'message' => 'Invalid name supplied'
+				)
 			)
 		));
 	}

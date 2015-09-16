@@ -24,7 +24,10 @@ final class TemplateName extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => "Template's name can not be empty"
 				),
-				//@TODO Reg ex for [a-z]
+				'RegExMatch' => array(
+					'value' => '~[A-Za-z/]~',
+					'message' => 'Invalid name supplied'
+				)
 			)
 		));
 	}
