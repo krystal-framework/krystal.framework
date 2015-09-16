@@ -24,7 +24,6 @@ class ImageFile extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => 'Choice an image from your PC to upload'
 				),
-				
 				'Extension' => array(
 					'break' => false,
 					'message' => 'Selected file does not seem to be a valid image',

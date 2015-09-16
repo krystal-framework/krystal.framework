@@ -24,7 +24,6 @@ final class Query extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => 'Query can not be blank',
 				),
-				
 				'MinLength' => array(
 					'message' => 'Query should contain at least 3 characters',
 					'value' => 3

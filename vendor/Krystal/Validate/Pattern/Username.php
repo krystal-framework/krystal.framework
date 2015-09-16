@@ -24,12 +24,10 @@ final class Username extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => 'Username can not be empty'
 				),
-				
 				'MinLength' => array(
 					'value' => 3,
 					'message' => 'Username should contain at least 3 characters'
 				),
-				
 				'MaxLength' => array(
 					'value' => 15,
 					'message' => 'Username cannot contain more than 15 characters'

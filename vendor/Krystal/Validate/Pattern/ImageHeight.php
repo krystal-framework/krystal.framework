@@ -24,7 +24,6 @@ final class ImageHeight extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => "Image's height can not be empty"
 				),
-				
 				'Numeric' => array(
 					'message' => "Image's height must be numeric"
 				)

@@ -24,7 +24,6 @@ final class Height extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => 'Height can not be empty'
 				),
-				
 				'Numeric' => array(
 					'message' => 'Height must be numeric'
 				)

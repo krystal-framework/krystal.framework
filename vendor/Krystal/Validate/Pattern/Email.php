@@ -24,7 +24,6 @@ final class Email extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => 'Email cannot be empty',
 				),
-				
 				'EmailPattern' => array(
 					'message' => 'Wrong email format supplied',
 				)
