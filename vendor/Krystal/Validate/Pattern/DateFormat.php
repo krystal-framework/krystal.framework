@@ -14,6 +14,26 @@ namespace Krystal\Validate\Pattern;
 final class DateFormat extends AbstractPattern
 {
 	/**
+	 * The compliant date itself
+	 * 
+	 * @var string
+	 */
+	private $format;
+
+	/**
+	 * State initialization
+	 * 
+	 * @param string $format Date format
+	 * @param array $overrides
+	 * @return void
+	 */
+	public function __construct($format, array $overrides = array())
+	{
+		$this->format = $format;
+		parent::__construct($overrides);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function getDefinition()
@@ -24,7 +44,9 @@ final class DateFormat extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => 'Date format can not be empty'
 				),
-				//@TODO Reg-ex
+				'DateFormatMatch' => array(
+					'value' => $this->format
+				)
 			)
 		));
 	}
