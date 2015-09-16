@@ -29,10 +29,11 @@ final class ValidatorFactory implements ComponentInterface
 			$options =& $config['components']['validator'];
 
 			// Translator configuration
-			if (!isset($options['translate']) || $options['translate'] === false) {
-				$translator = null;
-			} else {
+			if (!isset($options['translate']) || $options['translate'] == true) {
+				// By default, use translator
 				$translator = $container->get('translator');
+			} else {
+				$translator = null;
 			}
 
 			if (isset($options['render'])) {
@@ -60,7 +61,7 @@ final class ValidatorFactory implements ComponentInterface
 				}
 			}
 
-			return new Component($translator, $renderer);
+			return new Component($renderer, $translator);
 
 		} else {
 
