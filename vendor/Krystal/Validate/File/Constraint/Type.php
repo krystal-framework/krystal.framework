@@ -26,7 +26,7 @@ final class Type extends AbstractConstraint
 	protected $message = 'File %s contains invalid MIME-type';
 
 	/**
-	 * Class initialization
+	 * State initialization
 	 * 
 	 * @param string $type
 	 * @return void
