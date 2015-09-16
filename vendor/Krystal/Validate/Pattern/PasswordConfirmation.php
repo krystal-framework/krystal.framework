@@ -18,19 +18,19 @@ final class PasswordConfirmation extends AbstractPattern
 	 * 
 	 * @var string
 	 */
-	private $target;
+	private $password;
 
 	/**
 	 * State initialization
 	 * 
-	 * @param array $overrides
 	 * @param string $target Password confirmation
+	 * @param array $overrides
 	 * @return void
 	 */
-	public function __construct(array $overrides = array(), $target)
+	public function __construct($password, array $overrides = array())
 	{
 		parent::__construct($overrides);
-		$this->target = $target;
+		$this->password = $password;
 	}
 
 	/**
@@ -47,7 +47,7 @@ final class PasswordConfirmation extends AbstractPattern
 				'Identity' => array(
 					'message' => 'Passwords do not match the same combination',
 					// This is what to compare against
-					'value' => $this->target
+					'value' => $this->password
 				)
 			)
 		));
