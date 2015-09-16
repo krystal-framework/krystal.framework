@@ -27,8 +27,6 @@ final class Order extends AbstractPattern
 				'Numeric' => array(
 					'message' => 'Order must be numeric'
 				)
-				
-				//@TODO Can't be less 0
 			)
 		));
 	}
