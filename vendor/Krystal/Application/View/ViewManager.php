@@ -259,8 +259,9 @@ final class ViewManager implements ViewManagerInterface
 	/**
 	 * Generates a full path to an asset
 	 * 
-	 * @param string $asset
-	 * @param boolean $relative
+	 * @param string $asset Path to the target asset
+	 * @param string $module
+	 * @param boolean $absolute Whether path must be absolute or not
 	 * @return string
 	 */
 	public function asset($asset, $module = null, $absolute = false)
