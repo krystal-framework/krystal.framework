@@ -257,6 +257,19 @@ final class ViewManager implements ViewManagerInterface
 	}
 
 	/**
+	 * Generates a path to module asset file
+	 * 
+	 * @param string $path The target asset path
+	 * @param string $module Optionally module name can be overridden. By default the current is used
+	 * @param boolean $absolute Whether path must be absolute or not
+	 * @return string
+	 */
+	public function moduleAsset($asset, $module = null, $absolute = false)
+	{
+		return $this->resolver->getWithAssetPath($asset, $module, $absolute, true);
+	}
+
+	/**
 	 * Generates a full path to an asset
 	 * 
 	 * @param string $asset Path to the target asset
@@ -266,7 +279,7 @@ final class ViewManager implements ViewManagerInterface
 	 */
 	public function asset($asset, $module = null, $absolute = false)
 	{
-		return $this->resolver->getWithAssetPath($asset, $module, $absolute);
+		return $this->resolver->getWithAssetPath($asset, $module, $absolute, false);
 	}
 
 	/**

@@ -108,6 +108,16 @@ interface ViewManagerInterface
 	public function show($message, $translate = true);
 
 	/**
+	 * Generates a path to module asset file
+	 * 
+	 * @param string $path The target asset path
+	 * @param string $module Optionally module name can be overridden. By default the current is used
+	 * @param boolean $absolute Whether path must be absolute or not
+	 * @return string
+	 */
+	public function moduleAsset($asset, $module = null, $absolute = false);
+
+	/**
 	 * Generates a full path to an asset
 	 * 
 	 * @param string $asset
