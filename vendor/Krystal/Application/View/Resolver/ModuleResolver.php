@@ -48,7 +48,14 @@ final class ModuleResolver implements ResolverInterface
 	 * 
 	 * @var string
 	 */
-	private $baseDir;
+	private $baseDir = 'View/Template';
+
+	/**
+	 * Assets directory
+	 * 
+	 * @var string
+	 */
+	private $assetsDir = 'Assets';
 
 	/**
 	 * An extension for view templates
@@ -61,23 +68,33 @@ final class ModuleResolver implements ResolverInterface
 	 * State initialization
 	 * 
 	 * @param \Krystal\Http\RequestInterface $request
-	 * @param string $moduleDir
-	 * @param string $module
+	 * @param string $moduleDir Full path to module directory on the file-system
+	 * @param string $module Current module name which is being executed
 	 * @param string $theme Theme name
-	 * @param string $baseDir
 	 * @return void
 	 */
-	public function __construct(RequestInterface $request, $moduleDir, $module, $theme, $baseDir = 'View/Template')
+	public function __construct(RequestInterface $request, $moduleDir, $module, $theme)
 	{
 		$this->request = $request;
 		$this->moduleDir = $moduleDir;
 		$this->module = $module;
 		$this->theme = $theme;
-		$this->baseDir = $baseDir;
 	}
 
 	/**
-	 * Defines/overrides a base directory
+	 * Overrides directory name for assets
+	 * 
+	 * @param string $assetsDir
+	 * @return \Krystal\Application\View\Resolver\ModuleResolver
+	 */
+	public function setAssetsDir($assetsDir)
+	{
+		$this->assetsDir = $assetsDir;
+		return $this;
+	}
+
+	/**
+	 * Overrides a base directory
 	 * 
 	 * @param string $baseDir
 	 * @return \Krystal\Application\View\Resolver\ModuleResolver
@@ -140,9 +157,10 @@ final class ModuleResolver implements ResolverInterface
 	 * @param string $path
 	 * @param string $module Optionally default module can be replaced by another one
 	 * @param boolean $absolute Whether returned path should be absolute or relative
+	 * @param boolean $fromAssets Whether to use assets directory or theme's internal one
 	 * @return string
 	 */
-	public function getWithAssetPath($path, $module, $absolute)
+	public function getWithAssetPath($path, $module, $absolute, $fromAssets)
 	{
 		if ($absolute === true) {
 			$url = $this->request->getBaseUrl();
@@ -155,7 +173,15 @@ final class ModuleResolver implements ResolverInterface
 			$module = $this->module;
 		}
 
-		return $url . $this->resolveAsUrlWith($path, $module);
+		if ($fromAssets !== false) {
+			$dir = $this->assetsDir;
+			$theme = null;
+		} else {
+			$dir = $this->baseDir;
+			$theme = $this->theme;
+		}
+
+		return $url.sprintf('%s/%s', $this->resolveWith($dir, $this->request->getBaseUrl(), $module, $theme), $path);
 	}
 
 	/**
@@ -188,6 +214,7 @@ final class ModuleResolver implements ResolverInterface
 	 * Returns full path to a file by its name
 	 * 
 	 * @param string $name File's basename
+	 * @param string $module Module name
 	 * @return string
 	 */
 	public function getFilePathByName($name, $module = null)
@@ -196,51 +223,25 @@ final class ModuleResolver implements ResolverInterface
 			$module = $this->module;
 		}
 
-		return $this->resolveAsPath($module) . \DIRECTORY_SEPARATOR . $name . $this->extension;
-	}
-
-	/**
-	 * Resolves as a path on the file-system
-	 * 
-	 * @param string $module
-	 * @return string
-	 */
-	private function resolveAsPath($module)
-	{
-		return $this->resolveWith(dirname($this->moduleDir), $module);
-	}
-
-	/**
-	 * Resolves as URL path
-	 * 
-	 * @param string $module
-	 * @return string
-	 */
-	private function resolveAsUrl($module)
-	{
-		return $this->resolveWith($this->request->getBaseUrl(), $module);
-	}
-
-	/**
-	 * Resolves with URL with appends
-	 * 
-	 * @param string $path
-	 * @return string
-	 */
-	private function resolveAsUrlWith($path, $module)
-	{
-		return sprintf('%s/%s', $this->resolveAsUrl($module), $path);
+		$base = $this->resolveWith($this->baseDir, dirname($this->moduleDir), $module, $this->theme);
+		return $base.\DIRECTORY_SEPARATOR.$name.$this->extension;
 	}
 
 	/**
 	 * Resolves with a path
 	 * 
+	 * @param string $dir Base directory when assets are stored
 	 * @param string $path
 	 * @param string $module
+	 * @param string $theme
 	 * @return string
 	 */
-	private function resolveWith($path, $module)
+	private function resolveWith($dir, $path, $module, $theme = null)
 	{
-		return sprintf('%s/module/%s/%s/%s', $path, $module, $this->baseDir, $this->theme);
+		if ($theme !== null) {
+			return sprintf('%s/module/%s/%s/%s', $path, $module, $dir, $theme);
+		} else {
+			return sprintf('%s/module/%s/%s', $path, $module, $dir);
+		}
 	}
 }

@@ -10,9 +10,17 @@
  */
 
 namespace Krystal\Application\View\Resolver;
- 
+
 interface ResolverInterface
 {
+	/**
+	 * Overrides directory name for assets
+	 * 
+	 * @param string $assetsDir
+	 * @return \Krystal\Application\View\Resolver\ModuleResolver
+	 */
+	public function setAssetsDir($assetsDir);
+
 	/**
 	 * Defines/overrides a base directory
 	 * 
@@ -51,9 +59,10 @@ interface ResolverInterface
 	 * @param string $path
 	 * @param string $module Optionally default module can be replaced by another one
 	 * @param boolean $absolute Whether returned path should be absolute or relative
+	 * @param boolean $fromAssets Whether to use assets directory or theme's internal one
 	 * @return string
 	 */
-	public function getWithAssetPath($path, $module, $absolute);
+	public function getWithAssetPath($path, $module, $absolute, $fromAssets);
 
 	/**
 	 * Returns a theme path appending required filename
