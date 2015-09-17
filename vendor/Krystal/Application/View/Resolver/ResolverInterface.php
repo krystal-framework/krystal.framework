@@ -14,6 +14,14 @@ namespace Krystal\Application\View\Resolver;
 interface ResolverInterface
 {
 	/**
+	 * Defines/overrides a base directory
+	 * 
+	 * @param string $baseDir
+	 * @return \Krystal\Application\View\Resolver\ModuleResolver
+	 */
+	public function setBaseDir($baseDir);
+
+	/**
 	 * Overrides default theme
 	 * 
 	 * @param string $theme
@@ -70,5 +78,4 @@ interface ResolverInterface
 	 * @return string
 	 */
 	public function getFilePathByName($name, $module = null);
-	
 }

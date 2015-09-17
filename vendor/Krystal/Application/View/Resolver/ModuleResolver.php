@@ -77,6 +77,18 @@ final class ModuleResolver implements ResolverInterface
 	}
 
 	/**
+	 * Defines/overrides a base directory
+	 * 
+	 * @param string $baseDir
+	 * @return \Krystal\Application\View\Resolver\ModuleResolver
+	 */
+	public function setBaseDir($baseDir)
+	{
+		$this->baseDir = $baseDir;
+		return $this;
+	}
+
+	/**
 	 * Overrides default theme
 	 * 
 	 * @param string $theme
@@ -113,6 +125,16 @@ final class ModuleResolver implements ResolverInterface
 	}
 
 	/**
+	 * Returns current theme
+	 * 
+	 * @return string
+	 */
+	public function getTheme()
+	{
+		return $this->theme;
+	}
+
+	/**
 	 * Returns asset path by module and its nested path
 	 * 
 	 * @param string $path
@@ -132,18 +154,8 @@ final class ModuleResolver implements ResolverInterface
 		if (is_null($module)) {
 			$module = $this->module;
 		}
-		
-		return $url . $this->resolveAsUrlWith($path, $this->module);
-	}
 
-	/**
-	 * Returns current theme
-	 * 
-	 * @return string
-	 */
-	public function getTheme()
-	{
-		return $this->theme;
+		return $url . $this->resolveAsUrlWith($path, $module);
 	}
 
 	/**
@@ -188,19 +200,9 @@ final class ModuleResolver implements ResolverInterface
 	}
 
 	/**
-	 * Resolves a path and appends a target one
-	 * 
-	 * @param string $path
-	 * @return string
-	 */
-	private function resolveWithPath($path)
-	{
-		return sprintf('%s/%s', $this->resolve(), $path);
-	}
-
-	/**
 	 * Resolves as a path on the file-system
 	 * 
+	 * @param string $module
 	 * @return string
 	 */
 	private function resolveAsPath($module)
@@ -211,6 +213,7 @@ final class ModuleResolver implements ResolverInterface
 	/**
 	 * Resolves as URL path
 	 * 
+	 * @param string $module
 	 * @return string
 	 */
 	private function resolveAsUrl($module)
@@ -233,21 +236,11 @@ final class ModuleResolver implements ResolverInterface
 	 * Resolves with a path
 	 * 
 	 * @param string $path
+	 * @param string $module
 	 * @return string
 	 */
 	private function resolveWith($path, $module)
 	{
-		return sprintf('%s/%s', $path, $this->getBasePathByModule($module));
-	}
-
-	/**
-	 * Returns a base path which is common for both resolvers
-	 * 
-	 * @param string $module
-	 * @return string
-	 */
-	private function getBasePathByModule($module)
-	{
-		return sprintf('module/%s/%s/%s', $module, $this->baseDir, $this->theme);
+		return sprintf('%s/module/%s/%s/%s', $path, $module, $this->baseDir, $this->theme);
 	}
 }
