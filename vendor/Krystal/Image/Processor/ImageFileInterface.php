@@ -46,7 +46,7 @@ interface ImageFileInterface
 	 * 
 	 * @return resource
 	 */
-	public function getImage();
+	public function &getImage();
 
 	/**
 	 * Cleans taken memory

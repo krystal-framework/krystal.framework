@@ -152,7 +152,7 @@ class ImageFile implements ImageFileInterface
 	 * 
 	 * @return resource
 	 */
-	final public function getImage()
+	final public function &getImage()
 	{
 		return $this->image;
 	}
