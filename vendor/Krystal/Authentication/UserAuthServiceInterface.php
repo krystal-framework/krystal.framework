@@ -13,8 +13,20 @@ namespace Krystal\Authentication;
 
 interface UserAuthServiceInterface
 {
-	//@TODO Get role and get id
-	
+	/**
+	 * Returns stored user id
+	 * 
+	 * @return string
+	 */
+	public function getId();
+
+	/**
+	 * Returns stored user role
+	 * 
+	 * @return string
+	 */
+	public function getRole();
+
 	/**
 	 * Attempts to authenticate a user
 	 * 
