@@ -51,11 +51,4 @@ interface UserAuthServiceInterface
 	 * @return boolean
 	 */
 	public function isLoggedIn();
-
-	/**
-	 * Disables authorization checking
-	 * 
-	 * @return void
-	 */
-	public function disableAuthCheck();
 }
