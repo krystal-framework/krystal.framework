@@ -356,37 +356,4 @@ class ImageFile implements ImageFileInterface
 		$this->done();
 		exit(1);
 	}
-
-	/**
-	 * We need this for GIFs and PNGs
-	 * 
-	 * @param resource $image
-	 * @return void
-	 */
-	final protected function preserveTransparency($image)
-	{
-		$transparencyColor = array(0, 0, 0);
-
-		switch ($this->type) {
-			case \IMAGETYPE_GIF:
-
-				$color = imagecolorallocate($image, $transparencyColor[0], $transparencyColor[1], $transparencyColor[2]);
-
-				imagecolortransparent($image, $color);
-				imagetruecolortopalette($image, false, 256);
-
-			break;
-
-			case \IMAGETYPE_PNG:
-
-				imagealphablending($image, false);
-
-				$color = imagecolorallocatealpha($image, $transparencyColor[0], $transparencyColor[1], $transparencyColor[2], 0);
-
-				imagefill($image, 0, 0, $color);
-				imagesavealpha($image, true);
-
-			break;
-		}
-	}
 }
