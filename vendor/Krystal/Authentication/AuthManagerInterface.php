@@ -44,21 +44,6 @@ interface AuthManagerInterface
 	public function getRole();
 
 	/**
-	 * Sets whether AuthManager must be active or not
-	 * 
-	 * @param boolean $active The state
-	 * @return void
-	 */
-	public function setActive($active);
-
-	/**
-	 * Tells whether authentication is active
-	 * 
-	 * @return boolean
-	 */
-	public function isActive();
-
-	/**
 	 * Checks whether user is logged in, only once
 	 * 
 	 * @return boolean

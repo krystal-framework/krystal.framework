@@ -54,14 +54,6 @@ final class AuthManager implements AuthManagerInterface
 	const AUTH_NAMESPACE = 'Krystal_AUTH';
 
 	/**
-	 * Tells whether authorization is enabled
-	 * By default it's always active
-	 * 
-	 * @var boolean
-	 */
-	private $active = true;
-
-	/**
 	 * State initialization
 	 * 
 	 * @param \Krystal\Session\SessionBagInterface $sessionBag
@@ -129,27 +121,6 @@ final class AuthManager implements AuthManagerInterface
 	public function getRole()
 	{
 		return $this->getData('user_role');
-	}
-	
-	/**
-	 * Sets whether AuthManager must be active or not
-	 * 
-	 * @param boolean $active The state
-	 * @return void
-	 */
-	public function setActive($active)
-	{
-		$this->active = (bool) $active;
-	}
-
-	/**
-	 * Tells whether authentication is active
-	 * 
-	 * @return boolean
-	 */
-	public function isActive()
-	{
-		return $this->active;
 	}
 
 	/**
