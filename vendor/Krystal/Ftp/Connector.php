@@ -134,6 +134,8 @@ final class Connector implements ConnectorInterface
 	{
 		if (is_resource($this->stream)) {
 			return ftp_close($this->stream);
+		} else {
+			return false;
 		}
 	}
 
