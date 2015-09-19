@@ -282,7 +282,6 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 		$degrees = (int) $degrees;
 
 		$this->image = imagerotate($this->image, $degrees, 0);
-
 		$this->width = imagesx($this->image);
 		$this->height = imagesy($this->image);
 
@@ -301,24 +300,20 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 
 		switch ($this->type) {
 			case \IMAGETYPE_GIF:
-
 				$color = imagecolorallocate($image, $transparencyColor[0], $transparencyColor[1], $transparencyColor[2]);
 
 				imagecolortransparent($image, $color);
 				imagetruecolortopalette($image, false, 256);
-
 			break;
 
 			case \IMAGETYPE_PNG:
-
 				imagealphablending($image, false);
 
 				$color = imagecolorallocatealpha($image, $transparencyColor[0], $transparencyColor[1], $transparencyColor[2], 0);
 
 				imagefill($image, 0, 0, $color);
 				imagesavealpha($image, true);
-
 			break;
 		}
-	}	
+	}
 }
