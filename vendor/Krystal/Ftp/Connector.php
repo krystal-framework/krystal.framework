@@ -97,7 +97,7 @@ final class Connector implements ConnectorInterface
 	 * 
 	 * @return resource
 	 */
-	public function getStream()
+	public function &getStream()
 	{
 		return $this->stream;
 	}
