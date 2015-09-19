@@ -2,15 +2,15 @@
 
 /* Most options are already set by default, therefore they are hidden */
 return array(
-	
+
 	'production' => false,
 	'timezone' => 'UTC',
-	
+
 	/**
 	 * Framework components configuration
 	 */
 	'components' => array(
-		
+
 		/**
 		 * Session component
 		 */
@@ -24,7 +24,7 @@ return array(
 				// Session cookie parameters can be set set
 			)
 		),
-		
+
 		/**
 		 * Configuration service
 		 */
@@ -35,7 +35,7 @@ return array(
 				'table' => 'config'
 			)
 		),
-		
+
 		/**
 		 * Cache component
 		 */
@@ -57,7 +57,7 @@ return array(
 				// Default options can be overridden here
 			)
 		),
-		
+
 		/**
 		 * Autoloader configuration
 		 */
@@ -82,7 +82,7 @@ return array(
 			// Default language
 			'default' => 'en',
 		),
-		
+
 		/**
 		 * Param bag which holds application-level parameters
 		 * This values can be accessed in controllers, like $this->paramBag->get(..key..)
@@ -124,7 +124,7 @@ return array(
 		'mapperFactory' => array(
 			'connection' => 'mysql'
 		),
-		
+
 		/**
 		 * Pagination component used in data mappers. 
 		 */
