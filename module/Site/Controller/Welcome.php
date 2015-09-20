@@ -48,6 +48,6 @@ final class Welcome extends AbstractController
 	 */
 	public function notFoundAction()
 	{
-		return '404';
+		return '404: The requested page can not be found';
 	}
 }
