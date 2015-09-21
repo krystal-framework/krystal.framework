@@ -13,6 +13,7 @@ namespace Krystal\Db\Sql;
 
 use PDO;
 use RuntimeException;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Paginate\PaginatorInterface;
 use Krystal\Db\Sql\Relations\RelationProcessor;
 use Krystal\Db\Sql\Relations\RelationableServiceInterface;
@@ -380,10 +381,16 @@ final class Db implements DbInterface, RelationableServiceInterface
 	 * Returns prepared PDO statement
 	 * For internal usage only, regarding its public visibility
 	 * 
+	 * @throws \RuntimeException If bindings contain nested arrays
 	 * @return \PDOStatement
 	 */
 	public function getStmt()
 	{
+		// Make sure there are no nested arrays
+		if (ArrayUtils::hasAtLeastOneArrayValue($this->bindings)) {
+			throw new RuntimeException('PDO bindings can not contain nested arrays');
+		}
+
 		// Build target query before bindings are cleared purely for logging purpose
 		$log = str_replace(array_keys($this->bindings), array_values($this->bindings), $this->queryBuilder->getQueryString());
 
