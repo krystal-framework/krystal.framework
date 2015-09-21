@@ -378,6 +378,7 @@ final class Db implements DbInterface, RelationableServiceInterface
 
 	/**
 	 * Returns prepared PDO statement
+	 * For internal usage only, regarding its public visibility
 	 * 
 	 * @return \PDOStatement
 	 */
