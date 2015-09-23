@@ -13,5 +13,33 @@ namespace Krystal\Authentication;
 
 interface UserBagInterface
 {
-	//@TODO
+	/**
+	 * Returns a login
+	 * 
+	 * @return string
+	 */
+	public function getLogin();
+
+	/**
+	 * Sets a login
+	 * 
+	 * @param string $login
+	 * @return \Krystal\Authentication\Cookie\UserBag
+	 */
+	public function setLogin($login);
+
+	/**
+	 * Returns password hash
+	 * 
+	 * @return string
+	 */
+	public function getPasswordHash();
+
+	/**
+	 * Defines password hash
+	 * 
+	 * @param string $passwordHash
+	 * @return \Krystal\Authentication\Cookie\UserBag
+	 */
+	public function setPasswordHash($passwordHash);
 }
