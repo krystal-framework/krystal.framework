@@ -15,11 +15,7 @@ return array(
 		 * Session component
 		 */
 		'session' => array(
-			'handler' => 'sql',
-			'options' => array(
-				'connection' => 'mysql',
-				'table' => 'sessions'
-			),
+			'handler' => 'native',
 			'cookie_params' => array(
 				// Session cookie parameters can be set set
 			)
