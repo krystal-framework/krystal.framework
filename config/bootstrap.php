@@ -7,4 +7,4 @@ chdir(dirname(__DIR__));
 require(dirname(__DIR__).'/vendor/Krystal/Application/AppFactory.php');
 
 // Return prepared application's instance
-return Krystal\Application\AppFactory::build(require(__DIR__.'/application.php'));
+return Krystal\Application\AppFactory::build(require(__DIR__.'/app.php'));
