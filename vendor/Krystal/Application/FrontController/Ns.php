@@ -12,7 +12,7 @@
 namespace Krystal\Application\FrontController;
 
 /**
- * For works with a vendor namespace
+ * Namespace helper
  */
 class Ns
 {
