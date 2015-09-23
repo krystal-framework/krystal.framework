@@ -57,7 +57,7 @@ final class Paginator implements PaginatorInterface
 	}
 
 	/**
-	 * Tweaks the paginator before it can be used
+	 * Tweaks the service before it can be used
 	 * 
 	 * @param integer $totalAmount Total amount of records
 	 * @param integer $itemsPerPage Per page count
@@ -66,7 +66,6 @@ final class Paginator implements PaginatorInterface
 	 */
 	public function tweak($totalAmount, $itemsPerPage, $page)
 	{
-		// Order is this
 		$this->totalAmount = (int) $totalAmount;
 		$this->itemsPerPage = (int) $itemsPerPage;
 		$this->setCurrentPage($page);
