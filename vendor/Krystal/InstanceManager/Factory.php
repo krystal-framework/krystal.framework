@@ -44,8 +44,7 @@ class Factory
 	/**
 	 * Builds a classname according to defined pseudo-namespace
 	 * 
-	 * @param string $filename (Without extension and base path)
-	 *                         As we defined it in the constructor
+	 * @param string $filename PSR-0 compliant name
 	 * @return string
 	 */
 	final protected function buildClassNameByFileName($filename)
