@@ -97,7 +97,7 @@ final class Translator implements TranslatorInterface
 
 		// Ensure the proper message received
 		if (!is_string($message)) {
-			throw new InvalidArgumentException(sprintf('Argument #1 $default must be a string, received "%s"', gettype($default)));
+			throw new InvalidArgumentException(sprintf('Argument #1 $default must be a string, received "%s"', gettype($message)));
 		}
 
 		// The variables we are going to deal with
