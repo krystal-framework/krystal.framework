@@ -1129,9 +1129,23 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 			$target = $type->getFragment();
 
 		} elseif (is_array($type)) {
-			// Special case for array
-			foreach ($type as &$column) {
-				$column = $this->wrap($column);
+
+			if (!ArrayUtils::isAssoc($type)) {
+				// Special case for non-associative array
+				foreach ($type as &$column) {
+					$column = $this->wrap($column);
+				}
+				
+			} else {
+				// If associative array supplied then assume that values represent sort orders
+				$result = array();
+
+				foreach ($type as $column => $sortOrder) {
+					// Only column names should be wrapped around backticks
+					array_push($result, sprintf('%s %s', $this->wrap($column), $sortOrder));
+				}
+
+				$type = $result;
 			}
 
 			$target = implode(', ', $type);
