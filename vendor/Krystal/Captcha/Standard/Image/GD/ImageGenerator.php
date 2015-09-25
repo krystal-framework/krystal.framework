@@ -65,6 +65,9 @@ final class ImageGenerator implements ImageGeneratorInterface
 	 */
 	private function generate($text)
 	{
+		// The implementation of generation algorithm is base on this:
+		// https://github.com/yiisoft/yii/blob/master/framework/web/widgets/captcha/CCaptchaAction.php
+
 		// First and foremost we need to create a resource
 		$image = imagecreatetruecolor($this->paramBag->getWidth(), $this->paramBag->getHeight());
 
