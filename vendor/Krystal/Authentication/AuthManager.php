@@ -169,11 +169,11 @@ final class AuthManager implements AuthManagerInterface
 	 */
 	private function loggenIn()
 	{
-		if (!($this->authService instanceof UserAuthServiceInterface)) {
-			throw new LogicException('Authorization service was not injected');
-		}
-
 		if (!$this->has()) {
+
+			if (!($this->authService instanceof UserAuthServiceInterface)) {
+				throw new LogicException('Authorization service was not injected');
+			}
 
 			// Now try to find only in cookies, if found prepare a bag
 			if ($this->reAuth->isStored() && (!$this->has())) {
