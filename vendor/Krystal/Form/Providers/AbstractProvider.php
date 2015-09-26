@@ -13,6 +13,7 @@ namespace Krystal\Form\Providers;
 
 use Krystal\Form\Selectbox\OptionBox;
 use Krystal\Http\PersistentStorageInterface;
+use Krystal\Date\TimeHelper;
 use LogicException;
 
 abstract class AbstractProvider
@@ -85,7 +86,7 @@ abstract class AbstractProvider
 	 */
 	final protected function setData($value)
 	{
-		$this->storage->set($this->ns, $value);
+		$this->storage->set($this->ns, $value, TimeHelper::YEAR);
 	}
 
 	/**
