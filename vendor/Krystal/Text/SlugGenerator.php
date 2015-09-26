@@ -93,6 +93,20 @@ final class SlugGenerator implements SlugGeneratorInterface
 	{
 		return mb_strtolower($string, 'UTF-8');
 	}
+	
+	/**
+	 * Trims white-spaces from left and right sides
+	 * 
+	 * @param string $slug
+	 * @return string
+	 */
+	private function trim($slug)
+	{
+		$slug = rtrim($slug);
+		$slug = ltrim($slug);
+
+		return $slug;
+	}
 
 	/**
 	 * Generates a slug
@@ -108,6 +122,7 @@ final class SlugGenerator implements SlugGeneratorInterface
 
 		$string = $this->lowercase($string);
 		$string = $this->removeUndesiredChars($string);
+		$string = $this->trim($string);
 		$string = $this->replaceWt($string);
 		$string = $this->removeExtraDashes($string);
 
