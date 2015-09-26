@@ -12,6 +12,7 @@
 namespace Krystal\Http;
 
 use RuntimeException;
+use InvalidArgumentException;
 
 final class CookieBag implements CookieBagInterface, PersistentStorageInterface
 {
@@ -83,19 +84,18 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
 	 * @param boolean $secure Indicates that the cookie should only be transmitted over a secure HTTPS connection from the client
 	 * @param boolean $httpOnly When TRUE the cookie will be made accessible only through the HTTP protocol
 	 * @param boolean $raw Whether to send a cookie without urlencoding the cookie value
+	 * @throws \InvalidArgumentException if either $key or $value isn't scalar by type
 	 * @return boolean
 	 */
 	public function set($key, $value, $ttl = 0, $path = '/', $secure = false, $httpOnly = false, $raw = false)
 	{
-		if (!is_string($key) || !is_string($value)) {
-			throw new InvalidArgumentException(sprintf(
-				'Only strings are supported for cookies. Ensure each item is a string'
-			));
+		if (!is_scalar($key) || !is_scalar($value)) {
+			throw new InvalidArgumentException('Cookie writing must done only with scalar values');
 		}
 
 		// Arguments to pass either to setrawcookie() or setcookie()
 		// By doing it this way, we adhere to the DRY principle
-		$arguments = array($key, $value, $ttl + abs(time()), $path, $_SERVER['HTTP_HOST'], $secure, $httpOnly);
+		$arguments = array($key, (string) $value, $ttl + abs(time()), $path, $_SERVER['HTTP_HOST'], $secure, $httpOnly);
 
 		// Quick workaround that makes a cookie available on the current HTTP request
 		$this->cookies[$key] = $value;
