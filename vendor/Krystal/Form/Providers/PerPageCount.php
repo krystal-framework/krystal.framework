@@ -23,7 +23,7 @@ class PerPageCount extends AbstractProvider implements PerPageCountInterface
 	 * @param string $ns Unique namespace (i.e array key in storage)
 	 * @param integer $default value to select if doesn't exist in storage
 	 * @param array $values Values
-	 * @throws LogicException If $default doesn't belong to $values
+	 * @throws \LogicException If $default doesn't belong to $values
 	 * @return void
 	 */
 	public function __construct(PersistentStorageInterface $storage, $ns, $default = 3, array $values = array(3, 5, 10, 15, 20, 25))
