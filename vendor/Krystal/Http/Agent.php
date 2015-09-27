@@ -185,15 +185,6 @@ final class Agent implements AgentInterface
 	);
 
 	/**
-	 * State initialization
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-	}
-
-	/**
 	 * Return robots
 	 * 
 	 * @return array
