@@ -33,6 +33,13 @@ final class NodeElement implements NodeElementInterface
 	 * @var boolean
 	 */
 	private $finalized = false;
+	
+	/**
+	 * Element attributes
+	 * 
+	 * @var array
+	 */
+	private $attributes = array();
 
 	/**
 	 * Checks whether a tag is finalized
@@ -192,6 +199,8 @@ final class NodeElement implements NodeElementInterface
 	public function addAttribute($attribute, $value)
 	{
 		$this->append(sprintf(' %s="%s"', $attribute, $value));
+		$this->attributes[$attribute] = $value;
+
 		return $this;
 	}
 
@@ -208,5 +217,42 @@ final class NodeElement implements NodeElementInterface
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Returns all defined attributes
+	 * 
+	 * @return array
+	 */
+	public function getAttributes()
+	{
+		return $this->attributes;
+	}
+
+	/**
+	 * Checks whether attribute is defined
+	 * 
+	 * @param string $attribute
+	 * @return boolean
+	 */
+	public function hasAttribute($attribute)
+	{
+		return array_key_exists($attribute, $this->attributes);
+	}
+
+	/**
+	 * Returns attribute value
+	 * 
+	 * @param string $attribute
+	 * @param mixed $default Default value to be returned in case attribute doesn't exist
+	 * @return string
+	 */
+	public function getAttribute($attribute, $default = false)
+	{
+		if ($this->hasAttribute($attribute)) {
+			return $this->attributes[$attribute];
+		} else {
+			return $default;
+		}
 	}
 }

@@ -100,4 +100,28 @@ interface NodeElementInterface
 	 * @return \Krystal\Form\NodeElement
 	 */
 	public function addAttributes(array $attributes);
+
+	/**
+	 * Returns all defined attributes
+	 * 
+	 * @return array
+	 */
+	public function getAttributes();
+
+	/**
+	 * Checks whether attribute is defined
+	 * 
+	 * @param string $attribute
+	 * @return boolean
+	 */
+	public function hasAttribute($attribute);
+
+	/**
+	 * Returns attribute value
+	 * 
+	 * @param string $attribute
+	 * @param mixed $default Default value to be returned in case attribute doesn't exist
+	 * @return string
+	 */
+	public function getAttribute($attribute, $default = false);
 }
