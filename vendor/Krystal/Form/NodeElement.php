@@ -190,6 +190,21 @@ final class NodeElement implements NodeElementInterface
 	}
 
 	/**
+	 * Adds many properties at once
+	 * 
+	 * @param array $properties
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function addProperties(array $properties)
+	{
+		foreach ($properties as $property) {
+			$this->addProperty($property);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Adds an attribute
 	 * 
 	 * @param string $attribute
