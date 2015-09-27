@@ -42,6 +42,13 @@ final class NodeElement implements NodeElementInterface
 	private $attributes = array();
 
 	/**
+	 * Element properties
+	 * 
+	 * @var array
+	 */
+	private $properties = array();
+
+	/**
 	 * Checks whether a tag is finalized
 	 * 
 	 * @return boolean
@@ -186,6 +193,8 @@ final class NodeElement implements NodeElementInterface
 	public function addProperty($property)
 	{
 		$this->append(sprintf(' %s', $property));
+		array_push($this->properties, $property);
+
 		return $this;
 	}
 
@@ -202,6 +211,27 @@ final class NodeElement implements NodeElementInterface
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Checks whether property has been added
+	 * 
+	 * @param string $property
+	 * @return boolean
+	 */
+	public function hasProperty($property)
+	{
+		return in_array($property, $this->properties);
+	}
+
+	/**
+	 * Returns all defined properties
+	 * 
+	 * @return array
+	 */
+	public function getProperties()
+	{
+		return $this->properties;
 	}
 
 	/**

@@ -93,6 +93,21 @@ interface NodeElementInterface
 	public function addProperties(array $properties);
 
 	/**
+	 * Checks whether property has been added
+	 * 
+	 * @param string $property
+	 * @return boolean
+	 */
+	public function hasProperty($property);
+
+	/**
+	 * Returns all defined properties
+	 * 
+	 * @return array
+	 */
+	public function getProperties();
+
+	/**
 	 * Adds an attribute
 	 * 
 	 * @param string $attribute
