@@ -14,6 +14,23 @@ namespace Krystal\Security;
 class Filter
 {
 	/**
+	 * Strip the tags, even malformed ones
+	 * 
+	 * @param string $text Target HTML string
+	 * @param array $allowed An array of allowed tags
+	 * @return string
+	 */
+	public static function stripTags($text, array $allowed = array())
+	{
+		// Based on [fernando at zauber dot es]'s solution
+		$allowed = array_map('strtolower', $allowed);
+
+		return preg_replace_callback('/<\/?([^>\s]+)[^>]*>/i', function ($matches) use (&$allowed) {
+			return in_array(strtolower($matches[1]), $allowed) ? $matches[0] : '';
+		}, $text);
+	}
+
+	/**
 	 * Escapes special HTML values
 	 * 
 	 * @param string $value
