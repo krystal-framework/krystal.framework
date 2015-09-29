@@ -24,6 +24,9 @@ final class Message extends AbstractPattern
 				'NotEmpty' => array(
 					'message' => 'Message can not be blank'
 				)
+				'NoTags' => array(
+					'message' => 'Message can not contain HTML tags'
+				)
 			)
 		));
 	}

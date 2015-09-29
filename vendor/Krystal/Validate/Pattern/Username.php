@@ -31,6 +31,9 @@ final class Username extends AbstractPattern
 				'MaxLength' => array(
 					'value' => 15,
 					'message' => 'Username cannot contain more than 15 characters'
+				),
+				'NoTags' => array(
+					'message' => 'Username can not contain HTML tags'
 				)
 			)
 		));

@@ -23,6 +23,9 @@ final class Address extends AbstractPattern
 			'rules' => array(
 				'NotEmpty' => array(
 					'message' => 'Address can not be empty',
+				),
+				'NoTags' => array(
+					'message' => 'Address can not contain HTML tags'
 				)
 			),
 		));

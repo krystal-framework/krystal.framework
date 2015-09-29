@@ -23,6 +23,9 @@ final class ClassName extends AbstractPattern
 			'rules' => array(
 				'NotEmpty' => array(
 					'message' => 'Class name can not be empty'
+				),
+				'NoTags' => array(
+					'message' => 'Class name can not contain not HTML tags'
 				)
 			)
 		));

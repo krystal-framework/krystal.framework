@@ -23,6 +23,9 @@ final class Currency extends AbstractPattern
 			'rules' => array(
 				'NotEmpty' => array(
 					'message' => 'Currency can not be empty'
+				),
+				'NoTags' => array(
+					'message' => 'Currency can not contain HTML tags'
 				)
 			)
 		));

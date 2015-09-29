@@ -23,6 +23,9 @@ final class Login extends AbstractPattern
 			'rules' => array(
 				'NotEmpty' => array(
 					'message' => 'Login can not be blank'
+				),
+				'NoTags' => array(
+					'message' => 'Login can not contain HTML tags'
 				)
 			)
 		));

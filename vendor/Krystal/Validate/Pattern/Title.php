@@ -23,6 +23,9 @@ final class Title extends AbstractPattern
 			'rules' => array(
 				'NotEmpty' => array(
 					'message' => 'Title can not be empty'
+				),
+				'NoTags' => array(
+					'message' => 'Title can not contain HTML tags'
 				)
 			)
 		));
