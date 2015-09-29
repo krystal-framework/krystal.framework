@@ -14,6 +14,18 @@ namespace Krystal\Security;
 class Filter
 {
 	/**
+	 * Determines whether a string has HTML tags
+	 * 
+	 * @param string $target
+	 * @param array $exceptions Tags to be ignored
+	 * @return boolean
+	 */
+	public static function hasTags($target, array $exceptions = array())
+	{
+		return self::stripTags($target, $exceptions) !== $target;
+	}
+
+	/**
 	 * Strip the tags, even malformed ones
 	 * 
 	 * @param string $text Target HTML string
