@@ -354,5 +354,27 @@ final class NodeElement implements NodeElementInterface
 		} else {
 			return false;
 		}
-	}	
+	}
+
+	/**
+	 * Adds "required" property on demand
+	 * 
+	 * @param boolean $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setRequired($value)
+	{
+		$this->addPropertyOnDemand('required', $value);
+		return $this;
+	}
+
+	/**
+	 * Checks whether "required" property has been set
+	 * 
+	 * @return boolean
+	 */
+	public function isRequired()
+	{
+		return $this->hasProperty('required');
+	}
 }

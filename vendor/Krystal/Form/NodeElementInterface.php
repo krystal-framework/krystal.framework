@@ -181,4 +181,19 @@ interface NodeElementInterface
 	 * @return string
 	 */
 	public function getData($data);
+
+	/**
+	 * Adds "required" property on demand
+	 * 
+	 * @param boolean $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setRequired($value);
+
+	/**
+	 * Checks whether "required" property has been set
+	 * 
+	 * @return boolean
+	 */
+	public function isRequired();
 }
