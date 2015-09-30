@@ -475,4 +475,14 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->getAttribute('max');
 	}
+
+	/**
+	 * Checks whether "max" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasMax()
+	{
+		return $this->hasAttribute('max');
+	}
 }

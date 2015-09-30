@@ -263,4 +263,11 @@ interface NodeElementInterface
 	 * @return mixed
 	 */
 	public function getMax();
+
+	/**
+	 * Checks whether "max" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasMax();
 }
