@@ -421,4 +421,26 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasProperty('selected');
 	}
+
+	/**
+	 * Adds "min" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setMin($value)
+	{
+		$this->addAttribute('min', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns "min" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getMin()
+	{
+		return $this->getAttribute('min');
+	}
 }

@@ -226,4 +226,19 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function isSelected();
+
+	/**
+	 * Adds "min" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setMin($value)
+
+	/**
+	 * Returns "min" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getMin();
 }
