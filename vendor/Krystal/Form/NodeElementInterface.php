@@ -243,6 +243,13 @@ interface NodeElementInterface
 	public function getMin();
 
 	/**
+	 * Checks whether "min" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasMin();
+
+	/**
 	 * Adds "max" attribute
 	 * 
 	 * @param string $value

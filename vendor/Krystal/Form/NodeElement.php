@@ -445,6 +445,16 @@ final class NodeElement implements NodeElementInterface
 	}
 
 	/**
+	 * Checks whether "min" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasMin()
+	{
+		return $this->hasAttribute('min');
+	}
+
+	/**
 	 * Adds "max" attribute
 	 * 
 	 * @param string $value
