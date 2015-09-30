@@ -211,4 +211,19 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function isChecked();
+
+	/**
+	 * Adds "selected" property on demand
+	 * 
+	 * @param boolean $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setSelected($value);
+
+	/**
+	 * Checks whether "selected" property has been set
+	 * 
+	 * @return boolean
+	 */
+	public function isSelected();
 }
