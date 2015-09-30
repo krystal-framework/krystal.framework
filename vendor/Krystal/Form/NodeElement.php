@@ -443,4 +443,26 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->getAttribute('min');
 	}
+
+	/**
+	 * Adds "max" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setMax($value)
+	{
+		$this->addAttribute('max', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns "max" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getMax()
+	{
+		return $this->getAttribute('max');
+	}
 }

@@ -241,4 +241,19 @@ interface NodeElementInterface
 	 * @return mixed
 	 */
 	public function getMin();
+
+	/**
+	 * Adds "max" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setMax($value);
+
+	/**
+	 * Returns "max" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getMax();
 }
