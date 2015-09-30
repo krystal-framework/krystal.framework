@@ -199,6 +199,22 @@ final class NodeElement implements NodeElementInterface
 	}
 
 	/**
+	 * Adds a property on demand
+	 * 
+	 * @param string $property
+	 * @param mixed $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function addPropertyOnDemand($property, $value)
+	{
+		if ((bool) $value === true) {
+			$this->addProperty($property);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Adds many properties at once
 	 * 
 	 * @param array $properties
@@ -338,5 +354,5 @@ final class NodeElement implements NodeElementInterface
 		} else {
 			return false;
 		}
-	}
+	}	
 }

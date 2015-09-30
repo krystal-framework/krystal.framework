@@ -85,6 +85,15 @@ interface NodeElementInterface
 	public function addProperty($property);
 
 	/**
+	 * Adds a property on demand
+	 * 
+	 * @param string $property
+	 * @param mixed $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function addPropertyOnDemand($property, $value);
+
+	/**
 	 * Adds many properties at once
 	 * 
 	 * @param array $properties
