@@ -377,4 +377,26 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasProperty('required');
 	}
+
+	/**
+	 * Adds "checked" property on demand
+	 * 
+	 * @param boolean $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setChecked($value)
+	{
+		$this->addPropertyOnDemand('checked', $value);
+		return $this;
+	}
+
+	/**
+	 * Checks whether "checked" property has been set
+	 * 
+	 * @return boolean
+	 */
+	public function isChecked()
+	{
+		return $this->hasProperty('checked');
+	}
 }

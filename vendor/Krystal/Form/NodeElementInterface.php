@@ -196,4 +196,19 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function isRequired();
+
+	/**
+	 * Adds "checked" property on demand
+	 * 
+	 * @param boolean $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setChecked($value);
+
+	/**
+	 * Checks whether "checked" property has been set
+	 * 
+	 * @return boolean
+	 */
+	public function isChecked();
 }
