@@ -300,4 +300,43 @@ final class NodeElement implements NodeElementInterface
 			return $default;
 		}
 	}
+
+	/**
+	 * Adds data-* attribute
+	 * 
+	 * @param string $data
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function addData($data, $value)
+	{
+		$this->addAttribute(sprintf('data-%s', $data), $value);
+		return $this;
+	}
+
+	/**
+	 * Checks whether data-* attribute has been set
+	 * 
+	 * @param string $data
+	 * @return boolean
+	 */
+	public function hasData($data)
+	{
+		return $this->hasAttribute(sprintf('data-%s', $data));
+	}
+
+	/**
+	 * Returns data-* attribute
+	 * 
+	 * @param string $data
+	 * @return string
+	 */
+	public function getData($data)
+	{
+		if ($this->hasData($data)) {
+			return $this->getAttribute(sprintf('data-%s', $data));
+		} else {
+			return false;
+		}
+	}
 }

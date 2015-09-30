@@ -147,4 +147,29 @@ interface NodeElementInterface
 	 * @return string
 	 */
 	public function getAttribute($attribute, $default = false);
+
+	/**
+	 * Adds data-* attribute
+	 * 
+	 * @param string $data
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function addData($data, $value);
+
+	/**
+	 * Checks whether data-* attribute has been set
+	 * 
+	 * @param string $data
+	 * @return boolean
+	 */
+	public function hasData($data);
+
+	/**
+	 * Returns data-* attribute
+	 * 
+	 * @param string $data
+	 * @return string
+	 */
+	public function getData($data);
 }
