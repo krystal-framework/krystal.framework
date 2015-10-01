@@ -35,7 +35,7 @@ final class NodeElement implements NodeElementInterface
 	 * @var boolean
 	 */
 	private $finalized = false;
-	
+
 	/**
 	 * Element attributes
 	 * 
