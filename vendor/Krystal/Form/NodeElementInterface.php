@@ -80,6 +80,7 @@ interface NodeElementInterface
 	 * Adds a property
 	 * 
 	 * @param string $property
+	 * @throws \LogicException When trying to append existing property
 	 * @return \Krystal\Form\NodeElement
 	 */
 	public function addProperty($property);
@@ -121,6 +122,7 @@ interface NodeElementInterface
 	 * 
 	 * @param string $attribute
 	 * @param string $value
+	 * @throws \LogicException If trying to set existing attribute
 	 * @return \Krystal\Form\NodeElement
 	 */
 	public function addAttribute($attribute, $value);
