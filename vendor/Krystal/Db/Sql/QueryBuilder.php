@@ -1170,6 +1170,17 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 	}
 
 	/**
+	 * Appends ASC condition
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function asc()
+	{
+		$this->append(' ASC ');
+		return $this;
+	}
+
+	/**
 	 * Appends WHERE IN (..) expression
 	 * 
 	 * @param string $column

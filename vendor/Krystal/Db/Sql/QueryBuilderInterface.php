@@ -615,6 +615,13 @@ interface QueryBuilderInterface
 	public function desc();
 
 	/**
+	 * Appends ASC condition
+	 * 
+	 * @return \Krystal\Db\Sql\QueryBuilder
+	 */
+	public function asc();
+
+	/**
 	 * Opens a bracket 
 	 * 
 	 * @return \Krystal\Db\Sql\QueryBuilder

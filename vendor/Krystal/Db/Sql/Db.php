@@ -513,6 +513,17 @@ final class Db implements DbInterface, RelationableServiceInterface
 	}
 
 	/**
+	 * Appends ASC
+	 * 
+	 * @return \Krystal\Db\Sql
+	 */
+	public function asc()
+	{
+		$this->queryBuilder->asc();
+		return $this;
+	}
+
+	/**
 	 * Appends sorting clause
 	 * 
 	 * @param string $type
