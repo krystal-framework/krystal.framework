@@ -270,4 +270,26 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function hasMax();
+
+	/**
+	 * Adds "placeholder" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setPlaceholder($value);
+
+	/**
+	 * Returns "placeholder" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getPlaceholder();
+
+	/**
+	 * Checks whether "placeholder" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasPlaceholder();
 }

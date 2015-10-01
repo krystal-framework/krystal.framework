@@ -485,4 +485,36 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasAttribute('max');
 	}
+
+	/**
+	 * Adds "placeholder" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setPlaceholder($value)
+	{
+		$this->addAttribute('placeholder', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns "placeholder" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getPlaceholder()
+	{
+		return $this->getAttribute('placeholder');
+	}
+
+	/**
+	 * Checks whether "placeholder" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasPlaceholder()
+	{
+		return $this->hasAttribute('placeholder');
+	}
 }
