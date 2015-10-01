@@ -391,4 +391,26 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function hasClass($class = null);
+
+	/**
+	 * Adds "href" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setHref($value);
+
+	/**
+	 * Returns the value of "href" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getHref();
+
+	/**
+	 * Checks whether "href" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasHref();
 }

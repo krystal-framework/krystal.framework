@@ -676,5 +676,37 @@ final class NodeElement implements NodeElementInterface
 		} else {
 			return $this->hasAttribute('class');
 		}
-	}	
+	}
+
+	/**
+	 * Adds "href" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setHref($value)
+	{
+		$this->addAttribute('href', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns the value of "href" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getHref()
+	{
+		return $this->getAttribute('href');
+	}
+
+	/**
+	 * Checks whether "href" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasHref()
+	{
+		return $this->hasAttribute('href');
+	}
 }
