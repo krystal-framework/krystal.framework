@@ -233,7 +233,7 @@ interface NodeElementInterface
 	 * @param string $value
 	 * @return \Krystal\Form\NodeElement
 	 */
-	public function setMin($value)
+	public function setMin($value);
 
 	/**
 	 * Returns "min" attribute value if present
