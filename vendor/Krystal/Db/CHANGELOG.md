@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.2
+---
+
+ * Added asc() to `Db` service
+
 1.1
 ---
 
