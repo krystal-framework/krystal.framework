@@ -581,4 +581,36 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasAttribute('name');
 	}
+
+	/**
+	 * Adds "id" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setId($value)
+	{
+		$this->addAttribute('id', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns "id" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getId()
+	{
+		return $this->getAttribute('id');
+	}
+
+	/**
+	 * Checks whether "id" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasId()
+	{
+		return $this->hasAttribute('id');
+	}	
 }
