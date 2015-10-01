@@ -11,6 +11,8 @@
 
 namespace Krystal\Form;
 
+use LogicException;
+
 final class NodeElement implements NodeElementInterface
 {
 	/**
@@ -255,10 +257,15 @@ final class NodeElement implements NodeElementInterface
 	 * 
 	 * @param string $attribute
 	 * @param string $value
+	 * @throws \LogicException If trying to set existing attribute
 	 * @return \Krystal\Form\NodeElement
 	 */
 	public function addAttribute($attribute, $value)
 	{
+		if ($this->hasAttribute($attribute)) {
+			throw new LogicException(sprintf('The element already has "%s" attribute', $attribute));
+		}
+
 		$this->append(sprintf(' %s="%s"', $attribute, $value));
 		$this->attributes[$attribute] = $value;
 
