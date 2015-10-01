@@ -517,4 +517,36 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasAttribute('placeholder');
 	}
+
+	/**
+	 * Adds "value" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setValue($value)
+	{
+		$this->addAttribute('value', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns "value" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getValue()
+	{
+		return $this->getAttribute('value');
+	}
+
+	/**
+	 * Checks whether "value" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasValue()
+	{
+		return $this->hasAttribute('value');
+	}
 }
