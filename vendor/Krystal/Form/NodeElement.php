@@ -549,4 +549,36 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasAttribute('value');
 	}
+
+	/**
+	 * Adds "name" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setName($value)
+	{
+		$this->addAttribute('name', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns "name" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getName()
+	{
+		return $this->getAttribute('name');
+	}
+
+	/**
+	 * Checks whether "name" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasName()
+	{
+		return $this->hasAttribute('name');
+	}
 }

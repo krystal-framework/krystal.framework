@@ -314,4 +314,27 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function hasValue();
+
+	/**
+	 * Adds "name" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setName($value);
+
+	/**
+	 * Returns "name" attribute value if present
+	 * 
+	 * @return mixed
+	 */
+	public function getName();
+
+	/**
+	 * Checks whether "name" attribute has beet set
+	 * 
+	 * @return boolean
+	 */
+	public function hasName();
+	
 }
