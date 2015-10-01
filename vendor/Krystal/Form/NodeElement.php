@@ -190,10 +190,15 @@ final class NodeElement implements NodeElementInterface
 	 * Adds a property
 	 * 
 	 * @param string $property
+	 * @throws \LogicException When trying to append existing property
 	 * @return \Krystal\Form\NodeElement
 	 */
 	public function addProperty($property)
 	{
+		if ($this->hasProperty($property)) {
+			throw new LogicException(sprintf('The property "%s" can not be set twice', $property));
+		}
+
 		$this->append(sprintf(' %s', $property));
 		array_push($this->properties, $property);
 
