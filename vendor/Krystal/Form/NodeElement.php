@@ -612,5 +612,57 @@ final class NodeElement implements NodeElementInterface
 	public function hasId()
 	{
 		return $this->hasAttribute('id');
+	}
+
+	/**
+	 * Adds "class" attribute
+	 * 
+	 * @param string $class
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setClass($class)
+	{
+		$this->addAttribute('class', $class);
+		return $this;
+	}
+
+	/**
+	 * Returns "class" attribute
+	 * 
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function getClass()
+	{
+		return $this->getAttribute('class');
+	}
+
+	/**
+	 * Appends a class
+	 * 
+	 * @param string $class
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function addClass($class)
+	{
+		$new = sprintf('%s %s', $this->getClass(), $class);
+		$this->setClass($new);
+
+		return $this;
+	}
+
+	/**
+	 * Determines whether element has a class
+	 * 
+	 * @param string $class
+	 * @return boolean
+	 */
+	public function hasClass($class = null)
+	{
+		if ($class !== null) {
+			$classes = explode(' ', $this->getClass());
+			return in_array($class, $classes);
+		} else {
+			return $this->hasAttribute('class');
+		}
 	}	
 }

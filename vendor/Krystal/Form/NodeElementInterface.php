@@ -358,4 +358,35 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function hasId();
+
+	/**
+	 * Adds "class" attribute
+	 * 
+	 * @param string $class
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setClass($class);
+
+	/**
+	 * Returns "class" attribute
+	 * 
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function getClass();
+
+	/**
+	 * Appends a class
+	 * 
+	 * @param string $class
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function addClass($class);
+
+	/**
+	 * Determines whether element has a class
+	 * 
+	 * @param string $class
+	 * @return boolean
+	 */
+	public function hasClass($class = null);
 }
