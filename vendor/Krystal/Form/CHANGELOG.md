@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.2
+---
+
+ * Added shortcut methods for attributes in `NodeElement`
+ * Now it's not possible to set the same attribute or property twice on elements
+
 1.1
 ---
 
