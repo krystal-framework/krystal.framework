@@ -472,4 +472,26 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function hasType();
+
+	/**
+	 * Adds "target" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setTarget($value);
+
+	/**
+	 * Returns the value of "target" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getTarget();
+
+	/**
+	 * Checks whether "target" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasTarget();
 }
