@@ -709,4 +709,36 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasAttribute('href');
 	}
+
+	/**
+	 * Adds "title" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setTitle($value)
+	{
+		$this->addAttribute('title', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns the value of "title" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return $this->getAttribute('title');
+	}
+
+	/**
+	 * Checks whether "title" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasTitle()
+	{
+		return $this->hasAttribute('title');
+	}
 }

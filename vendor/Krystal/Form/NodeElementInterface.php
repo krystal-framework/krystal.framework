@@ -413,4 +413,26 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function hasHref();
+
+	/**
+	 * Adds "title" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setTitle($value);
+
+	/**
+	 * Returns the value of "title" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getTitle();
+
+	/**
+	 * Checks whether "title" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasTitle();
 }
