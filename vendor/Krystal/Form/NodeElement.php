@@ -435,6 +435,28 @@ final class NodeElement implements NodeElementInterface
 	}
 
 	/**
+	 * Adds "disabled" property on demand
+	 * 
+	 * @param boolean $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setDisabled($value)
+	{
+		$this->addPropertyOnDemand('disabled', $value);
+		return $this;
+	}
+
+	/**
+	 * Checks whether "selected" property has been set
+	 * 
+	 * @return boolean
+	 */
+	public function isDisabled()
+	{
+		return $this->hasProperty('disabled');
+	}
+
+	/**
 	 * Adds "min" attribute
 	 * 
 	 * @param string $value

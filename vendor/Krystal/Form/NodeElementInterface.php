@@ -230,6 +230,21 @@ interface NodeElementInterface
 	public function isSelected();
 
 	/**
+	 * Adds "disabled" property on demand
+	 * 
+	 * @param boolean $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setDisabled($value);
+
+	/**
+	 * Checks whether "selected" property has been set
+	 * 
+	 * @return boolean
+	 */
+	public function isDisabled();
+
+	/**
 	 * Adds "min" attribute
 	 * 
 	 * @param string $value
