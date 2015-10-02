@@ -450,4 +450,26 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function hasTitle();
+
+	/**
+	 * Adds "type" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setType($value);
+
+	/**
+	 * Returns the value of "type" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getType();
+
+	/**
+	 * Checks whether "type" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasType();
 }

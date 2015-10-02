@@ -763,4 +763,36 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasAttribute('title');
 	}
+
+	/**
+	 * Adds "type" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setType($value)
+	{
+		$this->addAttribute('type', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns the value of "type" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getType()
+	{
+		return $this->getAttribute('type');
+	}
+
+	/**
+	 * Checks whether "type" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasType()
+	{
+		return $this->hasAttribute('type');
+	}
 }
