@@ -51,6 +51,16 @@ final class NodeElement implements NodeElementInterface
 	private $properties = array();
 
 	/**
+	 * Allows to echo an instance of NodeElement
+	 * 
+	 * @return string
+	 */
+	public function __toString()
+	{
+		return $this->render();
+	}
+
+	/**
 	 * Checks whether a tag is finalized
 	 * 
 	 * @return boolean
