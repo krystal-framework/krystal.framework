@@ -837,4 +837,36 @@ final class NodeElement implements NodeElementInterface
 	{
 		return $this->hasAttribute('target');
 	}
+
+	/**
+	 * Adds "alt" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setAlt($value)
+	{
+		$this->addAttribute('alt', $value);
+		return $this;
+	}
+
+	/**
+	 * Returns the value of "alt" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getAlt()
+	{
+		return $this->getAttribute('alt');
+	}
+
+	/**
+	 * Checks whether "alt" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasAlt()
+	{
+		return $this->hasAttribute('alt');
+	}
 }

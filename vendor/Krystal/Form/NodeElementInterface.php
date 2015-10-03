@@ -494,4 +494,26 @@ interface NodeElementInterface
 	 * @return boolean
 	 */
 	public function hasTarget();
+
+	/**
+	 * Adds "alt" attribute
+	 * 
+	 * @param string $value
+	 * @return \Krystal\Form\NodeElement
+	 */
+	public function setAlt($value);
+
+	/**
+	 * Returns the value of "alt" attribute if present
+	 * 
+	 * @return string
+	 */
+	public function getAlt();
+
+	/**
+	 * Checks whether "alt" attribute has been set
+	 * 
+	 * @return boolean
+	 */
+	public function hasAlt();
 }
