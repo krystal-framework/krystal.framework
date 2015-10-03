@@ -15,7 +15,7 @@ final class Welcome extends AbstractController
 	{
 		// Append required assets
 		$this->view->getPluginBag()->appendStylesheets(array(
-			'@Site//bootstrap.min.css',
+			'@Site/bootstrap.min.css',
 			'@Site/styles.css'
 		));
 	}
