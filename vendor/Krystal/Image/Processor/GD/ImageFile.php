@@ -81,7 +81,7 @@ class ImageFile implements ImageFileInterface
 	final public function __construct($file)
 	{
 		if (!$this->load($file)) {
-			throw new RuntimeException(sprintf('Can not load image from "%s"', $file));
+			throw new RuntimeException(sprintf('Can not load image from %s', $file));
 		}
 
 		$this->file = $file;
