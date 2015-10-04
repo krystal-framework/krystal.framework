@@ -119,6 +119,21 @@ interface AppConfigInterface
 	public function getUploadsDir();
 
 	/**
+	 * Defines URL path for uploads directory
+	 * 
+	 * @param string $uploadsUrl
+	 * @return \Krystal\Application\AppConfig
+	 */
+	public function setUploadsUrl($uploadsUrl);
+
+	/**
+	 * Returns URL path to uploads directory
+	 *  
+	 * @return string
+	 */
+	public function getUploadsUrl();
+
+	/**
 	 * Defines root directory's absolute path
 	 * 
 	 * @param string $rootDir

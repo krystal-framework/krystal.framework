@@ -63,6 +63,13 @@ final class AppConfig implements AppConfigInterface
 	private $uploadsDir;
 
 	/**
+	 * URL path to uploads directory
+	 * 
+	 * @var string
+	 */
+	private $uploadsUrl;
+
+	/**
 	 * Absolute path to a root directory
 	 * 
 	 * @var string
@@ -256,6 +263,28 @@ final class AppConfig implements AppConfigInterface
 	public function getUploadsDir()
 	{
 		return $this->uploadsDir;
+	}
+
+	/**
+	 * Defines URL path for uploads directory
+	 * 
+	 * @param string $uploadsUrl
+	 * @return \Krystal\Application\AppConfig
+	 */
+	public function setUploadsUrl($uploadsUrl)
+	{
+		$this->uploadsUrl = $uploadsUrl;
+		return $this;
+	}
+
+	/**
+	 * Returns URL path to uploads directory
+	 *  
+	 * @return string
+	 */
+	public function getUploadsUrl()
+	{
+		return $this->uploadsUrl;
 	}
 
 	/**
