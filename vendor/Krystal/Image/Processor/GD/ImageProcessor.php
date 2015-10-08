@@ -17,6 +17,65 @@ use UnexpectedValueException;
 final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 {
 	/**
+	 * Adds a text on image
+ 	 * 
+ 	 * @param string $text Text to be printed on current image
+	 * @param string $fontFile Path to the font file
+	 * @param string $size The font size to be used when writing the text
+	 * @param array $rbg The optional RGB pallete
+	 * @param integer $corner Corner position
+	 * @param integer $offsetX
+	 * @param integer $offsetY
+	 * @param integer $angle
+	 * @return \Krystal\Image\Processor\GD\ImageProcessor
+ 	 */
+	public function text($text, $fontFile, $size, array $rgb = array(0, 0, 0), $corner = self::IMG_CENTER_CORNER, $offsetX = 0, $offsetY = 0, $angle = 0)
+	{
+  		$box = imagettfbbox($size, $angle, $fontFile, $text);
+
+    	// Calculate width and height for the text
+    	$height = $box[1] - $box[7];
+       	$width = $box[2] - $box[0];
+
+  	    // Calculate positions according to corner's value
+        switch ($corner) {
+
+           	case self::IMG_CENTER_CORNER:
+                $x = floor(($this->width - $width) / 2);
+                $y = floor(($this->height - $height) / 2);
+            break;
+
+        	case self::IMG_LEFT_TOP_CORNER:
+               	$x = $offsetX;
+     	   		$y = $offsetY;
+            break;
+
+            case self::IMG_RIGHT_TOP_CORNER:
+                $x = $this->width - $width - $offsetX;
+                $y = $offsetY;
+            break;
+
+            case self::IMG_LEFT_BOTTOM_CORNER:
+                $x = $offsetX;
+                $y = $this->height - $height - $offsetY;
+            break;
+
+	      	case self::IMG_RIGHT_BOTTOM_CORNER:
+                $x = $this->width - $width - $offsetX;
+                $y = $this->height - $height - $offsetY;
+            break;
+
+   	        default:
+          	    throw new UnexpectedValueException('unsupported corner value supplied');
+        }
+
+ 	 	$color = imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]);
+   		imagettftext($this->image, $size, $angle, $x, $y + $height, $color, $fontFile, $text);
+
+     	return $this;
+    }
+
+	/**
 	 * Flips the image
 	 * 
 	 * @param integer $type
