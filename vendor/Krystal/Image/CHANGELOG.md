@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.2
+---
+
+ * Added ability to draw a text on images. Added `text()` method in image processor.
+ * Remove error supression on image loading failures.
+
 1.1
 ---
 
