@@ -16,12 +16,29 @@ interface ImageProcessorInterface
 {
 	const IMG_RIGHT_TOP = 1;
 	const IMG_LEFT_CORNER = 2;
-	const IMG_LEFT_BOTTOM_CORNER = 3;
-	const IMG_RIGHT_BOTTOM_CORNER = 4;
-	const IMG_CENTER_CORNER = 5;
-	const IMG_FLIP_HORIZONTAL = 6;
-	const IMG_FLIP_VERTICAL = 7;
-	const IMG_FLIP_BOTH = 8;
+	const IMG_LEFT_TOP_CORNER = 3;
+	const IMG_LEFT_BOTTOM_CORNER = 4;
+	const IMG_RIGHT_BOTTOM_CORNER = 5;
+	const IMG_RIGHT_TOP_CORNER = 6;
+	const IMG_CENTER_CORNER = 7;
+	const IMG_FLIP_HORIZONTAL = 8;
+	const IMG_FLIP_VERTICAL = 9;
+	const IMG_FLIP_BOTH = 10;
+
+	/**
+	 * Adds a text on image
+ 	 * 
+ 	 * @param string $text Text to be printed on current image
+	 * @param string $fontFile Path to the font file
+	 * @param string $size The font size to be used when writing the text
+	 * @param array $rbg The optional RGB pallete
+	 * @param integer $corner Corner position
+	 * @param integer $offsetX
+	 * @param integer $offsetY
+	 * @param integer $angle
+	 * @return \Krystal\Image\Processor\GD\ImageProcessor
+ 	 */
+	public function text($text, $fontFile, $size, array $rgb = array(0, 0, 0), $corner = self::IMG_CENTER_CORNER, $offsetX = 0, $offsetY = 0, $angle = 0);
 
 	/**
 	 * Flips the image
