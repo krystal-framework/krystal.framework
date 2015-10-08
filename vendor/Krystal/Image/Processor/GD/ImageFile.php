@@ -165,8 +165,7 @@ class ImageFile implements ImageFileInterface
 	 */
 	final protected function getImageInfo($file)
 	{
-		// @ - intentionally, to avoid notices
-		$image = @getimagesize($file);
+		$image = getimagesize($file);
 
 		if ($image !== false) {
 
