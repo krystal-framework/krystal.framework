@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Added missing LogicException import in `AbstractMapper`
  * Added asc() to `Db` service
 
 1.1
