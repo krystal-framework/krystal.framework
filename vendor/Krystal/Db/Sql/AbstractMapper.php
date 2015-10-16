@@ -12,6 +12,7 @@
 namespace Krystal\Db\Sql;
 
 use Krystal\Paginate\PaginatorInterface;
+use LogicException;
 
 abstract class AbstractMapper
 {
