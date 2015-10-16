@@ -102,6 +102,23 @@ final class BreadcrumbBag implements BreadcrumbBagInterface
 	}
 
 	/**
+	 * Appends one breadcrumb
+	 * 
+	 * @param string $name Breadcrumb name
+	 * @param string $link Breadcrumb link
+	 * @return void
+	 */
+	public function addOne($name, $link = '#')
+	{
+		return $this->add(array(
+			array(
+				'name' => $name,
+				'link' => $link
+			)
+		));
+	}
+
+	/**
 	 * Checks whether breadcrumb bag is empty
 	 * 
 	 * @return boolean

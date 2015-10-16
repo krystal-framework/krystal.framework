@@ -29,6 +29,15 @@ interface BreadcrumbBagInterface
 	public function add(array $collection);
 
 	/**
+	 * Appends one breadcrumb
+	 * 
+	 * @param string $name Breadcrumb name
+	 * @param string $link Breadcrumb link
+	 * @return void
+	 */
+	public function addOne($name, $link = '#');
+
+	/**
 	 * Checks whether breadcrumb bag is empty
 	 * 
 	 * @return boolean
