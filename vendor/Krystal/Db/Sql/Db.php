@@ -411,12 +411,17 @@ final class Db implements DbInterface, RelationableServiceInterface
 	 * Queries for all result-set
 	 * 
 	 * @param string $column Optionally can be filtered by a column
+	 * @param integer $mode Fetch mode. Can be overridden when needed
 	 * @return mixed
 	 */
-	public function queryAll($column = null)
+	public function queryAll($column = null, $mode = null)
 	{
+		if (is_null($mode)) {
+			$mode = $this->pdo->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE);
+		}
+
 		$result = array();
-		$rows = $this->getStmt()->fetchAll();
+		$rows = $this->getStmt()->fetchAll($mode);
 
 		if ($column == null) {
 			$result = $rows;
@@ -441,12 +446,17 @@ final class Db implements DbInterface, RelationableServiceInterface
 	 * Queries for a single result-set
 	 * 
 	 * @param string $column Optionally can be filtered by a column
+	 * @param integer $mode Fetch mode. Can be overridden when needed
 	 * @return mixed
 	 */
-	public function query($column = null)
+	public function query($column = null, $mode = null)
 	{
+		if (is_null($mode)) {
+			$mode = $this->pdo->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE);
+		}
+
 		$result = array();
-		$rows = $this->getStmt()->fetch();
+		$rows = $this->getStmt()->fetch($mode);
 
 		if ($column !== null) {
 			if (isset($rows[$column])) {
