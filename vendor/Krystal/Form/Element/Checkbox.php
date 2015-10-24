@@ -84,7 +84,7 @@ final class Checkbox implements FormElementInterface
 			 ->addAttributes($attrs);
 
 		// Check if active
-		if ($this->active == $defaults['value']) {
+		if ($this->active == $defaults['value'] || $this->active === true) {
 			$node->addProperty('checked');
 		}
 
