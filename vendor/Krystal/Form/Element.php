@@ -16,6 +16,23 @@ use Krystal\Form\Element;
 class Element
 {
     /**
+     * Creates "Checkbox" node element
+     * 
+     * @param string $name Element name
+     * @param boolean $checked Whether it should be checked or not
+     * @param boolean $serialize Whether the element should be serializeable or not
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function checkbox($name, $checked, $serialize = true, array $attributes = array())
+    {
+        $attributes['name'] = $name;
+
+        $node = new Element\Checkbox($serialize, $checked);
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates "File" node element
      * 
      * @param string $name
