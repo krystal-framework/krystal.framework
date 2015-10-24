@@ -16,6 +16,25 @@ use Krystal\Form\Element;
 class Element
 {
     /**
+     * Creates "Select" element with its child "Option" nodes
+     * 
+     * @param string $name
+     * @param array $list
+     * @param string $select Select child option
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function select($name, array $list = array(), $selected, array $attributes = array())
+    {
+        $node = new Element\Select($list, $selected);
+
+        // Define major "name" attribute
+        $attributes['name'] = $name;
+
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates textarea element
      * 
      * @param string $name Element name
