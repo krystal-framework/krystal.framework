@@ -16,6 +16,20 @@ use Krystal\Form\Element;
 class Element
 {
     /**
+     * Creates textarea element
+     * 
+     * @param string $name Element name
+     * @param string $text Text to be supplied between tags
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public function texarea($name, $text, array $attributes = array())
+    {
+        $node = new Element\Textarea($text);
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates text input element
      * 
      * @param string $name Element name
