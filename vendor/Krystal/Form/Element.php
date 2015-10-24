@@ -15,4 +15,22 @@ use Krystal\Form\Element;
 
 class Element
 {
+    /**
+     * Creates text input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function text($name, $value, array $attributes = array())
+    {
+        $node = new Element\Text();
+
+        // Define major attributes
+        $attributes['name'] = $name;
+        $attributes['value'] = $value;
+
+        return $node->render($attributes);
+    }
 }
