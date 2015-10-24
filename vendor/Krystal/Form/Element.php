@@ -11,6 +11,8 @@
 
 namespace Krystal\Form;
 
+use Krystal\Form\Element;
+
 class Element
 {
 }
