@@ -24,7 +24,7 @@ final class Select implements FormElementInterface
 	private $data = array();
 
 	/**
-	 * Defaults
+	 * First "Option" elements to be prepended
 	 * 
 	 * @var array
 	 */
@@ -42,10 +42,10 @@ final class Select implements FormElementInterface
 	 * 
 	 * @param array $data
 	 * @param string $active
-	 * @param array $defaults
+	 * @param array $defaults Optional first elements to be prepended
 	 * @return void
 	 */
-	public function __construct(array $data, $active, array $defaults)
+	public function __construct(array $data, $active, array $defaults = array())
 	{
 		$this->data = $data;
 		$this->active = $active;
