@@ -13,17 +13,4 @@ namespace Krystal\Form;
 
 class Element
 {
-	/**
-	 * Creates text input element
-	 * 
-	 * @return \Krystal\Form\NodeElement
-	 */
-	public static function createText()
-	{
-		$element = new NodeElement();
-		$element->openTag('input')
-				->setType('text');
-
-		return $element;
-	}
 }
