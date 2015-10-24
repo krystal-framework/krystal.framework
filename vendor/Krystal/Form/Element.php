@@ -23,7 +23,7 @@ class Element
      * @param array $attributes Extra attributes
      * @return string
      */
-    public function texarea($name, $text, array $attributes = array())
+    public static function texarea($name, $text, array $attributes = array())
     {
         $node = new Element\Textarea($text);
         return $node->render($attributes);
