@@ -16,6 +16,21 @@ use Krystal\Form\Element;
 class Element
 {
     /**
+     * Creates "File" node element
+     * 
+     * @param string $name
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function file($name, array $attributes = array())
+    {
+        $attributes['name'] = $name;
+
+        $node = new Element\File();
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates "Select" element with its child "Option" nodes
      * 
      * @param string $name
