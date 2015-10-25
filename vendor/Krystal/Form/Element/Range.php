@@ -21,7 +21,6 @@ final class Range implements FormElementInterface
 	public function render(array $attrs)
 	{
 		$attrs['type'] = 'range';
-
 		$node = new NodeElement();
 
 		return $node->openTag('input')
