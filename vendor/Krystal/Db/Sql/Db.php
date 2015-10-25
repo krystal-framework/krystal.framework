@@ -1158,7 +1158,7 @@ final class Db implements DbInterface, RelationableServiceInterface
 	{
 		return $this->constraint(__FUNCTION__, $column, $operator, $value, $filter);
 	}
-	
+
 	/**
 	 * Appends OR WHERE expression with equality operator
 	 * 
