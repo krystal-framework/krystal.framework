@@ -16,6 +16,32 @@ use Krystal\Form\Element as Node;
 class Element
 {
     /**
+     * Creates reset button
+     * 
+     * @param string $text
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function reset($text, array $attributes = array())
+    {
+        $attributes['type'] = 'reset';
+        return self::button($text, $attributes);
+    }
+
+    /**
+     * Creates submit button
+     * 
+     * @param string $text
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function submit($text, array $attributes = array())
+    {
+        $attributes['type'] = 'submit';
+        return self::button($text, $attributes);
+    }
+
+    /**
      * Creates button element
      * 
      * @param string $text
