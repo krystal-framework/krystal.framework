@@ -11,7 +11,7 @@
 
 namespace Krystal\Form;
 
-use Krystal\Form\Element;
+use Krystal\Form\Element as Node;
 
 class Element
 {
@@ -29,7 +29,7 @@ class Element
         $attributes['name'] = $name;
         $attributes['value'] = $value;
 
-        $node = new Element\Radio($checked);
+        $node = new Node\Radio($checked);
         return $node->render($attributes);
     }
 
@@ -46,7 +46,7 @@ class Element
     {
         $attributes['name'] = $name;
 
-        $node = new Element\Checkbox($serialize, $checked);
+        $node = new Node\Checkbox($serialize, $checked);
         return $node->render($attributes);
     }
 
@@ -61,7 +61,7 @@ class Element
     {
         $attributes['name'] = $name;
 
-        $node = new Element\File();
+        $node = new Node\File();
         return $node->render($attributes);
     }
 
@@ -76,7 +76,7 @@ class Element
      */
     public static function select($name, array $list = array(), $selected, array $attributes = array())
     {
-        $node = new Element\Select($list, $selected);
+        $node = new Node\Select($list, $selected);
 
         // Define major "name" attribute
         $attributes['name'] = $name;
@@ -94,7 +94,7 @@ class Element
      */
     public static function textarea($name, $text, array $attributes = array())
     {
-        $node = new Element\Textarea($text);
+        $node = new Node\Textarea($text);
         return $node->render($attributes);
     }
 
@@ -108,7 +108,7 @@ class Element
      */
     public static function text($name, $value, array $attributes = array())
     {
-        $node = new Element\Text();
+        $node = new Node\Text();
 
         // Define major attributes
         $attributes['name'] = $name;
@@ -127,7 +127,7 @@ class Element
      */
     public static function color($name, $value, array $attributes = array())
     {
-        $node = new Element\Color();
+        $node = new Node\Color();
 
         // Define major attributes
         $attributes['name'] = $name;
@@ -146,7 +146,7 @@ class Element
      */
     public static function date($name, $value, array $attributes = array())
     {
-        $node = new Element\Date();
+        $node = new Node\Date();
 
         // Define major attributes
         $attributes['name'] = $name;
@@ -165,7 +165,7 @@ class Element
      */
     public static function email($name, $value, array $attributes = array())
     {
-        $node = new Element\Email();
+        $node = new Node\Email();
 
         // Define major attributes
         $attributes['name'] = $name;
@@ -184,7 +184,7 @@ class Element
      */
     public static function hidden($name, $value, array $attributes = array())
     {
-        $node = new Element\Hidden();
+        $node = new Node\Hidden();
 
         // Define major attributes
         $attributes['name'] = $name;
@@ -203,7 +203,7 @@ class Element
      */
     public static function number($name, $value, array $attributes = array())
     {
-        $node = new Element\Number();
+        $node = new Node\Number();
 
         // Define major attributes
         $attributes['name'] = $name;
@@ -222,7 +222,7 @@ class Element
      */
     public static function range($name, $value, array $attributes = array())
     {
-        $node = new Element\Range();
+        $node = new Node\Range();
 
         // Define major attributes
         $attributes['name'] = $name;
@@ -241,7 +241,7 @@ class Element
      */
     public static function url($name, $value, array $attributes = array())
     {
-        $node = new Element\Url();
+        $node = new Node\Url();
 
         // Define major attributes
         $attributes['name'] = $name;
@@ -259,7 +259,7 @@ class Element
      */
     public static function image($src, array $attributes = array())
     {
-        $node = new Element\Image();
+        $node = new Node\Image();
 
         // Define major attributes
         $attributes['src'] = $src;
