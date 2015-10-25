@@ -50,6 +50,21 @@ final class NodeElement implements NodeElementInterface
 	 */
 	private $properties = array();
 
+    /**
+     * Attributes that have no value
+     * 
+     * @var array
+     */
+    private $singular = array(
+        'checked',
+        'selected',
+        'autofocus',
+        'disabled',
+        'multiple',
+        'readonly',
+        'required'
+    );
+
 	/**
 	 * Allows to echo an instance of NodeElement
 	 * 
@@ -267,6 +282,17 @@ final class NodeElement implements NodeElementInterface
 		return $this->properties;
 	}
 
+    /**
+     * Checks whether an attribute is a property
+     * 
+     * @param string $attribute
+     * @return boolean
+     */
+    public function isProperty($attribute)
+    {
+        return in_array($attribute, $this->singular);
+    }
+
 	/**
 	 * Adds an attribute
 	 * 
@@ -275,17 +301,21 @@ final class NodeElement implements NodeElementInterface
 	 * @throws \LogicException If trying to set existing attribute
 	 * @return \Krystal\Form\NodeElement
 	 */
-	public function addAttribute($attribute, $value)
-	{
-		if ($this->hasAttribute($attribute)) {
-			throw new LogicException(sprintf('The element already has "%s" attribute', $attribute));
-		}
+    public function addAttribute($attribute, $value)
+    {
+        if ($this->isProperty($attribute)) {
+            $this->addPropertyOnDemand($attribute, $value);
+        } else {
+            if ($this->hasAttribute($attribute)) {
+                throw new LogicException(sprintf('The element already has "%s" attribute', $attribute));
+            }
 
-		$this->append(sprintf(' %s="%s"', $attribute, $value));
-		$this->attributes[$attribute] = $value;
+            $this->append(sprintf(' %s="%s"', $attribute, $value));
+            $this->attributes[$attribute] = $value;
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
 	/**
 	 * Adds attribute collection

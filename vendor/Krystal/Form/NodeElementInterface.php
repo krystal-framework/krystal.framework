@@ -117,6 +117,14 @@ interface NodeElementInterface
 	 */
 	public function getProperties();
 
+    /**
+     * Checks whether an attribute is a property
+     * 
+     * @param string $attribute
+     * @return boolean
+     */
+    public function isProperty($attribute);
+
 	/**
 	 * Adds an attribute
 	 * 
