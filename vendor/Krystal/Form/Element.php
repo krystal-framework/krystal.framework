@@ -213,6 +213,25 @@ class Element
     }
 
     /**
+     * Creates range input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function range($name, $value, array $attributes = array())
+    {
+        $node = new Element\Range();
+
+        // Define major attributes
+        $attributes['name'] = $name;
+        $attributes['value'] = $value;
+
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates URL input element
      * 
      * @param string $name Element name
