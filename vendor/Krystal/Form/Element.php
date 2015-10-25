@@ -16,6 +16,19 @@ use Krystal\Form\Element as Node;
 class Element
 {
     /**
+     * Creates button element
+     * 
+     * @param string $text
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function button($text, array $attributes = array())
+    {
+        $node = new Node\Button($text);
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates "Radio" node element
      * 
      * @param string $name Element name
