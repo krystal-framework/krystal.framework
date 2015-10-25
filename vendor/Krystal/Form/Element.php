@@ -77,11 +77,11 @@ class Element
      * 
      * @param string $name Element name
      * @param boolean $checked Whether it should be checked or not
-     * @param boolean $serialize Whether the element should be serializeable or not
      * @param array $attributes Extra attributes
+     * @param boolean $serialize Whether the element should be serializeable or not
      * @return string
      */
-    public static function checkbox($name, $checked, $serialize = true, array $attributes = array())
+    public static function checkbox($name, $checked, array $attributes = array(), $serialize = true)
     {
         $attributes['name'] = $name;
 
@@ -93,12 +93,17 @@ class Element
      * Creates "File" node element
      * 
      * @param string $name
+     * @param string $accept What type of files the input should accept
      * @param array $attributes Extra attributes
      * @return string
      */
-    public static function file($name, array $attributes = array())
+    public static function file($name, $accept = null, array $attributes = array())
     {
         $attributes['name'] = $name;
+
+        if (!is_null($accept)) {
+            $attributes['accept'] = $accept;
+        }
 
         $node = new Node\File();
         return $node->render($attributes);
@@ -133,6 +138,8 @@ class Element
      */
     public static function textarea($name, $text, array $attributes = array())
     {
+        $attributes['name'] = $name;
+
         $node = new Node\Textarea($text);
         return $node->render($attributes);
     }
