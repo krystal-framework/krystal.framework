@@ -213,6 +213,25 @@ class Element
     }
 
     /**
+     * Creates URL input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function url($name, $value, array $attributes = array())
+    {
+        $node = new Element\Url();
+
+        // Define major attributes
+        $attributes['name'] = $name;
+        $attributes['value'] = $value;
+
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates image element
      * 
      * @param string $src Path to image
