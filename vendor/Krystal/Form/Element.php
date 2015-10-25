@@ -155,4 +155,23 @@ class Element
 
         return $node->render($attributes);
     }
+
+    /**
+     * Creates hidden input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function hidden($name, $value, array $attributes = array())
+    {
+        $node = new Element\Hidden();
+
+        // Define major attributes
+        $attributes['name'] = $name;
+        $attributes['value'] = $value;
+
+        return $node->render($attributes);
+    }
 }
