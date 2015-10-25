@@ -174,4 +174,21 @@ class Element
 
         return $node->render($attributes);
     }
+
+    /**
+     * Creates hidden input element
+     * 
+     * @param string $src Path to image
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function image($src, array $attributes = array())
+    {
+        $node = new Element\Image();
+
+        // Define major attributes
+        $attributes['src'] = $src;
+
+        return $node->render($attributes);
+    }
 }
