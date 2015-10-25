@@ -16,6 +16,24 @@ use Krystal\Form\Element;
 class Element
 {
     /**
+     * Creates "Radio" node element
+     * 
+     * @param string $name Element name
+     * @param string $name Element value
+     * @param boolean $checked Whether it should be checked or not
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function radio($name, $value, $checked, array $attributes = array())
+    {
+        $attributes['name'] = $name;
+        $attributes['value'] = $value;
+
+        $node = new Element\Radio($checked);
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates "Checkbox" node element
      * 
      * @param string $name Element name
