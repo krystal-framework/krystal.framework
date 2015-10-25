@@ -195,7 +195,7 @@ class Element
     }
 
     /**
-     * Creates hidden input element
+     * Creates image element
      * 
      * @param string $src Path to image
      * @param array $attributes Extra attributes
