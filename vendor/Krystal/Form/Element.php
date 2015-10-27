@@ -16,6 +16,22 @@ use Krystal\Form\Element as Node;
 class Element
 {
     /**
+     * Creates standalone "option" element
+     * 
+     * @param string $value
+     * @param string $text
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function option($value, $text, array $attributes = array())
+    {
+        $attributes['value'] = $value;
+
+        $node = new Node\Option($text);
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates reset button
      * 
      * @param string $text
