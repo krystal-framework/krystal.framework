@@ -15,12 +15,12 @@ use Krystal\Tree\AdjacencyList\Render\AbstractRenderer;
 
 interface TreeInterface
 {
-	/**
-	 * Renders an interface
-	 * 
-	 * @param \Krystal\Tree\AdjacencyList\Render\AbstractRenderer $renderer Any renderer which extends AbstractRenderer
-	 * @param string $active
-	 * @return string
-	 */
-	public function render(AbstractRenderer $renderer, $active = null);
+    /**
+     * Renders an interface
+     * 
+     * @param \Krystal\Tree\AdjacencyList\Render\AbstractRenderer $renderer Any renderer which extends AbstractRenderer
+     * @param string $active
+     * @return string
+     */
+    public function render(AbstractRenderer $renderer, $active = null);
 }

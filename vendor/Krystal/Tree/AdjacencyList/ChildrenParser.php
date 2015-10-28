@@ -13,51 +13,51 @@ namespace Krystal\Tree\AdjacencyList;
 
 class ChildrenParser
 {
-	/**
-	 * Children key
-	 * 
-	 * @var string
-	 */
-	protected $childrenKey;
+    /**
+     * Children key
+     * 
+     * @var string
+     */
+    protected $childrenKey;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param string $childrenKey
-	 * @return void
-	 */
-	public function __construct($childrenKey = 'children')
-	{
-		$this->childrenKey = $childrenKey;
-	}
+    /**
+     * State initialization
+     * 
+     * @param string $childrenKey
+     * @return void
+     */
+    public function __construct($childrenKey = 'children')
+    {
+        $this->childrenKey = $childrenKey;
+    }
 
-	/**
-	 * Parses nested array with children
-	 * 
-	 * @param array $data
-	 * @param string|integer $parentId
-	 * @return array
-	 */
-	final protected function parseData(array $data, $parentId = 0)
-	{
-		$result = array();
+    /**
+     * Parses nested array with children
+     * 
+     * @param array $data
+     * @param string|integer $parentId
+     * @return array
+     */
+    final protected function parseData(array $data, $parentId = 0)
+    {
+        $result = array();
 
-		foreach ($data as $subArray) {
-			$nested = array();
+        foreach ($data as $subArray) {
+            $nested = array();
 
-			if (isset($subArray[$this->childrenKey])) {
-				// Recursive call
-				$nested = $this->parseData($subArray[$this->childrenKey], $subArray[RelationBuilder::TREE_PARAM_ID]);
-			}
+            if (isset($subArray[$this->childrenKey])) {
+                // Recursive call
+                $nested = $this->parseData($subArray[$this->childrenKey], $subArray[RelationBuilder::TREE_PARAM_ID]);
+            }
 
-			$result[] = array(
-				RelationBuilder::TREE_PARAM_ID => $subArray[RelationBuilder::TREE_PARAM_ID], 
-				RelationBuilder::TREE_PARAM_PARENT_ID => $parentId
-			);
+            $result[] = array(
+                RelationBuilder::TREE_PARAM_ID => $subArray[RelationBuilder::TREE_PARAM_ID], 
+                RelationBuilder::TREE_PARAM_PARENT_ID => $parentId
+            );
 
-			$result = array_merge($result, $nested);
-		}
+            $result = array_merge($result, $nested);
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 }

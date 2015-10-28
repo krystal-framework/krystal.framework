@@ -13,11 +13,11 @@ namespace Krystal\Tree\AdjacencyList;
 
 interface RelationBuilderInterface
 {
-	/**
-	 * Builds a relational tree
-	 * 
-	 * @param array $data Raw data
-	 * @return array
-	 */
-	public function build(array $data);
+    /**
+     * Builds a relational tree
+     * 
+     * @param array $data Raw data
+     * @return array
+     */
+    public function build(array $data);
 }

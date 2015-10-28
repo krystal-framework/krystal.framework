@@ -15,11 +15,11 @@ use Closure;
 
 interface BreadcrumbBuilderInterface
 {
-	/**
-	 * Makes breadcrumbs
-	 * 
-	 * @param \Closure $visitor
-	 * @return array
-	 */
-	public function makeAll(Closure $visitor);
+    /**
+     * Makes breadcrumbs
+     * 
+     * @param \Closure $visitor
+     * @return array
+     */
+    public function makeAll(Closure $visitor);
 }

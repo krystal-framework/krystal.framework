@@ -13,13 +13,13 @@ namespace Krystal\Tree\AdjacencyList;
 
 interface ChildrenOrderSaverMapperInterface
 {
-	/**
-	 * Saves new order of items
-	 * 
-	 * @param string $id Target id
-	 * @param string $parentId
-	 * @param integer $range New range
-	 * @return boolean
-	 */
-	public function save($id, $parentId, $range);
+    /**
+     * Saves new order of items
+     * 
+     * @param string $id Target id
+     * @param string $parentId
+     * @param integer $range New range
+     * @return boolean
+     */
+    public function save($id, $parentId, $range);
 }
