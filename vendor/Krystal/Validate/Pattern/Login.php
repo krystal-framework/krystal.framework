@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class Login extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
 	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Login can not be blank'
-				),
-				'NoTags' => array(
-					'message' => 'Login can not contain HTML tags'
-				)
-			)
-		));
-	}
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Login can not be blank'
+                ),
+                'NoTags' => array(
+                    'message' => 'Login can not contain HTML tags'
+                )
+            )
+        ));
+    }
 }

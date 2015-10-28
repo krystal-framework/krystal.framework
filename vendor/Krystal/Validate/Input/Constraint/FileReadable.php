@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class FileReadable extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given file path does not point to readable file';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given file path does not point to readable file';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (is_file($target) && is_readable($target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (is_file($target) && is_readable($target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

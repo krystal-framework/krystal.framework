@@ -16,21 +16,21 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class Callable extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string is not callable';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string is not callable';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (is_callable($target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (is_callable($target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

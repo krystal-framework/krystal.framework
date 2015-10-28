@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class NotEmpty extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Value can not be blank';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Value can not be blank';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (empty($target) && $target != '0') {
-			$this->violate($this->message);
-			return false;
-		} else {
-			return true;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (empty($target) && $target != '0') {
+            $this->violate($this->message);
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

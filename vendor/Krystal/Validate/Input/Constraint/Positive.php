@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Positive extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A number must be positive';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A number must be positive';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if ($target > 0) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if ($target > 0) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

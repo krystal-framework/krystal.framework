@@ -16,22 +16,22 @@ namespace Krystal\Validate\File\Constraint;
  */
 final class TmpDir extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Could not write %s to temporary directory on the server';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Could not write %s to temporary directory on the server';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid(array $files)
-	{
-		foreach ($files as $file) {
-			if ($file->getError() == UPLOAD_ERR_NO_TMP_DIR) {
-				$this->violate(sprintf($this->message, $file->getName()));
-			}
-		}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid(array $files)
+    {
+        foreach ($files as $file) {
+            if ($file->getError() == UPLOAD_ERR_NO_TMP_DIR) {
+                $this->violate(sprintf($this->message, $file->getName()));
+            }
+        }
 
-		return !$this->hasErrors();
-	}
+        return !$this->hasErrors();
+    }
 }

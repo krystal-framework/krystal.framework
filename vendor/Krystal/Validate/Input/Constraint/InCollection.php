@@ -16,32 +16,32 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class InCollection extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value does not belong to the collection';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value does not belong to the collection';
 
-	/**
-	 * State initialization
-	 * 
-	 * @param array $collection
-	 * @return void
-	 */
-	public function __construct(array $collection)
-	{
-		$this->collection = $collection;
-	}
+    /**
+     * State initialization
+     * 
+     * @param array $collection
+     * @return void
+     */
+    public function __construct(array $collection)
+    {
+        $this->collection = $collection;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (in_array($target, $this->collection)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (in_array($target, $this->collection)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

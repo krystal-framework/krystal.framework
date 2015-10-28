@@ -16,24 +16,24 @@ namespace Krystal\Validate\Renderer;
  */
 class Standard implements RendererInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $errors)
-	{
-		$messages = array();
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $errors)
+    {
+        $messages = array();
 
-		foreach ($errors as $target => $array) {
-			// Ensure target exists, before appending a value
-			if (!isset($messages[$target])) {
-				$messages[$target] = array();
-			}
+        foreach ($errors as $target => $array) {
+            // Ensure target exists, before appending a value
+            if (!isset($messages[$target])) {
+                $messages[$target] = array();
+            }
 
-			foreach ($array as $index => $messageArray) {
-				array_push($messages[$target], $messageArray[0]);
-			}
-		}
+            foreach ($array as $index => $messageArray) {
+                array_push($messages[$target], $messageArray[0]);
+            }
+        }
 
-		return $messages;
+        return $messages;
 	}
 }

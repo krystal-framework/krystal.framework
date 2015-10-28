@@ -16,21 +16,21 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class Charset extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Unknown charset supplied';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Unknown charset supplied';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
 	{
-		if (in_array($target, mb_list_encodings())) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+        if (in_array($target, mb_list_encodings())) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

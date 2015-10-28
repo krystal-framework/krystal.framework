@@ -13,32 +13,32 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Identity extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value is not equal';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value is not equal';
 
-	/**
-	 * State initialization
-	 * 
-	 * @param mixed $value
-	 * @return void
-	 */
-	public function __construct($value)
+    /**
+     * State initialization
+     * 
+     * @param mixed $value
+     * @return void
+     */
+    public function __construct($value)
 	{
-		$this->value = $value;
-	}
+        $this->value = $value;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if ($target === $this->value) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if ($target === $this->value) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

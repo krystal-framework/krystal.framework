@@ -13,20 +13,20 @@ namespace Krystal\Validate\Renderer;
 
 final class MessagesOnly extends Standard
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $errors)
-	{
-		$messages = parent::render($errors);
-		$result = array();
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $errors)
+    {
+        $messages = parent::render($errors);
+        $result = array();
 
-		foreach ($messages as $key => $array) {
-			foreach ($array as $index => $message) {
-				array_push($result, $message);
-			}
-		}
+        foreach ($messages as $key => $array) {
+            foreach ($array as $index => $message) {
+                array_push($result, $message);
+            }
+        }
 
-		return $result;
+        return $result;
 	}
 }

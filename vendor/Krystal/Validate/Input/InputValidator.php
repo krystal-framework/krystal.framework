@@ -17,16 +17,16 @@ use Krystal\Validate\AbstractValidator;
 
 final class InputValidator extends AbstractValidator
 {
-	/**
-	 * Builds an instance
-	 * 
-	 * @param array $source
-	 * @param array $definitions
-	 * @param Translator $translator
-	 * @return InputValidator
-	 */
-	public static function factory(array $source, array $definitions, $translator)
-	{
-		return new self($source, $definitions, new DefinitionParser(new ConstraintFactory()), $translator);
-	}
+    /**
+     * Builds an instance
+     * 
+     * @param array $source
+     * @param array $definitions
+     * @param Translator $translator
+     * @return \Krystal\Validate\Input\InputValidator
+     */
+    public static function factory(array $source, array $definitions, $translator)
+    {
+        return new self($source, $definitions, new DefinitionParser(new ConstraintFactory()), $translator);
+    }
 }

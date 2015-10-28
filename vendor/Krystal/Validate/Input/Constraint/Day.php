@@ -16,21 +16,21 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class Day extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string is out of day range';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string is out of day range';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if ($target > 31) {
-			$this->violate($this->message);
-			return false;
-		} else {
-			return true;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if ($target > 31) {
+            $this->violate($this->message);
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

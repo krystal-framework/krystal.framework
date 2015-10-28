@@ -18,39 +18,39 @@ use Krystal\Serializer\AbstractSerializer;
  */
 final class Serialized extends AbstractConstraint
 {
-	/**
-	 * Serialization service
-	 * 
-	 * @var \Krystal\Serializer\AbstractSerializer
-	 */
+    /**
+     * Serialization service
+     * 
+     * @var \Krystal\Serializer\AbstractSerializer
+     */
 	private $adapter;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string is not serialized';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string is not serialized';
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\Serializer\AbstractSerializer $adapter
-	 * @return void
-	 */
-	public function __construct(AbstractSerializer $adapter)
-	{
-		$this->adapter = $adapter;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\Serializer\AbstractSerializer $adapter
+     * @return void
+     */
+    public function __construct(AbstractSerializer $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if ($this->adapter->isSerialized($target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if ($this->adapter->isSerialized($target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

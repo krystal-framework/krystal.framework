@@ -13,18 +13,18 @@ namespace Krystal\Validate\Pattern;
 
 final class Comment extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NoTags' => array(
-					'message' => 'Comment can not contain HTML tags'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NoTags' => array(
+                    'message' => 'Comment can not contain HTML tags'
+                )
+            )
+        ));
+    }
 }

@@ -16,22 +16,22 @@ namespace Krystal\Validate\File\Constraint;
  */
 final class WriteFail extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Failed to write %s to the file-system';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Failed to write %s to the file-system';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid(array $files)
-	{
-		foreach ($files as $file) {
-			if ($file->getError() == \UPLOAD_ERR_CANT_WRITE) {
-				$this->violate(sprintf($this->message, $file->getName()));
-			}
-		}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid(array $files)
+    {
+        foreach ($files as $file) {
+            if ($file->getError() == \UPLOAD_ERR_CANT_WRITE) {
+                $this->violate(sprintf($this->message, $file->getName()));
+            }
+        }
 
-		return !$this->hasErrors();
+        return !$this->hasErrors();
 	}
 }

@@ -13,23 +13,23 @@ namespace Krystal\Validate\Pattern;
 
 class ImageFile extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Choice an image from your PC to upload'
-				),
-				'Extension' => array(
-					'break' => false,
-					'message' => 'Selected file does not seem to be a valid image',
-					'value' => array(array('jpg', 'jpeg', 'png', 'gif'))
-				),
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Choice an image from your PC to upload'
+                ),
+                'Extension' => array(
+                    'break' => false,
+                    'message' => 'Selected file does not seem to be a valid image',
+                    'value' => array(array('jpg', 'jpeg', 'png', 'gif'))
+                )
+            )
+        ));
+    }
 }

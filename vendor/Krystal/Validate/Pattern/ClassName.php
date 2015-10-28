@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class ClassName extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Class name can not be empty'
-				),
-				'NoTags' => array(
-					'message' => 'Class name can not contain not HTML tags'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Class name can not be empty'
+                ),
+                'NoTags' => array(
+                    'message' => 'Class name can not contain not HTML tags'
+                )
+            )
+        ));
+    }
 }

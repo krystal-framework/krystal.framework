@@ -13,25 +13,25 @@ namespace Krystal\Validate;
 
 interface ChainInterface
 {
-	/**
-	 * Return error messages from all attached validators
-	 * 
-	 * @return array
-	 */
-	public function getErrors();
+    /**
+     * Return error messages from all attached validators
+     * 
+     * @return array
+     */
+    public function getErrors();
 
-	/**
-	 * Runs the validation against all defined validators
-	 * 
-	 * @return boolean
-	 */
-	public function isValid();
+    /**
+     * Runs the validation against all defined validators
+     * 
+     * @return boolean
+     */
+    public function isValid();
 
-	/**
-	 * Adds a validator
-	 * 
-	 * @param Validateable $validator
-	 * @return void
-	 */
-	public function addValidators($validators);
+    /**
+     * Adds a validator
+     * 
+     * @param Validateable $validator
+     * @return void
+     */
+    public function addValidators($validators);
 }

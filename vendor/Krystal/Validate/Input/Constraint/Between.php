@@ -13,53 +13,51 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Between extends AbstractConstraint
 {
-	/**
-	 * Starting range
-	 * 
-	 * @var integer
-	 */
-	private $start;
+    /**
+     * Starting range
+     * 
+     * @var integer
+     */
+    private $start;
 
-	/**
-	 * Ending range
-	 * 
-	 * @var integer
-	 */
-	private $end;
+    /**
+     * Ending range
+     *  
+     * @var integer
+     */
+    private $end;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	protected $message = 'A value must in range between %s-%s';
+    protected $message = 'A value must in range between %s-%s';
 
-	/**
-	 * Start initialization
-	 * 
-	 * @param integer $start Starting range
-	 * @param integer $end Ending range
-	 * @return void
-	 */
-	public function __construct($start, $end)
-	{
-		$this->start = $start;
-		$this->end = $end;
+    /**
+     * Start initialization
+     * 
+     * @param integer $start Starting range
+     * @param integer $end Ending range
+     * @return void
+     */
+    public function __construct($start, $end)
+    {
+        $this->start = $start;
+        $this->end = $end;
 	}
 
-	/**
-	 * Checks whether values
-	 * 
-	 * @param string $target
-	 * @return boolean
-	 */
-	public function isValid($target)
-	{
-		if ($target >= $this->start && $target <= $this->end) {
-			return true;
-
-		} else {
-
-			$this->violate(sprintf($this->message, $this->start, $this->end));
-			return false;
-		}
-	}
+    /**
+     * Checks whether values
+     * 
+     * @param string $target
+     * @return boolean
+     */
+    public function isValid($target)
+    {
+        if ($target >= $this->start && $target <= $this->end) {
+            return true;
+        } else {
+            $this->violate(sprintf($this->message, $this->start, $this->end));
+            return false;
+        }
+    }
 }

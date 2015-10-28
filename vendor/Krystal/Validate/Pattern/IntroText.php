@@ -13,18 +13,18 @@ namespace Krystal\Validate\Pattern;
 
 final class IntroText extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Introduction text can not be empty'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Introduction text can not be empty'
+                )
+            )
+        ));
+    }
 }

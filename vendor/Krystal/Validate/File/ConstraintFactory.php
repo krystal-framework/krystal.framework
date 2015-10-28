@@ -15,11 +15,11 @@ use Krystal\InstanceManager\Factory;
 
 final class ConstraintFactory extends Factory
 {
-	/**
-	 * {@ineheritDoc}
-	 */
-	public function __construct()
-	{
-		$this->setNamespace('Krystal/Validate/File/Constraint');
-	}
+    /**
+     * {@ineheritDoc}
+     */
+    public function __construct()
+    {
+        $this->setNamespace('Krystal/Validate/File/Constraint');
+    }
 }

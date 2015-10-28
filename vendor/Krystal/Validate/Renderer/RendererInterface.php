@@ -13,11 +13,11 @@ namespace Krystal\Validate\Renderer;
 
 interface RendererInterface
 {
-	/**
-	 * Prepare error messages for more appropriate format
-	 * 
-	 * @param array $errors
-	 * @return array
-	 */
+    /**
+     * Prepare error messages for more appropriate format
+     * 
+     * @param array $errors
+     * @return array
+     */
 	public function render(array $errors);
 }

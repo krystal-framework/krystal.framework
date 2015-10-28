@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class FilePath extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string does not point to valid file path';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string does not point to valid file path';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (is_file($target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (is_file($target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

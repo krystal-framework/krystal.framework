@@ -13,11 +13,11 @@ namespace Krystal\Validate\File\Constraint;
 
 abstract class AbstractConstraint extends \Krystal\Validate\AbstractConstraint
 {
-	/**
-	 * Runs the validation against current constraint
-	 * 
-	 * @param array $files
-	 * @return boolean
-	 */
-	abstract public function isValid(array $files);
+    /**
+     * Runs the validation against current constraint
+     * 
+     * @param array $files
+     * @return boolean
+     */
+    abstract public function isValid(array $files);
 }

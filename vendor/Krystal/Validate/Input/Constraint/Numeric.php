@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Numeric extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value must be numeric';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value must be numeric';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (is_numeric($target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (is_numeric($target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

@@ -13,25 +13,25 @@ namespace Krystal\Validate\Pattern;
 
 final class PerPageCount extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
 	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Per page count can not be empty'
-				),
-				'Numeric' => array(
-					'message' => 'Per page count must be numeric',
-				),
-				'GreaterThan' => array(
-					'value' => 0,
-					'message' => 'Per page count must be greater than 0'
-				)
-			)
-		));
-	}
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Per page count can not be empty'
+                ),
+                'Numeric' => array(
+                    'message' => 'Per page count must be numeric',
+                ),
+                'GreaterThan' => array(
+                    'value' => 0,
+                    'message' => 'Per page count must be greater than 0'
+                )
+            )
+        ));
+    }
 }

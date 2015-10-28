@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class Height extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Height can not be empty'
-				),
-				'Numeric' => array(
-					'message' => 'Height must be numeric'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Height can not be empty'
+                ),
+                'Numeric' => array(
+                    'message' => 'Height must be numeric'
+                )
+            )
+        ));
+    }
 }

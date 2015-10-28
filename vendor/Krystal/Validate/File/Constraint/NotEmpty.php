@@ -13,21 +13,21 @@ namespace Krystal\Validate\File\Constraint;
 
 final class NotEmpty extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Please select a file to upload';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Please select a file to upload';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid(array $files)
-	{
-		if (empty($files)) {
-			$this->violate($this->message);
-			return false;
-		} else {
-			return true;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid(array $files)
+    {
+        if (empty($files)) {
+            $this->violate($this->message);
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

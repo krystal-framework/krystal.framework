@@ -15,39 +15,39 @@ use Krystal\Captcha\CaptchaInterface;
 
 final class Captcha extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'CAPTCHA is invalid';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'CAPTCHA is invalid';
 
-	/**
-	 * CAPTCHA service
-	 * 
-	 * @var \Krystal\Captcha\CaptchaInterface
-	 */
-	private $captcha;
+    /**
+     * CAPTCHA service
+     * 
+     * @var \Krystal\Captcha\CaptchaInterface
+     */
+    private $captcha;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\Captcha\CaptchaInterface $captcha CAPTCHA service
-	 * @return void
-	 */
-	public function __construct(CaptchaInterface $captcha)
-	{
-		$this->captcha = $captcha;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\Captcha\CaptchaInterface $captcha CAPTCHA service
+     * @return void
+     */
+    public function __construct(CaptchaInterface $captcha)
+    {
+        $this->captcha = $captcha;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($input)
-	{
-		if ($this->captcha->isValid($input)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($input)
+    {
+        if ($this->captcha->isValid($input)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

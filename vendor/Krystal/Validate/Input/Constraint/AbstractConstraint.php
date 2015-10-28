@@ -17,11 +17,11 @@ namespace Krystal\Validate\Input\Constraint;
  */
 abstract class AbstractConstraint extends \Krystal\Validate\AbstractConstraint
 {
-	/**
-	 * Runs a constraint against target string
-	 * 
-	 * @param string $target
-	 * @return boolean
+    /**
+     * Runs a constraint against target string
+     * 
+     * @param string $target
+     * @return boolean
 	 */
-	abstract public function isValid($target);
+    abstract public function isValid($target);
 }

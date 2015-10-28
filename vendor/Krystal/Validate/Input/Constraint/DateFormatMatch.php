@@ -14,60 +14,60 @@ namespace Krystal\Validate\Input\Constraint;
 /* Validates date string against date formats (or a single format) */
 final class DateFormatMatch extends AbstractConstraint
 {
-	/**
-	 * Supplied date formats
-	 * 
-	 * @var array
-	 */
-	private $formats;
+    /**
+     * Supplied date formats
+     * 
+     * @var array
+     */
+    private $formats;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Date format mismatch';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Date format mismatch';
 
-	/**
-	 * State initialization
-	 * 
-	 * @param mixed $formats
-	 * @return void
-	 */
-	public function __construct($formats)
-	{
-		if (!is_array($formats)) {
-			$formats = array($formats);
-		}
+    /**
+     * State initialization
+     * 
+     * @param mixed $formats
+     * @return void
+     */
+    public function __construct($formats)
+    {
+        if (!is_array($formats)) {
+            $formats = array($formats);
+        }
 
-		$this->formats = $formats;
+        $this->formats = $formats;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * {@inheritDoc}
+     */
 	public function isValid($date)
-	{
-		if ($this->isValidFormat($date)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    {
+        if ($this->isValidFormat($date)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 
 	/**
-	 * Validates date string against known formats
-	 * 
-	 * @param string $data
-	 * @return boolean
-	 */
-	private function isValidFormat($date)
-	{
-		foreach ($this->formats as $format) {
-			if (date($format, strtotime($date)) == $date) {
-				return true;
-			}
-		}
+     * Validates date string against known formats
+     * 
+     * @param string $data
+     * @return boolean
+     */
+    private function isValidFormat($date)
+    {
+        foreach ($this->formats as $format) {
+            if (date($format, strtotime($date)) == $date) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

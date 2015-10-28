@@ -16,22 +16,22 @@ namespace Krystal\Validate\File\Constraint;
  */
 final class Partial extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'File %s was partially uploaded only';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'File %s was partially uploaded only';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid(array $files)
-	{
-		foreach ($files as $file) {
-			if ($file->getError() == \UPLOAD_ERR_PARTIAL) {
-				$this->violate(sprintf($this->message, $file->getName()));
-			}
-		}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid(array $files)
+    {
+        foreach ($files as $file) {
+            if ($file->getError() == \UPLOAD_ERR_PARTIAL) {
+                $this->violate(sprintf($this->message, $file->getName()));
+            }
+        }
 
-		return !$this->hasErrors();
-	}
+        return !$this->hasErrors();
+    }
 }

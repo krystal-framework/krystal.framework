@@ -13,24 +13,24 @@ namespace Krystal\Validate\Renderer;
 
 final class JsonCollection extends Standard
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $errors)
-	{
-		$messages = parent::render($errors);
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $errors)
+    {
+        $messages = parent::render($errors);
 
-		// This is for returning
-		$result = array(
-			'messages' => array(),
-			'names' => array()
-		);
+        // This is for returning
+        $result = array(
+            'messages' => array(),
+            'names' => array()
+        );
 
-		foreach ($messages as $name => $messageCollection) {
-			$result['messages'] = array_merge($messageCollection, $result['messages']);
-			array_push($result['names'], $name);
-		}
+        foreach ($messages as $name => $messageCollection) {
+            $result['messages'] = array_merge($messageCollection, $result['messages']);
+            array_push($result['names'], $name);
+        }
 
-		return json_encode($result);
+        return json_encode($result);
 	}
 }

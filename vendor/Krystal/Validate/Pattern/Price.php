@@ -13,25 +13,25 @@ namespace Krystal\Validate\Pattern;
 
 final class Price extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Price can not be blank'
-				),
-				'Numeric' => array(
-					'message' => 'Price must be numeric'
-				),
-				'GreaterThan' => array(
-					'value' => 0,
-					'message' => 'Price must be greater than 0'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Price can not be blank'
+                ),
+                'Numeric' => array(
+                    'message' => 'Price must be numeric'
+                ),
+                'GreaterThan' => array(
+                    'value' => 0,
+                    'message' => 'Price must be greater than 0'
+                )
+            )
+        ));
+    }
 }

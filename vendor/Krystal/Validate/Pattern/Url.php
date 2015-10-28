@@ -13,18 +13,18 @@ namespace Krystal\Validate\Pattern;
 
 final class Url extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => false,
-			'rules' => array(
-				'UrlPattern' => array(
-					'message' => 'Given string does not look like a valid URL'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => false,
+            'rules' => array(
+                'UrlPattern' => array(
+                    'message' => 'Given string does not look like a valid URL'
+                )
+            )
+        ));
+    }
 }

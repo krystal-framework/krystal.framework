@@ -13,42 +13,42 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class MinLength extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value should contain at least %s characters';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value should contain at least %s characters';
 
-	/**
-	 * Target minimal length we're comparing against
-	 * 
-	 * @var integer
-	 */
-	private $length;
+    /**
+     * Target minimal length we're comparing against
+     * 
+     * @var integer
+     */
+    private $length;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param integer $length
-	 * @return void
-	 */
-	public function __construct($length)
-	{
-		$this->length = (int) $length;
-	}
+    /**
+     * State initialization
+     * 
+     * @param integer $length
+     * @return void
+     */
+    public function __construct($length)
+    {
+        $this->length = (int) $length;
+    }
 
-	/**
-	 * Checks whether target is valid
-	 * 
-	 * @param string $target
-	 * @return boolean True if string is blank, False otherwise
-	 */
-	public function isValid($target)
-	{
-		if (mb_strlen($target, $this->charset) < $this->length) {
-			$this->violate(sprintf($this->message, $this->length));
-			return false;
-		} else {
-			return true;
-		}
-	}
+    /**
+     * Checks whether target is valid
+     * 
+     * @param string $target
+     * @return boolean True if string is blank, False otherwise
+     */
+    public function isValid($target)
+    {
+        if (mb_strlen($target, $this->charset) < $this->length) {
+            $this->violate(sprintf($this->message, $this->length));
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

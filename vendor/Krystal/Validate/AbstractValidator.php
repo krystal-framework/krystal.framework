@@ -13,117 +13,114 @@ namespace Krystal\Validate;
 
 abstract class AbstractValidator
 {
-	/**
-	 * Error messages
-	 * 
-	 * @var array
-	 */
-	protected $errors = array();
+    /**
+     * Error messages
+     * 
+     * @var array
+     */
+    protected $errors = array();
+
+    /**
+     * Translator for messages
+     * 
+     * @var Translator
+     */
+    protected $translator;
+
+    /**
+     * Target source
+     * 
+     * @var array
+     */
+    protected $source = array();
+
+    /**
+     * Parser for definitions
+     * 
+     * @var DefinitionParser
+     */
+    protected $definitionParser;
 
 	/**
-	 * Translator for messages
-	 * 
-	 * @var Translator
-	 */
-	protected $translator;
+     * Array of definitions
+     * 
+     * @var array
+     */
+    protected $definitions = array();
+
+    /**
+     * State initialization
+     * 
+     * @param array $source
+     * @param array $definitions
+     * @param DefinitionParser $definitionParser
+     * @return void
+     */
+    final public function __construct(array $source, array $definitions, DefinitionParser $definitionParser, $translator)
+    {
+        $this->source = $source;
+        $this->definitions = $definitions;
+        $this->definitionParser = $definitionParser;
+        $this->translator = $translator;
+    }
 
 	/**
-	 * Target source
-	 * 
-	 * @var array
-	 */
-	protected $source = array();
+     * Return all error messages
+     * 
+     * @param boolean $onlyMessages
+     * @return array
+     */
+    final public function getErrors()
+    {
+        return $this->errors;
+    }
 
-	/**
-	 * Parser for definitions
-	 * 
-	 * @var DefinitionParser
-	 */
-	protected $definitionParser;
+    /**
+     * Checks whether at least one error occurred
+     * 
+     * @return boolean
+     */
+    final public function hasErrors()
+    {
+        return !empty($this->errors);
+    }
 
-	/**
-	 * Array of definitions
-	 * 
-	 * @var array
-	 */
-	protected $definitions = array();
+    /**
+     * {@inheritDoc}
+     */ 
+    final public function isValid()
+    {
+        $data = $this->definitionParser->parse($this->source, $this->definitions);
 
-	/**
-	 * State initialization
-	 * 
-	 * @param array $source
-	 * @param array $definitions
-	 * @param DefinitionParser $definitionParser
-	 * @return void
-	 */
-	final public function __construct(array $source, array $definitions, DefinitionParser $definitionParser, $translator)
-	{
-		$this->source = $source;
-		$this->definitions = $definitions;
-		$this->definitionParser = $definitionParser;
-		$this->translator = $translator;
-	}
+        foreach ($data as $target => $constraints) {
+            foreach ($constraints as $constraint) {
+                $key = $this->source[$target];
+                // Start validation only in case the constraint has required set to true
+                if ($constraint->getRequired()) {
+                    if (!$constraint->isValid($key)) {
+                        if (!isset($this->errors[$target])) {
+                            $this->errors[$target] = array();
+                        }
 
-	/**
-	 * Return all error messages
-	 * 
-	 * @param boolean $onlyMessages
-	 * @return array
-	 */
-	final public function getErrors()
-	{
-		return $this->errors;
-	}
+                        $messages = $constraint->getMessages();
 
-	/**
-	 * Checks whether at least one error occurred
-	 * 
-	 * @return boolean
-	 */
-	final public function hasErrors()
-	{
-		return !empty($this->errors);
-	}
+                        if ($this->translator) {
+                            $messages = $this->translator->translateArray($messages);
+                        }
 
-	/**
-	 * {@inheritDoc}
-	 */ 
-	final public function isValid()
-	{
-		$data = $this->definitionParser->parse($this->source, $this->definitions);
-		
-		foreach ($data as $target => $constraints) {
-			foreach ($constraints as $constraint) {
-				
-				$key = $this->source[$target];
-				
-				// Start validation only in case the constraint has required set to true
-				if ($constraint->getRequired()) {
-					if (!$constraint->isValid($key)) {
-						
-						if (!isset($this->errors[$target])) {
-							$this->errors[$target] = array();
-						}
-						
-						$messages = $constraint->getMessages();
-						
-						if ($this->translator) {
-							$messages = $this->translator->translateArray($messages);
-						}
-						
-						// Append an error message
-						array_push($this->errors[$target], $messages);
-						
-						// If the chain should be breaked, then we gotta stop here
-						if ($constraint->getBreakable() == true) {
-							// break current nested iteration, not the main one
-							break;
-						}
-					}
-				}
-			}
-		}
-		
-		return !$this->hasErrors();
+                        // Append an error message
+                        array_push($this->errors[$target], $messages);
+
+                        // If the chain should be breaked, then we gotta stop here
+                        if ($constraint->getBreakable() == true) {
+                            // break current nested iteration, not the main one
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return !$this->hasErrors();
 	}
 }

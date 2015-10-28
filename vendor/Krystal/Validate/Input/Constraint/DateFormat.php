@@ -15,21 +15,21 @@ use DateTime;
 
 final class DateFormat extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Invalid date format supplied';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Invalid date format supplied';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($format)
-	{
-		if (DateTime::createFromFormat($format) !== false) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($format)
+    {
+        if (DateTime::createFromFormat($format) !== false) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

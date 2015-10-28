@@ -15,42 +15,42 @@ use Krystal\Captcha\CaptchaInterface;
 
 final class Captcha extends AbstractPattern
 {
-	/**
-	 * CAPTCHA service
-	 * 
-	 * @var \Krystal\Captcha\CaptchaInterface
-	 */
-	private $captcha;
+    /**
+     * CAPTCHA service
+     * 
+     * @var \Krystal\Captcha\CaptchaInterface
+     */
+    private $captcha;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\Captcha\CaptchaInterface $captcha
-	 * @return void
-	 */
-	public function __construct(CaptchaInterface $captcha)
-	{
-		$this->captcha = $captcha;
-		parent::__construct();
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\Captcha\CaptchaInterface $captcha
+     * @return void
+     */
+    public function __construct(CaptchaInterface $captcha)
+    {
+        $this->captcha = $captcha;
+        parent::__construct();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'CAPTCHA can not be empty'
-				),
-				'Captcha' => array(
-					// This will pass \Krystal\Captcha\CaptchaInterface\'s instance to constraint constructor
-					'value' => $this->captcha,
-					'message' => 'Invalid verification code'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'CAPTCHA can not be empty'
+                ),
+                'Captcha' => array(
+                    // This will pass \Krystal\Captcha\CaptchaInterface\'s instance to constraint constructor
+                    'value' => $this->captcha,
+                    'message' => 'Invalid verification code'
+                )
+            )
+        ));
+    }
 }

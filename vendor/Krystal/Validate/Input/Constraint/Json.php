@@ -16,21 +16,21 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class Json extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'JSON string is not valid';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'JSON string is not valid';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (json_decode($target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (json_decode($target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

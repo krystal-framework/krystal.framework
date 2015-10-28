@@ -16,21 +16,21 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class DirectoryPath extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string is not a directory';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string is not a directory';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (is_dir($target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (is_dir($target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

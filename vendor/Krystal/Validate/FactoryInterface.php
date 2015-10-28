@@ -15,19 +15,19 @@ use Krystal\Validate\Renderer\RendererInterface;
 
 interface FactoryInterface
 {
-	/**
-	 * Sets or overrides default renderer
-	 * 
-	 * @param \Krystal\Validate\Renderer\RendererInterface $renderer
-	 * @return void
-	 */
-	public function setRenderer(RendererInterface $renderer);
+    /**
+     * Sets or overrides default renderer
+     * 
+     * @param \Krystal\Validate\Renderer\RendererInterface $renderer
+     * @return void
+     */
+    public function setRenderer(RendererInterface $renderer);
 
-	/**
-	 * Builds the instance
-	 * 
-	 * @param array $validators
-	 * @return \Krystal\Validate\ValidatorChain
-	 */
-	public function build(array $validators);
+    /**
+     * Builds the instance
+     * 
+     * @param array $validators
+     * @return \Krystal\Validate\ValidatorChain
+     */
+    public function build(array $validators);
 }

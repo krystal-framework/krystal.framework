@@ -16,22 +16,22 @@ namespace Krystal\Validate\File\Constraint;
  */
 final class IniSize extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'File %s exceeds maximal ini size';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'File %s exceeds maximal ini size';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid(array $files)
-	{
-		foreach ($files as $file) {
-			if ($file->getError() == UPLOAD_ERR_INI_SIZE) {
-				$this->violate(sprintf($this->message, $file->getName()));
-			}
-		}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid(array $files)
+    {
+        foreach ($files as $file) {
+            if ($file->getError() == UPLOAD_ERR_INI_SIZE) {
+                $this->violate(sprintf($this->message, $file->getName()));
+            }
+        }
 
-		return !$this->hasErrors();
-	}
+        return !$this->hasErrors();
+    }
 }

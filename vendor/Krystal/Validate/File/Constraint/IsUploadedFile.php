@@ -13,22 +13,22 @@ namespace Krystal\Validate\File\Constraint;
 
 final class IsUploadedFile extends AbstractConstraint
 {
-	/**
-	 * {@inheritDod}
-	 */
+    /**
+     * {@inheritDod}
+     */
 	protected $message = 'A file %s was not properly uploaded';
 
-	/**
-	 * {@inhertitDoc}
-	 */
-	public function isValid(array $files)
-	{
-		foreach ($files as $file) {
-			if (!is_uploaded_file($file->getTmpName())) {
-				$this->violate(sprintf($this->message, $file->getName()));
-			}
-		}
+    /**
+     * {@inhertitDoc}
+     */
+    public function isValid(array $files)
+    {
+        foreach ($files as $file) {
+            if (!is_uploaded_file($file->getTmpName())) {
+                $this->violate(sprintf($this->message, $file->getName()));
+            }
+        }
 
-		return !$this->hasErrors();
+        return !$this->hasErrors();
 	}
 }

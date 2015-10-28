@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class Address extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Address can not be empty',
-				),
-				'NoTags' => array(
-					'message' => 'Address can not contain HTML tags'
-				)
-			),
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Address can not be empty',
+                ),
+                'NoTags' => array(
+                    'message' => 'Address can not contain HTML tags'
+                )
+            )
+        ));
+    }
 }

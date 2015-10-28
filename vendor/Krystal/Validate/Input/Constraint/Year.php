@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Year extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string does not look like a year';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string does not look like a year';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (is_numeric($target) && strlen($target) == 4) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (is_numeric($target) && strlen($target) == 4) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

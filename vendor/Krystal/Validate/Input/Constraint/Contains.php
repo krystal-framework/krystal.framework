@@ -16,46 +16,46 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class Contains extends AbstractConstraint
 {
-	/**
-	 * Target char-list to compare against
-	 * 
-	 * @var array
-	 */
-	private $charlist = array();
+    /**
+     * Target char-list to compare against
+     * 
+     * @var array
+     */
+    private $charlist = array();
 
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string does not contain required character';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string does not contain required character';
 
-	/**
-	 * State initialization
-	 * 
-	 * @param mixed $charlist
-	 * @return void
-	 */
-	public function __construct($charlist)
-	{
-		if (!is_array($charlist)) {
-			$charlist = (array) $charlist;
-		}
+    /**
+     * State initialization
+     * 
+     * @param mixed $charlist
+     * @return void
+     */
+    public function __construct($charlist)
+    {
+        if (!is_array($charlist)) {
+            $charlist = (array) $charlist;
+        }
 
-		$this->charlist = $charlist;
+        $this->charlist = $charlist;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		foreach ($this->charlist as $char) {
-			if (mb_strpos($char, $target, 'UTF-8') !== false) {
-				return true;
-			}
-		}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        foreach ($this->charlist as $char) {
+            if (mb_strpos($char, $target, 'UTF-8') !== false) {
+                return true;
+            }
+        }
 
-		// By default
-		$this->violate($this->message);
-		return false;
-	}
+        // By default
+        $this->violate($this->message);
+        return false;
+    }
 }

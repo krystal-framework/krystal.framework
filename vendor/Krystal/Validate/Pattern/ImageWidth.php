@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class ImageWidth extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => "Image's width can not be empty"
-				),
-				'Numeric' => array(
-					'message' => "Image's width must be numeric"
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => "Image's width can not be empty"
+                ),
+                'Numeric' => array(
+                    'message' => "Image's width must be numeric"
+                )
+            )
+        ));
+    }
 }

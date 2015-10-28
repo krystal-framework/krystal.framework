@@ -14,40 +14,40 @@ namespace Krystal\Validate\Input\Constraint;
 /* Validates a regular expression against a string */
 final class RegExMatch extends AbstractConstraint
 {
-	/**
-	 * Target RegEx
-	 * 
-	 * @var string
-	 */
-	private $regex;
+    /**
+     * Target RegEx
+     * 
+     * @var string
+     */
+    private $regex;
 
-	/**
+    /**
 	 * {@inheiritDoc}
 	 */
-	protected $message = 'Defined regular expression does not match a target string';
+    protected $message = 'Defined regular expression does not match a target string';
 
-	/**
+    /**
 	 * State initialization
 	 * 
 	 * @param string $regex
 	 * @return void
 	 */
-	public function __construct($regex)
+    public function __construct($regex)
 	{
-		$this->regex = $regex;
-	}
+        $this->regex = $regex;
+    }
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function isValid($target)
-	{
-		// @ - intentionally since a regular expression might malformed
-		if (@preg_match($this->regex, $target)) {
-			return true;
+    public function isValid($target)
+    {
+        // @ - intentionally since a regular expression might malformed
+        if (@preg_match($this->regex, $target)) {
+            return true;
 		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

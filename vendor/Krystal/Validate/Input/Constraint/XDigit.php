@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class XDigit extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value must be X-Digit';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value must be X-Digit';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (ctype_xdigit($target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (ctype_xdigit($target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

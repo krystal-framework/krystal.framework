@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Odd extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value must be odd';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value must be odd';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if ($target & 1) {
-			return true;
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if ($target & 1) {
+            return true;
 		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

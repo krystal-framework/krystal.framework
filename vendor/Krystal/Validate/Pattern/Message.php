@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class Message extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Message can not be blank'
-				),
-				'NoTags' => array(
-					'message' => 'Message can not contain HTML tags'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Message can not be blank'
+                ),
+                'NoTags' => array(
+                    'message' => 'Message can not contain HTML tags'
+                )
+            )
+        ));
+    }
 }

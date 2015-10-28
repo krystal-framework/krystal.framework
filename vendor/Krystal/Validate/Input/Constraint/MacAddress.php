@@ -13,23 +13,23 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class MacAddress extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value does not look like a MAC-Address';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value does not look like a MAC-Address';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		$pattern = '^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$^';
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        $pattern = '^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$^';
 
-		if (preg_match($pattern, $target)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+        if (preg_match($pattern, $target)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

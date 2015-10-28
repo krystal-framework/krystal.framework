@@ -13,41 +13,41 @@ namespace Krystal\Validate\Pattern;
 
 final class DateFormat extends AbstractPattern
 {
-	/**
-	 * The compliant date itself
-	 * 
-	 * @var string
-	 */
-	private $format;
+    /**
+     * The compliant date itself
+     * 
+     * @var string
+     */
+    private $format;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param string $format Date format
-	 * @param array $overrides
-	 * @return void
-	 */
-	public function __construct($format, array $overrides = array())
-	{
-		$this->format = $format;
-		parent::__construct($overrides);
-	}
+    /**
+     * State initialization
+     * 
+     * @param string $format Date format
+     * @param array $overrides
+     * @return void
+     */
+    public function __construct($format, array $overrides = array())
+    {
+        $this->format = $format;
+        parent::__construct($overrides);
+    }
 
-	/**
-	 * {@inheritDoc}
+    /**
+     * {@inheritDoc}
 	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Date format can not be empty'
-				),
-				'DateFormatMatch' => array(
-					'value' => $this->format
-				)
-			)
-		));
-	}
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Date format can not be empty'
+                ),
+                'DateFormatMatch' => array(
+                    'value' => $this->format
+                )
+            )
+        ));
+    }
 }

@@ -13,16 +13,16 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Negative extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		If ((-1 * $target) * (-1) === $target) {
-			return true;
-		} else {
-			$this->violate('A value must be negative');
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        If ((-1 * $target) * (-1) === $target) {
+            return true;
+        } else {
+            $this->violate('A value must be negative');
+            return false;
+        }
+    }
 }

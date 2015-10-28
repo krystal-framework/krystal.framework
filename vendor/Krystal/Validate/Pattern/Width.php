@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class Width extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Width can not be empty'
-				),
-				'Numeric' => array(
-					'message' => 'Width must be numeric'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Width can not be empty'
+                ),
+                'Numeric' => array(
+                    'message' => 'Width must be numeric'
+                )
+            )
+        ));
+    }
 }

@@ -16,21 +16,21 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class EmailPattern extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Email does not seem to be valid';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Email does not seem to be valid';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (filter_var($target, \FILTER_VALIDATE_EMAIL)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (filter_var($target, \FILTER_VALIDATE_EMAIL)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

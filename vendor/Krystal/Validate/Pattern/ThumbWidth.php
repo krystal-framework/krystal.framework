@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class ThumbWidth extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => "Thumb's width can not be empty"
-				),
-				'Numeric' => array(
-					'message' => "Thumb's width must be numeric"
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => "Thumb's width can not be empty"
+                ),
+                'Numeric' => array(
+                    'message' => "Thumb's width must be numeric"
+                )
+            )
+        ));
+    }
 }

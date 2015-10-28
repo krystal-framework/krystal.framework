@@ -13,39 +13,39 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class LessOrEqual extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Value must be less or equal';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Value must be less or equal';
 
-	/**
-	 * Target value
-	 * 
-	 * @var integer|float
-	 */
-	private $value;
+    /**
+     * Target value
+     * 
+     * @var integer|float
+     */
+    private $value;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param mixed $value
-	 * @return void
-	 */
-	public function __construct($value)
-	{
-		$this->value = $value;
-	}
+    /**
+     * State initialization
+     * 
+     * @param mixed $value
+     * @return void
+     */
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if ($target >= $this->value) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if ($target >= $this->value) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

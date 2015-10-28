@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class ThumbHeight extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => "Thumb's height can not be empty"
-				),
-				'Numeric' => array(
-					'message' => "Thumb's height must be numeric"
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => "Thumb's height can not be empty"
+                ),
+                'Numeric' => array(
+                    'message' => "Thumb's height must be numeric"
+                )
+            )
+        ));
+    }
 }

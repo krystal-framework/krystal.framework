@@ -13,11 +13,11 @@ namespace Krystal\Validate\Renderer;
 
 final class StandardJson extends Standard implements RendererInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $errors)
-	{
-		return json_encode(parent::render($errors));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $errors)
+    {
+        return json_encode(parent::render($errors));
+    }
 }

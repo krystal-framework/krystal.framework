@@ -13,22 +13,22 @@ namespace Krystal\Validate\Pattern;
 
 final class ThemeName extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => "Theme's name can not be empty"
-				),
-				'RegExMatch' => array(
-					'value' => '~[A-Za-z/]~',
-					'message' => 'Invalid name supplied'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => "Theme's name can not be empty"
+                ),
+                'RegExMatch' => array(
+                    'value' => '~[A-Za-z/]~',
+                    'message' => 'Invalid name supplied'
+                )
+            )
+        ));
+    }
 }

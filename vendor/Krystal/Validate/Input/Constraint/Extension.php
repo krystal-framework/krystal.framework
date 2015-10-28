@@ -16,46 +16,46 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class Extension extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given path does not contain required extension';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given path does not contain required extension';
 
-	/**
-	 * Desired extension
-	 * 
-	 * @var string
-	 */
-	private $extensions;
+    /**
+     * Desired extension
+     * 
+     * @var string
+     */
+    private $extensions;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param string|array $extensions
-	 * @return void
-	 */
-	public function __construct($extensions)
-	{
-		if (is_string($extensions)){
-			$extensions = array($extensions);
-		}
+    /**
+     * State initialization
+     * 
+     * @param string|array $extensions
+     * @return void
+     */
+    public function __construct($extensions)
+    {
+        if (is_string($extensions)){
+            $extensions = array($extensions);
+        }
 
-		$this->extensions = $extensions;
-	}
+        $this->extensions = $extensions;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		foreach ($this->extensions as $extension) {
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        foreach ($this->extensions as $extension) {
 
-			if ($extension !== pathinfo($target, \PATHINFO_EXTENSION)) {
-				$this->violate($this->message);
-				return false;
-			}
-		}
+            if ($extension !== pathinfo($target, \PATHINFO_EXTENSION)) {
+                $this->violate($this->message);
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

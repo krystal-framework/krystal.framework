@@ -13,25 +13,25 @@ namespace Krystal\Validate\Pattern;
 
 final class ImageQuality extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => "Image's quality can not be empty"
-				),
-				'Numeric' => array(
-					'message' => "Image's quality must be numeric",
-				),
-				'Between' => array(
-					'message' => "Image's quality must be between 1 and 100",
-					'value' => array(1, 100)
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => "Image's quality can not be empty"
+                ),
+                'Numeric' => array(
+                    'message' => "Image's quality must be numeric",
+                ),
+                'Between' => array(
+                    'message' => "Image's quality must be between 1 and 100",
+                    'value' => array(1, 100)
+                )
+            )
+        ));
+    }
 }

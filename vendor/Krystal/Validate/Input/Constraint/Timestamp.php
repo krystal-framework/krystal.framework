@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Timestamp extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string does not look like a valid UNIX-timestamp';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string does not look like a valid UNIX-timestamp';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (is_numeric($target) && strlen($target) < 11) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (is_numeric($target) && strlen($target) < 11) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

@@ -13,22 +13,22 @@ namespace Krystal\Validate\Pattern;
 
 final class Query extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Query can not be blank',
-				),
-				'MinLength' => array(
-					'message' => 'Query should contain at least 3 characters',
-					'value' => 3
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Query can not be blank',
+                ),
+                'MinLength' => array(
+                    'message' => 'Query should contain at least 3 characters',
+                    'value' => 3
+                )
+            )
+        ));
+    }
 }

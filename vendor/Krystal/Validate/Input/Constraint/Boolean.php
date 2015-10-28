@@ -16,21 +16,21 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class Boolean extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value must represent a boolean value';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value must represent a boolean value';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		if (filter_var($target, \FILTER_VALIDATE_BOOLEAN)) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        if (filter_var($target, \FILTER_VALIDATE_BOOLEAN)) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

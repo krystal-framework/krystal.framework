@@ -13,21 +13,21 @@ namespace Krystal\Validate\Input\Constraint;
 
 final class Lowercase extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'A value should be in lowercase';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'A value should be in lowercase';
 
-	/**
-	 * {@inheritDoc}
-	 */ 
-	public function isValid($target)
-	{
-		if (mb_strtolower($target, 'UTF-8') === $target) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */ 
+    public function isValid($target)
+    {
+        if (mb_strtolower($target, 'UTF-8') === $target) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }

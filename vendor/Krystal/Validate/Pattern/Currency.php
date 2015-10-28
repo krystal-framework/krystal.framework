@@ -13,21 +13,21 @@ namespace Krystal\Validate\Pattern;
 
 final class Currency extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
-	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Currency can not be empty'
-				),
-				'NoTags' => array(
-					'message' => 'Currency can not contain HTML tags'
-				)
-			)
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
+    {
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Currency can not be empty'
+                ),
+                'NoTags' => array(
+                    'message' => 'Currency can not contain HTML tags'
+                )
+            )
+        ));
+    }
 }

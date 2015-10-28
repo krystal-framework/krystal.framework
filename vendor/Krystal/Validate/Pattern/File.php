@@ -16,39 +16,39 @@ namespace Krystal\Validate\Pattern;
  */
 class File extends AbstractPattern
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getDefinition()
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefinition()
 	{
-		return $this->getWithDefaults(array(
-			'required' => true,
-			'rules' => array(
-				'NotEmpty' => array(
-					'message' => 'Choice a file from your PC to upload'
+        return $this->getWithDefaults(array(
+            'required' => true,
+            'rules' => array(
+                'NotEmpty' => array(
+                    'message' => 'Choice a file from your PC to upload'
+                ),
+                'WriteFail' => array(
+                    'break' => false,
+                ),
+                'TmpDir' => array(
+                    'break' => false,
+                ),
+                'Partial' => array(
+                    'break' => false,
+                ),
+                'IsUploadedFile' => array(
+                    'break' => false,
 				),
-				'WriteFail' => array(
-					'break' => false,
-				),
-				'TmpDir' => array(
-					'break' => false,
-				),
-				'Partial' => array(
-					'break' => false,
-				),
-				'IsUploadedFile' => array(
-					'break' => false,
-				),
-				'IniSize' => array(
-					'break' => false,
-				),
-				'FormSize' => array(
-					'break' => false,
-				),
-				'FilenameMaxLength' => array(
-					'break' => false,
-				),
-			)	
-		));
-	}
+                'IniSize' => array(
+                    'break' => false,
+                ),
+                'FormSize' => array(
+                    'break' => false,
+                ),
+                'FilenameMaxLength' => array(
+                    'break' => false,
+                )
+            )
+        ));
+    }
 }

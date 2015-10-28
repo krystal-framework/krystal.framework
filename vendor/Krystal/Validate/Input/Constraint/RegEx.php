@@ -16,22 +16,22 @@ namespace Krystal\Validate\Input\Constraint;
  */
 final class RegEx extends AbstractConstraint
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected $message = 'Given string is not a valid RegEx';
+    /**
+     * {@inheritDoc}
+     */
+    protected $message = 'Given string is not a valid RegEx';
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isValid($target)
-	{
-		// @ - intentionally
-		if (@preg_match($target, ' ')) {
-			return true;
-		} else {
-			$this->violate($this->message);
-			return false;
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isValid($target)
+    {
+        // @ - intentionally
+        if (@preg_match($target, ' ')) {
+            return true;
+        } else {
+            $this->violate($this->message);
+            return false;
+        }
+    }
 }
