@@ -13,28 +13,28 @@ namespace Krystal\Serializer;
 
 final class JsonSerializer extends AbstractSerializer
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function serialize($var)
-	{
-		return json_encode($var);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function serialize($var)
+    {
+        return json_encode($var);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function unserialize($serialized)
-	{
-		return json_decode($serialized, true);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function unserialize($serialized)
+    {
+        return json_decode($serialized, true);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isSerialized($var)
-	{
-		json_decode($var);
-		return (json_last_error() === \JSON_ERROR_NONE);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isSerialized($var)
+    {
+        json_decode($var);
+        return (json_last_error() === \JSON_ERROR_NONE);
+    }
 }

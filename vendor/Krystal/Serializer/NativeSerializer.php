@@ -13,27 +13,27 @@ namespace Krystal\Serializer;
 
 final class NativeSerializer extends AbstractSerializer
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function isSerialized($string)
-	{
-		return $string == serialize(false) || @unserialize($string) !== false;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function isSerialized($string)
+    {
+        return $string == serialize(false) || @unserialize($string) !== false;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function serialize($var)
-	{
-		return serialize($var);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function serialize($var)
+    {
+        return serialize($var);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function unserialize($string)
-	{
-		return unserialize($string);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function unserialize($string)
+    {
+        return unserialize($string);
+    }
 }
