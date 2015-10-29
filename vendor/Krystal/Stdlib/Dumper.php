@@ -13,25 +13,25 @@ namespace Krystal\Stdlib;
 
 class Dumper
 {
-	/**
-	 * Dumps a variable
-	 * 
-	 * @param mixed $variable
-	 * @param boolean $exit Whether to terminate script execution
-	 * @return void
-	 */
-	public static function dump($variable, $exit = true)
-	{
-		if (false === $variable) {
-			var_dump($variable);
-		} else {
+    /**
+     * Dumps a variable
+     * 
+     * @param mixed $variable
+     * @param boolean $exit Whether to terminate script execution
+     * @return void
+     */
+    public static function dump($variable, $exit = true)
+    {
+        if (false === $variable) {
+            var_dump($variable);
+        } else {
 
-			$text = sprintf('<pre>%s</pre>', print_r($variable, true));
-			print $text;
-		}
+            $text = sprintf('<pre>%s</pre>', print_r($variable, true));
+            print $text;
+        }
 
-		if ($exit === true) {
-			exit();
-		}
-	}
+        if ($exit === true) {
+            exit();
+        }
+    }
 }

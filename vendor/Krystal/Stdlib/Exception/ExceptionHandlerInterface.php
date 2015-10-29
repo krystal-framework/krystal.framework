@@ -13,18 +13,18 @@ namespace Krystal\Stdlib\Exception;
 
 interface ExceptionHandlerInterface
 {
-	/**
-	 * Custom exception handler
-	 * 
-	 * @param \Exception $exception
-	 * @return void
-	 */
-	public function handle($exception);
+    /**
+     * Custom exception handler
+     * 
+     * @param \Exception $exception
+     * @return void
+     */
+    public function handle($exception);
 
-	/**
-	 * Registers custom exception handler
-	 * 
-	 * @return void
-	 */
-	public function register();
+    /**
+     * Registers custom exception handler
+     * 
+     * @return void
+     */
+    public function register();
 }

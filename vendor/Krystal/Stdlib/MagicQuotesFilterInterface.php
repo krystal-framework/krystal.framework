@@ -13,25 +13,25 @@ namespace Krystal\Stdlib;
 
 interface MagicQuotesFilterInterface
 {
-	/**
-	 * Deactivates magic quotes at runtime
-	 * 
-	 * @return void
-	 */
-	public function deactivate();
+    /**
+     * Deactivates magic quotes at runtime
+     * 
+     * @return void
+     */
+    public function deactivate();
 
-	/**
-	 * Checks whether magic quotes are enabled
-	 * 
-	 * @return boolean
-	 */
-	public function enabled();
+    /**
+     * Checks whether magic quotes are enabled
+     * 
+     * @return boolean
+     */
+    public function enabled();
 
-	/**
-	 * Recursively filter slashes in array
-	 * 
-	 * @param mixed $value
-	 * @return array
-	 */
-	public function filter($value);
+    /**
+     * Recursively filter slashes in array
+     * 
+     * @param mixed $value
+     * @return array
+     */
+    public function filter($value);
 }
