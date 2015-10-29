@@ -13,29 +13,29 @@ namespace Krystal\ParamBag;
 
 interface ParamBagInterface
 {
-	/**
-	 * Checks whether parameter is registered
-	 * 
-	 * @param string $param Param name to be checked for existence
-	 * @return boolean
-	 */
-	public function exists($param);
+    /**
+     * Checks whether parameter is registered
+     * 
+     * @param string $param Param name to be checked for existence
+     * @return boolean
+     */
+    public function exists($param);
 
-	/**
-	 * Appends a parameter
-	 * 
-	 * @param string $key
-	 * @param mixed $value
-	 * @return void
-	 */
-	public function set($key, $value);
+    /**
+     * Appends a parameter
+     * 
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    public function set($key, $value);
 
-	/**
-	 * Returns parameter's value
-	 * 
-	 * @param string $param
-	 * @param mixed $default Default value to be returned in case $param doesn't exist
-	 * @return mixed
-	 */
-	public function get($param, $default = false);
+    /**
+     * Returns parameter's value
+     * 
+     * @param string $param
+     * @param mixed $default Default value to be returned in case $param doesn't exist
+     * @return mixed
+     */
+    public function get($param, $default = false);
 }
