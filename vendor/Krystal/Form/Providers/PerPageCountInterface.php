@@ -13,25 +13,25 @@ namespace Krystal\Form\Providers;
 
 interface PerPageCountInterface
 {
-	/**
-	 * Returns per page count options
-	 * 
-	 * @return array Array of option entities
-	 */
-	public function getPerPageCountValues();
+    /**
+     * Returns per page count options
+     * 
+     * @return array Array of option entities
+     */
+    public function getPerPageCountValues();
 
-	/**
-	 * Returns current per page count
-	 * 
-	 * @return integer
-	 */
-	public function getPerPageCount();
+    /**
+     * Returns current per page count
+     * 
+     * @return integer
+     */
+    public function getPerPageCount();
 
-	/**
-	 * Defines new per page count
-	 * 
-	 * @param integer $count Current count
-	 * @return boolean
-	 */
-	public function setPerPageCount($count);
+    /**
+     * Defines new per page count
+     * 
+     * @param integer $count Current count
+     * @return boolean
+     */
+    public function setPerPageCount($count);
 }

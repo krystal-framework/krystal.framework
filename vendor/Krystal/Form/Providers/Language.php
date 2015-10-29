@@ -13,34 +13,34 @@ namespace Krystal\Form\Providers;
 
 class Language extends AbstractProvider
 {
-	/**
-	 * Returns all languages
-	 * 
-	 * @return array
-	 */
-	public function getAllLanguages()
-	{
-		return $this->getAllPrepared();
-	}
+    /**
+     * Returns all languages
+     * 
+     * @return array
+     */
+    public function getAllLanguages()
+    {
+        return $this->getAllPrepared();
+    }
 
-	/**
-	 * Returns current language
-	 * 
-	 * @return string
-	 */
-	public function getCurrentLanguage()
-	{
-		return $this->getData();
-	}
+    /**
+     * Returns current language
+     * 
+     * @return string
+     */
+    public function getCurrentLanguage()
+    {
+        return $this->getData();
+    }
 
-	/**
-	 * Sets current language
-	 * 
-	 * @param string $language
-	 * @return void
-	 */
-	public function setCurrentLanguage($language)
-	{
-		return $this->setData($language);
-	}
+    /**
+     * Sets current language
+     * 
+     * @param string $language
+     * @return void
+     */
+    public function setCurrentLanguage($language)
+    {
+        return $this->setData($language);
+    }
 }

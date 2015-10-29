@@ -13,34 +13,34 @@ namespace Krystal\Form\Providers;
 
 class DataSorter extends AbstractProvider
 {
-	/**
-	 * Returns sorting options
-	 * 
-	 * @return array
-	 */
-	public function getSortingOptions()
-	{
-		return $this->getAllPrepared();
-	}
+    /**
+     * Returns sorting options
+     * 
+     * @return array
+     */
+    public function getSortingOptions()
+    {
+        return $this->getAllPrepared();
+    }
 
-	/**
-	 * Returns current sort option
-	 * 
-	 * @return string
-	 */
-	public function getSortOption()
-	{
-		return $this->getData();
-	}
+    /**
+     * Returns current sort option
+     * 
+     * @return string
+     */
+    public function getSortOption()
+    {
+        return $this->getData();
+    }
 
-	/**
-	 * Stores sorting option
-	 * 
-	 * @param string $sort
-	 * @return boolean
-	 */
-	public function setSortOption($sort)
-	{
-		return $this->setData($sort);
-	}
+    /**
+     * Stores sorting option
+     * 
+     * @param string $sort
+     * @return boolean
+     */
+    public function setSortOption($sort)
+    {
+        return $this->setData($sort);
+    }
 }

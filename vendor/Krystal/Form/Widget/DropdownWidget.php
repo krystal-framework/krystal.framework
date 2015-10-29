@@ -15,24 +15,24 @@ use Krystal\Form\Element\Select;
 
 class DropdownWidget
 {
-	/**
-	 * Renders a drop-down list
-	 * 
-	 * @param array $attrs Element attributes
-	 * @param array $list Data
-	 * @param string $active Option's element to be marked as selected
-	 * @param string $prompt Default empty value at the top. If false, then its disabled
-	 * @return string
-	 */
-	public static function render(array $attrs, array $list, $active, $prompt = '')
-	{
-		if ($prompt !== false) {
-			$defaults = array('' => $prompt);
-		} else {
-			$defaults = array();
-		}
+    /**
+     * Renders a drop-down list
+     * 
+     * @param array $attrs Element attributes
+     * @param array $list Data
+     * @param string $active Option's element to be marked as selected
+     * @param string $prompt Default empty value at the top. If false, then its disabled
+     * @return string
+     */
+    public static function render(array $attrs, array $list, $active, $prompt = '')
+    {
+        if ($prompt !== false) {
+            $defaults = array('' => $prompt);
+        } else {
+            $defaults = array();
+        }
 
-		$element = new Select($list, $active, $defaults);
-		return $element->render($attrs);
-	}
+        $element = new Select($list, $active, $defaults);
+        return $element->render($attrs);
+    }
 }

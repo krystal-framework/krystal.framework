@@ -13,25 +13,25 @@ namespace Krystal\Form\Providers;
 
 interface LanguageInterface
 {
-	/**
-	 * Returns all languages
-	 * 
-	 * @return array
-	 */
-	public function getAllLanguages();
+    /**
+     * Returns all languages
+     * 
+     * @return array
+     */
+    public function getAllLanguages();
 
-	/**
-	 * Returns current language
-	 * 
-	 * @return string
-	 */
-	public function getCurrentLanguage();
+    /**
+     * Returns current language
+     * 
+     * @return string
+     */
+    public function getCurrentLanguage();
 
-	/**
-	 * Sets current language
-	 * 
-	 * @param string $language
-	 * @return void
-	 */
-	public function setCurrentLanguage($language);
+    /**
+     * Sets current language
+     * 
+     * @param string $language
+     * @return void
+     */
+    public function setCurrentLanguage($language);
 }

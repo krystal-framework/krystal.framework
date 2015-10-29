@@ -34,17 +34,17 @@ final class Option implements FormElementInterface
     }
 
     /**
-	 * {@inheritDoc}
-	 */
-	public function render(array $attrs)
-	{
-		$node = new NodeElement();
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $node = new NodeElement();
 
-		return $node->openTag('option')
+        return $node->openTag('option')
                     ->addAttributes($attrs)
                     ->finalize(false)
                     ->setText($this->text)
                     ->closeTag()
                     ->render();
-	}
+    }
 }

@@ -16,30 +16,30 @@ use Krystal\I18n\TranslatorInterface;
 
 class BooleanWidget
 {
-	/**
-	 * Renders the widget
-	 * 
-	 * @param array $attrs Element attributes
-	 * @param string $active (Should be either 1 or 0)
-	 * @param \Krystal\I18n\TranslatorInterface $translator
-	 * @param string $prompt Prompt text
-	 * @return string
-	 */
-	public static function render($attrs, $active, TranslatorInterface $translator = null, $prompt = '')
-	{
-		$list = array(
-			'1' => 'Yes',
-			'0' => 'No'
-		);
+    /**
+     * Renders the widget
+     * 
+     * @param array $attrs Element attributes
+     * @param string $active (Should be either 1 or 0)
+     * @param \Krystal\I18n\TranslatorInterface $translator
+     * @param string $prompt Prompt text
+     * @return string
+     */
+    public static function render($attrs, $active, TranslatorInterface $translator = null, $prompt = '')
+    {
+        $list = array(
+            '1' => 'Yes',
+            '0' => 'No'
+        );
 
-		$defaults = array('' => $prompt);
+        $defaults = array('' => $prompt);
 
-		if ($translator !== null) {
-			$list = $translator->translateArray($list);
-			$defaults = $translator->translateArray($defaults);
-		}
+        if ($translator !== null) {
+            $list = $translator->translateArray($list);
+            $defaults = $translator->translateArray($defaults);
+        }
 
-		$element = new Select($list, $active, $defaults);
-		return $element->render($attrs);
-	}
+        $element = new Select($list, $active, $defaults);
+        return $element->render($attrs);
+    }
 }

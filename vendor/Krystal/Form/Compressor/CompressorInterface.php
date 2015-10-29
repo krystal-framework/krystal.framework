@@ -13,11 +13,11 @@ namespace Krystal\Form\Compressor;
 
 interface CompressorInterface
 {
-	/**
-	 * Compresses the string
-	 * 
-	 * @param string $content
-	 * @return string 
-	 */
-	public function compress($content);
+    /**
+     * Compresses the string
+     * 
+     * @param string $content
+     * @return string 
+     */
+    public function compress($content);
 }

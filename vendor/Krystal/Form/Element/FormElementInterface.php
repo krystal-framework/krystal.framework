@@ -13,11 +13,11 @@ namespace Krystal\Form\Element;
 
 interface FormElementInterface
 {
-	/**
-	 * Renders an element
-	 * 
-	 * @param array $attrs Element attributes
-	 * @return string
-	 */
-	public function render(array $attrs);
+    /**
+     * Renders an element
+     * 
+     * @param array $attrs Element attributes
+     * @return string
+     */
+    public function render(array $attrs);
 }

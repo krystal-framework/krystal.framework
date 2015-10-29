@@ -15,17 +15,17 @@ use Krystal\Form\NodeElement;
 
 final class Text implements FormElementInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $attrs)
-	{
-		$node = new NodeElement();
-		$attrs['type'] = 'text';
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $node = new NodeElement();
+        $attrs['type'] = 'text';
 
-		return $node->openTag('input')
-					->addAttributes($attrs)
-					->finalize(true)
-					->render();
-	}
+        return $node->openTag('input')
+                    ->addAttributes($attrs)
+                    ->finalize(true)
+                    ->render();
+    }
 }

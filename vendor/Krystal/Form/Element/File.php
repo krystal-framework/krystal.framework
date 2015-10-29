@@ -15,18 +15,18 @@ use Krystal\Form\NodeElement;
 
 final class File implements FormElementInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $attrs)
-	{
-		$attrs['type'] = 'file';
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $attrs['type'] = 'file';
 
-		$node = new NodeElement();
+        $node = new NodeElement();
 
-		return $node->openTag('input')
-					->addAttributes($attrs)
-					->finalize(true)
-					->render();
-	}
+        return $node->openTag('input')
+                    ->addAttributes($attrs)
+                    ->finalize(true)
+                    ->render();
+    }
 }

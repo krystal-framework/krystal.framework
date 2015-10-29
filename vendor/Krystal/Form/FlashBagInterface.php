@@ -13,29 +13,29 @@ namespace Krystal\Form;
 
 interface FlashBagInterface
 {
-	/**
-	 * Checks whether message key exists
-	 * 
-	 * @param string $key
-	 * @return boolean
-	 */
-	public function has($key);
+    /**
+     * Checks whether message key exists
+     * 
+     * @param string $key
+     * @return boolean
+     */
+    public function has($key);
 
-	/**
-	 * Sets a message by given key name
-	 * 
-	 * @param string $key
-	 * @param string $message
-	 * @return FlashMessenger
-	 */
-	public function set($key, $message);
+    /**
+     * Sets a message by given key name
+     * 
+     * @param string $key
+     * @param string $message
+     * @return FlashMessenger
+     */
+    public function set($key, $message);
 
-	/**
-	 * Returns a message associated with a given key
-	 * 
-	 * @param string $key
-	 * @throws RuntimeException If attempted to read non-existing key
-	 * @return string
-	 */
-	public function get($key);
+    /**
+     * Returns a message associated with a given key
+     * 
+     * @param string $key
+     * @throws RuntimeException If attempted to read non-existing key
+     * @return string
+     */
+    public function get($key);
 }

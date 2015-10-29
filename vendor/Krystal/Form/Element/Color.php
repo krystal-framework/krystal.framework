@@ -15,17 +15,17 @@ use Krystal\Form\NodeElement;
 
 final class Color implements FormElementInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $attrs)
-	{
-		$attrs['type'] = 'color';
-		$node = new NodeElement();
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $attrs['type'] = 'color';
+        $node = new NodeElement();
 
-		return $node->openTag('input')
-					->addAttributes($attrs)
-					->finalize(true)
-					->render();
-	}
+        return $node->openTag('input')
+                    ->addAttributes($attrs)
+                    ->finalize(true)
+                    ->render();
+    }
 }

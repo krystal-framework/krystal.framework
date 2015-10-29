@@ -15,16 +15,16 @@ use Krystal\Form\NodeElement;
 
 final class Image implements FormElementInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $attrs)
-	{
-		$node = new NodeElement();
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $node = new NodeElement();
 
-		return $node->openTag('img')
-					->addAttributes($attrs)
-					->finalize(true)
-					->render();
-	}
+        return $node->openTag('img')
+                    ->addAttributes($attrs)
+                    ->finalize(true)
+                    ->render();
+    }
 }

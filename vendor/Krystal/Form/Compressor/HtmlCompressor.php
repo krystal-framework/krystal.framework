@@ -13,34 +13,34 @@ namespace Krystal\Form\Compressor;
 
 final class HtmlCompressor implements CompressorInterface
 {
-	/**
-	 * Compresses the string
-	 * 
-	 * @param string $content
-	 * @return string 
-	 */
-	public function compress($content)
-	{
-		// Increment recursion level only before doing a compression
-		ini_set('pcre.recursion_limit', '16777');
+    /**
+     * Compresses the string
+     * 
+     * @param string $content
+     * @return string 
+     */
+    public function compress($content)
+    {
+        // Increment recursion level only before doing a compression
+        ini_set('pcre.recursion_limit', '16777');
 
-		$content = $this->removeSpaces($content);
-		$content = $this->removeComments($content);
+        $content = $this->removeSpaces($content);
+        $content = $this->removeComments($content);
 
-		return $content;
-	}
+        return $content;
+    }
 
-	/**
-	 * Removes all spaces from a string
-	 * 
-	 * @param string $content
-	 * @return string
-	 */
-	private function removeSpaces($content)
-	{
-		// The pattern itself taken from here: http://stackoverflow.com/a/5324014/1208233
-		// With minor modifications
-		$pattern = '%# Collapse whitespace everywhere but in blacklisted elements.
+    /**
+     * Removes all spaces from a string
+     * 
+     * @param string $content
+     * @return string
+     */
+    private function removeSpaces($content)
+    {
+        // The pattern itself taken from here: http://stackoverflow.com/a/5324014/1208233
+        // With minor modifications
+        $pattern = '%# Collapse whitespace everywhere but in blacklisted elements.
         (?>             # Match all whitespans other than single space.
           [^\S ]\s*     # Either one [\t\r\n\f\v] and zero or more ws,
         | \s{3,}        # or two or more consecutive-any-whitespace.
@@ -60,17 +60,17 @@ final class HtmlCompressor implements CompressorInterface
         )  # If we made it here, we are not in a blacklist tag.
         %Sixu';
 
-		return preg_replace($pattern, '', $content);
-	}
+        return preg_replace($pattern, '', $content);
+    }
 
-	/**
-	 * Removes comments from the document, excluding IE's conditional ones
-	 * 
-	 * @param string $document
-	 * @return string
-	 */
-	private function removeComments($content)
-	{
-		return preg_replace('#<!--(?!\[).*?(?!<\])-->#', '', $content);
-	}	
+    /**
+     * Removes comments from the document, excluding IE's conditional ones
+     * 
+     * @param string $document
+     * @return string
+     */
+    private function removeComments($content)
+    {
+        return preg_replace('#<!--(?!\[).*?(?!<\])-->#', '', $content);
+    }   
 }

@@ -15,41 +15,41 @@ use Krystal\Form\NodeElement;
 
 final class Radio implements FormElementInterface
 {
-	/**
-	 * Whether must be checked on rendering or not
-	 * 
-	 * @var boolean
-	 */
-	private $active;
+    /**
+     * Whether must be checked on rendering or not
+     * 
+     * @var boolean
+     */
+    private $active;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param boolean $active
-	 * @return void
-	 */
-	public function __construct($active)
-	{
-		$this->active = $active;
-	}
+    /**
+     * State initialization
+     * 
+     * @param boolean $active
+     * @return void
+     */
+    public function __construct($active)
+    {
+        $this->active = $active;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $attrs)
-	{
-		$attrs['type'] = 'radio';
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $attrs['type'] = 'radio';
 
-		$node = new NodeElement();
-		$node->openTag('input')
-			 ->addAttributes($attrs);
+        $node = new NodeElement();
+        $node->openTag('input')
+             ->addAttributes($attrs);
 
-		// Check if active
-		if ($this->active) {
-			$node->addProperty('checked');
-		}
+        // Check if active
+        if ($this->active) {
+            $node->addProperty('checked');
+        }
 
-		return $node->finalize(true)
-					->render();
-	}
+        return $node->finalize(true)
+                    ->render();
+    }
 }

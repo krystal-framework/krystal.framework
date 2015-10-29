@@ -15,18 +15,18 @@ use Krystal\Form\NodeElement;
 
 final class Hidden implements FormElementInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $attrs)
-	{
-		$attrs['type'] = 'hidden';
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $attrs['type'] = 'hidden';
 
-		$node = new NodeElement();
-		$node->openTag('input')
-			 ->addAttributes($attrs)
-			 ->finalize(true);
+        $node = new NodeElement();
+        $node->openTag('input')
+             ->addAttributes($attrs)
+             ->finalize(true);
 
-		return $node->render();
-	}
+        return $node->render();
+    }
 }

@@ -34,8 +34,8 @@ final class Button implements FormElementInterface
     }
 
     /**
-	 * {@inheritDoc}
-	 */
+     * {@inheritDoc}
+     */
     public function render(array $attrs)
     {
         $node = new NodeElement();
@@ -46,5 +46,5 @@ final class Button implements FormElementInterface
                     ->setText($this->text)
                     ->closeTag()
                     ->render();
-	}
+    }
 }

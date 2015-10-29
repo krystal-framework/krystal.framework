@@ -27,5 +27,5 @@ final class Password implements FormElementInterface
                     ->addAttributes($attrs)
                     ->finalize(true)
                     ->render();
-	}
+    }
 }

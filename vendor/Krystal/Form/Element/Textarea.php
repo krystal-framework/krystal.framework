@@ -15,36 +15,36 @@ use Krystal\Form\NodeElement;
 
 final class Textarea implements FormElementInterface
 {
-	/**
-	 * Current content
-	 * 
-	 * @var string
-	 */
-	private $text;
+    /**
+     * Current content
+     * 
+     * @var string
+     */
+    private $text;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param string $text
-	 * @return void
-	 */
-	public function __construct($text = null)
-	{
-		$this->text = $text;
-	}
+    /**
+     * State initialization
+     * 
+     * @param string $text
+     * @return void
+     */
+    public function __construct($text = null)
+    {
+        $this->text = $text;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function render(array $attrs)
-	{
-		$node = new NodeElement();
-		$node->openTag('textarea')
-		     ->addAttributes($attrs)
-			 ->finalize()
-			 ->setText($this->text)
-			 ->closeTag();
-			 
-		return $node->render();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $node = new NodeElement();
+        $node->openTag('textarea')
+             ->addAttributes($attrs)
+             ->finalize()
+             ->setText($this->text)
+             ->closeTag();
+             
+        return $node->render();
+    }
 }

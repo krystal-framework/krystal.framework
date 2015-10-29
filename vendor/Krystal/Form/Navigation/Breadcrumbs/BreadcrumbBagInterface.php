@@ -13,48 +13,48 @@ namespace Krystal\Form\Navigation\Breadcrumbs;
 
 interface BreadcrumbBagInterface
 {
-	/**
-	 * Removes first breadcrumb
-	 * 
-	 * @return \Krystal\Form\Navigation\BreadcrumbBag
-	 */
-	public function removeFirst();
+    /**
+     * Removes first breadcrumb
+     * 
+     * @return \Krystal\Form\Navigation\BreadcrumbBag
+     */
+    public function removeFirst();
 
-	/**
-	 * Adds breadcrumb collection
-	 * 
-	 * @param array $collection
-	 * @return void
-	 */
-	public function add(array $collection);
+    /**
+     * Adds breadcrumb collection
+     * 
+     * @param array $collection
+     * @return void
+     */
+    public function add(array $collection);
 
-	/**
-	 * Appends one breadcrumb
-	 * 
-	 * @param string $name Breadcrumb name
-	 * @param string $link Breadcrumb link
-	 * @return void
-	 */
-	public function addOne($name, $link = '#');
+    /**
+     * Appends one breadcrumb
+     * 
+     * @param string $name Breadcrumb name
+     * @param string $link Breadcrumb link
+     * @return void
+     */
+    public function addOne($name, $link = '#');
 
-	/**
-	 * Checks whether breadcrumb bag is empty
-	 * 
-	 * @return boolean
-	 */
-	public function has();
+    /**
+     * Checks whether breadcrumb bag is empty
+     * 
+     * @return boolean
+     */
+    public function has();
 
-	/**
-	 * Clears the collection
-	 * 
-	 * @return void
-	 */
-	public function clear();
+    /**
+     * Clears the collection
+     * 
+     * @return void
+     */
+    public function clear();
 
-	/**
-	 * Returns breadcrumb collection
-	 * 
-	 * @return array
-	 */
-	public function getBreadcrumbs();
+    /**
+     * Returns breadcrumb collection
+     * 
+     * @return array
+     */
+    public function getBreadcrumbs();
 }
