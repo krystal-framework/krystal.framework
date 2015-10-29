@@ -13,13 +13,13 @@ namespace Krystal\Http\Response;
 
 interface FileDownloaderInterface
 {
-	/**
-	 * Sends downloadable headers for a file
-	 * 
-	 * @param string $filename A path to the target file
-	 * @param string $alias Basename name can be optionally changed
-	 * @throws \RuntimeException If can't access the target file
-	 * @return void
-	 */
-	public function download($target, $alias = null);
+    /**
+     * Sends downloadable headers for a file
+     * 
+     * @param string $filename A path to the target file
+     * @param string $alias Basename name can be optionally changed
+     * @throws \RuntimeException If can't access the target file
+     * @return void
+     */
+    public function download($target, $alias = null);
 }

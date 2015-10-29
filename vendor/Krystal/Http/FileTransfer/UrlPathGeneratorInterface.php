@@ -13,12 +13,12 @@ namespace Krystal\Http\FileTransfer;
 
 interface UrlPathGeneratorInterface
 {
-	/**
-	 * Returns full URL path to a file
-	 * 
-	 * @param string $id Nested directory's id
-	 * @param string $filename Required filename
-	 * @return string
-	 */
-	public function getPath($id, $filename);
+    /**
+     * Returns full URL path to a file
+     * 
+     * @param string $id Nested directory's id
+     * @param string $filename Required filename
+     * @return string
+     */
+    public function getPath($id, $filename);
 }

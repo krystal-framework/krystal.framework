@@ -13,12 +13,12 @@ namespace Krystal\Http\Response;
 
 interface HttpCacheInterface
 {
-	/**
-	 * Starts to capture
-	 * 
-	 * @param integer $timestamp Last modified timestamp
-	 * @param integer $ttl Time to live in seconds
-	 * @return void
-	 */
-	public function configure($timestamp, $ttl);
+    /**
+     * Starts to capture
+     * 
+     * @param integer $timestamp Last modified timestamp
+     * @param integer $ttl Time to live in seconds
+     * @return void
+     */
+    public function configure($timestamp, $ttl);
 }

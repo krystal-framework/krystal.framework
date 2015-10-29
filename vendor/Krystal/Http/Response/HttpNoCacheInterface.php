@@ -13,10 +13,10 @@ namespace Krystal\Http\Response;
 
 interface HttpNoCacheInterface
 {
-	/**
-	 * Appends required headers to disable HTTP cache
-	 * 
-	 * @return void
-	 */
-	public function configure();
+    /**
+     * Appends required headers to disable HTTP cache
+     * 
+     * @return void
+     */
+    public function configure();
 }

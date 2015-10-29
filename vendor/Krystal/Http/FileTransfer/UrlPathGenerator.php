@@ -13,33 +13,33 @@ namespace Krystal\Http\FileTransfer;
 
 final class UrlPathGenerator implements UrlPathGeneratorInterface
 {
-	/**
-	 * Base URL path
-	 * 
-	 * @var string
-	 */
-	private $baseUrl;
+    /**
+     * Base URL path
+     * 
+     * @var string
+     */
+    private $baseUrl;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param string $baseUrl
-	 * @return void
-	 */
-	public function __construct($baseUrl)
-	{
-		$this->baseUrl = $baseUrl;
-	}
+    /**
+     * State initialization
+     * 
+     * @param string $baseUrl
+     * @return void
+     */
+    public function __construct($baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+    }
 
-	/**
-	 * Returns full URL path to a file
-	 * 
-	 * @param string $id Nested directory's id
-	 * @param string $filename Required filename
-	 * @return string
-	 */
-	public function getPath($id, $filename)
-	{
-		return sprintf('%s/%s/%s', $this->baseUrl, $id, $filename);
-	}
+    /**
+     * Returns full URL path to a file
+     * 
+     * @param string $id Nested directory's id
+     * @param string $filename Required filename
+     * @return string
+     */
+    public function getPath($id, $filename)
+    {
+        return sprintf('%s/%s/%s', $this->baseUrl, $id, $filename);
+    }
 }

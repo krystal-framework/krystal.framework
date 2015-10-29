@@ -13,12 +13,12 @@ namespace Krystal\Http\FileTransfer;
 
 interface UploaderAwareInterface
 {
-	/**
-	 * Upload all files we have from the input
-	 * 
-	 * @param string $id
-	 * @param array $files
-	 * @return boolean
-	 */
-	public function upload($id, array $files);
+    /**
+     * Upload all files we have from the input
+     * 
+     * @param string $id
+     * @param array $files
+     * @return boolean
+     */
+    public function upload($id, array $files);
 }

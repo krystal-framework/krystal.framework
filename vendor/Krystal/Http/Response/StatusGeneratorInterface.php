@@ -13,27 +13,27 @@ namespace Krystal\Http\Response;
 
 interface StatusGeneratorInterface
 {
-	/**
-	 * Checks whether status code is valid
-	 * 
-	 * @param string $code
-	 * @return boolean
-	 */
-	public function isValid($code);
+    /**
+     * Checks whether status code is valid
+     * 
+     * @param string $code
+     * @return boolean
+     */
+    public function isValid($code);
 
-	/**
-	 * Returns description by its associated code
-	 * 
-	 * @param integer $code Status code
-	 * @return string
-	 */
-	public function getDescriptionByStatusCode($code);
+    /**
+     * Returns description by its associated code
+     * 
+     * @param integer $code Status code
+     * @return string
+     */
+    public function getDescriptionByStatusCode($code);
 
-	/**
-	 * Generates status header by associated code
-	 * 
-	 * @param integer $code
-	 * @return string|boolean
-	 */
-	public function generate($code);
+    /**
+     * Generates status header by associated code
+     * 
+     * @param integer $code
+     * @return string|boolean
+     */
+    public function generate($code);
 }

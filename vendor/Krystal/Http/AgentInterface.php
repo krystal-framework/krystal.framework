@@ -13,24 +13,24 @@ namespace Krystal\Http;
 
 interface AgentInterface
 {
-	/**
-	 * Return robots
-	 * 
-	 * @return array
-	 */
-	public function getRobots();
+    /**
+     * Return robots
+     * 
+     * @return array
+     */
+    public function getRobots();
 
-	/**
-	 * Return browsers
-	 * 
-	 * @return array
-	 */
-	public function getBrowsers();
+    /**
+     * Return browsers
+     * 
+     * @return array
+     */
+    public function getBrowsers();
 
-	/**
-	 * Return platforms
-	 * 
-	 * @return array
-	 */
-	public function getPlatforms();	
+    /**
+     * Return platforms
+     * 
+     * @return array
+     */
+    public function getPlatforms(); 
 }
