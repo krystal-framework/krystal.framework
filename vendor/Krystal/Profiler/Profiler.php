@@ -13,40 +13,40 @@ namespace Krystal\Profiler;
 
 final class Profiler implements ProfilerInterface
 {
-	/**
-	 * Timer for counting script's taken time
-	 * 
-	 * @var \Krystal\Profiler\Timer
-	 */
-	private $timer;
+    /**
+     * Timer for counting script's taken time
+     * 
+     * @var \Krystal\Profiler\Timer
+     */
+    private $timer;
 
-	/**
-	 * State initialization
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->timer = new Timer();
-	}
+    /**
+     * State initialization
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->timer = new Timer();
+    }
 
-	/**
-	 * Returns taken time
-	 * 
-	 * @return float
-	 */
-	public function getTakenTime()
-	{
-		return $this->timer->getSummary();
-	}
+    /**
+     * Returns taken time
+     * 
+     * @return float
+     */
+    public function getTakenTime()
+    {
+        return $this->timer->getSummary();
+    }
 
-	/**
-	 * Returns memory usage
-	 * 
-	 * @return string
-	 */
-	public function getMemoryUsage()
-	{
-		return Memory::getUsage();
-	}
+    /**
+     * Returns memory usage
+     * 
+     * @return string
+     */
+    public function getMemoryUsage()
+    {
+        return Memory::getUsage();
+    }
 }

@@ -13,20 +13,20 @@ namespace Krystal\Profiler;
 
 class Memory
 {
-	/**
-	 * Returns memory usage
-	 * 
-	 * @return string
-	 */
-	public static function getUsage()
-	{
-		$size = memory_get_usage(true);
-		$unit = array('b', 'kb', 'mb', 'gb', 'tb', 'pb');
+    /**
+     * Returns memory usage
+     * 
+     * @return string
+     */
+    public static function getUsage()
+    {
+        $size = memory_get_usage(true);
+        $unit = array('b', 'kb', 'mb', 'gb', 'tb', 'pb');
 
-		// Count the exponent 
-		$exp = floor(log($size, 1024));
-		$pow = pow(1024, $exp);
+        // Count the exponent 
+        $exp = floor(log($size, 1024));
+        $pow = pow(1024, $exp);
 
-		return round($size / $pow, 2).' '.strtoupper($unit[$exp]);
-	}
+        return round($size / $pow, 2).' '.strtoupper($unit[$exp]);
+    }
 }

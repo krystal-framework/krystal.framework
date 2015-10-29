@@ -15,75 +15,75 @@ use LogicException;
 
 final class Timer implements TimerInterface
 {
-	/**
-	 * Initial values
-	 * 
-	 * @var integer
-	 */
-	private $start, $end;
+    /**
+     * Initial values
+     * 
+     * @var integer
+     */
+    private $start, $end;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param boolean $auto Whether to automatically start the time on initialization
-	 * @return void
-	 */
-	public function __construct($auto = true)
-	{
-		if ($auto === true) {
-			$this->start();
-		}
-	}
+    /**
+     * State initialization
+     * 
+     * @param boolean $auto Whether to automatically start the time on initialization
+     * @return void
+     */
+    public function __construct($auto = true)
+    {
+        if ($auto === true) {
+            $this->start();
+        }
+    }
 
-	/**
-	 * Starts a timer
-	 * 
-	 * @return void
-	 */
-	public function start()
-	{
-		$this->start = microtime(true);
-	}
+    /**
+     * Starts a timer
+     * 
+     * @return void
+     */
+    public function start()
+    {
+        $this->start = microtime(true);
+    }
 
-	/**
-	 * Stops a times
-	 * 
-	 * @return void
-	 */
-	private function stop()
-	{
-		$this->end = microtime(true);
-	}
+    /**
+     * Stops a times
+     * 
+     * @return void
+     */
+    private function stop()
+    {
+        $this->end = microtime(true);
+    }
 
-	/**
-	 * Retrieves summary time
-	 * 
-	 * @throws \LogicException if timer was not started
-	 * @return string
-	 */
-	public function getSummary()
-	{
-		$this->stop();
+    /**
+     * Retrieves summary time
+     * 
+     * @throws \LogicException if timer was not started
+     * @return string
+     */
+    public function getSummary()
+    {
+        $this->stop();
 
-		if ($this->start !== null) {
-			$summary = $this->end - $this->start;
-			$summary = round($summary, 2);
-			
-			return $summary;
+        if ($this->start !== null) {
+            $summary = $this->end - $this->start;
+            $summary = round($summary, 2);
 
-		} else {
-			throw new LogicException('Timer was not started');
-		}
-	}
+            return $summary;
 
-	/**
-	 * Resets the timer
-	 * 
-	 * @return void
-	 */
-	public function reset()
-	{
-		$this->start = 0;
-		$this->end	 = 0;
-	}
+        } else {
+            throw new LogicException('Timer was not started');
+        }
+    }
+
+    /**
+     * Resets the timer
+     * 
+     * @return void
+     */
+    public function reset()
+    {
+        $this->start = 0;
+        $this->end   = 0;
+    }
 }

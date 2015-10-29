@@ -13,17 +13,17 @@ namespace Krystal\Profiler;
 
 interface ProfilerInterface
 {
-	/**
-	 * Returns taken time
-	 * 
-	 * @return float
-	 */
-	public function getTakenTime();
+    /**
+     * Returns taken time
+     * 
+     * @return float
+     */
+    public function getTakenTime();
 
-	/**
-	 * Returns memory usage
-	 * 
-	 * @return string
-	 */
-	public function getMemoryUsage();
+    /**
+     * Returns memory usage
+     * 
+     * @return string
+     */
+    public function getMemoryUsage();
 }

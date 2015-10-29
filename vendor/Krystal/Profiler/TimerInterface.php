@@ -13,10 +13,10 @@ namespace Krystal\Profiler;
 
 interface TimerInterface
 {
-	/**
-	 * Starts a timer
-	 * 
-	 * @return void
-	 */
-	public function start();
+    /**
+     * Starts a timer
+     * 
+     * @return void
+     */
+    public function start();
 }
