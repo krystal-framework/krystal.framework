@@ -13,32 +13,32 @@ namespace Krystal\Security;
 
 interface CsrfProtectorInterface
 {
-	/**
-	 * Prepares to run
-	 * 
-	 * @return void
-	 */
-	public function prepare();
+    /**
+     * Prepares to run
+     * 
+     * @return void
+     */
+    public function prepare();
 
-	/**
-	 * Returns generated token
-	 * 
-	 * @return string
-	 */
-	public function getToken();
+    /**
+     * Returns generated token
+     * 
+     * @return string
+     */
+    public function getToken();
 
-	/**
-	 * Checks whether token is expired
-	 * 
-	 * @return boolean
-	 */
-	public function isExpired();
+    /**
+     * Checks whether token is expired
+     * 
+     * @return boolean
+     */
+    public function isExpired();
 
-	/**
-	 * Check whether coming token is valid
-	 * 
-	 * @param string $token Target token to be validated
-	 * @return boolean
-	 */
-	public function isValid($token);
+    /**
+     * Check whether coming token is valid
+     * 
+     * @param string $token Target token to be validated
+     * @return boolean
+     */
+    public function isValid($token);
 }
