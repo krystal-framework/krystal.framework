@@ -13,34 +13,34 @@ namespace Krystal\I18n;
 
 interface TranslatorInterface
 {
-	/**
-	 * Translate array values if possible
-	 * 
-	 * @param array $array
-	 * @return array
-	 */
-	public function translateArray(array $array);
+    /**
+     * Translate array values if possible
+     * 
+     * @param array $array
+     * @return array
+     */
+    public function translateArray(array $array);
 
-	/**
-	 * Translates a string
-	 * 
-	 * @return string
-	 */
-	public function translate();
+    /**
+     * Translates a string
+     * 
+     * @return string
+     */
+    public function translate();
 
-	/**
-	 * Extends first language array ($data)
-	 * 
-	 * @param array [$args]
-	 * @return void
-	 */
-	public function extend();
+    /**
+     * Extends first language array ($data)
+     * 
+     * @param array [$args]
+     * @return void
+     */
+    public function extend();
 
-	/**
-	 * Check whether a string exists in a stack
-	 * 
-	 * @param string $string The target string
-	 * @return boolean
-	 */
-	public function exists($string);
+    /**
+     * Check whether a string exists in a stack
+     * 
+     * @param string $string The target string
+     * @return boolean
+     */
+    public function exists($string);
 }
