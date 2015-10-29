@@ -13,21 +13,21 @@ namespace Krystal\Image\Tool\Upload\Plugin;
 
 final class ThumbFactory
 {
-	/**
-	 * Builds thumb uploader
-	 * 
-	 * @param string $dir Target directory
-	 * @param integer $quality Desired quality for thumbs
-	 * @param array $options
-	 * @return \Krystal\Image\Tool\Upload\Plugin\ThumbFactory
-	 */
-	public function build($dir, $quality, array $options = array())
-	{
-		// Alter default quality on demand
-		if (isset($options['quality'])) {
-			$quality = $options['quality'];
-		}
+    /**
+     * Builds thumb uploader
+     * 
+     * @param string $dir Target directory
+     * @param integer $quality Desired quality for thumbs
+     * @param array $options
+     * @return \Krystal\Image\Tool\Upload\Plugin\ThumbFactory
+     */
+    public function build($dir, $quality, array $options = array())
+    {
+        // Alter default quality on demand
+        if (isset($options['quality'])) {
+            $quality = $options['quality'];
+        }
 
-		return new Thumb($dir, $options['dimensions'], $quality);
-	}
+        return new Thumb($dir, $options['dimensions'], $quality);
+    }
 }

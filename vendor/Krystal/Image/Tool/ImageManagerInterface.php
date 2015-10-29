@@ -16,28 +16,28 @@ namespace Krystal\Image\Tool;
  */
 interface ImageManagerInterface
 {
-	/**
-	 * Returns prepared ImageBag instance
-	 * 
-	 * @return ImageBag
-	 */
-	public function getImageBag();
+    /**
+     * Returns prepared ImageBag instance
+     * 
+     * @return ImageBag
+     */
+    public function getImageBag();
 
-	/**
-	 * Uploads an image from $files
-	 * 
-	 * @param string $id
-	 * @param array $files Files collection
-	 * @return boolean
-	 */
-	public function upload($id, array $files);
+    /**
+     * Uploads an image from $files
+     * 
+     * @param string $id
+     * @param array $files Files collection
+     * @return boolean
+     */
+    public function upload($id, array $files);
 
-	/**
-	 * Deletes a directory by its id
-	 * 
-	 * @param string $id
-	 * @param string $image Optional image filter
-	 * @return boolean
-	 */
-	public function delete($id, $image = null);
+    /**
+     * Deletes a directory by its id
+     * 
+     * @param string $id
+     * @param string $image Optional image filter
+     * @return boolean
+     */
+    public function delete($id, $image = null);
 }

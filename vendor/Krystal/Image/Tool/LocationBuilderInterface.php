@@ -13,23 +13,23 @@ namespace Krystal\Image\Tool;
 
 interface LocationBuilderInterface
 {
-	/**
-	 * Build a path to the image on the filesystem
-	 * 
-	 * @param string $id
-	 * @param string $image
-	 * @param string $dimension
-	 * @return string
-	 */
-	public function buildPath($id, $image, $dimension);
+    /**
+     * Build a path to the image on the filesystem
+     * 
+     * @param string $id
+     * @param string $image
+     * @param string $dimension
+     * @return string
+     */
+    public function buildPath($id, $image, $dimension);
 
-	/**
-	 * Builds an URL to the image
-	 * 
-	 * @param string $id
-	 * @param string $image
-	 * @param string $dimension
-	 * @return string
-	 */
-	public function buildUrl($id, $image, $dimension);
+    /**
+     * Builds an URL to the image
+     * 
+     * @param string $id
+     * @param string $image
+     * @param string $dimension
+     * @return string
+     */
+    public function buildUrl($id, $image, $dimension);
 }
