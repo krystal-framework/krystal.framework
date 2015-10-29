@@ -13,19 +13,19 @@ namespace Krystal\Session;
 
 interface SessionValidatorInterface
 {
-	/**
-	 * Checks whether current session is valid
-	 * 
-	 * @param \Krystal\Session\SessionBagInterface $sessionBag
-	 * @return boolean
-	 */
-	public function isValid(SessionBagInterface $sessionBag);
+    /**
+     * Checks whether current session is valid
+     * 
+     * @param \Krystal\Session\SessionBagInterface $sessionBag
+     * @return boolean
+     */
+    public function isValid(SessionBagInterface $sessionBag);
 
-	/**
-	 * Writes validation data to the session
-	 * 
-	 * @param \Krystal\Session\SessionBagInterface $sessionBag
-	 * @return void
-	 */
-	public function write(SessionBagInterface $sessionBag);
+    /**
+     * Writes validation data to the session
+     * 
+     * @param \Krystal\Session\SessionBagInterface $sessionBag
+     * @return void
+     */
+    public function write(SessionBagInterface $sessionBag);
 }

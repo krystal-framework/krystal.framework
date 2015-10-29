@@ -16,53 +16,53 @@ namespace Krystal\Session\Adapter;
  */
 interface SaveHandlerInterface
 {
-	/**
-	 * Opens a new session internally
-	 * 
-	 * @param string $path Session path
-	 * @param string $name
-	 * @return boolean
-	 */
-	public function open($path, $name);
+    /**
+     * Opens a new session internally
+     * 
+     * @param string $path Session path
+     * @param string $name
+     * @return boolean
+     */
+    public function open($path, $name);
 
-	/**
-	 * Closes the session internally
-	 * 
-	 * @return boolean
-	 */
-	public function close();
+    /**
+     * Closes the session internally
+     * 
+     * @return boolean
+     */
+    public function close();
 
-	/**
-	 * Writes data to the session
-	 * 
-	 * @param string $id Session id
-	 * @param array $data Session data
-	 * @return boolean
-	 */
-	public function write($id, $data);
+    /**
+     * Writes data to the session
+     * 
+     * @param string $id Session id
+     * @param array $data Session data
+     * @return boolean
+     */
+    public function write($id, $data);
 
-	/**
-	 * Reads data from the session
-	 * 
-	 * @param string $id Session id (used internally by PHP engine)
-	 * @return string (Always! or PHP crashes)
-	 */
-	public function read($id);
+    /**
+     * Reads data from the session
+     * 
+     * @param string $id Session id (used internally by PHP engine)
+     * @return string (Always! or PHP crashes)
+     */
+    public function read($id);
 
-	/**
-	 * Deletes data from the session
-	 * 
-	 * @param string $id Session id
-	 * @throws \PDOException If an error occurred
-	 * @return boolean true always
-	 */
-	public function destroy($id);
+    /**
+     * Deletes data from the session
+     * 
+     * @param string $id Session id
+     * @throws \PDOException If an error occurred
+     * @return boolean true always
+     */
+    public function destroy($id);
 
-	/**
-	 * Garbage collection
-	 * 
-	 * @param integer $maxlifetime
-	 * @return boolean Depending on success
-	 */
-	public function gc($maxlifetime);
+    /**
+     * Garbage collection
+     * 
+     * @param integer $maxlifetime
+     * @return boolean Depending on success
+     */
+    public function gc($maxlifetime);
 }
