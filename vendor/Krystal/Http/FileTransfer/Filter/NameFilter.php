@@ -17,57 +17,57 @@ use LogicException;
 
 final class NameFilter implements FileInputFilerInterface
 {
-	/**
-	 * Any compliant filter
-	 * 
-	 * @var \Krystal\Http\FileTransfer\Filter\Type\FilterTypeInterface
-	 */
-	private $filter;
+    /**
+     * Any compliant filter
+     * 
+     * @var \Krystal\Http\FileTransfer\Filter\Type\FilterTypeInterface
+     */
+    private $filter;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\Http\FileTransfer\Filter\Type\FilterTypeInterface $filter
-	 * @return void
-	 */
-	public function __construct(FilterTypeInterface $filter)
-	{
-		$this->filter = $filter;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\Http\FileTransfer\Filter\Type\FilterTypeInterface $filter
+     * @return void
+     */
+    public function __construct(FilterTypeInterface $filter)
+    {
+        $this->filter = $filter;
+    }
 
-	/**
-	 * Builds an instance
-	 * 
-	 * @param string $filter
-	 * @throws \LogicException If Unknown filter supplied
-	 * @return \Krystal\Http\FileTransfer\Filter\NameFilter
-	 */
-	public static function factory($type = 'unique')
-	{
-		switch ($type) {
-			case 'unique':
-				$filter = new Type\Unique();
-			break;
+    /**
+     * Builds an instance
+     * 
+     * @param string $filter
+     * @throws \LogicException If Unknown filter supplied
+     * @return \Krystal\Http\FileTransfer\Filter\NameFilter
+     */
+    public static function factory($type = 'unique')
+    {
+        switch ($type) {
+            case 'unique':
+                $filter = new Type\Unique();
+            break;
 
-			default:
-				throw new LogicException(sprintf('Unknown filter supplied "%s"', $type));
-		}
+            default:
+                throw new LogicException(sprintf('Unknown filter supplied "%s"', $type));
+        }
 
-		return new self($filter);
-	}
+        return new self($filter);
+    }
 
-	/**
-	 * Filter names inside each file entity applying defined filter
-	 * 
-	 * @param array $files
-	 * @return void
-	 */
-	public function filter(array $files)
-	{
-		foreach ($files as $fileEntity) {
+    /**
+     * Filter names inside each file entity applying defined filter
+     * 
+     * @param array $files
+     * @return void
+     */
+    public function filter(array $files)
+    {
+        foreach ($files as $fileEntity) {
 
-			$name = $this->filter->filter($fileEntity->getName());
-			$fileEntity->setName($name);
-		}
-	}
+            $name = $this->filter->filter($fileEntity->getName());
+            $fileEntity->setName($name);
+        }
+    }
 }

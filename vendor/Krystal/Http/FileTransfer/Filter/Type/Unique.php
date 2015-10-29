@@ -13,14 +13,14 @@ namespace Krystal\Http\FileTransfer\Filter\Type;
 
 final class Unique implements FilterTypeInterface
 {
-	/**
-	 * Filters file's base name
-	 * 
-	 * @param string $name
-	 * @return string
-	 */
-	public function filter($name)
-	{
-		return sprintf('%s.%s', uniqid(false, false), pathinfo($name, \PATHINFO_EXTENSION));
-	}
+    /**
+     * Filters file's base name
+     * 
+     * @param string $name
+     * @return string
+     */
+    public function filter($name)
+    {
+        return sprintf('%s.%s', uniqid(false, false), pathinfo($name, \PATHINFO_EXTENSION));
+    }
 }

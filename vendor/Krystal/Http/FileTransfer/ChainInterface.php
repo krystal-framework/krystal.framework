@@ -13,28 +13,28 @@ namespace Krystal\Http\FileTransfer;
 
 interface ChainInterface
 {
-	/**
-	 * Adds an uploader that implements UploaderAwareInterface
-	 * 
-	 * @param UploaderAwareInterface $uploader
-	 * @return UploadChain
-	 */
-	public function addUploader(UploaderAwareInterface $uploader);
+    /**
+     * Adds an uploader that implements UploaderAwareInterface
+     * 
+     * @param UploaderAwareInterface $uploader
+     * @return UploadChain
+     */
+    public function addUploader(UploaderAwareInterface $uploader);
 
-	/**
-	 * Add more uploaders
-	 * 
-	 * @param array $uploaders
-	 * @return UploadChain
-	 */
-	public function addUploaders(array $uploaders);
+    /**
+     * Add more uploaders
+     * 
+     * @param array $uploaders
+     * @return UploadChain
+     */
+    public function addUploaders(array $uploaders);
 
-	/**
-	 * Uploads via all defined uploaders
-	 * 
-	 * @param string $id
-	 * @param array $files
-	 * @return void
-	 */
-	public function upload($id, array $files);
+    /**
+     * Uploads via all defined uploaders
+     * 
+     * @param string $id
+     * @param array $files
+     * @return void
+     */
+    public function upload($id, array $files);
 }

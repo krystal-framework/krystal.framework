@@ -13,11 +13,11 @@ namespace Krystal\Http\FileTransfer\Filter\Type;
 
 interface FilterTypeInterface
 {
-	/**
-	 * Filters file's base name
-	 * 
-	 * @param string $name
-	 * @return string
-	 */
-	public function filter($name);
+    /**
+     * Filters file's base name
+     * 
+     * @param string $name
+     * @return string
+     */
+    public function filter($name);
 }

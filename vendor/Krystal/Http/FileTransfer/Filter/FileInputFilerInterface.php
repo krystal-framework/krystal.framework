@@ -13,11 +13,11 @@ namespace Krystal\Http\FileTransfer\Filter;
 
 interface FileInputFilerInterface
 {
-	/**
-	 * Filter names inside each file entity applying defined filter
-	 * 
-	 * @param array $files
-	 * @return void
-	 */
-	public function filter(array $files);
+    /**
+     * Filter names inside each file entity applying defined filter
+     * 
+     * @param array $files
+     * @return void
+     */
+    public function filter(array $files);
 }

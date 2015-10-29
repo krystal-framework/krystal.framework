@@ -14,143 +14,143 @@ namespace Krystal\Http\Client;
 use RuntimeException;
 
 if (!function_exists('curl_init')) {
-	throw new RuntimeException('To use cURL HTTP adapter, you must have curl extension installed');
+    throw new RuntimeException('To use cURL HTTP adapter, you must have curl extension installed');
 }
 
 final class Curl implements CurlInterface
 {
-	/**
-	 * Curl resource
-	 * 
-	 * @var resource
-	 */
-	private $ch;
+    /**
+     * Curl resource
+     * 
+     * @var resource
+     */
+    private $ch;
 
-	/**
-	 * Curl errors regarding current session
-	 * 
-	 * @var array
-	 */
-	private $errors = array();
+    /**
+     * Curl errors regarding current session
+     * 
+     * @var array
+     */
+    private $errors = array();
 
-	/**
-	 * State initialization
-	 * 
-	 * @param array $options
-	 * @return void
-	 */
-	public function __construct(array $options = array())
-	{
-		if (!empty($options)) {
-			$this->setOptions($options);
-		}
-	}
+    /**
+     * State initialization
+     * 
+     * @param array $options
+     * @return void
+     */
+    public function __construct(array $options = array())
+    {
+        if (!empty($options)) {
+            $this->setOptions($options);
+        }
+    }
 
-	/**
-	 * Destructor.
-	 * Closes connection if opened 
-	 * 
-	 * @return void
-	 */
-	public function __destruct()
-	{
-		$this->close();
-	}
+    /**
+     * Destructor.
+     * Closes connection if opened 
+     * 
+     * @return void
+     */
+    public function __destruct()
+    {
+        $this->close();
+    }
 
-	/**
-	 * Closes cURL connection
-	 *
-	 * @return void
-	 */
-	public function close()
-	{
-		if (is_resource($this->ch)) {
-			curl_close($this->ch);
-		}
-	}
+    /**
+     * Closes cURL connection
+     *
+     * @return void
+     */
+    public function close()
+    {
+        if (is_resource($this->ch)) {
+            curl_close($this->ch);
+        }
+    }
 
-	/**
-	 * Inits the cURL
-	 * 
-	 * @param array $options
-	 * @return void
-	 */
-	public function init(array $options = array())
-	{
-		$this->ch = curl_init();
+    /**
+     * Inits the cURL
+     * 
+     * @param array $options
+     * @return void
+     */
+    public function init(array $options = array())
+    {
+        $this->ch = curl_init();
 
-		if (!empty($options)) {
-			$this->setOptions($options);
-		}
-	}
+        if (!empty($options)) {
+            $this->setOptions($options);
+        }
+    }
 
-	/**
-	 * Returns a clone 
-	 *
-	 * @return object
-	 */
-	public function clone()
-	{
-		return curl_copy_handle($this->ch);
-	}
+    /**
+     * Returns a clone 
+     *
+     * @return object
+     */
+    public function clone()
+    {
+        return curl_copy_handle($this->ch);
+    }
 
-	/**
-	 * Return curl errors (if any)
-	 * 
-	 * @return array
-	 */
-	public function getErrors()
-	{
-		return $this->errors;
-	}
+    /**
+     * Return curl errors (if any)
+     * 
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 
-	/**
-	 * Perform a cURL session
-	 * This method should be called after initializing a cURL session  
-	 * and all the options for the session are set.
-	 * 
-	 * @return mixed, False on failure
-	 */
-	public function exec()
-	{
-		$result = curl_exec($this->ch);
+    /**
+     * Perform a cURL session
+     * This method should be called after initializing a cURL session  
+     * and all the options for the session are set.
+     * 
+     * @return mixed, False on failure
+     */
+    public function exec()
+    {
+        $result = curl_exec($this->ch);
 
-		if ($result === false) {
-			$this->appendError();
-			return false;
-		} else {
-			return $result;
-		}
-	}
+        if ($result === false) {
+            $this->appendError();
+            return false;
+        } else {
+            return $result;
+        }
+    }
 
-	/**
-	 * Appends an error with its own code
-	 * 
-	 * @return void
-	 */
-	private function appendError()
-	{
-		$this->errors[(string) curl_errno()] = curl_error();
-	}
+    /**
+     * Appends an error with its own code
+     * 
+     * @return void
+     */
+    private function appendError()
+    {
+        $this->errors[(string) curl_errno()] = curl_error();
+    }
 
-	/**
-	 * Set CURL options
-	 * 
-	 * @param array $options
-	 * @return boolean
-	 */
-	public function setOptions(array $options)
-	{
-		return curl_setopt_array($this->ch, $options);
-	}
+    /**
+     * Set CURL options
+     * 
+     * @param array $options
+     * @return boolean
+     */
+    public function setOptions(array $options)
+    {
+        return curl_setopt_array($this->ch, $options);
+    }
 
-	/**
-	 * Returns version info
-	 * 
-	 * @return array
-	 */
-	public function getVersion()
-	{
-		return curl_version();
-	}
+    /**
+     * Returns version info
+     * 
+     * @return array
+     */
+    public function getVersion()
+    {
+        return curl_version();
+    }
 }
