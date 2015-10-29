@@ -15,51 +15,51 @@ use Krystal\Paginate\Paginator;
 
 class PaginatorTest extends \PHPUnit_Framework_TestCase
 {
-	private $paginator;
-	private $totalAmount = 30;
-	private $perPage = 10;
-	private $page = 2;
-	
-	public function setUp()
-	{
-		$paginator = new Paginator()
-		$paginator->tweak($this->totalAmount, $this->perPage, $this->page);
+    private $paginator;
+    private $totalAmount = 30;
+    private $perPage = 10;
+    private $page = 2;
 
-		$this->paginator = $paginator;
-	}
+    public function setUp()
+    {
+        $paginator = new Paginator()
+        $paginator->tweak($this->totalAmount, $this->perPage, $this->page);
 
-	public function tearDown()
-	{
-		unset($this->paginator);
-	}
+        $this->paginator = $paginator;
+    }
 
-	public function testFirstPageIsAlwaysOne()
-	{
-		$this->assertEquals(1, $this->paginator->getFirstPage());
-	}
+    public function tearDown()
+    {
+        unset($this->paginator);
+    }
 
-	public function testIsCurrentPageTheSame()
-	{
-		$this->assertTrue($this->paginator->isCurrentPage($this->page));
-	}
+    public function testFirstPageIsAlwaysOne()
+    {
+        $this->assertEquals(1, $this->paginator->getFirstPage());
+    }
 
-	public function testHasMoreThanOnePage()
-	{
-		$this->assertTrue($this->paginator->hasPages());
-	}
+    public function testIsCurrentPageTheSame()
+    {
+        $this->assertTrue($this->paginator->isCurrentPage($this->page));
+    }
 
-	public function testHasNextPage()
-	{
-		$this->assertFalse($this->paginator->hasNextPage());
-	}
+    public function testHasMoreThanOnePage()
+    {
+        $this->assertTrue($this->paginator->hasPages());
+    }
 
-	public function testHasPreviousPage()
-	{
-		$this->assertTrue($this->paginator->hasPreviousPage());
-	}
+    public function testHasNextPage()
+    {
+        $this->assertFalse($this->paginator->hasNextPage());
+    }
 
-	public function testTotalAmountIsTheSame()
-	{
-		$this->assertEquals($this->totalAmount, $this->paginator->getTotalAmount());
-	}
+    public function testHasPreviousPage()
+    {
+        $this->assertTrue($this->paginator->hasPreviousPage());
+    }
+
+    public function testTotalAmountIsTheSame()
+    {
+        $this->assertEquals($this->totalAmount, $this->paginator->getTotalAmount());
+    }
 }
