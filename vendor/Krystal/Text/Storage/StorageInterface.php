@@ -13,25 +13,25 @@ namespace Krystal\Text\Storage;
 
 interface StorageInterface
 {
-	/**
-	 * Loads data from a storage
-	 * 
-	 * @return array Returns loaded data
-	 */
-	public function load();
+    /**
+     * Loads data from a storage
+     * 
+     * @return array Returns loaded data
+     */
+    public function load();
 
-	/**
-	 * Saves data into a storage
-	 * 
-	 * @param array $data Data to be saved
-	 * @return void
-	 */
-	public function save(array $data);
+    /**
+     * Saves data into a storage
+     * 
+     * @param array $data Data to be saved
+     * @return void
+     */
+    public function save(array $data);
 
-	/**
-	 * Clears data from a storage
-	 * 
-	 * @return void
-	 */
-	public function clear();
+    /**
+     * Clears data from a storage
+     * 
+     * @return void
+     */
+    public function clear();
 }

@@ -13,11 +13,11 @@ namespace Krystal\Text;
 
 interface SlugGeneratorInterface
 {
-	/**
-	 * Generates a slug
-	 * 
-	 * @param string $string Target string
-	 * @return string
-	 */
-	public function generate($string);
+    /**
+     * Generates a slug
+     * 
+     * @param string $string Target string
+     * @return string
+     */
+    public function generate($string);
 }

@@ -13,12 +13,12 @@ namespace Krystal\Text;
 
 interface TextTrimmerInterface
 {
-	/**
-	 * Trims the text
-	 * 
-	 * @param string $content
-	 * @param integer $maxLen Maximal allowed length
-	 * @return string
-	 */
-	public function trim($content, $maxLen);
+    /**
+     * Trims the text
+     * 
+     * @param string $content
+     * @param integer $maxLen Maximal allowed length
+     * @return string
+     */
+    public function trim($content, $maxLen);
 }
