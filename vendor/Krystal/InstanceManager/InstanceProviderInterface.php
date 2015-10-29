@@ -13,10 +13,10 @@ namespace Krystal\InstanceManager;
 
 interface InstanceProviderInterface
 {
-	/**
-	 * Returns all instances that are available
-	 * 
-	 * @return array
-	 */
-	public function getAll();
+    /**
+     * Returns all instances that are available
+     * 
+     * @return array
+     */
+    public function getAll();
 }

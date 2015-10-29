@@ -13,13 +13,13 @@ namespace Krystal\InstanceManager;
 
 interface InstanceBuilderInterface
 {
-	/**
-	 * Builds an instance of a class passing arguments to its constructor
-	 * 
-	 * @param string $class PSR-0 compliant class name
-	 * @param array $args Arguments to be passed to class's contructor
-	 * @throws \RuntimeException If attempting to build non-existing class
-	 * @return object
-	 */
-	public function build($class, array $args);
+    /**
+     * Builds an instance of a class passing arguments to its constructor
+     * 
+     * @param string $class PSR-0 compliant class name
+     * @param array $args Arguments to be passed to class's contructor
+     * @throws \RuntimeException If attempting to build non-existing class
+     * @return object
+     */
+    public function build($class, array $args);
 }
