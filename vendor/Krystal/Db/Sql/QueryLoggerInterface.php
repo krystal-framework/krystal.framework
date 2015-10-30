@@ -13,25 +13,25 @@ namespace Krystal\Db\Sql;
 
 interface QueryLoggerInterface
 {
-	/**
-	 * Adds a query to the stack
-	 * 
-	 * @param string $query
-	 * @return void
-	 */
-	public function add($query);
+    /**
+     * Adds a query to the stack
+     * 
+     * @param string $query
+     * @return void
+     */
+    public function add($query);
 
-	/**
-	 * Returns all queries
-	 * 
-	 * @return array
-	 */
-	public function getAll();
+    /**
+     * Returns all queries
+     * 
+     * @return array
+     */
+    public function getAll();
 
-	/**
-	 * Counts amount of queries in the stack
-	 * 
-	 * @return integer
-	 */
-	public function getCount();
+    /**
+     * Counts amount of queries in the stack
+     * 
+     * @return integer
+     */
+    public function getCount();
 }

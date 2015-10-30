@@ -15,22 +15,22 @@ use PDO;
 
 final class MySQL implements ConnectorInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getArgs(array $config)
-	{
-		$dsn = 'mysql:host='.$config['host'];
+    /**
+     * {@inheritDoc}
+     */
+    public function getArgs(array $config)
+    {
+        $dsn = 'mysql:host='.$config['host'];
 
-		if (isset($config['dbname'])) {
-			$dsn .= ';dbname='.$config['dbname'];
-		}
+        if (isset($config['dbname'])) {
+            $dsn .= ';dbname='.$config['dbname'];
+        }
 
-		return array($dsn, $config['username'], $config['password'], array(
-			PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_EMULATE_PREPARES => true,
-			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-		));
-	}
+        return array($dsn, $config['username'], $config['password'], array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_EMULATE_PREPARES => true,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ));
+    }
 }

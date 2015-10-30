@@ -15,16 +15,16 @@ use PDO;
 
 final class SqlServer implements ConnectorInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getArgs(array $config)
-	{
-		$dsn = sprintf('sqlsrv:server=%s;Database=%s', $config['host'], $config['dbname']);
-		return array($dsn, $config['username'], $config['password'], array(
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_EMULATE_PREPARES => true,
-			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-		));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getArgs(array $config)
+    {
+        $dsn = sprintf('sqlsrv:server=%s;Database=%s', $config['host'], $config['dbname']);
+        return array($dsn, $config['username'], $config['password'], array(
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_EMULATE_PREPARES => true,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ));
+    }
 }

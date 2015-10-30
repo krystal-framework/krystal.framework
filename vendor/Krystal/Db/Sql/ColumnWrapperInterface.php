@@ -13,11 +13,11 @@ namespace Krystal\Db\Sql;
 
 interface ColumnWrapperInterface
 {
-	/**
-	 * Wraps a column on demand
-	 * 
-	 * @param string $target
-	 * @return string
-	 */
-	public function wrap($target);
+    /**
+     * Wraps a column on demand
+     * 
+     * @param string $target
+     * @return string
+     */
+    public function wrap($target);
 }

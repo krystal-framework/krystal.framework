@@ -13,11 +13,11 @@ namespace Krystal\Db\Sql\Connector;
 
 interface ConnectorInterface
 {
-	/**
-	 * Returns arguments to be passed to PDO
-	 * 
-	 * @param array $config Configuration data
-	 * @return array
-	 */
-	public function getArgs(array $config);
+    /**
+     * Returns arguments to be passed to PDO
+     * 
+     * @param array $config Configuration data
+     * @return array
+     */
+    public function getArgs(array $config);
 }

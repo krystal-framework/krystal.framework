@@ -13,11 +13,11 @@ namespace Krystal\Db\Filter;
 
 interface QueryGeneratorInterface
 {
-	/**
-	 * Generates URL
-	 * 
-	 * @param array $data
-	 * @return string
-	 */
-	public function generate(array $data);
+    /**
+     * Generates URL
+     * 
+     * @param array $data
+     * @return string
+     */
+    public function generate(array $data);
 }

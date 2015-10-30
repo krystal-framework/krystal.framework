@@ -13,31 +13,31 @@ namespace Krystal\Db\Sql;
 
 final class RawSqlFragment implements RawSqlFragmentInterface
 {
-	/**
-	 * A fragment itself
-	 * 
-	 * @var string
-	 */
-	private $fragment;
+    /**
+     * A fragment itself
+     * 
+     * @var string
+     */
+    private $fragment;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param string $fragment
-	 * @return void
-	 */
-	public function __construct($fragment)
-	{
-		$this->fragment = $fragment;
-	}
+    /**
+     * State initialization
+     * 
+     * @param string $fragment
+     * @return void
+     */
+    public function __construct($fragment)
+    {
+        $this->fragment = $fragment;
+    }
 
-	/**
-	 * Returns defined fragment
-	 * 
-	 * @return string
-	 */
-	public function getFragment()
-	{
-		return $this->fragment;
-	}
+    /**
+     * Returns defined fragment
+     * 
+     * @return string
+     */
+    public function getFragment()
+    {
+        return $this->fragment;
+    }
 }

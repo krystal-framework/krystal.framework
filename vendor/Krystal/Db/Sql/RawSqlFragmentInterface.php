@@ -13,10 +13,10 @@ namespace Krystal\Db\Sql;
 
 interface RawSqlFragmentInterface
 {
-	/**
-	 * Returns defined fragment
-	 * 
-	 * @return string
-	 */
-	public function getFragment();
+    /**
+     * Returns defined fragment
+     * 
+     * @return string
+     */
+    public function getFragment();
 }

@@ -15,18 +15,18 @@ use PDO;
 
 final class PostgreSQL implements ConnectorInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getArgs(array $params)
-	{
-		// Build DSN string
-		$dsn = sprintf('pgsql:dbname=%s;host=%s;user=%s;password=%s', $params['dbname'], $params['host'], $params['user'], $params['password']);
+    /**
+     * {@inheritDoc}
+     */
+    public function getArgs(array $params)
+    {
+        // Build DSN string
+        $dsn = sprintf('pgsql:dbname=%s;host=%s;user=%s;password=%s', $params['dbname'], $params['host'], $params['user'], $params['password']);
 
-		return array($dsn, null, null, array(
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_EMULATE_PREPARES => true,
-			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-		));
-	}
+        return array($dsn, null, null, array(
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_EMULATE_PREPARES => true,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ));
+    }
 }

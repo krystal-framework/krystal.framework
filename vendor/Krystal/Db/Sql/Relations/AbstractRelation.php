@@ -15,21 +15,21 @@ use Krystal\Db\Sql\DbInterface;
 
 abstract class AbstractRelation
 {
-	/**
-	 * Database service
-	 * 
-	 * @var \Krystal\Db\Sql\DbInterface
-	 */
-	protected $db;
+    /**
+     * Database service
+     * 
+     * @var \Krystal\Db\Sql\DbInterface
+     */
+    protected $db;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\Db\Sql\DbInterface $db Database service
-	 * @return void
-	 */
-	public function __construct(DbInterface $db)
-	{
-		$this->db = $db;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\Db\Sql\DbInterface $db Database service
+     * @return void
+     */
+    public function __construct(DbInterface $db)
+    {
+        $this->db = $db;
+    }
 }

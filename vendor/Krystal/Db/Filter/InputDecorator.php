@@ -19,85 +19,85 @@ use ArrayAccess;
  */
 final class InputDecorator implements ArrayAccess
 {
-	/**
-	 * Target data to be decorated
-	 * 
-	 * @var array
-	 */
-	private $data = array();
+    /**
+     * Target data to be decorated
+     * 
+     * @var array
+     */
+    private $data = array();
 
-	/**
-	 * State initialization
-	 * 
-	 * @param array $data
-	 * @return void
-	 */
-	public function __construct(array $data)
-	{
-		$this->data = $data;
-	}
-
-	/**
-	 * Checks whether a key exist in the target array
-	 * 
-	 * @param string $key Target key to be checked for existence
-	 * @return boolean
-	 */
-	private function has($key)
-	{
-		return array_key_exists($key, $this->data);
-	}
-
-	/**
-	 * Appends data
-	 * 
-	 * @param string $offset
-	 * @param string $value
-	 * @return void
-	 */
-	public function offsetSet($offset, $value)
-	{
-		$this->data[$offset] = $value;
-	}
-
-	/**
-	 * Checks whether a key exists in the target array
-	 * 
-	 * @param string $key
-	 * @return boolean
-	 */
-	public function offsetExists($key)
-	{
-		return $this->has($key);
+    /**
+     * State initialization
+     * 
+     * @param array $data
+     * @return void
+     */
+    public function __construct(array $data)
+    {
+        $this->data = $data;
     }
 
-	/**
-	 * Removes a value from the target array
-	 * 
-	 * @param string $key
-	 * @return void
-	 */
-	public function offsetUnset($key)
-	{
-		if ($this->has($key)) {
-			unset($this->data[$key]);
-		}
+    /**
+     * Checks whether a key exist in the target array
+     * 
+     * @param string $key Target key to be checked for existence
+     * @return boolean
+     */
+    private function has($key)
+    {
+        return array_key_exists($key, $this->data);
     }
 
-	/**
-	 * Returns a value from the target array
-	 * 
-	 * @param string $key
-	 * @return string
-	 */
-	public function offsetGet($key)
-	{
-		$default = '';
+    /**
+     * Appends data
+     * 
+     * @param string $offset
+     * @param string $value
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->data[$offset] = $value;
+    }
 
-		if ($this->has($key)) {
-			return $this->data[$key];
-		} else {
-			return $default;
-		}
-	}
+    /**
+     * Checks whether a key exists in the target array
+     * 
+     * @param string $key
+     * @return boolean
+     */
+    public function offsetExists($key)
+    {
+        return $this->has($key);
+    }
+
+    /**
+     * Removes a value from the target array
+     * 
+     * @param string $key
+     * @return void
+     */
+    public function offsetUnset($key)
+    {
+        if ($this->has($key)) {
+            unset($this->data[$key]);
+        }
+    }
+
+    /**
+     * Returns a value from the target array
+     * 
+     * @param string $key
+     * @return string
+     */
+    public function offsetGet($key)
+    {
+        $default = '';
+
+        if ($this->has($key)) {
+            return $this->data[$key];
+        } else {
+            return $default;
+        }
+    }
 }

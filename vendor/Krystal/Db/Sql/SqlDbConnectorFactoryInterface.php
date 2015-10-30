@@ -13,13 +13,13 @@ namespace Krystal\Db\Sql;
 
 interface SqlDbConnectorFactoryInterface
 {
-	/**
-	 * Builds database service instance
-	 * 
-	 * @param string $vendor Database vendor name
-	 * @param array $options Options for connection, such as username and password
-	 * @throws \RuntimeException If unknown vendor name supplied
-	 * @return \Krystal\Db\Sql\DbInterface
-	 */
-	public function build($vendor, array $options);
+    /**
+     * Builds database service instance
+     * 
+     * @param string $vendor Database vendor name
+     * @param array $options Options for connection, such as username and password
+     * @throws \RuntimeException If unknown vendor name supplied
+     * @return \Krystal\Db\Sql\DbInterface
+     */
+    public function build($vendor, array $options);
 }

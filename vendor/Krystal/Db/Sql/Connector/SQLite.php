@@ -15,21 +15,21 @@ use PDO;
 
 final class SQLite implements ConnectorInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getArgs(array $config)
-	{
-		$dsn = 'sqlite:'.$config['path'];
+    /**
+     * {@inheritDoc}
+     */
+    public function getArgs(array $config)
+    {
+        $dsn = 'sqlite:'.$config['path'];
 
-		if (isset($config['dbname'])) {
-			$dsn .= ';dbname='.$config['dbname'];
-		}
+        if (isset($config['dbname'])) {
+            $dsn .= ';dbname='.$config['dbname'];
+        }
 
-		return array($dsn, null, null, array(
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_EMULATE_PREPARES => true,
-			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-		));
-	}
+        return array($dsn, null, null, array(
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_EMULATE_PREPARES => true,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ));
+    }
 }

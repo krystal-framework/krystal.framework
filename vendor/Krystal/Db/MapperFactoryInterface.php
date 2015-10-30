@@ -16,11 +16,11 @@ use Krystal\Paginate\PaginatorInterface;
 /* All mapper factories must implement this interface regarding storage engine */
 interface MapperFactoryInterface
 {
-	/**
-	 * Builds a mapper
-	 * 
-	 * @param string $namespace PSR-0 compliant mapper
-	 * @return void
-	 */
-	public function build($namespace);
+    /**
+     * Builds a mapper
+     * 
+     * @param string $namespace PSR-0 compliant mapper
+     * @return void
+     */
+    public function build($namespace);
 }

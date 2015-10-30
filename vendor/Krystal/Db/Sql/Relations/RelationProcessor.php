@@ -15,148 +15,148 @@ use Krystal\Db\Sql\DbInterface;
 
 final class RelationProcessor implements RelationProcessorInterface
 {
-	/**
-	 * Queue of relations
-	 * 
-	 * @var array
-	 */
-	private $queue = array();
+    /**
+     * Queue of relations
+     * 
+     * @var array
+     */
+    private $queue = array();
 
-	/**
-	 * Database service
-	 * 
-	 * @var \Krystal\Db\Sql\DbInterface
-	 */
-	private $db;
+    /**
+     * Database service
+     * 
+     * @var \Krystal\Db\Sql\DbInterface
+     */
+    private $db;
 
-	/**
-	 * A name of the PK in master table
-	 * 
-	 * @var string
-	 */
-	private $pk;
+    /**
+     * A name of the PK in master table
+     * 
+     * @var string
+     */
+    private $pk;
 
-	const PARAM_RELATION = 'relation';
-	const PARAM_ARGS = 'args';
+    const PARAM_RELATION = 'relation';
+    const PARAM_ARGS = 'args';
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\Db\Sql\DbInterface $db Database service
-	 * @return void
-	 */
-	public function __construct(DbInterface $db)
-	{
-		$this->db = $db;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\Db\Sql\DbInterface $db Database service
+     * @return void
+     */
+    public function __construct(DbInterface $db)
+    {
+        $this->db = $db;
+    }
 
-	/**
-	 * Append new relation to the queue stack
-	 * 
-	 * @param string $relation
-	 * @param array $args Arguments to be passed on invoking
-	 * @return void
-	 */
-	public function queue($relation, array $args)
-	{
-		$this->queue[] = array(
-			self::PARAM_RELATION => $relation,
-			self::PARAM_ARGS => $args
-		);
-	}
+    /**
+     * Append new relation to the queue stack
+     * 
+     * @param string $relation
+     * @param array $args Arguments to be passed on invoking
+     * @return void
+     */
+    public function queue($relation, array $args)
+    {
+        $this->queue[] = array(
+            self::PARAM_RELATION => $relation,
+            self::PARAM_ARGS => $args
+        );
+    }
 
-	/**
-	 * Checks whether queue is empty or not
-	 * 
-	 * @return boolean
-	 */
-	public function hasQueue()
-	{
-		return !empty($this->queue);
-	}
+    /**
+     * Checks whether queue is empty or not
+     * 
+     * @return boolean
+     */
+    public function hasQueue()
+    {
+        return !empty($this->queue);
+    }
 
-	/**
-	 * Processes a raw result-set appending relational data if necessary
-	 * 
-	 * @param array $rows Target collection of rows
-	 * @return array
-	 */
-	public function process(array $rows)
-	{
-		foreach ($this->queue as $queue) {
-			// Just references
-			$relation = $queue[self::PARAM_RELATION];
-			$args = $queue[self::PARAM_ARGS];
+    /**
+     * Processes a raw result-set appending relational data if necessary
+     * 
+     * @param array $rows Target collection of rows
+     * @return array
+     */
+    public function process(array $rows)
+    {
+        foreach ($this->queue as $queue) {
+            // Just references
+            $relation = $queue[self::PARAM_RELATION];
+            $args = $queue[self::PARAM_ARGS];
 
-			switch ($relation) {
-				case 'asOneToMany':
-					$relation = new OneToMany($this->db);
+            switch ($relation) {
+                case 'asOneToMany':
+                    $relation = new OneToMany($this->db);
 
-					// Grab values from arguments passed in $db->asOneToMany()
-					$slaveTable = $args[0];
-					$slaveColumnId = $args[1];
-					$alias = $args[2];
+                    // Grab values from arguments passed in $db->asOneToMany()
+                    $slaveTable = $args[0];
+                    $slaveColumnId = $args[1];
+                    $alias = $args[2];
 
-					$rows = $relation->merge($this->getMasterPkName(), $rows, $alias, $slaveTable, $slaveColumnId);
-				break;
+                    $rows = $relation->merge($this->getMasterPkName(), $rows, $alias, $slaveTable, $slaveColumnId);
+                break;
 
-				case 'asOneToOne':
-					// Grab values from arguments passed in $db->asOneToOne()
-					$column = $args[0];
-					$alias = $args[1];
-					$table = $args[2];
-					$link = $args[3];
+                case 'asOneToOne':
+                    // Grab values from arguments passed in $db->asOneToOne()
+                    $column = $args[0];
+                    $alias = $args[1];
+                    $table = $args[2];
+                    $link = $args[3];
 
-					$relation = new OneToOne($this->db);
-					$rows = $relation->merge($rows, $column, $alias, $table, $link);
-				break;
+                    $relation = new OneToOne($this->db);
+                    $rows = $relation->merge($rows, $column, $alias, $table, $link);
+                break;
 
-				case 'asManyToMany':
-					// Grab values from arguments passed in $db->asManyToMany()
-					$alias = $args[0];
-					$junction = $args[1];
-					$column = $args[2];
-					$table = $args[3];
-					$pk = $args[4];
+                case 'asManyToMany':
+                    // Grab values from arguments passed in $db->asManyToMany()
+                    $alias = $args[0];
+                    $junction = $args[1];
+                    $column = $args[2];
+                    $table = $args[3];
+                    $pk = $args[4];
 
-					$relation = new ManyToMany($this->db);
-					$rows = $relation->merge($this->getMasterPkName(), $alias, $rows, $junction, $column, $table, $pk);
-				break;
-			}
-		}
+                    $relation = new ManyToMany($this->db);
+                    $rows = $relation->merge($this->getMasterPkName(), $alias, $rows, $junction, $column, $table, $pk);
+                break;
+            }
+        }
 
-		return $rows;
-	}
+        return $rows;
+    }
 
-	/**
-	 * Extracts PK column from a table
-	 * 
-	 * @param string $table
-	 * @return string
-	 */
-	private function extractPkName($table)
-	{
-		if (is_null($this->pk)) {
-			// This has been tested only in MySQL so far
-			$row = $this->db->showKeys()
-							->from($table)
-							->whereEquals('Key_name', 'PRIMARY')
-							->getStmt()
-							->fetch();
+    /**
+     * Extracts PK column from a table
+     * 
+     * @param string $table
+     * @return string
+     */
+    private function extractPkName($table)
+    {
+        if (is_null($this->pk)) {
+            // This has been tested only in MySQL so far
+            $row = $this->db->showKeys()
+                            ->from($table)
+                            ->whereEquals('Key_name', 'PRIMARY')
+                            ->getStmt()
+                            ->fetch();
 
-			$this->pk = $row['Column_name'];
-		}
+            $this->pk = $row['Column_name'];
+        }
 
-		return $this->pk;
-	}
+        return $this->pk;
+    }
 
-	/**
-	 * Returns PK's column name of the master table
-	 * 
-	 * @return string
-	 */
-	private function getMasterPkName()
-	{
-		return $this->extractPkName($this->db->getQueryBuilder()->getSelectedTable());
-	}
+    /**
+     * Returns PK's column name of the master table
+     * 
+     * @return string
+     */
+    private function getMasterPkName()
+    {
+        return $this->extractPkName($this->db->getQueryBuilder()->getSelectedTable());
+    }
 }

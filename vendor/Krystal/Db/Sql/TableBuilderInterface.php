@@ -13,18 +13,18 @@ namespace Krystal\Db\MySQL;
 
 interface TableBuilderInterface
 {
-	/**
-	 * Loads data from file
-	 * 
-	 * @param string $filename
-	 * @return boolean
-	 */
-	public function loadFromFile($filename);
+    /**
+     * Loads data from file
+     * 
+     * @param string $filename
+     * @return boolean
+     */
+    public function loadFromFile($filename);
 
-	/**
-	 * Build tables
-	 * 
-	 * @return boolean Depending on success
-	 */
-	public function run();
+    /**
+     * Build tables
+     * 
+     * @return boolean Depending on success
+     */
+    public function run();
 }

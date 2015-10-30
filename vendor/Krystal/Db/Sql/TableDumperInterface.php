@@ -13,11 +13,11 @@ namespace Krystal\Db\Sql;
 
 interface TableDumperInterface
 {
-	/**
-	 * Dumps into SQL string
-	 * 
-	 * @param array $tables
-	 * @return string
-	 */
-	public function dump(array $tables = array());
+    /**
+     * Dumps into SQL string
+     * 
+     * @param array $tables
+     * @return string
+     */
+    public function dump(array $tables = array());
 }
