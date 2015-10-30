@@ -13,38 +13,38 @@ namespace Krystal\Captcha\Standard\Text;
 
 abstract class AbstractGenerator
 {
-	/**
-	 * Target answer
-	 * 
-	 * @var string
-	 */
-	protected $answer;
+    /**
+     * Target answer
+     * 
+     * @var string
+     */
+    protected $answer;
 
-	/**
-	 * Returns an answer
-	 * 
-	 * @return string
-	 */
-	final public function getAnswer()
-	{
-		return $this->answer;
-	}
+    /**
+     * Returns an answer
+     * 
+     * @return string
+     */
+    final public function getAnswer()
+    {
+        return $this->answer;
+    }
 
-	/**
-	 * Defines a answer
-	 * 
-	 * @param string $answer
-	 * @return void
-	 */
-	final public function setAnswer($answer)
-	{
-		$this->answer = $answer;
-	}
+    /**
+     * Defines a answer
+     * 
+     * @param string $answer
+     * @return void
+     */
+    final public function setAnswer($answer)
+    {
+        $this->answer = $answer;
+    }
 
-	/**
-	 * Generates a random string and saves it as an answer into the memory
-	 * 
-	 * @return string
-	 */
-	abstract public function generate();
+    /**
+     * Generates a random string and saves it as an answer into the memory
+     * 
+     * @return string
+     */
+    abstract public function generate();
 }

@@ -13,33 +13,33 @@ namespace Krystal\Captcha\Standard;
 
 interface StorageInterface
 {
-	/**
-	 * Updates the answer
-	 * 
-	 * @param string $answer
-	 * @return boolean
-	 */
-	public function set($answer);
+    /**
+     * Updates the answer
+     * 
+     * @param string $answer
+     * @return boolean
+     */
+    public function set($answer);
 
-	/**
-	 * Checks whether CAPTCHA identification is stored
-	 * 
-	 * @return boolean
-	 */
-	public function has();
+    /**
+     * Checks whether CAPTCHA identification is stored
+     * 
+     * @return boolean
+     */
+    public function has();
 
-	/**
-	 * Returns CAPTCHA answer
-	 * 
-	 * @return string
-	 */
-	public function get();
+    /**
+     * Returns CAPTCHA answer
+     * 
+     * @return string
+     */
+    public function get();
 
-	/**
-	 * Clears the CAPTCHA value
-	 * This is especially useful when we validation is passed
-	 * 
-	 * @return void
-	 */
-	public function clear();
+    /**
+     * Clears the CAPTCHA value
+     * This is especially useful when we validation is passed
+     * 
+     * @return void
+     */
+    public function clear();
 }

@@ -14,33 +14,33 @@ namespace Krystal\Captcha;
 /* All CAPTCHA adapters must implement this interface */
 interface CaptchaInterface
 {
-	/**
-	 * Clears the data from a storage
-	 * 
-	 * @return void
-	 */
-	public function clear();
+    /**
+     * Clears the data from a storage
+     * 
+     * @return void
+     */
+    public function clear();
 
-	/**
-	 * Returns error message
-	 * 
-	 * @return string
-	 */
-	public function getError();
+    /**
+     * Returns error message
+     * 
+     * @return string
+     */
+    public function getError();
 
-	/**
-	 * Checks whether answer to the CAPTCHA is valid
-	 * Should be always called after rendering
-	 * 
-	 * @param string $answer
-	 * @return boolean
-	 */
-	public function isValid($answer);
+    /**
+     * Checks whether answer to the CAPTCHA is valid
+     * Should be always called after rendering
+     * 
+     * @param string $answer
+     * @return boolean
+     */
+    public function isValid($answer);
 
-	/**
-	 * Renders the CAPTCHA
-	 * 
-	 * @return void
-	 */
-	public function render();
+    /**
+     * Renders the CAPTCHA
+     * 
+     * @return void
+     */
+    public function render();
 }

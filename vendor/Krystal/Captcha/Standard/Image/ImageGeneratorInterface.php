@@ -13,11 +13,11 @@ namespace Krystal\Captcha\Standard\Image;
 
 interface ImageGeneratorInterface
 {
-	/**
-	 * Renders the CAPTCHA
-	 * 
-	 * @param string $text Text to be rendered
-	 * @return void
-	 */
-	public function render($text);
+    /**
+     * Renders the CAPTCHA
+     * 
+     * @param string $text Text to be rendered
+     * @return void
+     */
+    public function render($text);
 }

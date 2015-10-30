@@ -17,65 +17,65 @@ namespace Krystal\Captcha\Standard;
  */
 final class StandaloneSessionBag
 {
-	/**
-	 * Local session data
-	 * 
-	 * @var array
-	 */
-	private $session = array();
+    /**
+     * Local session data
+     * 
+     * @var array
+     */
+    private $session = array();
 
-	/**
-	 * State initialization
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-		@session_start();
-		$this->session = &$_SESSION;
-	}
+    /**
+     * State initialization
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        @session_start();
+        $this->session = &$_SESSION;
+    }
 
-	/**
-	 * Checks whether key exists
-	 * 
-	 * @param string $key
-	 * @return boolean
-	 */
-	public function has($key)
-	{
-		return isset($this->session[$key]);
-	}
+    /**
+     * Checks whether key exists
+     * 
+     * @param string $key
+     * @return boolean
+     */
+    public function has($key)
+    {
+        return isset($this->session[$key]);
+    }
 
-	/**
-	 * Deletes a key
-	 * 
-	 * @param string $key
-	 * @return void
-	 */
-	public function remove($key)
-	{
-		unset($this->session[$key]);
-	}
+    /**
+     * Deletes a key
+     * 
+     * @param string $key
+     * @return void
+     */
+    public function remove($key)
+    {
+        unset($this->session[$key]);
+    }
 
-	/**
-	 * Writes data
-	 * 
-	 * @param array $data
-	 * @return void
-	 */
-	public function set($key, $value)
-	{
-		$this->session[$key] = $value;
-	}
+    /**
+     * Writes data
+     * 
+     * @param array $data
+     * @return void
+     */
+    public function set($key, $value)
+    {
+        $this->session[$key] = $value;
+    }
 
-	/**
-	 * Returns a value from session storage
-	 * 
-	 * @param string $key
-	 * @return mixed
-	 */
-	public function get($key)
-	{
-		return $this->session[$key];
-	}
+    /**
+     * Returns a value from session storage
+     * 
+     * @param string $key
+     * @return mixed
+     */
+    public function get($key)
+    {
+        return $this->session[$key];
+    }
 }

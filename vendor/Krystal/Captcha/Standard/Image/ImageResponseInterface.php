@@ -13,10 +13,10 @@ namespace Krystal\Captcha\Standard\Image;
 
 interface ImageResponseInterface
 {
-	/**
-	 * Sends appropriate headers
-	 * 
-	 * @return void
-	 */
-	public function send();
+    /**
+     * Sends appropriate headers
+     * 
+     * @return void
+     */
+    public function send();
 }

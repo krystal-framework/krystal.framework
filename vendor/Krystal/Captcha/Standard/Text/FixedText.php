@@ -13,19 +13,19 @@ namespace Krystal\Captcha\Standard\Text;
 
 final class FixedText extends AbstractGenerator
 {
-	/**
-	 * Target fixed text
-	 * 
-	 * @const string
-	 */
-	const FIXED_TEXT = 'test';
+    /**
+     * Target fixed text
+     * 
+     * @const string
+     */
+    const FIXED_TEXT = 'test';
 
-	/**
-	 * {@inhertirDoc}
-	 */
-	public function generate()
-	{
-		$this->setAnswer(self::FIXED_TEXT);
-		return self::FIXED_TEXT;
-	}
+    /**
+     * {@inhertirDoc}
+     */
+    public function generate()
+    {
+        $this->setAnswer(self::FIXED_TEXT);
+        return self::FIXED_TEXT;
+    }
 }
