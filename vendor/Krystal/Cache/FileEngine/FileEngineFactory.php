@@ -15,20 +15,20 @@ use Krystal\Serializer\NativeSerializer;
 
 abstract class FileEngineFactory
 {
-	/**
-	 * Builds cache instance
-	 * 
-	 * @param string $file The path to the cache file
-	 * @param boolean $autoCreate
-	 * @return \Krystal\Cache\FileEngine\CacheEngine
-	 */
-	public static function build($file, $autoCreate = true)
-	{
-		$storage = new CacheFile(new NativeSerializer(), $file, $autoCreate);
+    /**
+     * Builds cache instance
+     * 
+     * @param string $file The path to the cache file
+     * @param boolean $autoCreate
+     * @return \Krystal\Cache\FileEngine\CacheEngine
+     */
+    public static function build($file, $autoCreate = true)
+    {
+        $storage = new CacheFile(new NativeSerializer(), $file, $autoCreate);
 
-		$cache = new CacheEngine(new ArrayCache(), new ArraySignature(), $storage);
-		$cache->initialize();
+        $cache = new CacheEngine(new ArrayCache(), new ArraySignature(), $storage);
+        $cache->initialize();
 
-		return $cache;
-	}
+        return $cache;
+    }
 }

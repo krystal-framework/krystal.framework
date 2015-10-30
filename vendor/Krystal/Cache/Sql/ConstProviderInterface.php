@@ -13,8 +13,8 @@ namespace Krystal\Cache\Sql;
 
 interface ConstProviderInterface
 {
-	const CACHE_PARAM_KEY = 'key';
-	const CACHE_PARAM_VALUE = 'value';
-	const CACHE_PARAM_TTL = 'ttl';
-	const CACHE_PARAM_CREATED_ON = 'created_on';
+    const CACHE_PARAM_KEY = 'key';
+    const CACHE_PARAM_VALUE = 'value';
+    const CACHE_PARAM_TTL = 'ttl';
+    const CACHE_PARAM_CREATED_ON = 'created_on';
 }

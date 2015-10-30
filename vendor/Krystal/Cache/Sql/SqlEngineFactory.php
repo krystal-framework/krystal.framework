@@ -15,16 +15,16 @@ use Krystal\Serializer\NativeSerializer;
 
 abstract class SqlEngineFactory
 {
-	/**
-	 * Builds cache engine
-	 * 
-	 * @param \PDO $pdo
-	 * @param string $table Table name
-	 * @return \Krystal\Cache\Sql\SqlCacheEngine
-	 */
-	public static function build($pdo, $table)
-	{
-		$mapper = new CacheMapper(new NativeSerializer(), $pdo, $table);
-		return new SqlCacheEngine($mapper);
-	}
+    /**
+     * Builds cache engine
+     * 
+     * @param \PDO $pdo
+     * @param string $table Table name
+     * @return \Krystal\Cache\Sql\SqlCacheEngine
+     */
+    public static function build($pdo, $table)
+    {
+        $mapper = new CacheMapper(new NativeSerializer(), $pdo, $table);
+        return new SqlCacheEngine($mapper);
+    }
 }

@@ -14,22 +14,22 @@ namespace Krystal\Cache\Memcached;
 use Memcached;
 
 if (!class_exists('Memcached')) {
-	throw new \RuntimeException('Memcached is not installed. You have to install it before using');
+    throw new \RuntimeException('Memcached is not installed. You have to install it before using');
 }
 
 abstract class MemcachedFactory
 {
-	/**
-	 * Builds Memcached instance
-	 * 
-	 * @param array $servers
-	 * @return \Memcached
-	 */
-	public static function build(array $servers)
-	{
-		$memcached = new Memcached();
-		$memcached->addServers($servers);
+    /**
+     * Builds Memcached instance
+     * 
+     * @param array $servers
+     * @return \Memcached
+     */
+    public static function build(array $servers)
+    {
+        $memcached = new Memcached();
+        $memcached->addServers($servers);
 
-		return $memcached;
-	}
+        return $memcached;
+    }
 }

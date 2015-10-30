@@ -13,19 +13,19 @@ namespace Krystal\Cache\FileEngine;
 
 interface ArraySignatureInterface
 {
-	/**
-	 * Sets the initial data
-	 * 
-	 * @param array $data
-	 * @return void
-	 */
-	public function setData(array $data);
+    /**
+     * Sets the initial data
+     * 
+     * @param array $data
+     * @return void
+     */
+    public function setData(array $data);
 
-	/**
-	 * Checks new hash against its initial one
-	 * 
-	 * @param array $data
-	 * @return boolean
-	 */
-	public function hasChanged(array $data);
+    /**
+     * Checks new hash against its initial one
+     * 
+     * @param array $data
+     * @return boolean
+     */
+    public function hasChanged(array $data);
 }
