@@ -31,102 +31,102 @@ namespace Krystal\Date;
 
 interface ZodiacalInterface
 {
-	/**
-	 * Manualy checks whether $sign equals to calculated one
-	 * 
-	 * @param string $sign
-	 * @return boolean
-	 */
-	public function is($sign);
+    /**
+     * Manualy checks whether $sign equals to calculated one
+     * 
+     * @param string $sign
+     * @return boolean
+     */
+    public function is($sign);
 
-	/**
-	 * Gets a zodiacal sign based on a month and a day
-	 * 
-	 * @return string|boolean The name, false on failure
-	 */
-	public function getSign();
+    /**
+     * Gets a zodiacal sign based on a month and a day
+     * 
+     * @return string|boolean The name, false on failure
+     */
+    public function getSign();
 
-	/**
-	 * Checks whether the sign is Aries
-	 * 
-	 * @return boolean
-	 */
-	public function isAries();
+    /**
+     * Checks whether the sign is Aries
+     * 
+     * @return boolean
+     */
+    public function isAries();
 
-	/**
-	 * Checks whether the sign is Taurus
-	 * 
-	 * @return boolean
-	 */
-	public function isTaurus();
+    /**
+     * Checks whether the sign is Taurus
+     * 
+     * @return boolean
+     */
+    public function isTaurus();
 
-	/**
-	 * Checks whether the sign is Gemini
-	 * 
-	 * @return boolean
-	 */
-	public function isGemini();
+    /**
+     * Checks whether the sign is Gemini
+     * 
+     * @return boolean
+     */
+    public function isGemini();
 
-	/**
-	 * Checks whether the sign is Cancer
-	 * 
-	 * @return boolean
-	 */
-	public function isCancer();
+    /**
+     * Checks whether the sign is Cancer
+     * 
+     * @return boolean
+     */
+    public function isCancer();
 
-	/**
-	 * Checks whether the sign is Leo
-	 * 
-	 * @return boolean
-	 */
-	public function isLeo();
+    /**
+     * Checks whether the sign is Leo
+     * 
+     * @return boolean
+     */
+    public function isLeo();
 
-	/**
-	 * Checks whether the sign is Virgo
-	 * 
-	 * @return boolean
-	 */
-	public function isVirgo();
+    /**
+     * Checks whether the sign is Virgo
+     * 
+     * @return boolean
+     */
+    public function isVirgo();
 
-	/**
-	 * Checks whether the sign is Scorpio
-	 * 
-	 * @return boolean
-	 */
-	public function isScorpio();
+    /**
+     * Checks whether the sign is Scorpio
+     * 
+     * @return boolean
+     */
+    public function isScorpio();
 
-	/**
-	 * Checks whether the sign is Libra
-	 * 
-	 * @return boolean
-	 */
-	public function isLibra();
+    /**
+     * Checks whether the sign is Libra
+     * 
+     * @return boolean
+     */
+    public function isLibra();
 
-	/**
-	 * Checks whether the sign is Sagittarius
-	 * 
-	 * @return boolean
-	 */
-	public function isSagittarius();
+    /**
+     * Checks whether the sign is Sagittarius
+     * 
+     * @return boolean
+     */
+    public function isSagittarius();
 
-	/**
-	 * Checks whether the sign is Capricorn
-	 * 
-	 * @return boolean
-	 */
-	public function isCapricorn();
+    /**
+     * Checks whether the sign is Capricorn
+     * 
+     * @return boolean
+     */
+    public function isCapricorn();
 
-	/**
-	 * Checks whether the sign is Aquarius
-	 * 
-	 * @return boolean
-	 */
-	public function isAquarius();
+    /**
+     * Checks whether the sign is Aquarius
+     * 
+     * @return boolean
+     */
+    public function isAquarius();
 
-	/**
-	 * Checks whether the sign is Pisces
-	 * 
-	 * @return boolean
-	 */
-	public function isPisces();
+    /**
+     * Checks whether the sign is Pisces
+     * 
+     * @return boolean
+     */
+    public function isPisces();
 }
