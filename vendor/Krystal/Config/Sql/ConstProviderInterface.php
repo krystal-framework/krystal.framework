@@ -13,7 +13,7 @@ namespace Krystal\Config\Sql;
 
 interface ConstProviderInterface
 {
-	const CONFIG_PARAM_MODULE = 'module';
-	const CONFIG_PARAM_NAME = 'name';
-	const CONFIG_PARAM_VALUE = 'value';
+    const CONFIG_PARAM_MODULE = 'module';
+    const CONFIG_PARAM_NAME = 'name';
+    const CONFIG_PARAM_VALUE = 'value';
 }

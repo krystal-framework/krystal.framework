@@ -14,207 +14,207 @@ namespace Krystal\Config\Sql;
 /* An abstraction over configuration array */
 final class ArrayConfig implements ArrayConfigInterface
 {
-	/**
-	 * Configuration data
-	 * 
-	 * @var array
-	 */
-	private $data = array();
+    /**
+     * Configuration data
+     * 
+     * @var array
+     */
+    private $data = array();
 
-	/**
-	 * Sets configuration data
-	 * 
-	 * @param array $data
-	 * @return void
-	 */
-	public function setData(array $data)
-	{
-		$this->data = $data;
-	}
+    /**
+     * Sets configuration data
+     * 
+     * @param array $data
+     * @return void
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
 
-	/**
-	 * Removes all configuration data
-	 * 
-	 * @return void
-	 */
-	public function clear()
-	{
-		$this->data = array();
-	}
+    /**
+     * Removes all configuration data
+     * 
+     * @return void
+     */
+    public function clear()
+    {
+        $this->data = array();
+    }
 
-	/**
-	 * Removes by module and its associated name
-	 * 
-	 * @param string $module
-	 * @param string $name
-	 * @return void
-	 */
-	public function remove($module, $name)
-	{
-		$index = 0;
+    /**
+     * Removes by module and its associated name
+     * 
+     * @param string $module
+     * @param string $name
+     * @return void
+     */
+    public function remove($module, $name)
+    {
+        $index = 0;
 
-		if ($this->has($module, $name, $index)) {
-			unset($this->data[$index]);
-		}
-	}
+        if ($this->has($module, $name, $index)) {
+            unset($this->data[$index]);
+        }
+    }
 
-	/**
-	 * Removes all by associated module
-	 * 
-	 * @param string $module
-	 * @return void
-	 */
-	public function removeAllByModule($module)
-	{
-		foreach ($this->getIndexesByModule($module) as $index) {
+    /**
+     * Removes all by associated module
+     * 
+     * @param string $module
+     * @return void
+     */
+    public function removeAllByModule($module)
+    {
+        foreach ($this->getIndexesByModule($module) as $index) {
 
-			if (isset($this->data[$index])) {
-				unset($this->data[$index]);
-			}
-		}
-	}
+            if (isset($this->data[$index])) {
+                unset($this->data[$index]);
+            }
+        }
+    }
 
-	/**
-	 * Returns indexes by associated module
-	 * 
-	 * @param string $module
-	 * @return array
-	 */
-	private function getIndexesByModule($module)
-	{
-		// Indexes to be removed
-		$indexes = array();
+    /**
+     * Returns indexes by associated module
+     * 
+     * @param string $module
+     * @return array
+     */
+    private function getIndexesByModule($module)
+    {
+        // Indexes to be removed
+        $indexes = array();
 
-		foreach ($this->data as $index => $row) {
-			if (isset($row[ConstProviderInterface::CONFIG_PARAM_MODULE]) && $row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module) {
-				array_push($indexes, $index);
-			}
-		}
+        foreach ($this->data as $index => $row) {
+            if (isset($row[ConstProviderInterface::CONFIG_PARAM_MODULE]) && $row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module) {
+                array_push($indexes, $index);
+            }
+        }
 
-		return $indexes;
-	}
+        return $indexes;
+    }
 
-	/**
-	 * Returns all data by associated module
-	 * 
-	 * @param string $module
-	 * @return array|boolean
-	 */
-	public function getAllByModule($module)
-	{
-		if (!$this->hasModule($module)) {
-			return false;
+    /**
+     * Returns all data by associated module
+     * 
+     * @param string $module
+     * @return array|boolean
+     */
+    public function getAllByModule($module)
+    {
+        if (!$this->hasModule($module)) {
+            return false;
 
-		} else {
-			$result = array();
+        } else {
+            $result = array();
 
-			foreach ($this->data as $index => $row) {
+            foreach ($this->data as $index => $row) {
 
-				if (isset($row[ConstProviderInterface::CONFIG_PARAM_MODULE]) && $row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module) {
+                if (isset($row[ConstProviderInterface::CONFIG_PARAM_MODULE]) && $row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module) {
 
-					$name = $row[ConstProviderInterface::CONFIG_PARAM_NAME];
-					$value = $row[ConstProviderInterface::CONFIG_PARAM_VALUE];
+                    $name = $row[ConstProviderInterface::CONFIG_PARAM_NAME];
+                    $value = $row[ConstProviderInterface::CONFIG_PARAM_VALUE];
 
-					$result[$name] = $value;
-				}
-			}
+                    $result[$name] = $value;
+                }
+            }
 
-			return $result;
-		}
-	}
+            return $result;
+        }
+    }
 
-	/**
-	 * Returns configuration entry
-	 * 
-	 * @param string $module
-	 * @param string $name
-	 * @param mixed $default Default value to be returned in case requested one doesn't exist
-	 * @return mixed
-	 */
-	public function get($module, $name, $default)
-	{
-		$index = 0;
+    /**
+     * Returns configuration entry
+     * 
+     * @param string $module
+     * @param string $name
+     * @param mixed $default Default value to be returned in case requested one doesn't exist
+     * @return mixed
+     */
+    public function get($module, $name, $default)
+    {
+        $index = 0;
 
-		if ($this->has($module, $name, $index)) {
-			return $this->data[$index][ConstProviderInterface::CONFIG_PARAM_VALUE];
-		} else {
-			return $default;
-		}
-	}
+        if ($this->has($module, $name, $index)) {
+            return $this->data[$index][ConstProviderInterface::CONFIG_PARAM_VALUE];
+        } else {
+            return $default;
+        }
+    }
 
-	/**
-	 * Adds configuration data
-	 * 
-	 * @param string $module
-	 * @param string $name
-	 * @param mixed $value
-	 * @return void
-	 */
-	public function add($module, $name, $value)
-	{
-		array_push($this->data, array(
-			ConstProviderInterface::CONFIG_PARAM_MODULE => $module,
-			ConstProviderInterface::CONFIG_PARAM_NAME => $name,
-			ConstProviderInterface::CONFIG_PARAM_VALUE => $value
-		));
-	}
+    /**
+     * Adds configuration data
+     * 
+     * @param string $module
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
+    public function add($module, $name, $value)
+    {
+        array_push($this->data, array(
+            ConstProviderInterface::CONFIG_PARAM_MODULE => $module,
+            ConstProviderInterface::CONFIG_PARAM_NAME => $name,
+            ConstProviderInterface::CONFIG_PARAM_VALUE => $value
+        ));
+    }
 
-	/**
-	 * Updates existing pair with new value
-	 * 
-	 * @param string $module
-	 * @param string $name
-	 * @param mixed $value
-	 * @return void
-	 */
-	public function update($module, $name, $value)
-	{
-		foreach ($this->data as $index => $row) {
-			if ($row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module && $row[ConstProviderInterface::CONFIG_PARAM_NAME] == $name) {
-				// Alter found index's value
-				$this->data[$index][ConstProviderInterface::CONFIG_PARAM_VALUE] = $value;
-			}
-		}
-	}
+    /**
+     * Updates existing pair with new value
+     * 
+     * @param string $module
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
+    public function update($module, $name, $value)
+    {
+        foreach ($this->data as $index => $row) {
+            if ($row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module && $row[ConstProviderInterface::CONFIG_PARAM_NAME] == $name) {
+                // Alter found index's value
+                $this->data[$index][ConstProviderInterface::CONFIG_PARAM_VALUE] = $value;
+            }
+        }
+    }
 
-	/**
-	 * Checks whether there's at least one module in the stack with provided name
-	 * 
-	 * @param string $module
-	 * @return boolean
-	 */
-	public function hasModule($module)
-	{
-		foreach ($this->data as $index => $row) {
-			if ($row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module) {
-				return true;
-			}
-		}
+    /**
+     * Checks whether there's at least one module in the stack with provided name
+     * 
+     * @param string $module
+     * @return boolean
+     */
+    public function hasModule($module)
+    {
+        foreach ($this->data as $index => $row) {
+            if ($row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Checks whether module has a specific key
-	 * 
-	 * @param string $module
-	 * @param string $name
-	 * @param integer $position For internal usage only
-	 * @return boolean
-	 */
-	public function has($module, $name, &$position = false)
-	{
-		foreach ($this->data as $index => $row) {
-			if ($row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module && $row[ConstProviderInterface::CONFIG_PARAM_NAME] == $name) {
+    /**
+     * Checks whether module has a specific key
+     * 
+     * @param string $module
+     * @param string $name
+     * @param integer $position For internal usage only
+     * @return boolean
+     */
+    public function has($module, $name, &$position = false)
+    {
+        foreach ($this->data as $index => $row) {
+            if ($row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module && $row[ConstProviderInterface::CONFIG_PARAM_NAME] == $name) {
 
-				if ($position !== false) {
-					$position = $index;
-				}
+                if ($position !== false) {
+                    $position = $index;
+                }
 
-				return true;
-			}
-		}
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

@@ -15,88 +15,88 @@ use Krystal\Stdlib\VirtualEntity;
 
 abstract class AbstractConfigManager
 {
-	/**
-	 * Any compliant configuration adapter
-	 * 
-	 * @var \Krystal\Config\File\FileAbstract
-	 */
-	protected $adapter;
+    /**
+     * Any compliant configuration adapter
+     * 
+     * @var \Krystal\Config\File\FileAbstract
+     */
+    protected $adapter;
 
-	/**
-	 * Configuration entity object
-	 * 
-	 * @var \Krystal\Stdlib\VirtualEntity
-	 */
-	protected $entity;
+    /**
+     * Configuration entity object
+     * 
+     * @var \Krystal\Stdlib\VirtualEntity
+     */
+    protected $entity;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\Config\File\FileAbstract $adapter
-	 * @return void
-	 */
-	public function __construct(FileAbstract $adapter)
-	{
-		$this->adapter = $adapter;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\Config\File\FileAbstract $adapter
+     * @return void
+     */
+    public function __construct(FileAbstract $adapter)
+    {
+        $this->adapter = $adapter;
+    }
 
-	/**
-	 * Populates the entity
-	 * 
-	 * @return void
-	 */
-	abstract protected function populate();
+    /**
+     * Populates the entity
+     * 
+     * @return void
+     */
+    abstract protected function populate();
 
-	/**
-	 * Returns a value
-	 * 
-	 * @param string $key
-	 * @param mixed $default Default value to be returned if $key is absent
-	 * @return mixed
-	 */
-	final public function get($key, $default = false)
-	{
-		return $this->adapter->get($key, $default);
-	}
+    /**
+     * Returns a value
+     * 
+     * @param string $key
+     * @param mixed $default Default value to be returned if $key is absent
+     * @return mixed
+     */
+    final public function get($key, $default = false)
+    {
+        return $this->adapter->get($key, $default);
+    }
 
-	/**
-	 * Writes value
-	 * 
-	 * @param array $input
-	 * @return boolean
-	 */
-	final public function write(array $input)
-	{
-		$this->adapter->setPair($input);
-		$this->adapter->save();
+    /**
+     * Writes value
+     * 
+     * @param array $input
+     * @return boolean
+     */
+    final public function write(array $input)
+    {
+        $this->adapter->setPair($input);
+        $this->adapter->save();
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Checks whether configuration key exist
-	 * 
-	 * @param string $key
-	 * @return boolean
-	 */
-	final public function exists($key)
-	{
-		return $this->adapter->exists($key);
-	}
+    /**
+     * Checks whether configuration key exist
+     * 
+     * @param string $key
+     * @return boolean
+     */
+    final public function exists($key)
+    {
+        return $this->adapter->exists($key);
+    }
 
-	/**
-	 * Returns the entity
-	 * 
-	 * @return \Krystal\Stdlib\VirtualEntity
-	 */
-	final public function getEntity()
-	{
-		// Lazy initialization
-		if (is_null($this->entity)) {
-			$this->entity = new VirtualEntity();
-			$this->populate();
-		}
+    /**
+     * Returns the entity
+     * 
+     * @return \Krystal\Stdlib\VirtualEntity
+     */
+    final public function getEntity()
+    {
+        // Lazy initialization
+        if (is_null($this->entity)) {
+            $this->entity = new VirtualEntity();
+            $this->populate();
+        }
 
-		return $this->entity;
-	}
+        return $this->entity;
+    }
 }
