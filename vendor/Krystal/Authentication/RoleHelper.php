@@ -13,32 +13,32 @@ namespace Krystal\Authentication;
 
 class RoleHelper implements RoleHelperInterface
 {
-	/**
-	 * Current role
-	 * 
-	 * @var string
-	 */
-	private $current;
+    /**
+     * Current role
+     * 
+     * @var string
+     */
+    private $current;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param string $current
-	 * @return void
-	 */
-	public function __construct($current)
-	{
-		$this->current = $current;
-	}
+    /**
+     * State initialization
+     * 
+     * @param string $current
+     * @return void
+     */
+    public function __construct($current)
+    {
+        $this->current = $current;
+    }
 
-	/**
-	 * Checks whether stored role equals to target one
-	 * 
-	 * @param string $role
-	 * @return boolean
-	 */
-	final public function is($role)
-	{
-		return $this->current == $role;
-	}
+    /**
+     * Checks whether stored role equals to target one
+     * 
+     * @param string $role
+     * @return boolean
+     */
+    final public function is($role)
+    {
+        return $this->current == $role;
+    }
 }

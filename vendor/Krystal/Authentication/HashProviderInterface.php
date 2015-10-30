@@ -13,11 +13,11 @@ namespace Krystal\Authentication;
 
 interface HashProviderInterface
 {
-	/**
-	 * Hashes a string
-	 * 
-	 * @param string $key
-	 * @return string
-	 */
-	public function hash($string);
+    /**
+     * Hashes a string
+     * 
+     * @param string $key
+     * @return string
+     */
+    public function hash($string);
 }

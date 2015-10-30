@@ -13,11 +13,11 @@ namespace Krystal\Authentication;
 
 interface RoleHelperInterface
 {
-	/**
-	 * Checks whether stored role equals to a target one
-	 * 
-	 * @param string $role
-	 * @return boolean
-	 */
-	public function is($role);
+    /**
+     * Checks whether stored role equals to a target one
+     * 
+     * @param string $role
+     * @return boolean
+     */
+    public function is($role);
 }

@@ -13,61 +13,61 @@ namespace Krystal\Authentication;
 
 final class UserBag implements UserBagInterface
 {
-	/**
-	 * User's login
-	 * 
-	 * @var string
-	 */
-	private $login;
+    /**
+     * User's login
+     * 
+     * @var string
+     */
+    private $login;
 
-	/**
-	 * User's password hash
-	 * 
-	 * @var string
-	 */
-	private $passwordHash;
+    /**
+     * User's password hash
+     * 
+     * @var string
+     */
+    private $passwordHash;
 
-	/**
-	 * Returns a login
-	 * 
-	 * @return string
-	 */
-	public function getLogin()
-	{
-		return $this->login;
-	}
+    /**
+     * Returns a login
+     * 
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
 
-	/**
-	 * Sets a login
-	 * 
-	 * @param string $login
-	 * @return \Krystal\Authentication\Cookie\UserBag
-	 */
-	public function setLogin($login)
-	{
-		$this->login = $login;
-		return $this;
-	}
+    /**
+     * Sets a login
+     * 
+     * @param string $login
+     * @return \Krystal\Authentication\Cookie\UserBag
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+        return $this;
+    }
 
-	/**
-	 * Returns password hash
-	 * 
-	 * @return string
-	 */
-	public function getPasswordHash()
-	{
-		return $this->passwordHash;
-	}
+    /**
+     * Returns password hash
+     * 
+     * @return string
+     */
+    public function getPasswordHash()
+    {
+        return $this->passwordHash;
+    }
 
-	/**
-	 * Defines password hash
-	 * 
-	 * @param string $passwordHash
-	 * @return \Krystal\Authentication\Cookie\UserBag
-	 */
-	public function setPasswordHash($passwordHash)
-	{
-		$this->passwordHash = $passwordHash;
-		return $this;
-	}	
+    /**
+     * Defines password hash
+     * 
+     * @param string $passwordHash
+     * @return \Krystal\Authentication\Cookie\UserBag
+     */
+    public function setPasswordHash($passwordHash)
+    {
+        $this->passwordHash = $passwordHash;
+        return $this;
+    }   
 }

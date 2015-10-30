@@ -13,42 +13,42 @@ namespace Krystal\Authentication;
 
 interface UserAuthServiceInterface
 {
-	/**
-	 * Returns stored user id
-	 * 
-	 * @return string
-	 */
-	public function getId();
+    /**
+     * Returns stored user id
+     * 
+     * @return string
+     */
+    public function getId();
 
-	/**
-	 * Returns stored user role
-	 * 
-	 * @return string
-	 */
-	public function getRole();
+    /**
+     * Returns stored user role
+     * 
+     * @return string
+     */
+    public function getRole();
 
-	/**
-	 * Attempts to authenticate a user
-	 * 
-	 * @param string $login
-	 * @param string $password
-	 * @param boolean $remember Whether to remember
-	 * @param boolean $hash Whether to hash password
-	 * @return boolean
-	 */
-	public function authenticate($login, $password, $remember, $hash = true);
+    /**
+     * Attempts to authenticate a user
+     * 
+     * @param string $login
+     * @param string $password
+     * @param boolean $remember Whether to remember
+     * @param boolean $hash Whether to hash password
+     * @return boolean
+     */
+    public function authenticate($login, $password, $remember, $hash = true);
 
-	/**
-	 * Log-outs a user
-	 * 
-	 * @return void
-	 */
-	public function logout();
+    /**
+     * Log-outs a user
+     * 
+     * @return void
+     */
+    public function logout();
 
-	/**
-	 * Checks whether a user is logged in
-	 * 
-	 * @return boolean
-	 */
-	public function isLoggedIn();
+    /**
+     * Checks whether a user is logged in
+     * 
+     * @return boolean
+     */
+    public function isLoggedIn();
 }
