@@ -17,24 +17,24 @@ use Krystal\Application\InputInterface;
 
 final class Profiler implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$profiler = new Component();
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $profiler = new Component();
 
-		$view = $container->get('view');
-		$view->addVariable('profiler', $profiler);
+        $view = $container->get('view');
+        $view->addVariable('profiler', $profiler);
 
-		return $profiler;
-	}
+        return $profiler;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'profiler';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'profiler';
+    }
 }

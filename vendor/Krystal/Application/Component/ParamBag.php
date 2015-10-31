@@ -17,25 +17,25 @@ use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
 final class ParamBag implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$params = array();
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $params = array();
 
-		if (isset($config['components']['paramBag'])) {
-			$params = $config['components']['paramBag'];
-		}
+        if (isset($config['components']['paramBag'])) {
+            $params = $config['components']['paramBag'];
+        }
 
-		return new Component($params);
-	}
+        return new Component($params);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'paramBag';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'paramBag';
+    }
 }

@@ -17,20 +17,20 @@ use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
 final class Translator implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$moduleManager = $container->get('moduleManager');
-		return new Component($moduleManager->getTranslations());
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $moduleManager = $container->get('moduleManager');
+        return new Component($moduleManager->getTranslations());
+    }
 
-	/**
-	 * {@inheritDoc}}
-	 */
-	public function getName()
-	{
-		return 'translator';
-	}
+    /**
+     * {@inheritDoc}}
+     */
+    public function getName()
+    {
+        return 'translator';
+    }
 }

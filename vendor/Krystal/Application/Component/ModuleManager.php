@@ -19,52 +19,52 @@ use RuntimeException;
 
 final class ModuleManager implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$appConfig = $container->get('appConfig');
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $appConfig = $container->get('appConfig');
 
-		// Read from configuration
-		if (isset($config['components']['module_manager'])) {
-			$section = &$config['components']['module_manager'];
+        // Read from configuration
+        if (isset($config['components']['module_manager'])) {
+            $section = &$config['components']['module_manager'];
 
-			if (isset($section['loader'])) {
-				switch ($section['loader']) {
-					case 'auto':
-						$loader = new Loader\Dir($appConfig->getModulesDir());
-					break;
-					
-					case 'list':
-						if (isset($section['options']['modules']) && is_array($section['options']['modules'])) {
-							$loader = new Loader\StaticList($section['options']['modules']);
-						} else {
-							throw new RuntimeException('No modules provided for the list');
-						}
-					break;
-				}
+            if (isset($section['loader'])) {
+                switch ($section['loader']) {
+                    case 'auto':
+                        $loader = new Loader\Dir($appConfig->getModulesDir());
+                    break;
+                    
+                    case 'list':
+                        if (isset($section['options']['modules']) && is_array($section['options']['modules'])) {
+                            $loader = new Loader\StaticList($section['options']['modules']);
+                        } else {
+                            throw new RuntimeException('No modules provided for the list');
+                        }
+                    break;
+                }
 
-			} else {
-				throw new RuntimeException("You need to provide loader's name");
-			}
+            } else {
+                throw new RuntimeException("You need to provide loader's name");
+            }
 
-		} else {
-			// When no configuration provided, we'd stick to defaults
-			$loader = new Loader\Dir($appConfig->getModulesDir());
-		}
+        } else {
+            // When no configuration provided, we'd stick to defaults
+            $loader = new Loader\Dir($appConfig->getModulesDir());
+        }
 
-		$moduleManager = new Component($loader, $container->getAll(), $appConfig);
-		$moduleManager->initialize();
+        $moduleManager = new Component($loader, $container->getAll(), $appConfig);
+        $moduleManager->initialize();
 
-		return $moduleManager;
-	}
+        return $moduleManager;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'moduleManager';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'moduleManager';
+    }
 }

@@ -17,61 +17,61 @@ use DomainException;
 
 final class ControllerFactory implements ControllerFactoryInterface
 {
-	/**
-	 * Service locator
-	 *  
-	 * @var \Krystal\InstanceManager\ServiceLocatorInterface
-	 */
-	private $serviceLocator;
+    /**
+     * Service locator
+     *  
+     * @var \Krystal\InstanceManager\ServiceLocatorInterface
+     */
+    private $serviceLocator;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param \Krystal\InstanceManager\ServiceLocatorInterface $serviceLocator
-	 * @return void
-	 */
-	public function __construct(ServiceLocatorInterface $serviceLocator)
-	{
-		$this->serviceLocator = $serviceLocator;
-	}
+    /**
+     * State initialization
+     * 
+     * @param \Krystal\InstanceManager\ServiceLocatorInterface $serviceLocator
+     * @return void
+     */
+    public function __construct(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
 
-	/**
-	 * Builds a controller instance
-	 * 
-	 * @param string $controller PSR-0 Compliant path
-	 * @param array $options Route options passed to corresponding controller
-	 * @return \Krystal\Application\Controller\AbstractController
-	 */
-	public function build($controller, array $options)
-	{
-		$class = Ns::normalize($controller);
+    /**
+     * Builds a controller instance
+     * 
+     * @param string $controller PSR-0 Compliant path
+     * @param array $options Route options passed to corresponding controller
+     * @return \Krystal\Application\Controller\AbstractController
+     */
+    public function build($controller, array $options)
+    {
+        $class = Ns::normalize($controller);
 
-		// PSR-0 Autoloader will do its own job by default when calling class_exists() function
-		if (class_exists($class)) {
+        // PSR-0 Autoloader will do its own job by default when calling class_exists() function
+        if (class_exists($class)) {
 
-			// Target module which is going to be instantiated
-			$module = Ns::extractVendorNs($controller);
-			$controller = new $class($this->serviceLocator, $module, $options);
+            // Target module which is going to be instantiated
+            $module = Ns::extractVendorNs($controller);
+            $controller = new $class($this->serviceLocator, $module, $options);
 
-			if (method_exists($controller, 'initialize')) {
+            if (method_exists($controller, 'initialize')) {
 
-				$controller->initialize();
+                $controller->initialize();
 
-				if ($controller->isHalted()) {
-					throw new DomainException('Controller halted its execution due to route options mismatch');
-				}
+                if ($controller->isHalted()) {
+                    throw new DomainException('Controller halted its execution due to route options mismatch');
+                }
 
-				return $controller;
+                return $controller;
 
-			} else {
-				throw new RuntimeException('A base controller must be inherited');
-			}
+            } else {
+                throw new RuntimeException('A base controller must be inherited');
+            }
 
-		} else {
-			// A name does not match PSR-0
-			trigger_error(sprintf(
-				'Controller does not exist : "%s" or it does not match PSR-0', $class), E_USER_ERROR
-			);
-		}
-	}
+        } else {
+            // A name does not match PSR-0
+            trigger_error(sprintf(
+                'Controller does not exist : "%s" or it does not match PSR-0', $class), E_USER_ERROR
+            );
+        }
+    }
 }

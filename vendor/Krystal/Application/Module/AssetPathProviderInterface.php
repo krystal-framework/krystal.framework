@@ -13,20 +13,20 @@ namespace Krystal\Application\Module;
 
 interface AssetPathProviderInterface
 {
-	/**
-	 * Returns asset path
-	 * 
-	 * @param string $module Module's name
-	 * @return string
-	 */
-	public function getPathByModule($module);
+    /**
+     * Returns asset path
+     * 
+     * @param string $module Module's name
+     * @return string
+     */
+    public function getPathByModule($module);
 
-	/**
-	 * Returns a path with a module
-	 * 
-	 * @param string $module Module's name
-	 * @param string $path
-	 * @return string
-	 */
-	public function getWithModulePath($module, $path);
+    /**
+     * Returns a path with a module
+     * 
+     * @param string $module Module's name
+     * @param string $path
+     * @return string
+     */
+    public function getWithModulePath($module, $path);
 }

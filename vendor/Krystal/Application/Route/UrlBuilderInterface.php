@@ -13,12 +13,12 @@ namespace Krystal\Application\Route;
 
 interface UrlBuilderInterface
 {
-	/**
-	 * Builds an URL
-	 * 
-	 * @param string $controller Controller name in format <Module>:<Controller>@<Action>
-	 * @param array $vars
-	 * @return string|boolean False on failure
-	 */
-	public function build($controller, array $vars = array());
+    /**
+     * Builds an URL
+     * 
+     * @param string $controller Controller name in format <Module>:<Controller>@<Action>
+     * @param array $vars
+     * @return string|boolean False on failure
+     */
+    public function build($controller, array $vars = array());
 }

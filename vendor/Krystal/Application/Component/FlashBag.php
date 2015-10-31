@@ -17,19 +17,19 @@ use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
 final class FlashBag implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		return new Component($container->get('sessionBag'));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        return new Component($container->get('sessionBag'));
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'flashBag';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'flashBag';
+    }
 }

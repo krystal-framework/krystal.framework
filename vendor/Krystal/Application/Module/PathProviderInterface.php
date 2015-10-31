@@ -13,41 +13,41 @@ namespace Krystal\Application\Module;
 
 interface PathProviderInterface
 {
-	/**
-	 * Returns configuration directory of current module
-	 * 
-	 * @return string
-	 */
-	public function getConfigDir();
+    /**
+     * Returns configuration directory of current module
+     * 
+     * @return string
+     */
+    public function getConfigDir();
 
-	/**
-	 * Appends provided filename to configuration's directory and returns it
-	 * 
-	 * @param string $file
-	 * @return string
-	 */
-	public function getWithConfigDir($file);
+    /**
+     * Appends provided filename to configuration's directory and returns it
+     * 
+     * @param string $file
+     * @return string
+     */
+    public function getWithConfigDir($file);
 
-	/**
-	 * Returns translations directory of current module
-	 * 
-	 * @return string
-	 */
-	public function getTranslationsDir();
+    /**
+     * Returns translations directory of current module
+     * 
+     * @return string
+     */
+    public function getTranslationsDir();
 
-	/**
-	 * Returns appended language's code and file's name with translations directory
-	 * 
-	 * @param string $language
-	 * @param string $file
-	 * @return string
-	 */
-	public function getWithTranslationsDir($language, $file);
+    /**
+     * Returns appended language's code and file's name with translations directory
+     * 
+     * @param string $language
+     * @param string $file
+     * @return string
+     */
+    public function getWithTranslationsDir($language, $file);
 
-	/**
-	 * Returns assets directory
-	 * 
-	 * @return string
-	 */
-	public function getAssetsDir();
+    /**
+     * Returns assets directory
+     * 
+     * @return string
+     */
+    public function getAssetsDir();
 }

@@ -18,20 +18,20 @@ use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
 final class Request implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$cookieBag = new CookieBag($input->getCookie());
-		return new Component($input->getQuery(), $input->getPost(), $cookieBag, $input->getServer(), $input->getFiles());
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $cookieBag = new CookieBag($input->getCookie());
+        return new Component($input->getQuery(), $input->getPost(), $cookieBag, $input->getServer(), $input->getFiles());
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'request';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'request';
+    }
 }

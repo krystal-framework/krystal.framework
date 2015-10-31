@@ -17,28 +17,28 @@ use Krystal\Security\CsrfProtector as Component;
 
 final class CsrfProtector implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$sessionBag = $container->get('sessionBag');
-		$view = $container->get('view');
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $sessionBag = $container->get('sessionBag');
+        $view = $container->get('view');
 
-		$component = new Component($sessionBag);
-		$component->prepare();
+        $component = new Component($sessionBag);
+        $component->prepare();
 
-		// Append global $csrfToken variable to all templates
-		$view->addVariable('csrfToken', $component->getToken());
+        // Append global $csrfToken variable to all templates
+        $view->addVariable('csrfToken', $component->getToken());
 
-		return $component;
-	}
+        return $component;
+    }
 
-	/**
-	 * {@inheritoDoc}
-	 */
-	public function getName()
-	{
-		return 'csrfProtector';
-	}
+    /**
+     * {@inheritoDoc}
+     */
+    public function getName()
+    {
+        return 'csrfProtector';
+    }
 }

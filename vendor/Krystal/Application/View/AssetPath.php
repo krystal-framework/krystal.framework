@@ -13,55 +13,55 @@ namespace Krystal\Application\View;
 
 final class AssetPath implements AssetPathInterface
 {
-	const MODULE_PREFIX = '@';
+    const MODULE_PREFIX = '@';
 
-	/**
-	 * An array of loaded module names
-	 * 
-	 * @var array
-	 */
-	private $modules = array();
+    /**
+     * An array of loaded module names
+     * 
+     * @var array
+     */
+    private $modules = array();
 
-	/**
-	 * State initialization
-	 * 
-	 * @param array $modules
-	 * @return string
-	 */
-	public function __construct(array $modules)
-	{
-		$this->modules = $modules;
-	}
+    /**
+     * State initialization
+     * 
+     * @param array $modules
+     * @return string
+     */
+    public function __construct(array $modules)
+    {
+        $this->modules = $modules;
+    }
 
-	/**
-	 * Returns asset path to a module
-	 * 
-	 * @param string $module
-	 * @return string
-	 */
-	private function getAssetPathByModule($module)
-	{
-		return sprintf('/module/%s/Assets', $module);
-	}
+    /**
+     * Returns asset path to a module
+     * 
+     * @param string $module
+     * @return string
+     */
+    private function getAssetPathByModule($module)
+    {
+        return sprintf('/module/%s/Assets', $module);
+    }
 
-	/**
-	 * Replaces a module path inside provided path
-	 * 
-	 * @param string $path Target path
-	 * @return string
-	 */
-	public function replace($path)
-	{
-		foreach ($this->modules as $module) {
+    /**
+     * Replaces a module path inside provided path
+     * 
+     * @param string $path Target path
+     * @return string
+     */
+    public function replace($path)
+    {
+        foreach ($this->modules as $module) {
 
-			$target = self::MODULE_PREFIX.$module;
+            $target = self::MODULE_PREFIX.$module;
 
-			if (strpos($path, $target) !== false) {
-				$path = str_replace($target, $this->getAssetPathByModule($module), $path);
-				break;
-			}
-		}
+            if (strpos($path, $target) !== false) {
+                $path = str_replace($target, $this->getAssetPathByModule($module), $path);
+                break;
+            }
+        }
 
-		return $path;
-	}
+        return $path;
+    }
 }

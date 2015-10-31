@@ -18,31 +18,31 @@ use Krystal\Application\InputInterface;
 
 final class Db implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		if (isset($config['components']['db'])) {
-			$db = $config['components']['db'];
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        if (isset($config['components']['db'])) {
+            $db = $config['components']['db'];
 
-			// Prepared connection instances
-			$instances = array();
-			$factory = new SqlDbConnectorFactory($container->get('paginator'));
+            // Prepared connection instances
+            $instances = array();
+            $factory = new SqlDbConnectorFactory($container->get('paginator'));
 
-			foreach ($db as $name => $options) {
-				$instances[$name] = $factory->build($name, $options);
-			}
+            foreach ($db as $name => $options) {
+                $instances[$name] = $factory->build($name, $options);
+            }
 
-			return $instances;
-		}
-	}
+            return $instances;
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'db';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'db';
+    }
 }

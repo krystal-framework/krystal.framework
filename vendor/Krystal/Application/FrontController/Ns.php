@@ -16,34 +16,34 @@ namespace Krystal\Application\FrontController;
  */
 class Ns
 {
-	/**
-	 * Normalizes a path
-	 * 
-	 * @param string $target
-	 * @return string
-	 */
-	public static function normalize($target)
-	{
-		return str_replace('/', '\\', $target);
-	}
+    /**
+     * Normalizes a path
+     * 
+     * @param string $target
+     * @return string
+     */
+    public static function normalize($target)
+    {
+        return str_replace('/', '\\', $target);
+    }
 
-	/**
-	 * Extracts vendor's namespace
-	 * 
-	 * @param string $compliant
-	 * @return string
-	 */
-	public static function extractVendorNs($compliant)
-	{
-		// To work with a string easily, it's better to turn it into an array
-		$array = explode('/', $compliant);
+    /**
+     * Extracts vendor's namespace
+     * 
+     * @param string $compliant
+     * @return string
+     */
+    public static function extractVendorNs($compliant)
+    {
+        // To work with a string easily, it's better to turn it into an array
+        $array = explode('/', $compliant);
 
-		foreach ($array as $key => $value) {
-			if ($value == '') {
-				return $array[1];
-			}
-		}
+        foreach ($array as $key => $value) {
+            if ($value == '') {
+                return $array[1];
+            }
+        }
 
-		return $array[0];
-	}
+        return $array[0];
+    }
 }

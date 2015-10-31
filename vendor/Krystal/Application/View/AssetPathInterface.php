@@ -13,11 +13,11 @@ namespace Krystal\Application\View;
 
 interface AssetPathInterface
 {
-	/**
-	 * Replaces a module path inside provided path
-	 * 
-	 * @param string $path Target path
-	 * @return string
-	 */
-	public function replace($path);
+    /**
+     * Replaces a module path inside provided path
+     * 
+     * @param string $path Target path
+     * @return string
+     */
+    public function replace($path);
 }

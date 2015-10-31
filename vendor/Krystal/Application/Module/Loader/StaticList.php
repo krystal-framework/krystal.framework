@@ -13,29 +13,29 @@ namespace Krystal\Application\Module\Loader;
 
 final class StaticList implements LoaderInterface
 {
-	/**
-	 * Current modules
-	 * 
-	 * @var array
-	 */
-	private $modules = array();
+    /**
+     * Current modules
+     * 
+     * @var array
+     */
+    private $modules = array();
 
-	/**
-	 * State initialization
-	 * 
-	 * @param array $modules
-	 * @return void
-	 */
-	public function __construct(array $modules)
-	{
-		$this->modules = $modules;
-	}
+    /**
+     * State initialization
+     * 
+     * @param array $modules
+     * @return void
+     */
+    public function __construct(array $modules)
+    {
+        $this->modules = $modules;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getModules()
-	{
-		return $this->modules;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getModules()
+    {
+        return $this->modules;
+    }
 }

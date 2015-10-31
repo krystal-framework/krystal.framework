@@ -19,22 +19,22 @@ use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
 final class UrlBuilder implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$moduleManager = $container->get('moduleManager');
-		$mapManager = new MapManager($moduleManager->getRoutes(), new RouteNotation());
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $moduleManager = $container->get('moduleManager');
+        $mapManager = new MapManager($moduleManager->getRoutes(), new RouteNotation());
 
-		return new Component($mapManager);
-	}
+        return new Component($mapManager);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'urlBuilder';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'urlBuilder';
+    }
 }

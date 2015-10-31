@@ -23,77 +23,77 @@ use RuntimeException;
 
 final class Cache implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		// First of all, check cache component is required
-		if (isset($config['components']['cache']['engine'])) {
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        // First of all, check cache component is required
+        if (isset($config['components']['cache']['engine'])) {
 
-			// Reference as a short-cut
-			$component =& $config['components']['cache'];
-			$options =& $config['components']['cache']['options'];
+            // Reference as a short-cut
+            $component =& $config['components']['cache'];
+            $options =& $config['components']['cache']['options'];
 
-			switch ($component['engine']) {
+            switch ($component['engine']) {
 
-				case 'memcached':
-					if (!isset($options['servers']) || !is_array($options['servers'])) {
-						throw new RuntimeException('Memcached servers must be defined in configuration');
-					}
+                case 'memcached':
+                    if (!isset($options['servers']) || !is_array($options['servers'])) {
+                        throw new RuntimeException('Memcached servers must be defined in configuration');
+                    }
 
-					return MemcachedFactory::build($options['servers']);
+                    return MemcachedFactory::build($options['servers']);
 
-				case 'file' :
-					// By default, a file need to be created automatically if it doesn't exist
-					$autoCreate = true;
+                case 'file' :
+                    // By default, a file need to be created automatically if it doesn't exist
+                    $autoCreate = true;
 
-					if (isset($options['auto_create']) && is_bool($options['auto_create'])){
-						$autoCreate = $options['auto_create'];
-					}
+                    if (isset($options['auto_create']) && is_bool($options['auto_create'])){
+                        $autoCreate = $options['auto_create'];
+                    }
 
-					return FileEngineFactory::build($options['file'], $autoCreate);
+                    return FileEngineFactory::build($options['file'], $autoCreate);
 
-				case 'wincache';
-					return new WinCache();
+                case 'wincache';
+                    return new WinCache();
 
-				case 'apc':
-					return new APC();
+                case 'apc':
+                    return new APC();
 
-				case 'xcache':
-					return new XCache();
+                case 'xcache':
+                    return new XCache();
 
-				case 'sql':
+                case 'sql':
 
-					if (!isset($options['table']) || !isset($options['connection'])) {
-						throw new RuntimeException('Cache SQL service request connection and table names to run');
-					}
+                    if (!isset($options['table']) || !isset($options['connection'])) {
+                        throw new RuntimeException('Cache SQL service request connection and table names to run');
+                    }
 
-					$table = $options['table'];
+                    $table = $options['table'];
 
-					$db = $container->get('db');
-					$connection = $db[$options['connection']];
+                    $db = $container->get('db');
+                    $connection = $db[$options['connection']];
 
-					$pdo = $connection->getPdo();
+                    $pdo = $connection->getPdo();
 
-					return SqlEngineFactory::build($pdo, $table);
+                    return SqlEngineFactory::build($pdo, $table);
 
-				default : 
-					throw new RuntimeException(sprintf('Invalid engine provided %s', $component['engine']));
-			}
+                default : 
+                    throw new RuntimeException(sprintf('Invalid engine provided %s', $component['engine']));
+            }
 
-		} else {
+        } else {
 
-			// Not defined in configuration
-			return false;
-		}
-	}
+            // Not defined in configuration
+            return false;
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'cache';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'cache';
+    }
 }

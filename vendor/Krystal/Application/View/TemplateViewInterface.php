@@ -13,21 +13,21 @@ namespace Krystal\Application\View;
 
 interface TemplateViewInterface
 {
-	/**
-	 * Returns content of glued layout and its fragment
-	 * 
-	 * @param string $layout Path to a layout
-	 * @param string $fragment Path to a fragment
-	 * @param string $variable Variable name which represents a fragment
-	 * @return string
-	 */
-	public function getFileContentWithLayout($layout, $fragment, $variable);
+    /**
+     * Returns content of glued layout and its fragment
+     * 
+     * @param string $layout Path to a layout
+     * @param string $fragment Path to a fragment
+     * @param string $variable Variable name which represents a fragment
+     * @return string
+     */
+    public function getFileContentWithLayout($layout, $fragment, $variable);
 
-	/**
-	 * Includes a file a returns its content as a string
-	 * 
-	 * @param string $file Path to the file
-	 * @return string
-	 */
-	public function getFileContent($file);
+    /**
+     * Includes a file a returns its content as a string
+     * 
+     * @param string $file Path to the file
+     * @return string
+     */
+    public function getFileContent($file);
 }

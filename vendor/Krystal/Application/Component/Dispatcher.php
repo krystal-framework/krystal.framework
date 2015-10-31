@@ -21,30 +21,30 @@ use Krystal\InstanceManager\ServiceLocator;
 
 final class Dispatcher implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$moduleManager = $container->get('moduleManager');
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $moduleManager = $container->get('moduleManager');
 
-		$mapManager = new MapManager($moduleManager->getRoutes(), new RouteNotation());
-		$dispatcher = new Component($mapManager);
+        $mapManager = new MapManager($moduleManager->getRoutes(), new RouteNotation());
+        $dispatcher = new Component($mapManager);
 
-		// This is critical
-		$services = array_merge(array($this->getName() => $dispatcher), $container->getAll());
+        // This is critical
+        $services = array_merge(array($this->getName() => $dispatcher), $container->getAll());
 
-		$controllerFactory = new ControllerFactory(new ServiceLocator($services));
-		$dispatcher->setControllerFactory($controllerFactory);
+        $controllerFactory = new ControllerFactory(new ServiceLocator($services));
+        $dispatcher->setControllerFactory($controllerFactory);
 
-		return $dispatcher;
-	}
+        return $dispatcher;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'dispatcher';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'dispatcher';
+    }
 }

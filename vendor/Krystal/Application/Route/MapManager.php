@@ -16,167 +16,167 @@ use RuntimeException;
 
 final class MapManager implements MapManagerInterface
 {
-	/**
-	 * Current route map
-	 * 
-	 * @var array
-	 */
-	private $map = array();
+    /**
+     * Current route map
+     * 
+     * @var array
+     */
+    private $map = array();
 
-	/**
-	 * Parser for route notations
-	 * 
-	 * @var \Krystal\Application\Route\NotationInterface
-	 */
-	private $notation;
+    /**
+     * Parser for route notations
+     * 
+     * @var \Krystal\Application\Route\NotationInterface
+     */
+    private $notation;
 
-	/**
-	 * State initialization
-	 * 
-	 * @param array $map
-	 * @param \Krystal\Application\Route\NotationInterface $notation
-	 * @return void
-	 */
-	public function __construct(array $map, RouteNotationInterface $notation = null)
-	{
-		$this->map = $map;
-		$this->notation = $notation;
-	}
+    /**
+     * State initialization
+     * 
+     * @param array $map
+     * @param \Krystal\Application\Route\NotationInterface $notation
+     * @return void
+     */
+    public function __construct(array $map, RouteNotationInterface $notation = null)
+    {
+        $this->map = $map;
+        $this->notation = $notation;
+    }
 
-	/**
-	 * Converts route notation to PSR-compliant
-	 * 
-	 * @param string $notation Route's notation
-	 * @return string
-	 */
-	public function toCompliant($notation)
-	{
-		return $this->notation->toCompliant($notation);
-	}
+    /**
+     * Converts route notation to PSR-compliant
+     * 
+     * @param string $notation Route's notation
+     * @return string
+     */
+    public function toCompliant($notation)
+    {
+        return $this->notation->toCompliant($notation);
+    }
 
-	/**
-	 * Gets associated options by URI template
-	 * 
-	 * @param string $uriTemplate
-	 * @param string $option Optionally can be filtered by some existing option
-	 * @return array
-	 */
-	public function getDataByUriTemplate($uriTemplate, $option = null)
-	{
-		if (isset($this->map[$uriTemplate])) {
-			$target = $this->map[$uriTemplate];
+    /**
+     * Gets associated options by URI template
+     * 
+     * @param string $uriTemplate
+     * @param string $option Optionally can be filtered by some existing option
+     * @return array
+     */
+    public function getDataByUriTemplate($uriTemplate, $option = null)
+    {
+        if (isset($this->map[$uriTemplate])) {
+            $target = $this->map[$uriTemplate];
 
-			if ($option !== null) {
-				// The option might not be set, so ensure
-				if (!isset($target[$option])) {
-					throw new RuntimeException(sprintf('Can not read non-existing option %s for "%s"', $option, $uriTemplate));
-				} else {
-					return $target[$option];
-				}
+            if ($option !== null) {
+                // The option might not be set, so ensure
+                if (!isset($target[$option])) {
+                    throw new RuntimeException(sprintf('Can not read non-existing option %s for "%s"', $option, $uriTemplate));
+                } else {
+                    return $target[$option];
+                }
 
-			} else {
-				return $target;
-			}
+            } else {
+                return $target;
+            }
 
-		} else {
-			throw new RuntimeException(sprintf(
-				'URI "%s" does not belong to route map. Cannot get a controller in %s', $uriTemplate, __METHOD__
-			));
-		}
-	}
+        } else {
+            throw new RuntimeException(sprintf(
+                'URI "%s" does not belong to route map. Cannot get a controller in %s', $uriTemplate, __METHOD__
+            ));
+        }
+    }
 
-	/**
-	 * Returns all loaded controllers
-	 * 
-	 * @return array
-	 */
-	public function getControllers()
-	{
-		$map = $this->map;
-		$result = array();
+    /**
+     * Returns all loaded controllers
+     * 
+     * @return array
+     */
+    public function getControllers()
+    {
+        $map = $this->map;
+        $result = array();
 
-		foreach ($map as $template => $options) {
-			if (isset($options['controller'])) {
-				$result[] = $options['controller'];
-			}
-		}
+        foreach ($map as $template => $options) {
+            if (isset($options['controller'])) {
+                $result[] = $options['controller'];
+            }
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * Gets URL template by its associated controller
-	 * This method is  basically used when building URLs by their associated controllers
-	 * 
-	 * @param string $controller (Module:Controler@action)
-	 * @return string|boolean
-	 */
-	public function getUrlTemplateByController($controller)
-	{
-		// Recursively search
-		$data = ArrayUtils::search($this->map, $controller);
+    /**
+     * Gets URL template by its associated controller
+     * This method is  basically used when building URLs by their associated controllers
+     * 
+     * @param string $controller (Module:Controler@action)
+     * @return string|boolean
+     */
+    public function getUrlTemplateByController($controller)
+    {
+        // Recursively search
+        $data = ArrayUtils::search($this->map, $controller);
 
-		// Now check the results of search
-		if (is_array($data) && isset($data[0])) {
-			return $data[0];
-		} else {
-			return false;
-		}
-	}
+        // Now check the results of search
+        if (is_array($data) && isset($data[0])) {
+            return $data[0];
+        } else {
+            return false;
+        }
+    }
 
-	/**
-	 * Returns URI map
-	 * 
-	 * @return array
-	 */
-	public function getURIMap()
-	{
-		return array_keys($this->map);
-	}
+    /**
+     * Returns URI map
+     * 
+     * @return array
+     */
+    public function getURIMap()
+    {
+        return array_keys($this->map);
+    }
 
-	/**
-	 * Returns a controller by its associated URI template
-	 * 
-	 * @param string $uriTemplate URI template, not actual one
-	 * @throws \RuntimeException if URI doesn't belong to route map
-	 * @return string|boolean
-	 */
-	public function getControllerByURITemplate($uriTemplate)
-	{
-		$controller = $this->getDataByUriTemplate($uriTemplate, 'controller');
-		$separatorPosition = strpos($controller, '@');
+    /**
+     * Returns a controller by its associated URI template
+     * 
+     * @param string $uriTemplate URI template, not actual one
+     * @throws \RuntimeException if URI doesn't belong to route map
+     * @return string|boolean
+     */
+    public function getControllerByURITemplate($uriTemplate)
+    {
+        $controller = $this->getDataByUriTemplate($uriTemplate, 'controller');
+        $separatorPosition = strpos($controller, '@');
 
-		if ($separatorPosition !== false) {
+        if ($separatorPosition !== false) {
 
-			$controller = substr($controller, 0, $separatorPosition);
-			return $this->notation->toClassPath($controller);
-		} else {
+            $controller = substr($controller, 0, $separatorPosition);
+            return $this->notation->toClassPath($controller);
+        } else {
 
-			// No separator
-			return false;
-		}
-	}
+            // No separator
+            return false;
+        }
+    }
 
-	/**
-	 * Returns action by associated URI template
-	 * 
-	 * @param string $uriTemplate
-	 * @throws \RuntimeException if $uriTemplate does not belong to route map
-	 * @return string|boolean
-	 */
-	public function getActionByURITemplate($uriTemplate)
-	{
-		$controller = $this->getDataByUriTemplate($uriTemplate, 'controller');
-		$separatorPosition = strpos($controller, '@');
+    /**
+     * Returns action by associated URI template
+     * 
+     * @param string $uriTemplate
+     * @throws \RuntimeException if $uriTemplate does not belong to route map
+     * @return string|boolean
+     */
+    public function getActionByURITemplate($uriTemplate)
+    {
+        $controller = $this->getDataByUriTemplate($uriTemplate, 'controller');
+        $separatorPosition = strpos($controller, '@');
 
-		if ($separatorPosition !== false) {
-			$action = substr($controller, $separatorPosition + 1);
-			return $action;
+        if ($separatorPosition !== false) {
+            $action = substr($controller, $separatorPosition + 1);
+            return $action;
 
-		} else {
+        } else {
 
-			// No separator
-			return false;
-		}
-	}
+            // No separator
+            return false;
+        }
+    }
 }

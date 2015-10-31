@@ -19,62 +19,62 @@ use RuntimeException;
 
 final class ValidatorFactory implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		if (isset($config['components']['validator'])) {
-			// Save a reference to array key
-			$options =& $config['components']['validator'];
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        if (isset($config['components']['validator'])) {
+            // Save a reference to array key
+            $options =& $config['components']['validator'];
 
-			// Translator configuration
-			if (!isset($options['translate']) || $options['translate'] == true) {
-				// By default, use translator
-				$translator = $container->get('translator');
-			} else {
-				$translator = null;
-			}
+            // Translator configuration
+            if (!isset($options['translate']) || $options['translate'] == true) {
+                // By default, use translator
+                $translator = $container->get('translator');
+            } else {
+                $translator = null;
+            }
 
-			if (isset($options['render'])) {
-				switch ($options['render']) {
+            if (isset($options['render'])) {
+                switch ($options['render']) {
 
-					case 'JsonCollection':
-						$template = isset($options['template']) ? $options['template'] : null;
-						$renderer = new Renderer\JsonCollection($template);
-					break;
+                    case 'JsonCollection':
+                        $template = isset($options['template']) ? $options['template'] : null;
+                        $renderer = new Renderer\JsonCollection($template);
+                    break;
 
-					case 'MessagesOnly':
-						$renderer = new Renderer\MessagesOnly();
-					break;
+                    case 'MessagesOnly':
+                        $renderer = new Renderer\MessagesOnly();
+                    break;
 
-					case 'Standard':
-						$renderer = new Renderer\Standard();
-					break;
+                    case 'Standard':
+                        $renderer = new Renderer\Standard();
+                    break;
 
-					case 'StandardJson':
-						$renderer = new Renderer\StandardJson();
-					break;
+                    case 'StandardJson':
+                        $renderer = new Renderer\StandardJson();
+                    break;
 
-					default:
-						throw new RuntimeException(sprintf('Unsupported validation renderer supplied in configuration "%s"', $options['render']));
-				}
-			}
+                    default:
+                        throw new RuntimeException(sprintf('Unsupported validation renderer supplied in configuration "%s"', $options['render']));
+                }
+            }
 
-			return new Component($renderer, $translator);
+            return new Component($renderer, $translator);
 
-		} else {
+        } else {
 
-			// Component isn't defined in configuration
-			return false;
-		}
-	}
+            // Component isn't defined in configuration
+            return false;
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'validatorFactory';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'validatorFactory';
+    }
 }

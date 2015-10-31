@@ -13,10 +13,10 @@ namespace Krystal\Application\Module\Loader;
 
 interface LoaderInterface
 {
-	/**
-	 * Fetches available collection of modules
-	 * 
-	 * @return array
-	 */
-	public function getModules();
+    /**
+     * Fetches available collection of modules
+     * 
+     * @return array
+     */
+    public function getModules();
 }

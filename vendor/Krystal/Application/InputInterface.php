@@ -13,108 +13,108 @@ namespace Krystal\Application;
 
 interface InputInterface
 {
-	/**
-	 * Sets request array
-	 * 
-	 * @param array $request
-	 * @return \Krystal\Application\Input
-	 */
-	public function setRequest(array &$request);
+    /**
+     * Sets request array
+     * 
+     * @param array $request
+     * @return \Krystal\Application\Input
+     */
+    public function setRequest(array &$request);
 
-	/**
-	 * Returns request array
-	 * 
-	 * @return array
-	 */
-	public function &getRequest();
+    /**
+     * Returns request array
+     * 
+     * @return array
+     */
+    public function &getRequest();
 
-	/**
-	 * Sets query array
-	 * 
-	 * @param array $query
-	 * @return \Krystal\Application\Input
-	 */
-	public function setQuery(array &$query);
+    /**
+     * Sets query array
+     * 
+     * @param array $query
+     * @return \Krystal\Application\Input
+     */
+    public function setQuery(array &$query);
 
-	/**
-	 * Returns query array
-	 * 
-	 * @return array
-	 */
-	public function &getQuery();
+    /**
+     * Returns query array
+     * 
+     * @return array
+     */
+    public function &getQuery();
 
-	/**	
-	 * Sets posts array
-	 * 
-	 * @param array $post
-	 * @return \Krystal\Application\Input
-	 */
-	public function setPost(array &$post);
+    /** 
+     * Sets posts array
+     * 
+     * @param array $post
+     * @return \Krystal\Application\Input
+     */
+    public function setPost(array &$post);
 
-	/**
-	 * Returns post data
-	 * 
-	 * @return array
-	 */
-	public function &getPost();
+    /**
+     * Returns post data
+     * 
+     * @return array
+     */
+    public function &getPost();
 
-	/**
-	 * Sets files
-	 * 
-	 * @param array $files
-	 * @return \Krystal\Application\Input
-	 */
-	public function setFiles(&$files);
+    /**
+     * Sets files
+     * 
+     * @param array $files
+     * @return \Krystal\Application\Input
+     */
+    public function setFiles(&$files);
 
-	/**
-	 * Returns files array
-	 * 
-	 * @return array
-	 */
-	public function &getFiles();
+    /**
+     * Returns files array
+     * 
+     * @return array
+     */
+    public function &getFiles();
 
-	/**
-	 * Sets server's array
-	 * 
-	 * @param array $server
-	 * @return \Krystal\Application\Input
-	 */
-	public function setServer(&$server);
+    /**
+     * Sets server's array
+     * 
+     * @param array $server
+     * @return \Krystal\Application\Input
+     */
+    public function setServer(&$server);
 
-	/**
-	 * Returns server's array
-	 * 
-	 * @return array
-	 */
-	public function &getServer();
+    /**
+     * Returns server's array
+     * 
+     * @return array
+     */
+    public function &getServer();
 
-	/**
-	 * Sets environment array
-	 * 
-	 * @param array $env
-	 * @return \Krystal\Application\Input
-	 */
-	public function setEnv(array &$env);
+    /**
+     * Sets environment array
+     * 
+     * @param array $env
+     * @return \Krystal\Application\Input
+     */
+    public function setEnv(array &$env);
 
-	/**
-	 * Returns environment array
-	 * 
-	 * @return array
-	 */
-	public function &getEnv();
+    /**
+     * Returns environment array
+     * 
+     * @return array
+     */
+    public function &getEnv();
 
-	/**
-	 * Sets cookie array
-	 * 
-	 * @param array $cookie
-	 * @return \Krystal\Application\Input
-	 */
-	public function setCookie(array &$cookie);
+    /**
+     * Sets cookie array
+     * 
+     * @param array $cookie
+     * @return \Krystal\Application\Input
+     */
+    public function setCookie(array &$cookie);
 
-	/**
-	 * Returns cookie array
-	 * 
-	 * @return array
-	 */
-	public function &getCookie();
+    /**
+     * Returns cookie array
+     * 
+     * @return array
+     */
+    public function &getCookie();
 }

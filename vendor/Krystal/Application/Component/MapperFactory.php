@@ -18,41 +18,41 @@ use RuntimeException;
 
 final class MapperFactory implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$connections = $container->get('db');
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $connections = $container->get('db');
 
-		// If no connections, then stop
-		if (empty($connections)) {
-			return;
-		}
+        // If no connections, then stop
+        if (empty($connections)) {
+            return;
+        }
 
-		if (!isset($config['components']['mapperFactory']['connection'])) {
-			throw new RuntimeException('Missing connection to use for building mappers');
-		}
+        if (!isset($config['components']['mapperFactory']['connection'])) {
+            throw new RuntimeException('Missing connection to use for building mappers');
+        }
 
-		// Defined connection name in configuration. Grab it
-		$current = $config['components']['mapperFactory']['connection'];
+        // Defined connection name in configuration. Grab it
+        $current = $config['components']['mapperFactory']['connection'];
 
-		if (!in_array($current, array_keys($connections))) {
-			throw new RuntimeException(sprintf(
-				'The connection for the mapper factory "%s" was not defined in database configuration section', $current
-			));
-		} else {
-			$db = $connections[$current];
-		}
+        if (!in_array($current, array_keys($connections))) {
+            throw new RuntimeException(sprintf(
+                'The connection for the mapper factory "%s" was not defined in database configuration section', $current
+            ));
+        } else {
+            $db = $connections[$current];
+        }
 
-		return new Component($db, $container->get('paginator'));
-	}
+        return new Component($db, $container->get('paginator'));
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'mapperFactory';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'mapperFactory';
+    }
 }

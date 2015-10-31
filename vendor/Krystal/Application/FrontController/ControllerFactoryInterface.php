@@ -13,12 +13,12 @@ namespace Krystal\Application\FrontController;
 
 interface ControllerFactoryInterface
 {
-	/**
-	 * Builds a controller instance
-	 * 
-	 * @param string $controller PSR-0 Compliant path
-	 * @param array $options Route options
-	 * @return \Krystal\Application\Controller\AbstractController
-	 */
-	public function build($controller, array $options);
+    /**
+     * Builds a controller instance
+     * 
+     * @param string $controller PSR-0 Compliant path
+     * @param array $options Route options
+     * @return \Krystal\Application\Controller\AbstractController
+     */
+    public function build($controller, array $options);
 }

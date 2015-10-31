@@ -21,73 +21,73 @@ use LogicException;
 
 final class SessionBag implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		// Defaults
-		$handler = null;
-		$cookieParams = array();
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        // Defaults
+        $handler = null;
+        $cookieParams = array();
 
-		// Start configuring if possible
-		if (isset($config['components']['session'])) {
-			// Just a short-cut
-			$config = $config['components']['session'];
+        // Start configuring if possible
+        if (isset($config['components']['session'])) {
+            // Just a short-cut
+            $config = $config['components']['session'];
 
-			// Alter default $cookieParams if needed
-			if (isset($config['cookie_params']) && is_array($config['cookie_params'])) {
-				$cookieParams = $config['cookie_params'];
-			}
+            // Alter default $cookieParams if needed
+            if (isset($config['cookie_params']) && is_array($config['cookie_params'])) {
+                $cookieParams = $config['cookie_params'];
+            }
 
-			// Check if there's a custom session handler
-			if (isset($config['handler'])) {
-				switch ($config['handler']) {
-					case 'sql':
+            // Check if there's a custom session handler
+            if (isset($config['handler'])) {
+                switch ($config['handler']) {
+                    case 'sql':
 
-						// Make sure the database component is available, before processing the rest
-						if (!$container->exists('db')) {
-							throw new LogicException('Can not use SQL session handler without configured database connection');
-						}
+                        // Make sure the database component is available, before processing the rest
+                        if (!$container->exists('db')) {
+                            throw new LogicException('Can not use SQL session handler without configured database connection');
+                        }
 
-						// Grab available database connection
-						$db = $container->get('db');
+                        // Grab available database connection
+                        $db = $container->get('db');
 
-						if (isset($config['options']['connection']) && isset($config['options']['table'])) {
-							// Grab connection's name
-							$connection = $db[$config['options']['connection']];
-							
-							// Now alter default handler
-							$handler = new Adapter\Sql($connection->getPdo(), $config['options']['table']);
+                        if (isset($config['options']['connection']) && isset($config['options']['table'])) {
+                            // Grab connection's name
+                            $connection = $db[$config['options']['connection']];
+                            
+                            // Now alter default handler
+                            $handler = new Adapter\Sql($connection->getPdo(), $config['options']['table']);
 
-						} else {
-							throw new LogicException('No connection or table name defined for session service');
-						}
+                        } else {
+                            throw new LogicException('No connection or table name defined for session service');
+                        }
 
-					break;
+                    break;
 
-					// Do nothing for native handler
-					case 'native':
-					break;
+                    // Do nothing for native handler
+                    case 'native':
+                    break;
 
-					default:
-						throw new RuntimeException(sprintf('Unsupported session handler supplied "%s"', $config['handler']));
-				}
-			}
-		}
+                    default:
+                        throw new RuntimeException(sprintf('Unsupported session handler supplied "%s"', $config['handler']));
+                }
+            }
+        }
 
-		$cookieBag = $container->get('request')->getCookieBag();
-		$sessionBag = new Component($cookieBag, new SessionValidator($input->getServer()), $handler);
+        $cookieBag = $container->get('request')->getCookieBag();
+        $sessionBag = new Component($cookieBag, new SessionValidator($input->getServer()), $handler);
 
-		$sessionBag->start($cookieParams);
-		return $sessionBag;
-	}
+        $sessionBag->start($cookieParams);
+        return $sessionBag;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'sessionBag';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'sessionBag';
+    }
 }

@@ -15,13 +15,13 @@ use Krystal\Application\FrontController\ControllerFactory;
 
 interface DispatcherInterface
 {
-	/**
-	 * Renders as a string
-	 * The last thing we could possibly do
-	 * 
-	 * @param string $matchedURITemplate
-	 * @param array $params
-	 * @return string
-	 */
-	public function render($matchedURITemplate, array $params);
+    /**
+     * Renders as a string
+     * The last thing we could possibly do
+     * 
+     * @param string $matchedURITemplate
+     * @param array $params
+     * @return string
+     */
+    public function render($matchedURITemplate, array $params);
 }

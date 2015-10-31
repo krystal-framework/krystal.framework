@@ -13,63 +13,63 @@ namespace Krystal\Application\Route;
 
 interface RouteMatchInterface
 {
-	/**
-	 * Defines matched URI
-	 * 
-	 * @param string $matchedURI
-	 * @return \Krystal\Application\Route\RouteMatch
-	 */
-	public function setMatchedURI($matchedURI);
+    /**
+     * Defines matched URI
+     * 
+     * @param string $matchedURI
+     * @return \Krystal\Application\Route\RouteMatch
+     */
+    public function setMatchedURI($matchedURI);
 
-	/**
-	 * Returns matched URI
-	 * 
-	 * @return string
-	 */
-	public function getMatchedURI();
+    /**
+     * Returns matched URI
+     * 
+     * @return string
+     */
+    public function getMatchedURI();
 
-	/**
-	 * Defines a matched URI template
-	 * 
-	 * @param string $matchedURITemplate
-	 * @return \Krystal\Application\Route\RouteMatch
-	 */
-	public function setMatchedURITemplate($matchedURITemplate);
+    /**
+     * Defines a matched URI template
+     * 
+     * @param string $matchedURITemplate
+     * @return \Krystal\Application\Route\RouteMatch
+     */
+    public function setMatchedURITemplate($matchedURITemplate);
 
-	/**
-	 * Returns matched URI template
-	 * 
-	 * @return string
-	 */
-	public function getMatchedURITemplate();
+    /**
+     * Returns matched URI template
+     * 
+     * @return string
+     */
+    public function getMatchedURITemplate();
 
-	/**
-	 * Defines a method
-	 * 
-	 * @param string $method
-	 * @return \Krystal\Application\Route\RouteMatch
-	 */
-	public function setMethod($method);
+    /**
+     * Defines a method
+     * 
+     * @param string $method
+     * @return \Krystal\Application\Route\RouteMatch
+     */
+    public function setMethod($method);
 
-	/**
-	 * Returns route method
-	 * 
-	 * @return string
-	 */
-	public function getMethod();
+    /**
+     * Returns route method
+     * 
+     * @return string
+     */
+    public function getMethod();
 
-	/**
-	 * Defines route variables
-	 * 
-	 * @param array $variables
-	 * @return \Krystal\Application\Route\RouteMatch
-	 */
-	public function setVariables(array $variables);
+    /**
+     * Defines route variables
+     * 
+     * @param array $variables
+     * @return \Krystal\Application\Route\RouteMatch
+     */
+    public function setVariables(array $variables);
 
-	/**
-	 * Returns route variables
-	 * 
-	 * @return array
-	 */
-	public function getVariables();
+    /**
+     * Returns route variables
+     * 
+     * @return array
+     */
+    public function getVariables();
 }

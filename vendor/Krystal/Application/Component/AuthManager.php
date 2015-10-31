@@ -19,25 +19,25 @@ use Krystal\Application\InputInterface;
 
 final class AuthManager implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$cookieBag = $container->get('request')->getCookieBag();
-		$sessionBag = $container->get('sessionBag');
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $cookieBag = $container->get('request')->getCookieBag();
+        $sessionBag = $container->get('sessionBag');
 
-		$hashProvider = new HashProvider();
-		$reAuth = new ReAuth($cookieBag, $hashProvider);
+        $hashProvider = new HashProvider();
+        $reAuth = new ReAuth($cookieBag, $hashProvider);
 
-		return new Component($sessionBag, $reAuth, $hashProvider);
-	}
+        return new Component($sessionBag, $reAuth, $hashProvider);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'authManager';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'authManager';
+    }
 }

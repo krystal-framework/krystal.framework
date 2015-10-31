@@ -19,46 +19,46 @@ use RuntimeException;
 
 final class Captcha implements ComponentInterface
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
-	{
-		$sessionBag = $container->get('sessionBag');
+    /**
+     * {@inheritDoc}
+     */
+    public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
+    {
+        $sessionBag = $container->get('sessionBag');
 
-		if (isset($config['components']['captcha']['type'])) {
-			// By default, no options to override
-			$options = array();
+        if (isset($config['components']['captcha']['type'])) {
+            // By default, no options to override
+            $options = array();
 
-			// Alter $options if we have them in user's configuration
-			if (isset($config['components']['captcha']['options']) && is_array($config['components']['captcha']['options'])) {
-				$options = $config['components']['captcha']['options'];
-			}
+            // Alter $options if we have them in user's configuration
+            if (isset($config['components']['captcha']['options']) && is_array($config['components']['captcha']['options'])) {
+                $options = $config['components']['captcha']['options'];
+            }
 
-			$type =& $config['components']['captcha']['type'];
+            $type =& $config['components']['captcha']['type'];
 
-			switch($type) {
-				case 'standard';
-					$captcha = CaptchaFactory::build($options, $sessionBag);
-				break;
+            switch($type) {
+                case 'standard';
+                    $captcha = CaptchaFactory::build($options, $sessionBag);
+                break;
 
-				default:
-					throw new RuntimeException(sprintf('Unknown CAPTCHA adapter supplied "%s"', $type));
-			}
+                default:
+                    throw new RuntimeException(sprintf('Unknown CAPTCHA adapter supplied "%s"', $type));
+            }
 
-			return $captcha;
+            return $captcha;
 
-		} else {
+        } else {
 
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getName()
-	{
-		return 'captcha';
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'captcha';
+    }
 }
