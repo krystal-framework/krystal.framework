@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
  
+ * Breadcrumb service's add() method now returns self instead of void
  * Added addOne() to breadcrumb bag. That makes it much easier to add single breadcrumbs
  * Added shortcut methods for attributes in `NodeElement`
  * Now it's not possible to set the same attribute or property twice on elements
