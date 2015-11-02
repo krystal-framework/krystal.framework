@@ -3,7 +3,7 @@ CHANGELOG
 
 1.2
 ---
- 
+
  * Breadcrumb service's add() method now returns self instead of void
  * Added addOne() to breadcrumb bag. That makes it much easier to add single breadcrumbs
  * Added shortcut methods for attributes in `NodeElement`
@@ -12,15 +12,10 @@ CHANGELOG
 1.1
 ---
 
- * Removed all helpers which render HTML elements. 
-   That is a bad practise, because it violates Separation Of Concerns
-
- * Added `NodeElement` class. 
-   Now HTML elements inside recursive functions can be easily constructed without native `DOMDocument`
- 
+ * Removed all helpers which render HTML elements
+ * Added `NodeElement` class. Now HTML elements inside recursive functions can be easily constructed without native `DOMDocument` 
  * Moved breadcrumb's functionality into `Form` component from `Application\View`
-
- * Improved `HTMLHelper`. Now it has more "useful" methods
+ * Improved `HTMLHelper`. Now it has more useful methods
  
 1.0
 ---
