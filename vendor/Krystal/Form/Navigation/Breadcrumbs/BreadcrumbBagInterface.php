@@ -33,7 +33,7 @@ interface BreadcrumbBagInterface
      * 
      * @param string $name Breadcrumb name
      * @param string $link Breadcrumb link
-     * @return void
+     * @return \Krystal\Form\Navigation\BreadcrumbBag
      */
     public function addOne($name, $link = '#');
 

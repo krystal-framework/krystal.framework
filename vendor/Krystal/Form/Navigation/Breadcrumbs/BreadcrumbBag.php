@@ -88,7 +88,7 @@ final class BreadcrumbBag implements BreadcrumbBagInterface
      * Adds breadcrumb collection
      * 
      * @param array $collection
-     * @return void
+     * @return \Krystal\Form\Navigation\BreadcrumbBag
      */
     public function add(array $collection)
     {
@@ -96,9 +96,11 @@ final class BreadcrumbBag implements BreadcrumbBagInterface
             $breadcrumb = new Breadcrumb();
             $breadcrumb->setName($data['name'])
                        ->setLink(isset($data['link']) ? $data['link'] : '#');
-            
+
             array_push($this->collection, $breadcrumb);
         }
+
+        return $this;
     }
 
     /**
