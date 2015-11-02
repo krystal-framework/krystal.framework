@@ -4,6 +4,10 @@ CHANGELOG
 1.2
 ---
 
+ * `Form\NodeElement` can now render properties on demand when setting them as attributes
+ * Added `Form\Element`. Now elements can be rendered via its shortcut methods
+ * Added builder for  HTML5 `range` inputs
+ * Added builder for button elements
  * Breadcrumb service's add() method now returns self instead of void
  * Added addOne() to breadcrumb bag. That makes it much easier to add single breadcrumbs
  * Added shortcut methods for attributes in `NodeElement`
