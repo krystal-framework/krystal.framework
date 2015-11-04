@@ -64,21 +64,6 @@ abstract class AbstractProvider
     }
 
     /**
-     * Returns all prepared entities
-     * 
-     * @return array
-     */
-    final protected function getAllPrepared()
-    {
-        $ob = new OptionBox();
-
-        $ob->setOptions($this->values);
-        $ob->setCurrent($this->getData());
-
-        return $ob->getAll();
-    }
-
-    /**
      * Defines data's key
      * 
      * @param string $value A value to be written in provided namespace
@@ -95,7 +80,7 @@ abstract class AbstractProvider
      * 
      * @return mixed
      */
-    final public function getData()
+    final protected function getData()
     {
         if ($this->storage->has($this->ns)) {
             return $this->storage->get($this->ns);

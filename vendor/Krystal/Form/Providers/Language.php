@@ -20,7 +20,7 @@ class Language extends AbstractProvider
      */
     public function getAllLanguages()
     {
-        return $this->getAllPrepared();
+        return $this->values;
     }
 
     /**

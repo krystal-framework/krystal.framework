@@ -20,7 +20,7 @@ class DataSorter extends AbstractProvider
      */
     public function getSortingOptions()
     {
-        return $this->getAllPrepared();
+        return $this->values;
     }
 
     /**

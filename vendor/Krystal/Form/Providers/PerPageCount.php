@@ -43,11 +43,11 @@ class PerPageCount extends AbstractProvider implements PerPageCountInterface
     /**
      * Returns per page count options
      * 
-     * @return array Array of option entities
+     * @return array
      */
     public function getPerPageCountValues()
     {
-        return $this->getAllPrepared();
+        return array_combine($this->values, $this->values);
     }
 
     /**
