@@ -121,7 +121,6 @@ final class FlashBag implements FlashBagInterface
     public function get($key)
     {
         if ($this->has($key)) {
-
             $flashMessages = $this->storage->get(self::FLASH_KEY);
             $message = $flashMessages[$key];
 
@@ -132,7 +131,6 @@ final class FlashBag implements FlashBagInterface
             }
 
             return $message;
-            
         } else {
             throw new RuntimeException(sprintf(
                 'Attempted to read non-existing key %s', $key
