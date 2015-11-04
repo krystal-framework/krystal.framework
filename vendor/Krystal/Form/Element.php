@@ -81,8 +81,13 @@ class Element
      */
     public static function radio($name, $value, $checked, array $attributes = array())
     {
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         $node = new Node\Radio($checked);
         return $node->render($attributes);
@@ -99,7 +104,9 @@ class Element
      */
     public static function checkbox($name, $checked, array $attributes = array(), $serialize = true)
     {
-        $attributes['name'] = $name;
+        if ($name !== null) {
+            $attributes['name'] = $name;
+        }
 
         $node = new Node\Checkbox($serialize, $checked);
         return $node->render($attributes);
@@ -115,7 +122,9 @@ class Element
      */
     public static function file($name, $accept = null, array $attributes = array())
     {
-        $attributes['name'] = $name;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
 
         if (!is_null($accept)) {
             $attributes['accept'] = $accept;
@@ -138,8 +147,9 @@ class Element
     {
         $node = new Node\Select($list, $selected);
 
-        // Define major "name" attribute
-        $attributes['name'] = $name;
+        if ($name !== null) {
+            $attributes['name'] = $name;
+        }
 
         return $node->render($attributes);
     }
@@ -154,7 +164,9 @@ class Element
      */
     public static function textarea($name, $text, array $attributes = array())
     {
-        $attributes['name'] = $name;
+        if ($name !== null) {
+            $attributes['name'] = $name;
+        }
 
         $node = new Node\Textarea($text);
         return $node->render($attributes);
@@ -172,9 +184,13 @@ class Element
     {
         $node = new Node\Text();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -191,9 +207,13 @@ class Element
     {
         $node = new Node\Color();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -210,9 +230,13 @@ class Element
     {
         $node = new Node\Date();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -229,9 +253,13 @@ class Element
     {
         $node = new Node\Email();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -248,9 +276,13 @@ class Element
     {
         $node = new Node\Hidden();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -267,9 +299,13 @@ class Element
     {
         $node = new Node\Number();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -286,9 +322,13 @@ class Element
     {
         $node = new Node\Range();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -305,9 +345,13 @@ class Element
     {
         $node = new Node\Url();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -324,9 +368,13 @@ class Element
     {
         $node = new Node\Password();
 
-        // Define major attributes
-        $attributes['name'] = $name;
-        $attributes['value'] = $value;
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         return $node->render($attributes);
     }
@@ -342,8 +390,9 @@ class Element
     {
         $node = new Node\Image();
 
-        // Define major attributes
-        $attributes['src'] = $src;
+        if (!is_null($src)) {
+            $attributes['src'] = $src;
+        }
 
         return $node->render($attributes);
     }
