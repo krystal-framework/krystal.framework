@@ -12,7 +12,6 @@
 namespace Krystal\Db\Sql;
 
 use InvalidArgumentException;
-use PDO;
 
 final class TableBuilder implements TableBuilderInterface
 {
@@ -37,7 +36,7 @@ final class TableBuilder implements TableBuilderInterface
      * @param string $charset
      * @return void
      */
-    public function __construct(PDO $pdo, $charset = 'UTF-8')
+    public function __construct($pdo, $charset = 'UTF-8')
     {
         $this->pdo = $pdo;
         $this->charset = $charset;

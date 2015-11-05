@@ -11,8 +11,6 @@
 
 namespace Krystal\Db\Sql;
 
-use PDO;
-
 final class TableDumper implements TableDumperInterface
 {
     /**
@@ -28,7 +26,7 @@ final class TableDumper implements TableDumperInterface
      * @param \PDO $pdo
      * @return void
      */
-    public function __construct(PDO $pdo)
+    public function __construct($pdo)
     {
         $this->pdo = $pdo;
     }
