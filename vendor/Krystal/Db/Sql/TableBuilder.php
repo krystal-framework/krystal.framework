@@ -23,23 +23,21 @@ final class TableBuilder implements TableBuilderInterface
     private $pdo;
 
     /**
-     * Pending queries to be executed
+     * A query to be executed
      * 
-     * @var array
+     * @var string
      */
-    private $queries = array();
+    private $query;
 
     /**
      * State initialization
      * 
      * @param \PDO $pdo
-     * @param string $charset
      * @return void
      */
-    public function __construct($pdo, $charset = 'UTF-8')
+    public function __construct($pdo)
     {
         $this->pdo = $pdo;
-        $this->charset = $charset;
     }
 
     /**
@@ -50,7 +48,7 @@ final class TableBuilder implements TableBuilderInterface
      */
     public function loadFromString($content)
     {
-        $this->queries  = $this->parse($content, $this->charset);
+        $this->query = $content;
     }
 
     /**
@@ -72,47 +70,12 @@ final class TableBuilder implements TableBuilderInterface
     }
 
     /**
-     * Parses SQL (that would be full of statements) string and returns an array
-     * 
-     * @param string $sql SQL string with all queries
-     * @param string $charset The charset to be used while parsing
-     * @return array
-     */
-    private function parse($sql, $charset)
-    {
-        $queries = explode(';', $sql);
-        $result  = array();
-
-        foreach ($queries as $query) {
-            // In order to avoid junk in queries,
-            // That's a temporary trick
-            if (mb_strlen($query, $charset) > 8) {
-                array_push($result, $query);
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Build tables
      * 
      * @return boolean
      */
     public function run()
     {
-        $this->pdo->beginTransaction();
-
-        foreach ($this->queries as $query) {
-            if ($this->pdo->exec($query) === false) {
-                // if something went wrong, then
-                $this->pdo->rollBack();
-                // And
-                return false;
-            }
-        }
-
-        $this->pdo->commit();
-        return true;
+        return $this->pdo->exec($this->query);
     }
 }
