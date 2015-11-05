@@ -14,6 +14,14 @@ namespace Krystal\Db\MySQL;
 interface TableBuilderInterface
 {
     /**
+     * Loads data from a string
+     * 
+     * @param string $content
+     * @return void
+     */
+    public function loadFromString($content);
+
+    /**
      * Loads data from file
      * 
      * @param string $filename

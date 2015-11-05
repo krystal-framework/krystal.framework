@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Since now `Db\Sql\TableBuilder` can load data from strings as well. Added new `loadFromString()` method
  * Added ability to re-define default fetching mode in `query()` and `queryAll()` methods. 
    Since now, the second argument defines a fethcing mode
  * Added missing LogicException import in `AbstractMapper`

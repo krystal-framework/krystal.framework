@@ -44,6 +44,17 @@ final class TableBuilder implements TableBuilderInterface
     }
 
     /**
+     * Loads data from a string
+     * 
+     * @param string $content
+     * @return void
+     */
+    public function loadFromString($content)
+    {
+        $this->queries  = $this->parse($content, $this->charset);
+    }
+
+    /**
      * Loads data from file
      * 
      * @param string $filename
@@ -52,14 +63,11 @@ final class TableBuilder implements TableBuilderInterface
     public function loadFromFile($filename)
     {
         if (is_file($filename)) {
-
             $content = file_get_contents($filename);
-            $this->queries  = $this->parse($content, $this->charset);
+            $this->loadFromString($content);
 
             return true;
-
         } else {
-
             return false;
         }
     }
