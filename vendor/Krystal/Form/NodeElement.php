@@ -224,7 +224,7 @@ final class NodeElement implements NodeElementInterface
             throw new LogicException(sprintf('The property "%s" can not be set twice', $property));
         }
 
-        $this->append(sprintf(' %s', $property));
+        $this->append(sprintf(' %s="%s"', $property, $property));
         array_push($this->properties, $property);
 
         return $this;

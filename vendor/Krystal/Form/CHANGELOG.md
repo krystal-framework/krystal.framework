@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Now `Form\NodeElement::addProperty()` renders stricktly-compliant properties, like `prop="prop"`
  * `Form\NodeElement` can now render properties on demand when setting them as attributes
  * Added `Form\Element`. Now elements can be rendered via its shortcut methods
  * Added builder for  HTML5 `range` inputs
