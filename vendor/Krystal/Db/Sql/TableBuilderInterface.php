@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Db\MySQL;
+namespace Krystal\Db\Sql;
 
 interface TableBuilderInterface
 {
