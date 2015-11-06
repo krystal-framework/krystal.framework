@@ -25,7 +25,9 @@ class Element
      */
     public static function option($value, $text, array $attributes = array())
     {
-        $attributes['value'] = $value;
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
 
         $node = new Node\Option($text);
         return $node->render($attributes);
