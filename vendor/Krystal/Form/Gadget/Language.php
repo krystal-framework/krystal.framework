@@ -9,38 +9,38 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Form\Providers;
+namespace Krystal\Form\Gadget;
 
-class DataSorter extends AbstractProvider
+class Language extends AbstractGadget
 {
     /**
-     * Returns sorting options
+     * Returns all languages
      * 
      * @return array
      */
-    public function getSortingOptions()
+    public function getAllLanguages()
     {
         return $this->values;
     }
 
     /**
-     * Returns current sort option
+     * Returns current language
      * 
      * @return string
      */
-    public function getSortOption()
+    public function getCurrentLanguage()
     {
         return $this->getData();
     }
 
     /**
-     * Stores sorting option
+     * Sets current language
      * 
-     * @param string $sort
-     * @return boolean
+     * @param string $language
+     * @return void
      */
-    public function setSortOption($sort)
+    public function setCurrentLanguage($language)
     {
-        return $this->setData($sort);
+        return $this->setData($language);
     }
 }

@@ -9,14 +9,14 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Form\Providers;
+namespace Krystal\Form\Gadget;
 
 use Krystal\Form\Selectbox\OptionBox;
 use Krystal\Http\PersistentStorageInterface;
 use Krystal\Date\TimeHelper;
 use LogicException;
 
-abstract class AbstractProvider
+abstract class AbstractGadget
 {
     /**
      * Default value in collection to choice from

@@ -9,12 +9,12 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Form\Providers;
+namespace Krystal\Form\Gadget;
 
 use LogicException;
 use Krystal\Http\PersistentStorageInterface;
 
-class PerPageCount extends AbstractProvider implements PerPageCountInterface
+class PerPageCount extends AbstractGadget implements PerPageCountInterface
 {
     /**
      * State initialization

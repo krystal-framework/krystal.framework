@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Form\Providers;
+namespace Krystal\Form\Gadget;
 
 interface PerPageCountInterface
 {
