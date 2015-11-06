@@ -11,7 +11,7 @@
 
 namespace Krystal\Form\Gadget;
 
-class DataSorter extends AbstractGadget
+class DataSorter extends AbstractGadget implements DataSorterInterface
 {
     /**
      * Returns sorting options

@@ -9,6 +9,8 @@
  * the license file that was distributed with this source code.
  */
 
+namespace Krystal\Form\Gadget;
+
 interface DataSorterInterface
 {
     /**
