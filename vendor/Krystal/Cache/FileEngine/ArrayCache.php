@@ -14,33 +14,16 @@ namespace Krystal\Cache\FileEngine;
 /* An abstraction over cache's array */
 final class ArrayCache implements ArrayCacheInterface
 {
+    const CACHE_PARAM_VALUE = 'value';
+    const CACHE_PARAM_TTL = 'ttl';
+    const CACHE_PARAM_CREATED = 'created';
+
     /**
      * Cache data
      * 
      * @var array
      */
     private $data = array();
-
-    /**
-     * Key which represents a value itself
-     * 
-     * @const string
-     */
-    const CACHE_PARAM_VALUE = 'value';
-
-    /**
-     * Key which represents time to live
-     * 
-     * @const string
-     */
-    const CACHE_PARAM_TTL = 'ttl';
-
-    /**
-     * Key which represents created time
-     * 
-     * @const string
-     */
-    const CACHE_PARAM_CREATED = 'created';
 
     /**
      * Decrements a value
