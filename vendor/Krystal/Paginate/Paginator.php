@@ -357,7 +357,7 @@ final class Paginator implements PaginatorInterface
      * @return integer
      */
     public function getCurrentPage()
-	{
+    {
         return $this->currentPage;
     }
 
