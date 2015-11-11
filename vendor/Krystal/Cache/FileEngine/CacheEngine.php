@@ -147,7 +147,6 @@ final class CacheEngine implements CacheEngineInterface
         foreach (array_keys($this->arrayCache->getData()) as $key) {
             // Do remove outdated keys from the collection
             if ($this->arrayCache->isExpired($key, time())) {
-
                 $refresh = true;
                 $this->arrayCache->remove($key);
             }

@@ -77,11 +77,9 @@ final class SqlCacheEngine implements CacheEngineInterface
         $this->initializeOnDemand();
 
         if ($this->cacheMapper->flush()) {
-
             // Reset the current state as well
             $this->cache = array();
             return true;
-
         } else {
             return false;
         }
@@ -99,13 +97,11 @@ final class SqlCacheEngine implements CacheEngineInterface
         $this->initializeOnDemand();
 
         if ($this->cacheMapper->increment($key, $step)) {
-
             // Synchronize with the current state
             $value = $this->get($key);
             $this->set($key, $value + $step, $this->getKeyTtl($key));
 
             return true;
-
         } else {
             return false;
         }
@@ -123,13 +119,11 @@ final class SqlCacheEngine implements CacheEngineInterface
         $this->initializeOnDemand();
 
         if ($this->cacheMapper->decrement($key, $step)) {
-
             // Synchronize with the current state
             $value = $this->get($key);
             $this->set($key, $value - $step, $this->getKeyTtl($key));
 
             return true;
-
         } else {
             return false;
         }
@@ -225,7 +219,6 @@ final class SqlCacheEngine implements CacheEngineInterface
     public function getAll()
     {
         $this->initializeOnDemand();
-
         $result = array();
 
         foreach ($this->cache as $key => $options) {
@@ -276,10 +269,8 @@ final class SqlCacheEngine implements CacheEngineInterface
         $this->initializeOnDemand();
 
         if ($this->has($key) && $this->cacheMapper->delete($key)) {
-
             unset($this->cache[$key]);
             return true;
-
         } else {
             return false;
         }

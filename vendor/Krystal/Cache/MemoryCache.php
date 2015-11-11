@@ -87,10 +87,8 @@ final class MemoryCache implements CacheEngineInterface
     public function remove($key)
     {
         if ($this->has($key)) {
-
             unset($this->cache[$key]);
             return true;
-
         } else {
             return false;
         }

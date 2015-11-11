@@ -179,10 +179,8 @@ final class ArrayCache implements ArrayCacheInterface
     public function remove($key)
     {
         if ($this->has($key)) {
-
             unset($this->data[$key]);
             return true;
-
         } else {
             return false;
         }

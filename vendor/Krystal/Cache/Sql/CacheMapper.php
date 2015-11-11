@@ -183,7 +183,6 @@ final class CacheMapper implements CacheMapperInterface
     public function delete($key)
     {
         $query = sprintf('DELETE FROM `%s` WHERE `key` = :key', $this->table);
-
         $stmt = $this->pdo->prepare($query);
 
         return $stmt->execute(array(
