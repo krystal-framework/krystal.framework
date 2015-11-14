@@ -11,23 +11,27 @@
 
 namespace Krystal\Validate\Pattern;
 
-final class Login extends AbstractPattern
+final class Login extends AbstractUniquePattern
 {
     /**
      * {@inheritDoc}
      */
     public function getDefinition()
 	{
+        $rules = array(
+            'NotEmpty' => array(
+                'message' => 'Login can not be blank'
+            ),
+            'NoTags' => array(
+                'message' => 'Login can not contain HTML tags'
+            )
+        );
+
+        $rules = $this->getMergedWithUniquenessOnDemand($rules, 'This login is already taken');
+
         return $this->getWithDefaults(array(
             'required' => true,
-            'rules' => array(
-                'NotEmpty' => array(
-                    'message' => 'Login can not be blank'
-                ),
-                'NoTags' => array(
-                    'message' => 'Login can not contain HTML tags'
-                )
-            )
+            'rules' => $rules
         ));
     }
 }
