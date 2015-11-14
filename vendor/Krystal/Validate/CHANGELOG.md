@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Added support for uniqueness in Login and Email constraints
  * Added `Unqiue` constrant
  * Renamed `Empty` pattern to `EmptyValue`
 
