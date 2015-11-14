@@ -322,6 +322,7 @@ abstract class AbstractMapper
      * 
      * @param string $column
      * @param string $value
+     * @param string $field Field to be counted. By default the value of PK is taken
      * @return integer
      */
     final protected function countByColumn($column, $value, $field = null)
