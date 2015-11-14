@@ -63,7 +63,7 @@ abstract class AbstractMapper
         $prefix = static::$prefix;
 
         if (is_null($prefix)) {
-            // If prefix is null, then no need to prepend a reduntant _
+            // If prefix is null, then no need to prepend a redundant _
             return $table;
         }
 
