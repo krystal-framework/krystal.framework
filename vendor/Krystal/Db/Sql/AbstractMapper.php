@@ -179,12 +179,10 @@ abstract class AbstractMapper
         $this->validateShortcutData();
 
         if (isset($data[$this->getPk()]) && $data[$this->getPk()]) {
-
             return $this->db->update(static::getTableName(), $data)
                             ->whereEquals($this->getPk(), $data[$this->getPk()])
                             ->execute();
         } else {
-
             if (array_key_exists($this->getPk(), $data)) {
                 unset($data[$this->getPk()]);
             }
