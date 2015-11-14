@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Added `deleteByPks()` in `Db\Sql\AbstractMapper`
  * Improved internals of `Db\Sql\TableBuilder` . Now it can parse dumps via PDO natively
  * Since now `Db\Sql\TableBuilder` can load data from strings as well. Added new `loadFromString()` method
  * Added ability to re-define default fetching mode in `query()` and `queryAll()` methods. 

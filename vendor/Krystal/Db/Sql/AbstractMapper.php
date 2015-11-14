@@ -110,6 +110,23 @@ abstract class AbstractMapper
         $this->validateShortcutData();
         return $this->deleteByColumn($this->getPk(), $pk);
     }
+    
+    /**
+     * Deletes rows by their associated primary keys
+     * 
+     * @param array $ids
+     * @return boolean
+     */
+    final protected function deleteByPks(array $ids)
+    {
+        foreach ($ids as $id) {
+            if (!$this->deleteByPk($id)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Finds a row by associated PK's value
