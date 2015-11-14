@@ -11,23 +11,27 @@
 
 namespace Krystal\Validate\Pattern;
 
-final class Email extends AbstractPattern
+final class Email extends AbstractUniquePattern
 {
     /**
      * {@inheritDoc}
      */
     public function getDefinition()
     {
+        $rules = array(
+            'NotEmpty' => array(
+                'message' => 'Email cannot be empty',
+            ),
+            'EmailPattern' => array(
+                'message' => 'Wrong email format supplied',
+            )
+        );
+
+        $rules = $this->getMergedWithUniquenessOnDemand($rules, 'This email is already taken');
+
         return $this->getWithDefaults(array(
             'required' => true,
-            'rules' => array(
-                'NotEmpty' => array(
-                    'message' => 'Email cannot be empty',
-                ),
-                'EmailPattern' => array(
-                    'message' => 'Wrong email format supplied',
-                )
-            )
+            'rules' => $rules
         ));
     }
 }
