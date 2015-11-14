@@ -11,7 +11,7 @@
 
 namespace Krystal\Validate\Input\Constraint;
 
-final class Empty extends AbstractConstraint
+final class EmptyValue extends AbstractConstraint
 {
     /**
      * {@inheritDoc}

@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.2
+---
+
+ * Renamed `Empty` pattern to `EmptyValue`
+
 1.1
 ---
 
