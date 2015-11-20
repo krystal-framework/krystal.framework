@@ -13,7 +13,6 @@ namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
 
-/* @TODO Add visitor for option elements */
 final class Select implements FormElementInterface
 {
     /**
