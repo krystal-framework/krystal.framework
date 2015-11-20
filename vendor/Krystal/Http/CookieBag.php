@@ -57,9 +57,7 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
             }
 
             return true;
-
         } else {
-
             return false;
         }
     }
@@ -141,11 +139,9 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
         if ($this->has($key)) {
             // Set cookie in the past
             $this->set($key, '', -86400);
-
             // And also make sure it won't be available on the current HTTP request
             unset($this->cookies[$key]);
             return true;
-
         } else {
             return false;
         }
