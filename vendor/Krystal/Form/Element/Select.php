@@ -41,7 +41,7 @@ final class Select implements FormElementInterface
      * State initialization
      * 
      * @param array $data
-     * @param string $active
+     * @param string|array $active An active value or an array of active values
      * @param array $defaults Optional first elements to be prepended
      * @return void
      */
@@ -70,7 +70,7 @@ final class Select implements FormElementInterface
 
         return $nodes;
     }
-    
+
     /**
      * Determines whether node is active
      * 
@@ -79,8 +79,13 @@ final class Select implements FormElementInterface
      */
     private function isActiveNode($value)
     {
-        // Without type-casting it's error-prone
-        return (string) $this->active == (string) $value;
+        if (is_array($this->active)) {
+            $actives = array_values($this->active);
+            return in_array($value, $actives);
+        } else {
+            // Without type-casting it's error-prone
+            return (string) $this->active == (string) $value;
+        }
     }
 
     /**

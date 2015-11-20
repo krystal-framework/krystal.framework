@@ -141,7 +141,7 @@ class Element
      * 
      * @param string $name
      * @param array $list
-     * @param string $select Select child option
+     * @param string|array $select Select child option
      * @param array $attributes Extra attributes
      * @return string
      */

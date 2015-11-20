@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Added ability to select multiple option nodes in `\Form\Element\Select`
  * Renamed providers to gadgets since this name is more appropriate
  * Now `Form\NodeElement::addProperty()` renders strictly-compliant properties, like `prop="prop"`
  * `Form\NodeElement` can now render properties on demand when setting them as attributes
