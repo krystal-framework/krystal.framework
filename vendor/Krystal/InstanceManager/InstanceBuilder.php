@@ -39,12 +39,10 @@ final class InstanceBuilder implements InstanceBuilderInterface
             return $this->cache[$class];
         } else {
             if (class_exists($class, true)) {
-
                 $instance = $this->getInstance($class, $args);
                 $this->cache[$class] = $instance;
 
                 return $instance;
-
             } else {
                 throw new RuntimeException(sprintf(
                     'Can not build non-existing class "%s". The class does not exist or it does not follow PSR-0', $class
