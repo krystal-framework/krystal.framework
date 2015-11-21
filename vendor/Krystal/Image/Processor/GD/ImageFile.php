@@ -243,7 +243,6 @@ class ImageFile implements ImageFileInterface
         $info = $this->getImageInfo($file);
 
         if ($info !== false) {
-
             $this->image = $this->createImageFromFile($file, $info['type']);
 
             $this->width = $info['width'];
@@ -253,11 +252,8 @@ class ImageFile implements ImageFileInterface
 
             // Calculate required memory space in bytes
             $this->requiredMemorySpace = $info['width'] * $info['height'] * $info['bits'];
-
             return true;
-
         } else {
-
             return false;
         }
     }
@@ -309,7 +305,6 @@ class ImageFile implements ImageFileInterface
         }
 
         $this->done();
-
         // Returns boolean value indicating success or failure
         return $result;
     }
