@@ -1,1 +1,1 @@
-Session component=================This component provides a service object to work with session data. For details, please refer its documentation.
+Session component=================This component provides a service object to work with session data. For details, please refer to its documentation.

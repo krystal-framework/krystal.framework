@@ -1,1 +1,1 @@
-Cache component===============This component provides several services to manage caching functionality. For details, please refer its documentation.
+Cache component===============This component provides several services to manage caching functionality. For details, please refer to its documentation.

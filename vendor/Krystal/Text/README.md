@@ -1,1 +1,1 @@
-Text component=============This component has several tools to work with text. For details, please refer its documentation.
+Text component=============This component has several tools to work with text. For details, please refer to its documentation.
