@@ -40,14 +40,14 @@ final class Connector implements ConnectorInterface
      * @var integer
      */
     private $port;
-    
+
     /**
      * Connection host address
      * 
      * @var string
      */
     private $host;
-    
+
     /**
      * Whether to connect via SSL
      * 
@@ -152,7 +152,6 @@ final class Connector implements ConnectorInterface
         if (@ftp_login($this->stream, $username, $password)) {
             $this->loggedIn = true;
             return true;
-
         } else {
             return false;
         }
