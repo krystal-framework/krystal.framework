@@ -14,6 +14,20 @@ namespace Krystal\Text;
 class TextUtils
 {
     /**
+     * Trims a string
+     * 
+     * @param string $string
+     * @param integer $maxLen
+     * @param string $after
+     * @return string
+     */
+    public static function trim($string, $maxLen, $after = ' .... ')
+    {
+        $trimmer = new TextTrimmer($after);
+        return $trimmer->trim($string, $maxLen);
+    }
+
+    /**
      * Sluggifies a string
      * 
      * @param string $string

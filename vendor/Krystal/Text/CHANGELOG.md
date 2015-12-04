@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Added `TextUtils::trim()` shortcut
  * Added `TextUtils::sluggify()` shortcut
  * Added `TextUtils::romanize()` shortcut
  * Added `TextUtils::explodeText()` that supports dropping a text into array
