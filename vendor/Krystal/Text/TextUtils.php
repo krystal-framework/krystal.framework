@@ -14,6 +14,19 @@ namespace Krystal\Text;
 class TextUtils
 {
     /**
+     * Sluggifies a string
+     * 
+     * @param string $string
+     * @param boolean $romanize Whether to romanize the string as well
+     * @return string
+     */
+    public static function sluggify($string, $romanize = true)
+    {
+        $generator = new SlugGenerator($romanize);
+        return $generator->generate($string);
+    }
+
+    /**
      * Romanizes a string
      * 
      * @param string $string
