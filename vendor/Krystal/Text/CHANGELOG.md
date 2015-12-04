@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Added `TextUtils::studly()`. It can convert strings to StudlyCase
  * Added `TextUtils::trim()` shortcut
  * Added `TextUtils::sluggify()` shortcut
  * Added `TextUtils::romanize()` shortcut

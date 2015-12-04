@@ -52,6 +52,21 @@ class TextUtils
     }
 
     /**
+     * Converts a string to studly case
+     * 
+     * @param string $input
+     * @return string
+     */
+    public static function studly($input)
+    {
+        $input = mb_convert_case($input, \MB_CASE_TITLE, 'UTF-8');
+        $input = str_replace(['-', '_'], ' ', $input);
+        $input = str_replace(' ', '', $input);
+
+        return $input;
+    }
+
+    /**
      * Explodes a text into sentences
      * 
      * @param string $text
