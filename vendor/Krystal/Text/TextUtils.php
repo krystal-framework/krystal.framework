@@ -14,6 +14,25 @@ namespace Krystal\Text;
 class TextUtils
 {
     /**
+     * Explodes a text into sentences
+     * 
+     * @param string $text
+     * @param string $carriage Carriage return to be used to detect new lines
+     * @return array
+     */
+    public static function explodeText($text, $carriage = "\r")
+    {
+        // Default delimiters
+        $delimiters = array('!', '?', '.');
+
+        if ($carriage !== null) {
+            array_push($delimiters, $carriage);
+        }
+
+        return self::multiExplode($text, $delimiters);
+    }
+
+    /**
      * Explodes a string into array supporting several delimiters
      * 
      * @param string $string
