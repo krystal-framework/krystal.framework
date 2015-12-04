@@ -14,6 +14,17 @@ namespace Krystal\Text;
 class TextUtils
 {
     /**
+     * Romanizes a string
+     * 
+     * @param string $string
+     * @return string
+     */
+    public static function romanize($string)
+    {
+        return ForeignChars::romanize($string);
+    }
+
+    /**
      * Explodes a text into sentences
      * 
      * @param string $text
