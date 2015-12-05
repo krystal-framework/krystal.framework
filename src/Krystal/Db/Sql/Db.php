@@ -31,7 +31,7 @@ final class Db implements DbInterface, RelationableServiceInterface
     /**
      * Built-in PDO instance
      * 
-     * @var \PDO
+     * @var \Krystal\Db\Sql\LazyPDO
      */
     private $pdo;
 
