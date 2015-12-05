@@ -1,8 +1,0 @@
-# For syntax checking, see:
-# http://www.sxw.org.uk/computing/robots/check.html
-
-User-agent: *
-Disallow: /config/
-Disallow: /data/
-Disallow: /module/
-Disallow: /vendor/
