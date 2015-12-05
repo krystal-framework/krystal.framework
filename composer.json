@@ -1,15 +1,29 @@
 {
-    "name": "no-global-state/krystal-framework",
-    "description": "Lightweight PHP Framework",
-    "type": "framework",
-    "license": "BSD-3-Clause",
-    "authors": [
-        {
-            "name": "No Global State Lab",
-            "email": "daworld.ny@gmail.com"
-        }
-    ],
-    "require": {
-        "php" : ">=5.3.0"
+  "name": "no-global-state/Krystal",
+  "description": "Lightweight PHP Framework",
+  "minimum-stability": "dev",
+  "type": "library",
+  "support": {
+      "issues": "https://github.com/krystal-framework/krystal.framework/issues",
+      "source": "https://github.com/krystal-framework/krystal.framework"
+  },
+  "require": {
+    "php": ">=5.3",
+    "ext-mbstring": "*"
+  },
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "Krystal\\": "src/Krystal"
     }
+  },
+  "authors": [
+    {
+      "name": "No Global State Lab",
+      "homepage": "http://krystal-framework.ml"
+    }
+  ],
+  "license": "BSD-3-Clause"
 }
