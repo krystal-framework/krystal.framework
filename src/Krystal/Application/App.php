@@ -41,34 +41,15 @@ final class App implements AppInterface
     private $config = array();
 
     /**
-     * Application's default charset
-     * 
-     * @const string
-     */
-    const DEFAULT_CHARSET = 'UTF-8';
-
-    /**
-     * Maximal error reporting level
-     * In most cases should be -1 
-     * 
-     * @const string
-     */
-    const ERR_LEVEL_MAX = -1;
-
-    /**
-     * Minimal error reporting level
-     * In most cases should be 0
-     * 
-     * @const string
-     */
-    const ERR_LEVEL_NONE = 0;
-
-    /**
      * Environment container
      * 
      * @var \Krystal\Application\Input
      */
     private $input;
+
+    const DEFAULT_CHARSET = 'UTF-8';
+    const ERR_LEVEL_MAX = -1;
+    const ERR_LEVEL_NONE = 0;
 
     /**
      * State initialization
