@@ -163,8 +163,6 @@ final class App implements AppInterface
      */
     public function bootstrap()
     {
-        // First and foremost thing to do is to prepare an autoloader
-        $this->registerAutoload();
         $this->tweak();
 
         $serviceLocator = new ServiceLocator();
@@ -246,59 +244,6 @@ final class App implements AppInterface
         }
 
         $response->send($content);
-    }
-
-    /**
-     * Registers auto-loading. That's the very first thing that needs to be done
-     * 
-     * @throws \InvalidArgumentException If invalid configuration provided
-     * @throws \RuntimeException If no auto-loading section is provided
-     * @return void
-     */
-    private function registerAutoload()
-    {
-        if (isset($this->config['components']['autoload'])) {
-
-            // Check if we have at least one PSR-0 compliant
-            if (isset($this->config['components']['autoload']['psr-0'])) {
-                if (!is_array($this->config['components']['autoload']['psr-0'])) {
-                    throw new InvalidArgumentException(sprintf(
-                        'PSR-0 autoloader configuration should be an array of directories for vendor paths'
-                    ));
-                }
-
-                $loader = new PSR0();
-                $loader->addDirs($this->config['components']['autoload']['psr-0']);
-                $loader->register();
-            }
-
-            if (isset($this->config['components']['autoload']['psr-4'])) {
-                if (!is_array($this->config['components']['autoload']['psr-0'])) {
-                    throw new InvalidArgumentException(sprintf(
-                        'PSR-4 autoloader configuration should be an associative array with vendor prefixes and base directories'
-                    ));
-                }
-
-                $loader = new PSR4();
-                $loader->addNamespaces($this->config['components']['autoload']['psr-4']);
-                $loader->register();
-            }
-
-            // Map auto-loading for vendors that do not follow PSR-0
-            if (isset($this->config['components']['autoload']['map'])) {
-                if (!is_array($this->config['components']['autoload']['map'])) {
-                    throw new InvalidArgumentException(sprintf(
-                        'Map autoloader should be an array, not "%s"', gettype($this->config['autoload']['map'])
-                    ));
-                }
-
-                $mapLoader = new ClassMapLoader($this->config['components']['autoload']['map']);
-                $mapLoader->register();
-            }
-
-        } else {
-            throw new RuntimeException('Autoloader section was not defined in configuration');
-        }
     }
 
     /**
