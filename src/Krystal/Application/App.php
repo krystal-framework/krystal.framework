@@ -11,12 +11,6 @@
 
 namespace Krystal\Application;
 
-/* We need to include autoloader manually */
-require(dirname(__DIR__) . '/Autoloader/PSR0.php');
-
-/* An interface should be also included manually */
-require(__DIR__ . '/AppInterface.php');
-
 use Krystal\Stdlib\Exception\Handler as ExceptionHandler;
 use Krystal\Stdlib\MagicQuotesFilter;
 use Krystal\Stdlib\IniFile;

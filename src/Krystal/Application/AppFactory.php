@@ -11,11 +11,6 @@
 
 namespace Krystal\Application;
 
-// PSR-0 autoloader isn't ready yet, so gotta include these ones manually
-require(__DIR__ . '/App.php');
-require(__DIR__ . '/InputInterface.php');
-require(__DIR__ . '/Input.php');
-
 use Krystal\Application\App;
 
 abstract class AppFactory
