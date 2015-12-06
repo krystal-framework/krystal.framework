@@ -13,7 +13,6 @@ namespace Krystal\Application;
 
 use Krystal\Stdlib\Exception\Handler as ExceptionHandler;
 use Krystal\Stdlib\MagicQuotesFilter;
-use Krystal\Stdlib\IniFile;
 use Krystal\InstanceManager\ServiceLocator;
 use Krystal\InstanceManager\DependencyInjectionContainer;
 use Krystal\Application\Route\Router;
