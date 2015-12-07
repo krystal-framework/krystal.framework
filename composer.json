@@ -1,7 +1,6 @@
 {
   "name": "no-global-state/krystal",
   "description": "Lightweight PHP Framework",
-  "minimum-stability": "dev",
   "type": "library",
   "support": {
       "issues": "https://github.com/krystal-framework/krystal.framework/issues",
