@@ -39,7 +39,7 @@ final class Label implements FormElementInterface
     public function render(array $attrs)
     {
         $node = new NodeElement();
-        
+
         return $node->openTag('label')
                     ->addAttributes($attrs)
                     ->finalize(false)
