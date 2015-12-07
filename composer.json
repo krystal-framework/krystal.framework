@@ -25,5 +25,10 @@
       "homepage": "http://krystal-framework.ml"
     }
   ],
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "extra": {
+    "branch-alias": {
+        "dev-master": "1.2.x"
+    }
+  }
 }
