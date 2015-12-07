@@ -16,6 +16,24 @@ use Krystal\Form\Element as Node;
 class Element
 {
     /**
+     * Creates label element
+     * 
+     * @param string $caption
+     * @param string $for
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function label($caption, $for = null, array $attributes = array())
+    {
+        if (!is_null($for)) {
+            $attributes['for'] = $for;
+        }
+
+        $node = new Node\Label($caption);
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates standalone "option" element
      * 
      * @param string $value
