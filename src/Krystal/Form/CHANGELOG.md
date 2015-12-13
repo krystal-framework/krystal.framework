@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Added link() method in `\Form\Element` to generate links
+ * Added label() method in `\Form\Element` to generate labels
+
 1.2
 ---
 
