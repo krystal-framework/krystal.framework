@@ -16,6 +16,24 @@ use Krystal\Form\Element as Node;
 class Element
 {
     /**
+     * Creates link element
+     * 
+     * @param string $text
+     * @param string $link
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function link($text, $link = '#', array $attributes = array())
+    {
+        if (!is_null($link)) {
+            $attributes['href'] = $link;
+        }
+
+        $node = new Node\Link($text);
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates label element
      * 
      * @param string $caption
