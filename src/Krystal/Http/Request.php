@@ -16,21 +16,21 @@ use Krystal\Http\FileTransfer\Input as FileInput;
 final class Request implements RequestInterface
 {
     /**
-     * Post's data
+     * POST data
      * 
      * @var array
      */
     private $post = array();
 
     /**
-     * GET's data
+     * GET data
      * 
      * @var array
      */
     private $get = array();
 
     /**
-     * Server's data
+     * Server data
      * 
      * @var array
      */
