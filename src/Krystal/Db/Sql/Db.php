@@ -318,7 +318,7 @@ final class Db implements DbInterface, RelationableServiceInterface
             $this->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
 
         } else {
-            throw new RuntimeException('Smart pagination is currently supported only for MySQL and SQLite');
+            throw new RuntimeException('Smart pagination algorithm is currently supported only for MySQL and SQLite');
         }
 
         return $this;
