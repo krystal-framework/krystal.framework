@@ -40,9 +40,9 @@ abstract class AbstractMapper
     /**
      * State initialization
      * 
-     * @param \Krystal\Db\Sql\Db
+     * @param \Krystal\Db\Sql\Db Database service object
      * @param \Krystal\Paginate\PaginatorInterface $paginator
-     * @param string $prefix
+     * @param string $prefix Optional table prefix
      * @return void
      */
     public function __construct(Db $db, PaginatorInterface $paginator, $prefix = null)
@@ -152,7 +152,7 @@ abstract class AbstractMapper
         $this->validateShortcutData();
         return $this->fetchOneColumn($column, $this->getPk(), $id);
     }
-    
+
     /**
      * Returns last primary key
      * 
@@ -254,12 +254,7 @@ abstract class AbstractMapper
      */
     final protected function findAllByColumn($column, $value)
     {
-        $this->validateShortcutData();
-
-        return $this->db->select('*')
-                        ->from(static::getTableName())
-                        ->whereEquals($column, $value)
-                        ->queryAll();
+        return $this->fetchAllByColumn($column, $value);
     }
 
     /**
@@ -394,7 +389,7 @@ abstract class AbstractMapper
     /**
      * Return paginator's instance
      * 
-     * @return object
+     * @return \Krystal\Paginate\Paginator
      */
     final public function getPaginator()
     {
