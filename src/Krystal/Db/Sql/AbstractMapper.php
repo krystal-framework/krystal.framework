@@ -105,7 +105,7 @@ abstract class AbstractMapper
      * @param string $pk PK's value
      * @return boolean
      */
-    final protected function deleteByPk($pk)
+    final public function deleteByPk($pk)
     {
         $this->validateShortcutData();
         return $this->deleteByColumn($this->getPk(), $pk);
@@ -117,7 +117,7 @@ abstract class AbstractMapper
      * @param array $ids
      * @return boolean
      */
-    final protected function deleteByPks(array $ids)
+    final public function deleteByPks(array $ids)
     {
         foreach ($ids as $id) {
             if (!$this->deleteByPk($id)) {
@@ -134,7 +134,7 @@ abstract class AbstractMapper
      * @param string $pk PK's value
      * @return array
      */
-    final protected function findByPk($pk)
+    final public function findByPk($pk)
     {
         $this->validateShortcutData();
         return $this->fetchByColumn($this->getPk(), $pk);
@@ -147,7 +147,7 @@ abstract class AbstractMapper
      * @param string $column
      * @return boolean
      */
-    final protected function findColumnByPk($id, $column)
+    final public function findColumnByPk($id, $column)
     {
         $this->validateShortcutData();
         return $this->fetchOneColumn($column, $this->getPk(), $id);
@@ -158,7 +158,7 @@ abstract class AbstractMapper
      * 
      * @return integer
      */
-    final protected function getLastPk()
+    final public function getLastPk()
     {
         $this->validateShortcutData();
 
@@ -174,7 +174,7 @@ abstract class AbstractMapper
      * @param array $data
      * @return boolean
      */
-    final protected function persist(array $data)
+    final public function persist(array $data)
     {
         $this->validateShortcutData();
 
@@ -200,7 +200,7 @@ abstract class AbstractMapper
      * @param string $value
      * @return boolean
      */
-    final protected function updateColumnByPk($pk, $column, $value)
+    final public function updateColumnByPk($pk, $column, $value)
     {
         $this->validateShortcutData();
 
@@ -217,7 +217,7 @@ abstract class AbstractMapper
      * @param string $value
      * @return array
      */
-    final protected function fetchOneColumn($column, $key, $value)
+    final public function fetchOneColumn($column, $key, $value)
     {
         $this->validateShortcutData();
 
@@ -235,7 +235,7 @@ abstract class AbstractMapper
      * @param string $value
      * @return array
      */
-    final protected function fetchColumns($column, $key, $value)
+    final public function fetchColumns($column, $key, $value)
     {
         $this->validateShortcutData();
 
@@ -252,7 +252,7 @@ abstract class AbstractMapper
      * @param string $value
      * @return array
      */
-    final protected function findAllByColumn($column, $value)
+    final public function findAllByColumn($column, $value)
     {
         return $this->fetchAllByColumn($column, $value);
     }
@@ -265,7 +265,7 @@ abstract class AbstractMapper
      * @param mixed $select
      * @return array
      */
-    final protected function fetchAllByColumn($column, $value, $select = '*')
+    final public function fetchAllByColumn($column, $value, $select = '*')
     {
         $this->validateShortcutData();
 
@@ -283,7 +283,7 @@ abstract class AbstractMapper
      * @param mixed $select Data to be selected. By default all columns are selected
      * @return array
      */
-    final protected function fetchByColumn($column, $value, $select = '*')
+    final public function fetchByColumn($column, $value, $select = '*')
     {
         $this->validateShortcutData();
 
@@ -300,7 +300,7 @@ abstract class AbstractMapper
      * @param string PK's value
      * @return boolean
      */
-    final protected function deleteByColumn($column, $value)
+    final public function deleteByColumn($column, $value)
     {
         $this->validateShortcutData();
 
@@ -318,7 +318,7 @@ abstract class AbstractMapper
      * @param string $field Field to be counted. By default the value of PK is taken
      * @return integer
      */
-    final protected function countByColumn($column, $value, $field = null)
+    final public function countByColumn($column, $value, $field = null)
     {
         $this->validateShortcutData();
         $alias = 'count';
@@ -342,7 +342,7 @@ abstract class AbstractMapper
      * @param integer $step
      * @return boolean
      */
-    final protected function incrementColumnByPk($pk, $column, $step = 1)
+    final public function incrementColumnByPk($pk, $column, $step = 1)
     {
         return $this->db->increment(static::getTableName(), $column, $step)
                         ->whereEquals($this->getPk(), $pk)
@@ -357,7 +357,7 @@ abstract class AbstractMapper
      * @param integer $step
      * @return boolean
      */
-    final protected function decrementColumnByPk($pk, $column, $step = 1)
+    final public function decrementColumnByPk($pk, $column, $step = 1)
     {
         return $this->db->decrement(static::getTableName(), $column, $step)
                         ->whereEquals($this->getPk(), $pk)
