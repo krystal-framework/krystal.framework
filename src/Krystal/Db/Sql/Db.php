@@ -369,7 +369,7 @@ final class Db implements DbInterface, RelationableServiceInterface
     {
         if (!empty($bindings)) {
             foreach ($bindings as $column => $value) {
-                $this->bind($this->toPlaceholder($column), $value);
+                $this->bind($column, $value);
             }
         }
 
