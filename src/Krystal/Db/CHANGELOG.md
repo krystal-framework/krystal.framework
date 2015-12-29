@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed binding issue with placeholders in `DB::raw()`
  * Since now shortcut methods are public, not protected as they used to be
 
 1.2
