@@ -29,7 +29,7 @@ final class Db implements DbInterface, RelationableServiceInterface
     private $queryBuilder;
 
     /**
-     * Built-in PDO instance
+     * Prepared PDO instance
      * 
      * @var \Krystal\Db\Sql\LazyPDO
      */
