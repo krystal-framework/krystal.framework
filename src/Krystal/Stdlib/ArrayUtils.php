@@ -16,6 +16,34 @@ use LogicException;
 abstract class ArrayUtils
 {
     /**
+     * Filters an array by matching keys only
+     * 
+     * @param array $array Target array
+     * @param array $keys Filtering keys
+     * @return array
+     */
+    public static function arrayOnlyWith(array $array, array $keys)
+    {
+        $result = array();
+
+        if (!self::isSequential($array)) {
+            foreach ($array as $key => $value) {
+                if (in_array($key, $keys)) {
+                    $result[$key] = $value;
+                }
+            }
+        } else {
+            foreach ($array as $value) {
+                if (in_array($value, $keys)) {
+                    $result[] = $value;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Combines two arrays even with different length
      * 
      * @param array $first

@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Added `arrayOnlyWith()` in `Stdlib\ArrayUtils`
+
 1.2
 ---
  
