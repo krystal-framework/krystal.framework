@@ -52,6 +52,27 @@ interface BreadcrumbBagInterface
     public function clear();
 
     /**
+     * Returns an array of all registred breadcrumb names
+     * 
+     * @return array
+     */
+    public function getNames();
+
+    /**
+     * Returns first breadcrumb name
+     * 
+     * @return string
+     */
+    public function getFirstName();
+
+    /**
+     * Returns last breadcrumb name
+     * 
+     * @return string
+     */
+    public function getLastName();
+
+    /**
      * Returns breadcrumb collection
      * 
      * @return array

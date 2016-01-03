@@ -141,6 +141,44 @@ final class BreadcrumbBag implements BreadcrumbBagInterface
     }
 
     /**
+     * Returns an array of all registred breadcrumb names
+     * 
+     * @return array
+     */
+    public function getNames()
+    {
+        $result = array();
+
+        foreach ($this->getBreadcrumbs() as $breadcrumb) {
+            array_push($result, $breadcrumb->getName());
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns first breadcrumb name
+     * 
+     * @return string
+     */
+    public function getFirstName()
+    {
+        $breadcrumbs = $this->getNames();
+        return array_shift($breadcrumbs);
+    }
+
+    /**
+     * Returns last breadcrumb name
+     * 
+     * @return string
+     */
+    public function getLastName()
+    {
+        $breadcrumbs = $this->getNames();
+        return array_pop($breadcrumbs);
+    }
+
+    /**
      * Returns breadcrumb collection
      * 
      * @return array
