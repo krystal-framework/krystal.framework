@@ -16,8 +16,8 @@ interface ChainInterface
     /**
      * Adds an uploader that implements UploaderAwareInterface
      * 
-     * @param UploaderAwareInterface $uploader
-     * @return UploadChain
+     * @param \Krystal\Http\FileTransfer\UploaderAwareInterface $uploader
+     * @return \Krystal\Http\FileTransfer\UploadChain
      */
     public function addUploader(UploaderAwareInterface $uploader);
 
@@ -25,7 +25,7 @@ interface ChainInterface
      * Add more uploaders
      * 
      * @param array $uploaders
-     * @return UploadChain
+     * @return Krystal\Http\FileTransfer\UploadChain
      */
     public function addUploaders(array $uploaders);
 
