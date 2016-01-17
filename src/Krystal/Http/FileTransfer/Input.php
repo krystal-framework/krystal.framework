@@ -163,14 +163,14 @@ final class Input implements InputInterface
                 ));
             }
 
-            return $this->toObject($this->files[$name]);
+            return $this->toEntity($this->files[$name]);
         } else {
             // When returning all files
             $return = array();
             $names = array_keys($this->files);
 
             foreach ($names as $name) {
-                $return[$name] = $this->toObject($this->files[$name]);
+                $return[$name] = $this->toEntity($this->files[$name]);
             }
 
             return $return;
@@ -178,12 +178,12 @@ final class Input implements InputInterface
     }
 
     /**
-     * Converts an array to object
+     * Converts an array to entity object
      * 
      * @param array $files
      * @return array
      */
-    private function toObject(array $files)
+    private function toEntity(array $files)
     {
         $entities = array();
 
