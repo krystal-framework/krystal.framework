@@ -642,7 +642,7 @@ final class Request implements RequestInterface
         if (func_num_args() == 0) {
             return !empty($this->query);
         }
-        
+
         foreach (func_get_args() as $key) {
             if (!$this->hasParam($this->query, $key)) {
                 return false;
@@ -858,5 +858,5 @@ final class Request implements RequestInterface
     public function isPatch()
     {
         return $this->getMethod() === 'PATCH';
-    }   
+    }
 }
