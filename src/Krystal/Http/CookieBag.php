@@ -13,6 +13,7 @@ namespace Krystal\Http;
 
 use RuntimeException;
 use InvalidArgumentException;
+use UnexpectedValueException;
 
 final class CookieBag implements CookieBagInterface, PersistentStorageInterface
 {
@@ -83,10 +84,15 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
      * @param boolean $httpOnly When TRUE the cookie will be made accessible only through the HTTP protocol
      * @param boolean $raw Whether to send a cookie without urlencoding the cookie value
      * @throws \InvalidArgumentException if either $key or $value isn't scalar by type
+     * @throws \UnexpectedValueException If trying to set a key that contains a dot
      * @return boolean
      */
     public function set($key, $value, $ttl = 0, $path = '/', $secure = false, $httpOnly = false, $raw = false)
     {
+        if (strpos($key, '.') !== false) {
+            throw new UnexpectedValueException('Setting cookie keys that contain a dot is not allowed');
+        }
+
         if (!is_scalar($key) || !is_scalar($value)) {
             throw new InvalidArgumentException('Cookie writing must done only with scalar values');
         }
