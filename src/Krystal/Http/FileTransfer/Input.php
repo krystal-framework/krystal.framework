@@ -35,10 +35,8 @@ final class Input implements InputInterface
     public function __construct(array $files)
     {
         if ($this->isValid($files)) {
-
             $this->files = $files;
             $this->prepare();
-
         } else {
             throw new LogicException('Invalid depth level of $_FILES supplied');
         }
@@ -103,7 +101,6 @@ final class Input implements InputInterface
         // An array is not sorted yet, so that we'd do naive nested level testing
         foreach ($files as $index => $value) {
             $target = $files[$index]['type'];
-                
             // If its an array, then multi-upload assumed
             if (is_array($target)) {
                 foreach ($target as $index => $value) {
@@ -136,7 +133,6 @@ final class Input implements InputInterface
             }
 
             return !empty($this->files[$name]);
-
         } else {
             // Global checking if all values are not empty
             $target = array();
@@ -168,7 +164,6 @@ final class Input implements InputInterface
             }
 
             return $this->toObject($this->files[$name]);
-
         } else {
             // When returning all files
             $return = array();
@@ -236,7 +231,6 @@ final class Input implements InputInterface
                 foreach ($array as $index => $value) {
                     // Make sure it's not an array:
                     if (!isset($files[$index]) || !is_array($files[$index])) {
-
                         $files[$index] = array();
                         // This key we want to assign right here
                         // otherwise it will be not available inside "else" block
@@ -253,9 +247,7 @@ final class Input implements InputInterface
             }
 
             $source = $files;
-            
         } else {
-    
             // Not an array, then single upload assumed
             $source = array(0 => $source);
         }

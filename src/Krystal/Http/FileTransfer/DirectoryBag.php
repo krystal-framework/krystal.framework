@@ -87,7 +87,6 @@ final class DirectoryBag implements DirectoryBagInterface
 
         if ($filename == null) {
             return $fm->rmdir($this->getPath($id));
-
         } else {
             return $fm->rmfile($this->getPath($id, $filename));
         }

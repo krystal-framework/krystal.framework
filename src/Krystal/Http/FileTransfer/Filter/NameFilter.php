@@ -65,7 +65,6 @@ final class NameFilter implements FileInputFilerInterface
     public function filter(array $files)
     {
         foreach ($files as $fileEntity) {
-
             $name = $this->filter->filter($fileEntity->getName());
             $fileEntity->setName($name);
         }
