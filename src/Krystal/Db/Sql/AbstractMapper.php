@@ -395,4 +395,18 @@ abstract class AbstractMapper
     {
         return $this->paginator;
     }
+    
+    /**
+     * Creates a configured pagination instance
+     * 
+     * @param string $url
+     * @return \Krystal\Paginate\Paginator
+     */
+    final public function createPaginator($url)
+    {
+        $paginator = $this->paginator;
+        $paginator->setUrl($url);
+
+        return $paginator;
+    }
 }
