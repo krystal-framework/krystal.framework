@@ -4,7 +4,9 @@ CHANGELOG
 1.3
 ---
 
+ * Removed framework version from exception's template
  * Added `arrayOnlyWith()` in `Stdlib\ArrayUtils`
+ * Forced to throw exceptions when trying to retrieve a getter for undefined property in `VirtualEntity`
 
 1.2
 ---
