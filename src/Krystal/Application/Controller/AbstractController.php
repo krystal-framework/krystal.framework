@@ -63,6 +63,17 @@ abstract class AbstractController
     }
 
     /**
+     * Creates validation instance
+     * 
+     * @param array $config
+     * @return \Krystal\Validate\ValidatorChain
+     */
+    final protected function createValidator(array $params)
+    {
+        return $this->validatorFactory->build($params);
+    }
+
+    /**
      * Redirects to given route
      * 
      * @param string $route Target route
