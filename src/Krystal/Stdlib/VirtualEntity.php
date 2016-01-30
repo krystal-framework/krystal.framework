@@ -12,6 +12,7 @@
 namespace Krystal\Stdlib;
 
 use RuntimeException;
+use LogicException;
 
 class VirtualEntity
 {
@@ -51,6 +52,7 @@ class VirtualEntity
      * @param array $arguments
      * @param mixed $default Default value to be returned if getter fails
      * @throws \RuntimeException If has and violated writing constraint
+     * @throws \LogicException If trying to get undefined property
      * @return mixed
      */
     private function handle($method, array $arguments, $default)
@@ -64,6 +66,10 @@ class VirtualEntity
 
         // Are we dealing with a getter?
         if ($start == 'get') {
+            if ($property === false) {
+                throw new LogicException('Attempted to call a getter on undefined property');
+            }
+
             // getter is being used
             if (array_key_exists($property, $this->container)) {
                 return $this->container[$property];
