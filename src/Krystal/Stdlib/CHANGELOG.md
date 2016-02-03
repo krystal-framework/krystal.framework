@@ -5,6 +5,7 @@ CHANGELOG
 ---
 
  * Removed framework version from exception's template
+ * Added `keysExist()` in `Stdlib\ArrayUtils`
  * Added `arrayOnlyWith()` in `Stdlib\ArrayUtils`
  * Forced to throw exceptions when trying to retrieve a getter for undefined property in `VirtualEntity`
 

@@ -16,6 +16,26 @@ use LogicException;
 abstract class ArrayUtils
 {
     /**
+     * Determines whether all keys exist in a collection
+     * 
+     * @param array $collection
+     * @param array $keys Keys to be checked for existence
+     * @return boolean
+     */
+    public static function keysExist(array $collection, array $keys)
+    {
+        $collection = array_flip($collection);
+
+        foreach ($keys as $key) {
+            if (!in_array($key, $collection)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Filters an array by matching keys only
      * 
      * @param array $array Target array
