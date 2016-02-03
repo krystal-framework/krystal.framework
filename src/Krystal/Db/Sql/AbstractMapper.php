@@ -12,6 +12,7 @@
 namespace Krystal\Db\Sql;
 
 use Krystal\Paginate\PaginatorInterface;
+use Krystal\Stdlib\ArrayUtils;
 use LogicException;
 
 abstract class AbstractMapper
@@ -172,10 +173,16 @@ abstract class AbstractMapper
      * Inserts or updates a record
      * 
      * @param array $data
+     * @param array $fillable Optional fillable protection
+     * @throws \LogicException if failed on keys existence validation
      * @return boolean
      */
-    final public function persist(array $data)
+    final public function persist(array $data, $fillable = array())
     {
+        if (!empty($fillable) && !ArrayUtils::keysExist($data, $fillable)) {
+            throw new LogicException('Can not persist the entity due to fillable protection. Make sure all fillable keys exist in the entity');
+        }
+
         $this->validateShortcutData();
 
         if (isset($data[$this->getPk()]) && $data[$this->getPk()]) {
