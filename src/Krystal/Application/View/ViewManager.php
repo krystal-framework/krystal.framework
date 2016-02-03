@@ -427,4 +427,15 @@ final class ViewManager implements ViewManagerInterface
         $args = func_get_args();
         return call_user_func_array(array($this->translator, 'translate'), $args);
     }
+
+    /**
+     * Translates array values
+     * 
+     * @param array $messages
+     * @return array
+     */
+    public function translateArray(array $messages)
+    {
+        return $this->translator->translateArray($messages);
+    }
 }

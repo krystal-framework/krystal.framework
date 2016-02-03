@@ -201,4 +201,12 @@ interface ViewManagerInterface
      * @return string
      */
     public function translate();
+
+    /**
+     * Translates array values
+     * 
+     * @param array $messages
+     * @return array
+     */
+    public function translateArray(array $messages);
 }
