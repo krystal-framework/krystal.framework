@@ -89,7 +89,7 @@ final class Curl implements CurlInterface
      *
      * @return object
      */
-    public function clone()
+    public function __clone()
     {
         return curl_copy_handle($this->ch);
     }
@@ -130,7 +130,7 @@ final class Curl implements CurlInterface
      */
     private function appendError()
     {
-        $this->errors[(string) curl_errno()] = curl_error();
+        $this->errors[(string) curl_errno($this->ch)] = curl_error($this->ch);
     }
 
     /**
