@@ -42,7 +42,7 @@ final class Curl implements CurlInterface
     public function __construct(array $options = array())
     {
         if (!empty($options)) {
-            $this->setOptions($options);
+            $this->init($options);
         }
     }
 
