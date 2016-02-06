@@ -29,6 +29,17 @@ interface HttpCrawlerInterface
     public function getErrors();
 
     /**
+     * Performs a HTTP request
+     * 
+     * @param string $method
+     * @param string $url Target URL
+     * @param array $params Parameters
+     * @param \UnexpectedValueException If unknown HTTP method provided
+     * @return mixed
+     */
+    public function request($method, $url, array $params = array());
+
+    /**
      * Performs HTTP GET request
      * 
      * @param string $url Target URL

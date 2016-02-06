@@ -11,6 +11,8 @@
 
 namespace Krystal\Http\Client;
 
+use UnexpectedValueException;
+
 final class CurlHttplCrawler implements HttpCrawlerInterface
 {
     /**
@@ -50,6 +52,27 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
     public function getErrors()
     {
         return $this->curl->getErrors();
+    }
+
+    /**
+     * Performs a HTTP request
+     * 
+     * @param string $method
+     * @param string $url Target URL
+     * @param array $params Parameters
+     * @param \UnexpectedValueException If unknown HTTP method provided
+     * @return mixed
+     */
+    public function request($method, $url, array $params = array())
+    {
+        switch (strtoupper($method)) {
+            case 'POST':
+                return $this->post($url, $params);
+            case 'GET':
+                return $this->get($url, $params);
+            default:
+                throw new UnexpectedValueException(sprintf('Unsupported or unknown HTTP method provided "%s"', $method));
+        }
     }
 
     /**
