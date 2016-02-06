@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added cURL HTTP crawler
  * Added `getInfo()` in cURL wrapper
  * Fixed issues in Curl wrapper
  * Minor improvements in internals
