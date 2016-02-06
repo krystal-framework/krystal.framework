@@ -47,6 +47,17 @@ final class Curl implements CurlInterface
     }
 
     /**
+     * Get information regarding a specific transfer
+     * 
+     * @param integer $opt
+     * @return mixed
+     */
+    public function getInfo($opt = 0)
+    {
+        return curl_getinfo($this->ch, $opt);
+    }
+
+    /**
      * Destructor.
      * Closes connection if opened 
      * 
