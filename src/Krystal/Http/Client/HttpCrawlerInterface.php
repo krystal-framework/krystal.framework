@@ -72,7 +72,7 @@ interface HttpCrawlerInterface
     public function patch($url, array $data = array(), array $extra = array());
 
     /**
-     * Performs HTTP PATCH request
+     * Performs HTTP HEAD request
      * 
      * @param string $url Target URL
      * @param array $data Data to be sent

@@ -162,7 +162,7 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
     }
 
     /**
-     * Performs HTTP PATCH request
+     * Performs HTTP HEAD request
      * 
      * @param string $url Target URL
      * @param array $data Data to be sent
