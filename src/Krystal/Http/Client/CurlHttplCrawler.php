@@ -69,18 +69,18 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * 
      * @param string $method
      * @param string $url Target URL
-     * @param array $params Parameters
+     * @param array $data Data to be sent
      * @param string $prepend The character to be prepended to query string for GET request
      * @param \UnexpectedValueException If unknown HTTP method provided
      * @return mixed
      */
-    public function request($method, $url, array $params = array(), $prepend = '?')
+    public function request($method, $url, array $data = array(), $prepend = '?')
     {
         switch (strtoupper($method)) {
             case 'POST':
-                return $this->post($url, $params);
+                return $this->post($url, $data);
             case 'GET':
-                return $this->get($url, $params, $prepend);
+                return $this->get($url, $data, $prepend);
             default:
                 throw new UnexpectedValueException(sprintf('Unsupported or unknown HTTP method provided "%s"', $method));
         }
@@ -90,14 +90,14 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * Performs HTTP GET request
      * 
      * @param string $url Target URL
-     * @param array $params Parameters
+     * @param array $data Data to be sent
      * @param string $prepend The character to be prepended to query string
      * @return mixed
      */
-    public function get($url, array $params = array(), $prepend = '?')
+    public function get($url, array $data = array(), $prepend = '?')
     {
         $this->curl->init(array(
-            CURLOPT_URL => $url . $prepend . http_build_query($params),
+            CURLOPT_URL => $url . $prepend . http_build_query($data),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)'
@@ -110,17 +110,17 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * Performs HTTP POST request
      * 
      * @param string $url Target URL
-     * @param array $params Parameters
+     * @param array $data Data to be sent
      * @return mixed
      */
-    public function post($url, array $params = array())
+    public function post($url, array $data = array())
     {
         $this->curl->init(array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
-            CURLOPT_POST => count($params),
-            CURLOPT_POSTFIELDS => http_build_query($params),
+            CURLOPT_POST => count($data),
+            CURLOPT_POSTFIELDS => http_build_query($data),
             CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)'
         ));
 
