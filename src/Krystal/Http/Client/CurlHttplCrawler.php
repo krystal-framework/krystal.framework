@@ -101,8 +101,7 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
         $options = array(
             CURLOPT_URL => $url . $prepend . http_build_query($data),
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER => false,
-            CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)'
+            CURLOPT_HEADER => false
         );
 
         $this->curl->init(array_merge($options, $extra));
@@ -124,8 +123,7 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_POST => count($data),
-            CURLOPT_POSTFIELDS => http_build_query($data),
-            CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)'
+            CURLOPT_POSTFIELDS => http_build_query($data)
         );
 
         $this->curl->init(array_merge($options, $extra));
