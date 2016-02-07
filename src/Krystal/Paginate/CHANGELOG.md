@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Added `toArray()` and `toJson()` methods
+
 1.1
 ---
  
