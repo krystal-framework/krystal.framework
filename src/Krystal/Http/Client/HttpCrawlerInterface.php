@@ -61,4 +61,13 @@ interface HttpCrawlerInterface
      * @return mixed
      */
     public function post($url, array $data = array(), array $extra = array());
+
+    /**
+     * Performs HTTP PATCH request
+     * 
+     * @param string $url Target URL
+     * @param array $data Data to be sent
+     * @param array $extra Extra options
+     */
+    public function patch($url, array $data = array(), array $extra = array());
 }
