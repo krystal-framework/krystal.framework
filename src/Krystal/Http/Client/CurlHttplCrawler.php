@@ -34,6 +34,16 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
     }
 
     /**
+     * Builds an instance
+     * 
+     * @return \Krystal\Http\Client\CurlHttplCrawler
+     */
+    public static function factory()
+    {
+        return new self(new Curl());
+    }
+
+    /**
      * Returns information about the last transfer
      * 
      * @param integer $opt
