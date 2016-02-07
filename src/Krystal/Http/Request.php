@@ -759,7 +759,7 @@ final class Request implements RequestInterface
     {
         return $this->isXhr();
     }
-    
+
     /**
      * Checks whether requested via POST method
      * 
