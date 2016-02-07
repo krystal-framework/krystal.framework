@@ -34,10 +34,11 @@ interface HttpCrawlerInterface
      * @param string $method
      * @param string $url Target URL
      * @param array $params Parameters
+     * @param string $prepend The character to be prepended to query string for GET request
      * @param \UnexpectedValueException If unknown HTTP method provided
      * @return mixed
      */
-    public function request($method, $url, array $params = array());
+    public function request($method, $url, array $params = array(), $prepend = '?');
 
     /**
      * Performs HTTP GET request
