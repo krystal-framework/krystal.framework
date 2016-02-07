@@ -125,5 +125,5 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
         ));
 
         return $this->curl->exec();
-    }    
+    }
 }
