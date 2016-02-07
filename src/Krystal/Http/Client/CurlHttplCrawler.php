@@ -149,6 +149,7 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * @param string $url Target URL
      * @param array $data Data to be sent
      * @param array $extra Extra options
+     * @return mixed
      */
     public function patch($url, array $data = array(), array $extra = array())
     {
