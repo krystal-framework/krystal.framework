@@ -71,16 +71,17 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * @param string $url Target URL
      * @param array $data Data to be sent
      * @param string $prepend The character to be prepended to query string for GET request
+     * @param array $extra Extra options
      * @param \UnexpectedValueException If unknown HTTP method provided
      * @return mixed
      */
-    public function request($method, $url, array $data = array(), $prepend = '?')
+    public function request($method, $url, array $data = array(), $prepend = '?', array $extra = array())
     {
         switch (strtoupper($method)) {
             case 'POST':
-                return $this->post($url, $data);
+                return $this->post($url, $data, $extra);
             case 'GET':
-                return $this->get($url, $data, $prepend);
+                return $this->get($url, $data, $prepend, $extra);
             default:
                 throw new UnexpectedValueException(sprintf('Unsupported or unknown HTTP method provided "%s"', $method));
         }
@@ -92,17 +93,19 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * @param string $url Target URL
      * @param array $data Data to be sent
      * @param string $prepend The character to be prepended to query string
+     * @param array $extra Extra options
      * @return mixed
      */
-    public function get($url, array $data = array(), $prepend = '?')
+    public function get($url, array $data = array(), $prepend = '?', array $extra = array())
     {
-        $this->curl->init(array(
+        $options = array(
             CURLOPT_URL => $url . $prepend . http_build_query($data),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)'
-        ));
+        );
 
+        $this->curl->init(array_merge($options, $extra));
         return $this->curl->exec();
     }
 
@@ -111,19 +114,21 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * 
      * @param string $url Target URL
      * @param array $data Data to be sent
+     * @param array $extra Extra options
      * @return mixed
      */
-    public function post($url, array $data = array())
+    public function post($url, array $data = array(), array $extra = array())
     {
-        $this->curl->init(array(
+        $options = array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_POST => count($data),
             CURLOPT_POSTFIELDS => http_build_query($data),
             CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)'
-        ));
+        );
 
+        $this->curl->init(array_merge($options, $extra));
         return $this->curl->exec();
     }
 }
