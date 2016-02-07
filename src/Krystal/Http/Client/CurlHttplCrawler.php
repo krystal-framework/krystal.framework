@@ -88,6 +88,19 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
     }
 
     /**
+     * Executes cURL
+     * 
+     * @param array $options
+     * @param array $extra
+     * @return mixed
+     */
+    private function exec(array $options, array $extra)
+    {
+        $this->curl->init(array_merge($options, $extra));
+        return $this->curl->exec();
+    }
+
+    /**
      * Performs HTTP GET request
      * 
      * @param string $url Target URL
@@ -98,14 +111,12 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      */
     public function get($url, array $data = array(), $prepend = '?', array $extra = array())
     {
-        $options = array(
+        return $this->exec(array(
             CURLOPT_URL => $url . $prepend . http_build_query($data),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false
-        );
 
-        $this->curl->init(array_merge($options, $extra));
-        return $this->curl->exec();
+        ), $extra);
     }
 
     /**
@@ -118,15 +129,13 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      */
     public function post($url, array $data = array(), array $extra = array())
     {
-        $options = array(
+        return $this->exec(array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_POST => count($data),
             CURLOPT_POSTFIELDS => http_build_query($data)
-        );
 
-        $this->curl->init(array_merge($options, $extra));
-        return $this->curl->exec();
+        ), $extra);
     }
 }
