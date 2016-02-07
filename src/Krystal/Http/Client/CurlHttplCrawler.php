@@ -80,17 +80,18 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * 
      * @param string $url Target URL
      * @param array $params Parameters
+     * @param string $prepend The character to be prepended to query string
      * @return mixed
      */
-    public function get($url, array $params = array())
+    public function get($url, array $params = array(), $prepend = '?')
     {
         $this->curl->init(array(
-            CURLOPT_URL => $url . http_build_query($params),
+            CURLOPT_URL => $url . $prepend . http_build_query($params),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)'
         ));
-        
+
         return $this->curl->exec();
     }
 

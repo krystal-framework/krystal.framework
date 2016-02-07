@@ -44,9 +44,10 @@ interface HttpCrawlerInterface
      * 
      * @param string $url Target URL
      * @param array $params Parameters
+     * @param string $prepend The character to be prepended to query string
      * @return mixed
      */
-    public function get($url, array $params = array());
+    public function get($url, array $params = array(), $prepend = '?');
 
     /**
      * Performs HTTP GET request
