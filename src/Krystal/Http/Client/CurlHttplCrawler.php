@@ -87,9 +87,9 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
             case 'HEAD':
                 return $this->head($url, $data, $prepend, $extra);
             case 'PUT':
-                return $this->put($url, $data, $prepend, $extra);
+                return $this->put($url, $data, $extra);
             case 'DELETE':
-                return $this->delete($url, $data, $prepend, $extra);
+                return $this->delete($url, $data, $extra);
             default:
                 throw new UnexpectedValueException(sprintf('Unsupported or unknown HTTP method provided "%s"', $method));
         }
