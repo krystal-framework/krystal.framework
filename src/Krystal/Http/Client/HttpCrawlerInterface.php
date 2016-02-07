@@ -70,4 +70,15 @@ interface HttpCrawlerInterface
      * @param array $extra Extra options
      */
     public function patch($url, array $data = array(), array $extra = array());
+
+    /**
+     * Performs HTTP PATCH request
+     * 
+     * @param string $url Target URL
+     * @param array $data Data to be sent
+     * @param array $extra Extra options
+     * @param string $prepend The character to be prepended to query string
+     * @return mixed
+     */
+    public function head($url, array $data = array(), $prepend = '?', array $extra = array());
 }

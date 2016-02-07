@@ -84,6 +84,8 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
                 return $this->get($url, $data, $prepend, $extra);
             case 'PATCH':
                 return $this->patch($url, $data, $extra);
+            case 'HEAD':
+                return $this->head($url, $data, $prepend, $extra);
             default:
                 throw new UnexpectedValueException(sprintf('Unsupported or unknown HTTP method provided "%s"', $method));
         }
@@ -154,6 +156,26 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PATCH',
+            CURLOPT_POSTFIELDS => http_build_query($data)
+
+        ), $extra);
+    }
+
+    /**
+     * Performs HTTP PATCH request
+     * 
+     * @param string $url Target URL
+     * @param array $data Data to be sent
+     * @param array $extra Extra options
+     * @param string $prepend The character to be prepended to query string
+     * @return mixed
+     */
+    public function head($url, array $data = array(), $prepend = '?', array $extra = array())
+    {
+        return $this->exec(array(
+            CURLOPT_URL => $url . $prepend . http_build_query($data),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_NOBODY => true,
             CURLOPT_POSTFIELDS => http_build_query($data)
 
         ), $extra);
