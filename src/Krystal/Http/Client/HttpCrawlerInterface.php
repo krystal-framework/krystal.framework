@@ -73,6 +73,16 @@ interface HttpCrawlerInterface
     public function patch($url, array $data = array(), array $extra = array());
 
     /**
+     * Performs HTTP DELETE request
+     * 
+     * @param string $url Target URL
+     * @param array $data Data to be sent
+     * @param array $extra Extra options
+     * @return mixed
+     */
+    public function delete($url, array $data = array(), array $extra = array());
+
+    /**
      * Performs HTTP PUT request
      * 
      * @param string $url Target URL

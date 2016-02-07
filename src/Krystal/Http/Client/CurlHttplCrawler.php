@@ -88,6 +88,8 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
                 return $this->head($url, $data, $prepend, $extra);
             case 'PUT':
                 return $this->put($url, $data, $prepend, $extra);
+            case 'DELETE':
+                return $this->delete($url, $data, $prepend, $extra);
             default:
                 throw new UnexpectedValueException(sprintf('Unsupported or unknown HTTP method provided "%s"', $method));
         }
@@ -159,6 +161,25 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PATCH',
+            CURLOPT_POSTFIELDS => http_build_query($data)
+
+        ), $extra);
+    }
+
+    /**
+     * Performs HTTP DELETE request
+     * 
+     * @param string $url Target URL
+     * @param array $data Data to be sent
+     * @param array $extra Extra options
+     * @return mixed
+     */
+    public function delete($url, array $data = array(), array $extra = array())
+    {
+        return $this->exec(array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_POSTFIELDS => http_build_query($data)
 
         ), $extra);
