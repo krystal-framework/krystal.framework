@@ -184,4 +184,18 @@ interface PaginatorInterface
      * @return integer
      */
     public function getTotalAmount();
+
+    /**
+     * Returns current state as array representation
+     * 
+     * @return array
+     */ 
+    public function toArray();
+
+    /**
+     * Returns current state as JSON representation
+     * 
+     * @return string
+     */
+    public function toJson();
 }

@@ -380,4 +380,41 @@ final class Paginator implements PaginatorInterface
     {
         return $this->totalAmount;
     }
+
+    /**
+     * Returns current state as array representation
+     * 
+     * @return array
+     */ 
+    public function toArray()
+    {
+        return array(
+            'firstPage' => $this->getFirstPage(),
+            'lastPage' => $this->getLastPage(),
+            'offset' => $this->countOffset(),
+            'summary' => $this->getSummary(),
+            'hasPages' => $this->hasPages(),
+            'hasAdapter' => $this->hasAdapter(),
+            'hasNextPage' => $this->hasNextPage(),
+            'hasPreviousPage' => $this->hasPreviousPage(),
+            'nextPage' => $this->getNextPage(),
+            'previousPage' => $this->getPreviousPage(),
+            'nextPageUrl' => $this->getNextPageUrl(),
+            'previousPageUrl' => $this->getPreviousPageUrl(),
+            'currentPage' => $this->getCurrentPage(),
+            'perPageCount' => $this->getItemsPerPage(),
+            'total' => $this->getTotalAmount(),
+            'pageNumbers' => $this->getPageNumbers()
+        );
+    }
+
+    /**
+     * Returns current state as JSON representation
+     * 
+     * @return string
+     */
+    public function toJson()
+    {
+        return json_encode($this->toArray());
+    }
 }
