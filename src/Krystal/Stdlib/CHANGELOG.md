@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Changed date format to Y-m-d h:i:s in exception handler
  * Removed framework version from exception's template
  * Added `keysExist()` in `Stdlib\ArrayUtils`
  * Added `arrayOnlyWith()` in `Stdlib\ArrayUtils`
