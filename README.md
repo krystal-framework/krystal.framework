@@ -7,7 +7,7 @@ Started back in 2014 as a lightweight PHP framework, Krystal remained its simpli
 
 The framework is licensed under BSD-3.
 
-# Official documentantaion
+# Official documentation
 
 The documentation is hosted on ReadTheDocs and can be found [here](http://krystal-docs.readthedocs.org/en/latest/README/).
 
