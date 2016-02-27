@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with join methods
  * Added optional fillable protection in `Db\Sql\AbstractMapper::persist()` method
  * Added `createPaginator()` in `Krystal\Db\Sql\AbstractMapper`
  * Fixed binding issue with placeholders in `DB::raw()`
