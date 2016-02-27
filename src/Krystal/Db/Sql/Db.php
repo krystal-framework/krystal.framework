@@ -874,11 +874,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends INNER JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
+     * @param string $left A column from the left table (first)
+     * @param string $right A column from the right table (second)
      * @return \Krystal\Db\Sql\Db
      */
-    public function innerJoin($table, $a, $b)
+    public function innerJoin($table, $left, $right)
     {
         $this->queryBuilder->innerJoin($table, $left, $right);
         return $this;
@@ -888,11 +888,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends LEFT JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
+     * @param string $left A column from the left table (first)
+     * @param string $right A column from the right table (second)
      * @return \Krystal\Db\Sql\Db
      */
-    public function leftJoin($table, $a, $b)
+    public function leftJoin($table, $left, $right)
     {
         $this->queryBuilder->leftJoin($table, $left, $right);
         return $this;
@@ -902,11 +902,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends RIGHT JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
+     * @param string $left A column from the left table (first)
+     * @param string $right A column from the right table (second)
      * @return \Krystal\Db\Sql\Db
      */
-    public function rightJoin($table, $a, $b)
+    public function rightJoin($table, $left, $right)
     {
         $this->queryBuilder->rightJoin($table, $left, $right);
         return $this;
@@ -916,11 +916,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Append FULL OUTER JOIN
      *
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
+     * @param string $left A column from the left table (first)
+     * @param string $right A column from the right table (second)
      * @return \Krystal\Db\Sql\Db
      */
-    public function fullJoin($table, $a, $b)
+    public function fullJoin($table, $left, $right)
     {
         $this->queryBuilder->fullJoin($table, $left, $right);
         return $this;
