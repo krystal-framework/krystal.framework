@@ -1275,7 +1275,7 @@ final class Db implements DbInterface, RelationableServiceInterface
     {
         return $this->andWhere($column, '>', $value, $filter);
     }
-    
+
     /**
      * Appends AND WHERE clause with < operator
      * 
