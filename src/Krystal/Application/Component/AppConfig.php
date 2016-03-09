@@ -66,7 +66,7 @@ final class AppConfig implements ComponentInterface
             // Visitor function has a higher priority
             if (isset($translator['visitor']) && is_callable($translator['visitor'])) {
                 // Invoke a visitor
-                $language = $translator['visitor']($container, $config);
+                $language = $translator['visitor']($config);
                 // If we have a default language
             } elseif (isset($translator['default'])) {
                 $language = $translator['default'];
