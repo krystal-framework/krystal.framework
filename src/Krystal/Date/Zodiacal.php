@@ -30,6 +30,19 @@ final class Zodiacal implements ZodiacalInterface
      */
     private $day;
 
+    const MONTH_JANUARY = 'January';
+    const MONTH_FEBRUARY = 'February';
+    const MONTH_MARCH = 'March';
+    const MONTH_APRIL = 'April';
+    const MONTH_MAY = 'May';
+    const MONTH_JUNE = 'June';
+    const MONTH_JULY = 'July';
+    const MONTH_AUGUST = 'August';
+    const MONTH_SEPTEMBER = 'September';
+    const MONTH_OCTOBER = 'October';
+    const MONTH_NOVEMBER = 'November';
+    const MONTH_DECEMBER = 'December';
+
     /**
      * State initialization
      * 
@@ -75,7 +88,6 @@ final class Zodiacal implements ZodiacalInterface
     public function getSign()
     {
         foreach ($this->getMap() as $name => $method) {
-
             // Call associated method dynamically
             if (call_user_func(array($this, $method))) {
                 return $name;
@@ -106,18 +118,18 @@ final class Zodiacal implements ZodiacalInterface
     private function isValidMonth($month)
     {
         $list = array(
-            'January', 
-            'February', 
-            'March', 
-            'April', 
-            'May', 
-            'June',
-            'July', 
-            'August', 
-            'September', 
-            'October', 
-            'November', 
-            'December'
+            self::MONTH_JANUARY,
+            self::MONTH_FEBRUARY,
+            self::MONTH_MARCH,
+            self::MONTH_APRIL,
+            self::MONTH_MAY,
+            self::MONTH_JUNE,
+            self::MONTH_JULY,
+            self::MONTH_AUGUST,
+            self::MONTH_SEPTEMBER,
+            self::MONTH_OCTOBER,
+            self::MONTH_NOVEMBER,
+            self::MONTH_DECEMBER
         );
 
         return in_array($month, $list);
@@ -165,7 +177,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isAries()
     {
-        return ($this->month === 'March') && ($this->day >= 21) && ($this->day <= 31) || ($this->month === 'April') && ($this->day <= 20);
+        return ($this->month === self::MONTH_MARCH) && ($this->day >= 21) && ($this->day <= 31) || ($this->month === self::MONTH_APRIL) && ($this->day <= 20);
     }
 
     /**
@@ -175,7 +187,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isTaurus()
     {
-        return ($this->month === 'April') && ($this->day >= 21) && ($this->day <= 30) || ($this->month === 'May') && ($this->day <= 21);
+        return ($this->month === self::MONTH_APRIL) && ($this->day >= 21) && ($this->day <= 30) || ($this->month === self::MONTH_MAY) && ($this->day <= 21);
     }
 
     /**
@@ -185,7 +197,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isGemini()
     {
-        return ($this->month === 'May') && ($this->day >= 22) && ($this->day <= 31) || ($this->month === 'July') && ($this->day <= 21);
+        return ($this->month === self::MONTH_MAY) && ($this->day >= 22) && ($this->day <= 31) || ($this->month === self::MONTH_JULY) && ($this->day <= 21);
     }
 
     /**
@@ -195,7 +207,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isCancer()
     {
-        return ($this->month === 'June') && ($this->day >= 22) && ($this->day <= 30) || ($this->month === 'July') && ($this->day <= 22);
+        return ($this->month === self::MONTH_JUNE) && ($this->day >= 22) && ($this->day <= 30) || ($this->month === self::MONTH_JULY) && ($this->day <= 22);
     }
 
     /**
@@ -205,7 +217,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isLeo()
     {
-        return ($this->month === 'July') && ($this->day >= 23) && ($this->day <= 30) || ($this->month === 'May') && ($this->day <= 22);
+        return ($this->month === self::MONTH_JULY) && ($this->day >= 23) && ($this->day <= 30) || ($this->month === self::MONTH_MAY) && ($this->day <= 22);
     }
 
     /**
@@ -215,7 +227,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isVirgo()
     {
-        return ($this->month === 'August') && ($this->day >= 23) && ($this->day <= 30) || ($this->month === 'September') && ($this->day <= 23);
+        return ($this->month === self::MONTH_AUGUST) && ($this->day >= 23) && ($this->day <= 30) || ($this->month === self::MONTH_SEPTEMBER) && ($this->day <= 23);
     }
 
     /**
@@ -225,7 +237,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isScorpio()
     {
-        return ($this->month === 'October') && ($this->day >= 24) && ($this->day <= 30) || ($this->month === 'November') && ($this->day <= 22);
+        return ($this->month === self::MONTH_OCTOBER) && ($this->day >= 24) && ($this->day <= 30) || ($this->month === self::MONTH_NOVEMBER) && ($this->day <= 22);
     }
 
     /**
@@ -235,7 +247,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isLibra()
     {
-        return ($this->month === 'September') && ($this->day >= 24) && ($this->day <= 30) || ($this->month === 'October') && ($this->day <= 23);
+        return ($this->month === self::MONTH_SEPTEMBER) && ($this->day >= 24) && ($this->day <= 30) || ($this->month === self::MONTH_OCTOBER) && ($this->day <= 23);
     }
 
     /**
@@ -245,7 +257,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isSagittarius()
     {
-        return ($this->month === 'November') && ($this->day >= 23) && ($this->day <= 30) || ($this->month === 'December') && ($this->day <= 21);
+        return ($this->month === self::MONTH_NOVEMBER) && ($this->day >= 23) && ($this->day <= 30) || ($this->month === self::MONTH_DECEMBER) && ($this->day <= 21);
     }
 
     /**
@@ -255,7 +267,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isCapricorn()
     {
-        return ($this->month === 'December') && ($this->day >= 22) && ($this->day <= 30) || ($this->month === 'January') && ($this->day <= 20);
+        return ($this->month === self::MONTH_DECEMBER) && ($this->day >= 22) && ($this->day <= 30) || ($this->month === self::MONTH_JANUARY) && ($this->day <= 20);
     }
 
     /**
@@ -265,7 +277,7 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isAquarius()
     {
-        return ($this->month === 'January') && ($this->day >= 21) && ($this->day <= 30) || ($this->month === 'February') && ($this->day <= 19);
+        return ($this->month === self::MONTH_JANUARY) && ($this->day >= 21) && ($this->day <= 30) || ($this->month === self::MONTH_FEBRUARY) && ($this->day <= 19);
     }
 
     /**
@@ -275,6 +287,6 @@ final class Zodiacal implements ZodiacalInterface
      */
     public function isPisces()
     {
-        return ($this->month === 'February') && ($this->day >= 20) && ($this->day <= 30) || ($this->month === 'March') && ($this->day <= 20);
+        return ($this->month === self::MONTH_FEBRUARY) && ($this->day >= 20) && ($this->day <= 30) || ($this->month === self::MONTH_MARCH) && ($this->day <= 20);
     }
 }
