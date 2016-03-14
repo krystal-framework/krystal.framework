@@ -30,13 +30,11 @@ final class Cache implements ComponentInterface
     {
         // First of all, check cache component is required
         if (isset($config['components']['cache']['engine'])) {
-
             // Reference as a short-cut
             $component =& $config['components']['cache'];
             $options =& $config['components']['cache']['options'];
 
             switch ($component['engine']) {
-
                 case 'memcached':
                     if (!isset($options['servers']) || !is_array($options['servers'])) {
                         throw new RuntimeException('Memcached servers must be defined in configuration');
@@ -64,7 +62,6 @@ final class Cache implements ComponentInterface
                     return new XCache();
 
                 case 'sql':
-
                     if (!isset($options['table']) || !isset($options['connection'])) {
                         throw new RuntimeException('Cache SQL service request connection and table names to run');
                     }
@@ -83,7 +80,6 @@ final class Cache implements ComponentInterface
             }
 
         } else {
-
             // Not defined in configuration
             return false;
         }
