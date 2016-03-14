@@ -13,9 +13,9 @@ namespace Krystal\Application\Component;
 
 use Krystal\Session\SessionBag as Component;
 use Krystal\Session\SessionValidator;
+use Krystal\Session\Adapter;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
-use Krystal\Session\Adapter;
 use RuntimeException;
 use LogicException;
 
@@ -44,7 +44,6 @@ final class SessionBag implements ComponentInterface
             if (isset($config['handler'])) {
                 switch ($config['handler']) {
                     case 'sql':
-
                         // Make sure the database component is available, before processing the rest
                         if (!$container->exists('db')) {
                             throw new LogicException('Can not use SQL session handler without configured database connection');
@@ -55,15 +54,13 @@ final class SessionBag implements ComponentInterface
 
                         if (isset($config['options']['connection']) && isset($config['options']['table'])) {
                             // Grab connection's name
-                            $connection = $db[$config['options']['connection']];
-                            
+                            $connection = $db[$config['options']['connection']];                            
                             // Now alter default handler
                             $handler = new Adapter\Sql($connection->getPdo(), $config['options']['table']);
 
                         } else {
                             throw new LogicException('No connection or table name defined for session service');
                         }
-
                     break;
 
                     // Do nothing for native handler
