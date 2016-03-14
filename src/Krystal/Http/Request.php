@@ -213,7 +213,7 @@ final class Request implements RequestInterface
      * Returns files bag
      * For internal usage only
      * 
-     * @return FileInput
+     * @return \Krystal\Http\FileTransfer\Input
      */
     private function getFilesbag()
     {
