@@ -280,7 +280,6 @@ final class Request implements RequestInterface
             }
 
         } else {
-
             return $this->server['REMOTE_ADDR'];
         }
     }
@@ -587,7 +586,6 @@ final class Request implements RequestInterface
     public function getWithNsQuery($ns, array $data, $mark = true)
     {
         if ($this->hasQuery($ns)) {
-
             $query = $this->getQuery($ns);
             $url = null;
 
@@ -599,7 +597,6 @@ final class Request implements RequestInterface
             $url = str_replace('%25s', '%s', $url);
 
             return $url;
-
         } else {
             return null;
         }
