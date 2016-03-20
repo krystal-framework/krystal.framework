@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Finished partial table prefix implementation
  * Fixed issue with join methods
  * Added optional fillable protection in `Db\Sql\AbstractMapper::persist()` method
  * Added `createPaginator()` in `Krystal\Db\Sql\AbstractMapper`
