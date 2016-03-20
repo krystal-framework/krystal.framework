@@ -32,15 +32,24 @@ final class MapperFactory implements MapperFactoryInterface
     private $paginator;
 
     /**
+     * A prefix for tables
+     * 
+     * @var string
+     */
+    private $prefix;
+
+    /**
      * State initialization
      * 
      * @param \Krystal\Db\Sql\DbInterface $db Database service
      * @param \Krystal\Paginate\PaginatorInterface $paginator
+     * @param string $prefix Optional table prefix
      * @return void
      */
-    public function __construct(DbInterface $db, PaginatorInterface $paginator = null)
+    public function __construct(DbInterface $db, PaginatorInterface $paginator = null, $prefix = null)
     {
         $this->db = $db;
+        $this->prefix = $prefix;
 
         if (!is_null($paginator)) {
             $this->paginator = $paginator;
@@ -60,6 +69,7 @@ final class MapperFactory implements MapperFactoryInterface
             array_push($args, $this->paginator);
         }
 
+        array_push($args, $this->prefix);
         return $args;
     }
 

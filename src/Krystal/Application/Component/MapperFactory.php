@@ -45,7 +45,14 @@ final class MapperFactory implements ComponentInterface
             $db = $connections[$current];
         }
 
-        return new Component($db, $container->get('paginator'));
+        // Handle prefix
+        if (isset($config['components']['mapperFactory']['prefix'])) {
+            $prefix = $config['components']['mapperFactory']['prefix'];
+        } else {
+            $prefix = null;
+        }
+
+        return new Component($db, $container->get('paginator'), $prefix);
     }
 
     /**
