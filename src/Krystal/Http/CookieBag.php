@@ -11,6 +11,7 @@
 
 namespace Krystal\Http;
 
+use Krystal\Date\TimeHelper;
 use RuntimeException;
 use InvalidArgumentException;
 use UnexpectedValueException;
@@ -87,7 +88,7 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
      * @throws \UnexpectedValueException If trying to set a key that contains a dot
      * @return boolean
      */
-    public function set($key, $value, $ttl = 0, $path = '/', $secure = false, $httpOnly = false, $raw = false)
+    public function set($key, $value, $ttl = TimeHelper::YEAR, $path = '/', $secure = false, $httpOnly = false, $raw = false)
     {
         if (strpos($key, '.') !== false) {
             throw new UnexpectedValueException('Setting cookie keys that contain a dot is not allowed');

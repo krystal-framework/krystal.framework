@@ -11,6 +11,8 @@
 
 namespace Krystal\Http;
 
+use Krystal\Date\TimeHelper;
+
 interface CookieBagInterface
 {
     /**
@@ -25,5 +27,5 @@ interface CookieBagInterface
      * @param boolean $raw Whether to send a cookie without urlencoding the cookie value
      * @return boolean
      */
-    public function set($key, $value, $ttl = 0, $path = '/', $secure = false, $httpOnly = false, $raw = false);
+    public function set($key, $value, $ttl = TimeHelper::YEAR, $path = '/', $secure = false, $httpOnly = false, $raw = false);
 }
