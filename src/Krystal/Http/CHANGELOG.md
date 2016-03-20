@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Set default (one year) lifetime for cookies when setting them
  * Added cURL HTTP crawler
  * Added `getInfo()` in cURL wrapper
  * Fixed issues in Curl wrapper
