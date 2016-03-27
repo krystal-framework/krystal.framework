@@ -324,6 +324,57 @@ abstract class AbstractController
     }
 
     /**
+     * Load translation messages from all available modules
+     * 
+     * @param string $language
+     * @return void
+     */
+    private function loadTranslationMessages($language)
+    {
+        // Reset any previous translations if any
+        $this->moduleManager->clearTranslations();
+        $this->translator->reset();
+
+        // Now load new ones
+        $this->moduleManager->loadAllTranslations($language);
+        $this->translator->extend($this->moduleManager->getTranslations());
+    }
+
+    /**
+     * Loads default translations if default language is defined
+     * 
+     * @return void
+     */
+    private function loadDefaultTranslations()
+    {
+        $language = $this->appConfig->getLanguage();
+
+        if ($language !== null) {
+            $this->loadTranslationMessages($language);
+        }
+    }
+
+    /**
+     * Load translation messages
+     * 
+     * @param string $language
+     * @return boolean
+     */
+    final protected function loadTranslations($language)
+    {
+        // Don't load the same language twice, if that's the case
+        if ($this->appConfig->getLanguage() !== $language) {
+
+            $this->appConfig->setLanguage($language);
+            $this->loadTranslationMessages($language);
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+    
+    /**
      * Invoked right after class instantiation
      * 
      * @return void
@@ -343,5 +394,7 @@ abstract class AbstractController
         if (method_exists($this, 'onAuth')) {
             $this->onAuth();
         }
+
+        $this->loadDefaultTranslations();
     }
 }
