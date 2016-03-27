@@ -35,7 +35,7 @@ final class ModuleManager implements ComponentInterface
                     case 'auto':
                         $loader = new Loader\Dir($appConfig->getModulesDir());
                     break;
-                    
+
                     case 'list':
                         if (isset($section['options']['modules']) && is_array($section['options']['modules'])) {
                             $loader = new Loader\StaticList($section['options']['modules']);

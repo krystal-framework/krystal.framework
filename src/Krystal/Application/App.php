@@ -192,14 +192,13 @@ final class App implements AppInterface
             $default = $this->config['components']['router']['default'];
 
             if (is_string($default)) {
-
                 $notation = new RouteNotation();
                 $args = $notation->toArgs($default);
 
                 // Extract controller and action from $args
                 $controller = $args[0];
                 $action = $args[1];
-
+                
                 // Finally call it
                 $content = $dispatcher->call($controller, $action);
 
@@ -213,7 +212,7 @@ final class App implements AppInterface
 
             $response->setStatusCode(404);
         }
-
+        
         $response->send($content);
     }
 

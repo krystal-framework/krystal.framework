@@ -124,10 +124,10 @@ final class Dispatcher implements DispatcherInterface
     {
         // For current URI template
         $options = $this->mapManager->getDataByUriTemplate($matchedURITemplate);
-        
+
         $class = $this->mapManager->getControllerByURITemplate($matchedURITemplate);
         $action = $this->mapManager->getActionByURITemplate($matchedURITemplate);
-        
+
         return $this->call($class, $action, $params, $options);
     }
 }
