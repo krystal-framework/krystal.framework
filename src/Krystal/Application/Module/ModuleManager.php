@@ -230,31 +230,50 @@ final class ModuleManager implements ModuleManagerInterface
             $this->appendRoutes($this->prepareRoutes($moduleNamespace, $module->getRoutes()));
         }
 
-        // Translations are optional
-        if (method_exists($module, 'getTranslations')) {
-            $translations = $module->getTranslations($this->appConfig->getLanguage());
-
-            // Only array must be provided, otherwise ignore another type
-            if (is_array($translations)) {
-                $this->appendTranslations($translations);
-            }
-        }
-
         $this->loaded[$name] = $module;
         return $module;
     }
 
     /**
-     * Append translations
+     * Loads module translations
      * 
-     * @param array $translations
+     * @param string $language
      * @return void
      */
-    private function appendTranslations(array $translations)
+    public function loadAllTranslations($language)
     {
-        foreach ($translations as $string => $translation) {
-            $this->translations[$string] = $translation;
+        foreach ($this->loaded as $module) {
+            $this->loadModuleTranslation($module, $language);
         }
+    }
+
+    /**
+     * Loads translation message for particular module
+     * 
+     * @param \Krystal\Application\Module\AbstractModule $module Module instance
+     * @param string $language Language name to be loaded
+     * @return boolean
+     */
+    private function loadModuleTranslation(AbstractModule $module, $language)
+    {
+        // Translations are optional
+        if (method_exists($module, 'getTranslations')) {
+            $translations = $module->getTranslations($language);
+
+            // Only array must be provided, otherwise ignore another type
+            if (is_array($translations)) {
+                // If that's an array, then append translations
+                foreach ($translations as $string => $translation) {
+                    $this->translations[$string] = $translation;
+                }
+
+                // And indicate success
+                return true;
+            }
+        }
+
+        // Failure by default
+        return false;
     }
 
     /**
@@ -288,5 +307,5 @@ final class ModuleManager implements ModuleManagerInterface
     public function getTranslations()
     {
         return $this->translations;
-    }   
+    }
 }

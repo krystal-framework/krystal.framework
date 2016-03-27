@@ -52,6 +52,14 @@ interface ModuleManagerInterface
     public function getLoadedModules();
 
     /**
+     * Loads module translations
+     * 
+     * @param string $language
+     * @return void
+     */
+    public function loadAllTranslations($language);
+
+    /**
      * Append routes to the global stack
      * 
      * @param array $routes
