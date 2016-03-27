@@ -14,6 +14,13 @@ namespace Krystal\Http\Response;
 interface HttpResponseInterface
 {
     /**
+     * Returns header bag
+     * 
+     * @return \Krystal\Http\HeaderBagInterface
+     */
+    public function getHeaderBag();
+
+    /**
      * Downloads a file
      * 
      * @param string $filename A path to the target file

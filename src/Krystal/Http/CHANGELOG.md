@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `getHeaderBag()` method in response service to be able to alter headers
  * Set default (one year) lifetime for cookies when setting them
  * Added cURL HTTP crawler
  * Added `getInfo()` in cURL wrapper

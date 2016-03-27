@@ -34,6 +34,16 @@ final class HttpResponse implements HttpResponseInterface
     }
 
     /**
+     * Returns header bag
+     * 
+     * @return \Krystal\Http\HeaderBagInterface
+     */
+    public function getHeaderBag()
+    {
+        return $this->headerBag;
+    }
+
+    /**
      * Downloads a file
      * 
      * @param string $filename A path to the target file
