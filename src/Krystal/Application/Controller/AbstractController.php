@@ -63,6 +63,17 @@ abstract class AbstractController
     }
 
     /**
+     * Creates a mapper
+     * 
+     * @param string $namespace
+     * @return \Krystal\Db\Sql\AbstractMapper
+     */
+    final protected function createMapper($namespace)
+    {
+        return $this->mapperFactory->build($namespace);
+    }
+
+    /**
      * Creates validation instance
      * 
      * @param array $config

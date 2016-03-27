@@ -118,6 +118,17 @@ abstract class AbstractModule
     }
 
     /**
+     * Creates a mapper
+     * 
+     * @param string $namespace
+     * @return \Krystal\Db\Sql\AbstractMapper
+     */
+    final protected function createMapper($namespace)
+    {
+        return $this->getServiceLocator()->get('mapperFactory')->build($namespace);
+    }
+
+    /**
      * Safely loads an array from a file
      * 
      * @param string $file
