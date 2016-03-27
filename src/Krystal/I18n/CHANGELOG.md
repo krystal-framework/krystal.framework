@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Added ability to reset translations
+ * Performance improvement
+
 1.1
 ---
 
