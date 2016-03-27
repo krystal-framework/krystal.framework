@@ -52,6 +52,13 @@ interface ModuleManagerInterface
     public function getLoadedModules();
 
     /**
+     * Clears loaded translations
+     * 
+     * @return void
+     */
+    public function clearTranslations();
+
+    /**
      * Loads module translations
      * 
      * @param string $language

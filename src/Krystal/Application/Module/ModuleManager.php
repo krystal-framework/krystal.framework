@@ -235,6 +235,16 @@ final class ModuleManager implements ModuleManagerInterface
     }
 
     /**
+     * Clears loaded translations
+     * 
+     * @return void
+     */
+    public function clearTranslations()
+    {
+        $this->translations = array();
+    }
+
+    /**
      * Loads module translations
      * 
      * @param string $language
