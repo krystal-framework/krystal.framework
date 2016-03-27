@@ -34,6 +34,16 @@ final class Translator implements TranslatorInterface
             $this->extend($dictionary);
         }
     }
+    
+    /**
+     * Clears a dictionary
+     * 
+     * @return void
+     */
+    public function reset()
+    {
+        $this->dictionary = array();
+    }
 
     /**
      * Extends first language array ($data)
@@ -94,6 +104,11 @@ final class Translator implements TranslatorInterface
         // Receive arguments
         $arguments = func_get_args();
         $message = array_shift($arguments);
+
+        // Don't process anything if a dictionary is empty
+        if (empty($this->dictionary)) {
+            return $message;
+        }
 
         // Ensure the proper message received
         if (!is_string($message)) {

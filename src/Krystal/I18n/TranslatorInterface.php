@@ -14,6 +14,13 @@ namespace Krystal\I18n;
 interface TranslatorInterface
 {
     /**
+     * Clears a dictionary
+     * 
+     * @return void
+     */
+    public function reset();
+
+    /**
      * Translate array values if possible
      * 
      * @param array $array
