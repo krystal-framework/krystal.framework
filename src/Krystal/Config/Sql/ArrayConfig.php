@@ -67,7 +67,6 @@ final class ArrayConfig implements ArrayConfigInterface
     public function removeAllByModule($module)
     {
         foreach ($this->getIndexesByModule($module) as $index) {
-
             if (isset($this->data[$index])) {
                 unset($this->data[$index]);
             }
@@ -104,14 +103,11 @@ final class ArrayConfig implements ArrayConfigInterface
     {
         if (!$this->hasModule($module)) {
             return false;
-
         } else {
             $result = array();
 
             foreach ($this->data as $index => $row) {
-
                 if (isset($row[ConstProviderInterface::CONFIG_PARAM_MODULE]) && $row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module) {
-
                     $name = $row[ConstProviderInterface::CONFIG_PARAM_NAME];
                     $value = $row[ConstProviderInterface::CONFIG_PARAM_VALUE];
 
@@ -206,7 +202,6 @@ final class ArrayConfig implements ArrayConfigInterface
     {
         foreach ($this->data as $index => $row) {
             if ($row[ConstProviderInterface::CONFIG_PARAM_MODULE] == $module && $row[ConstProviderInterface::CONFIG_PARAM_NAME] == $name) {
-
                 if ($position !== false) {
                     $position = $index;
                 }

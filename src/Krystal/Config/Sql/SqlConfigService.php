@@ -81,7 +81,6 @@ final class SqlConfigService implements ConfigServiceInterface
             }
 
         } else {
-
             if ($this->configMapper->update($module, $name, $value)) {
                 $this->arrayConfig->update($module, $name, $value);
                 return true;
@@ -141,7 +140,6 @@ final class SqlConfigService implements ConfigServiceInterface
         $this->initializeOnDemand();
 
         if ($this->configMapper->truncate()) {
-
             $this->arrayConfig->clear();
             return true;
 
@@ -162,7 +160,6 @@ final class SqlConfigService implements ConfigServiceInterface
         $this->initializeOnDemand();
 
         if ($this->exists($module, $name) && $this->configMapper->delete($module, $name)) {
-
             $this->arrayConfig->remove($module, $name);
             return true;
 
@@ -182,10 +179,8 @@ final class SqlConfigService implements ConfigServiceInterface
         $this->initializeOnDemand();
 
         if ($this->arrayConfig->hasModule($module) && $this->configMapper->deleteAllByModule($module)) {
-
             $this->arrayConfig->removeAllByModule($module);
             return true;
-
         } else {
             return false;
         }
