@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Dropped extra `TemplateView` abstraction in internals of View layer
  * Dropped loading messages under initialization level. Forced to load translation messages from controllers.
    Added shared `loadTranslations()` method to load or reload translation messages
  * Added `createMapper()` shortcut methods in `AbstractModule` and `AbstractController`
