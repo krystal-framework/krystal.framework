@@ -168,7 +168,6 @@ class ImageFile implements ImageFileInterface
         $image = getimagesize($file);
 
         if ($image !== false) {
-
             return array(
                 'width' => $image[0],
                 'height' => $image[1],
@@ -176,9 +175,7 @@ class ImageFile implements ImageFileInterface
                 'mime' => $image['mime'],
                 'bits' => $image['bits']
             );
-
         } else {
-
             return false;
         }
     }
