@@ -49,25 +49,11 @@ final class ViewManager implements ViewManagerInterface
     private $urlBuilder;
 
     /**
-     * Breadcrumb bag to manage breadcrumbs
-     * 
-     * @var \Krystal\Form\Navigation\Breadcrumbs\BreadcrumbBag
-     */
-    private $breadcrumbBag;
-
-    /**
      * Plugin bag to manage plugins
      * 
      * @var \Krystal\Application\View\PluginBag
      */
     private $pluginBag;
-
-    /**
-     * Block bag to manage blocks
-     * 
-     * @var \Krystal\Application\View\BlockBag
-     */
-    private $blockBag;
 
     /**
      * Template variables
@@ -134,11 +120,13 @@ final class ViewManager implements ViewManagerInterface
      */
     public function getBreadcrumbBag()
     {
-        if ($this->breadcrumbBag == null) {
-            $this->breadcrumbBag = new BreadcrumbBag();
+        static $breadcrumbBag = null;
+
+        if ($breadcrumbBag === null) {
+            $breadcrumbBag = new BreadcrumbBag();
         }
 
-        return $this->breadcrumbBag;
+        return $breadcrumbBag;
     }
 
     /**
@@ -148,11 +136,13 @@ final class ViewManager implements ViewManagerInterface
      */
     public function getBlockBag()
     {
-        if ($this->blockBag == null) {
-            $this->blockBag = new BlockBag();
+        static $blockBag = null;
+
+        if ($blockBag === null) {
+            $blockBag = new BlockBag();
         }
-        
-        return $this->blockBag;
+
+        return $blockBag;
     }
 
     /**
