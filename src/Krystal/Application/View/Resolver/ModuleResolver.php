@@ -181,7 +181,7 @@ final class ModuleResolver implements ResolverInterface
             $theme = $this->theme;
         }
 
-        return $url.sprintf('%s/%s', $this->resolveWith($dir, $this->request->getBaseUrl(), $module, $theme), $path);
+        return $url.sprintf('%s/%s', $this->createPath($dir, $this->request->getBaseUrl(), $module, $theme), $path);
     }
 
     /**
@@ -223,12 +223,12 @@ final class ModuleResolver implements ResolverInterface
             $module = $this->module;
         }
 
-        $base = $this->resolveWith($this->baseDir, dirname($this->moduleDir), $module, $this->theme);
+        $base = $this->createPath($this->baseDir, dirname($this->moduleDir), $module, $this->theme);
         return $base.\DIRECTORY_SEPARATOR.$name.$this->extension;
     }
 
     /**
-     * Resolves with a path
+     * Creates path to view template
      * 
      * @param string $dir Base directory when assets are stored
      * @param string $path
@@ -236,7 +236,7 @@ final class ModuleResolver implements ResolverInterface
      * @param string $theme
      * @return string
      */
-    private function resolveWith($dir, $path, $module, $theme = null)
+    private function createPath($dir, $path, $module, $theme = null)
     {
         if ($theme !== null) {
             return sprintf('%s/module/%s/%s/%s', $path, $module, $dir, $theme);
