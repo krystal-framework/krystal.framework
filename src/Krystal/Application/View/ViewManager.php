@@ -348,23 +348,14 @@ final class ViewManager implements ViewManagerInterface
      * 
      * @param string $layout Path to a layout
      * @param string $fragment Path to a fragment
-     * @param string $variable Variable name which represents a fragment
      * @return string
      */
-    private function createContentWithLayout($layout, $fragment, $variable)
+    private function createContentWithLayout($layout, $fragment)
     {
-        // Save it into a variable
-        $fragment = $this->createFileContent($fragment);
+        // Create and append $fragment variable to the shared view stack
+        $this->variables['fragment'] = $this->createFileContent($fragment);
 
-        ob_start();
-
-        // Append new variable to the global stack
-        $this->variables[$variable] = $fragment;
-
-        extract($this->variables);
-        include($layout);
-
-        return ob_get_clean();
+        return $this->createFileContent($layout);
     }
 
     /**
@@ -389,7 +380,7 @@ final class ViewManager implements ViewManagerInterface
         if ($this->hasLayout()) {
             $layout = $this->resolver->getFilePathByName($this->layout, $this->module);
 
-            $content = $this->createContentWithLayout($layout, $file, 'fragment');
+            $content = $this->createContentWithLayout($layout, $file);
         } else {
             $content = $this->createFileContent($file);
         }
