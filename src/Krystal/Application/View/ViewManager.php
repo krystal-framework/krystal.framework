@@ -337,7 +337,7 @@ final class ViewManager implements ViewManagerInterface
     private function createFileContent($file)
     {
         ob_start();
-        extract($this->variables, \EXTR_REFS);
+        extract($this->variables);
         include($file);
 
         return ob_get_clean();
@@ -353,13 +353,8 @@ final class ViewManager implements ViewManagerInterface
      */
     private function createContentWithLayout($layout, $fragment, $variable)
     {
-        // Include and parse fragment's template
-        ob_start();
-        extract($this->variables);
-        include($fragment);
-
         // Save it into a variable
-        $fragment = ob_get_clean();
+        $fragment = $this->createFileContent($fragment);
 
         ob_start();
 
