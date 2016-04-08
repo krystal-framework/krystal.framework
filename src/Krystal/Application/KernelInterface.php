@@ -11,7 +11,7 @@
 
 namespace Krystal\Application;
 
-interface AppInterface
+interface KernelInterface
 {
     /**
      * Bootstrap the application. Prepare service location and module manager

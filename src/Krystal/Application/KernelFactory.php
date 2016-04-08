@@ -13,13 +13,13 @@ namespace Krystal\Application;
 
 use Krystal\Application\App;
 
-abstract class AppFactory
+abstract class KernelFactory
 {
     /**
      * Builds prepared application instance
      * 
      * @param array $config
-     * @return \Krystal\Application\App
+     * @return \Krystal\Application\Kernel
      */
     public static function build(array $config)
     {
@@ -32,6 +32,6 @@ abstract class AppFactory
             ->setEnv($_ENV)
             ->setRequest($_REQUEST);
 
-        return new App($input, $config);
+        return new Kernel($input, $config);
     }
 }

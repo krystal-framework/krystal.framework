@@ -27,7 +27,7 @@ use LogicException;
  * This class abstracts application initialization logic
  * And parses configuration array
  */
-final class App implements AppInterface
+final class Kernel implements KernelInterface
 {
     /**
      * Configuration container
