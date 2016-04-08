@@ -431,7 +431,7 @@ final class AppConfig implements AppConfigInterface
         $this->language = $language;
         return $this;
     }
-    
+
     /**
      * Returns application's default language
      * 
