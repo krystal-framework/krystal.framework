@@ -329,6 +329,50 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
+     * Includes a file a returns its content as a string
+     * 
+     * @param string $file Path to the file
+     * @return string
+     */
+    private function createFileContent($file)
+    {
+        ob_start();
+        extract($this->variables, \EXTR_REFS);
+        include($file);
+
+        return ob_get_clean();
+    }
+
+    /**
+     * Returns content of glued layout and its fragment
+     * 
+     * @param string $layout Path to a layout
+     * @param string $fragment Path to a fragment
+     * @param string $variable Variable name which represents a fragment
+     * @return string
+     */
+    private function createContentWithLayout($layout, $fragment, $variable)
+    {
+        // Include and parse fragment's template
+        ob_start();
+        extract($this->variables);
+        include($fragment);
+
+        // Save it into a variable
+        $fragment = ob_get_clean();
+
+        ob_start();
+
+        // Append new variable to the global stack
+        $this->variables[$variable] = $fragment;
+
+        extract($this->variables);
+        include($layout);
+
+        return ob_get_clean();
+    }
+
+    /**
      * Passes variables and renders a template. If there's attached layout, then renders it with that layout
      * 
      * @param string $template Template's name without extension in themes directory
@@ -346,14 +390,13 @@ final class ViewManager implements ViewManagerInterface
         $file = $this->resolver->getFilePathByName($template);
 
         $this->addVariables($vars);
-        $templateView = new TemplateView($this, $this->variables);
 
         if ($this->hasLayout()) {
             $layout = $this->resolver->getFilePathByName($this->layout, $this->module);
 
-            $content = $templateView->getFileContentWithLayout($layout, $file, 'fragment');
+            $content = $this->createContentWithLayout($layout, $file, 'fragment');
         } else {
-            $content = $templateView->getFileContent($file);
+            $content = $this->createFileContent($file);
         }
 
         // Compress if needed
