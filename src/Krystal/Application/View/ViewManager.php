@@ -117,7 +117,7 @@ final class ViewManager implements ViewManagerInterface
      * @var string
      */
     private $extension = '.phtml';
-    
+
     /**
      * State initialization
      * 
@@ -128,7 +128,7 @@ final class ViewManager implements ViewManagerInterface
      * @param $compress Whether to compress an output
      * @return void
      */
-    public function __construct($moduleDir, PluginBagInterface $pluginBag, TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, $compress = true)
+    public function __construct($moduleDir, PluginBagInterface $pluginBag, TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, $compress)
     {
         $this->moduleDir = $moduleDir;
         $this->pluginBag = $pluginBag;
