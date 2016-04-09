@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * Added `hasVariables()` in view
+ * Dropped extra abstraction for view resolver
  * Renamed `App` to `Kernel`
  * Dropped extra `TemplateView` abstraction in internals of View layer
  * Dropped loading messages under initialization level. Forced to load translation messages from controllers.
