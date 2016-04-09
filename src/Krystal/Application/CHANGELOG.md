@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * Dropped `getResolverThemeName()`, `getResolverModuleName()` in shared controller. 
+   Since now they must be altered right from view service directly, when needed
  * Made `renderRaw()` in View service not to override initial state
  * Added `hasVariables()` in view
  * Dropped extra abstraction for view resolver

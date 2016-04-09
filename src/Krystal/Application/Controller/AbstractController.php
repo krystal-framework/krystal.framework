@@ -245,7 +245,7 @@ abstract class AbstractController
             $module = $this->moduleName;
         }
 
-        return sprintf('/module/%s/View/Template/%s/%s', $module, $this->getResolverThemeName(), $path);
+        return sprintf('/module/%s/View/Template/%s/%s', $module, $this->appConfig->getTheme(), $path);
     }
 
     /**
@@ -283,26 +283,6 @@ abstract class AbstractController
     public function getModule()
     {
         return $this->moduleName;
-    }
-
-    /**
-     * Returns resolver module's name to be used when rendering
-     * 
-     * @return string
-     */
-    protected function getResolverModuleName()
-    {
-        return $this->getModule();
-    }
-    
-    /**
-     * Returns theme name to be used when rendering a template from within view
-     * 
-     * @return string
-     */
-    protected function getResolverThemeName()
-    {
-        return $this->appConfig->getTheme();
     }
 
     /**
@@ -373,7 +353,7 @@ abstract class AbstractController
             return false;
         }
     }
-    
+
     /**
      * Invoked right after class instantiation
      * 
@@ -383,9 +363,9 @@ abstract class AbstractController
     {
         $this->haltOnDemand();
 
-        // Configure view
-        $this->view->setModule($this->getResolverModuleName())
-                   ->setTheme($this->getResolverThemeName());
+        // Configure view with defaults
+        $this->view->setModule($this->getModule())
+                   ->setTheme($this->appConfig->getTheme());
 
         if (method_exists($this, 'bootstrap')) {
             $this->bootstrap();
