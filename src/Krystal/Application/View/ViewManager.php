@@ -359,22 +359,63 @@ final class ViewManager implements ViewManagerInterface
     {
         return sprintf('%s/%s', $this->createThemePath(), $filename);
     }
-
+    
     /**
-     * Resolves a base path
-     * 
-     * @param string $theme Optionally a theme can be overridden
      * @return string
      */
-    public function createThemePath($theme = null)
+    private function createSharedThemePath($module, $theme, $base)
     {
         if (is_null($theme)) {
             $theme = $this->theme;
         }
 
-        return sprintf('%s/%s/%s/%s', $this->moduleDir, $this->module, self::TEMPLATE_PARAM_BASE_DIR, $theme);
+        if (is_null($module)) {
+            $module = $this->module;
+        }
+
+        return sprintf('%s/%s/%s/%s', $base, $module, self::TEMPLATE_PARAM_BASE_DIR, $theme);
     }
-    
+
+    /**
+     * Creates theme URL
+     * 
+     * @param string $module
+     * @param string $theme
+     * @return string
+     */
+    public function createThemeUrl($module = null, $theme = null)
+    {
+        return $this->createSharedThemePath($module, $theme, '/'.self::TEMPLATE_PARAM_MODULES_DIR);
+    }
+
+    /**
+     * Resolves a base path
+     * 
+     * @param string $module
+     * @param string $theme Optionally a theme can be overridden
+     * @return string
+     */
+    public function createThemePath($module = null, $theme = null)
+    {
+        return $this->createSharedThemePath($module, $theme, $this->moduleDir);
+    }
+
+    /**
+     * Creates URL for asset
+     * 
+     * @param string $module
+     * @param string $path Optional path to be appended
+     * @return string
+     */
+    public function createAssetUrl($module = null, $path = null)
+    {
+        if (is_null($module)) {
+            $module = $this->module;
+        }
+
+        return sprintf('/%s/%s/%s', self::TEMPLATE_PARAM_MODULES_DIR, $module, self::TEMPLATE_PARAM_ASSETS_DIR) . $path;
+    }
+
     /**
      * Returns asset path by module and its nested path
      * 
