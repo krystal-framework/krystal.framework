@@ -11,8 +11,6 @@
 
 namespace Krystal\Application\View;
 
-use Krystal\Application\View\Resolver\ResolverInterface;
-
 interface ViewManagerInterface
 {
     /**
@@ -82,21 +80,6 @@ interface ViewManagerInterface
      * @return string
      */
     public function url();
-
-    /**
-     * Sets/Overrides default template resolver
-     * 
-     * @param \Krystal\Application\View\Resolver\ResolverInterface $resolver Any resolver that implements this interface
-     * @return \Krystal\Application\View\ViewManager
-     */
-    public function setResolver(ResolverInterface $resolver);
-
-    /**
-     * Returns view resolver
-     * 
-     * @return \Krystal\Application\View\Resolver\ResolverInterface
-     */
-    public function getResolver();
 
     /**
      * Prints a string

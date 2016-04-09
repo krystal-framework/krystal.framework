@@ -35,7 +35,13 @@ final class View implements ComponentInterface
         $pluginBag = new PluginBag(new AssetPath($container->get('moduleManager')->getLoadedModuleNames()));
 
         // Resolver will be injected later
-        $viewManager = new ViewManager($pluginBag, $container->get('translator'), $container->get('urlBuilder'), $compress);
+        $viewManager = new ViewManager(
+            $container->get('appConfig')->getModulesDir(), 
+            $pluginBag, 
+            $container->get('translator'), 
+            $container->get('urlBuilder'), 
+            $compress
+        );
 
         if (isset($config['components']['view'])) {
             if (isset($config['components']['view']['plugins'])) {

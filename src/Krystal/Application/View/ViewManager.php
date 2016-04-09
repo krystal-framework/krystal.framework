@@ -77,16 +77,53 @@ final class ViewManager implements ViewManagerInterface
     private $module;
 
     /**
+     * Current theme name
+     * 
+     * @var string
+     */
+    private $theme;
+
+    /**
+     * Base directory
+     * 
+     * @var string
+     */
+    private $baseDir = 'View/Template';
+
+    /**
+     * Modules directory
+     * 
+     * @var string
+     */
+    private $moduleDir;
+
+    /**
+     * Assets directory
+     * 
+     * @var string
+     */
+    private $assetsDir = 'Assets';
+
+    /**
+     * An extension for view templates
+     * 
+     * @var string
+     */
+    private $extension = '.phtml';
+    
+    /**
      * State initialization
      * 
+     * @param string $moduleDir
      * @param \Krystal\Application\View\PluginBagInterface $pluginBag
      * @param \Krystal\I18n\TranslatorInterface $translator
      * @param \Krystal\Application\Route\UrlBuilderInterface $urlBuilder
      * @param $compress Whether to compress an output
      * @return void
      */
-    public function __construct(PluginBagInterface $pluginBag, TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, $compress = true)
+    public function __construct($moduleDir, PluginBagInterface $pluginBag, TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, $compress = true)
     {
+        $this->moduleDir = $moduleDir;
         $this->pluginBag = $pluginBag;
         $this->translator = $translator;
         $this->urlBuilder = $urlBuilder;
@@ -146,6 +183,96 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
+     * Defines target module
+     * 
+     * @param string $module
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function setModule($module)
+    {
+        $this->module = $module;
+        return $this;
+    }
+
+    /**
+     * Returns target module
+     * 
+     * @return string
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * Defines target theme
+     * 
+     * @param string $theme
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+        return $this;
+    }
+
+    /**
+     * Returns current theme
+     * 
+     * @return string
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
+     * Defines global template's layout
+     * 
+     * @param string $layoutModule Just a basename of that layout inside theme's folder
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function setLayout($layout, $layoutModule = null)
+    {
+        $this->layout = $layout;
+        $this->layoutModule = $layoutModule;
+
+        return $this;
+    }
+
+    /**
+     * Cancels defined layout if present
+     * 
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function disableLayout()
+    {
+        $this->layout = null;
+        return $this;
+    }
+
+    /**
+     * Checks whether global layout has been defined before
+     * 
+     * @return boolean
+     */
+    public function hasLayout()
+    {
+        return $this->layout !== null;
+    }
+
+    /**
+     * Defines whether output compression should be done
+     * 
+     * @param boolean $compress
+     * @return void
+     */
+    public function setCompress($compress)
+    {
+        $this->compress = (bool) $compress;
+    }
+
+    /**
      * Adds a variable
      * 
      * @param string $name Variable name in view
@@ -174,27 +301,6 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
-     * Returns current theme
-     * 
-     * @return string
-     */
-    public function getTheme()
-    {
-        return $this->resolver->getTheme();
-    }
-
-    /**
-     * Defines whether output compression should be done
-     * 
-     * @param boolean $compress
-     * @return void
-     */
-    public function setCompress($compress)
-    {
-        $this->compress = (bool) $compress;
-    }
-
-    /**
      * Generates URL by known controller's syntax and optional arguments
      * This should be used inside templates only
      * 
@@ -206,28 +312,6 @@ final class ViewManager implements ViewManagerInterface
         $controller = array_shift($args);
 
         return $this->urlBuilder->build($controller, $args);
-    }
-
-    /**
-     * Sets/Overrides default template resolver
-     * 
-     * @param \Krystal\Application\View\Resolver\ResolverInterface $resolver Any resolver that implements this interface
-     * @return \Krystal\Application\View\ViewManager
-     */
-    public function setResolver(ResolverInterface $resolver)
-    {
-        $this->resolver = $resolver;
-        return $this;
-    }
-
-    /**
-     * Returns view resolver
-     * 
-     * @return \Krystal\Application\View\Resolver\ResolverInterface
-     */
-    public function getResolver()
-    {
-        return $this->resolver;
     }
 
     /**
@@ -247,6 +331,102 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
+     * Creates path to view template
+     * 
+     * @param string $dir Base directory when assets are stored
+     * @param string $path
+     * @param string $module
+     * @param string $theme
+     * @return string
+     */
+    private function createPath($dir, $path, $module, $theme = null)
+    {
+        if ($theme !== null) {
+            return sprintf('%s/module/%s/%s/%s', $path, $module, $dir, $theme);
+        } else {
+            return sprintf('%s/module/%s/%s', $path, $module, $dir);
+        }
+    }
+
+    /**
+     * Returns a theme path appending required filename
+     * 
+     * @param string $filename
+     * @return string
+     */
+    public function getWithThemePath($filename)
+    {
+        return sprintf('%s/%s', $this->createThemePath(), $filename);
+    }
+
+    /**
+     * Resolves a base path
+     * 
+     * @param string $theme Optionally a theme can be overridden
+     * @return string
+     */
+    public function createThemePath($theme = null)
+    {
+        if (is_null($theme)) {
+            $theme = $this->theme;
+        }
+
+        return sprintf('%s/%s/%s/%s', $this->moduleDir, $this->module, $this->baseDir, $theme);
+    }
+    
+    /**
+     * Returns asset path by module and its nested path
+     * 
+     * @param string $path
+     * @param string $module Optionally default module can be replaced by another one
+     * @param boolean $absolute Whether returned path should be absolute or relative
+     * @param boolean $fromAssets Whether to use assets directory or theme's internal one
+     * @return string
+     */
+    private function createAssetPath($path, $module, $absolute, $fromAssets)
+    {
+        $baseUrl = '';
+
+        if ($absolute === true) {
+            $url = $baseUrl;
+        } else {
+            $url = null;
+        }
+
+        // If module isn't provided, then current one used by default
+        if (is_null($module)) {
+            $module = $this->module;
+        }
+
+        if ($fromAssets !== false) {
+            $dir = $this->assetsDir;
+            $theme = null;
+        } else {
+            $dir = $this->baseDir;
+            $theme = $this->theme;
+        }
+
+        return $url.sprintf('%s/%s', $this->createPath($dir, $baseUrl, $module, $theme), $path);
+    }
+
+    /**
+     * Returns full path to a file by its name
+     * 
+     * @param string $name File's basename
+     * @param string $module Module name
+     * @return string
+     */
+    private function createInclusionPath($name, $module = null)
+    {
+        if (is_null($module)) {
+            $module = $this->module;
+        }
+
+        $base = $this->createPath($this->baseDir, dirname($this->moduleDir), $module, $this->theme);
+        return $base.\DIRECTORY_SEPARATOR.$name.$this->extension;
+    }
+
+    /**
      * Generates a path to module asset file
      * 
      * @param string $path The target asset path
@@ -256,7 +436,7 @@ final class ViewManager implements ViewManagerInterface
      */
     public function moduleAsset($asset, $module = null, $absolute = false)
     {
-        return $this->resolver->getWithAssetPath($asset, $module, $absolute, true);
+        return $this->createAssetPath($asset, $module, $absolute, true);
     }
 
     /**
@@ -269,42 +449,7 @@ final class ViewManager implements ViewManagerInterface
      */
     public function asset($asset, $module = null, $absolute = false)
     {
-        return $this->resolver->getWithAssetPath($asset, $module, $absolute, false);
-    }
-
-    /**
-     * Defines global template's layout
-     * 
-     * @param string $layout Just a basename of that layout inside theme's folder
-     * @return \Krystal\Application\View\ViewManager
-     */
-    public function setLayout($layout, $module = null)
-    {
-        $this->layout = $layout;
-        $this->module = $module;
-
-        return $this;
-    }
-
-    /**
-     * Cancels defined layout if present
-     * 
-     * @return \Krystal\Application\View\ViewManager
-     */
-    public function disableLayout()
-    {
-        $this->layout = null;
-        return $this;
-    }
-
-    /**
-     * Checks whether global layout has been defined before
-     * 
-     * @return boolean
-     */
-    public function hasLayout()
-    {
-        return $this->layout !== null;
+        return $this->createAssetPath($asset, $module, $absolute, false);
     }
 
     /**
@@ -315,7 +460,7 @@ final class ViewManager implements ViewManagerInterface
      */
     public function templateExists($template)
     {
-        return is_file($this->resolver->getFilePathByName($template));
+        return is_file($this->createInclusionPath($template));
     }
 
     /**
@@ -363,12 +508,12 @@ final class ViewManager implements ViewManagerInterface
         }
 
         // Template file
-        $file = $this->resolver->getFilePathByName($template);
+        $file = $this->createInclusionPath($template);
 
         $this->addVariables($vars);
 
         if ($this->hasLayout()) {
-            $layout = $this->resolver->getFilePathByName($this->layout, $this->module);
+            $layout = $this->createInclusionPath($this->layout, $this->layoutModule);
 
             $content = $this->createContentWithLayout($layout, $file);
         } else {
@@ -395,9 +540,8 @@ final class ViewManager implements ViewManagerInterface
      */
     public function renderRaw($module, $theme, $template, array $vars = array())
     {
-        $resolver = $this->getResolver();
-        $resolver->setModule($module)
-                 ->setTheme($theme);
+        $this->setModule($module)
+             ->setTheme($theme);
 
         $this->disableLayout();
 

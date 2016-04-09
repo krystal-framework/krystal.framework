@@ -383,9 +383,9 @@ abstract class AbstractController
     {
         $this->haltOnDemand();
 
-        // Now tweak the view
-        $resolver = new ModuleResolver($this->request, $this->appConfig->getModulesDir(), $this->getResolverModuleName(), $this->getResolverThemeName());
-        $this->view->setResolver($resolver);
+        // Configure view
+        $this->view->setModule($this->getResolverModuleName())
+                   ->setTheme($this->getResolverThemeName());
 
         if (method_exists($this, 'bootstrap')) {
             $this->bootstrap();
