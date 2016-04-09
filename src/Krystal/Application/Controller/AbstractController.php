@@ -192,63 +192,6 @@ abstract class AbstractController
     }
 
     /**
-     * Returns view path appending target one
-     * 
-     * @param string $path
-     * @param string $module
-     * @param string $theme
-     * @return string
-     */
-    final protected function getWithViewPath($path, $module, $theme)
-    {
-        return $this->getViewPath($module, $theme) . $path;
-    }
-
-    /**
-     * Returns view path to given module
-     * 
-     * @param string $module
-     * @param string $theme
-     * @return string
-     */
-    final protected function getViewPath($module, $theme)
-    {
-        return sprintf('%s/%s/%s/%s', $this->appConfig->getModulesDir(), $module, 'View/Template', $theme);
-    }
-
-    /**
-     * Returns asset path
-     * 
-     * @param string
-     * @param string $module Current one is used If omitted 
-     * @return string
-     */
-    final protected function getWithAssetPath($path, $module = null)
-    {
-        if (is_null($module)) {
-            $module = $this->moduleName;
-        }
-
-        return sprintf('/module/%s/Assets', $module) . $path;
-    }
-
-    /**
-     * Returns with theme path
-     * 
-     * @param string $path
-     * @param string $module Optionally module can be replaced
-     * @return string
-     */
-    final protected function getWithThemePath($path, $module = null)
-    {
-        if (is_null($module)) {
-            $module = $this->moduleName;
-        }
-
-        return sprintf('/module/%s/View/Template/%s/%s', $module, $this->appConfig->getTheme(), $path);
-    }
-
-    /**
      * Checks whether current controller has an option in its route definition
      * 
      * @param string $option
