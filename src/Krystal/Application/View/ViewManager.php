@@ -101,6 +101,7 @@ final class ViewManager implements ViewManagerInterface
     const TEMPLATE_PARAM_BASE_DIR = 'View/Template';
     const TEMPLATE_PARAM_ASSETS_DIR = 'Assets';
     const TEMPLATE_PARAM_EXTENSION = '.phtml';
+    const TEMPLATE_PARAM_FRAGMENT_VAR_NAME = 'fragment';
 
     /**
      * State initialization
@@ -124,7 +125,7 @@ final class ViewManager implements ViewManagerInterface
     /**
      * Returns translator's instance
      * 
-     * @return \Krystal\I18n\Translator $translator
+     * @return \Krystal\I18n\Translator
      */
     public function getTranslator()
     {
@@ -220,6 +221,7 @@ final class ViewManager implements ViewManagerInterface
     /**
      * Defines global template's layout
      * 
+     * @param string $layout Template name
      * @param string $layoutModule Just a basename of that layout inside theme's folder
      * @return \Krystal\Application\View\ViewManager
      */
@@ -256,11 +258,12 @@ final class ViewManager implements ViewManagerInterface
      * Defines whether output compression should be done
      * 
      * @param boolean $compress
-     * @return void
+     * @return \Krystal\Application\View\ViewManager
      */
     public function setCompress($compress)
     {
         $this->compress = (bool) $compress;
+        return $this;
     }
 
     /**
@@ -361,6 +364,11 @@ final class ViewManager implements ViewManagerInterface
     }
     
     /**
+     * Creates shared theme path
+     * 
+     * @param string $module
+     * @param string $theme
+     * @param string $base
      * @return string
      */
     private function createSharedThemePath($module, $theme, $base)
@@ -530,7 +538,7 @@ final class ViewManager implements ViewManagerInterface
     private function createContentWithLayout($layout, $fragment)
     {
         // Create and append $fragment variable to the shared view stack
-        $this->variables['fragment'] = $this->createFileContent($fragment);
+        $this->variables[self::TEMPLATE_PARAM_FRAGMENT_VAR_NAME] = $this->createFileContent($fragment);
 
         return $this->createFileContent($layout);
     }
