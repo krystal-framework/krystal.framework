@@ -16,7 +16,7 @@ interface ViewManagerInterface
     /**
      * Returns translator's instance
      * 
-     * @return \Krystal\I18n\Translator $translator
+     * @return \Krystal\I18n\Translator
      */
     public function getTranslator();
 
@@ -42,13 +42,74 @@ interface ViewManagerInterface
     public function getBlockBag();
 
     /**
+     * Defines target module
+     * 
+     * @param string $module
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function setModule($module);
+
+    /**
+     * Returns target module
+     * 
+     * @return string
+     */
+    public function getModule();
+
+    /**
+     * Defines target theme
+     * 
+     * @param string $theme
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function setTheme($theme);
+
+    /**
+     * Returns current theme
+     * 
+     * @return string
+     */
+    public function getTheme();
+
+    /**
+     * Defines global template's layout
+     * 
+     * @param string $layout Template name
+     * @param string $layoutModule Just a basename of that layout inside theme's folder
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function setLayout($layout, $layoutModule = null);
+
+    /**
+     * Cancels defined layout if present
+     * 
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function disableLayout();
+
+    /**
+     * Checks whether global layout has been defined before
+     * 
+     * @return boolean
+     */
+    public function hasLayout();
+
+    /**
+     * Defines whether output compression should be done
+     * 
+     * @param boolean $compress
+     * @return \Krystal\Application\View\ViewManager
+     */
+    public function setCompress($compress);
+
+    /**
      * Adds a variable
      * 
      * @param string $name Variable name in view
-     * @param mixed $variable A variable itself
+     * @param mixed $value A variable itself
      * @return \Krystal\Application\View\ViewManager
      */
-    public function addVariable($name, $variable);
+    public function addVariable($name, $value);
 
     /**
      * Appends collection of variables
@@ -59,19 +120,11 @@ interface ViewManagerInterface
     public function addVariables(array $variables);
 
     /**
-     * Returns current theme
+     * Determines whether there's at least one defined variable
      * 
-     * @return string
+     * @return boolean
      */
-    public function getTheme();
-
-    /**
-     * Defines whether output compression should be done
-     * 
-     * @param boolean $compress
-     * @return void
-     */
-    public function setCompress($compress);
+    public function hasVariables();
 
     /**
      * Generates URL by known controller's syntax and optional arguments
@@ -91,6 +144,41 @@ interface ViewManagerInterface
     public function show($message, $translate = true);
 
     /**
+     * Returns a theme path appending required filename
+     * 
+     * @param string $filename
+     * @return string
+     */
+    public function getWithThemePath($filename);
+
+    /**
+     * Creates theme URL
+     * 
+     * @param string $module
+     * @param string $theme
+     * @return string
+     */
+    public function createThemeUrl($module = null, $theme = null);
+
+    /**
+     * Resolves a base path
+     * 
+     * @param string $module
+     * @param string $theme Optionally a theme can be overridden
+     * @return string
+     */
+    public function createThemePath($module = null, $theme = null);
+
+    /**
+     * Creates URL for asset
+     * 
+     * @param string $module
+     * @param string $path Optional path to be appended
+     * @return string
+     */
+    public function createAssetUrl($module = null, $path = null);
+
+    /**
      * Generates a path to module asset file
      * 
      * @param string $path The target asset path
@@ -103,33 +191,12 @@ interface ViewManagerInterface
     /**
      * Generates a full path to an asset
      * 
-     * @param string $asset
-     * @param boolean $relative
+     * @param string $asset Path to the target asset
+     * @param string $module
+     * @param boolean $absolute Whether path must be absolute or not
      * @return string
      */
     public function asset($asset, $module = null, $absolute = false);
-
-    /**
-     * Defines global template's layout
-     * 
-     * @param string $layout Just a basename of that layout inside theme's folder
-     * @return \Krystal\Application\View\ViewManager
-     */
-    public function setLayout($layout, $module = null);
-
-    /**
-     * Cancels defined layout if present
-     * 
-     * @return \Krystal\Application\View\ViewManager
-     */
-    public function disableLayout();
-
-    /**
-     * Checks whether global layout has been defined before
-     * 
-     * @return boolean
-     */
-    public function hasLayout();
 
     /**
      * Checks whether framework-compliant template file exists
