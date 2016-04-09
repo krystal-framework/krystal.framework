@@ -70,6 +70,13 @@ final class ViewManager implements ViewManagerInterface
     private $layout;
 
     /**
+     * General module name where shared layout file will taken
+     * 
+     * @var string
+     */
+    private $layoutModule;
+
+    /**
      * A module name which belongs to layout
      * 
      * @var string
