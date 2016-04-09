@@ -91,32 +91,16 @@ final class ViewManager implements ViewManagerInterface
     private $theme;
 
     /**
-     * Base directory
-     * 
-     * @var string
-     */
-    private $baseDir = 'View/Template';
-
-    /**
      * Modules directory
      * 
      * @var string
      */
     private $moduleDir;
 
-    /**
-     * Assets directory
-     * 
-     * @var string
-     */
-    private $assetsDir = 'Assets';
-
-    /**
-     * An extension for view templates
-     * 
-     * @var string
-     */
-    private $extension = '.phtml';
+    const TEMPLATE_PARAM_MODULES_DIR = 'module';
+    const TEMPLATE_PARAM_BASE_DIR = 'View/Template';
+    const TEMPLATE_PARAM_ASSETS_DIR = 'Assets';
+    const TEMPLATE_PARAM_EXTENSION = '.phtml';
 
     /**
      * State initialization
@@ -359,9 +343,9 @@ final class ViewManager implements ViewManagerInterface
     private function createPath($dir, $path, $module, $theme = null)
     {
         if ($theme !== null) {
-            return sprintf('%s/module/%s/%s/%s', $path, $module, $dir, $theme);
+            return sprintf('%s/%s/%s/%s/%s', $path, self::TEMPLATE_PARAM_MODULES_DIR, $module, $dir, $theme);
         } else {
-            return sprintf('%s/module/%s/%s', $path, $module, $dir);
+            return sprintf('%s/%s/%s/%s', $path, self::TEMPLATE_PARAM_MODULES_DIR, $module, $dir);
         }
     }
 
@@ -388,7 +372,7 @@ final class ViewManager implements ViewManagerInterface
             $theme = $this->theme;
         }
 
-        return sprintf('%s/%s/%s/%s', $this->moduleDir, $this->module, $this->baseDir, $theme);
+        return sprintf('%s/%s/%s/%s', $this->moduleDir, $this->module, self::TEMPLATE_PARAM_BASE_DIR, $theme);
     }
     
     /**
@@ -416,10 +400,10 @@ final class ViewManager implements ViewManagerInterface
         }
 
         if ($fromAssets !== false) {
-            $dir = $this->assetsDir;
+            $dir = self::TEMPLATE_PARAM_ASSETS_DIR;
             $theme = null;
         } else {
-            $dir = $this->baseDir;
+            $dir = self::TEMPLATE_PARAM_BASE_DIR;
             $theme = $this->theme;
         }
 
@@ -439,8 +423,8 @@ final class ViewManager implements ViewManagerInterface
             $module = $this->module;
         }
 
-        $base = $this->createPath($this->baseDir, dirname($this->moduleDir), $module, $this->theme);
-        return $base.\DIRECTORY_SEPARATOR.$name.$this->extension;
+        $base = $this->createPath(self::TEMPLATE_PARAM_BASE_DIR, dirname($this->moduleDir), $module, $this->theme);
+        return $base.\DIRECTORY_SEPARATOR.$name.self::TEMPLATE_PARAM_EXTENSION;
     }
 
     /**
