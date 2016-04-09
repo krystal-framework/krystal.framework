@@ -301,6 +301,16 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
+     * Determines whether there's at least one defined variable
+     * 
+     * @return boolean
+     */
+    public function hasVariables()
+    {
+        return !empty($this->variables);
+    }
+
+    /**
      * Generates URL by known controller's syntax and optional arguments
      * This should be used inside templates only
      * 
