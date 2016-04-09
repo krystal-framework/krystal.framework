@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Made `renderRaw()` in View service not to override initial state
  * Added `hasVariables()` in view
  * Dropped extra abstraction for view resolver
  * Renamed `App` to `Kernel`

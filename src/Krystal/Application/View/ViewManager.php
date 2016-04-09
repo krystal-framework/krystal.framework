@@ -557,12 +557,24 @@ final class ViewManager implements ViewManagerInterface
      */
     public function renderRaw($module, $theme, $template, array $vars = array())
     {
+        // Save initial values before overriding theme
+        $initialLayout = $this->layout;
+        $initialModule = $this->module;
+        $initialTheme = $this->theme;
+
+        // Configure view with new values
         $this->setModule($module)
-             ->setTheme($theme);
+             ->setTheme($theme)
+             ->disableLayout();
 
-        $this->disableLayout();
+        $response = $this->render($template, $vars);
 
-        return $this->render($template, $vars);
+        // Restore initial values now
+        $this->layout = $initialLayout;
+        $this->module = $initialModule;
+        $this->theme = $initialTheme;
+
+        return $response;
     }
 
     /**
