@@ -85,6 +85,19 @@ abstract class AbstractController
     }
 
     /**
+     * Creates URL
+     * 
+     * @param string $controller
+     * @param array $args
+     * @param integer $index
+     * @return string
+     */
+    final protected function createUrl($controller, array $args = array(), $index = 0)
+    {
+        return $this->urlBuilder->createUrl($controller, $args, $index);
+    }
+
+    /**
      * Redirects to given route
      * 
      * @param string $route Target route
