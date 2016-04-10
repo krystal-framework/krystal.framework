@@ -105,6 +105,25 @@ final class MapManager implements MapManagerInterface
     }
 
     /**
+     * Finds all URI templates associated with a controller
+     * 
+     * @param string $controller
+     * @return string
+     */
+    public function findUriTemplatesByController($controller)
+    {
+        $result = array();
+
+        foreach ($this->map as $uriTemplate => $options) {
+            if (isset($options['controller']) && $options['controller'] == $controller) {
+                array_push($result, $uriTemplate);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Gets URL template by its associated controller
      * This method is  basically used when building URLs by their associated controllers
      * 
@@ -113,12 +132,11 @@ final class MapManager implements MapManagerInterface
      */
     public function getUrlTemplateByController($controller)
     {
-        // Recursively search
-        $data = ArrayUtils::search($this->map, $controller);
+        $result = $this->findUriTemplatesByController($controller);
 
         // Now check the results of search
-        if (is_array($data) && isset($data[0])) {
-            return $data[0];
+        if (isset($result[0])) {
+            return $result[0];
         } else {
             return false;
         }

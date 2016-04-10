@@ -38,6 +38,14 @@ interface MapManagerInterface
     public function getControllers();
 
     /**
+     * Finds all URI templates associated with a controller
+     * 
+     * @param string $controller
+     * @return string
+     */
+    public function findUriTemplatesByController($controller);
+
+    /**
      * Gets URL template by its associated controller
      * This method is  basically used when building URLs by their associated controllers
      * 
