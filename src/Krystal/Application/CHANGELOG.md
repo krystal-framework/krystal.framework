@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `createUrl()` method in shared controller
  * Removed view shortcut methods from shared controller. Since now they must be called from the `view` service only.
  * Dropped `getResolverThemeName()`, `getResolverModuleName()` in shared controller. 
    Since now they must be altered right from view service directly, when needed
