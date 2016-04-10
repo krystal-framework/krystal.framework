@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Added `TextUtils::getNeedlePositions()` helper to extra positions of a string to be searched
+
 1.2
 ---
 
