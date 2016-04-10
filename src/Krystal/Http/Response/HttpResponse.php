@@ -44,6 +44,32 @@ final class HttpResponse implements HttpResponseInterface
     }
 
     /**
+     * Forces to respond as JSON
+     * 
+     * @return \Krystal\Http\Response\HttpResponse
+     */
+    public function respondAsJson()
+    {
+        $this->getHeaderBag()
+             ->appendPair('Content-type', 'application/json');
+
+        return $this;
+    }
+
+    /**
+     * Forces to respond as XML
+     * 
+     * @return \Krystal\Http\Response\HttpResponse
+     */
+    public function respondAsXml()
+    {
+        $this->getHeaderBag()
+             ->appendPair('Content-type', 'text/xml; charset=UTF-8');
+
+        return $this;
+    }
+
+    /**
      * Downloads a file
      * 
      * @param string $filename A path to the target file

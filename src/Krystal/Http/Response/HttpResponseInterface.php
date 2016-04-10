@@ -21,6 +21,20 @@ interface HttpResponseInterface
     public function getHeaderBag();
 
     /**
+     * Forces to respond as JSON
+     * 
+     * @return \Krystal\Http\Response\HttpResponse
+     */
+    public function respondAsJson();
+
+    /**
+     * Forces to respond as XML
+     * 
+     * @return \Krystal\Http\Response\HttpResponse
+     */
+    public function respondAsXml();
+
+    /**
      * Downloads a file
      * 
      * @param string $filename A path to the target file
