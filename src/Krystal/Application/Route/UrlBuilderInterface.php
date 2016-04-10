@@ -14,6 +14,16 @@ namespace Krystal\Application\Route;
 interface UrlBuilderInterface
 {
     /**
+     * Creates URL
+     * 
+     * @param string $controller In <Module:Path@method> format
+     * @param array $args A collection of arguments to be passed to the method
+     * @param integer $index Index in case, one controller action has more than one route
+     * @return string
+     */
+    public function createUrl($controller, array $args = array(), $index = 0);
+
+    /**
      * Builds an URL
      * 
      * @param string $controller Controller name in format <Module>:<Controller>@<Action>

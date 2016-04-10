@@ -87,6 +87,54 @@ final class UrlBuilder implements UrlBuilderInterface
     }
 
     /**
+     * Creates URL
+     * 
+     * @param string $controller In <Module:Path@method> format
+     * @param array $args A collection of arguments to be passed to the method
+     * @param integer $index Index in case, one controller action has more than one route
+     * @return string
+     */
+    public function createUrl($controller, array $args = array(), $index = 0)
+    {
+        $collection = $this->mapManager->findUriTemplatesByController($controller);
+
+        if (!empty($collection)) {
+            if (isset($collection[$index])) {
+                return $this->createVariadicUrl($collection[$index], $args);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Creates variadic URL
+     * 
+     * @param string $haystack URI template
+     * @param array $args Arguments to be substituted
+     * @return string
+     */
+    private function createVariadicUrl($haystack, array $args)
+    {
+        $varCount = substr_count($haystack, self::ROUTE_PARAM_VAR);
+        $argCount = count($args);
+
+        // In case, the length is different
+        if ($varCount != $argCount) {
+            $difference = abs($argCount - $varCount);
+
+            for ($i = 0; $i < $difference; $i++) {
+                array_push($args, self::ROUTE_PARAM_VAR);
+            }
+        }
+
+        $haystack = str_replace(self::ROUTE_PARAM_VAR, '%s', $haystack);
+        return vsprintf($haystack, $args);
+    }
+
+    /**
      * Builds URL
      * 
      * @param string $controller Controller name in format <Module>:<Controller>@<Action>
