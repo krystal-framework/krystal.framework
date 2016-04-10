@@ -14,6 +14,33 @@ namespace Krystal\Text;
 class TextUtils
 {
     /**
+     * Returns needle positions
+     * 
+     * @param string $haystack
+     * @param string $needle
+     * @return array An array with starting and ending positions for each match
+     */
+    public static function getNeedlePositions($haystack, $needle)
+    {
+        $start = 0;
+        $result = array();
+        $needleLength = strlen($needle);
+
+        while (($pos = strpos($haystack, $needle, $start)) !== false) {
+            $start = $pos + 1;
+
+            // Calculate starting and ending positions
+            $startPos = $pos;
+            $endPos = $pos + $needleLength;
+
+            // Save them
+            $result[$startPos] = $endPos;
+        }
+
+        return $result;
+    }
+
+    /**
      * Trims a string
      * 
      * @param string $string
