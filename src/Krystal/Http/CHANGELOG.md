@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `authenticate()` method in response service for HTTP authentication
  * Added `respondAsJson()` and `respondAsXml()` methods in response service
  * Added `getHeaderBag()` method in response service to be able to alter headers
  * Set default (one year) lifetime for cookies when setting them
