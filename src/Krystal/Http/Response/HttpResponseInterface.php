@@ -21,6 +21,15 @@ interface HttpResponseInterface
     public function getHeaderBag();
 
     /**
+     * Performs HTTP-digest authentication
+     * 
+     * @param string $login
+     * @param string $password
+     * @return boolean
+     */
+    public function authenticate($login, $password);
+
+    /**
      * Forces to respond as JSON
      * 
      * @return \Krystal\Http\Response\HttpResponse

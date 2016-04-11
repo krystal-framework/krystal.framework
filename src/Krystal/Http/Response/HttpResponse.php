@@ -44,6 +44,41 @@ final class HttpResponse implements HttpResponseInterface
     }
 
     /**
+     * Send HTTP headers that indicate that access isn't allowed
+     * 
+     * @return void
+     */
+    private function forbid()
+    {
+        // Configure failure headers
+        $this->headerBag->clear()
+                        ->appendPair('WWW-Authenticate', 'Basic realm="Private Area"')
+                        ->append('HTTP/1.0 401 Unauthorized');
+    }
+
+    /**
+     * Performs HTTP-digest authentication
+     * 
+     * @param string $login
+     * @param string $password
+     * @return boolean
+     */
+    public function authenticate($login, $password)
+    {
+        if (!isset($_SERVER['PHP_AUTH_USER'])) {
+            $this->forbid();
+            return false;
+        } else {
+            if (($_SERVER['PHP_AUTH_USER'] == $login) && ($_SERVER['PHP_AUTH_PW'] == $password)) {
+                return true;
+            } else {
+                $this->forbid();
+                return false;
+            }
+        }
+    }
+
+    /**
      * Forces to respond as JSON
      * 
      * @return \Krystal\Http\Response\HttpResponse
