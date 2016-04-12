@@ -23,14 +23,32 @@ final class HttpResponse implements HttpResponseInterface
     private $headerBag;
 
     /**
+     * HTTP Protocol version
+     * 
+     * @var string
+     */
+    private $version;
+
+    /**
+     * Charset for output
+     * 
+     * @var string
+     */
+    private $charset;
+
+    /**
      * State initialization
      * 
      * @param \Krystal\Http\HeaderBagInterface $headerBag
+     * @param string $version
+     * @param string $charset
      * @return void
      */
-    public function __construct(HeaderBagInterface $headerBag)
+    public function __construct(HeaderBagInterface $headerBag, $version = '1.1', $charset = 'UTF-8')
     {
         $this->headerBag = $headerBag;
+        $this->version = $version;
+        $this->charset = $charset;
     }
 
     /**
@@ -53,7 +71,7 @@ final class HttpResponse implements HttpResponseInterface
         // Configure failure headers
         $this->headerBag->clear()
                         ->appendPair('WWW-Authenticate', 'Basic realm="Private Area"')
-                        ->append('HTTP/1.0 401 Unauthorized');
+                        ->append(sprintf('HTTP/%s 401 Unauthorized', $this->version));
     }
 
     /**
@@ -99,7 +117,7 @@ final class HttpResponse implements HttpResponseInterface
     public function respondAsXml()
     {
         $this->getHeaderBag()
-             ->appendPair('Content-type', 'text/xml; charset=UTF-8');
+             ->appendPair(sprintf('Content-type', 'text/xml; charset=%s', $this->charset));
 
         return $this;
     }
@@ -178,12 +196,11 @@ final class HttpResponse implements HttpResponseInterface
      * Generates and appends to the queue "Content-Type" header
      * 
      * @param string $type Content type
-     * @param string $charset
      * @return \Krystal\Http\Response\HttpResponse
      */
-    public function setContentType($type, $charset)
+    public function setContentType($type)
     {
-        $this->headerBag->appendPair('Content-Type', sprintf('%s;charset=%s', $type, $charset));
+        $this->headerBag->appendPair('Content-Type', sprintf('%s;charset=%s', $type, $this->charset));
         return $this;
     }
 

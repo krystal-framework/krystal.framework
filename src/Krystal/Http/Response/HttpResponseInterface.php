@@ -81,10 +81,9 @@ interface HttpResponseInterface
      * Generates and appends to the queue "Content-Type" header
      * 
      * @param string $type Content type
-     * @param string $charset
      * @return \Krystal\Http\Response\HttpResponse
      */
-    public function setContentType($type, $charset);
+    public function setContentType($type);
 
     /**
      * Sets signature
