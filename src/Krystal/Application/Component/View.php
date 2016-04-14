@@ -12,7 +12,6 @@
 namespace Krystal\Application\Component;
 
 use Krystal\Application\View\ViewManager;
-use Krystal\Application\View\AssetPath;
 use Krystal\Application\View\PluginBag;
 use Krystal\Application\View\Resolver\Module as Resolver;
 use Krystal\Application\InputInterface;
@@ -32,12 +31,10 @@ final class View implements ComponentInterface
             $compress = false;
         }
 
-        $pluginBag = new PluginBag(new AssetPath($container->get('moduleManager')->getLoadedModuleNames()));
-
         // Resolver will be injected later
         $viewManager = new ViewManager(
             $container->get('appConfig')->getModulesDir(), 
-            $pluginBag, 
+            new PluginBag(), 
             $container->get('translator'), 
             $container->get('urlBuilder'), 
             $compress
