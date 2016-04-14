@@ -33,6 +33,14 @@ interface BlockBagInterface
     public function addStaticBlock($baseDir, $name);
 
     /**
+     * Adds a collection of static blocks
+     * 
+     * @param array $collection
+     * @return \Krystal\Application\View\BlockBag
+     */
+    public function addStaticBlocks(array $collection);
+
+    /**
      * Returns block directory path
      * 
      * @return string

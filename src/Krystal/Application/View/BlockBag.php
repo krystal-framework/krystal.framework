@@ -84,6 +84,21 @@ final class BlockBag implements BlockBagInterface
     }
 
     /**
+     * Adds a collection of static blocks
+     * 
+     * @param array $collection
+     * @return \Krystal\Application\View\BlockBag
+     */
+    public function addStaticBlocks(array $collection)
+    {
+        foreach ($collection as $baseDir => $name) {
+            $this->addStaticBlock($baseDir, $name);
+        }
+
+        return $this;
+    }
+
+    /**
      * Checks whether static block has been added before
      * 
      * @param string $name
