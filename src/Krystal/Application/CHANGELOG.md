@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Dropped `Krystal\Application\View\AssetPath` abstraction. Moved its implementation to `Krystal\Application\View\AssetPath\PluginBag::normalizeAssetPath()`
  * Added `Krystal\Application\View\BlockBag::addStaticBlocks()` to add a collection
  * In `Krystal\Application\View\BlockBag::addStaticBlock()` forced to return the chain
  * Added `createUrl()` method in shared controller
