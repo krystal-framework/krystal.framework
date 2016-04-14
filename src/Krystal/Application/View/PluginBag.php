@@ -35,14 +35,14 @@ final class PluginBag implements PluginBagInterface
     private $stylesheets = array();
 
     /**
-     * State initialization
+     * Replaces a module path inside provided path
      * 
-     * @param \Krystal\Application\View\AssetPathInterface
-     * @return void
+     * @param string $path Target path
+     * @return string
      */
-    public function __construct(AssetPathInterface $assetPath)
+    private function normalizeAssetPath($path)
     {
-        $this->assetPath = $assetPath;
+        return preg_replace('~@(\w+)~', '/module/$1/Assets', $path);
     }
 
     /**
@@ -53,7 +53,7 @@ final class PluginBag implements PluginBagInterface
      */
     public function appendStylesheet($stylesheet)
     {
-        $stylesheet = $this->assetPath->replace($stylesheet);
+        $stylesheet = $this->normalizeAssetPath($stylesheet);
 
         array_push($this->stylesheets, $stylesheet);
         return $this;
@@ -92,7 +92,7 @@ final class PluginBag implements PluginBagInterface
      */
     public function appendScript($script)
     {
-        $script = $this->assetPath->replace($script);
+        $script = $this->normalizeAssetPath($script);
 
         array_push($this->scripts, $script);
         return $this;
