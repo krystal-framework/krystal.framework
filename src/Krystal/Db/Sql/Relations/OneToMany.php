@@ -27,7 +27,6 @@ final class OneToMany extends AbstractRelation
         foreach ($rows as &$row) {
             // Extra check
             if (isset($row[$pk])) {
-
                 $value = $row[$pk];
 
                 // Prepare slave set

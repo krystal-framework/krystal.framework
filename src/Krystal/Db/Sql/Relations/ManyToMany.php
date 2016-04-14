@@ -27,7 +27,6 @@ final class ManyToMany extends AbstractRelation
     public function merge($masterPk, $alias, array $rows, $junction, $column, $table, $pk)
     {
         foreach ($rows as &$row) {
-
             $value = $row[$masterPk];
             $row[$alias] = $this->getSlaveData($table, $pk, $junction, $column, $value);
         }
@@ -119,6 +118,8 @@ final class ManyToMany extends AbstractRelation
      * Queries junction table
      * 
      * @param string $table Junction table name
+     * @param string $column
+     * @param string $value
      * @return array
      */
     private function queryJunctionTable($table, $column, $value)
