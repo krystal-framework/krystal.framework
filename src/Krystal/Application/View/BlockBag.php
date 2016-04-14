@@ -16,13 +16,6 @@ use LogicException;
 final class BlockBag implements BlockBagInterface
 {
     /**
-     * Static block collection
-     * 
-     * @var array
-     */
-    private $blocks = array();
-
-    /**
      * Available block directories
      * 
      * @var string
@@ -37,17 +30,6 @@ final class BlockBag implements BlockBagInterface
     private $staticBlocks = array();
 
     /**
-     * State initialization
-     * 
-     * @param string $extension Default is phtml
-     * @return void
-     */
-    public function __construct($extension = 'phtml')
-    {
-        $this->extension = $extension;
-    }
-
-    /**
      * Attempts to return block's file path
      * 
      * @param string $name Block's name
@@ -56,7 +38,7 @@ final class BlockBag implements BlockBagInterface
      */
     public function getBlockFile($name)
     {
-        $file = $this->getPathWithBaseDir($this->getBlocksDir(), $name);
+        $file = $this->createBlockPath($this->getBlocksDir(), $name);
 
         if (is_file($file)) {
             return $file;
@@ -76,9 +58,9 @@ final class BlockBag implements BlockBagInterface
      * @param string $name
      * @return string
      */
-    private function getPathWithBaseDir($baseDir, $name)
+    private function createBlockPath($baseDir, $name)
     {
-        return sprintf('%s/%s.%s', $baseDir, $name, $this->extension);
+        return sprintf('%s/%s.%s', $baseDir, $name, ViewManager::TEMPLATE_PARAM_EXTENSION);
     }
 
     /**
@@ -91,7 +73,7 @@ final class BlockBag implements BlockBagInterface
      */
     public function addStaticBlock($baseDir, $name)
     {
-        $file = $this->getPathWithBaseDir($baseDir, $name);
+        $file = $this->createBlockPath($baseDir, $name);
 
         if (!is_file($file)) {
             throw new LogicException(sprintf('Invalid base directory or file name provided "%s"', $file));
