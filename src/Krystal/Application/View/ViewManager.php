@@ -100,7 +100,7 @@ final class ViewManager implements ViewManagerInterface
     const TEMPLATE_PARAM_MODULES_DIR = 'module';
     const TEMPLATE_PARAM_BASE_DIR = 'View/Template';
     const TEMPLATE_PARAM_ASSETS_DIR = 'Assets';
-    const TEMPLATE_PARAM_EXTENSION = '.phtml';
+    const TEMPLATE_PARAM_EXTENSION = 'phtml';
     const TEMPLATE_PARAM_FRAGMENT_VAR_NAME = 'fragment';
 
     /**
@@ -473,7 +473,9 @@ final class ViewManager implements ViewManagerInterface
         }
 
         $base = $this->createPath(self::TEMPLATE_PARAM_BASE_DIR, dirname($this->moduleDir), $module, $this->theme);
-        return $base.\DIRECTORY_SEPARATOR.$name.self::TEMPLATE_PARAM_EXTENSION;
+        $path = sprintf('%s.%s', $base . \DIRECTORY_SEPARATOR . $name, self::TEMPLATE_PARAM_EXTENSION);
+
+        return $path;
     }
 
     /**
