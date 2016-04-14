@@ -42,7 +42,10 @@ final class PluginBag implements PluginBagInterface
      */
     private function normalizeAssetPath($path)
     {
-        return preg_replace('~@(\w+)~', '/module/$1/Assets', $path);
+        $pattern = '~@(\w+)~';
+        $replacement = sprintf('/%s/$1/%s', ViewManager::TEMPLATE_PARAM_MODULES_DIR, ViewManager::TEMPLATE_PARAM_ASSETS_DIR);
+
+        return preg_replace($pattern, $replacement, $path);
     }
 
     /**
