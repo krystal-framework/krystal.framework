@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `Krystal\Application\View\BlockBag::addStaticBlock()` forced to return the chain
  * Added `createUrl()` method in shared controller
  * Removed view shortcut methods from shared controller. Since now they must be called from the `view` service only.
  * Dropped `getResolverThemeName()`, `getResolverModuleName()` in shared controller. 

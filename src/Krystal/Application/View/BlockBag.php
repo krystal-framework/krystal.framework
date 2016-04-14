@@ -80,6 +80,7 @@ final class BlockBag implements BlockBagInterface
         }
 
         $this->staticBlocks[$name] = $file;
+        return $this;
     }
 
     /**
