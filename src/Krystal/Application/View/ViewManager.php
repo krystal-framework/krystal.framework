@@ -556,7 +556,8 @@ final class ViewManager implements ViewManagerInterface
     public function render($template, array $vars = array())
     {
         if (!$this->templateExists($template)) {
-            throw new RuntimeException(sprintf('Invalid template path provided : %s', $template));
+            $base = $this->createPath(self::TEMPLATE_PARAM_BASE_DIR, dirname($this->moduleDir), $this->module, $this->theme);
+            throw new RuntimeException(sprintf('Cannot find "%s.%s" in %s', $template, self::TEMPLATE_PARAM_EXTENSION, $base));
         }
 
         // Template file
