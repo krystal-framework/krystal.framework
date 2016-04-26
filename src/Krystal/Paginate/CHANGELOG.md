@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Made page placeholder configurable. It can be passed as a second argument to the constructor
  * Added `toArray()` and `toJson()` methods
 
 1.1
