@@ -22,7 +22,7 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $paginator = new Paginator()
+        $paginator = new Paginator();
         $paginator->tweak($this->totalAmount, $this->perPage, $this->page);
 
         $this->paginator = $paginator;
