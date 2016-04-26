@@ -33,6 +33,16 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
         unset($this->paginator);
     }
 
+    public function testPreviousPageHasExpectedNumber()
+    {
+        $this->assertEquals($this->paginator->getPreviousPage(), 1);
+    }
+
+    public function testNextPageHasExpectedNumber()
+    {
+        $this->assertEquals($this->paginator->getNextPage(), 3);
+    }
+
     public function testFirstPageIsAlwaysOne()
     {
         $this->assertEquals(1, $this->paginator->getFirstPage());
