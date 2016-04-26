@@ -46,14 +46,23 @@ final class Paginator implements PaginatorInterface
     private $url;
 
     /**
+     * Placeholder to be replaced with actual page number in URL
+     * 
+     * @var string
+     */
+    private $placeholder;
+
+    /**
      * State initialization
      * 
      * @param \Krystal\Paginate\Style\StyleInterface $style Optional style adapter
+     * @param string $placeholder
      * @return void
      */
-    public function __construct(StyleInterface $style = null)
+    public function __construct(StyleInterface $style = null, $placeholder = '(:var)')
     {
         $this->style = $style;
+        $this->placeholder = $placeholder;
     }
 
     /**
@@ -98,10 +107,8 @@ final class Paginator implements PaginatorInterface
             throw new RuntimeException('URL template must be defined');
         }
 
-        $placeholder = '(:var)';
-
-        if (strpos($this->url, $placeholder) !== false) {
-            return str_replace($placeholder, $page, $this->url);
+        if (strpos($this->url, $this->placeholder) !== false) {
+            return str_replace($this->placeholder, $page, $this->url);
         }
 
         // By default
