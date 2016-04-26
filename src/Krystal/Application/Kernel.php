@@ -212,7 +212,7 @@ final class Kernel implements KernelInterface
 
             $response->setStatusCode(404);
         }
-        
+
         $response->send($content);
     }
 
@@ -245,7 +245,6 @@ final class Kernel implements KernelInterface
             mb_internal_encoding(self::DEFAULT_CHARSET);
 
         } else {
-            
             ini_set('default_charset', $this->config['charset']);
             mb_internal_encoding($this->config['charset']);
         }
