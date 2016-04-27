@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Added `setMany()` method
+ * Forced to return `ParamBag::set()` the chain instead of void
+
 1.1
 ---
 
