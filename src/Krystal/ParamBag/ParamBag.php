@@ -50,11 +50,12 @@ final class ParamBag implements ParamBagInterface
      * 
      * @param string $key
      * @param mixed $value
-     * @return void
+     * @return \Krystal\ParamBag\ParamBag
      */
     public function set($key, $value)
     {
         $this->params[$key] = $value;
+        return $this;
     }
 
 	/**
