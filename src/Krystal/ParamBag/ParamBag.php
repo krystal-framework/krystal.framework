@@ -58,6 +58,21 @@ final class ParamBag implements ParamBagInterface
         return $this;
     }
 
+    /**
+     * Append many parameters
+     * 
+     * @param array $params
+     * @return \Krystal\ParamBag\ParamBag
+     */
+    public function setMany(array $params)
+    {
+        foreach ($params as $key => $value) {
+            $this->set($key, $value);
+        }
+
+        return $this;
+    }
+
 	/**
      * Returns parameter's value
      * 

@@ -31,6 +31,14 @@ interface ParamBagInterface
     public function set($key, $value);
 
     /**
+     * Append many parameters
+     * 
+     * @param array $params
+     * @return \Krystal\ParamBag\ParamBag
+     */
+    public function setMany(array $params);
+
+    /**
      * Returns parameter's value
      * 
      * @param string $param
