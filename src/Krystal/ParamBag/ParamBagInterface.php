@@ -26,7 +26,7 @@ interface ParamBagInterface
      * 
      * @param string $key
      * @param mixed $value
-     * @return void
+     * @return \Krystal\ParamBag\ParamBag
      */
     public function set($key, $value);
 
