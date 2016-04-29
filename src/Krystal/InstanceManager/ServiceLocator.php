@@ -26,7 +26,7 @@ final class ServiceLocator implements ServiceLocatorInterface
     /**
      * State initialization
      * 
-     * @param array $services Services can be optinally registered on instantiation
+     * @param array $services Services can be optionally registered on instantiation
      * @return void
      */
     public function __construct(array $services = array())
