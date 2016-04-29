@@ -15,5 +15,30 @@ use Krystal\ParamBag\ParamBag;
 
 class ParamBagTest extends \PHPUnit_Framework_TestCase
 {
+    private $paramBag;
     
+    public function setUp()
+    {
+        $this->paramBag = new ParamBag(array(
+            'foo' => 'bar',
+            'x' => 'y',
+            'empty' => null
+        ));
+    }
+    
+    public function testDefinedKeyExists()
+    {
+        $this->assertTrue($this->paramBag->exists('foo'));
+    }
+    
+    public function testCanSetNewPair()
+    {
+        $this->paramBag->set('new', 'value');
+        $this->assertTrue($this->paramBag->exists('new'));
+    }
+    
+    public function testCanReturnDefinedKey()
+    {
+        $this->assertEquals($this->paramBag->get('foo'), 'bar');
+    }
 }
