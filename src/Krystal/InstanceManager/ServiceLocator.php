@@ -17,7 +17,7 @@ use InvalidArgumentException;
 final class ServiceLocator implements ServiceLocatorInterface
 {
     /**
-     * Availabe service instances
+     * Available service instances
      * 
      * @var array
      */
