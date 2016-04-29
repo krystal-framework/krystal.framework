@@ -46,24 +46,27 @@ final class DependencyInjectionContainer implements DependencyInjectionContainer
      * Adds a parameter to a callable closure when registering a service
      * 
      * @param mixed $param
-     * @return void
+     * @return \Krystal\InstanceManager\DependencyInjectionContainer
      */
     public function addParam($param)
     {
         array_push($this->params, $param);
+        return $this;
     }
 
     /**
      * Add parameters to a callable closure when registering a service
      * 
      * @param array $params
-     * @return void
+     * @return \Krystal\InstanceManager\DependencyInjectionContainer
      */
     public function addParams(array $params)
     {
         foreach ($params as $param) {
             $this->addParam($param);
         }
+
+        return $this;
     }
 
     /**
@@ -71,7 +74,7 @@ final class DependencyInjectionContainer implements DependencyInjectionContainer
      * 
      * @param string $name
      * @param mixed $handler Either a closure or an instance
-     * @return void
+     * @return \Krystal\InstanceManager\DependencyInjectionContainer
      */
     public function register($name, $handler)
     {
@@ -82,19 +85,23 @@ final class DependencyInjectionContainer implements DependencyInjectionContainer
         } else {
             $this->container[$name] = $handler;
         }
+
+        return $this;
     }
 
     /**
      * Registers a collection of services
      * 
      * @param array $collection
-     * @return void
+     * @return \Krystal\InstanceManager\DependencyInjectionContainer
      */
     public function registerCollection(array $collection)
     {
         foreach ($collection as $name => $handler) {
             $this->register($name, $handler);
         }
+
+        return $this;
     }
 
     /**
