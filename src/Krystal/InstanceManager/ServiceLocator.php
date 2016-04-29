@@ -126,8 +126,8 @@ final class ServiceLocator implements ServiceLocatorInterface
      */
     public function remove($service)
     {
-        if ($this->exists($serviceName)) {
-            unset($this->container[$serviceName]);
+        if ($this->has($service)) {
+            unset($this->container[$service]);
             return true;
         } else {
             trigger_error(sprintf(
