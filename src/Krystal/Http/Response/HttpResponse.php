@@ -117,7 +117,7 @@ final class HttpResponse implements HttpResponseInterface
     public function respondAsXml()
     {
         $this->getHeaderBag()
-             ->appendPair(sprintf('Content-type', 'text/xml; charset=%s', $this->charset));
+             ->appendPair('Content-type', sprintf('text/xml; charset=%s', $this->charset));
 
         return $this;
     }
