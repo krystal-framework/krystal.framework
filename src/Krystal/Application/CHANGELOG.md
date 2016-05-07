@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed missing controller name for halting cases in `UrlBuilder`
  * Made view rendering exception a bit clear. It now displays a file being rendered with its base path
  * Dropped `Krystal\Application\View\AssetPath` abstraction. Moved its implementation to `Krystal\Application\View\AssetPath\PluginBag::normalizeAssetPath()`
  * Added `Krystal\Application\View\BlockBag::addStaticBlocks()` to add a collection

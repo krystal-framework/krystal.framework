@@ -65,12 +65,13 @@ final class UrlBuilder implements UrlBuilderInterface
     /**
      * Prepares URL
      * 
+     * @param string $controller
      * @param string $template URI template
      * @param array $vars
-     * @throws RuntimeException When count mismatches
+     * @throws \RuntimeException When count mismatches
      * @return string
      */
-    private function prepare($template, array $vars)
+    private function prepare($controller, $template, array $vars)
     {
         $varCount = $this->getVarCount($template);
         $currentCount = count($vars);
@@ -147,14 +148,12 @@ final class UrlBuilder implements UrlBuilderInterface
 
         if ($template !== false) {
             if ($this->hasVar($template)) {
-                return $this->prepare($template, $vars);
-                
+                return $this->prepare($controller, $template, $vars);
             } else {
                 return $template;
             }
 
         } else {
-
             // Wrong controller, so nothing to return there
             return null;
         }
