@@ -91,9 +91,17 @@ interface SessionBagInterface
      * 
      * @param string $key
      * @param mixed $value
-     * @return void
+     * @return \Krystal\Session\SessionBag
      */
     public function set($key, $value);
+
+    /**
+     * Set many keys at once
+     * 
+     * @param array $collection
+     * @return \Krystal\Session\SessionBag
+     */
+    public function setMany(array $collection);
 
     /**
      * Determines whether session has a key
@@ -115,9 +123,8 @@ interface SessionBagInterface
     /**
      * Removes a key from the storage
      * 
-     * @throws \RuntimeException if attempted to remove non-existing key
      * @param string $key
-     * @return void
+     * @return boolean
      */
     public function remove($key);
 
@@ -125,7 +132,7 @@ interface SessionBagInterface
      * Remove many session keys with their values at once
      * 
      * @param array $keys A collection of keys
-     * @return void
+     * @return boolean
      */
     public function removeMany(array $keys);
 
