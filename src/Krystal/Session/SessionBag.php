@@ -230,6 +230,21 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
     }
 
     /**
+     * Set many keys at once
+     * 
+     * @param array $collection
+     * @return \Krystal\Session\SessionBag
+     */
+    public function setMany(array $collection)
+    {
+        foreach ($collection as $key => $value) {
+            $this->set($key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
      * Determines whether session has a key
      * 
      * @param string $key

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `setMany()` to set a collection at once
  * Since now `set()` returns a chain instead of void
  * Since now `remove()` returns a boolean indicating success or failure
  * Added `removeMany()` to remove several keys at once
