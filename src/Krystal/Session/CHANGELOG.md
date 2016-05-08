@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now `remove()` returns a boolean indicating success or failure
  * Added `removeMany()` to remove several keys at once
 
 1.1

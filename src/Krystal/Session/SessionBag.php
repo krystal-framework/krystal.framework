@@ -15,7 +15,6 @@ use Krystal\Session\ManagerInterface;
 use Krystal\Session\Adapter\SaveHandlerInterface;
 use Krystal\Http\PersistentStorageInterface;
 use Krystal\Http\CookieBagInterface;
-use RuntimeException;
 
 final class SessionBag implements SessionBagInterface, PersistentStorageInterface
 {
@@ -259,18 +258,16 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
     /**
      * Removes a key from the storage
      * 
-     * @throws \RuntimeException if attempted to remove non-existing key
      * @param string $key
-     * @return void
+     * @return boolean
      */
     public function remove($key)
     {
         if ($this->has($key)) {
             unset($this->session[$key]);
+            return true;
         } else {
-            throw new RuntimeException(sprintf(
-                'Attempted to remove non-existing key "%s"', $key
-            ));
+            return false;
         }
     }
 
@@ -278,13 +275,15 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
      * Remove many session keys with their values at once
      * 
      * @param array $keys A collection of keys
-     * @return void
+     * @return boolean
      */
     public function removeMany(array $keys)
     {
         foreach ($keys as $key) {
             $this->remove($key);
         }
+
+        return true;
     }
 
     /**
