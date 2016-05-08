@@ -1,11 +1,16 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Fixed exception message text in `Image\Tool\FileHandler::delete()` when throwing `LogicException`
+
 1.2
 ---
 
- * Added ability to draw a text on images. Added `text()` method in image processor.
- * Remove error supression on image loading failures.
+ * Added ability to draw a text on images. Added `text()` method in image processor
+ * Remove error suppression on image loading failures
 
 1.1
 ---
