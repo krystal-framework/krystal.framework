@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now `set()` returns a chain instead of void
  * Since now `remove()` returns a boolean indicating success or failure
  * Added `removeMany()` to remove several keys at once
 

@@ -221,11 +221,12 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
      * 
      * @param string $key
      * @param mixed $value
-     * @return void
+     * @return \Krystal\Session\SessionBag
      */
     public function set($key, $value)
     {
         $this->session[$key] = $value;
+        return $this;
     }
 
     /**
