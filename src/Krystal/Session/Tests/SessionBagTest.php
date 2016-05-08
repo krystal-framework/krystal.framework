@@ -18,6 +18,12 @@ class SessionBagTest extends \PHPUnit_Framework_TestCase
         $this->sessionBag = new SessionBag($cookieBag, $validator);
     }
 
+    public function testReturnsExpected()
+    {
+        $this->sessionBag->set('test', 'value');
+        $this->assertEquals($this->sessionBag->get('test'), 'value');
+    }
+
     public function testCanWriteOne()
     {
         $this->sessionBag->set('key', 'value');
