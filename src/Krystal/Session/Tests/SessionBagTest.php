@@ -18,6 +18,12 @@ class SessionBagTest extends \PHPUnit_Framework_TestCase
         $this->sessionBag = new SessionBag($cookieBag, $validator);
     }
 
+    public function testReturnsDefaultValueOnNonExistingKeys()
+    {
+        $key = $this->sessionBag->get('nonExistingKey');
+        $this->assertFalse($key);
+    }
+
     public function testReturnsExpected()
     {
         $this->sessionBag->set('test', 'value');
