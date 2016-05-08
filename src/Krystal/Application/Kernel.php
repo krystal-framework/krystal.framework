@@ -75,6 +75,7 @@ final class Kernel implements KernelInterface
             new Component\MapperFactory(),
             new Component\SessionBag(),
             new Component\AuthManager(),
+            new Component\AuthAttemptLimit(),
             new Component\ParamBag(),
             new Component\AppConfig(),
             new Component\ModuleManager(),

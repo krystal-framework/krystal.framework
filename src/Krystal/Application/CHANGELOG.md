@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `authAttemptLimit` core service
  * Made `paramBag` service available in module definition classes
  * Fixed missing controller name for halting cases in `UrlBuilder`
  * Made view rendering exception a bit clear. It now displays a file being rendered with its base path
