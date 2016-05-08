@@ -56,7 +56,7 @@ final class FileHandler implements FileHandlerInterface
         // This check is extremely important!!
         // Otherwise it might remove a directory recursively
         if (!is_numeric($id)) {
-            throw new LogicException('Warning: Invalid Id provided. This might remove a whole target directory recursively!');
+            throw new LogicException(sprintf('Warning: Invalid Id "%s" provided. This might remove a whole target directory recursively!', $id));
         }
 
         $path = sprintf('%s/%s', $this->dir, $id);
