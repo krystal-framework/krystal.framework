@@ -275,6 +275,19 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
     }
 
     /**
+     * Remove many session keys with their values at once
+     * 
+     * @param array $keys A collection of keys
+     * @return void
+     */
+    public function removeMany(array $keys)
+    {
+        foreach ($keys as $key) {
+            $this->remove($key);
+        }
+    }
+
+    /**
      * Free all session variables
      * 
      * @return void
