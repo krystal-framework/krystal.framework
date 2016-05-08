@@ -33,4 +33,12 @@ class SessionBagTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->sessionBag->has('key-1') && $this->sessionBag->has('key-2'));
     }
+
+    public function testCanChangeSessionName()
+    {
+        $name = 'foo';
+        $this->sessionBag->setName($name);
+
+        $this->assertEquals($name, $this->sessionBag->getName());
+    }
 }
