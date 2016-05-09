@@ -45,4 +45,20 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->verify('SELECT table.column AS `alias`, name');
     }
+
+    public function testCanGenerateSelectFromTable()
+    {
+        $this->qb->select('*')
+                 ->from('table');
+
+        $this->verify('SELECT * FROM `table`');
+    }
+
+    public function testCanGenerateSelectFrom()
+    {
+        $this->qb->select('*')
+                 ->from();
+
+        $this->verify('SELECT * FROM ');
+    }
 }
