@@ -12,4 +12,37 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->qb = new QueryBuilder();
     }
+
+    private function verify($fragment)
+    {
+        $this->assertEquals($fragment, $this->qb->getQueryString());
+    }
+
+    public function testCanGenerateSelect()
+    {
+        $this->qb->select();
+        $this->verify('SELECT ');
+    }
+
+    public function testCanGenerateDistinctSelect()
+    {
+        $this->qb->select(null, true);
+        $this->verify('SELECT DISTINCT ');
+    }
+
+    public function testCanGenerateSelectWithColumns()
+    {
+        $this->qb->select(array('id', 'name'));
+        $this->verify('SELECT id, name');
+    }
+
+    public function testCanGenerateColumnsWithAlias()
+    {
+        $this->qb->select(array(
+            array('table.column' => 'alias'),
+            'name'
+        ));
+
+        $this->verify('SELECT table.column AS `alias`, name');
+    }
 }
