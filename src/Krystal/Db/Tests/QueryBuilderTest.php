@@ -18,6 +18,13 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($fragment, $this->qb->getQueryString());
     }
 
+    public function testCanGenerateInsert()
+    {
+        $this->qb->insert('table', array('name' => "'Dave'", 'age' => '24'));
+
+        $this->verify("INSERT  INTO `table` (`name`, `age`) VALUES ('Dave', 24)");
+    }
+
     public function testCanGenerateSelect()
     {
         $this->qb->select();
