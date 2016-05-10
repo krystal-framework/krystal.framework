@@ -54,6 +54,22 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->verify('SELECT  AVG(`users`) ');
     }
 
+    public function testCanGenerateSelectWithMin()
+    {
+        $this->qb->select()
+                 ->min('count');
+
+        $this->verify('SELECT  MIN(`count`) ');
+    }
+
+    public function testCanGenerateSelectWithMax()
+    {
+        $this->qb->select()
+                 ->max('count');
+
+        $this->verify('SELECT  MAX(`count`) ');
+    }
+
     public function testCanGenerateSelectFromTable()
     {
         $this->qb->select('*')
