@@ -70,7 +70,7 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->verify('SELECT * FROM `table` WHERE `id` = 1 ');
     }
-    
+
     public function testCanGenerateWhereNotEquals()
     {
         $this->qb->select('*')
@@ -78,5 +78,23 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
                  ->whereNotEquals('id', '1');
 
         $this->verify('SELECT * FROM `table` WHERE `id` != 1 ');
+    }
+
+    public function testCanGenerateWhereGreaterThan()
+    {
+        $this->qb->select('*')
+                 ->from('table')
+                 ->whereGreaterThan('count', '1');
+
+        $this->verify('SELECT * FROM `table` WHERE `count` > 1 ');
+    }
+
+    public function testCanGenerateWhereLessThan()
+    {
+        $this->qb->select('*')
+                 ->from('table')
+                 ->whereLessThan('count', '1');
+
+        $this->verify('SELECT * FROM `table` WHERE `count` < 1 ');
     }
 }
