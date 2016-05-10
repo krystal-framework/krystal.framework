@@ -46,6 +46,14 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->verify('SELECT table.column AS `alias`, name');
     }
 
+    public function testCanGenerateSelectWithAvg()
+    {
+        $this->qb->select()
+                 ->avg('users');
+
+        $this->verify('SELECT  AVG(`users`) ');
+    }
+
     public function testCanGenerateSelectFromTable()
     {
         $this->qb->select('*')
