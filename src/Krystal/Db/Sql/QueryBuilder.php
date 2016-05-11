@@ -1428,4 +1428,23 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $this->append(sprintf('TRUNCATE %s', $this->wrap($table)));
         return $this;
     }
+
+    /**
+     * Generates DROP TABLE statement
+     * 
+     * @param string $table Table name
+     * @param boolean $ifExists Whether to generate IF EXIST condition as well
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropTable($table, $ifExists = true)
+    {
+        $this->append('DROP TABLE');
+
+        if ($ifExists === true) {
+            $this->append(' IF EXISTS');
+        }
+
+        $this->append(sprintf(' %s', $this->wrap($table)));
+        return $this;
+    }
 }

@@ -1511,4 +1511,17 @@ final class Db implements DbInterface, RelationableServiceInterface
         $this->queryBuilder->truncate($table);
         return $this;
     }
+
+    /**
+     * Appends DROP TABLE statement
+     * 
+     * @param string $table Table name
+     * @param boolean $ifExists Whether to generate IF EXIST condition as well
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropTable($table, $ifExists = true)
+    {
+        $this->queryBuilder->dropTable($table, $ifExists);
+        return $this;
+    }
 }

@@ -664,4 +664,13 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function truncate($table);
+
+    /**
+     * Generates DROP TABLE statement
+     * 
+     * @param string $table Table name
+     * @param boolean $ifExists Whether to generate IF EXIST condition as well
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropTable($table, $ifExists = true);
 }
