@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `dropTable()` generator and shortcut
  * Finished partial table prefix implementation
  * Fixed issue with join methods
  * Added optional fillable protection in `Db\Sql\AbstractMapper::persist()` method
