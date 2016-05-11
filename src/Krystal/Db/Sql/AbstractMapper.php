@@ -372,6 +372,17 @@ abstract class AbstractMapper
     }
 
     /**
+     * Drops a table
+     * 
+     * @return boolean
+     */
+    final public function dropTable()
+    {
+        return $this->db->dropTable(static::getTableName(), true)
+                        ->execute();
+    }
+
+    /**
      * Returns last id
      * 
      * @return integer
