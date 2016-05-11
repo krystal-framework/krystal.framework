@@ -128,4 +128,18 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->verify('SELECT * FROM `table` WHERE `count` < 1 ');
     }
+
+    public function testCanGenerateDropTable()
+    {
+        $this->qb->dropTable('users', false);
+
+        $this->verify('DROP TABLE `users`');
+    }
+
+    public function testCanGenerateDropTableIfExists()
+    {
+        $this->qb->dropTable('users');
+
+        $this->verify('DROP TABLE IF EXISTS `users`');
+    }
 }
