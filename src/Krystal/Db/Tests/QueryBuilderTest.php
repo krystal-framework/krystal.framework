@@ -142,4 +142,18 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->verify('DROP TABLE IF EXISTS `users`');
     }
+
+    public function testCanGenerateIncrement()
+    {
+        $this->qb->increment('articles', 'views');
+
+        $this->verify('UPDATE `articles` SET `views` = views + 1');
+    }
+
+    public function testCanGenerateDecrement()
+    {
+        $this->qb->decrement('articles', 'views');
+
+        $this->verify('UPDATE `articles` SET `views` = views - 1');
+    }
 }
