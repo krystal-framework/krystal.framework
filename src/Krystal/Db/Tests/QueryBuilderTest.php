@@ -77,6 +77,14 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->verify('SELECT  MAX(`count`) ');
     }
 
+    public function testCanGenerateSelectWithCount()
+    {
+        $this->qb->select()
+                 ->count('count');
+
+        $this->verify('SELECT  COUNT(`count`) ');
+    }
+
     public function testCanGenerateSelectFromTable()
     {
         $this->qb->select('*')
