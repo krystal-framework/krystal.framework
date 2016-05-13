@@ -104,11 +104,10 @@ interface FileManagerInterface
      * Removes a directory (recursively)
      * 
      * @param string $dir
-     * @param array $ignored Files that couldn't be read
      * @throws \RuntimeException if $dir isn't a path to directory
      * @return boolean Depending on success
      */
-    public function rmdir($dir, array &$ignored = array());
+    public function rmdir($dir);
 
     /**
      * Copies a directory to another directory

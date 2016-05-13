@@ -203,37 +203,29 @@ class FileManager implements FileManagerInterface
      * Removes a directory (recursively)
      * 
      * @param string $dir
-     * @param array $ignored Files that couldn't be read
      * @throws \RuntimeException if $dir isn't a path to directory
      * @return boolean Depending on success
      */
-    public function rmdir($dir, array &$ignored = array())
+    public function rmdir($dir)
     {
         if (!is_dir($dir)) {
             throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $dir));
         }
-        
-        d(glob($dir . '/*'));
-        
-        foreach (glob($dir . '/*') as $file) {
-            if (is_dir($file)) {
-                // Recursive call
-                call_user_func(__METHOD__, $file);
-            } else {
-                // Coudn't unlink - push this ignored item
-                chmod($file, 0777);
 
-                if (!unlink($file)) {
-                    array_push($ignored, $file);
-                }
+        $files = array_diff(scandir($dir), array('.', '..'));
+
+        foreach ($files as $file) {
+            $path = sprintf('%s/%s', $dir, $file);
+
+            if (is_dir($path)) {
+                call_user_func(array($this, __FUNCTION__), $path);
+            } else {
+                chmod($path, 0777);
+                unlink($path);
             }
         }
 
-        if (!rmdir($dir)) {
-            array_push($ignored, $dir);
-        }
-
-        return true;
+        return rmdir($dir);
     }
 
     /**
