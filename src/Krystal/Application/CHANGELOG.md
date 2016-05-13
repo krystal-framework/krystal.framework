@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `removeFromFileSysem()` in module manager service
  * Added `authAttemptLimit` core service
  * Made `paramBag` service available in module definition classes
  * Fixed missing controller name for halting cases in `UrlBuilder`
