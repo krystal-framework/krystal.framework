@@ -43,7 +43,7 @@ final class Cache implements ComponentInterface
                     return MemcachedFactory::build($options['servers']);
 
                 case 'file' :
-                    // By default, a file need to be created automatically if it doesn't exist
+                    // By default, a file needs to be created automatically if it doesn't exist
                     $autoCreate = true;
 
                     if (isset($options['auto_create']) && is_bool($options['auto_create'])){
