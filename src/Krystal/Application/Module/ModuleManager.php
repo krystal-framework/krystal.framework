@@ -176,17 +176,17 @@ final class ModuleManager implements ModuleManagerInterface
     private function prepareRoutes($module, array $routes)
     {
         $result = array();
-        
+
         foreach ($routes as $uriTemplate => $options) {
             // Controller is the special case
             if (isset($options['controller'])) {
                 // Override with module-compliant
                 $options['controller'] = sprintf('%s:%s', $this->grabModuleName($module), $options['controller']);
             }
-            
+
             $result[$uriTemplate] = $options;
         }
-        
+
         return $result;
     }
 
