@@ -88,7 +88,6 @@ class FileManager implements FileManagerInterface
     {
         if (is_file($file)) {
             return chmod($file, 0777) && unlink($file);
-
         } else {
             throw new RuntimeException(sprintf(
                 'Invalid file path supplied "%s"', $file
@@ -192,7 +191,6 @@ class FileManager implements FileManagerInterface
             }
 
         } else {
-
             throw new UnexpectedValueException(sprintf(
                 '%s expects a path to be a directory or a file as first argument', __METHOD__
             ));
@@ -214,7 +212,9 @@ class FileManager implements FileManagerInterface
         if (!is_dir($dir)) {
             throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $dir));
         }
-
+        
+        d(glob($dir . '/*'));
+        
         foreach (glob($dir . '/*') as $file) {
             if (is_dir($file)) {
                 // Recursive call
