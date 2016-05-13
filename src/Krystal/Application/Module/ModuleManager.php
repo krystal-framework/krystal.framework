@@ -15,6 +15,7 @@ use Krystal\Application\AppConfigInterface;
 use Krystal\Application\Module\Loader\LoaderInterface;
 use Krystal\InstanceManager\ServiceLocator;
 use Krystal\Application\AppConfig;
+use Krystal\Filesystem\FileManager;
 use RuntimeException;
 
 final class ModuleManager implements ModuleManagerInterface
@@ -232,6 +233,25 @@ final class ModuleManager implements ModuleManagerInterface
 
         $this->loaded[$name] = $module;
         return $module;
+    }
+
+    /**
+     * Removes a module from file system
+     * 
+     * @param string $module Module name (as in the folder)
+     * @throws \RuntimeException When trying to remove non-existent module
+     * @return boolean Depending on success
+     */
+    public function removeFromFileSysem($module)
+    {
+        $path = sprintf('%s/%s', $this->appConfig->getModulesDir(), $module);
+
+        if (is_dir($path)) {
+            $fm = new FileManager();
+            return $fm->rmdir($path);
+        } else {
+            throw new RuntimeException(sprintf('Module called "%s" does not exist in modules directory', $module));
+        }
     }
 
     /**

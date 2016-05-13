@@ -38,6 +38,15 @@ interface ModuleManagerInterface
     public function isLoaded($name);
 
     /**
+     * Removes a module from file system
+     * 
+     * @param string $module Module name (as in the folder)
+     * @throws \RuntimeException When trying to remove non-existent module
+     * @return boolean Depending on success
+     */
+    public function removeFromFileSysem($module);
+
+    /**
      * Returns an array of loaded module names
      * 
      * @return array
