@@ -15,5 +15,6 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             '/about-us'
         ));
 
+        $this->assertTrue($result instanceof RouteMatch);
     }
 }
