@@ -41,17 +41,18 @@ interface BlockBagInterface
     public function addStaticBlocks(array $collection);
 
     /**
-     * Returns block directory path
+     * Appends block directory
      * 
-     * @return string
-     */
-    public function getBlocksDir();
-
-    /**
-     * Defines block directory path
-     * 
-     * @param string $blockDir
+     * @param string $dir
      * @return \Krystal\Application\View\BlockBag
      */
-    public function setBlocksDir($blockDir);
+    public function addBlockDir($dir);
+
+    /**
+     * Appends several directories
+     * 
+     * @param array $dirs
+     * @return \Krystal\Application\View\BlockBag
+     */
+    public function addBlockDirs(array $dirs);
 }

@@ -16,11 +16,11 @@ use LogicException;
 final class BlockBag implements BlockBagInterface
 {
     /**
-     * Available block directories
+     * Registered block directories
      * 
      * @var string
      */
-    private $blockDir;
+    private $blockDirs = array();
 
     /**
      * Static blocks
@@ -38,7 +38,7 @@ final class BlockBag implements BlockBagInterface
      */
     public function getBlockFile($name)
     {
-        $file = $this->createBlockPath($this->getBlocksDir(), $name);
+        $file = $this->findBlockFile($name);
 
         if (is_file($file)) {
             return $file;
@@ -49,6 +49,25 @@ final class BlockBag implements BlockBagInterface
         } else {
             throw new LogicException(sprintf('Could not find a registered block called %s', $name));
         }
+    }
+
+    /**
+     * Tries to find a block within registered directories
+     * 
+     * @param string $name Block name
+     * @return mixed
+     */
+    private function findBlockFile($name)
+    {
+        foreach ($this->blockDirs as $dir) {
+            $file = $this->createBlockPath($dir, $name);
+
+            if (is_file($file)) {
+                return $file;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -99,6 +118,33 @@ final class BlockBag implements BlockBagInterface
     }
 
     /**
+     * Appends block directory
+     * 
+     * @param string $dir
+     * @return \Krystal\Application\View\BlockBag
+     */
+    public function addBlockDir($dir)
+    {
+        array_push($this->blockDirs, $dir);
+        return $this;
+    }
+
+    /**
+     * Appends several directories
+     * 
+     * @param array $dirs
+     * @return \Krystal\Application\View\BlockBag
+     */
+    public function addBlockDirs(array $dirs)
+    {
+        foreach ($dirs as $dir) {
+            $this->addBlockDir($dir);
+        }
+
+        return $this;
+    }
+    
+    /**
      * Checks whether static block has been added before
      * 
      * @param string $name
@@ -119,27 +165,5 @@ final class BlockBag implements BlockBagInterface
     private function getStaticFile($name)
     {
         return $this->staticBlocks[$name];
-    }
-
-    /**
-     * Returns block directory path
-     * 
-     * @return string
-     */
-    public function getBlocksDir()
-    {
-        return $this->blockDir;
-    }
-
-    /**
-     * Defines block directory path
-     * 
-     * @param string $blockDir
-     * @return \Krystal\Application\View\BlockBag
-     */
-    public function setBlocksDir($blockDir)
-    {
-        $this->blockDir = $blockDir;
-        return $this;
     }
 }
