@@ -17,4 +17,14 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($result instanceof RouteMatch);
     }
+
+    public function testCanCatchVars()
+    {
+        $router = new Router();
+        $result = $router->match('/user/1', array(
+            '/user/(:var)'
+        ));
+
+        $this->assertTrue($result instanceof RouteMatch);
+    }
 }
