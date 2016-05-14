@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `BlockBag` service dropped `setBlockDir()` and `getBlockDir()`. Replaced them with `addBlockDir()` and `addBlocksDir()`
  * Added `removeFromFileSysem()` in module manager service
  * Added `authAttemptLimit` core service
  * Made `paramBag` service available in module definition classes
