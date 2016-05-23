@@ -114,7 +114,9 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->qb->select('*')
                  ->from('table')
+                 ->whereLike('name', 'foo');
 
+        $this->verify('SELECT * FROM `table` WHERE `name` LIKE foo ');
     }
 
     public function testCanGenerateWhereNotEquals()
