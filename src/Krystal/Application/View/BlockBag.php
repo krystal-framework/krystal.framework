@@ -155,7 +155,7 @@ final class BlockBag implements BlockBagInterface
         $names = array_keys($this->staticBlocks);
         return in_array($name, $names);
     }
-    
+
     /**
      * Returns path to a static file
      * 
