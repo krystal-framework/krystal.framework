@@ -146,6 +146,16 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->verify('SELECT * FROM `table` WHERE `count` < 1 ');
     }
 
+    public function testCanGenerateAndWhere()
+    {
+        $this->qb->select('*')
+                 ->from('users')
+                 ->whereEquals('user', "'Dave'")
+                 ->andWhereEquals('age', "'24'");
+
+        $this->verify("SELECT * FROM `users` WHERE `user` = 'Dave' AND `age` = '24' ");
+    }
+
     public function testCanSaveSelectedTableName()
     {
         $this->qb->select('*')
