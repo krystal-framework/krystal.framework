@@ -76,13 +76,6 @@ final class UrlBuilder implements UrlBuilderInterface
         $varCount = $this->getVarCount($template);
         $currentCount = count($vars);
 
-        // Ensure the amount of variables is the same as in the target array
-        if ($varCount !== $currentCount) {
-            throw new RuntimeException(sprintf(
-                'Controller "%s" expects %s variables, %s passed', $controller, $varCount, $currentCount
-            ));
-        }
-
         $template = str_replace(self::ROUTE_PARAM_VAR, '%s', $template);
         return vsprintf($template, $vars);
     }
