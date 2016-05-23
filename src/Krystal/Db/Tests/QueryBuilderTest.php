@@ -101,13 +101,20 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->verify('SELECT * FROM ');
     }
 
-    public function testCanGenerateWhereEquals()
+    public function testCanGenerateWhereLike()
     {
         $this->qb->select('*')
                  ->from('table')
                  ->whereEquals('id', '1');
 
         $this->verify('SELECT * FROM `table` WHERE `id` = 1 ');
+    }
+
+    public function testCanGenerateWhereEquals()
+    {
+        $this->qb->select('*')
+                 ->from('table')
+
     }
 
     public function testCanGenerateWhereNotEquals()
