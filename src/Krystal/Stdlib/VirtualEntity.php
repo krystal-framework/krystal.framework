@@ -24,6 +24,13 @@ class VirtualEntity
     protected $container = array();
 
     /**
+     * Defines whether properties can be overridden or not
+     * 
+     * @var boolean
+     */
+    protected $once;
+
+    /**
      * State initialization
      * 
      * @param boolean $once Whether writing can be done only once
@@ -31,7 +38,7 @@ class VirtualEntity
      */
     public function __construct($once = true)
     {
-        $this->once = $once;
+        $this->once = (bool) $once;
     }
 
     /**
