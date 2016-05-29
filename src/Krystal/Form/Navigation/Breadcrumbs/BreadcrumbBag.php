@@ -141,7 +141,7 @@ final class BreadcrumbBag implements BreadcrumbBagInterface
     }
 
     /**
-     * Returns an array of all registred breadcrumb names
+     * Returns an array of all registered breadcrumb names
      * 
      * @return array
      */
