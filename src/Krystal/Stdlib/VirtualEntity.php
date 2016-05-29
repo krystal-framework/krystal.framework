@@ -95,7 +95,7 @@ class VirtualEntity implements Sanitizeable
             }
 
             // Make sure the first argument is supplied
-            if (isset($arguments[0])) {
+            if (array_key_exists(0, $arguments)) {
                 $value = $arguments[0];
             } else {
                 throw new UnderflowException(sprintf(
