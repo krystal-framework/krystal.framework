@@ -71,7 +71,7 @@ class VirtualEntity
             }
 
             // getter is being used
-            if (array_key_exists($property, $this->container)) {
+            if ($this->has($property)) {
                 return $this->container[$property];
             } else {
                 return $default;
@@ -80,7 +80,7 @@ class VirtualEntity
 
         // Are we dealing with a setter?
         if ($start == 'set') {
-            if ($this->once === true && isset($this->container[$property])) {
+            if ($this->once === true && $this->has($property)) {
                 throw new RuntimeException(sprintf('You can write to "%s" only once', $property));
             }
 

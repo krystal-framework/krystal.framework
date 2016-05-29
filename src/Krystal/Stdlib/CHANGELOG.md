@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with handling `null` values in `VirtualEntity`
  * Changed date format to Y-m-d h:i:s in exception handler
  * Removed framework version from exception's template
  * Added `keysExist()` in `Stdlib\ArrayUtils`
