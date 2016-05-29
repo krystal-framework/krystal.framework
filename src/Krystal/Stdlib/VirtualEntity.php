@@ -13,6 +13,7 @@ namespace Krystal\Stdlib;
 
 use RuntimeException;
 use LogicException;
+use UnderflowException;
 
 class VirtualEntity
 {
@@ -91,8 +92,17 @@ class VirtualEntity
                 throw new RuntimeException(sprintf('You can write to "%s" only once', $property));
             }
 
+            // Make sure the first argument is supplied
+            if (isset($arguments[0])) {
+                $value = $arguments[0];
+            } else {
+                throw new UnderflowException(sprintf(
+                    'The virtual setter for "%s" expects at least one argument, which would be a value. None supplied.', $property
+                ));
+            }
+
             // setter is being used
-            $this->container[$property] = $arguments[0];
+            $this->container[$property] = $value;
             return $this;
         }
     }
