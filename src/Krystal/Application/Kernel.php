@@ -140,6 +140,9 @@ final class Kernel implements KernelInterface
         $serviceLocator = new ServiceLocator();
         $serviceLocator->registerArray($this->getServices());
 
+        // Constant that tells that the framework is launched
+        define('KRYSTAL', true);
+
         return $serviceLocator;
     }
 
