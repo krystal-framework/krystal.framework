@@ -11,11 +11,13 @@
 
 namespace Krystal\Stdlib;
 
+use Krystal\Security\Filter;
+use Krystal\Security\Sanitizeable;
 use RuntimeException;
 use LogicException;
 use UnderflowException;
 
-class VirtualEntity
+class VirtualEntity implements Sanitizeable
 {
     /**
      * Entity container
@@ -99,6 +101,12 @@ class VirtualEntity
                 throw new UnderflowException(sprintf(
                     'The virtual setter for "%s" expects at least one argument, which would be a value. None supplied.', $property
                 ));
+            }
+
+            // If filter is defined, then use it
+            if (isset($arguments[1])) {
+                // Override value with filtered one
+                $value = Filter::sanitize($value, $arguments[1]);
             }
 
             // setter is being used
