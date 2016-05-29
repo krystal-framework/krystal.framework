@@ -11,8 +11,42 @@
 
 namespace Krystal\Security;
 
-class Filter
+use InvalidArgumentException;
+use UnexpectedValueException;
+
+class Filter implements Sanitizeable
 {
+    /**
+     * Sanitize a value
+     * 
+     * @param string $value
+     * @param string $filter
+     * @return string
+     */
+    public static function sanitize($value, $filter = self::FILTER_NONE)
+    {
+        if (!is_scalar($value)) {
+            throw new InvalidArgumentException(sprintf('Sanitizer can only handle scalar values. Received "%s"', gettype($value)));
+        }
+
+        switch ($filter) {
+            case self::FILTER_NONE;
+                return $value;
+            case self::FILTER_BOOL:
+                return (bool) $value;
+            case self::FILTER_FLOAT:
+                return (float) $value;
+            case self::FILTER_INT:
+                return (int) $value;
+            case self::FILTER_HTML:
+                return self::escape($value);
+            case self::FILTER_TAGS:
+                return self::stripTags($value);
+            default:
+                throw new UnexpectedValueException('Unknown filter type provided');
+        }
+    }
+
     /**
      * Determines whether a string has HTML tags
      * 
