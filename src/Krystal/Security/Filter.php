@@ -55,7 +55,7 @@ class Filter implements Sanitizeable
      * @param string $string
      * @return string
      */
-    public function safeTags($string)
+    public static function safeTags($string)
     {
         return $string;
     }
