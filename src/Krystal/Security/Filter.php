@@ -42,9 +42,22 @@ class Filter implements Sanitizeable
                 return self::escape($value);
             case self::FILTER_TAGS:
                 return self::stripTags($value);
+            case self::FILTER_SAFE_TAGS:
+                return self::safeTags($value);
             default:
                 throw new UnexpectedValueException('Unknown filter type provided');
         }
+    }
+
+    /**
+     * Removes all unwanted tags
+     * 
+     * @param string $string
+     * @return string
+     */
+    public function safeTags($string)
+    {
+        return $string;
     }
 
     /**

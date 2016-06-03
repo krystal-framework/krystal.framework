@@ -19,4 +19,5 @@ interface Sanitizeable
     const FILTER_BOOL = 3;
     const FILTER_HTML = 4;
     const FILTER_TAGS = 5;
+    const FILTER_SAFE_TAGS = 6;
 }
