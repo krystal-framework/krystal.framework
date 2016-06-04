@@ -25,7 +25,7 @@ class Filter implements Sanitizeable
      */
     public static function sanitize($value, $filter = self::FILTER_NONE)
     {
-        if (!is_scalar($value)) {
+        if (!is_scalar($value) && !is_null($value)) {
             throw new InvalidArgumentException(sprintf('Sanitizer can only handle scalar values. Received "%s"', gettype($value)));
         }
 
