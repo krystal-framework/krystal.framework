@@ -159,19 +159,19 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
-     * Returns block bag
+     * Returns partial bag
      * 
-     * @return \Krystal\Application\View\BlockBag
+     * @return \Krystal\Application\View\PartialBag
      */
-    public function getBlockBag()
+    public function getPartialBag()
     {
-        static $blockBag = null;
+        static $partialBag = null;
 
-        if ($blockBag === null) {
-            $blockBag = new BlockBag();
+        if ($partialBag === null) {
+            $partialBag = new PartialBag();
         }
 
-        return $blockBag;
+        return $partialBag;
     }
 
     /**
@@ -614,28 +614,28 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
-     * Load several blocks at once
+     * Load several partials at once
      * 
-     * @param array $blocks
+     * @param array $partials
      * @return void
      */
-    public function loadBlocks(array $blocks)
+    public function loadPartials(array $partials)
     {
-        return array_walk($blocks, array($this, 'loadBlock'));
+        return array_walk($partials, array($this, 'loadPartial'));
     }
 
     /**
-     * Loads a block
+     * Loads partial template
      * 
      * @param string $name
      * @param array $vars Additional variables if needed
      * @return void
      */
-    public function loadBlock($name, array $vars = array())
+    public function loadPartial($name, array $vars = array())
     {
         extract(array_replace_recursive($vars, $this->variables));
 
-        $file = $this->getBlockBag()->getBlockFile($name);
+        $file = $this->getPartialBag()->getPartialFile($name);
 
         if (is_file($file)) {
             include($file);

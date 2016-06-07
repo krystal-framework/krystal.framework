@@ -5,7 +5,8 @@ CHANGELOG
 ---
 
  * Added `KRYSTAL` constant. Its available as soon as application bootstraps
- * In `BlockBag` service dropped `setBlockDir()` and `getBlockDir()`. Replaced them with `addBlockDir()` and `addBlocksDir()`
+ * In `PartialBag` service dropped `setPartialsDir()` and `getPartialsDir()`. Replaced them with `addPartialDir()` and `addPartialDirs()`
+ * Renamed conception of `block` to `partials`. Updated its corresponding API
  * Added `removeFromFileSysem()` in module manager service
  * Added `authAttemptLimit` core service
  * Made `paramBag` service available in module definition classes

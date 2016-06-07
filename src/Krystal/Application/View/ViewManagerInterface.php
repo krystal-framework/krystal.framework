@@ -35,11 +35,11 @@ interface ViewManagerInterface
     public function getBreadcrumbBag();
 
     /**
-     * Returns block bag
+     * Returns partial bag
      * 
-     * @return \Krystal\Application\View\BlockBag
+     * @return \Krystal\Application\View\PartialBag
      */
-    public function getBlockBag();
+    public function getPartialBag();
 
     /**
      * Defines target module
@@ -228,21 +228,21 @@ interface ViewManagerInterface
     public function renderRaw($module, $theme, $template, array $vars = array());
 
     /**
-     * Load several blocks at once
+     * Load several partials at once
      * 
-     * @param array $blocks
+     * @param array $partials
      * @return void
      */
-    public function loadBlocks(array $blocks);
+    public function loadPartials(array $partials);
 
     /**
-     * Loads a block
+     * Loads partial template
      * 
      * @param string $name
      * @param array $vars Additional variables if needed
      * @return void
      */
-    public function loadBlock($name, array $vars = array());
+    public function loadPartial($name, array $vars = array());
 
     /**
      * Translates a string

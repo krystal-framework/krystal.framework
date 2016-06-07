@@ -11,48 +11,48 @@
 
 namespace Krystal\Application\View;
 
-interface BlockBagInterface
+interface PartialBagInterface
 {
     /**
-     * Attempts to return block's file path
+     * Attempts to return partial file path
      * 
-     * @param string $name Block's name
+     * @param string $name Partial name
      * @throws \LogicException If can't find a block's file by its name
      * @return string
      */
-    public function getBlockFile($name);
+    public function getPartialFile($name);
 
     /**
-     * Adds new static block to collection
+     * Adds new static partial to collection
      * 
      * @param string $name
      * @param string $baseDir
      * @throws \LogicException if wrong data supplied
-     * @return \Krystal\Application\View\BlockBag
+     * @return \Krystal\Application\View\PartialBag
      */
-    public function addStaticBlock($baseDir, $name);
+    public function addStaticPartial($baseDir, $name);
 
     /**
-     * Adds a collection of static blocks
+     * Adds a collection of static partials
      * 
      * @param array $collection
-     * @return \Krystal\Application\View\BlockBag
+     * @return \Krystal\Application\View\PartialBag
      */
-    public function addStaticBlocks(array $collection);
+    public function addStaticPartials(array $collection);
 
     /**
-     * Appends block directory
+     * Appends partial directory
      * 
      * @param string $dir
-     * @return \Krystal\Application\View\BlockBag
+     * @return \Krystal\Application\View\PartialBag
      */
-    public function addBlockDir($dir);
+    public function addPartialDir($dir);
 
     /**
      * Appends several directories
      * 
      * @param array $dirs
-     * @return \Krystal\Application\View\BlockBag
+     * @return \Krystal\Application\View\PartialBag
      */
-    public function addBlockDirs(array $dirs);
+    public function addPartialDirs(array $dirs);
 }
