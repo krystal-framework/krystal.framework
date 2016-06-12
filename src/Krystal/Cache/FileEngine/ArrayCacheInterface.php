@@ -61,6 +61,13 @@ interface ArrayCacheInterface
     public function getAsPair();
 
     /**
+     * Checks whether there's a data
+     * 
+     * @return boolean
+     */
+    public function isEmpty();
+
+    /**
      * Checks whether cache key is expired
      * 
      * @param string $key

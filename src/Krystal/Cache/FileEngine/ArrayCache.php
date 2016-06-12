@@ -113,6 +113,16 @@ final class ArrayCache implements ArrayCacheInterface
     }
 
     /**
+     * Checks whether there's a data
+     * 
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return empty($this->data);
+    }
+
+    /**
      * Checks whether cache key is expired
      * 
      * @param string $key
