@@ -29,4 +29,20 @@ class ArrayCacheTest extends \PHPUnit_Framework_TestCase
             )
         ));
     }
+
+    public function testCanBeIncremented()
+    {
+        $this->arrayCache->increment('age', 1);
+        $age = $this->arrayCache->getValueByKey('age', false);
+
+        $this->assertEquals($age, 31);
+    }
+
+    public function testCanBeDecremented()
+    {
+        $this->arrayCache->decrement('age', 1);
+        $age = $this->arrayCache->getValueByKey('age', false);
+
+        $this->assertEquals($age, 29);
+    }
 }
