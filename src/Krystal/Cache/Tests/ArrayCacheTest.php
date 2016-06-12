@@ -11,23 +11,9 @@ class ArrayCacheTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->arrayCache = new ArrayCache();
-        $this->arrayCache->setData(array(
-            'name' => array(
-                ArrayCache::CACHE_PARAM_VALUE => 'Jack',
-                ArrayCache::CACHE_PARAM_TTL => 10,
-                ArrayCache::CACHE_PARAM_CREATED => time(),
-            ),
-            'age' => array(
-                ArrayCache::CACHE_PARAM_VALUE => 30,
-                ArrayCache::CACHE_PARAM_TTL => 10,
-                ArrayCache::CACHE_PARAM_CREATED => time(),
-            ),
-            'location' => array(
-                ArrayCache::CACHE_PARAM_VALUE => 'Palo Alto',
-                ArrayCache::CACHE_PARAM_TTL => 10,
-                ArrayCache::CACHE_PARAM_CREATED => time(),
-            )
-        ));
+        $this->arrayCache->set('name', 'Jack', 10, time())
+                         ->set('age', 30, 10, time())
+                         ->set('location', 'Palo Alto', 10, time());
     }
 
     public function testCanBeIncremented()
