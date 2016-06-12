@@ -83,7 +83,7 @@ interface ArrayCacheInterface
      * @param mixed $value
      * @param integer $ttl Time to live in seconds
      * @param integer $time Current timestamp
-     * @return void
+     * @return \Krystal\Cache\FileEngine\ArrayCache
      */
     public function set($key, $value, $ttl, $time);
 
