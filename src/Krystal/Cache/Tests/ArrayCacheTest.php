@@ -42,4 +42,10 @@ class ArrayCacheTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->arrayCache->has('age'));
     }
+
+    public function testCanBeDefinedKeyRemoved()
+    {
+        $this->arrayCache->remove('age');
+        $this->assertFalse($this->arrayCache->has('age'));
+    }
 }
