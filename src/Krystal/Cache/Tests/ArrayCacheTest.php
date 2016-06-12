@@ -45,4 +45,10 @@ class ArrayCacheTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($age, 29);
     }
+
+    public function testCanBeCleared()
+    {
+        $this->arrayCache->clear();
+        $this->assertTrue(!$this->arrayCache->isEmpty());
+    }
 }
