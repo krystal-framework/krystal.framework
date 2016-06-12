@@ -37,4 +37,9 @@ class ArrayCacheTest extends \PHPUnit_Framework_TestCase
         $this->arrayCache->clear();
         $this->assertTrue($this->arrayCache->isEmpty());
     }
+
+    public function testDefinedKeyExists()
+    {
+        $this->assertTrue($this->arrayCache->has('age'));
+    }
 }
