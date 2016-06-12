@@ -49,6 +49,6 @@ class ArrayCacheTest extends \PHPUnit_Framework_TestCase
     public function testCanBeCleared()
     {
         $this->arrayCache->clear();
-        $this->assertTrue(!$this->arrayCache->isEmpty());
+        $this->assertTrue($this->arrayCache->isEmpty());
     }
 }
