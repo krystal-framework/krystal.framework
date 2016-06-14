@@ -236,6 +236,26 @@ final class ModuleManager implements ModuleManagerInterface
     }
 
     /**
+     * Removes module data from uploading directory
+     * 
+     * @param string $module
+     * @throws \RuntimeException When trying to remove non-existent module from a directory
+     * @return boolean
+     */
+    public function removeFromUploadsDir($module)
+    {
+        // Create a path
+        $path = $this->appConfig->getModuleUploadsDir($module);
+
+        if (is_dir($path)) {
+            $fm = new FileManager();
+            return $fm->rmdir($path);
+        } else {
+            throw new RuntimeException(sprintf('Module called "%s" does not exist in uploading directory', $module));
+        }
+    }
+
+    /**
      * Removes a module from file system
      * 
      * @param string $module Module name (as in the folder)

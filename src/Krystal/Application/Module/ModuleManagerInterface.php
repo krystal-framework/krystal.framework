@@ -38,6 +38,15 @@ interface ModuleManagerInterface
     public function isLoaded($name);
 
     /**
+     * Removes module data from uploading directory
+     * 
+     * @param string $module
+     * @throws \RuntimeException When trying to remove non-existent module from a directory
+     * @return boolean
+     */
+    public function removeFromUploadsDir($module);
+
+    /**
      * Removes a module from file system
      * 
      * @param string $module Module name (as in the folder)
