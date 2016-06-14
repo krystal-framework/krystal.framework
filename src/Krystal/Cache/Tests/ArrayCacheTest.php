@@ -48,4 +48,10 @@ class ArrayCacheTest extends \PHPUnit_Framework_TestCase
         $this->arrayCache->remove('age');
         $this->assertFalse($this->arrayCache->has('age'));
     }
+
+    public function testCanReturnDefinedValue()
+    {
+        $value = $this->arrayCache->getValueByKey('age', false);
+        $this->assertEquals($value, 30);
+    }
 }
