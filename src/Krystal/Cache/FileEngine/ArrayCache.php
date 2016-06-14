@@ -52,20 +52,6 @@ final class ArrayCache implements ArrayCacheInterface
     }
 
     /**
-     * Alters key's value
-     * 
-     * @param string $key
-     * @param mixed $value
-     * @return void
-     */
-    private function alter($key, $value)
-    {
-        if ($this->has($key)) {
-            $this->data[$key][self::CACHE_PARAM_VALUE] = $value;
-        }
-    }
-
-    /**
      * Clears the data
      * 
      * @return void
@@ -191,6 +177,20 @@ final class ArrayCache implements ArrayCacheInterface
     public function getValueByKey($key, $default)
     {
         return $this->get($key, self::CACHE_PARAM_VALUE, $default);
+    }
+
+    /**
+     * Alters key's value
+     * 
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    private function alter($key, $value)
+    {
+        if ($this->has($key)) {
+            $this->data[$key][self::CACHE_PARAM_VALUE] = $value;
+        }
     }
 
     /**
