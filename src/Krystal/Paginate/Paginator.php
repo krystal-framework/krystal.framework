@@ -13,7 +13,6 @@ namespace Krystal\Paginate;
 
 use RuntimeException;
 use Krystal\Paginate\Style\StyleInterface;
-use Krystal\Paginate\PaginatorInterface;
 
 final class Paginator implements PaginatorInterface
 {
