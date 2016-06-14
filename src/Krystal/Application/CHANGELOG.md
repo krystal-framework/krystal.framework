@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In module manager service, added `removeFromFileSysem()` and `removeFromUploadsDir()` methods
  * Added `KRYSTAL` constant. Its available as soon as application bootstraps
  * In `PartialBag` service dropped `setPartialsDir()` and `getPartialsDir()`. Replaced them with `addPartialDir()` and `addPartialDirs()`
  * Renamed conception of `block` to `partials`. Updated its corresponding API
