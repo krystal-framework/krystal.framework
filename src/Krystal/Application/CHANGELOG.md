@@ -5,7 +5,7 @@ CHANGELOG
 ---
 
  * In `appConfig` service, added `getModuleCacheDir()` and `getModuleUploadsDir()`
- * In module manager service, added `removeFromFileSysem()` and `removeFromUploadsDir()` methods
+ * In module manager service, added `removeFromFileSysem()`, `removeFromUploadsDir()` and `removeFromCacheDir()` methods
  * Added `KRYSTAL` constant. Its available as soon as application bootstraps
  * In `PartialBag` service dropped `setPartialsDir()` and `getPartialsDir()`. Replaced them with `addPartialDir()` and `addPartialDirs()`
  * Renamed conception of `block` to `partials`. Updated its corresponding API

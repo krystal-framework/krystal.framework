@@ -254,6 +254,20 @@ final class ModuleManager implements ModuleManagerInterface
     }
 
     /**
+     * Removes module data from cache directory
+     * 
+     * @param string $module
+     * @throws \RuntimeException When trying to remove non-existent module from a directory
+     * @return boolean
+     */
+    public function removeFromCacheDir($module)
+    {
+        // Create a path
+        $path = $this->appConfig->getModuleCacheDir($module);
+        return $this->performRemoval($path, sprintf('Module called "%s" does not exist in uploading directory', $module));
+    }
+
+    /**
      * Removes module data from uploading directory
      * 
      * @param string $module

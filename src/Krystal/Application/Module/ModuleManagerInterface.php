@@ -38,6 +38,15 @@ interface ModuleManagerInterface
     public function isLoaded($name);
 
     /**
+     * Removes module data from cache directory
+     * 
+     * @param string $module
+     * @throws \RuntimeException When trying to remove non-existent module from a directory
+     * @return boolean
+     */
+    public function removeFromCacheDir($module);
+
+    /**
      * Removes module data from uploading directory
      * 
      * @param string $module
