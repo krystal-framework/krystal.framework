@@ -236,6 +236,24 @@ final class ModuleManager implements ModuleManagerInterface
     }
 
     /**
+     * Shared method for performing module-related removals
+     * 
+     * @param string $path Target path
+     * @param string $message Exception's message
+     * @throws \RuntimeException If the directory doesn't exist
+     * @return boolean Depending on success
+     */
+    private function performRemoval($path, $message)
+    {
+        if (is_dir($path)) {
+            $fm = new FileManager();
+            return $fm->rmdir($path);
+        } else {
+            throw new RuntimeException($message);
+        }
+    }
+
+    /**
      * Removes module data from uploading directory
      * 
      * @param string $module
@@ -246,13 +264,7 @@ final class ModuleManager implements ModuleManagerInterface
     {
         // Create a path
         $path = $this->appConfig->getModuleUploadsDir($module);
-
-        if (is_dir($path)) {
-            $fm = new FileManager();
-            return $fm->rmdir($path);
-        } else {
-            throw new RuntimeException(sprintf('Module called "%s" does not exist in uploading directory', $module));
-        }
+        return $this->performRemoval($path, sprintf('Module called "%s" does not exist in uploading directory', $module));
     }
 
     /**
@@ -265,13 +277,7 @@ final class ModuleManager implements ModuleManagerInterface
     public function removeFromFileSysem($module)
     {
         $path = sprintf('%s/%s', $this->appConfig->getModulesDir(), $module);
-
-        if (is_dir($path)) {
-            $fm = new FileManager();
-            return $fm->rmdir($path);
-        } else {
-            throw new RuntimeException(sprintf('Module called "%s" does not exist in modules directory', $module));
-        }
+        return $this->performRemoval($path, sprintf('Module called "%s" does not exist in modules directory', $module));
     }
 
     /**
