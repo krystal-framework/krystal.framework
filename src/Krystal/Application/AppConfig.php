@@ -360,9 +360,9 @@ final class AppConfig implements AppConfigInterface
      * @param string $module
      * @return string
      */
-    private function getModuleUploadsPath($base, $module)
+    private function createModuleUploadsPath($base, $module)
     {
-        return sprintf('%s/module/%s', $base, $module);
+        return sprintf('%s/module/%s', $base, strtolower($module));
     }
 
     /**
@@ -373,7 +373,7 @@ final class AppConfig implements AppConfigInterface
      */
     public function getModuleUploadsDir($module)
     {
-        return $this->getModuleUploadsPath($this->getUploadsDir(), $module);
+        return $this->createModuleUploadsPath($this->getUploadsDir(), $module);
     }
 
     /**
