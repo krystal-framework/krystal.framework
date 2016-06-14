@@ -187,6 +187,14 @@ interface AppConfigInterface
     public function getModuleUploadsDir($module);
 
     /**
+     * Returns module cache directory path
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleCacheDir($module);
+
+    /**
      * Defines application's default charset
      * 
      * @param string $charset

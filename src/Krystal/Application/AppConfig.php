@@ -377,6 +377,17 @@ final class AppConfig implements AppConfigInterface
     }
 
     /**
+     * Returns module cache directory path
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleCacheDir($module)
+    {
+        return $this->createModuleUploadsPath($this->getCacheDir(), $module);
+    }
+
+    /**
      * Defines application's default charset
      * 
      * @param string $charset
