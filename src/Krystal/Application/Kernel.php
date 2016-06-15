@@ -239,6 +239,8 @@ final class Kernel implements KernelInterface
             }
 
             error_reporting(self::ERR_LEVEL_MAX);
+            ini_set('display_errors', 1);
+
         } else {
             error_reporting(self::ERR_LEVEL_NONE);
         }
