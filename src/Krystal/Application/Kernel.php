@@ -11,7 +11,7 @@
 
 namespace Krystal\Application;
 
-use Krystal\Stdlib\Exception\Handler as ExceptionHandler;
+use Krystal\Debug\Exception\Handler as ExceptionHandler;
 use Krystal\Stdlib\MagicQuotesFilter;
 use Krystal\InstanceManager\ServiceLocator;
 use Krystal\InstanceManager\DependencyInjectionContainer;

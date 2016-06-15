@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Moved away exception handler to standalone component
  * Added optional support for filters `VirtualEntity` when defining a setter
  * Forced to throw `\UnderflowException` when defining a setter with no arguments in `VirtualEntity`
  * Fixed issue with handling `null` values in `VirtualEntity`
