@@ -50,8 +50,7 @@ class TextUtils
      */
     public static function trim($string, $maxLen, $after = ' .... ')
     {
-        $trimmer = new TextTrimmer($after);
-        return $trimmer->trim($string, $maxLen);
+        return mb_substr($string, 0, $maxLen, 'UTF-8') . $after;
     }
 
     /**
