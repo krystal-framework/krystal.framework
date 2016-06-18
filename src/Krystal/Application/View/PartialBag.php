@@ -33,7 +33,7 @@ final class PartialBag implements PartialBagInterface
      * Attempts to return partial file path
      * 
      * @param string $name Partial name
-     * @throws \LogicException If can't find a block's file by its name
+     * @throws \LogicException If can't find partials file by its name
      * @return string
      */
     public function getPartialFile($name)
@@ -47,7 +47,7 @@ final class PartialBag implements PartialBagInterface
             return $this->getStaticFile($name);
 
         } else {
-            throw new LogicException(sprintf('Could not find a registered block called %s', $name));
+            throw new LogicException(sprintf('Could not find a registered partial called %s', $name));
         }
     }
 
