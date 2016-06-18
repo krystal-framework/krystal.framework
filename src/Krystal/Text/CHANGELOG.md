@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * Added `CurrencyConvertor` tool
+ * Moved internals of `TextTrimmer` into `TextUtils::trim()`
  * Added `TextUtils::getNeedlePositions()` helper to extra positions of a string to be searched
 
 1.2
