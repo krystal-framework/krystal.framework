@@ -100,4 +100,22 @@ final class CoreBag implements CoreBagInterface
 
         return in_array($module, $this->coreModules);
     }
+
+    /**
+     * Checks whether all collection consists of core modules
+     * 
+     * @param string $modules A collection of module names
+     * @throws \InvalidArgumentException If $module isn't a string
+     * @return boolean
+     */
+    public function isCoreModules(array $modules)
+    {
+        foreach ($modules as $module) {
+            if (!$this->isCoreModule($module)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

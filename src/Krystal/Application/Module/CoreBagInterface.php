@@ -35,4 +35,13 @@ interface CoreBagInterface
      * @return boolean
      */
     public function isCoreModule($module);
+
+    /**
+     * Checks whether all collection consists of core modules
+     * 
+     * @param string $modules A collection of module names
+     * @throws \InvalidArgumentException If $module isn't a string
+     * @return boolean
+     */
+    public function isCoreModules(array $modules);
 }

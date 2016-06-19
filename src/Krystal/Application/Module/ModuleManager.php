@@ -145,6 +145,18 @@ final class ModuleManager implements ModuleManagerInterface
     }
 
     /**
+     * Checks whether all collection consists of core modules
+     * 
+     * @param string $modules A collection of module names
+     * @throws \InvalidArgumentException If $module isn't a string
+     * @return boolean
+     */
+    public function isCoreModules(array $modules)
+    {
+        return $this->getCoreBag()->isCoreModules($module);
+    }
+
+    /**
      * Returns core bag instance
      * 
      * @return \Krystal\Application\Module\CoreBag
