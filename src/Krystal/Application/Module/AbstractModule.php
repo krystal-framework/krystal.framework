@@ -138,15 +138,14 @@ abstract class AbstractModule
     {
         if (is_file($file)) {
             $array = include($file);
-            
+
             if (is_array($array)) {
                 return $array;
             } else {
                 trigger_error(sprintf('Included file "%s" should return an array not %s', $file, gettype($array)));
             }
-            
+
         } else {
-            
             return array();
         }
     }
@@ -225,7 +224,7 @@ abstract class AbstractModule
     final public function hasConfig($key = null)
     {
         $config = $this->getConfig();
-        
+
         if (is_null($key)) {
             return !empty($config);
         } else {
@@ -244,9 +243,8 @@ abstract class AbstractModule
     final public function getService($name)
     {
         if (method_exists($this, 'getServiceProviders')) {
-            
             $services = $this->getServices();
-            
+
             if (isset($services[$name])) {
                 return $services[$name];
             } else {
@@ -254,7 +252,7 @@ abstract class AbstractModule
                     'Attempted to read non-existing service %s', $name
                 ));
             }
-            
+
         } else {
             throw new RuntimeException(sprintf(
                 'There are no services'
@@ -284,7 +282,7 @@ abstract class AbstractModule
         if (is_null($this->serviceProviders)) {
             $this->serviceProviders = $this->getServiceProviders();
         }
-        
+
         return $this->serviceProviders;
     }
 }
