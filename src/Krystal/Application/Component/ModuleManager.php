@@ -13,6 +13,7 @@ namespace Krystal\Application\Component;
 
 use Krystal\Application\Module\ModuleManager as Component;
 use Krystal\Application\Module\Loader;
+use Krystal\Application\Module\CoreBag;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 use RuntimeException;
@@ -44,9 +45,9 @@ final class ModuleManager implements ComponentInterface
                         }
                     break;
                 }
-
             } else {
-                throw new RuntimeException("You need to provide loader's name");
+                // By default
+                $loader = new Loader\Dir($appConfig->getModulesDir());
             }
 
         } else {
@@ -55,8 +56,13 @@ final class ModuleManager implements ComponentInterface
         }
 
         $moduleManager = new Component($loader, $container->getAll(), $appConfig);
-        $moduleManager->initialize();
 
+        // Validate core modules, if provided
+        if (isset($section, $section['core_modules'])) {
+            $moduleManager->setCoreModuleNames($section['core_modules']);
+        }
+
+        $moduleManager->initialize();
         return $moduleManager;
     }
 

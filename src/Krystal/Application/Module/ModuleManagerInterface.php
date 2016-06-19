@@ -22,6 +22,22 @@ interface ModuleManagerInterface
     public function initialize();
 
     /**
+     * Defines a collection of core modules
+     * 
+     * @param array $coreModules
+     * @return void
+     */
+    public function setCoreModuleNames(array $coreModules);
+
+    /**
+     * Checks whether module name belongs to core collection
+     * 
+     * @param string $module
+     * @return boolean
+     */
+    public function isCoreModule($module);
+
+    /**
      * Returns module instance by its name
      * 
      * @param object $name
@@ -60,6 +76,7 @@ interface ModuleManagerInterface
      * 
      * @param string $module Module name (as in the folder)
      * @throws \RuntimeException When trying to remove non-existent module
+     * @throws \LogicException If trying to remove core module
      * @return boolean Depending on success
      */
     public function removeFromFileSysem($module);

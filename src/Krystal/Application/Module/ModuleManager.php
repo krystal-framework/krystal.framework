@@ -17,6 +17,7 @@ use Krystal\InstanceManager\ServiceLocator;
 use Krystal\Application\AppConfig;
 use Krystal\Filesystem\FileManager;
 use RuntimeException;
+use LogicException;
 
 final class ModuleManager implements ModuleManagerInterface
 {
@@ -70,6 +71,13 @@ final class ModuleManager implements ModuleManagerInterface
     private $services = array();
 
     /**
+     * A collection of module names that must be considered as core ones
+     * 
+     * @var array
+     */
+    private $coreModules = array();
+
+    /**
      * Module config class that represents basic data in module
      * No need for an extension, because it will be included by the PSR-0 autoloader automatically
      * 
@@ -107,6 +115,66 @@ final class ModuleManager implements ModuleManagerInterface
         } else {
             $this->loadAll($modules);
             $this->modules = $modules;
+
+            // Validate on demand
+            $this->validateCoreModuleNames();
+        }
+    }
+
+    /**
+     * Defines a collection of core modules
+     * 
+     * @param array $coreModules
+     * @return void
+     */
+    public function setCoreModuleNames(array $coreModules)
+    {
+        $this->coreModules = $coreModules;
+    }
+
+    /**
+     * Checks whether module name belongs to core collection
+     * 
+     * @param string $module
+     * @return boolean
+     */
+    public function isCoreModule($module)
+    {
+        return $this->getCoreBag()->isCoreModule($module);
+    }
+
+    /**
+     * Returns core bag instance
+     * 
+     * @return \Krystal\Application\Module\CoreBag
+     */
+    private function getCoreBag()
+    {
+        static $coreBag = null;
+
+        if (is_null($coreBag)) {
+            $coreBag = new CoreBag($this->getLoadedModuleNames(), $this->coreModules);
+        }
+
+        return $coreBag;
+    }
+
+    /**
+     * Validates core modules on demand
+     * 
+     * @throws \LogicException On validation failure
+     * @return void
+     */
+    private function validateCoreModuleNames()
+    {
+        if (!empty($this->coreModules)) {
+            $coreBag = $this->getCoreBag();
+
+            if (!$coreBag->hasAllCoreModules()) {
+                throw new LogicException(sprintf(
+                    'The framework can not start without defined core modules: %s', implode(', ', $coreBag->getMissingCoreModules())
+                ));
+            }
         }
     }
 
@@ -286,10 +354,17 @@ final class ModuleManager implements ModuleManagerInterface
      * 
      * @param string $module Module name (as in the folder)
      * @throws \RuntimeException When trying to remove non-existent module
+     * @throws \LogicException If trying to remove core module
      * @return boolean Depending on success
      */
     public function removeFromFileSysem($module)
     {
+        if ($this->isCoreModule($module)) {
+            throw new LogicException(sprintf(
+                'Trying to remove core module "%s". This is not allowed by design', $module
+            ));
+        }
+
         $path = sprintf('%s/%s', $this->appConfig->getModulesDir(), $module);
         return $this->performRemoval($path, sprintf('Module called "%s" does not exist in modules directory', $module));
     }
