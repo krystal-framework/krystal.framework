@@ -31,6 +31,7 @@ interface CoreBagInterface
      * Checks whether target module
      * 
      * @param string $module Module name
+     * @throws \InvalidArgumentException If $module isn't a string
      * @return boolean
      */
     public function isCoreModule($module);

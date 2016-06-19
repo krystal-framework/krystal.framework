@@ -11,6 +11,8 @@
 
 namespace Krystal\Application\Module;
 
+use InvalidArgumentException;
+
 /* Responsible for core modules */
 final class CoreBag implements CoreBagInterface
 {
@@ -85,10 +87,17 @@ final class CoreBag implements CoreBagInterface
      * Checks whether target module
      * 
      * @param string $module Module name
+     * @throws \InvalidArgumentException If $module isn't a string
      * @return boolean
      */
     public function isCoreModule($module)
     {
+        if (!is_string($module)) {
+            throw new InvalidArgumentException(sprintf(
+                'Module name must be a string, not "%s"', gettype($module)
+            ));
+        }
+
         return in_array($module, $this->coreModules);
     }
 }

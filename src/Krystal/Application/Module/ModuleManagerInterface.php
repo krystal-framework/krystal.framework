@@ -33,6 +33,7 @@ interface ModuleManagerInterface
      * Checks whether module name belongs to core collection
      * 
      * @param string $module
+     * @throws \InvalidArgumentException If $module isn't a string
      * @return boolean
      */
     public function isCoreModule($module);
