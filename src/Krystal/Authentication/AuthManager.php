@@ -164,15 +164,14 @@ final class AuthManager implements AuthManagerInterface
     /**
      * Checks whether user is logged in
      * 
-     * @throws \LogicException If authorization service was not injected
      * @return boolean
      */
     private function loggenIn()
     {
         if (!$this->has()) {
-
             if (!($this->authService instanceof UserAuthServiceInterface)) {
-                throw new LogicException('Authorization service was not injected');
+                // Not logged in
+                return false;
             }
 
             // Now try to find only in cookies, if found prepare a bag
@@ -206,7 +205,6 @@ final class AuthManager implements AuthManagerInterface
             return false;
 
         } else {
-
             return true;
         }
     }
