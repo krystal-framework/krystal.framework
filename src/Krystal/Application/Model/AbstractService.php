@@ -14,7 +14,7 @@ namespace Krystal\Application\Model;
 use Krystal\Http\FileTransfer\Filter\NameFilter;
 use Krystal\Http\FileTransfer\Filter\Type\Unique as UniqueType;
 
-abstract class AbstractManager
+abstract class AbstractService
 {
     /**
      * Filters file input names

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Renamed `Model\AbstractManager` to `Model\AbstractService`
  * Added conception of core modules. 
    They have a validation method, the framework can not be started without them, they can't be removed from file system via built-in handler
  * Forced to display errors instead of 500 Internal Server Error on PHP failures, when `production` setting is `true`
