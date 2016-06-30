@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * Added `ConfigModuleService`
+ * Improved SQL handler
  * Improved internals
 
 1.1
