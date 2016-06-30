@@ -101,7 +101,7 @@ final class SqlConfigService implements ConfigServiceInterface
     public function storeModule($module, array $vars)
     {
         foreach ($vars as $key => $value) {
-            if (!$this->store($key, $value)) {
+            if (!$this->store($module, $key, $value)) {
                 return false;
             }
         }
