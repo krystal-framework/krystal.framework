@@ -25,6 +25,15 @@ interface ConfigServiceInterface
     public function store($module, $name, $value);
 
     /**
+     * Stores a collection for a module
+     * 
+     * @param string $module
+     * @param array $vars
+     * @return boolean
+     */
+    public function storeModule($module, array $vars);
+
+    /**
      * Returns all configuration entries by associated module
      * 
      * @param string $module

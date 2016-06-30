@@ -92,6 +92,24 @@ final class SqlConfigService implements ConfigServiceInterface
     }
 
     /**
+     * Stores a collection for a module
+     * 
+     * @param string $module
+     * @param array $vars
+     * @return boolean
+     */
+    public function storeModule($module, array $vars)
+    {
+        foreach ($vars as $key => $value) {
+            if (!$this->store($key, $value)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Returns all configuration entries by associated module
      * 
      * @param string $module
