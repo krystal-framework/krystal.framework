@@ -68,7 +68,7 @@ final class Kernel implements KernelInterface
     private function getComponents()
     {
         // Order of components being registered is extremely important!
-        $components = array(
+        return array(
             new Component\Request(),
             new Component\Paginator(),
             new Component\Db(),
@@ -78,6 +78,7 @@ final class Kernel implements KernelInterface
             new Component\AuthAttemptLimit(),
             new Component\ParamBag(),
             new Component\AppConfig(),
+            new Component\Config(),
             new Component\ModuleManager(),
             new Component\Translator(),
             new Component\Response(),
@@ -87,22 +88,11 @@ final class Kernel implements KernelInterface
             new Component\View(),
             new Component\Profiler(),
             new Component\Cache(),
-            new Component\CsrfProtector()
+            new Component\CsrfProtector(),
+            new Component\Captcha(),
+            // Dispatcher always must be very last component to be registered
+            new Component\Dispatcher()
         );
-
-        // Captcha is optional component, so we would include it in case it has been defined in configuration
-        if (isset($this->config['components']['captcha'])) {
-            array_push($components, new Component\Captcha());
-        }
-
-        if (isset($this->config['components']['config'])) {
-            array_push($components, new Component\Config());
-        }
-
-        // Dispatcher always must be very last component to be registered
-        array_push($components, new Component\Dispatcher());
-
-        return $components;
     }
 
     /**

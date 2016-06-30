@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now components are being registered without being checked for entries in the main configuration array
  * Renamed `Model\AbstractManager` to `Model\AbstractService`
  * Added conception of core modules. 
    They have a validation method, the framework can not be started without them, they can't be removed from file system via built-in handler
