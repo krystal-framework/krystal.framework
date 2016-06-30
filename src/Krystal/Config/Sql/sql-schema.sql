@@ -5,4 +5,4 @@ CREATE TABLE `config` (
  `name` char(30) NOT NULL,
  `value` TEXT
  
-) type=MyISAM DEFAULT CHARSET=UTF8;
+) DEFAULT CHARSET=UTF8;
