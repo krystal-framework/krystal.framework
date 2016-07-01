@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * The way of storing configuration in files has been rewritten
  * Added `ConfigModuleService`
  * Improved SQL handler
  * Improved internals
