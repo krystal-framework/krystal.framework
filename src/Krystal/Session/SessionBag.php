@@ -256,6 +256,23 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
     }
 
     /**
+     * Determines whether all keys present in the session storage
+     * 
+     * @param array $keys
+     * @return boolean
+     */
+    public function hasMany(array $keys)
+    {
+        foreach ($keys as $key) {
+            if (!$this->has($key)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Reads data from a session
      * 
      * @param string $key

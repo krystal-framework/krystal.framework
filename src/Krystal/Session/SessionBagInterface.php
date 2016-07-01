@@ -112,6 +112,14 @@ interface SessionBagInterface
     public function has($key);
 
     /**
+     * Determines whether all keys present in the session storage
+     * 
+     * @param array $keys
+     * @return boolean
+     */
+    public function hasMany(array $keys);
+
+    /**
      * Reads data from a session
      * 
      * @param string $key
