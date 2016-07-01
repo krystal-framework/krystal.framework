@@ -42,7 +42,7 @@ interface ConfigModuleServiceInterface
     /**
      * Returns all configuration
      * 
-     * @return array|object
+     * @return array
      */
     public function getAll();
 
