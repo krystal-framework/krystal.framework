@@ -158,7 +158,7 @@ final class SqlConfigService implements ConfigServiceInterface
     public function hasMany($module, array $keys)
     {
         foreach ($keys as $key) {
-            if (!$this->has($key)) {
+            if (!$this->has($module, $key)) {
                 return false;
             }
         }
