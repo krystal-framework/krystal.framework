@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In Cookie Bag service added `hasMany()` method
  * In \Krystal\Http\Response\HttpResponse::setContentType()` dropped second argument
  * Added `authenticate()` method in response service for HTTP authentication
  * Added `respondAsJson()` and `respondAsXml()` methods in response service

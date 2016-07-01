@@ -164,4 +164,21 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
     {
         return isset($this->cookies[$key]);
     }
+
+    /**
+     * Determines whether several keys exist in the cookie storage
+     * 
+     * @param array $keys
+     * @return boolean
+     */
+    public function hasMany(array $keys)
+    {
+        foreach ($keys as $key) {
+            if (!$this->has($key)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

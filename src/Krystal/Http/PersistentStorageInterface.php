@@ -59,4 +59,12 @@ interface PersistentStorageInterface
      * @return boolean TRUE if exists, FALSE if not
      */
     public function has($key);
+
+    /**
+     * Determines whether several keys exist in the cookie storage
+     * 
+     * @param array $keys
+     * @return boolean
+     */
+    public function hasMany(array $keys);
 }
