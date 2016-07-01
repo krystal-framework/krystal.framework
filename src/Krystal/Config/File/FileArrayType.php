@@ -13,25 +13,25 @@ namespace Krystal\Config\File;
 
 use LogicException;
 
-final class FileArray extends FileAbstract
+final class FileArrayType implements FileTypeInterface
 {
     /**
      * {@inheritDoc}
      */
-    protected function render()
+    public function render(array $config)
     {
-        return "<?php\n return ".var_export($this->config, true).';';
+        return "<?php\n return ".var_export($config, true).';';
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function fetch()
+    public function fetch($file)
     {
-        $array = require($this->path);
+        $array = require($file);
 
         if (!is_array($array)) {
-            throw new LogicException(sprintf('Configuration file "%s" must return an array', $this->path));
+            throw new LogicException(sprintf('Configuration file "%s" must return an array', $file));
         } else {
             return $array;
         }
