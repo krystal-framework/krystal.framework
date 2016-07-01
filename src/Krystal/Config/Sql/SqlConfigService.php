@@ -149,6 +149,24 @@ final class SqlConfigService implements ConfigServiceInterface
     }
 
     /**
+     * Checks whether many keys exists at once
+     * 
+     * @param string $module
+     * @param array $keys
+     * @return boolean
+     */
+    public function hasMany($module, array $keys)
+    {
+        foreach ($keys as $key) {
+            if (!$this->has($key)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Removes all configuration
      * 
      * @return boolean

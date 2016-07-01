@@ -97,6 +97,17 @@ class ConfigModuleService implements ConfigModuleServiceInterface
     }
 
     /**
+     * Checks whether many configuration keys exists at once
+     * 
+     * @param array $keys
+     * @return boolean
+     */
+    public function hasMany(array $keys)
+    {
+        return $this->configService->hasMany($this->module, $keys);
+    }
+
+    /**
      * Removes a key
      * 
      * @param string $key

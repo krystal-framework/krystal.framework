@@ -55,6 +55,14 @@ interface ConfigModuleServiceInterface
     public function has($key);
 
     /**
+     * Checks whether many configuration keys exists at once
+     * 
+     * @param array $keys
+     * @return boolean
+     */
+    public function hasMany(array $keys);
+
+    /**
      * Removes a key
      * 
      * @param string $key
