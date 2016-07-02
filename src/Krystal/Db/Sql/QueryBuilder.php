@@ -451,7 +451,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function select($type = null, $distinct = false)
     {
-        $type = $this->getSelectType($type);
+        $type = $this->createSelectData($type);
 
         if ($distinct === true) {
             $this->append('SELECT DISTINCT ' . $type);
@@ -474,7 +474,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param mixed $type
      * @return string
      */
-    private function getSelectType($type)
+    private function createSelectData($type)
     {
         // * is a special keyword, which doesn't need to be wrapped
         if ($type !== '*' && $type !== null && !is_array($type)) {
@@ -483,26 +483,21 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 
         // Special case when $type is array
         if (is_array($type)) {
-            if (ArrayUtils::hasAtLeastOneArrayValue($type)) {
-                $collection = array();
+            $collection = array();
 
-                foreach ($type as $key => $value) {
-                    // Did we receive an alias?
-                    if (is_array($value)) {
-                        foreach ($value as $column => $alias) {
-                            array_push($collection, sprintf('%s AS %s', $this->wrap($column), $this->wrap($alias)));
-                        }
-
-                    } else {
-                        array_push($collection, $value);
-                    }
+            foreach ($type as $column => $alias) {
+                // Did we receive an alias?
+                if (!is_numeric($column)) {
+                    $push = sprintf('%s AS %s', $this->wrap($column), $this->wrap($alias));
+                } else {
+                    $push = $alias;
                 }
 
-                $type = $collection;
+                array_push($collection, $push);
             }
 
             // And finally, separate via commas
-            $type = implode(', ', $type);
+            $type = implode(', ', $collection);
         }
 
         return $type;

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Simplified the way of building aliases in SELECT query
  * Added `dropTable()` generator and shortcut
  * Finished partial table prefix implementation
  * Dropped necessary conditional statements in JOIN builders

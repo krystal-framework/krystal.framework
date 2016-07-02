@@ -46,7 +46,7 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     public function testCanGenerateColumnsWithAlias()
     {
         $this->qb->select(array(
-            array('table.column' => 'alias'),
+            'table.column' => 'alias',
             'name'
         ));
 
