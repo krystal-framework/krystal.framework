@@ -1058,6 +1058,17 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends ON
+     * 
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function on()
+    {
+        $this->append(' ON ');
+        return $this;
+    }
+
+    /**
      * Appends HAVING() clause
      * 
      * @param string $function Aggregate function

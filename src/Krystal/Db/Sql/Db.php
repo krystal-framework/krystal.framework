@@ -919,6 +919,17 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends ON
+     * 
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function on()
+    {
+        $this->queryBuilder->on();
+        return $this;
+    }
+
+    /**
      * Appends HAVING() clause
      * 
      * @param string $function Aggregate function

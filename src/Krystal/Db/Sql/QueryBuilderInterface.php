@@ -510,6 +510,13 @@ interface QueryBuilderInterface
     public function fullJoin($table);
 
     /**
+     * Appends ON
+     * 
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function on();
+
+    /**
      * Appends HAVING() clause
      * 
      * @param string $function Aggregate function
