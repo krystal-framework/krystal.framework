@@ -1067,11 +1067,14 @@ final class Db implements DbInterface, RelationableServiceInterface
             return $this;
         }
 
-        $placeholder = $this->toPlaceholder($column);
+        if ($value instanceof RawSqlFragment) {
+            $placeholder = $value->getFragment();
+        } else {
+            $placeholder = $this->toPlaceholder($column);
+            $this->bind($placeholder, $value);
+        }
 
         call_user_func(array($this->queryBuilder, $method), $column, $operator, $placeholder);
-        $this->bind($placeholder, $value);
-
         return $this;
     }
 
