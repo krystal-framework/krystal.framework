@@ -6,7 +6,7 @@ CHANGELOG
 
  * Added `dropTable()` generator and shortcut
  * Finished partial table prefix implementation
- * Fixed issue with join methods
+ * Dropped necessary conditional statements in JOIN builders
  * Added optional fillable protection in `Db\Sql\AbstractMapper::persist()` method
  * Added `createPaginator()` in `Krystal\Db\Sql\AbstractMapper`
  * Fixed binding issue with placeholders in `DB::raw()`

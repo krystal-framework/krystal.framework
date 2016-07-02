@@ -1010,13 +1010,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * 
      * @param string $type JOIN type
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    private function join($type, $table, $a, $b)
+    private function join($type, $table)
     {
-        $this->append(sprintf(' %s JOIN %s ON %s = %s', $type, $table, $a, $b));
+        $this->append(sprintf(' %s JOIN %s ', $type, $table));
         return $this;
     }
 
@@ -1024,52 +1022,44 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * Appends INNER JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function innerJoin($table, $a, $b)
+    public function innerJoin($table)
     {
-        return $this->join('INNER', $table, $a, $b);
+        return $this->join('INNER', $table);
     }
 
     /**
      * Appends LEFT JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function leftJoin($table, $a, $b)
+    public function leftJoin($table)
     {
-        return $this->join('LEFT', $table, $a, $b);
+        return $this->join('LEFT', $table);
     }
 
     /**
      * Appends RIGHT JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function rightJoin($table, $a, $b)
+    public function rightJoin($table)
     {
-        return $this->join('RIGHT', $table, $a, $b);
+        return $this->join('RIGHT', $table);
     }
 
     /**
      * Append FULL OUTER JOIN
      *
      * @param string $table Right table (second)
-     * @param string $a A column from the left table (first)
-     * @param string $b A column from the right table (second)
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function fullJoin($table, $a, $b)
+    public function fullJoin($table)
     {
-        return $this->join('FULL OUTER', $table, $a, $b);
+        return $this->join('FULL OUTER', $table);
     }
 
     /**

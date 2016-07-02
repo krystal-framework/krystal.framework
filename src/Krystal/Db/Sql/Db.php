@@ -874,13 +874,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends INNER JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $left A column from the left table (first)
-     * @param string $right A column from the right table (second)
      * @return \Krystal\Db\Sql\Db
      */
-    public function innerJoin($table, $left, $right)
+    public function innerJoin($table)
     {
-        $this->queryBuilder->innerJoin($table, $left, $right);
+        $this->queryBuilder->innerJoin($table);
         return $this;
     }
 
@@ -888,13 +886,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends LEFT JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $left A column from the left table (first)
-     * @param string $right A column from the right table (second)
      * @return \Krystal\Db\Sql\Db
      */
-    public function leftJoin($table, $left, $right)
+    public function leftJoin($table)
     {
-        $this->queryBuilder->leftJoin($table, $left, $right);
+        $this->queryBuilder->leftJoin($table);
         return $this;
     }
 
@@ -902,13 +898,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends RIGHT JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $left A column from the left table (first)
-     * @param string $right A column from the right table (second)
      * @return \Krystal\Db\Sql\Db
      */
-    public function rightJoin($table, $left, $right)
+    public function rightJoin($table)
     {
-        $this->queryBuilder->rightJoin($table, $left, $right);
+        $this->queryBuilder->rightJoin($table);
         return $this;
     }
 
@@ -916,13 +910,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Append FULL OUTER JOIN
      *
      * @param string $table Right table (second)
-     * @param string $left A column from the left table (first)
-     * @param string $right A column from the right table (second)
      * @return \Krystal\Db\Sql\Db
      */
-    public function fullJoin($table, $left, $right)
+    public function fullJoin($table)
     {
-        $this->queryBuilder->fullJoin($table, $left, $right);
+        $this->queryBuilder->fullJoin($table);
         return $this;
     }
 
