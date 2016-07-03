@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Added `NullCache`
+
 1.1
 ---
 
