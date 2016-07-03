@@ -103,6 +103,15 @@ interface ViewManagerInterface
     public function setCompress($compress);
 
     /**
+     * Returns a variable
+     * 
+     * @param string $var Variable name
+     * @param mixed $default Default value to be returned in case a variable doesn't exist
+     * @return mixed
+     */
+    public function getVariable($var, $default = false);
+
+    /**
      * Adds a variable
      * 
      * @param string $name Variable name in view
@@ -125,6 +134,14 @@ interface ViewManagerInterface
      * @return boolean
      */
     public function hasVariables();
+
+    /**
+     * Checks whether a variable exist
+     * 
+     * @param string $var
+     * @return boolean
+     */
+    public function hasVariable($var);
 
     /**
      * Generates URL by known controller's syntax and optional arguments

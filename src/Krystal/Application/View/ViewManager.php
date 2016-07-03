@@ -267,6 +267,22 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
+     * Returns a variable
+     * 
+     * @param string $var Variable name
+     * @param mixed $default Default value to be returned in case a variable doesn't exist
+     * @return mixed
+     */
+    public function getVariable($var, $default = false)
+    {
+        if ($this->hasVariable($var)) {
+            return $this->variables[$var];
+        } else {
+            return $default;
+        }
+    }
+
+    /**
      * Adds a variable
      * 
      * @param string $name Variable name in view
@@ -302,6 +318,17 @@ final class ViewManager implements ViewManagerInterface
     public function hasVariables()
     {
         return !empty($this->variables);
+    }
+
+    /**
+     * Checks whether a variable exist
+     * 
+     * @param string $var
+     * @return boolean
+     */
+    public function hasVariable($var)
+    {
+        return array_key_exists($var, $this->variables);
     }
 
     /**

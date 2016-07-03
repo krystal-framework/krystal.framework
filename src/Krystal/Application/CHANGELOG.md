@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In view service, added `hasVariable()` and `getVariable()`
  * Since now components are being registered without being checked for entries in the main configuration array
  * Renamed `Model\AbstractManager` to `Model\AbstractService`
  * Added conception of core modules. 
