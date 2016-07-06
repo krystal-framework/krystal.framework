@@ -152,6 +152,16 @@ interface ViewManagerInterface
     public function url();
 
     /**
+     * Generates URL filtered by mapped index
+     * 
+     * @param string $controller
+     * @param array $args
+     * @param integer $index
+     * @return string
+     */
+    public function mapUrl($controller, array $args = array(), $index = 0);
+
+    /**
      * Prints a string
      * 
      * @param string $message

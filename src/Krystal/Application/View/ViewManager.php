@@ -342,7 +342,20 @@ final class ViewManager implements ViewManagerInterface
         $args = func_get_args();
         $controller = array_shift($args);
 
-        return $this->urlBuilder->build($controller, $args);
+        return $this->urlBuilder->createUrl($controller, $args);
+    }
+
+    /**
+     * Generates URL filtered by mapped index
+     * 
+     * @param string $controller
+     * @param array $args
+     * @param integer $index
+     * @return string
+     */
+    public function mapUrl($controller, array $args = array(), $index = 0)
+    {
+        return $this->urlBuilder->createUrl($controller, $args, $index);
     }
 
     /**
