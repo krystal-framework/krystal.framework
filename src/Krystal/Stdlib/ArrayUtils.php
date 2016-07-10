@@ -16,6 +16,20 @@ use LogicException;
 abstract class ArrayUtils
 {
     /**
+     * Merges two arrays removing keys
+     * 
+     * @param array $first
+     * @param array $second
+     * @param array $keys Keys to be removed after merging
+     * @return array
+     */
+    public static function mergeWithout(array $first, array $second, array $keys)
+    {
+        $result = array_merge($first, $second);
+        return self::arrayWithout($result, $keys);
+    }
+
+    /**
      * Determines whether all keys exist in a collection
      * 
      * @param array $collection

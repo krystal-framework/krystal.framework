@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `mergeWithout()` in `Stdlib\ArrayUtils`
  * Moved away exception handler to standalone component
  * Added optional support for filters `VirtualEntity` when defining a setter
  * Forced to throw `\UnderflowException` when defining a setter with no arguments in `VirtualEntity`
