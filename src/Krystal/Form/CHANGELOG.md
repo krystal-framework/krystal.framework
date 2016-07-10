@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `Element::dynamic()` renderer
  * Added 3 new methods in `BreadcrumbBag` service to simplify work with names: `getNames()`, `getFirstName()`, `getLastName()`
  * Added link() method in `\Form\Element` to generate links
  * Added label() method in `\Form\Element` to generate labels

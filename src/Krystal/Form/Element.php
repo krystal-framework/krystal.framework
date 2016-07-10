@@ -12,9 +12,52 @@
 namespace Krystal\Form;
 
 use Krystal\Form\Element as Node;
+use UnexpectedValueException;
 
 class Element
 {
+    /**
+     * Creates dynamic input element
+     * 
+     * @param string $type Input type
+     * @param string $name
+     * @param string $value
+     * @param array $attributes Input attributes
+     * @throws \UnexpectedValueException If unknown type supplied
+     * @return string
+     */
+    public static function dynamic($type, $name, $value, array $attributes = array(), $extra = array())
+    {
+        switch ($type) {
+            case 'text':
+                return self::text($name, $value, $attributes);
+            case 'password':
+                return self::password($name, $value, $attributes);
+            case 'url':
+                return self::url($name, $value, $attributes);
+            case 'range':
+                return self::range($name, $value, $attributes);
+            case 'number':
+                return self::number($name, $value, $attributes);
+            case 'hidden':
+                return self::hidden($name, $value, $attributes);
+            case 'date':
+                return self::date($name, $value, $attributes);
+            case 'color':
+                return self::color($name, $value, $attributes);
+            case 'textarea':
+                return self::textarea($name, $value, $attributes);
+            case 'radio':
+                return self::radio($name, $value, $attributes);
+            case 'checkbox':
+                return self::checkbox($name, $value, $attributes);
+            case 'select':
+                return self::select($name, $extra, $value, $attributes);
+            default:
+                throw new UnexpectedValueException(sprintf('Unexpected value supplied %s', $type));
+        }
+    }
+
     /**
      * Creates link element
      * 
