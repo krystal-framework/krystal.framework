@@ -23,7 +23,7 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
 
     public function testTargetSentenceExists()
     {
-        $this->assertTrue($this->translator->exists('To do something'));
+        $this->assertTrue($this->translator->has('To do something'));
     }
 
     public function testCanBeExtended()

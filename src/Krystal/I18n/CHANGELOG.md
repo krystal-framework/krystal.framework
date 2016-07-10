@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Renamed `exists()` method to `has()`
  * Added ability to reset translations
  * Performance improvement
 

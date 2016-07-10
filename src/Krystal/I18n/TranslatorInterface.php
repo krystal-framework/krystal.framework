@@ -49,5 +49,5 @@ interface TranslatorInterface
      * @param string $string The target string
      * @return boolean
      */
-    public function exists($string);
+    public function has($string);
 }
