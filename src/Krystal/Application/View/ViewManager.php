@@ -673,12 +673,11 @@ final class ViewManager implements ViewManagerInterface
      */
     public function loadPartial($name, array $vars = array())
     {
-        extract(array_replace_recursive($vars, $this->variables));
+        $partialTemplateFile = $this->getPartialBag()->getPartialFile($name);
 
-        $file = $this->getPartialBag()->getPartialFile($name);
-
-        if (is_file($file)) {
-            include($file);
+        if (is_file($partialTemplateFile)) {
+            extract(array_replace_recursive($vars, $this->variables));
+            include($partialTemplateFile);
         } else {
             return false;
         }
