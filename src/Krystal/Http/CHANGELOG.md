@@ -6,7 +6,7 @@ CHANGELOG
 
  * In request service added `isUrlLike()` method
  * In Cookie Bag service added `hasMany()` method
- * In \Krystal\Http\Response\HttpResponse::setContentType()` dropped second argument
+ * In `\Krystal\Http\Response\HttpResponse::setContentType()` dropped second argument
  * Added `authenticate()` method in response service for HTTP authentication
  * Added `respondAsJson()` and `respondAsXml()` methods in response service
  * Added `getHeaderBag()` method in response service to be able to alter headers
