@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In request service added `isUrlLike()` method
  * In Cookie Bag service added `hasMany()` method
  * In \Krystal\Http\Response\HttpResponse::setContentType()` dropped second argument
  * Added `authenticate()` method in response service for HTTP authentication

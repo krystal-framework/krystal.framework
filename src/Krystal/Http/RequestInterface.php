@@ -14,6 +14,14 @@ namespace Krystal\Http;
 interface RequestInterface
 {
     /**
+     * Checks whether a path looks as an URL
+     * 
+     * @param string $path
+     * @return boolean
+     */
+    public function isUrlLike($path);
+
+    /**
      * Checks whether requested either via POST or GET
      * 
      * @return boolean

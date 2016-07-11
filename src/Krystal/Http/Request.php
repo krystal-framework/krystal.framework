@@ -70,6 +70,18 @@ final class Request implements RequestInterface
     }
 
     /**
+     * Checks whether a path looks as an URL
+     * 
+     * @param string $path
+     * @return boolean
+     */
+    public function isUrlLike($path)
+    {
+        $path = trim($path);
+        return substr($path, 0, 4) === 'http' || substr($path, 0, 2) === '//';
+    }
+
+    /**
      * Checks whether requested either via POST or GET
      * 
      * @return boolean
