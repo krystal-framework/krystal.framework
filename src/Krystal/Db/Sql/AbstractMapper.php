@@ -385,12 +385,34 @@ abstract class AbstractMapper
     /**
      * Drops a table
      * 
+     * @param string $table Optionally current table can be overridden
      * @return boolean
      */
-    final public function dropTable()
+    final public function dropTable($table = null)
     {
-        return $this->db->dropTable(static::getTableName(), true)
+        if (is_null($table)) {
+            $table = static::getTableName();
+        }
+
+        return $this->db->dropTable($table, true)
                         ->execute();
+    }
+
+    /**
+     * Drop several tables at once
+     * 
+     * @param array $tables
+     * @return boolean
+     */
+    final public function dropTables(array $tables)
+    {
+        foreach ($tables as $table) {
+            if (!$this->dropTable($table)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

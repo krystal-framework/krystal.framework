@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `dropTables()` that can drop several tables at once in `Sql\AbstractMapper`
  * Added `executeSqlFromString()` in `Sql\AbstractMapper`
  * Added support for raw SQL fragments for values in WHERE clause
  * Simplified the way of building aliases in SELECT query
@@ -12,6 +13,7 @@ CHANGELOG
  * Dropped necessary conditional statements in JOIN builders
  * Added optional fillable protection in `Db\Sql\AbstractMapper::persist()` method
  * Added `createPaginator()` in `Krystal\Db\Sql\AbstractMapper`
+ * Fixed binding issue with placeholders in `DB::raw()`
  * Fixed binding issue with placeholders in `DB::raw()`
  * Since now shortcut methods are public, not protected as they used to be
 
