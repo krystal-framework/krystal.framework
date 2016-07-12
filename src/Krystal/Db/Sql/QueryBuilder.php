@@ -1428,11 +1428,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     /**
      * Generates DROP TABLE statement
      * 
-     * @param string $table Table name
+     * @param string|array $table Table name
      * @param boolean $ifExists Whether to generate IF EXIST condition as well
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function dropTable($table, $ifExists = true)
+    public function dropTable($target, $ifExists = true)
     {
         $this->append('DROP TABLE');
 
@@ -1440,7 +1440,15 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $this->append(' IF EXISTS');
         }
 
-        $this->append(sprintf(' %s', $this->wrap($table)));
+        if (!is_array($target)) {
+            $target = array($target);
+        }
+
+        foreach ($target as &$table) {
+            $table = $this->wrap($table);
+        }
+
+        $this->append(sprintf(' %s', implode(', ', $target)));
         return $this;
     }
 }

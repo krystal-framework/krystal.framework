@@ -171,6 +171,13 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->verify('DROP TABLE `users`');
     }
 
+    public function testCanGenerateDropManyTables()
+    {
+        $this->qb->dropTable(array('users', 'passwords'), false);
+
+        $this->verify('DROP TABLE `users`, `passwords`');
+    }
+
     public function testCanGenerateDropTableIfExists()
     {
         $this->qb->dropTable('users');
