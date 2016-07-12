@@ -671,7 +671,7 @@ interface QueryBuilderInterface
     /**
      * Generates DROP TABLE statement
      * 
-     * @param string $table Table name
+     * @param string|array $table Table name
      * @param boolean $ifExists Whether to generate IF EXIST condition as well
      * @return \Krystal\Db\Sql\QueryBuilder
      */
