@@ -61,7 +61,7 @@ final class MapperFactory implements MapperFactoryInterface
      * 
      * @return array
      */
-    private function getArgs()
+    private function createArgs()
     {
         $args = array($this->db);
 
@@ -82,6 +82,6 @@ final class MapperFactory implements MapperFactoryInterface
     public function build($namespace)
     {
         $builder = new InstanceBuilder();
-        return $builder->build($namespace, $this->getArgs());
+        return $builder->build($namespace, $this->createArgs());
     }
 }
