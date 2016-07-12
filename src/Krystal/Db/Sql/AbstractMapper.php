@@ -89,6 +89,17 @@ abstract class AbstractMapper
     }
 
     /**
+     * Executes raw SQL from a string
+     * 
+     * @param string $sql
+     * @return integer Number of affected rows
+     */
+    final protected function executeSqlFromString($sql)
+    {
+        return $this->db->getPdo()->exec($sql);
+    }
+
+    /**
      * Checks whether shortcut data
      * 
      * @return void

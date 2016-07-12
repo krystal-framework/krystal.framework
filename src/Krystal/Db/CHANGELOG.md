@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `executeSqlFromString()` in `Sql\AbstractMapper`
  * Added support for raw SQL fragments for values in WHERE clause
  * Simplified the way of building aliases in SELECT query
  * Added `dropTable()` generator and shortcut
