@@ -484,7 +484,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function execute()
     {
-        // Execute without doiing anything with returned value
+        // Execute without doing anything with returned value
         $this->getStmt();
         return true;
     }
