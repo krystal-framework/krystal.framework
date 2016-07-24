@@ -53,9 +53,9 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
      */
     public function removeAll()
     {
-        if ($this->hasCookies() !== false) {
-            foreach ($this->cookies as $key => $val) {
-                $this->delete($key);
+        if (!$this->isEmpty()) {
+            foreach ($this->getAll() as $key => $val) {
+                $this->remove($key);
             }
 
             return true;
