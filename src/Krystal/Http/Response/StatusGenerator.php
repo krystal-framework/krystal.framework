@@ -104,13 +104,21 @@ final class StatusGenerator implements StatusGeneratorInterface
      * Returns description by its associated code
      * 
      * @param integer $code Status code
+     * @throws \OutOfRangeException If the supplied code is out of range
      * @return string
      */
     public function getDescriptionByStatusCode($code)
     {
         // Make sure the expected type supplied
         $code = (int) $code;
-        return $this->statuses[$code];
+
+        if (isset($this->statuses[$code])) {
+            return $this->statuses[$code];
+        } else {
+            throw new OutOfRangeException(
+                sprintf('The status code "%s" is out of allowed range', $code)
+            );
+        }
     }
 
     /**

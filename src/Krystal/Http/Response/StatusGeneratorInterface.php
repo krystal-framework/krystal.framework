@@ -25,6 +25,7 @@ interface StatusGeneratorInterface
      * Returns description by its associated code
      * 
      * @param integer $code Status code
+     * @throws \OutOfRangeException If the supplied code is out of range
      * @return string
      */
     public function getDescriptionByStatusCode($code);
