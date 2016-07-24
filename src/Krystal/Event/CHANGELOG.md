@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Added `attachMany()`, `hasMany()`
+
 1.1
 ---
 

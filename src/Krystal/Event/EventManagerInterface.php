@@ -26,6 +26,14 @@ interface EventManagerInterface
     public function attach($event, Closure $listener);
 
     /**
+     * Attaches several events at once
+     * 
+     * @param array $collection
+     * @return \Krystal\Event\EventManager
+     */
+    public function attachMany(array $collection);
+
+    /**
      * Detaches an event
      * 
      * @param string $event Event name
@@ -57,6 +65,14 @@ interface EventManagerInterface
      * @return boolean
      */
     public function has($event);
+
+    /**
+     * Checks whether event names are registered
+     * 
+     * @param array $events
+     * @return boolean
+     */
+    public function hasMany(array $events);
 
     /**
      * Counts amount of defined events

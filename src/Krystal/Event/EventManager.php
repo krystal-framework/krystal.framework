@@ -63,6 +63,21 @@ final class EventManager implements EventManagerInterface
     }
 
     /**
+     * Attaches several events at once
+     * 
+     * @param array $collection
+     * @return \Krystal\Event\EventManager
+     */
+    public function attachMany(array $collection)
+    {
+        foreach ($collection as $event => $listener) {
+            $this->attach($event, $listener);
+        }
+
+        return $this;
+    }
+
+    /**
      * Detaches an event
      * 
      * @param string $event Event name
@@ -117,6 +132,23 @@ final class EventManager implements EventManagerInterface
     public function has($event)
     {
         return isset($this->listeners[$event]);
+    }
+
+    /**
+     * Checks whether event names are registered
+     * 
+     * @param array $events
+     * @return boolean
+     */
+    public function hasMany(array $events)
+    {
+        foreach ($events as $event) {
+            if (!$this->has($event)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
