@@ -59,7 +59,7 @@ final class SqlDbConnectorFactory implements SqlDbConnectorFactoryInterface
      * @throws \RuntimeException If unknown vendor name supplied
      * @return \Krystal\Db\Sql\LazyPDO
      */
-    private function getPdo($vendor, array $options)
+    private function createPdo($vendor, array $options)
     {
         // First of all, make sure it's possible to instantiate PDO instance by vendor name
         if (isset($this->map[$vendor])) {
@@ -84,6 +84,6 @@ final class SqlDbConnectorFactory implements SqlDbConnectorFactoryInterface
      */
     public function build($vendor, array $options)
     {
-        return new Db(new QueryBuilder(), $this->getPdo($vendor, $options), $this->paginator, new QueryLogger());
+        return new Db(new QueryBuilder(), $this->createPdo($vendor, $options), $this->paginator, new QueryLogger());
     }
 }
