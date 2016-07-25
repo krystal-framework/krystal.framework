@@ -37,6 +37,14 @@ final class HttpResponse implements HttpResponseInterface
     private $charset;
 
     /**
+     * HTTP Status code to be sent
+     * Success by default
+     * 
+     * @var integer
+     */
+    private $statusCode = 200;
+
+    /**
      * State initialization
      * 
      * @param \Krystal\Http\HeaderBagInterface $headerBag
@@ -147,7 +155,19 @@ final class HttpResponse implements HttpResponseInterface
     public function setStatusCode($code)
     {
         $this->headerBag->setStatusCode($code);
+        $this->statusCode = $code;
+
         return $this;
+    }
+
+    /**
+     * Returns HTTP status code
+     * 
+     * @return integer
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
 
     /**

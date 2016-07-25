@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In response service added `getStatusCode()` to return assigned HTTP status code
  * In request service added `isUrlLike()` method
  * In Cookie Bag service added `hasMany()` method
  * In `\Krystal\Http\Response\HttpResponse::setContentType()` dropped second argument

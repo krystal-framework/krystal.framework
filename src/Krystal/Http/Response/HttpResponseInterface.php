@@ -61,6 +61,13 @@ interface HttpResponseInterface
     public function setStatusCode($code);
 
     /**
+     * Returns HTTP status code
+     * 
+     * @return integer
+     */
+    public function getStatusCode();
+
+    /**
      * Redirects to given URL
      * 
      * @param string $url
