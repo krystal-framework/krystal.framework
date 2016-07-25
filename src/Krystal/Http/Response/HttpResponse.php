@@ -167,7 +167,7 @@ final class HttpResponse implements HttpResponseInterface
      */
     public function getStatusCode()
     {
-        return $this->statusCode;
+        return (int) $this->statusCode;
     }
 
     /**
@@ -234,6 +234,91 @@ final class HttpResponse implements HttpResponseInterface
     {
         $this->headerBag->appendPair('X-Powered-By', $signature);
         return $this;
+    }
+
+    /**
+     * Is the HTTP response was defined as client error?
+     *
+     * @return boolean
+     */
+    public function isClientError()
+    {
+        $code = $this->getStatusCode();
+        return ($code < 500 && $code >= 400);
+	}
+
+    /**
+     * Is the HTTP response was defined as forbidden?
+     *
+     * @return boolean
+     */
+    public function isForbidden()
+    {
+        return (403 === $this->getStatusCode());
+    }
+
+    /**
+     * Is the HTTP response was defined as informational?
+     *
+     * @return boolean
+     */
+    public function isInformational()
+    {
+        $code = $this->getStatusCode();
+        return ($code >= 100 && $code < 200);
+    }
+
+    /**
+     * Is the HTTP response was defined as not found?
+     *
+     * @return boolean
+     */
+    public function isNotFound()
+    {
+        return (404 === $this->getStatusCode());
+    }
+
+    /**
+     * Is the HTTP response was defined as OK?
+     *
+     * @return boolean
+     */
+    public function isOk()
+    {
+        return (200 === $this->getStatusCode());
+    }
+
+    /**
+     * Is the HTTP response was defined as server error?
+     *
+     * @return boolean
+     */
+    public function isServerError()
+    {
+        $code = $this->getStatusCode();
+        return (500 <= $code && 600 > $code);
+    }
+
+    /**
+     * Is the HTTP response was defined as redirect?
+     *
+     * @return boolean
+     */
+    public function isRedirect()
+    {
+        $code = $this->getStatusCode();
+        return (300 <= $code && 400 > $code);
+    }
+
+    /**
+     * Is the HTTP response was defined as successful?
+     *
+     * @return boolean
+     */
+    public function isSuccess()
+    {
+        $code = $this->getStatusCode();
+        return (200 <= $code && 300 > $code);
     }
 
     /**

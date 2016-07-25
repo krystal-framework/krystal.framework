@@ -108,6 +108,62 @@ interface HttpResponseInterface
     public function disableCache();
 
     /**
+     * Is the HTTP response was defined as client error?
+     *
+     * @return boolean
+     */
+    public function isClientError();
+
+    /**
+     * Is the HTTP response was defined as forbidden?
+     *
+     * @return boolean
+     */
+    public function isForbidden();
+
+    /**
+     * Is the HTTP response was defined as informational?
+     *
+     * @return boolean
+     */
+    public function isInformational();
+
+    /**
+     * Is the HTTP response was defined as not found?
+     *
+     * @return boolean
+     */
+    public function isNotFound();
+
+    /**
+     * Is the HTTP response was defined as OK?
+     *
+     * @return boolean
+     */
+    public function isOk();
+
+    /**
+     * Is the HTTP response was defined as server error?
+     *
+     * @return boolean
+     */
+    public function isServerError();
+
+    /**
+     * Is the HTTP response was defined as redirect?
+     *
+     * @return boolean
+     */
+    public function isRedirect();
+
+    /**
+     * Is the HTTP response was defined as successful?
+     *
+     * @return boolean
+     */
+    public function isSuccess();
+
+    /**
      * Sends the response
      * 
      * @param string $content Content to be sent
