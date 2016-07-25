@@ -11,8 +11,41 @@
 
 namespace Krystal\Text;
 
+use UnexpectedValueException;
+
 class TextUtils
 {
+    /**
+     * Creates a random string with fixed length
+     * 
+     * @param integer $length
+     * @param string $method Dictionary method
+     * @throws \UnexpectedValueException If unsupported dictionary method provided
+     * @return string
+     */
+    public static function randomString($length, $method = 'alnum')
+    {
+        $types = array(
+            'alpha' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            'alnum' => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            'numeric' => '0123456789'
+        );
+
+        if (isset($types[$method])) {
+            $dictionary = $types[$method];
+        } else {
+            throw new UnexpectedValueException(sprintf('Unsupported dictionary type provided "%s"', $method));
+        }
+
+        $output = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $output .= substr($dictionary, mt_rand(0, strlen($dictionary) -1), 1);
+        }
+
+        return $output;
+    }
+
     /**
      * Returns needle positions
      * 

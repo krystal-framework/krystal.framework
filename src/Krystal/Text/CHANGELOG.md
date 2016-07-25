@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In TextUtils added `randomString()`
  * Added `CurrencyConvertor` tool
  * Moved internals of `TextTrimmer` into `TextUtils::trim()`
  * Added `TextUtils::getNeedlePositions()` helper to extra positions of a string to be searched
