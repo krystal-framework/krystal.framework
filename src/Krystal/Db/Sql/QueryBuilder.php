@@ -290,6 +290,52 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Generate INSERT query for many records
+     * 
+     * @param string $table
+     * @param array $columns
+     * @param array $values
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function insertMany($table, array $columns, array $values)
+    {
+        // Escape column names
+        foreach ($columns as &$column) {
+            $column = $this->wrap($column);
+        }
+
+        // Validate the length
+        foreach ($values as $data) {
+            $dataCount = count($data);
+            $columnsCount = count($columns);
+
+            if ($dataCount !== $columnsCount) {
+                throw new Exception(sprintf('Count mismatch. One collection contains %s keys instead of expected %s', $dataCount, $columnsCount));
+            }
+        }
+
+        // Generate initial fragment
+        $sql = sprintf('INSERT INTO %s (%s) VALUES ', $table, implode(', ', $columns));
+
+        // Generate the rest
+        foreach ($values as $data) {
+            if (is_array($data)) {
+                $sql .= sprintf("(%s), ", implode(', ', $data));
+            } else {
+                throw new Exception(sprintf('3-rd argument should contain a collection of arrays, one of them is %s', gettype($data)));
+            }
+        }
+
+        // Tweak the ending fragment
+        $sql = substr($sql, 0, -2);
+        $sql .= ';';
+
+        // Done there
+        $this->append($sql);
+        return $this;
+    }
+
+    /**
      * Builds UPDATE query
      * 
      * @param string $table

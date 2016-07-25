@@ -33,6 +33,16 @@ interface QueryBuilderInterface
     public function insert($table, array $data, $ignore = false);
 
     /**
+     * Generate INSERT query for many records
+     * 
+     * @param string $table
+     * @param array $columns
+     * @param array $values
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function insertMany($table, array $columns, array $values);
+
+    /**
      * Builds UPDATE query
      * 
      * @return \Krystal\Db\Sql\QueryBuilder

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In database service, added `insertMany()` method
  * Added `dropTables()` that can drop several tables at once in `Sql\AbstractMapper`
  * Added `executeSqlFromString()` in `Sql\AbstractMapper`
  * Added support for raw SQL fragments for values in WHERE clause

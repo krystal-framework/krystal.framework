@@ -871,6 +871,35 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Generate INSERT query for many records
+     * 
+     * @param string $table
+     * @param array $columns
+     * @param array $values
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function insertMany($table, array $columns, array $values)
+    {
+        $collection = array();
+
+        foreach ($values as $index => $data) {
+            foreach ($data as $key){
+                // Create unique placeholder
+                $placeholder = $this->getUniqPlaceholder();
+
+                // Bind to the global stack
+                $this->bind($placeholder, $key);
+
+                // Push to the placeholder stack as well
+                $collection[$index][] = $placeholder;
+            }
+        }
+
+        $this->queryBuilder->insertMany($table, $columns, $collection);
+        return $this;
+    }
+
+    /**
      * Appends INNER JOIN
      * 
      * @param string $table Right table (second)
