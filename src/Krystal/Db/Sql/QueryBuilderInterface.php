@@ -28,7 +28,7 @@ interface QueryBuilderInterface
      * @param array $data Simply key value pair (without placeholders)
      * @param boolean $ignore Whether to ignore when PK collisions occur
      * @throws \LogicException if $data array is empty
-     * @return boolean
+     * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function insert($table, array $data, $ignore = false);
 
