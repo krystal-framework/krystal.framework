@@ -184,6 +184,16 @@ final class HttpResponse implements HttpResponseInterface
     }
 
     /**
+     * Redirects to home page
+     * 
+     * @return void
+     */
+    public function redirectToHome()
+    {
+        $this->redirect('/');
+    }
+
+    /**
      * Enables internal HTTP cache mechanism
      * 
      * @param integer $timestamp Last modified timestamp

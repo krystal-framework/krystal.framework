@@ -76,6 +76,13 @@ interface HttpResponseInterface
     public function redirect($url);
 
     /**
+     * Redirects to home page
+     * 
+     * @return void
+     */
+    public function redirectToHome();
+
+    /**
      * Enables internal HTTP cache mechanism
      * 
      * @param integer $timestamp Last modified timestamp
