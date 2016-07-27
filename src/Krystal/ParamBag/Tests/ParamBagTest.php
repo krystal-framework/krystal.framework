@@ -28,13 +28,13 @@ class ParamBagTest extends \PHPUnit_Framework_TestCase
     
     public function testDefinedKeyExists()
     {
-        $this->assertTrue($this->paramBag->exists('foo'));
+        $this->assertTrue($this->paramBag->has('foo'));
     }
     
     public function testCanSetNewPair()
     {
         $this->paramBag->set('new', 'value');
-        $this->assertTrue($this->paramBag->exists('new'));
+        $this->assertTrue($this->paramBag->has('new'));
     }
     
     public function testCanReturnDefinedKey()

@@ -19,7 +19,7 @@ interface ParamBagInterface
      * @param string $param Param name to be checked for existence
      * @return boolean
      */
-    public function exists($param);
+    public function has($param);
 
     /**
      * Appends a parameter

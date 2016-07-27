@@ -40,7 +40,7 @@ final class ParamBag implements ParamBagInterface
      * @param string $param Param name to be checked for existence
      * @return boolean
      */
-    public function exists($param)
+    public function has($param)
     {
         return array_key_exists($param, $this->params);
     }
@@ -82,7 +82,7 @@ final class ParamBag implements ParamBagInterface
      */
     public function get($param, $default = false)
     {
-        if ($this->exists($param)) {
+        if ($this->has($param)) {
             return $this->params[$param];
         } else {
             return $default;
