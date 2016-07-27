@@ -22,6 +22,14 @@ interface ParamBagInterface
     public function has($param);
 
     /**
+     * Checks whether several parameters are defined at once
+     * 
+     * @param array $params
+     * @return boolean
+     */
+    public function hasMany(array $params);
+
+    /**
      * Appends a parameter
      * 
      * @param string $key

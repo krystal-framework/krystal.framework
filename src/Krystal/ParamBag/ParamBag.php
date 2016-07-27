@@ -46,6 +46,23 @@ final class ParamBag implements ParamBagInterface
     }
 
     /**
+     * Checks whether several parameters are defined at once
+     * 
+     * @param array $params
+     * @return boolean
+     */
+    public function hasMany(array $params)
+    {
+        foreach ($params as $param) {
+            if (!$this->has($param)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Appends a parameter
      * 
      * @param string $key

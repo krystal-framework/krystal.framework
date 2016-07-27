@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `hasMany()`
  * Renamed `exists()` to `has()`
  * Added `setMany()` method
  * Forced to return `ParamBag::set()` the chain instead of void
