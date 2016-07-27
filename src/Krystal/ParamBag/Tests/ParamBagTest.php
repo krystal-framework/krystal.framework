@@ -1,14 +1,5 @@
 <?php
 
-/**
- * This file is part of the Krystal Framework
- * 
- * Copyright (c) No Global State Lab
- * 
- * For the full copyright and license information, please view
- * the license file that was distributed with this source code.
- */
-
 namespace Krystal\ParamBag\ParamBag\Tests;
 
 use Krystal\ParamBag\ParamBag;
@@ -25,18 +16,18 @@ class ParamBagTest extends \PHPUnit_Framework_TestCase
             'empty' => null
         ));
     }
-    
+
     public function testDefinedKeyExists()
     {
         $this->assertTrue($this->paramBag->has('foo'));
     }
-    
+
     public function testCanSetNewPair()
     {
         $this->paramBag->set('new', 'value');
         $this->assertTrue($this->paramBag->has('new'));
     }
-    
+
     public function testCanReturnDefinedKey()
     {
         $this->assertEquals($this->paramBag->get('foo'), 'bar');
