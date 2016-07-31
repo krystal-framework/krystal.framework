@@ -883,12 +883,17 @@ final class Db implements DbInterface, RelationableServiceInterface
         $collection = array();
 
         foreach ($values as $index => $data) {
-            foreach ($data as $key){
-                // Create unique placeholder
-                $placeholder = $this->getUniqPlaceholder();
+            foreach ($data as $key) {
+                // Support for raw SQL values
+                if ($key instanceof RawSqlFragment) {
+                    $placeholder = $key->getFragment();
+                } else {
+                    // Create unique placeholder
+                    $placeholder = $this->getUniqPlaceholder();
 
-                // Bind to the global stack
-                $this->bind($placeholder, $key);
+                    // Bind to the global stack
+                    $this->bind($placeholder, $key);
+                }
 
                 // Push to the placeholder stack as well
                 $collection[$index][] = $placeholder;
