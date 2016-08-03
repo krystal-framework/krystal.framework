@@ -320,17 +320,15 @@ final class ModuleManager implements ModuleManagerInterface
      * Shared method for performing module-related removals
      * 
      * @param string $path Target path
-     * @param string $message Exception's message
-     * @throws \RuntimeException If the directory doesn't exist
      * @return boolean Depending on success
      */
-    private function performRemoval($path, $message)
+    private function performRemoval($path)
     {
         if (is_dir($path)) {
             $fm = new FileManager();
             return $fm->rmdir($path);
         } else {
-            throw new RuntimeException($message);
+            return false;
         }
     }
 
@@ -338,35 +336,32 @@ final class ModuleManager implements ModuleManagerInterface
      * Removes module data from cache directory
      * 
      * @param string $module
-     * @throws \RuntimeException When trying to remove non-existent module from a directory
      * @return boolean
      */
     public function removeFromCacheDir($module)
     {
         // Create a path
         $path = $this->appConfig->getModuleCacheDir($module);
-        return $this->performRemoval($path, sprintf('Module called "%s" does not exist in uploading directory', $module));
+        return $this->performRemoval($path);
     }
 
     /**
      * Removes module data from uploading directory
      * 
      * @param string $module
-     * @throws \RuntimeException When trying to remove non-existent module from a directory
      * @return boolean
      */
     public function removeFromUploadsDir($module)
     {
         // Create a path
         $path = $this->appConfig->getModuleUploadsDir($module);
-        return $this->performRemoval($path, sprintf('Module called "%s" does not exist in uploading directory', $module));
+        return $this->performRemoval($path);
     }
 
     /**
      * Removes a module from file system
      * 
      * @param string $module Module name (as in the folder)
-     * @throws \RuntimeException When trying to remove non-existent module
      * @throws \LogicException If trying to remove core module
      * @return boolean Depending on success
      */
@@ -379,7 +374,7 @@ final class ModuleManager implements ModuleManagerInterface
         }
 
         $path = sprintf('%s/%s', $this->appConfig->getModulesDir(), $module);
-        return $this->performRemoval($path, sprintf('Module called "%s" does not exist in modules directory', $module));
+        return $this->performRemoval($path);
     }
 
     /**

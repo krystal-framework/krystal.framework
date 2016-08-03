@@ -67,7 +67,6 @@ interface ModuleManagerInterface
      * Removes module data from cache directory
      * 
      * @param string $module
-     * @throws \RuntimeException When trying to remove non-existent module from a directory
      * @return boolean
      */
     public function removeFromCacheDir($module);
@@ -76,7 +75,6 @@ interface ModuleManagerInterface
      * Removes module data from uploading directory
      * 
      * @param string $module
-     * @throws \RuntimeException When trying to remove non-existent module from a directory
      * @return boolean
      */
     public function removeFromUploadsDir($module);
@@ -85,7 +83,6 @@ interface ModuleManagerInterface
      * Removes a module from file system
      * 
      * @param string $module Module name (as in the folder)
-     * @throws \RuntimeException When trying to remove non-existent module
      * @throws \LogicException If trying to remove core module
      * @return boolean Depending on success
      */
