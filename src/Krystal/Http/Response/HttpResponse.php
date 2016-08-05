@@ -203,6 +203,19 @@ final class HttpResponse implements HttpResponseInterface
     }
 
     /**
+     * Redirects to previous page
+     * 
+     * @return void
+     */
+    public function redirectToPreviousPage()
+    {
+        // Do that in case it's possible
+        if (isset($this->server['HTTP_REFERER'])) {
+            $this->redirect($this->server['HTTP_REFERER']);
+        }
+    }
+
+    /**
      * Enables internal HTTP cache mechanism
      * 
      * @param integer $timestamp Last modified timestamp

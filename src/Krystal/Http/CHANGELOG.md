@@ -4,7 +4,7 @@ CHANGELOG
 1.3
 ---
 
- * In response service added `redirectToHome()` method
+ * In response service added `redirectToHome()` and `redirectToPreviousPage()` shortcut methods
  * In response service added informal methods for HTTP responses
  * In response service added `getStatusCode()` to return assigned HTTP status code
  * In request service added `isUrlLike()` method

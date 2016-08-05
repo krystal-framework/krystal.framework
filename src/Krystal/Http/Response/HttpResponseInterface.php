@@ -83,6 +83,13 @@ interface HttpResponseInterface
     public function redirectToHome();
 
     /**
+     * Redirects to previous page
+     * 
+     * @return void
+     */
+    public function redirectToPreviousPage();
+
+    /**
      * Enables internal HTTP cache mechanism
      * 
      * @param integer $timestamp Last modified timestamp
