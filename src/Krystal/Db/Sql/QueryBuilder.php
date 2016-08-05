@@ -1511,6 +1511,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends "RENAME TO" statement
+     * 
+     * @param string $old
+     * @param string $new
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function renameTable($old, $new)
+    {
+        $this->append(sprintf('RENAME TABLE %s TO %s ', $this->wrap($old), $this->wrap($new)));
+        return $this;
+    }
+
+    /**
      * Generates DROP TABLE statement
      * 
      * @param string|array $table Table name

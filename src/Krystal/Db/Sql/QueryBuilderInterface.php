@@ -709,6 +709,15 @@ interface QueryBuilderInterface
     public function truncate($table);
 
     /**
+     * Appends "RENAME TO" statement
+     * 
+     * @param string $old
+     * @param string $new
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function renameTable($old, $new);
+
+    /**
      * Generates DROP TABLE statement
      * 
      * @param string|array $table Table name

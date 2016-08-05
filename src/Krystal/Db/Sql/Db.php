@@ -1594,6 +1594,19 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends "RENAME TO" statement
+     * 
+     * @param string $old
+     * @param string $new
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function renameTable($old, $new)
+    {
+        $this->queryBuilder->renameTable($old, $new);
+        return $this;
+    }
+
+    /**
      * Appends DROP TABLE statement
      * 
      * @param string $table Table name
