@@ -1536,4 +1536,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $this->append(sprintf(' %s', implode(', ', $target)));
         return $this;
     }
+
+    /**
+     * Appends "ALTER TABLE" statement
+     * 
+     * @param string $table
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function alterTable($table)
+    {
+        $this->append(sprintf('ALTER TABLE %s', $this->wrap($table)));
+        return $this;
+    }
 }

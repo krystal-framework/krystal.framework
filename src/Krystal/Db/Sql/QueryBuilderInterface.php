@@ -716,4 +716,12 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function dropTable($table, $ifExists = true);
+
+    /**
+     * Appends "ALTER TABLE" statement
+     * 
+     * @param string $table
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function alterTable($table);
 }

@@ -1605,4 +1605,16 @@ final class Db implements DbInterface, RelationableServiceInterface
         $this->queryBuilder->dropTable($table, $ifExists);
         return $this;
     }
+
+    /**
+     * Appends "ALTER TABLE" statement
+     * 
+     * @param string $table
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function alterTable($table)
+    {
+        $this->queryBuilder->alterTable($table);
+        return $this;
+    }
 }
