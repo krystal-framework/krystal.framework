@@ -217,6 +217,16 @@ interface QueryBuilderInterface
     public function notLike($column, $value, $filter = false);
 
     /**
+     * Appends OR WHERE NOT LIKE condition
+     * 
+     * @param string $column
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function orWhereNotLike($column, $value, $filter = false);
+
+    /**
      * Appends a raw comparison with > operator
      * 
      * @param string $column

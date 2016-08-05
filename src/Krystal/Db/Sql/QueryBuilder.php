@@ -804,6 +804,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends OR WHERE NOT LIKE condition
+     * 
+     * @param string $column
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function orWhereNotLike($column, $value, $filter = false)
+    {
+        return $this->orWhere($column, 'NOT LIKE', $value, $filter);
+    }
+
+    /**
      * Appends OR WHERE clause with "greater than" operator
      * 
      * @param string $column

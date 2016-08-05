@@ -1410,6 +1410,20 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends OR WHERE NOT LIKE condition
+     * 
+     * @param string $column
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function orWhereNotLike($column, $value, $filter = false)
+    {
+        $value = $this->queryBuilder->prepareWildcard($value);
+        return $this->orWhere($column, 'NOT LIKE', $value, $filter);
+    }
+
+    /**
      * Appends WHERE LIKE condition
      * 
      * @param string $column
