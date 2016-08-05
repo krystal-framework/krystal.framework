@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In database service, added `createTable()` method to dynamically create tables
  * In database service, added `renameTable()` method to rename tables
  * In database service, also added methods for migrations: `alterTable()`, `addColumn()`, `dropColumn()`, `renameColumn()`, `alterColumn()`
  * In database service, added missing `notLike()`, `orWhereNotLike()`, `andWhereNotLike()` method

@@ -1681,4 +1681,20 @@ final class Db implements DbInterface, RelationableServiceInterface
         $this->queryBuilder->alterColumn($column, $type);
         return $this;
     }
+
+    /**
+     * Appends "CREATE TABLE" statement
+     * 
+     * @param string $table Table name
+     * @param array $definitions Column definitions
+     * @param string $engine Table engine
+     * @param boolean $ifNotExists Whether to include IF NOT EXITS statement
+     * @param string $charset Table charset
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function createTable($table, array $definitions, $engine = 'MyISAM', $ifNotExists = false, $charset = 'UTF8')
+    {
+        $this->queryBuilder->createTable($table, $definitions, $engine, $ifNotExists, $charset);
+        return $this;
+    }
 }

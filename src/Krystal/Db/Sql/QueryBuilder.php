@@ -1614,4 +1614,59 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $this->append(sprintf(' CHANGE %s %s %s ', $column, $column, $type));
         return $this;
     }
+
+    /**
+     * Appends "CREATE TABLE" statement
+     * 
+     * @param string $table Table name
+     * @param array $definitions Column definitions
+     * @param string $engine Table engine
+     * @param boolean $ifNotExists Whether to include IF NOT EXITS statement
+     * @param string $charset Table charset
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function createTable($table, array $definitions, $engine = 'MyISAM', $ifNotExists = false, $charset = 'UTF8')
+    {
+        $fragment = 'CREATE TABLE ';
+
+        if ($ifNotExists === true) {
+            $fragment .= 'IF NOT EXISTS';
+        }
+
+        $fragment .= $this->wrap($table);
+
+        // Open bracket for columns 
+        $fragment .= ' ( ';
+
+        // Iteration counter
+        $count = 0;
+        $size = count(array_keys($definitions));
+
+        foreach ($definitions as $column => $type) {
+            $fragment .= sprintf('%s %s', $this->wrap($column), $type);
+
+            $count++;
+
+            // Append commas, expect on last iteration
+            if ($count !== $size) {
+                $fragment .= ', ';
+            }
+        }
+
+        // Close the bracket for columns 
+        $fragment .= ' ) ';
+
+        // Extras to be appended
+        $extras = array(
+            'DEFAULT CHARSET' => $charset,
+            'ENGINE' => $engine
+        );
+
+        foreach ($extras as $option => $value) {
+            $fragment .= sprintf(' %s=%s ', $option, $value);
+        }
+
+        $this->append($fragment . ';');
+        return $this;
+    }
 }

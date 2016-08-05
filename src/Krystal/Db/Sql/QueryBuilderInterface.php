@@ -768,4 +768,16 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function alterColumn($column, $type);
+
+    /**
+     * Appends "CREATE TABLE" statement
+     * 
+     * @param string $table Table name
+     * @param array $definitions Column definitions
+     * @param string $engine Table engine
+     * @param boolean $ifNotExists Whether to include IF NOT EXITS statement
+     * @param string $charset Table charset
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function createTable($table, array $definitions, $engine = 'MyISAM', $ifNotExists = false, $charset = 'UTF8');
 }
