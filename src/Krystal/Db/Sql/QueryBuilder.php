@@ -1552,12 +1552,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     /**
      * Appends "ADD COLUMN" statement
      * 
-     * @param string $table
      * @param string $column
      * @param string $type
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function addColumn($table, $column, $type)
+    public function addColumn($column, $type)
     {
         $this->append(sprintf(' ADD COLUMN %s %s', $this->wrap($column), $type));
         return $this;
