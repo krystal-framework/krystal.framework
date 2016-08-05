@@ -1642,4 +1642,17 @@ final class Db implements DbInterface, RelationableServiceInterface
         $this->queryBuilder->dropColumn($column);
         return $this;
     }
+
+    /**
+     * Appends "RENAME COLUMN TO" statement
+     * 
+     * @param string $old Old name
+     * @param string $new New name
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function renameColumn($old, $new)
+    {
+        $this->queryBuilder->renameColumn($old, $new);
+        return $this;
+    }
 }

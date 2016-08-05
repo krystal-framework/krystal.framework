@@ -741,4 +741,13 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function dropColumn($column);
+
+    /**
+     * Appends "RENAME COLUMN TO" statement
+     * 
+     * @param string $old Old name
+     * @param string $new New name
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function renameColumn($old, $new);
 }
