@@ -733,4 +733,12 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function addColumn($column, $type);
+
+    /**
+     * Appends "DROP COLUMN" statement
+     * 
+     * @param string $column
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropColumn($column);
 }

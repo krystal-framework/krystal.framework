@@ -1561,4 +1561,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $this->append(sprintf(' ADD COLUMN %s %s', $this->wrap($column), $type));
         return $this;
     }
+
+    /**
+     * Appends "DROP COLUMN" statement
+     * 
+     * @param string $column
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropColumn($column)
+    {
+        $this->append(sprintf(' DROP COLUMN %s', $this->wrap($column)));
+        return $this;
+    }
 }

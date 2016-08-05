@@ -1630,4 +1630,16 @@ final class Db implements DbInterface, RelationableServiceInterface
         $this->queryBuilder->addColumn($table, $column, $type);
         return $this;
     }
+
+    /**
+     * Appends "DROP COLUMN" statement
+     * 
+     * @param string $column
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropColumn($column)
+    {
+        $this->queryBuilder->dropColumn($column);
+        return $this;
+    }
 }
