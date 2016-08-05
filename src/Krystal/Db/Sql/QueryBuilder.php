@@ -1586,4 +1586,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $this->append(sprintf(' RENAME COLUMN %s TO %s ', $this->wrap($old), $this->wrap($new)));
         return $this;
     }
+
+    /**
+     * Appends "CHANGE" statement
+     * 
+     * @param string $column
+     * @param string $type
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function alterColumn($column, $type)
+    {
+        $column = $this->wrap($column);
+
+        $this->append(sprintf(' CHANGE %s %s %s ', $column, $column, $type));
+        return $this;
+    }
 }

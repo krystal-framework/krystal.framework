@@ -750,4 +750,13 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function renameColumn($old, $new);
+
+    /**
+     * Appends "CHANGE" statement
+     * 
+     * @param string $column
+     * @param string $type
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function alterColumn($column, $type);
 }
