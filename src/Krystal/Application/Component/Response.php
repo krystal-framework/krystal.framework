@@ -23,7 +23,7 @@ final class Response implements ComponentInterface
      */
     public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
     {
-        return new Component(new HeaderBag());
+        return new Component(new HeaderBag(), $input->getServer());
     }
 
     /**

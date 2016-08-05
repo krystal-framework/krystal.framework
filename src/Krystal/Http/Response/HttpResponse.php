@@ -23,6 +23,13 @@ final class HttpResponse implements HttpResponseInterface
     private $headerBag;
 
     /**
+     * Server information container
+     * 
+     * @var array
+     */
+    private $server = array();
+
+    /**
      * HTTP Protocol version
      * 
      * @var string
@@ -48,15 +55,17 @@ final class HttpResponse implements HttpResponseInterface
      * State initialization
      * 
      * @param \Krystal\Http\HeaderBagInterface $headerBag
+     * @param array $server
      * @param string $version
      * @param string $charset
      * @return void
      */
-    public function __construct(HeaderBagInterface $headerBag, $version = '1.1', $charset = 'UTF-8')
+    public function __construct(HeaderBagInterface $headerBag, array $server, $version = '1.1', $charset = 'UTF-8')
     {
         $this->headerBag = $headerBag;
         $this->version = $version;
         $this->charset = $charset;
+        $this->server = $server;
     }
 
     /**
@@ -91,11 +100,11 @@ final class HttpResponse implements HttpResponseInterface
      */
     public function authenticate($login, $password)
     {
-        if (!isset($_SERVER['PHP_AUTH_USER'])) {
+        if (!isset($this->server['PHP_AUTH_USER'])) {
             $this->forbid();
             return false;
         } else {
-            if (($_SERVER['PHP_AUTH_USER'] == $login) && ($_SERVER['PHP_AUTH_PW'] == $password)) {
+            if (($this->server['PHP_AUTH_USER'] == $login) && ($this->server['PHP_AUTH_PW'] == $password)) {
                 return true;
             } else {
                 $this->forbid();
