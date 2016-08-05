@@ -1617,4 +1617,18 @@ final class Db implements DbInterface, RelationableServiceInterface
         $this->queryBuilder->alterTable($table);
         return $this;
     }
+
+    /**
+     * Appends "ADD COLUMN" statement
+     * 
+     * @param string $table
+     * @param string $column
+     * @param string $type
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function addColumn($table, $column, $type)
+    {
+        $this->queryBuilder->addColumn($table, $column, $type);
+        return $this;
+    }
 }

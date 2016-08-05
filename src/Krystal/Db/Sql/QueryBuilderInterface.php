@@ -724,4 +724,14 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function alterTable($table);
+
+    /**
+     * Appends "ADD COLUMN" statement
+     * 
+     * @param string $table
+     * @param string $column
+     * @param string $type
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function addColumn($table, $column, $type);
 }
