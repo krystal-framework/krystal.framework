@@ -1396,6 +1396,20 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends WHERE with "NOT LIKE" operator
+     * 
+     * @param string $column
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function andWhereNotLike($column, $value, $filter = false)
+    {
+        $value = $this->queryBuilder->prepareWildcard($value);
+        return $this->andWhere($column, 'NOT LIKE', $value, $filter);
+    }
+
+    /**
      * Appends OR WHERE LIKE condition
      * 
      * @param string $column

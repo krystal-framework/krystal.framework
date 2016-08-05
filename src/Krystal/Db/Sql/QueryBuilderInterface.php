@@ -480,6 +480,16 @@ interface QueryBuilderInterface
     public function andWhereLike($column, $value, $filter = false);
 
     /**
+     * Appends WHERE with "NOT LIKE" operator
+     * 
+     * @param string $column
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function andWhereNotLike($column, $value, $filter = false);
+
+    /**
      * Appends WHERE IN (..) expression
      * 
      * @param string $column

@@ -973,6 +973,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends WHERE with "NOT LIKE" operator
+     * 
+     * @param string $column
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function andWhereNotLike($column, $value, $filter = false)
+    {
+        return $this->andWhere($column, 'NOT LIKE', $value, $filter);
+    }
+
+    /**
      * Appends AND WHERE clause with equality operator
      * 
      * @param string $column
