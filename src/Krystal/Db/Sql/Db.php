@@ -1598,7 +1598,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * 
      * @param string $table Table name
      * @param boolean $ifExists Whether to generate IF EXIST condition as well
-     * @return \Krystal\Db\Sql\QueryBuilder
+     * @return \Krystal\Db\Sql\Db
      */
     public function dropTable($table, $ifExists = true)
     {
@@ -1610,7 +1610,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends "ALTER TABLE" statement
      * 
      * @param string $table
-     * @return \Krystal\Db\Sql\QueryBuilder
+     * @return \Krystal\Db\Sql\Db
      */
     public function alterTable($table)
     {
@@ -1623,7 +1623,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * 
      * @param string $column
      * @param string $type
-     * @return \Krystal\Db\Sql\QueryBuilder
+     * @return \Krystal\Db\Sql\Db
      */
     public function addColumn($column, $type)
     {
@@ -1635,7 +1635,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends "DROP COLUMN" statement
      * 
      * @param string $column
-     * @return \Krystal\Db\Sql\QueryBuilder
+     * @return \Krystal\Db\Sql\Db
      */
     public function dropColumn($column)
     {
