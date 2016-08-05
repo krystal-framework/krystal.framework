@@ -207,6 +207,16 @@ interface QueryBuilderInterface
     public function like($column, $value, $filter = false);
 
     /**
+     * Appends a raw comparison with NOT LIKE operator
+     * 
+     * @param string $column
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function notLike($column, $value, $filter = false);
+
+    /**
      * Appends a raw comparison with > operator
      * 
      * @param string $column

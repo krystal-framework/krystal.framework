@@ -643,6 +643,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends a raw comparison with NOT LIKE operator
+     * 
+     * @param string $column
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function notLike($column, $value, $filter = false)
+    {
+        return $this->compare($column, 'NOT LIKE', $value, $filter);
+    }
+
+    /**
      * Appends a raw comparison with > operator
      * 
      * @param string $column
