@@ -180,9 +180,9 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     private function getFunction($func, $column, $alias = null)
     {
         if (is_null($alias)) {
-            return sprintf(' %s(%s) ', $func, $this->wrap($column));
+            return sprintf(' %s(%s) ', $func, $this->quote($column));
         } else {
-            return sprintf(' %s(%s) AS %s ', $func, $this->wrap($column), $this->wrap($alias));
+            return sprintf(' %s(%s) AS %s ', $func, $this->quote($column), $this->quote($alias));
         }
     }
 
@@ -244,7 +244,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @throws \InvalidArgumentException If unknown type supplied
      * @return string
      */
-    private function wrap($target)
+    private function quote($target)
     {
         if (!$this->needsQuoting($target)) {
             return $target;
@@ -303,7 +303,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $values = array_values($data);
 
         foreach (array_keys($data) as $key) {
-            $keys[] = $this->wrap($key);
+            $keys[] = $this->quote($key);
         }
 
         // Handle ignore case
@@ -330,7 +330,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     {
         // Escape column names
         foreach ($columns as &$column) {
-            $column = $this->wrap($column);
+            $column = $this->quote($column);
         }
 
         // Validate the length
@@ -501,7 +501,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function round($column, $decimals)
     {
-        $this->append(sprintf(' ROUND(%s, %s) ', $this->wrap($column), $decimals));
+        $this->append(sprintf(' ROUND(%s, %s) ', $this->quote($column), $decimals));
         return $this;
     }
 
@@ -553,7 +553,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     {
         // * is a special keyword, which doesn't need to be wrapped
         if ($type !== '*' && $type !== null && !is_array($type)) {
-            $type = $this->wrap($type);
+            $type = $this->quote($type);
         }
 
         // Special case when $type is array
@@ -563,7 +563,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             foreach ($type as $column => $alias) {
                 // Did we receive an alias?
                 if (!is_numeric($column)) {
-                    $push = sprintf('%s AS %s', $this->wrap($column), $this->wrap($alias));
+                    $push = sprintf('%s AS %s', $this->quote($column), $this->quote($alias));
                 } else {
                     $push = $alias;
                 }
@@ -606,7 +606,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     {
         if ($table !== null) {
             $this->table = $table;
-            $table = $this->wrap($table);
+            $table = $this->quote($table);
         }
 
         $this->append(' FROM ' . $table);
@@ -628,7 +628,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             return $this;
         }
 
-        $this->append(sprintf(' %s %s %s ', $this->wrap($column), $operator, $value));
+        $this->append(sprintf(' %s %s %s ', $this->quote($column), $operator, $value));
         return $this;
     }
 
@@ -751,7 +751,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             return $this;
         }
 
-        $this->append(sprintf(' WHERE %s %s %s ', $this->wrap($column), $operator, $value));
+        $this->append(sprintf(' WHERE %s %s %s ', $this->quote($column), $operator, $value));
         return $this;
     }
 
@@ -770,7 +770,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             return $this;
         }
 
-        $this->append(sprintf('AND %s %s %s ', $this->wrap($key), $operator, $value));
+        $this->append(sprintf('AND %s %s %s ', $this->quote($key), $operator, $value));
         return $this;
     }
 
@@ -789,7 +789,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             return $this;
         }
 
-        $this->append(sprintf(' OR %s %s %s ', $this->wrap($key), $operator, $value));
+        $this->append(sprintf(' OR %s %s %s ', $this->quote($key), $operator, $value));
         return $this;
     }
 
@@ -1243,7 +1243,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             if (!ArrayUtils::isAssoc($type)) {
                 // Special case for non-associative array
                 foreach ($type as &$column) {
-                    $column = $this->wrap($column);
+                    $column = $this->quote($column);
                 }
                 
             } else {
@@ -1252,7 +1252,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 
                 foreach ($type as $column => $sortOrder) {
                     // Only column names should be wrapped around backticks
-                    array_push($result, sprintf('%s %s', $this->wrap($column), $sortOrder));
+                    array_push($result, sprintf('%s %s', $this->quote($column), $sortOrder));
                 }
 
                 $type = $result;
@@ -1261,7 +1261,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $target = implode(', ', $type);
 
         } else {
-            $target = $this->wrap($type);
+            $target = $this->quote($type);
         }
 
         $this->append(' ORDER BY '.$target);
@@ -1501,7 +1501,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function asAlias($alias)
     {
-        $this->append(sprintf(' AS %s', $this->wrap($alias)));
+        $this->append(sprintf(' AS %s', $this->quote($alias)));
         return $this;
     }
 
@@ -1535,7 +1535,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function truncate($table)
     {
-        $this->append(sprintf('TRUNCATE %s', $this->wrap($table)));
+        $this->append(sprintf('TRUNCATE %s', $this->quote($table)));
         return $this;
     }
 
@@ -1548,7 +1548,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function renameTable($old, $new)
     {
-        $this->append(sprintf('RENAME TABLE %s TO %s ', $this->wrap($old), $this->wrap($new)));
+        $this->append(sprintf('RENAME TABLE %s TO %s ', $this->quote($old), $this->quote($new)));
         return $this;
     }
 
@@ -1572,7 +1572,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         }
 
         foreach ($target as &$table) {
-            $table = $this->wrap($table);
+            $table = $this->quote($table);
         }
 
         $this->append(sprintf(' %s', implode(', ', $target)));
@@ -1587,7 +1587,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function alterTable($table)
     {
-        $this->append(sprintf('ALTER TABLE %s', $this->wrap($table)));
+        $this->append(sprintf('ALTER TABLE %s', $this->quote($table)));
         return $this;
     }
 
@@ -1600,7 +1600,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function addColumn($column, $type)
     {
-        $this->append(sprintf(' ADD COLUMN %s %s', $this->wrap($column), $type));
+        $this->append(sprintf(' ADD COLUMN %s %s', $this->quote($column), $type));
         return $this;
     }
 
@@ -1612,7 +1612,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function dropColumn($column)
     {
-        $this->append(sprintf(' DROP COLUMN %s', $this->wrap($column)));
+        $this->append(sprintf(' DROP COLUMN %s', $this->quote($column)));
         return $this;
     }
 
@@ -1625,7 +1625,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function renameColumn($old, $new)
     {
-        $this->append(sprintf(' RENAME COLUMN %s TO %s ', $this->wrap($old), $this->wrap($new)));
+        $this->append(sprintf(' RENAME COLUMN %s TO %s ', $this->quote($old), $this->quote($new)));
         return $this;
     }
 
@@ -1638,7 +1638,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function alterColumn($column, $type)
     {
-        $column = $this->wrap($column);
+        $column = $this->quote($column);
 
         $this->append(sprintf(' CHANGE %s %s %s ', $column, $column, $type));
         return $this;
@@ -1662,7 +1662,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $fragment .= 'IF NOT EXISTS';
         }
 
-        $fragment .= $this->wrap($table);
+        $fragment .= $this->quote($table);
 
         // Open bracket for columns 
         $fragment .= ' ( ';
@@ -1672,7 +1672,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $size = count(array_keys($definitions));
 
         foreach ($definitions as $column => $type) {
-            $fragment .= sprintf('%s %s', $this->wrap($column), $type);
+            $fragment .= sprintf('%s %s', $this->quote($column), $type);
 
             $count++;
 
@@ -1707,7 +1707,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function addConstraint($name)
     {
-        $this->append(sprintf(' ADD CONSTRAINT %s ', $this->wrap($name)));
+        $this->append(sprintf(' ADD CONSTRAINT %s ', $this->quote($name)));
         return $this;
     }
 
@@ -1719,7 +1719,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function dropConstraint($name)
     {
-        $this->append(sprintf(' DROP CONSTRAINT %s ', $this->wrap($name)));
+        $this->append(sprintf(' DROP CONSTRAINT %s ', $this->quote($name)));
         return $this;
     }
 
@@ -1738,7 +1738,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         }
 
         foreach ($columns as &$column) {
-            $column = $this->wrap($column);
+            $column = $this->quote($column);
         }
 
         $this->append(sprintf(' PRIMARY KEY (%s) ', implode(', ', $columns)));
