@@ -247,21 +247,17 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     private function quote($target)
     {
-        if (!$this->needsQuoting($target)) {
-            return $target;
-        }
-
         $wrapper = function($column) {
             return sprintf('`%s`', $column);
         };
 
         if (is_array($target)) {
             foreach($target as &$column) {
-                $column = $wrapper($column);
+                $column = $this->needsQuoting($column) ? $wrapper($column) : $column;
             }
 
         } else if (is_string($target)) {
-            $target = $wrapper($target);
+            $target = $this->needsQuoting($target) ? $wrapper($target) : $target;
 
         } else {
             throw new InvalidArgumentException(sprintf(
@@ -331,10 +327,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function insertMany($table, array $columns, array $values)
     {
-        // Escape column names
-        foreach ($columns as &$column) {
-            $column = $this->quote($column);
-        }
+        $columns = $this->quote($columns);
 
         // Validate the length
         foreach ($values as $data) {
@@ -1252,13 +1245,9 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $target = $type->getFragment();
 
         } elseif (is_array($type)) {
-
+            // Special case for non-associative array
             if (!ArrayUtils::isAssoc($type)) {
-                // Special case for non-associative array
-                foreach ($type as &$column) {
-                    $column = $this->quote($column);
-                }
-                
+                $type = $this->quote($type);
             } else {
                 // If associative array supplied then assume that values represent sort orders
                 $result = array();
@@ -1584,9 +1573,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $target = array($target);
         }
 
-        foreach ($target as &$table) {
-            $table = $this->quote($table);
-        }
+        $target = $this->quote($target);
 
         $this->append(sprintf(' %s', implode(', ', $target)));
         return $this;
@@ -1750,9 +1737,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $columns = array($target);
         }
 
-        foreach ($columns as &$column) {
-            $column = $this->quote($column);
-        }
+        $columns = $this->quote($columns);
 
         $this->append(sprintf(' PRIMARY KEY (%s) ', implode(', ', $columns)));
         return $this;
