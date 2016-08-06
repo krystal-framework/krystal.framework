@@ -12,7 +12,7 @@ CHANGELOG
  * In database service, added `renameTable()` method to rename tables
  * In database service, also added methods for migrations: `alterTable()`, `addColumn()`, `dropColumn()`, `renameColumn()`, `alterColumn()`
  * In database service, added missing `notLike()`, `orWhereNotLike()`, `andWhereNotLike()` method
- * In database service, added `insertMany()` method
+ * In database service, added `insertMany()` and `insertShort()` methods
  * Added `dropTables()` that can drop several tables at once in `Sql\AbstractMapper`
  * Added `executeSqlFromString()` in `Sql\AbstractMapper`
  * Added support for raw SQL fragments for values in WHERE clause

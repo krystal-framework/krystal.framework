@@ -320,6 +320,33 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Builds and appends INSERT statement without explicit column names
+     * 
+     * @param string $table
+     * @param array $values Values to be inseted in columns
+     * @param boolean $ignore Whether to ignore when PK collisions occur
+     * @throws \LogicException if $values array is empty
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function insertShort($table, array $values, $ignore = false)
+    {
+        if (empty($values)) {
+            throw new LogicException('You have not provided a data to be inserted');
+        }
+
+        // Handle ignore case
+        if ($ignore === true) {
+            $ignore = 'IGNORE';
+        } else {
+            $ignore = '';
+        }
+
+        // Build and append query we made
+        $this->append(sprintf('INSERT %s INTO %s VALUES (%s); ', $ignore, $this->quote($table), implode(', ', $values)));
+        return $this;
+    }
+
+    /**
      * Generate INSERT query for many records
      * 
      * @param string $table

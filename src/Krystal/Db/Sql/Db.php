@@ -897,6 +897,38 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Builds and appends INSERT statement without explicit column names
+     * 
+     * @param string $table
+     * @param array $values Values to be inseted in columns
+     * @param boolean $ignore Whether to ignore when PK collisions occur
+     * @throws \LogicException if $values array is empty
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function insertShort($table, array $values, $ignore = false)
+    {
+        $collection = array();
+
+        foreach ($values as $value) {
+            if ($value instanceof RawSqlFragment) {
+                $placeholder = $value->getFragment();
+            } else {
+                // Create unique placeholder
+                $placeholder = $this->getUniqPlaceholder();
+
+                // Bind to the global stack
+                $this->bind($placeholder, $value);
+            }
+
+            // Push to the placeholder stack as well
+            $collection[] = $placeholder;
+        }
+
+        $this->queryBuilder->insertShort($table, $collection, $ignore);
+        return $this;
+    }
+
+    /**
      * Generate INSERT query for many records
      * 
      * @param string $table
