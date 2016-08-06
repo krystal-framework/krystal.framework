@@ -30,6 +30,13 @@ interface HttpResponseInterface
     public function authenticate($login, $password);
 
     /**
+     * Forces to respond as JavaScript
+     * 
+     * @return \Krystal\Http\Response\HttpResponse
+     */
+    public function respondAsJs();
+
+    /**
      * Forces to respond as JSON
      * 
      * @return \Krystal\Http\Response\HttpResponse

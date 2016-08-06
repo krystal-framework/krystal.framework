@@ -114,6 +114,19 @@ final class HttpResponse implements HttpResponseInterface
     }
 
     /**
+     * Forces to respond as JavaScript
+     * 
+     * @return \Krystal\Http\Response\HttpResponse
+     */
+    public function respondAsJs()
+    {
+        $this->getHeaderBag()
+             ->appendPair('Content-type', 'application/javascript');
+
+        return $this;
+    }
+
+    /**
      * Forces to respond as JSON
      * 
      * @return \Krystal\Http\Response\HttpResponse

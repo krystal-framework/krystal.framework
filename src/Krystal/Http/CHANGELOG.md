@@ -11,7 +11,7 @@ CHANGELOG
  * In Cookie Bag service added `hasMany()` method
  * In `\Krystal\Http\Response\HttpResponse::setContentType()` dropped second argument
  * Added `authenticate()` method in response service for HTTP authentication
- * Added `respondAsJson()` and `respondAsXml()` methods in response service
+ * Added `respondAsJson()`, `respondAsXml()` and `respondAsJs()` methods (quick shortcuts) in response service
  * Added `getHeaderBag()` method in response service to be able to alter headers
  * Set default (one year) lifetime for cookies when setting them
  * Added cURL HTTP crawler
