@@ -303,6 +303,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Returns a word with wildcard. Can be used for LIKE constraints
      * 
      * @param string $target
+     * @param string $type
      * @throws \RuntimeException if unknown type supplied
      * @return string
      */
