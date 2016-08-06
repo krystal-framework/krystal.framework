@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `getWithWildcart()` in database service. It can be used to build parameters with wildcarts in LIKE queries
  * Removed `TableBuilder`
  * In database service, added `primaryKey()` to create PRIMARY KEYs
  * In database service, added `addConstraint()` and `dropConstraint()`

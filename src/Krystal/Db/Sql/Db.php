@@ -300,6 +300,18 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Returns a word with wildcard. Can be used for LIKE constraints
+     * 
+     * @param string $target
+     * @throws \RuntimeException if unknown type supplied
+     * @return string
+     */
+    public function getWithWildcart($target, $type = self::LIKE_RAW)
+    {
+        return $this->queryBuilder->getWithWildcart($target, $type);
+    }
+
+    /**
      * Automatically paginates result-set
      * 
      * @param integer $page

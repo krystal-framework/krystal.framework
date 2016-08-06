@@ -22,6 +22,15 @@ interface QueryObjectInterface
     public function getSelectedTable();
 
     /**
+     * Returns a word with wildcard. Can be used for LIKE constraints
+     * 
+     * @param string $target
+     * @throws \RuntimeException if unknown type supplied
+     * @return string
+     */
+    public function getWithWildcart($target, $type = self::LIKE_RAW);
+
+    /**
      * Prepares a wildcard
      * 
      * @param string $value

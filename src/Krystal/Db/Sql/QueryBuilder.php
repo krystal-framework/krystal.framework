@@ -91,6 +91,29 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Returns a word with wildcard. Can be used for LIKE constraints
+     * 
+     * @param string $target
+     * @throws \RuntimeException if unknown type supplied
+     * @return string
+     */
+    public function getWithWildcart($target, $type = self::LIKE_RAW)
+    {
+        switch ($type) {
+            case self::LIKE_RAW:
+                return $target;
+            case self::LIKE_STARTS:
+                return $word.'%';
+            case self::LIKE_ENDS:
+                return '%'.$target;
+            case self::LIKE_CONTAINS:
+                return '%'.$target.'%';
+            default:
+                throw new RuntimeException('Unknown type supplied');
+        }
+    }
+
+    /**
      * Prepares a wildcard
      * 
      * @param string $value

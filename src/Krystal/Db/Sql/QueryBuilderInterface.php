@@ -13,6 +13,11 @@ namespace Krystal\Db\Sql;
 
 interface QueryBuilderInterface
 {
+    const LIKE_RAW = 1;
+    const LIKE_STARTS = 2;
+    const LIKE_ENDS = 3;
+    const LIKE_CONTAINS = 4;
+
     /**
      * Appends SHOW KEYS expression
      * 
