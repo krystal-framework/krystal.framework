@@ -224,6 +224,20 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Checks whether it's worth applying a wrapper for a target
+     * 
+     * @param string $target
+     * @return boolean
+     */
+    private function needsQuoting($target)
+    {
+        $isSqlFunction = strpos($target, '(') !== false || strpos($target, ')') !== false;
+        $isColumn = strpos($target, '.') !== false;
+
+        return !(is_numeric($target) || $isColumn || $isSqlFunction);
+    }
+
+    /**
      * Wraps a string into back-ticks
      * 
      * @param string|array $target Target column name to be wrapped
@@ -232,14 +246,29 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     private function wrap($target)
     {
-        // Lazy initialization
-        static $wrapper = null;
-
-        if (is_null($wrapper)) {
-            $wrapper = new ColumnWrapper();
+        if (!$this->needsQuoting($target)) {
+            return $target;
         }
 
-        return $wrapper->wrap($target);
+        $wrapper = function($column) {
+            return sprintf('`%s`', $column);
+        };
+
+        if (is_array($target)) {
+            foreach($target as &$column) {
+                $column = $wrapper($column);
+            }
+
+        } else if (is_string($target)) {
+            $target = $wrapper($target);
+
+        } else {
+            throw new InvalidArgumentException(sprintf(
+                'Unknown type for wrapping supplied "%s"', gettype($target)
+            ));
+        }
+
+        return $target;
     }
 
     /**
