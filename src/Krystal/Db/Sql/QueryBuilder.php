@@ -314,7 +314,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         }
 
         // Build and append query we made
-        $this->append(sprintf('INSERT %s INTO `%s` (%s) VALUES (%s)', $ignore, $table, implode(', ', $keys), implode(', ', $values)));
+        $this->append(sprintf('INSERT %s INTO %s (%s) VALUES (%s)', $ignore, $this->quote($table), implode(', ', $keys), implode(', ', $values)));
         return $this;
     }
 
@@ -377,10 +377,10 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 
         foreach ($data as $key => $value) {
             // Wrap column names into back-ticks
-            $conditions[] = sprintf('`%s` = %s', $key, $value);
+            $conditions[] = sprintf('%s = %s', $this->quote($key), $value);
         }
 
-        $query = sprintf('UPDATE `%s` SET %s', $table, implode(', ', $conditions));
+        $query = sprintf('UPDATE %s SET %s', $this->quote($table), implode(', ', $conditions));
         $this->append($query);
 
         return $this;
@@ -1327,7 +1327,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             return $this;
         }
 
-        $this->append(sprintf(' WHERE `%s` IN (%s)', $column, implode(', ', $values)));
+        $this->append(sprintf(' WHERE %s IN (%s)', $this->quote($column), implode(', ', $values)));
         return $this;
     }
 
@@ -1360,7 +1360,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $not = '';
         }
 
-        $this->append($operator.sprintf(' WHERE `%s` %s BETWEEN %s AND %s ', $column, $not, $a, $b));
+        $this->append($operator.sprintf(' WHERE %s %s BETWEEN %s AND %s ', $this->quote($column), $not, $a, $b));
         return $this;
     }
 
