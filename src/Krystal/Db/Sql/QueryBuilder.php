@@ -14,6 +14,7 @@ namespace Krystal\Db\Sql;
 use Krystal\Stdlib\ArrayUtils;
 use InvalidArgumentException;
 use LogicException;
+use RuntimeException;
 
 /**
  * This class is only responsible for building query strings.
@@ -324,6 +325,8 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param string $table
      * @param array $columns
      * @param array $values
+     * @throws \LogicException On count mismatch
+     * @throws \RuntimeException If some element in collection isn't array
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function insertMany($table, array $columns, array $values)
@@ -339,7 +342,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $columnsCount = count($columns);
 
             if ($dataCount !== $columnsCount) {
-                throw new Exception(sprintf('Count mismatch. One collection contains %s keys instead of expected %s', $dataCount, $columnsCount));
+                throw new LogicException(sprintf('Count mismatch. One collection contains %s keys instead of expected %s', $dataCount, $columnsCount));
             }
         }
 
@@ -351,7 +354,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             if (is_array($data)) {
                 $sql .= sprintf("(%s), ", implode(', ', $data));
             } else {
-                throw new Exception(sprintf('3-rd argument should contain a collection of arrays, one of them is %s', gettype($data)));
+                throw new RuntimeException(sprintf('3-rd argument should contain a collection of arrays, one of them is %s', gettype($data)));
             }
         }
 
