@@ -256,7 +256,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
                 $column = $this->needsQuoting($column) ? $wrapper($column) : $column;
             }
 
-        } else if (is_string($target)) {
+        } else if (is_scalar($target)) {
             $target = $this->needsQuoting($target) ? $wrapper($target) : $target;
 
         } else {
