@@ -1697,4 +1697,28 @@ final class Db implements DbInterface, RelationableServiceInterface
         $this->queryBuilder->createTable($table, $definitions, $engine, $ifNotExists, $charset);
         return $this;
     }
+
+    /**
+     * Appends "ADD CONSTRAINT" statement
+     * 
+     * @param string $name
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function addConstraint($name)
+    {
+        $this->queryBuilder->addConstraint($name);
+        return $this;
+    }
+
+    /**
+     * Appends "DROP CONSTRAINT" statement
+     * 
+     * @param string $name
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function dropConstraint($name)
+    {
+        $this->queryBuilder->dropConstraint($name);
+        return $this;
+    }
 }

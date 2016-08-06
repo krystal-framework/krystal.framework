@@ -780,4 +780,20 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function createTable($table, array $definitions, $engine = 'MyISAM', $ifNotExists = false, $charset = 'UTF8');
+
+    /**
+     * Appends "ADD CONSTRAINT" statement
+     * 
+     * @param string $name
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function addConstraint($name);
+
+    /**
+     * Appends "DROP CONSTRAINT" statement
+     * 
+     * @param string $name
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropConstraint($name);
 }

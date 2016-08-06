@@ -1669,4 +1669,28 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $this->append($fragment . ';');
         return $this;
     }
+
+    /**
+     * Appends "ADD CONSTRAINT" statement
+     * 
+     * @param string $name
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function addConstraint($name)
+    {
+        $this->append(sprintf(' ADD CONSTRAINT %s ', $this->wrap($name)));
+        return $this;
+    }
+
+    /**
+     * Appends "DROP CONSTRAINT" statement
+     * 
+     * @param string $name
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropConstraint($name)
+    {
+        $this->append(sprintf(' DROP CONSTRAINT %s ', $this->wrap($name)));
+        return $this;
+    }
 }

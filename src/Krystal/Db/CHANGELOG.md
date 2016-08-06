@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In database service, added `addConstraint()` and `dropConstraint()`
  * In database service, added `createTable()` method to dynamically create tables
  * In database service, added `renameTable()` method to rename tables
  * In database service, also added methods for migrations: `alterTable()`, `addColumn()`, `dropColumn()`, `renameColumn()`, `alterColumn()`
