@@ -31,14 +31,6 @@ interface QueryObjectInterface
     public function getWithWildcart($target, $type = self::LIKE_RAW);
 
     /**
-     * Prepares a wildcard
-     * 
-     * @param string $value
-     * @return string
-     */
-    public function prepareWildcard($value);
-
-    /**
      * Checks whether it's worth filtering
      * 
      * @param boolean $state

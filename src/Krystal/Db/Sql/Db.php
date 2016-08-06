@@ -1403,7 +1403,6 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function andWhereLike($column, $value, $filter = false)
     {
-        $value = $this->queryBuilder->prepareWildcard($value);
         return $this->andWhere($column, 'LIKE', $value, $filter);
     }
 
@@ -1417,7 +1416,6 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function andWhereNotLike($column, $value, $filter = false)
     {
-        $value = $this->queryBuilder->prepareWildcard($value);
         return $this->andWhere($column, 'NOT LIKE', $value, $filter);
     }
 
@@ -1431,7 +1429,6 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function orWhereLike($column, $value, $filter = false)
     {
-        $value = $this->queryBuilder->prepareWildcard($value);
         return $this->orWhere($column, 'LIKE', $value, $filter);
     }
 
@@ -1445,7 +1442,6 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function orWhereNotLike($column, $value, $filter = false)
     {
-        $value = $this->queryBuilder->prepareWildcard($value);
         return $this->orWhere($column, 'NOT LIKE', $value, $filter);
     }
 
@@ -1459,7 +1455,6 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function whereLike($column, $value, $filter = false)
     {
-        $value = $this->queryBuilder->prepareWildcard($value);
         return $this->where($column, 'LIKE', $value, $filter);
     }
 

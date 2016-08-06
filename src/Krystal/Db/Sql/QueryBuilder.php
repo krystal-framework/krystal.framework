@@ -114,26 +114,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
-     * Prepares a wildcard
-     * 
-     * @param string $value
-     * @return string
-     */
-    public function prepareWildcard($value)
-    {
-        // For now doing nothing, since it might build query incorrectly in case a value was empty
-        return $value;
-
-        // If value has only wildcards, then it should be considered as empty
-        if (in_array($value, array('%', '%%'))) {
-            return '';
-        } else {
-            // Otherwise, that's a value which might contain wildcards, so nothing to do here
-            return $value;
-        }
-    }
-
-    /**
      * Checks whether it's worth filtering
      * 
      * @param boolean $state
