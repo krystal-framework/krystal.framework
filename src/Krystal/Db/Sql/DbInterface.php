@@ -16,6 +16,21 @@ use PDO;
 interface DbInterface extends QueryBuilderInterface
 {
     /**
+     * Fetch all tables
+     * 
+     * @return array
+     */
+    public function fetchAllTables();
+
+    /**
+     * Dump tables into SQL string
+     * 
+     * @param array $tables If empty current tables will be taken into account
+     * @return string
+     */
+    public function dump(array $tables = array());
+
+    /**
      * Checks whether current driver is a target
      * 
      * @param string $driver

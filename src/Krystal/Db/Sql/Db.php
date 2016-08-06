@@ -300,6 +300,97 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Fetch all tables
+     * 
+     * @return array
+     */
+    public function fetchAllTables()
+    {
+        $tables = array();
+        $result = $this->pdo->query('SHOW TABLES')->fetchAll();
+
+        foreach ($result as $index => $array) {
+            // Extract a value - we don't care about a key
+            $data = array_values($array);
+            // Its ready not, just append it
+            $tables[] = $data[0];
+        }
+
+        return $tables;
+    }
+
+    /**
+     * Dump tables into SQL string
+     * 
+     * @param array $tables If empty current tables will be taken into account
+     * @return string
+     */
+    public function dump(array $tables = array())
+    {
+        $result = null;
+
+        if (empty($tables)) {
+            $tables = $this->fetchAllTables();
+        }
+
+        // Building logic
+        foreach ($tables as $table) {
+            // Main SELECT query
+            $select = $this->queryBuilder->clear()
+                                         ->select('*')
+                                         ->from($table)
+                                         ->getQueryString();
+
+            $stmt = $this->pdo->query($select);
+            $fieldCount = $stmt->columnCount();
+
+            // Append additional drop state
+            $result .= $this->queryBuilder->clear()
+                                          ->dropTable($table)
+                                          ->getQueryString();;
+
+            // Show how this table was created
+            $createResult = $this->pdo->query(sprintf('SHOW CREATE TABLE %s', $table))->fetch();
+            $result .=  "\n\n" . $createResult['Create Table'] . ";\n\n";
+
+            // Start main loop
+            for ($i = 0; $i < $fieldCount; $i++) {
+                // Loop to generate INSERT statements
+                while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                    $values = array();
+
+                    // Extra values and push them to $values array
+                    for ($j = 0; $j < $fieldCount; $j++) {
+                        // We need to ensure all quotes are properly escaped
+                        $row[$j] = addslashes($row[$j]);
+
+                        // Ensure its correctly escaped
+                        $row[$j] = str_replace("\n", "\\n", $row[$j]);
+                        $row[$j] = sprintf('"%s"', $row[$j]);
+
+                        // Push the value
+                        array_push($values, $row[$j]);
+                    }
+
+                    // Generate short INSERT statement
+                    $result .= $this->queryBuilder->clear()
+                                                  ->insertShort($table, $values)
+                                                  ->getQueryString();
+
+                    $result .= "\n";
+
+                    // Free memory for next iteration
+                    unset($vals);
+                }
+            }
+
+            $result .= "\n";
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns a word with wildcard. Can be used for LIKE constraints
      * 
      * @param string $target
