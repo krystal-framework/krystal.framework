@@ -796,4 +796,12 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function dropConstraint($name);
+
+    /**
+     * Append "PRIMARY KEY ()" statement
+     * 
+     * @param array $columns
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function primaryKey($target);
 }

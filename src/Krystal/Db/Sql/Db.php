@@ -1721,4 +1721,16 @@ final class Db implements DbInterface, RelationableServiceInterface
         $this->queryBuilder->dropConstraint($name);
         return $this;
     }
+
+    /**
+     * Append "PRIMARY KEY ()" statement
+     * 
+     * @param array $columns
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function primaryKey($target)
+    {
+        $this->queryBuilder->primaryKey($target);
+        return $this;
+    }
 }

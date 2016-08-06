@@ -1693,4 +1693,26 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $this->append(sprintf(' DROP CONSTRAINT %s ', $this->wrap($name)));
         return $this;
     }
+
+    /**
+     * Append "PRIMARY KEY ()" statement
+     * 
+     * @param array $columns
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function primaryKey($target)
+    {
+        if (is_array($target)) {
+            $columns = $target;
+        } else {
+            $columns = array($target);
+        }
+
+        foreach ($columns as &$column) {
+            $column = $this->wrap($column);
+        }
+
+        $this->append(sprintf(' PRIMARY KEY (%s) ', implode(', ', $columns)));
+        return $this;
+    }
 }
