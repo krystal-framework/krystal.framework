@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Removed `TableBuilder`
  * In database service, added `primaryKey()` to create PRIMARY KEYs
  * In database service, added `addConstraint()` and `dropConstraint()`
  * In database service, added `createTable()` method to dynamically create tables

@@ -14,6 +14,7 @@ namespace Krystal\Db\Sql;
 use Krystal\Paginate\PaginatorInterface;
 use Krystal\Stdlib\ArrayUtils;
 use LogicException;
+use RuntimeException;
 
 abstract class AbstractMapper
 {
@@ -75,16 +76,15 @@ abstract class AbstractMapper
      * Executes raw SQL from a file
      * 
      * @param string $file
+     * @throws \RuntimeException On reading failure
      * @return boolean
      */
     final protected function executeSqlFromFile($file)
     {
-        $builder = new TableBuilder($this->db->getPdo());
-
-        if ($builder->loadFromFile($file)) {
-            return $builder->run();
+        if (is_file($file)) {
+            return $this->executeSqlFromString(file_get_contents($file));
         } else {
-            return false;
+            throw new RuntimeException(sprintf('Can not read file at "%s"', $file));
         }
     }
 
