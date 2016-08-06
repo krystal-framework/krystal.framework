@@ -387,6 +387,24 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Re-counts a column
+     * 
+     * @param string $table
+     * @param string $column
+     * @param string $operator
+     * @param integer $step
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    private function recountColumn($table, $column, $operator, $step = 1)
+    {
+        // Make sure expected value is going to be updated
+        $step = (int) $step;
+        $step = (string) $step;
+
+        return $this->update($table, array($column => $column . sprintf(' %s ', $operator) . $step));
+    }
+
+    /**
      * Increments a value of a column
      * 
      * @param string $table
@@ -396,11 +414,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function increment($table, $column, $step = 1)
     {
-        // Make sure expected value is going to be updated
-        $step = (int) $step;
-        $step = (string) $step;
-
-        return $this->update($table, array($column => $column.' + '.$step));
+        return $this->recountColumn($table, $column, '+', $step);
     }
 
     /**
@@ -413,11 +427,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function decrement($table, $column, $step = 1)
     {
-        // Make sure expected value is going to be updated
-        $step = (int) $step;
-        $step = (string) $step;
-
-        return $this->update($table, array($column => $column.' - '.$step));
+        return $this->recountColumn($table, $column, '-', $step);
     }
 
     /**
