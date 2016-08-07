@@ -198,15 +198,16 @@ abstract class AbstractMapper
     /**
      * Synchronizes a junction table
      * 
-     * @param string $table Junction table name
      * @param string $masterColumn Master column name
      * @param string $masterValue Master value (shared for slaves)
      * @param string $slaveColumn Slave column name
      * @param array $slaves A collection of slave values
      * @return boolean
      */
-    final public function syncJunction($table, $masterColumn, $masterValue, $slaveColumn, array $slaves)
+    final public function syncWithJunction($masterValue, array $slaves, $masterColumn = 'master_id', $slaveColumn = 'slave_id')
     {
+        $table = static::getJunctionTableName();
+
         $this->db->delete()
                  ->from($table)
                  ->whereEquals($masterColumn, $masterValue)
