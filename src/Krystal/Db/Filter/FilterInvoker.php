@@ -48,6 +48,26 @@ final class FilterInvoker implements FilterInvokerInterface
     }
 
     /**
+     * Generates URL
+     * 
+     * @param array $data
+     * @param string $route
+     * @param string $placeholder
+     * @return string
+     */
+    public static function createUrl(array $data, $route)
+    {
+        // Query start
+        $placeholder = '(:var)';
+        $url = '?';
+
+        $url .= http_build_query($data);
+        $url = str_replace(rawurlencode($placeholder), $placeholder, $url);
+
+        return $route.$url;
+    }
+
+    /**
      * Invokes a filter
      * 
      * @param \Krystal\Db\Filter\FilterableServiceInterface $service
@@ -116,8 +136,7 @@ final class FilterInvoker implements FilterInvokerInterface
             self::FILTER_PARAM_SORT => $sort
         );
 
-        $generator = new QueryGenerator($this->route, $placeholder);
-        return $generator->generate(array_merge($this->input, $data));
+        return self::createUrl(array_merge($this->input, $data), $this->route);
     }
 
     /**

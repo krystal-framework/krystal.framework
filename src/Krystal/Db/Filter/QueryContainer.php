@@ -134,10 +134,9 @@ final class QueryContainer implements QueryContainerInterface
             FilterInvoker::FILTER_PARAM_PAGE => $this->getCurrentPageNumber(), 
             FilterInvoker::FILTER_PARAM_DESC => !$this->isSortedByDesc($column), 
             FilterInvoker::FILTER_PARAM_SORT => $column
-        );
+        );        
 
-        $generator = new QueryGenerator($this->route, '(:var)');
-        return $generator->generate(array_merge($this->query, $data));
+        return FilterInvoker::createUrl(array_merge($this->query, $data), $this->route);
     }
 
     /**
