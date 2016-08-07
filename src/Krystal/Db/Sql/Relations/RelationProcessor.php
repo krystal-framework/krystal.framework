@@ -126,7 +126,18 @@ final class RelationProcessor implements RelationProcessorInterface
             }
         }
 
+        $this->clearQueue();
         return $rows;
+    }
+
+    /**
+     * Clears the queue
+     * 
+     * @return void
+     */
+    private function clearQueue()
+    {
+        $this->queue = array();
     }
 
     /**

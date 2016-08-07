@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with queue overflow when execution relation processor
  * When selecting as many-to-many, it's now possible to select custom columns, instead of default `*`. Custom custom also defaults to `*`
  * In `AbstractMapper` added `syncJunction()` to synchronize junction tables
  * In database service, added `insertIntoJunction()` to simplify inserting records into junction tables
