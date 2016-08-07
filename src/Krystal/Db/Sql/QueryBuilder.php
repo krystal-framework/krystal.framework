@@ -1594,10 +1594,10 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function dropTable($target, $ifExists = true)
     {
-        $this->append('DROP TABLE');
+        $query = 'DROP TABLE';
 
         if ($ifExists === true) {
-            $this->append(' IF EXISTS');
+            $query .= ' IF EXISTS ';
         }
 
         if (!is_array($target)) {
@@ -1605,8 +1605,9 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         }
 
         $target = $this->quote($target);
+        $query .= sprintf('%s ;', implode(', ', $target));
 
-        $this->append(sprintf(' %s', implode(', ', $target)));
+        $this->append($query);
         return $this;
     }
 
