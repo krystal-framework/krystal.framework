@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `\Krystal\Db\Sql\AbstractMapper` added the following shortcut methods: `addColumn()`, `dropColumn()`, `renameColumn()`, `alterColumn()`, `createIndex()`, `dropIndex()`, `addPrimaryKey()`, `dropPrimaryKey()`
  * Added shortcut constants in `\Krystal\Db\Sql\QueryBuilderInterface` for migration methods
  * Dropped `TableDumper` and moved its methods to database service - `dump()` and `fetchAllTables()`
  * Added `getWithWildcart()` in database service. It can be used to build parameters with wildcarts in LIKE queries

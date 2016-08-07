@@ -55,6 +55,21 @@ abstract class AbstractMapper
     }
 
     /**
+     * Returns table name if not null. Otherwise returns mapper's table name
+     * 
+     * @param string $table
+     * @return string
+     */
+    final protected function getTable($table)
+    {
+        if (is_null($table)) {
+            $table = static::getTableName();
+        }
+
+        return $table;
+    }
+
+    /**
      * Returns table name with a prefix
      * 
      * @param string $table
@@ -390,9 +405,7 @@ abstract class AbstractMapper
      */
     final public function dropTable($table = null)
     {
-        if (is_null($table)) {
-            $table = static::getTableName();
-        }
+        $table = $this->getTable($table);
 
         return $this->db->dropTable($table, true)
                         ->execute();
@@ -413,6 +426,123 @@ abstract class AbstractMapper
         }
 
         return true;
+    }
+
+    /**
+     * Adds a column
+     * 
+     * @param string $column Column name
+     * @param string $type Column type
+     * @param string $table Table name. By default it uses mapper's table
+     * @return boolean
+     */
+    public function addColumn($column, $type, $table = null)
+    {
+        return $this->db->alterTable($this->getTable($table))
+                        ->addColumn($column, $type)
+                        ->execute();
+    }
+
+    /**
+     * Drops a column
+     * 
+     * @param string $column Column name
+     * @param string $table Table name. By default it uses mapper's table
+     * @return boolean
+     */
+    public function dropColumn($column, $table = null)
+    {
+        return $this->db->alterTable($this->getTable($table))
+                        ->dropColumn($column)
+                        ->execute();
+    }
+
+    /**
+     * Renames a column
+     * 
+     * @param string $old Old name
+     * @param string $new New name
+     * @param string $table Table name. By default it uses mapper's table
+     * @return boolean
+     */
+    public function renameColumn($old, $new, $table = null)
+    {
+        return $this->db->alterTable($this->getTable($table))
+                        ->renameColumn($old, $new)
+                        ->execute();
+    }
+
+    /**
+     * Alters a column
+     * 
+     * @param string $column Column name
+     * @param string $type Column type
+     * @param string $table Table name. By default it uses mapper's table
+     * @return boolean
+     */
+    public function alterColumn($column, $type, $table = null)
+    {
+        return $this->db->alterTable($this->getTable($table))
+                        ->alterColumn($column, $type)
+                        ->execute();
+    }
+
+    /**
+     * Creates an INDEX
+     * 
+     * @param string $name Index name
+     * @param string|array $target Column name or collection of ones
+     * @param boolean $unique Whether it should be unique or not
+     * @param string $table Table name. By default it uses mapper's table
+     * @return boolean
+     */
+    public function createIndex($name, $target, $unique = false, $table = null)
+    {
+        return $this->db->createIndex($table, $name, $target, $unique)
+                        ->execute();
+    }
+
+    /**
+     * Drops an INDEX
+     * 
+     * @param string $name Index name
+     * @param string $table Table name. By default it uses mapper's table
+     * @return boolean
+     */
+    public function dropIndex($name, $table = null)
+    {
+        return $this->db->dropIndex($table, $name)
+                        ->execute();
+    }
+    
+    /**
+     * Adds a primary key
+     * 
+     * @param string $name PK's name
+     * @param string|array $target Column name or collection of ones
+     * @param string $table Table name. By default it uses mapper's table
+     * @return boolean
+     */
+    public function addPrimaryKey($name, $target, $table = null)
+    {
+        return $this->db->alterTable($this->getTable($table))
+                        ->addConstraint($name)
+                        ->primaryKey($target)
+                        ->execute();
+    }
+
+    /**
+     * Drops a primary key
+     * 
+     * @param string $name PK's name
+     * @param string $table Table name. By default it uses mapper's table
+     * @return boolean
+     */
+    public function dropPrimaryKey($name, $table = null)
+    {
+        return $this->db->alterTable($this->getTable($table))
+                        ->dropConstraint($name)
+                        ->execute();
     }
 
     /**
