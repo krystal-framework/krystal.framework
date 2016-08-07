@@ -25,7 +25,7 @@ class FileManager implements FileManagerInterface
      * @param string $path
      * @return string
      */
-    public function getBaseName($path)
+    public static function getBaseName($path)
     {
         return pathinfo($path, \PATHINFO_BASENAME);
     }
@@ -36,7 +36,7 @@ class FileManager implements FileManagerInterface
      * @param string $path
      * @return string
      */
-    public function getExtension($path)
+    public static function getExtension($path)
     {
         return pathinfo($path, \PATHINFO_EXTENSION);
     }
@@ -47,7 +47,7 @@ class FileManager implements FileManagerInterface
      * @param string $path
      * @return string
      */
-    public function getDirName($path)
+    public static function getDirName($path)
     {
         return pathinfo($path, \PATHINFO_DIRNAME);
     }
@@ -58,7 +58,7 @@ class FileManager implements FileManagerInterface
      * @param string $path
      * @return string
      */
-    public function getFileName($path)
+    public static function getFileName($path)
     {
         return pathinfo($path, \PATHINFO_FILENAME);
     }
@@ -69,10 +69,10 @@ class FileManager implements FileManagerInterface
      * @param string $file
      * @return string
      */
-    public function getMimeType($file)
+    public static function getMimeType($file)
     {
         $mimeType = new MimeTypeGuesser();
-        $extension = $this->getExtension($file);
+        $extension = self::getExtension($file);
 
         return $mimeType->getTypeByExtension($file);
     }
@@ -84,7 +84,7 @@ class FileManager implements FileManagerInterface
      * @throws \RuntimeException When invalid file provided
      * @return boolean
      */
-    public function rmfile($file)
+    public static function rmfile($file)
     {
         if (is_file($file)) {
             return chmod($file, 0777) && unlink($file);
@@ -103,7 +103,7 @@ class FileManager implements FileManagerInterface
      * @throws \RuntimeException When invalid directory provided
      * @return array
      */
-    public function getDirTree($dir, $self = false)
+    public static function getDirTree($dir, $self = false)
     {
         if (!is_dir($dir)) {
             throw new RuntimeException(sprintf(
@@ -137,7 +137,7 @@ class FileManager implements FileManagerInterface
      * @throws \RuntimeException If invalid directory path supplied
      * @return float
      */
-    public function getDirSizeCount($dir)
+    public static function getDirSizeCount($dir)
     {
         if (!is_dir($dir)) {
             throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $dir));
@@ -159,9 +159,9 @@ class FileManager implements FileManagerInterface
      * @param string $dir
      * @return boolean Depending on success
      */
-    public function cleanDir($dir)
+    public static function cleanDir($dir)
     {
-        return $this->rmdir($dir) && mkdir($dir, 0777);
+        return self::rmdir($dir) && mkdir($dir, 0777);
     }
 
     /**
@@ -173,7 +173,7 @@ class FileManager implements FileManagerInterface
      * @throws \UnexpectedValueException if $file is neither a directory and a file
      * @return boolean Depending on success
      */
-    public function chmod($file, $mode, array &$ignored = array())
+    public static function chmod($file, $mode, array &$ignored = array())
     {
         if (is_file($file)) {
             if (!chmod($file, $mode)) {
@@ -182,7 +182,7 @@ class FileManager implements FileManagerInterface
             }
 
         } else if (is_dir($file)) {
-            $items = $this->getDirTree($file, true);
+            $items = self::getDirTree($file, true);
 
             foreach ($items as $item) {
                 if (!chmod($item, $mode)) {
@@ -206,7 +206,7 @@ class FileManager implements FileManagerInterface
      * @throws \RuntimeException if $dir isn't a path to directory
      * @return boolean Depending on success
      */
-    public function rmdir($dir)
+    public static function rmdir($dir)
     {
         if (!is_dir($dir)) {
             throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $dir));
@@ -218,7 +218,7 @@ class FileManager implements FileManagerInterface
             $path = sprintf('%s/%s', $dir, $file);
 
             if (is_dir($path)) {
-                call_user_func(array($this, __FUNCTION__), $path);
+                self::rmdir($path);
             } else {
                 chmod($path, 0777);
                 unlink($path);
@@ -236,7 +236,7 @@ class FileManager implements FileManagerInterface
      * @throws \RuntimeException if $src isn't a path to directory
      * @return boolean Depending on success
      */
-    public function copy($src, $dst)
+    public static function copy($src, $dst)
     {
         if (!is_dir($src)) {
             throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $src));
@@ -271,9 +271,9 @@ class FileManager implements FileManagerInterface
      * @param string $to Target destination path
      * @return boolean
      */
-    public function move($from, $to)
+    public static function move($from, $to)
     {
-        return $this->copy($from, $to) && $this->delete($from);
+        return self::copy($from, $to) && self::delete($from);
     }
 
     /**
@@ -283,7 +283,7 @@ class FileManager implements FileManagerInterface
      * @throws \RuntimeException if invalid file path supplied
      * @return boolean
      */
-    public function isFileEmpty($file)
+    public static function isFileEmpty($file)
     {
         if (!is_file($file)) {
             throw new RuntimeException(sprintf('Invalid file path supplied'));
@@ -299,7 +299,7 @@ class FileManager implements FileManagerInterface
      * @throws \UnexpectedValueException If can't open a directory
      * @return array
      */
-    public function getFirstLevelDirs($dir)
+    public static function getFirstLevelDirs($dir)
     {
         $iterator = new DirectoryIterator($dir);
         $result = array();
