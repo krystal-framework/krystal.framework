@@ -836,4 +836,24 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function primaryKey($target);
+
+    /**
+     * Appends "CREATE INDEX" expression
+     * 
+     * @param string $name Index name
+     * @param string $table Target table
+     * @param array|string $target A collection of column names, or a single one
+     * @param boolean $unique Whether to include UNIQUE constraint
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function createIndex($table, $name, $target, $unique = false);
+
+    /**
+     * Appends "DROP INDEX" expression
+     * 
+     * @param string $table Target table
+     * @param string $name Index name
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropIndex($table, $name);
 }

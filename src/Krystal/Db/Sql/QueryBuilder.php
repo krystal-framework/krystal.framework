@@ -1774,4 +1774,39 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         $this->append(sprintf(' PRIMARY KEY (%s) ', implode(', ', $columns)));
         return $this;
     }
+
+    /**
+     * Appends "CREATE INDEX" expression
+     * 
+     * @param string $name Index name
+     * @param string $table Target table
+     * @param array|string $target A collection of column names, or a single one
+     * @param boolean $unique Whether to include UNIQUE constraint
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function createIndex($table, $name, $target, $unique = false)
+    {
+        $columns = !is_array($target) ? array($target) : $target;
+        $unique = $unique ? 'UNIQUE' : '';
+
+        $query = sprintf('CREATE %s INDEX %s ON %s (%s);', $unique, $this->quote($name), $this->quote($table), implode(', ', $this->quote($columns)));
+
+        $this->append($query);
+        return $this;
+    }
+
+    /**
+     * Appends "DROP INDEX" expression
+     * 
+     * @param string $table Target table
+     * @param string $name Index name
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function dropIndex($table, $name)
+    {
+        $query = sprintf('DROP INDEX %s ON %s ;', $this->quote($name), $this->quote($table));
+
+        $this->append($query);
+        return $this;
+    }
 }
