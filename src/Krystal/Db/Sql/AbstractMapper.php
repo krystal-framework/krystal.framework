@@ -196,6 +196,30 @@ abstract class AbstractMapper
     }
 
     /**
+     * Synchronizes a junction table
+     * 
+     * @param string $table Junction table name
+     * @param string $masterColumn Master column name
+     * @param string $masterValue Master value (shared for slaves)
+     * @param string $slaveColumn Slave column name
+     * @param array $slaves A collection of slave values
+     * @return boolean
+     */
+    final public function syncJunction($table, $masterColumn, $masterValue, $slaveColumn, array $slaves)
+    {
+        $this->db->delete()
+                 ->from($table)
+                 ->whereEquals($masterColumn, $masterValue)
+                 ->execute();
+
+        $this->db->insertIntoJunction($table, array($masterColumn, $slaveColumn), $masterValue, $slaves)
+                 ->execute();
+
+        // Always assume success
+        return true;
+    }
+
+    /**
      * Inserts or updates a record
      * 
      * @param array $data

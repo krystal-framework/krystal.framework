@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `AbstractMapper` added `syncJunction()` to synchronize junction tables
  * In database service, added `insertIntoJunction()` to simplify inserting records into junction tables
  * In `\Krystal\Db\Sql\AbstractMapper` added the following shortcut methods: `addColumn()`, `dropColumn()`, `renameColumn()`, `alterColumn()`, `createIndex()`, `dropIndex()`, `addPrimaryKey()`, `dropPrimaryKey()`
  * Added shortcut constants in `\Krystal\Db\Sql\QueryBuilderInterface` for migration methods
