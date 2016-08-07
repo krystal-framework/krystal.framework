@@ -392,6 +392,38 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends special INSERT statement for junction table
+     * 
+     * @param string $table Junction table name
+     * @param array $columns
+     * @param string $master Master value
+     * @param array $slaves Slave keys
+     * @throws \LogicException If the count of columns isn't 2
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function insertIntoJunction($table, array $columns, $master, array $slaves)
+    {
+        $count = count($columns);
+
+        // Allow only two values
+        if ($count !== 2) {
+            throw new LogicException(sprintf('Column count must be 2 exactly, not "%s"', $count));
+        }
+
+        $collection = array();
+
+        if (!empty($slaves)) {
+            foreach ($slaves as $slave) {
+                $collection[] = array($master, $slave);
+            }
+
+            $this->insertMany($table, $columns, $collection);
+        }
+
+        return $this;
+    }
+
+    /**
      * Builds UPDATE query
      * 
      * @param string $table

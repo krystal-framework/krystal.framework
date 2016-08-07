@@ -1054,6 +1054,40 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends special INSERT statement for junction table
+     * 
+     * @param string $table Junction table name
+     * @param array $columns
+     * @param string $master Master value
+     * @param array $slaves Slave keys
+     * @throws \LogicException If the count of columns isn't 2
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function insertIntoJunction($table, array $columns, $master, array $slaves)
+    {
+        $collection = array();
+
+        foreach ($slaves as $key) {
+            // Support for raw SQL values
+            if ($key instanceof RawSqlFragment) {
+                $placeholder = $key->getFragment();
+            } else {
+                // Create unique placeholder
+                $placeholder = $this->getUniqPlaceholder();
+
+                // Bind to the global stack
+                $this->bind($placeholder, $key);
+            }
+
+            // Push to the placeholder stack as well
+            $collection[] = $placeholder;
+        }
+
+        $this->queryBuilder->insertIntoJunction($table, $columns, $master, $collection);
+        return $this;
+    }
+
+    /**
      * Appends INNER JOIN
      * 
      * @param string $table Right table (second)

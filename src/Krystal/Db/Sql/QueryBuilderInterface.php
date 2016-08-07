@@ -75,6 +75,18 @@ interface QueryBuilderInterface
     public function insertMany($table, array $columns, array $values);
 
     /**
+     * Appends special INSERT statement for junction table
+     * 
+     * @param string $table Junction table name
+     * @param array $columns
+     * @param string $master Master value
+     * @param array $slaves Slave keys
+     * @throws \LogicException If the count of columns isn't 2
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function insertIntoJunction($table, array $columns, $master, array $slaves);
+
+    /**
      * Builds UPDATE query
      * 
      * @return \Krystal\Db\Sql\QueryBuilder
