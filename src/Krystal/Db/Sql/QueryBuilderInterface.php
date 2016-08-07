@@ -18,6 +18,22 @@ interface QueryBuilderInterface
     const LIKE_ENDS = 3;
     const LIKE_CONTAINS = 4;
 
+    /* Shortcuts for migration methods */
+    const COLUMN_TYPE_PK = 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT';
+    const COLUMN_TYPE_STRING = 'VARCHAR(255)';
+    const COLUMN_TYPE_BOOL = 'VARCHAR(1)';
+    const COLUMN_TYPE_INT = 'INT';
+    const COLUMN_TYPE_FLOAT = 'FLOAT';
+    const COLUMN_TYPE_SMALLINT = 'SMALLINT(6)';
+    const COLUMN_TYPE_BIGINT = 'BIGINT(20)';
+    const COLUMN_TYPE_DECIMAL = 'DECIMAL';
+    const COLUMN_TYPE_DATETIME = 'DATETIME';
+    const COLUMN_TYPE_TIMESTAMP = 'TIMESTAMP';
+    const COLUMN_TYPE_TIME = 'TIME';
+    const COLUMN_TYPE_DATE = 'DATE';
+    const COLUMN_TYPE_MONEY = 'DECIMAL(19,4)';
+    const COLUMN_TYPE_BINARY = 'BLOB';
+
     /**
      * Appends SHOW KEYS expression
      * 
