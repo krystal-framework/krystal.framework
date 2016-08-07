@@ -39,6 +39,10 @@ abstract class AbstractMapper
      */
     protected static $prefix;
 
+    /* Default convention for column names in junction tables */
+    const PARAM_JUNCTION_MASTER_COLUMN = 'master_id';
+    const PARAM_JUNCTION_SLAVE_COLUMN = 'slave_id';
+
     /**
      * State initialization
      * 
@@ -204,7 +208,7 @@ abstract class AbstractMapper
      * @param array $slaves A collection of slave values
      * @return boolean
      */
-    final public function syncWithJunction($masterValue, array $slaves, $masterColumn = 'master_id', $slaveColumn = 'slave_id')
+    final public function syncWithJunction($masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
         $table = static::getJunctionTableName();
 
