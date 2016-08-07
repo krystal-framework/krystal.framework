@@ -83,12 +83,10 @@ final class DirectoryBag implements DirectoryBagInterface
      */
     public function remove($id, $filename = null)
     {
-        $fm = new FileManager();
-
         if ($filename == null) {
-            return $fm->rmdir($this->getPath($id));
+            return FileManager::rmdir($this->getPath($id));
         } else {
-            return $fm->rmfile($this->getPath($id, $filename));
+            return FileManager::rmfile($this->getPath($id, $filename));
         }
     }
 }

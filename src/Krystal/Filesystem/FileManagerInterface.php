@@ -19,7 +19,7 @@ interface FileManagerInterface
      * @param string $path
      * @return string
      */
-    public function getBaseName($path);
+    public static function getBaseName($path);
 
     /**
      * Returns a directory name from a path
@@ -27,7 +27,7 @@ interface FileManagerInterface
      * @param string $path
      * @return string
      */
-    public function getExtension($path);
+    public static function getExtension($path);
 
     /**
      * Returns a directory name from a path
@@ -35,7 +35,7 @@ interface FileManagerInterface
      * @param string $path
      * @return string
      */
-    public function getDirName($path);
+    public static function getDirName($path);
 
     /**
      * Returns a file name from a path
@@ -43,7 +43,7 @@ interface FileManagerInterface
      * @param string $path
      * @return string
      */
-    public function getFileName($path);
+    public static function getFileName($path);
 
     /**
      * Fetches mime type from a file
@@ -51,7 +51,7 @@ interface FileManagerInterface
      * @param string $file
      * @return string
      */
-    public function getMimeType($file);
+    public static function getMimeType($file);
 
     /**
      * Safely removes a file
@@ -60,7 +60,7 @@ interface FileManagerInterface
      * @throws \RuntimeException When invalid file provided
      * @return boolean
      */
-    public function rmfile($file);
+    public static function rmfile($file);
 
     /**
      * Builds directory tree
@@ -70,7 +70,7 @@ interface FileManagerInterface
      * @throws \RuntimeException When invalid directory provided
      * @return array
      */
-    public function getDirTree($dir, $self = false);
+    public static function getDirTree($dir, $self = false);
 
     /**
      * Counts directory size in bytes
@@ -79,7 +79,7 @@ interface FileManagerInterface
      * @throws \RuntimeException If invalid directory path supplied
      * @return float
      */
-    public function getDirSizeCount($dir);
+    public static function getDirSizeCount($dir);
 
     /**
      * Removes everything in a directory but leaves directory itself
@@ -87,7 +87,7 @@ interface FileManagerInterface
      * @param string $dir
      * @return boolean Depending on success
      */
-    public function cleanDir($dir);
+    public static function cleanDir($dir);
 
     /**
      * Recursively applies chmod to given directory
@@ -98,7 +98,7 @@ interface FileManagerInterface
      * @throws \UnexpectedValueException if $file is neither a directory and a file
      * @return boolean Depending on success
      */
-    public function chmod($file, $mode, array &$ignored = array());
+    public static function chmod($file, $mode, array &$ignored = array());
 
     /**
      * Removes a directory (recursively)
@@ -107,7 +107,7 @@ interface FileManagerInterface
      * @throws \RuntimeException if $dir isn't a path to directory
      * @return boolean Depending on success
      */
-    public function rmdir($dir);
+    public static function rmdir($dir);
 
     /**
      * Copies a directory to another directory
@@ -117,7 +117,7 @@ interface FileManagerInterface
      * @throws \RuntimeException if $src isn't a path to directory
      * @return boolean Depending on success
      */
-    public function copy($src, $dst);
+    public static function copy($src, $dst);
 
     /**
      * Moves a directory
@@ -126,7 +126,7 @@ interface FileManagerInterface
      * @param string $to Target destination path
      * @return boolean
      */
-    public function move($from, $to);
+    public static function move($from, $to);
 
     /**
      * Checks whether file is empty
@@ -135,7 +135,7 @@ interface FileManagerInterface
      * @throws \RuntimeException if invalid file path supplied
      * @return boolean
      */
-    public function isFileEmpty($file);
+    public static function isFileEmpty($file);
 
     /**
      * Returns nested directories inside provided one
@@ -144,5 +144,5 @@ interface FileManagerInterface
      * @throws \UnexpectedValueException If can't open a directory
      * @return array
      */
-    public function getFirstLevelDirs($dir);
+    public static function getFirstLevelDirs($dir);
 }

@@ -17,13 +17,6 @@ use LogicException;
 final class FileHandler implements FileHandlerInterface
 {
     /**
-     * File manager
-     * 
-     * @var \Krystal\Filesystem\FileManager
-     */
-    private $fileManager;
-
-    /**
      * Target directory
      * 
      * @var string
@@ -34,13 +27,11 @@ final class FileHandler implements FileHandlerInterface
      * State initialization
      * 
      * @param string $dir Target directory
-     * @param \Krystal\Filesystem\FileManager $fileManager
      * @return void
      */
-    public function __construct($dir, FileManager $fileManager)
+    public function __construct($dir)
     {
         $this->dir = $dir;
-        $this->fileManager = $fileManager;
     }
 
     /**
@@ -62,11 +53,11 @@ final class FileHandler implements FileHandlerInterface
         $path = sprintf('%s/%s', $this->dir, $id);
 
         if ($image !== null) {
-            $tree = $this->fileManager->getDirTree($path);
+            $tree = FileManager::getDirTree($path);
 
             foreach ($tree as $file) {
-                if ($this->fileManager->getBaseName($file) == $image && is_file($file)) {
-                    $this->fileManager->rmfile($file);
+                if (FileManager::getBaseName($file) == $image && is_file($file)) {
+                    FileManager::rmfile($file);
                 }
             }
 
@@ -74,7 +65,7 @@ final class FileHandler implements FileHandlerInterface
             // Target directory might not exist, so we'd better check it
             if (is_dir($path)) {
                 // Remove id directory with its content recursively
-                $this->fileManager->rmdir($path);
+                FileManager::rmdir($path);
             }
         }
 

@@ -325,8 +325,7 @@ final class ModuleManager implements ModuleManagerInterface
     private function performRemoval($path)
     {
         if (is_dir($path)) {
-            $fm = new FileManager();
-            return $fm->rmdir($path);
+            return FileManager::rmdir($path);
         } else {
             return false;
         }

@@ -12,7 +12,6 @@
 namespace Krystal\Image\Tool;
 
 use Krystal\Image\Tool\Upload\UploaderFactory;
-use Krystal\Filesystem\FileManager;
 
 final class ImageManager implements ImageManagerInterface
 {
@@ -105,7 +104,7 @@ final class ImageManager implements ImageManagerInterface
     {
         if (is_null($this->fileHandler)) {
             $path = rtrim($this->path, '/');
-            $this->fileHandler = new FileHandler($this->rootDir.$path, new FileManager());
+            $this->fileHandler = new FileHandler($this->rootDir.$path);
         }
         
         return $this->fileHandler;

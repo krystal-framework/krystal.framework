@@ -82,17 +82,15 @@ final class FileDownloader implements FileDownloaderInterface
             throw new RuntimeException('Either invalid file supplied or its not readable');
         }
 
-        $fm = new FileManager();
-
         // Prepare base name
         if ($alias === null) {
-            $baseName = $fm->getBaseName($target);
+            $baseName = FileManager::getBaseName($target);
         } else {
             $baseName = $alias;
         }
 
         // Grab the Mime-Type
-        $mime = $fm->getMimeType($target);
+        $mime = FileManager::getMimeType($target);
 
         $this->prepare($mime, $baseName);
     }
