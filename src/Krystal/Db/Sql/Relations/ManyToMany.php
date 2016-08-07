@@ -24,11 +24,11 @@ final class ManyToMany extends AbstractRelation
      * @param string $pk PK column name in slave table
      * @return array
      */
-    public function merge($masterPk, $alias, array $rows, $junction, $column, $table, $pk)
+    public function merge($masterPk, $alias, array $rows, $junction, $column, $table, $pk, $columns)
     {
         foreach ($rows as &$row) {
             $value = $row[$masterPk];
-            $row[$alias] = $this->getSlaveData($table, $pk, $junction, $column, $value);
+            $row[$alias] = $this->getSlaveData($table, $pk, $junction, $column, $value, $columns);
         }
 
         return $rows;
@@ -42,15 +42,16 @@ final class ManyToMany extends AbstractRelation
      * @param string $junction Junction table name
      * @param string $column Column in junction table to be queried
      * @param string $value Value for the column being queried
+     * @param mixed $columns Columns to be selected in slave table
      * @return array
      */
-    private function getSlaveData($slaveTable, $slavePk, $junction, $column, $value)
+    private function getSlaveData($slaveTable, $slavePk, $junction, $column, $value, $columns)
     {
-        $ids = $this->queryJunctionTable($junction, $column, $value);
+        $ids = $this->queryJunctionTable($junction, $column, $value, '*');
         $result = array();
 
         foreach ($ids as $id) {
-            $result[] = $this->queryTable($slaveTable, $slavePk, $id);
+            $result[] = $this->queryTable($slaveTable, $slavePk, $id, $columns);
         }
 
         return $this->prepareResult($result);
@@ -120,11 +121,12 @@ final class ManyToMany extends AbstractRelation
      * @param string $table Junction table name
      * @param string $column
      * @param string $value
+     * @param mixed $columns Columns to be selected in slave table
      * @return array
      */
-    private function queryJunctionTable($table, $column, $value)
+    private function queryJunctionTable($table, $column, $value, $columns)
     {
-        $rows = $this->queryTable($table, $column, $value);
+        $rows = $this->queryTable($table, $column, $value, $columns);
 
         foreach ($rows as &$row) {
             $row = $this->leaveOnlyCurrent($row, $column);
@@ -140,11 +142,12 @@ final class ManyToMany extends AbstractRelation
      * @param string $link Linking column name to be selected
      * @param string $column Slave column id name
      * @param string $value Value of PK from master table
+     * @param mixed $columns Columns to be selected in slave table
      * @return array
      */
-    private function queryTable($table, $column, $value)
+    private function queryTable($table, $column, $value, $columns)
     {
-        return $this->db->select('*')
+        return $this->db->select($columns)
                         ->from($table)
                         ->whereEquals($column, $value)
                         ->getStmt()

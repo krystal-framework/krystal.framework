@@ -118,9 +118,10 @@ final class RelationProcessor implements RelationProcessorInterface
                     $column = $args[2];
                     $table = $args[3];
                     $pk = $args[4];
+                    $columns = $args[5];
 
                     $relation = new ManyToMany($this->db);
-                    $rows = $relation->merge($this->getMasterPkName(), $alias, $rows, $junction, $column, $table, $pk);
+                    $rows = $relation->merge($this->getMasterPkName(), $alias, $rows, $junction, $column, $table, $pk, $columns);
                 break;
             }
         }

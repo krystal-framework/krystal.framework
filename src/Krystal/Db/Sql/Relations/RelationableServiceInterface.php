@@ -21,9 +21,10 @@ interface RelationableServiceInterface
      * @param string $column Column name from junction table to be selected
      * @param string $table Slave table name table
      * @param string $pk PK column name in slave table
+     * @param mixed $columns Columns to be selected in slave table
      * @return \Krystal\Db\Sql\Db
      */
-    public function asManyToMany($alias, $junction, $column, $table, $pk);
+    public function asManyToMany($alias, $junction, $column, $table, $pk, $columns = '*');
 
     /**
      * Appends one-to-one grabber to the queue
