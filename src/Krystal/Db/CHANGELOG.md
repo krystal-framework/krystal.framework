@@ -7,7 +7,9 @@ CHANGELOG
  * In shared mapper added `getMasterIdsFromJunction()` and `getSlaveIdsFromJunction()` to find associated ids
  * Fixed issue with queue overflow when execution relation processor
  * When selecting as many-to-many, it's now possible to select custom columns, instead of default `*`. Custom custom also defaults to `*`
- * In `syncWithJunction` added `syncJunction()` to synchronize junction tables
+ * In shared mapper added `removeFromJunction()`, `insertIntoJunction()` to simplify common operations
+ * In shared mapper added `getMasterIdsFromJunction()`, `getSlaveIdsFromJunction()` to simplify grabbing
+ * In shared mapper added `syncWithJunction()` to synchronize junction tables
  * In database service, added `insertIntoJunction()` to simplify inserting records into junction tables
  * In `\Krystal\Db\Sql\AbstractMapper` added the following shortcut methods: `addColumn()`, `dropColumn()`, `renameColumn()`, `alterColumn()`, `createIndex()`, `dropIndex()`, `addPrimaryKey()`, `dropPrimaryKey()`
  * Added shortcut constants in `\Krystal\Db\Sql\QueryBuilderInterface` for migration methods
