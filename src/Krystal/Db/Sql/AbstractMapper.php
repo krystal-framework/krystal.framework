@@ -225,6 +225,50 @@ abstract class AbstractMapper
     }
 
     /**
+     * Fetches master values associated with a slave in junction table
+     * 
+     * @param string $value Slave value
+     * @param string $masterColumn Master column name
+     * @param string $slaveColumn Slave column name
+     * @return array
+     */
+    final public function getMasterIdsFromJunction($value, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
+    {
+        return $this->getIdsFromJunction($masterColumn, $slaveColumn, $value);
+    }
+
+    /**
+     * Fetches master values associated with a slave in junction table
+     * 
+     * @param string $value Slave value
+     * @param string $masterColumn Master column name
+     * @param string $slaveColumn Slave column name
+     * @return array
+     */
+    final public function getSlaveIdsFromJunction($value, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
+    {
+        return $this->getIdsFromJunction($slaveColumn, $masterColumn, $value);
+    }
+
+    /**
+     * Fetches values from junction table
+     * 
+     * @param string $column Column to be selected
+     * @param string $key
+     * @param string $value
+     * @return array
+     */
+    private function getIdsFromJunction($column, $key, $value)
+    {
+        $table = static::getJunctionTableName();
+
+        return $this->db->select($column)
+                        ->from($table)
+                        ->whereEquals($key, $value)
+                        ->queryAll($column);
+    }
+
+    /**
      * Inserts or updates a record
      * 
      * @param array $data
