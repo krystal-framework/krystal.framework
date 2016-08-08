@@ -225,18 +225,41 @@ abstract class AbstractMapper
      */
     final public function syncWithJunction($masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
+        return $this->removeFromJunction($masterValue, $masterColumn) && $this->insertIntoJunction($masterValue, $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN);
+    }
+
+    /**
+     * Removes all records from junction table associated with master's key
+     * 
+     * @param string $masterValue Master value (shared for slaves)
+     * @param string $masterColumn Master column name
+     * @return boolean
+     */
+    final public function removeFromJunction($masterValue, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN)
+    {
         $table = $this->getJunction();
 
-        $this->db->delete()
-                 ->from($table)
-                 ->whereEquals($masterColumn, $masterValue)
-                 ->execute();
+        return $this->db->delete()
+                        ->from($table)
+                        ->whereEquals($masterColumn, $masterValue)
+                        ->execute();
+    }
 
-        $this->db->insertIntoJunction($table, array($masterColumn, $slaveColumn), $masterValue, $slaves)
-                 ->execute();
+    /**
+     * Inserts a record into junction table
+     * 
+     * @param string $masterValue
+     * @param array $slaves
+     * @param string $masterColumn Master column name
+     * @param string $slaveColumn Slave column name
+     * @return boolean
+     */
+    final public function insertIntoJunction($masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
+    {
+        $table = $this->getJunction();
 
-        // Always assume success
-        return true;
+        return $this->db->insertIntoJunction($table, array($masterColumn, $slaveColumn), $masterValue, $slaves)
+                        ->execute();
     }
 
     /**
