@@ -64,13 +64,28 @@ abstract class AbstractMapper
      * @param string $table
      * @return string
      */
-    final protected function getTable($table)
+    private function getTable($table)
     {
         if (is_null($table)) {
             $table = static::getTableName();
         }
 
         return $table;
+    }
+
+    /**
+     * Returns junction table name
+     * 
+     * @throws \RuntimeException If getJunctionTable() is not declared
+     * @return string
+     */
+    private function getJunction()
+    {
+        if (method_exists(get_called_class(), 'getJunctionTableName')) {
+            return static::getJunctionTableName();
+        } else {
+            throw new RuntimeException(sprintf('The getJunctionTableName() is not declared. You need to declare it to work junction shortcut methods'));
+        }
     }
 
     /**
@@ -210,7 +225,7 @@ abstract class AbstractMapper
      */
     final public function syncWithJunction($masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
-        $table = static::getJunctionTableName();
+        $table = $this->getJunction();
 
         $this->db->delete()
                  ->from($table)
@@ -260,7 +275,7 @@ abstract class AbstractMapper
      */
     private function getIdsFromJunction($column, $key, $value)
     {
-        $table = static::getJunctionTableName();
+        $table = $this->getJunction();
 
         return $this->db->select($column)
                         ->from($table)
