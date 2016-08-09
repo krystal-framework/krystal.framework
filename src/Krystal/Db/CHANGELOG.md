@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In database service, added `paginateRaw()` to paginate result-sets without guessing
  * In shared mapper added `getMasterIdsFromJunction()` and `getSlaveIdsFromJunction()` to find associated ids
  * Fixed issue with queue overflow when execution relation processor
  * When selecting as many-to-many, it's now possible to select custom columns, instead of default `*`. Custom custom also defaults to `*`

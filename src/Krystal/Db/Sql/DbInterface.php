@@ -75,6 +75,16 @@ interface DbInterface extends QueryBuilderInterface
     public function rollBack();
 
     /**
+     * Paginates a result-set without automatic query guessing
+     * 
+     * @param integer $count
+     * @param integer $page Current page
+     * @param integer $itemsPerPage Items per page to be shown
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function paginateRaw($count, $page, $itemsPerPage);
+
+    /**
      * Automatically paginates result-set
      * 
      * @param integer $page

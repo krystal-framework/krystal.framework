@@ -405,10 +405,26 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Paginates a result-set without automatic query guessing
+     * 
+     * @param integer $count
+     * @param integer $page Current page
+     * @param integer $itemsPerPage Items per page to be shown
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function paginateRaw($count, $page, $itemsPerPage)
+    {
+        $this->paginator->tweak($count, $itemsPerPage, $page);
+        $this->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
+
+        return $this;
+    }
+
+    /**
      * Automatically paginates result-set
      * 
-     * @param integer $page
-     * @param integer $itemsPerPage
+     * @param integer $page Current page
+     * @param integer $itemsPerPage Items per page to be shown
      * @param string $column Column to be selected when counting
      * @throws \RuntimeException If algorithm isn't supported for current driver
      * @return \Krystal\Db\Sql\Db
@@ -419,9 +435,7 @@ final class Db implements DbInterface, RelationableServiceInterface
 
         if ($this->isDriver('mysql') || $this->isDriver('sqlite')) {
             // Alter paginator's state
-            $this->paginator->tweak($count, $itemsPerPage, $page);
-            $this->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
-
+            $this->paginateRaw($count, $page, $itemsPerPage);
         } else {
             throw new RuntimeException('Smart pagination algorithm is currently supported only for MySQL and SQLite');
         }
