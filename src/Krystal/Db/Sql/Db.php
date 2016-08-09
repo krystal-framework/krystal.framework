@@ -243,7 +243,7 @@ final class Db implements DbInterface, RelationableServiceInterface
 
             } else {
 
-                $placeholder = $this->toPlaceholder($key);
+                $placeholder = $this->getUniqPlaceholder();
 
                 $data[$key] = $placeholder;
                 $this->bind($placeholder, $value);
@@ -1313,7 +1313,7 @@ final class Db implements DbInterface, RelationableServiceInterface
         if ($value instanceof RawSqlFragment) {
             $placeholder = $value->getFragment();
         } else {
-            $placeholder = $this->toPlaceholder($column);
+            $placeholder = $this->getUniqPlaceholder();
             $this->bind($placeholder, $value);
         }
 

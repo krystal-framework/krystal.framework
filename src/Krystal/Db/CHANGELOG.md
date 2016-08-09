@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Internal improvement with PDO placeholder bindings
  * In database service, added `paginateRaw()` to paginate result-sets without guessing
  * In shared mapper added `getMasterIdsFromJunction()` and `getSlaveIdsFromJunction()` to find associated ids
  * Fixed issue with queue overflow when execution relation processor
