@@ -11,8 +11,6 @@
 
 namespace Krystal\Security;
 
-use RuntimeException;
-
 interface CrypterInterface
 {
     /**
