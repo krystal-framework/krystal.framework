@@ -242,7 +242,6 @@ final class Db implements DbInterface, RelationableServiceInterface
                 $data[$key] = $value->getFragment();
 
             } else {
-
                 $placeholder = $this->getUniqPlaceholder();
 
                 $data[$key] = $placeholder;
@@ -251,6 +250,27 @@ final class Db implements DbInterface, RelationableServiceInterface
         }
 
         return $data;
+    }
+
+    /**
+     * Creates unique placeholder
+     * 
+     * @param string $key
+     * @return string
+     */
+    private function createUniqPlaceholder($key)
+    {
+        if ($key instanceof RawSqlFragment) {
+            $placeholder = $key->getFragment();
+        } else {
+            // Create unique placeholder
+            $placeholder = $this->getUniqPlaceholder();
+
+            // Bind to the global stack
+            $this->bind($placeholder, $key);
+        }
+
+        return $placeholder;
     }
 
     /**
@@ -1016,18 +1036,7 @@ final class Db implements DbInterface, RelationableServiceInterface
         $collection = array();
 
         foreach ($values as $value) {
-            if ($value instanceof RawSqlFragment) {
-                $placeholder = $value->getFragment();
-            } else {
-                // Create unique placeholder
-                $placeholder = $this->getUniqPlaceholder();
-
-                // Bind to the global stack
-                $this->bind($placeholder, $value);
-            }
-
-            // Push to the placeholder stack as well
-            $collection[] = $placeholder;
+            $collection[] = $this->createUniqPlaceholder($value);
         }
 
         $this->queryBuilder->insertShort($table, $collection, $ignore);
@@ -1048,19 +1057,7 @@ final class Db implements DbInterface, RelationableServiceInterface
 
         foreach ($values as $index => $data) {
             foreach ($data as $key) {
-                // Support for raw SQL values
-                if ($key instanceof RawSqlFragment) {
-                    $placeholder = $key->getFragment();
-                } else {
-                    // Create unique placeholder
-                    $placeholder = $this->getUniqPlaceholder();
-
-                    // Bind to the global stack
-                    $this->bind($placeholder, $key);
-                }
-
-                // Push to the placeholder stack as well
-                $collection[$index][] = $placeholder;
+                $collection[$index][] = $this->createUniqPlaceholder($key);
             }
         }
 
@@ -1083,19 +1080,7 @@ final class Db implements DbInterface, RelationableServiceInterface
         $collection = array();
 
         foreach ($slaves as $key) {
-            // Support for raw SQL values
-            if ($key instanceof RawSqlFragment) {
-                $placeholder = $key->getFragment();
-            } else {
-                // Create unique placeholder
-                $placeholder = $this->getUniqPlaceholder();
-
-                // Bind to the global stack
-                $this->bind($placeholder, $key);
-            }
-
-            // Push to the placeholder stack as well
-            $collection[] = $placeholder;
+            $collection[] = $this->createUniqPlaceholder($key);
         }
 
         $this->queryBuilder->insertIntoJunction($table, $columns, $master, $collection);
@@ -1310,14 +1295,7 @@ final class Db implements DbInterface, RelationableServiceInterface
             return $this;
         }
 
-        if ($value instanceof RawSqlFragment) {
-            $placeholder = $value->getFragment();
-        } else {
-            $placeholder = $this->getUniqPlaceholder();
-            $this->bind($placeholder, $value);
-        }
-
-        call_user_func(array($this->queryBuilder, $method), $column, $operator, $placeholder);
+        call_user_func(array($this->queryBuilder, $method), $column, $operator, $this->createUniqPlaceholder($value));
         return $this;
     }
 
