@@ -13,6 +13,7 @@ namespace Krystal\Application\Component;
 
 use Krystal\Http\Request as Component;
 use Krystal\Http\CookieBag;
+use Krystal\Security\Crypter;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
 
@@ -23,7 +24,14 @@ final class Request implements ComponentInterface
      */
     public function getInstance(DependencyInjectionContainerInterface $container, array $config, InputInterface $input)
     {
-        $cookieBag = new CookieBag($input->getCookie());
+        if (isset($config['components']['cookie']['salt'])) {
+            $salt = $config['components']['cookie']['salt'];
+            $crypter = new Crypter($salt);
+        } else {
+            $crypter = null;
+        }
+
+        $cookieBag = new CookieBag($input->getCookie(), $crypter);
         return new Component($input->getQuery(), $input->getPost(), $cookieBag, $input->getServer(), $input->getFiles());
     }
 
