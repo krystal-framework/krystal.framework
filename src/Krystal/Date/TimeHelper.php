@@ -22,4 +22,34 @@ abstract class TimeHelper
     const WEEK = 604800;
     const MONTH = 2592000;
     const YEAR = 31536000;
+
+    /**
+     * Create years
+     * 
+     * @param integer $start Starting year
+     * @param integer $end Ending year
+     * @return array
+     */
+    public static function createYears($start, $end)
+    {
+        $result = array();
+
+        for ($i = $start; $i < $end + 1; $i++) {
+            $result[$i] = $i;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Create years up to current one
+     * 
+     * @param integer $start Starting year
+     * @param integer $end Ending year
+     * @return array
+     */
+    public static function createYearsUpToCurrent($start)
+    {
+        return self::createYears($start, date('Y'));
+    }
 }

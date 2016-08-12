@@ -4,6 +4,7 @@ CHANGELOG
 1.1
 ----
 
+ * In `TimeHelper` added `createYears()` and `createYearsUpToCurrent()`
  * Added Zodiacal service
  * Renamed `Helper` to `TimeHelper`
 
