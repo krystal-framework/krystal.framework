@@ -107,6 +107,11 @@ final class TreeBuilder implements TreeInterface
         $rl = $this->getRelations();
         $data = $rl[RelationBuilder::TREE_PARAM_ITEMS];
 
+        // If can't find, then return empty array
+        if (!isset($data[$id])) {
+            return array();
+        }
+
         $current = $data[$id];
         $parentId = $current[RelationBuilder::TREE_PARAM_PARENT_ID];
 
