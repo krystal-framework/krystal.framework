@@ -91,6 +91,26 @@ abstract class AbstractGadget
     }
 
     /**
+     * Clears the namespaced data
+     * 
+     * @return void
+     */
+    final protected function clearData()
+    {
+        return $this->storage->remove($this->ns);
+    }
+
+    /**
+     * Checks whether namespaced data exists
+     * 
+     * @return boolean
+     */
+    final protected function hasData()
+    {
+        return $this->storage->has($this->ns);
+    }
+
+    /**
      * Checks whether option exists
      * 
      * @param string $option Target option key
