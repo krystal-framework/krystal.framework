@@ -63,6 +63,21 @@ abstract class AbstractController
     }
 
     /**
+     * Prepares a response as JSON string setting corresponding headers
+     * 
+     * @param array $data
+     * @param integer Native encoding options
+     * @return string
+     */
+    final protected function json(array $data, $options = 0)
+    {
+        // Set JSON header
+        $this->response->respondAsJson();
+
+        return json_encode($data, $options);
+    }
+
+    /**
      * Creates a mapper
      * 
      * @param string $namespace
