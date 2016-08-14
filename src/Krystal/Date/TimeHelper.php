@@ -24,6 +24,45 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Return quarters
+     * 
+     * @return array
+     */
+    public static function getQuarters()
+    {
+        return range(1, 4);
+    }
+
+    /**
+     * Returns current quarter
+     * 
+     * @param integer $month Month number without leading zeros
+     * @return integer
+     */
+    public static function getQuarter($month = null)
+    {
+        if ($month === null) {
+            $month = date('n', abs(time()));
+        }
+
+        if (in_array($month, range(1, 3))) {
+            return 1;
+        }
+
+        if (in_array($month, range(4, 6))) {
+            return 2;
+        }
+
+        if (in_array($month, range(7, 9))) {
+            return 3;
+        }
+
+        if (in_array($month, range(10, 12))) {
+            return 4;
+        }
+    }
+
+    /**
      * Create years
      * 
      * @param integer $start Starting year
