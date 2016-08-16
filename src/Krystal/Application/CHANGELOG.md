@@ -4,7 +4,7 @@ CHANGELOG
 1.3
 ---
 
- * In share controller, added `json()` shortcut method
+ * In shared controller, added `json()` shortcut method
  * In view service, added `mapUrl()`
  * In view service, added `hasVariable()` and `getVariable()`
  * Since now components are being registered without being checked for entries in the main configuration array
