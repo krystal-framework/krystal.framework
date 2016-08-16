@@ -14,6 +14,20 @@ namespace Krystal\Application\View;
 interface PartialBagInterface
 {
     /**
+     * Clear all scripts
+     * 
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function clearScripts();
+
+    /**
+     * Clear all stylesheets
+     * 
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function clearStylesheets();
+
+    /**
      * Attempts to return partial file path
      * 
      * @param string $name Partial name

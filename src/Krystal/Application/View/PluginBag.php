@@ -35,6 +35,28 @@ final class PluginBag implements PluginBagInterface
     private $stylesheets = array();
 
     /**
+     * Clear all scripts
+     * 
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function clearScripts()
+    {
+        $this->scripts = array();
+        return $this;
+    }
+
+    /**
+     * Clear all stylesheets
+     * 
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function clearStylesheets()
+    {
+        $this->stylesheets = array();
+        return $this;
+    }
+
+    /**
      * Replaces a module path inside provided path
      * 
      * @param string $path Target path
