@@ -14,6 +14,20 @@ namespace Krystal\Application\View;
 interface PluginBagInterface
 {
     /**
+     * Clear all scripts
+     * 
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function clearScripts();
+
+    /**
+     * Clear all stylesheets
+     * 
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function clearStylesheets();
+
+    /**
      * Appends a stylesheet
      * 
      * @param string $stylesheet
