@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `PluginBag` service added `clearScripts()` and `clearStylesheets()`
  * In shared controller, added `json()` shortcut method
  * In view service, added `mapUrl()`
  * In view service, added `hasVariable()` and `getVariable()`
