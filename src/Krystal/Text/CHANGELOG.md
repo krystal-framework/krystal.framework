@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added static `Math` class with utility methods
  * In TextUtils added `randomString()`
  * Added `CurrencyConvertor` tool
  * Moved internals of `TextTrimmer` into `TextUtils::trim()`
