@@ -43,20 +43,32 @@ final class Router implements RouterInterface
     {
         foreach ($map as $index => $uriTemplate) {
             $matches = array();
-            if (preg_match($this->buildRegEx($uriTemplate), $segment, $matches) === 1) {
+            if (preg_match($this->createRegEx($uriTemplate), $segment, $matches) === 1) {
                 $matchedURI = array_shift($matches);
 
                 $routeMatch = new RouteMatch();
                 $routeMatch->setMatchedUri($matchedURI)
                             ->setMatchedUriTemplate($uriTemplate)
                             ->setVariables($matches);
-                
+
                 return $routeMatch;
             }
         }
 
         // By default, we have no matches
         return false;
+    }
+
+    /**
+     * Creates a regular expression according to URI template
+     * 
+     * @param string $uriTemplate string
+     * @return string Prepared regular expression
+     */
+    private function createRegEx($uriTemplate)
+    {
+        $pattern = str_replace($this->getPlaceholders(), $this->getPatterns(), $uriTemplate);
+        return '~^' . $pattern . '$~i';
     }
 
     /**
@@ -77,19 +89,5 @@ final class Router implements RouterInterface
     private function getPatterns()
     {
         return array_values($this->replacements);
-    }
-
-    /**
-     * Builds a regular expression according to URI template
-     * 
-     * @param string $uriTemplate string
-     * @return string Prepared regular expression
-     */
-    private function buildRegex($uriTemplate)
-    {
-        $pattern = str_replace($this->getPlaceholders(), $this->getPatterns(), $uriTemplate);
-        $regex = '~^' . $pattern . '$~i';
-
-        return $regex;
     }
 }
