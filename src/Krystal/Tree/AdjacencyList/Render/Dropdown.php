@@ -113,8 +113,13 @@ class Dropdown extends AbstractDropdown
     protected function getNestedLevelParent()
     {
         $ul = new NodeElement();
-        return $ul->openTag('ul')
-                  ->finalize()
+        $ul->openTag('ul');
+
+        if (isset($this->options['class']['nested'])) {
+            $ul->addAttribute('class', $this->options['class']['nested']);
+        }
+
+        return $ul->finalize()
                   ->render();
     }
 }
