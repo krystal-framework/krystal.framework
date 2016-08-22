@@ -603,12 +603,8 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $this->append('SELECT ' . $type);
         }
 
-        // Do save only for the first select
-        if (is_null($this->selected)) {
-            // Save selected data
-            $this->selected = $type;
-        }
-
+        // Save selected data (to be used when guessing count query)
+        $this->selected = $type;
         return $this;
     }
 
