@@ -64,6 +64,14 @@ interface ModuleManagerInterface
     public function isLoaded($name);
 
     /**
+     * Returns a collection of unloaded modules
+     * 
+     * @param array $modules Target collection of required modules
+     * @return array
+     */
+    public function getUnloadedModules(array $modules);
+
+    /**
      * Removes module data from cache directory
      * 
      * @param string $module

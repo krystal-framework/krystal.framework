@@ -229,6 +229,25 @@ final class ModuleManager implements ModuleManagerInterface
     }
 
     /**
+     * Returns a collection of unloaded modules
+     * 
+     * @param array $modules Target collection of required modules
+     * @return array
+     */
+    public function getUnloadedModules(array $modules)
+    {
+        $unloaded = array();
+
+        foreach ($modules as $module) {
+            if (!$this->isLoaded($module)) {
+                array_push($unloaded, $module);
+            }
+        }
+
+        return $unloaded;
+    }
+
+    /**
      * Returns an array of loaded module names
      * 
      * @return array
