@@ -116,18 +116,16 @@ final class ImageGenerator implements ImageGeneratorInterface
         $y = round($this->paramBag->getHeight() * 27 / 40);
 
         for ($i = 0; $i < $length; ++$i) {
-
             $fontSize = (int) (rand(26, 32) * $scale * 0.8);
             $angle = rand(-10, 10);
-            
+
             $letter = $text[$i];
             $box = imagettftext($image, $fontSize, $angle, $x, $y, $textColor, $this->paramBag->getFontFile(), $letter);
             $x = $box[2] + $this->paramBag->getOffset();
         }
-        
+
         // Now free the memory
         imagecolordeallocate($image, $textColor);
-
         return $image;
     }
 }
