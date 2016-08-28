@@ -354,6 +354,96 @@ final class AppConfig implements AppConfigInterface
     }
 
     /**
+     * Returns a path to particular module
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleDir($module)
+    {
+        return sprintf('%s/%s', $this->getModulesDir(), $module);
+    }
+
+    /**
+     * Returns module URL
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleUrl($module)
+    {
+        return sprintf('%s/%s', '/module', $module);
+    }
+
+    /**
+     * Returns a path to module view directory
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleViewDir($module)
+    {
+        return sprintf('%s/View', $this->getModuleDir($module));
+    }
+
+    /**
+     * Returns module view URL
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleViewUrl($module)
+    {
+        return sprintf('%s/View', $this->getModuleUrl($module));
+    }
+
+    /**
+     * Returns module template directory
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleTemplateDir($module)
+    {
+        return sprintf('%s/Template', $this->getModuleViewDir($module));
+    }
+
+    /**
+     * Returns module template URL
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleTemplateUrl($module)
+    {
+        return sprintf('%s/Template', $this->getModuleViewUrl($module));
+    }
+
+    /**
+     * Returns module directory path 
+     * 
+     * @param string $module
+     * @param string $theme
+     * @return string
+     */
+    public function getModuleThemeDir($module, $theme)
+    {
+        return sprintf('%s/%s', $this->getModuleTemplateDir($module), $theme);
+    }
+
+    /**
+     * Returns module directory URL
+     * 
+     * @param string $module
+     * @param string $theme
+     * @return string
+     */
+    public function getModuleThemeUrl($module, $theme)
+    {
+        return sprintf('%s/%s', $this->getModuleTemplateUrl($module), $theme);
+    }
+
+    /**
      * Returns a path to uploads directory of particular module
      * 
      * @param string $base

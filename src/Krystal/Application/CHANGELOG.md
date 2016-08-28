@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `AppConfig` added extra methods to generate paths for module views and templates
  * In module manager service, added `getUnloadedModules()` to compare a collection of modules against current loaded ones
  * In `PluginBag` service added `clearScripts()` and `clearStylesheets()`
  * In shared controller, added `json()` shortcut method

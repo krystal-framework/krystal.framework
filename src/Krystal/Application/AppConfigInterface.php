@@ -179,6 +179,72 @@ interface AppConfigInterface
     public function getModulesDir();
 
     /**
+     * Returns a path to particular module
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleDir($module);
+
+    /**
+     * Returns module URL
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleUrl($module);
+
+    /**
+     * Returns a path to module view directory
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleViewDir($module);
+
+    /**
+     * Returns module view URL
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleViewUrl($module);
+
+    /**
+     * Returns module template directory
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleTemplateDir($module);
+
+    /**
+     * Returns module template URL
+     * 
+     * @param string $module
+     * @return string
+     */
+    public function getModuleTemplateUrl($module);
+
+    /**
+     * Returns module directory path 
+     * 
+     * @param string $module
+     * @param string $theme
+     * @return string
+     */
+    public function getModuleThemeDir($module, $theme);
+
+    /**
+     * Returns module directory URL
+     * 
+     * @param string $module
+     * @param string $theme
+     * @return string
+     */
+    public function getModuleThemeUrl($module, $theme);
+
+    /**
      * Returns a directory path on file-system of particular module
      * 
      * @param string $module
