@@ -123,6 +123,28 @@ final class NodeElement implements NodeElementInterface
     }
 
     /**
+     * Appends child element prepending or appending a text
+     * 
+     * @param \Krystal\Form\NodeElement $nodeElement
+     * @param string $text
+     * @param boolean $append Whether to append or prepend
+     * @return \Krystal\Form\NodeElement
+     */
+    public function appendChildWithText(NodeElement $nodeElement, $text, $append = true)
+    {
+        $content = $nodeElement->render();
+
+        if ($append === true) {
+            $content = $content.$text;
+        } else {
+            $content = $text.$content;
+        }
+
+        $this->setText($content);
+        return $this;
+    }
+
+    /**
      * Appends another element after
      * 
      * @param \Krystal\Form\NodeElement $nodeElement
