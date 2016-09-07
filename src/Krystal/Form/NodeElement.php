@@ -123,6 +123,21 @@ final class NodeElement implements NodeElementInterface
     }
 
     /**
+     * Append children elements
+     * 
+     * @param array $nodes
+     * @return \Krystal\Form\NodeElement
+     */
+    public function appendChildren(array $nodes)
+    {
+        foreach ($nodes as $node) {
+            $this->appendChild($node);
+        }
+
+        return $this;
+    }
+
+    /**
      * Appends child element prepending or appending a text
      * 
      * @param \Krystal\Form\NodeElement $nodeElement

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `appendChildren()` in `NodeElement` to append several child nodes at once
  * Added `appendChildWithText()` in `NodeElement`
  * Added `LastCategoryKeeper` gadget
  * Added `Element::dynamic()` renderer

@@ -29,6 +29,14 @@ interface NodeElementInterface
     public function appendChild(NodeElement $nodeElement);
 
     /**
+     * Append children elements
+     * 
+     * @param array $nodes
+     * @return \Krystal\Form\NodeElement
+     */
+    public function appendChildren(array $nodes);
+
+    /**
      * Appends child element prepending or appending a text
      * 
      * @param \Krystal\Form\NodeElement $nodeElement
