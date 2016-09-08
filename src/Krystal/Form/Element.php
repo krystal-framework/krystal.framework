@@ -23,6 +23,7 @@ class Element
      * @param string $name
      * @param string $value
      * @param array $attributes Input attributes
+     * @param array $extra Select option elements, in case 'select' is supplied as a type
      * @throws \UnexpectedValueException If unknown type supplied
      * @return string
      */
