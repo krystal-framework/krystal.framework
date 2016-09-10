@@ -12,6 +12,7 @@
 namespace Krystal\InstanceManager;
 
 use ReflectionClass;
+use RuntimeException;
 
 final class InstanceBuilder implements InstanceBuilderInterface
 {
