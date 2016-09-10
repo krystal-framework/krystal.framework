@@ -14,6 +14,20 @@ namespace Krystal\Text;
 class Math
 {
     /**
+     * Finds the average
+     * 
+     * @param array $values
+     * @return float
+     */
+    public static function average($values)
+    {
+        $sum = array_sum($values);
+        $count = count($values);
+
+        return $sum / $count;
+    }
+
+    /**
      * Counts a percentage
      * 
      * @param float|integer $total
