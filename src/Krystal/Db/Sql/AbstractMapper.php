@@ -663,7 +663,8 @@ abstract class AbstractMapper
      */
     public function getLastId()
     {
-        return $this->pdo->lastInsertId();
+        return $this->db->getPdo()
+                        ->lastInsertId();
     }
 
     /**
