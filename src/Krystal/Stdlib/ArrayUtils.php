@@ -16,6 +16,22 @@ use LogicException;
 abstract class ArrayUtils
 {
     /**
+     * Filters an array applying a callback function
+     * 
+     * @param array $array Target array
+     * @param \Closure A callback function that returns a filtered array
+     * @return array
+     */
+    public static function filterArray(array $array, \Closure $callback)
+    {
+        foreach ($array as $index => $collection){
+            $array[$index] = call_user_func($callback, $collection);
+        }
+
+        return $array;
+    }
+
+    /**
      * Recursively applies a callback function to each array value
      * 
      * @param string $function

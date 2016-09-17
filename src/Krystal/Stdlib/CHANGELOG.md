@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `filterArray()` in `Stdlib\ArrayUtils` to apply a callback function to each memeber of array
  * Added `apply()` in `Stdlib\ArrayUtils` to apply a callback function to a value or array values recursively
  * Added `mergeWithout()` in `Stdlib\ArrayUtils`
  * Moved away exception handler to standalone component
