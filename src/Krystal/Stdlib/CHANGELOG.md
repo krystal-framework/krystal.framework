@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `apply()` in `Stdlib\ArrayUtils` to apply a callback function to a value or array values recursively
  * Added `mergeWithout()` in `Stdlib\ArrayUtils`
  * Moved away exception handler to standalone component
  * Added optional support for filters `VirtualEntity` when defining a setter

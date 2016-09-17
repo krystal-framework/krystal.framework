@@ -16,6 +16,18 @@ use LogicException;
 abstract class ArrayUtils
 {
     /**
+     * Recursively applies a callback function to each array value
+     * 
+     * @param string $function
+     * @param mixed $value
+     * @return array
+     */
+    public static function apply($function, $value)
+    {
+        return is_array($value) ? array_map(__METHOD__, $value) : call_user_func($function, $value);
+    }
+
+    /**
      * Merges two arrays removing keys
      * 
      * @param array $first
