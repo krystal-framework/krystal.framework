@@ -395,7 +395,8 @@ final class TableMaker
     /**
      * Creates table heading tag
      * 
-     * @param $children
+     * @param array|null $children
+     * @param string $text
      * @return \Krystal\Form\NodeElement
      */
     private function createHeader($children = array(), $text = null)
@@ -404,9 +405,10 @@ final class TableMaker
     }
 
     /**
-     * Creates table heading tag
+     * Creates table data tag
      * 
-     * @param $children
+     * @param array|null $children
+     * @param string $text
      * @return \Krystal\Form\NodeElement
      */
     private function createRow($children = array(), $text = null)
