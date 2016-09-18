@@ -315,6 +315,17 @@ final class TableMaker
     }
 
     /**
+     * Creates icon element with class
+     * 
+     * @param string $class
+     * @return \Krystal\Form\NodeElement
+     */
+    private function createIcon($class)
+    {
+        return $this->createTableElement('i', array(), $class, false);
+    }
+
+    /**
      * Creates table element
      * 
      * @param array $children
@@ -438,12 +449,6 @@ final class TableMaker
         $class = ($column) ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up';
         //$class = $this->filter->isSortedByDesc($column) ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up';
 
-        $i = new NodeElement();
-        $i->openTag('i')
-          ->setClass($class)
-          ->finalize()
-          ->closeTag();
-
-        return $i;
+        return $this->createIcon($class);
     }
 }
