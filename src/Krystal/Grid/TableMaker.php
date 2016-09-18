@@ -31,6 +31,15 @@ final class TableMaker
      */
     private $options = array();
 
+    const GRID_PARAM_ACTIONS = 'actions';
+    const GRIG_PARAM_EDITABLE = 'editable';
+    const GRID_PARAM_FILTER = 'filter';
+    const GRID_PARAM_COLUMNS = 'columns';
+    const GRID_PARAM_COLUMN = 'column';
+    const GRID_PARAM_LABEL = 'label';
+    const GRID_PARAM_TYPE = 'type';
+    const GRID_PARAM_PK = 'pk';
+
     /**
      * State initialization
      * 
@@ -53,7 +62,7 @@ final class TableMaker
      */
     public function render()
     {
-        $columns = $this->options['columns'];
+        $columns = $this->options[self::GRID_PARAM_COLUMNS];
 
         $head = $this->createTableHeader(array(
             $this->createTopHeadingRow($columns), 
@@ -77,8 +86,8 @@ final class TableMaker
         $elements = array();
 
         foreach ($rows as $row) {
-            $column = isset($row['column']) ? $row['column'] : null;
-            $label = isset($row['label']) ? $row['label'] : null;
+            $column = isset($row[self::GRID_PARAM_COLUMN]) ? $row[self::GRID_PARAM_COLUMN] : null;
+            $label = isset($row[self::GRID_PARAM_LABEL]) ? $row[self::GRID_PARAM_LABEL] : null;
 
             $elements[] = $this->createHeader($this->createHeaderLink($column, ' ' . $label));
         }
@@ -102,11 +111,11 @@ final class TableMaker
 
         foreach ($rows as $row) {
             // Find out whether a column needs to have a filter
-            $filter = $this->findOptionByColumn($row['column'], 'filter');
-            $name = $this->createInputName('filter', $row['column']);
+            $filter = $this->findOptionByColumn($row[self::GRID_PARAM_COLUMN], 'filter');
+            $name = $this->createInputName('filter', $row[self::GRID_PARAM_COLUMN]);
 
             if ($filter) {
-                $elements[] = $this->createInput('createHeader', $row['column'], $name, false);
+                $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, false);
             } else {
                 $elements[] = $this->createRow(null, '');
             }
@@ -153,7 +162,7 @@ final class TableMaker
                 $id = $value;
             }
 
-            if ($this->findOptionByColumn($key, 'editable') == true) {
+            if ($this->findOptionByColumn($key, self::GRIG_PARAM_EDITABLE) == true) {
                 $name = $this->createInputName($key, $id);
                 $element = $this->createInput('createRow', $key, $name, $value);
             } else {
@@ -197,7 +206,7 @@ final class TableMaker
             // Make sure $collection is array
             if (is_array($collection)) {
                 foreach ($collection as $row) {
-                    if ($row['column'] == $column) {
+                    if ($row[self::GRID_PARAM_COLUMN] == $column) {
                         return $row;
                     }
                 }
@@ -225,7 +234,7 @@ final class TableMaker
      */
     private function getPkColumn()
     {
-        return $this->options['pk'];
+        return $this->options[self::GRID_PARAM_PK];
     }
 
     /**
@@ -235,7 +244,7 @@ final class TableMaker
      */
     private function hasActions()
     {
-        return isset($this->options['actions']);
+        return isset($this->options[self::GRID_PARAM_ACTIONS]);
     }
 
     /**
@@ -261,7 +270,7 @@ final class TableMaker
     {
         $options = $this->findOptionsByColumn($column);
 
-        switch ($options['type']) {
+        switch ($options[self::GRID_PARAM_TYPE]) {
             case 'text':
                 $element = new Element\Text();
                 $text = $element->render(array('name' => $name, 'value' => $value, 'class' => 'form-control'));
