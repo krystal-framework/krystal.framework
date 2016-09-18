@@ -22,6 +22,7 @@ final class Grid
      */
     public static function render(array $data, array $options)
     {
-        
+        $maker = new TableMaker($data, $options);
+        return $maker->render();
     }
 }
