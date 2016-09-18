@@ -165,11 +165,9 @@ final class MapManager implements MapManagerInterface
         $separatorPosition = strpos($controller, '@');
 
         if ($separatorPosition !== false) {
-
             $controller = substr($controller, 0, $separatorPosition);
             return $this->notation->toClassPath($controller);
         } else {
-
             // No separator
             return false;
         }
@@ -190,9 +188,7 @@ final class MapManager implements MapManagerInterface
         if ($separatorPosition !== false) {
             $action = substr($controller, $separatorPosition + 1);
             return $action;
-
         } else {
-
             // No separator
             return false;
         }
