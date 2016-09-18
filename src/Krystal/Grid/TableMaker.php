@@ -280,7 +280,7 @@ final class TableMaker
     }
 
     /**
-     * Creates table element
+     * Shared element builder abstraction
      * 
      * @param string $type
      * @param array $children
@@ -288,7 +288,7 @@ final class TableMaker
      * @param string $text
      * @return \Krystal\Form\NodeElement
      */
-    private function createTableElement($type, $children = array(), $class = null, $text = null)
+    private function createElement($type, $children = array(), $class = null, $text = null)
     {
         $element = new NodeElement();
         $element->openTag($type);
@@ -322,7 +322,7 @@ final class TableMaker
      */
     private function createIcon($class)
     {
-        return $this->createTableElement('i', array(), $class, false);
+        return $this->createElement('i', array(), $class, false);
     }
 
     /**
@@ -333,7 +333,7 @@ final class TableMaker
      */
     private function createTable(array $children)
     {
-        return $this->createTableElement('table', $children, 'table');
+        return $this->createElement('table', $children, 'table');
     }
 
     /**
@@ -344,7 +344,7 @@ final class TableMaker
      */
     private function createTableBody(array $children)
     {
-        return $this->createTableElement('tbody', $children);
+        return $this->createElement('tbody', $children);
     }
 
     /**
@@ -355,7 +355,7 @@ final class TableMaker
      */
     private function createTableHeader(array $children)
     {
-        return $this->createTableElement('thead', $children);
+        return $this->createElement('thead', $children);
     }
 
     /**
@@ -367,7 +367,7 @@ final class TableMaker
      */
     private function createTableRow(array $children, $class = null)
     {
-        return $this->createTableElement('tr', $children, $class);
+        return $this->createElement('tr', $children, $class);
     }
 
     /**
@@ -378,7 +378,7 @@ final class TableMaker
      */
     private function createTextHeader($text)
     {
-        return $this->createTableElement('th', array(), 'text-center', $text);
+        return $this->createElement('th', array(), 'text-center', $text);
     }
 
     /**
@@ -389,7 +389,7 @@ final class TableMaker
      */
     private function createBodyHeader($text)
     {
-        return $this->createTableElement('td', array(), 'text-center', $text);
+        return $this->createElement('td', array(), 'text-center', $text);
     }
 
     /**
@@ -400,7 +400,7 @@ final class TableMaker
      */
     private function createHeader($children = array(), $text = null)
     {
-        return $this->createTableElement('th', $children, 'text-center', $text);
+        return $this->createElement('th', $children, 'text-center', $text);
     }
 
     /**
@@ -411,7 +411,7 @@ final class TableMaker
      */
     private function createRow($children = array(), $text = null)
     {
-        return $this->createTableElement('td', $children, 'text-center', $text);
+        return $this->createElement('td', $children, 'text-center', $text);
     }
 
     /**
