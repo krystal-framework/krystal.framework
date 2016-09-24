@@ -123,6 +123,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function isFilterable($state, $target)
     {
+        // Pure wildcards must be treated as empty values
+        if ($state == true && ($target == '%%' || $target == '%')) {
+            return false;
+        }
+
         // Start checking from very common usage case
         if ($state == true && $target == '0') {
             return true;

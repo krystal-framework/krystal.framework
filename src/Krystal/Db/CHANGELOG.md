@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with empty wildcarts appeinding to the query when invoking a filter
  * Fixed `getLastId()` in database service
  * Internal improvement with PDO placeholder bindings
  * In database service, added `paginateRaw()` to paginate result-sets without guessing
