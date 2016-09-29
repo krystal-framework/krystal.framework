@@ -94,6 +94,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function getQueryString()
     {
+        $this->hasFunctionCall = false;
         return $this->queryString;
     }
 
@@ -196,18 +197,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     private function createFunction($func, $column, $alias = null)
     {
-        // Append a comma if there was a function call
+        if (is_null($alias)) {
+            $fragment = sprintf(' %s(%s) ', $func, $this->quote($column));
+        } else {
+            $fragment = sprintf(' %s(%s) AS %s ', $func, $this->quote($column), $this->quote($alias));
+        }
+
+        // Append a comma if there was a function call before
         if ($this->hasFunctionCall === true) {
             $this->append(',');
         }
 
         $this->hasFunctionCall = true;
-
-        if (is_null($alias)) {
-            return sprintf(' %s(%s) ', $func, $this->quote($column));
-        } else {
-            return sprintf(' %s(%s) AS %s ', $func, $this->quote($column), $this->quote($alias));
-        }
+        return $fragment;
     }
 
     /**
