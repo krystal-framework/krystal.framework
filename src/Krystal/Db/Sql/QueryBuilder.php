@@ -43,6 +43,13 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     private $table;
 
     /**
+     * Determines whether at least one SQL function call has been invoked
+     * 
+     * @var boolean
+     */
+    private $hasFunctionCall = false;
+
+    /**
      * Returns a name of selected table
      * 
      * @throws \LogicException if no table is selected
@@ -77,7 +84,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function guessCountQuery($column, $alias)
     {
-        return str_replace($this->selected, $this->getFunction('COUNT', $column, $alias), $this->getQueryString());
+        return str_replace($this->selected, $this->createFunction('COUNT', $column, $alias), $this->getQueryString());
     }
 
     /**
@@ -187,8 +194,15 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param string $alias 
      * @return string
      */
-    private function getFunction($func, $column, $alias = null)
+    private function createFunction($func, $column, $alias = null)
     {
+        // Append a comma if there was a function call
+        if ($this->hasFunctionCall === true) {
+            $this->append(',');
+        }
+
+        $this->hasFunctionCall = true;
+
         if (is_null($alias)) {
             return sprintf(' %s(%s) ', $func, $this->quote($column));
         } else {
@@ -206,7 +220,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     private function func($func, $column, $alias = null)
     {
-        $this->append($this->getFunction($func, $column, $alias));
+        $this->append($this->createFunction($func, $column, $alias));
         return $this;
     }
 
