@@ -16,6 +16,37 @@ use LogicException;
 abstract class ArrayUtils
 {
     /**
+     * Counts column sum
+     * 
+     * @param array $data
+     * @param array $columns
+     * @throws \LogicException if non-numeric value provided
+     * @return array
+     */
+    public static function columnSum(array $data, array $columns)
+    {
+        $result = array();
+
+        foreach ($columns as $column) {
+            foreach ($data as $collection) {
+                if (isset($collection[$column])) {
+                    if (!is_numeric($collection[$column])) {
+                        throw new LogicException(sprintf('A column must have numeric type "%s", received "%s"', $column, gettype($column)));
+                    }
+
+                    if (isset($result[$column])) {
+                        $result[$column] += $collection[$column];
+                    } else {
+                        $result[$column] = $collection[$column];
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Filters an array applying a callback function
      * 
      * @param array $array Target array
