@@ -40,6 +40,18 @@ abstract class ArrayUtils
     }
 
     /**
+     * Counts a total sum of each collection
+     * 
+     * @param array $data
+     * @return array
+     */
+    public static function sumColumns(array $data)
+    {
+        $columns = self::arrayColumns($data);
+        return self::columnSum($data, $columns);
+    }
+
+    /**
      * Counts column sum
      * 
      * @param array $data
