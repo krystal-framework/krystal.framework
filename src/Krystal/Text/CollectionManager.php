@@ -58,7 +58,6 @@ final class CollectionManager implements CollectionManagerInterface
     {
         if (is_null($filteringOption)) {
             return array_values($this->container);
-            
         } else {
             $result = array();
 
