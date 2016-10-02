@@ -14,6 +14,24 @@ namespace Krystal\Text;
 class Math
 {
     /**
+     * Rounds a collection
+     * 
+     * @param array $data
+     * @param integer $precision
+     * @return array
+     */
+    public static function roundCollection(array $data, $precision = 2)
+    {
+        $output = array();
+
+        foreach ($data as $key => $value){
+            $output[$key] = round($value, $precision);
+        }
+
+        return $output;
+    }
+
+    /**
      * Finds the average
      * 
      * @param array $values
@@ -32,7 +50,7 @@ class Math
      * 
      * @param float|integer $total
      * @param float|integer $actual
-     * @param integer 
+     * @param integer $round 
      * @return mixed
      */
     public static function percentage($total, $actual, $round = 1)
