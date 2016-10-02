@@ -24,6 +24,17 @@ abstract class ArrayUtils
      */
     public static function arrayColumns(array $data)
     {
+        // Count the amount of values from the source input
+        $count = count($data);
+
+        if ($count === 0) {
+            return false;
+        }
+
+        if ($count === 1) {
+            return array_keys($data[0]);
+        }
+
         $diff = call_user_func_array('array_diff_key', $data);
 
         if (!empty($diff)) {
@@ -48,7 +59,12 @@ abstract class ArrayUtils
     public static function sumColumns(array $data)
     {
         $columns = self::arrayColumns($data);
-        return self::columnSum($data, $columns);
+
+        if ($columns !== false){
+            return self::columnSum($data, $columns);
+        } else {
+            return false;
+        }
     }
 
     /**
