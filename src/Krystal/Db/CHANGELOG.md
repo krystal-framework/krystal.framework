@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `\Krystal\Db\Sql\AbstractMapper` added `getColumsSum()` shortcut to count the sum of provided columns
  * In `\Krystal\Db\Sql\AbstractMapper` added `getMaxId()` to return the maximal PK's value
  * In `\Krystal\Db\Sql\AbstractMapper` added `persistRow()` to persist a data-set and return it after doing so with PK
  * Fixed issue with commas when appending several SQL functions after SELECT statement
