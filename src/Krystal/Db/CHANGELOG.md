@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * In `\Krystal\Db\Sql\AbstractMapper` added `getMaxId()` to return the maximal PK's value
+ * In `\Krystal\Db\Sql\AbstractMapper` added `persistRow()` to persist a data-set and return it after doing so with PK
  * Fixed issue with commas when appending several SQL functions after SELECT statement
  * Fixed issue with empty wildcarts appeinding to the query when invoking a filter
  * Fixed `getLastId()` in database service

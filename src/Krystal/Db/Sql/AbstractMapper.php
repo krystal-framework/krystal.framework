@@ -307,6 +307,63 @@ abstract class AbstractMapper
     }
 
     /**
+     * Persists a row
+     * 
+     * @param array $data
+     * @param array $fillable Optional fillable protection
+     * @param boolean $set Whether to return a set or not
+     * @throws \LogicException if failed on keys existence validation
+     * @return array|boolean
+     */
+    private function persistRecord(array $data, array $fillable = array(), $set)
+    {
+        if (!empty($fillable) && !ArrayUtils::keysExist($data, $fillable)) {
+            throw new LogicException('Can not persist the entity due to fillable protection. Make sure all fillable keys exist in the entity');
+        }
+
+        $this->validateShortcutData();
+
+        if (isset($data[$this->getPk()]) && $data[$this->getPk()]) {
+            $result = $this->db->update(static::getTableName(), $data)
+                               ->whereEquals($this->getPk(), $data[$this->getPk()])
+                               ->execute();
+
+            return $set === true ? $data : $result;
+
+        } else {
+            // Do not insert primary key if present
+            if (array_key_exists($this->getPk(), $data)) {
+                unset($data[$this->getPk()]);
+            }
+
+            // Insert a new row without PK
+            $result = $this->db->insert(static::getTableName(), $data)
+                               ->execute();
+
+            if ($set === true) {
+                // Append a PK in result-set now
+                $data[$this->getPk()] = $this->getMaxId();
+                return $data;
+            } else {
+                return $result;
+            }
+        }
+    }
+
+    /**
+     * Persists a row
+     * 
+     * @param array $data
+     * @param array $fillable Optional fillable protection
+     * @throws \LogicException if failed on keys existence validation
+     * @return array
+     */
+    final public function persistRow(array $data, array $fillable = array())
+    {
+        return $this->persistRecord($data, $fillable, true);
+    }
+
+    /**
      * Inserts or updates a record
      * 
      * @param array $data
@@ -316,24 +373,7 @@ abstract class AbstractMapper
      */
     final public function persist(array $data, array $fillable = array())
     {
-        if (!empty($fillable) && !ArrayUtils::keysExist($data, $fillable)) {
-            throw new LogicException('Can not persist the entity due to fillable protection. Make sure all fillable keys exist in the entity');
-        }
-
-        $this->validateShortcutData();
-
-        if (isset($data[$this->getPk()]) && $data[$this->getPk()]) {
-            return $this->db->update(static::getTableName(), $data)
-                            ->whereEquals($this->getPk(), $data[$this->getPk()])
-                            ->execute();
-        } else {
-            if (array_key_exists($this->getPk(), $data)) {
-                unset($data[$this->getPk()]);
-            }
-
-            return $this->db->insert(static::getTableName(), $data)
-                            ->execute();
-        }
+        return $this->persistRecord($data, $fillable, false);
     }
 
     /**
@@ -654,6 +694,23 @@ abstract class AbstractMapper
         return $this->db->alterTable($this->getTable($table))
                         ->dropConstraint($name)
                         ->execute();
+    }
+
+    /**
+     * Returns maximal id
+     * 
+     * @return integer
+     */
+    public function getMaxId()
+    {
+        $column = $this->getPk();
+
+        return $this->db->select($column)
+                        ->from(static::getTableName())
+                        ->orderBy($column)
+                        ->desc()
+                        ->limit(1)
+                        ->query($column);
     }
 
     /**
