@@ -13,6 +13,7 @@ namespace Krystal\Db\Sql;
 
 use Krystal\Paginate\PaginatorInterface;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Text\Math;
 use LogicException;
 use RuntimeException;
 
