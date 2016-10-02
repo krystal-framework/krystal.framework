@@ -42,6 +42,11 @@ class Math
         $sum = array_sum($values);
         $count = count($values);
 
+        // Avoid useless calculations
+        if ($count == 0) {
+            return 0;
+        }
+
         return $sum / $count;
     }
 
@@ -55,6 +60,11 @@ class Math
      */
     public static function percentage($total, $actual, $round = 1)
     {
+        // Avoid useless calculations
+        if ($total == 0 || $actual == 0) {
+            return 0;
+        }
+
         $value = 100 * $actual / $total;
 
         if (is_integer($round)) {
