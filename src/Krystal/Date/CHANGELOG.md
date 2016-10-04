@@ -4,7 +4,7 @@ CHANGELOG
 1.3
 ---
 
- * In `TimeHelper` added `getQuarters()` and `getQuarter()`
+ * In `TimeHelper` added `getQuarters()`, `getQuarter()` and getMonthsByQuarter()
  * In `TimeHelper` added `createYears()` and `createYearsUpToCurrent()`
 
 1.2
