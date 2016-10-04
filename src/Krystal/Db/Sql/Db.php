@@ -498,6 +498,18 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends raw SQL fragment
+     * 
+     * @param string $fragment
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function append($fragment)
+    {
+        $this->queryBuilder->append($fragment);
+        return $this;
+    }
+
+    /**
      * Executes raw query
      * 
      * @param string $query

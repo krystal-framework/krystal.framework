@@ -65,6 +65,18 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends a part to query string
+     * 
+     * @param string $part
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function append($part)
+    {
+        $this->queryString .= $part;
+        return $this;
+    }
+
+    /**
      * Sets query raw string
      * 
      * @param string $queryString
@@ -234,18 +246,6 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     public function clear()
     {
         $this->queryString = '';
-        return $this;
-    }
-
-    /**
-     * Appends a part to query string
-     * 
-     * @param string $part
-     * @return \Krystal\Db\Sql\QueryBuilder
-     */
-    private function append($part)
-    {
-        $this->queryString .= $part;
         return $this;
     }
 

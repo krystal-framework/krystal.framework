@@ -35,6 +35,14 @@ interface QueryBuilderInterface
     const COLUMN_TYPE_BINARY = 'BLOB';
 
     /**
+     * Appends a part to query string
+     * 
+     * @param string $part
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function append($part);
+
+    /**
      * Appends SHOW KEYS expression
      * 
      * @return \Krystal\Db\Sql\QueryBuilder
