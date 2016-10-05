@@ -42,6 +42,29 @@ abstract class TimeHelper
      * @throws \LogicException If invalid quarter supplied
      * @return array
      */
+    public static function getAllMonthsByQuarter($quarter)
+    {
+        switch ($quarter) {
+            case 1:
+                return self::getMonthsByQuarter(1);
+            case 2:
+                return array_merge(self::getMonthsByQuarter(1), self::getMonthsByQuarter(2));
+            case 3:
+                return array_merge(self::getMonthsByQuarter(1), self::getMonthsByQuarter(2), self::getMonthsByQuarter(3));
+            case 4:
+                return array_merge(self::getMonthsByQuarter(1), self::getMonthsByQuarter(2), self::getMonthsByQuarter(3), self::getMonthsByQuarter(4));
+            default:
+                throw new LogicException(sprintf('Invalid quarter supplied - %s', $quarter));
+        }
+    }
+
+    /**
+     * Returns a collection of months by associated quarter
+     * 
+     * @param integer $quarter
+     * @throws \LogicException If invalid quarter supplied
+     * @return array
+     */
     public static function getMonthsByQuarter($quarter)
     {
         switch ($quarter) {
