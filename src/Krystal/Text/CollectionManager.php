@@ -74,6 +74,16 @@ final class CollectionManager implements CollectionManagerInterface
     }
 
     /**
+     * Returns a collection of keys
+     * 
+     * @return array
+     */
+    public function getKeys()
+    {
+        return array_keys($this->container);
+    }
+
+    /**
      * Returns current data container
      * 
      * @return array

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `CollectionManager` added `getKeys()`
  * Added static `Math` class with utility methods
  * In TextUtils added `randomString()`
  * Added `CurrencyConvertor` tool

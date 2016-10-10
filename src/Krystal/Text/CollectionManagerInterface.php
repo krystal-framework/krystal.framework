@@ -30,6 +30,13 @@ interface CollectionManagerInterface
     public function getAllOptions($filteringOption = null);
 
     /**
+     * Returns a collection of keys
+     * 
+     * @return array
+     */
+    public function getKeys();
+
+    /**
      * Returns current data container
      * 
      * @return array
