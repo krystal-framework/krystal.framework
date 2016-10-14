@@ -44,9 +44,22 @@ class Filter implements Sanitizeable
                 return self::stripTags($value);
             case self::FILTER_SAFE_TAGS:
                 return self::safeTags($value);
+            case self::FILTER_HTML_CHARS:
+                return self::specialChars($value);
             default:
                 throw new UnexpectedValueException('Unknown filter type provided');
         }
+    }
+
+    /**
+     * Convert special characters to HTML entities
+     * 
+     * @param string $value
+     * @return string
+     */
+    public static function specialChars($value)
+    {
+        return htmlspecialchars($value, \ENT_QUOTES, 'UTF-8');
     }
 
     /**
