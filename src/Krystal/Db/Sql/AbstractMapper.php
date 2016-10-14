@@ -568,11 +568,12 @@ abstract class AbstractMapper
      * @param string $pk PK's value
      * @param string $column Target column
      * @param integer $step
+     * @param string $table Optionally current table can be overridden
      * @return boolean
      */
-    final public function incrementColumnByPk($pk, $column, $step = 1)
+    final public function incrementColumnByPk($pk, $column, $step = 1, $table = null)
     {
-        return $this->db->increment(static::getTableName(), $column, $step)
+        return $this->db->increment($this->getTable($table), $column, $step)
                         ->whereEquals($this->getPk(), $pk)
                         ->execute();
     }
@@ -583,11 +584,12 @@ abstract class AbstractMapper
      * @param string $pk PK's value
      * @param string $column Target column
      * @param integer $step
+     * @param string $table Optionally current table can be overridden
      * @return boolean
      */
-    final public function decrementColumnByPk($pk, $column, $step = 1)
+    final public function decrementColumnByPk($pk, $column, $step = 1, $table = null)
     {
-        return $this->db->decrement(static::getTableName(), $column, $step)
+        return $this->db->decrement($this->getTable($table), $column, $step)
                         ->whereEquals($this->getPk(), $pk)
                         ->execute();
     }
