@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `AbstractMapper` added `isPrimaryKeyValue()` shortcut to check if the value if a primary key
  * In query builder and database service added public `append()` method to append raw fragments when building complex SQL queries
  * In `\Krystal\Db\Sql\AbstractMapper` added `getColumsSum()` shortcut to count the sum of provided columns
  * In `\Krystal\Db\Sql\AbstractMapper` added `getMaxId()` to return the maximal PK's value

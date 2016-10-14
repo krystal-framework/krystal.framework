@@ -438,6 +438,22 @@ abstract class AbstractMapper
     }
 
     /**
+     * Checks whether PK value exists
+     * 
+     * @param string $value PK's value
+     * @return boolean
+     */
+    final public function isPrimaryKeyValue($value)
+    {
+        $column = $this->getPk();
+
+        return (bool) $this->db->select($column)
+                               ->from(static::getTableName())
+                               ->whereEquals($column, $value)
+                               ->query($column);
+    }
+
+    /**
      * Fetches one column
      * 
      * @param string $column
