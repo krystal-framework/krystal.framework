@@ -21,6 +21,8 @@ class Filter implements Sanitizeable
      * 
      * @param string $value
      * @param string $filter
+     * @throws \InvalidArgumentException if invalid $value type supplied
+     * @throws \UnexpectedValueException If unknown filter type supplied
      * @return string
      */
     public static function sanitize($value, $filter = self::FILTER_NONE)
