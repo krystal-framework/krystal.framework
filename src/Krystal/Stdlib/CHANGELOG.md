@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `filterValuesRecursively()` in `Stdlib\ArrayUtils` to apply a callback function that filter array values recursively
  * Added `sumColumns()` in `Stdlib\ArrayUtils` to count the sum of column right from a data array
  * Added `arrayColumns()` in `Stdlib\ArrayUtils` to extract column names
  * Added `columnSum()` in `Stdlib\ArrayUtils` to count the sum of columns

@@ -12,6 +12,7 @@
 namespace Krystal\Stdlib;
 
 use LogicException;
+use Closure;
 
 abstract class ArrayUtils
 {
@@ -91,6 +92,26 @@ abstract class ArrayUtils
         }
 
         return $result;
+    }
+
+    /**
+     * Filter array values applying a callback function that returns a value
+     * 
+     * @param mixed $array
+     * @param \Closure A callback function that returns a filtered value
+     * @return mixed
+     */
+    public static function filterValuesRecursively(array $array, Closure $callback = null)
+    {
+        foreach ($array as $index => $value) {
+            if (is_array($value)) {
+                $array[$index] = call_user_func(__METHOD__, $value, $callback);
+            } else {
+                $array[$index] = call_user_func($callback, $value);
+            }
+        }
+
+        return $array;
     }
 
     /**
