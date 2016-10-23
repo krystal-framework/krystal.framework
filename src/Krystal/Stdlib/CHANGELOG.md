@@ -9,7 +9,6 @@ CHANGELOG
  * Added `arrayColumns()` in `Stdlib\ArrayUtils` to extract column names
  * Added `columnSum()` in `Stdlib\ArrayUtils` to count the sum of columns
  * Added `filterArray()` in `Stdlib\ArrayUtils` to apply a callback function to each memeber of array
- * Added `apply()` in `Stdlib\ArrayUtils` to apply a callback function to a value or array values recursively
  * Added `mergeWithout()` in `Stdlib\ArrayUtils`
  * Moved away exception handler to standalone component
  * Added optional support for filters `VirtualEntity` when defining a setter

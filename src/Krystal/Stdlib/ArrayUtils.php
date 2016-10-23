@@ -121,25 +121,13 @@ abstract class ArrayUtils
      * @param \Closure A callback function that returns a filtered array
      * @return array
      */
-    public static function filterArray(array $array, \Closure $callback)
+    public static function filterArray(array $array, Closure $callback)
     {
-        foreach ($array as $index => $collection){
+        foreach ($array as $index => $collection) {
             $array[$index] = call_user_func($callback, $collection);
         }
 
         return $array;
-    }
-
-    /**
-     * Recursively applies a callback function to each array value
-     * 
-     * @param string $function
-     * @param mixed $value
-     * @return array
-     */
-    public static function apply($function, $value)
-    {
-        return is_array($value) ? array_map(__METHOD__, $value) : call_user_func($function, $value);
     }
 
     /**
