@@ -12,6 +12,7 @@
 namespace Krystal\Paginate;
 
 use RuntimeException;
+use LogicException;
 use Krystal\Paginate\Style\StyleInterface;
 
 final class Paginator implements PaginatorInterface
@@ -98,6 +99,7 @@ final class Paginator implements PaginatorInterface
      * 
      * @param integer $page Current page number
      * @throws \RuntimeException If URL isn't defined
+     * @throws \LogicException In case the URL string hasn't a placeholder
      * @return string
      */
     public function getUrl($page)
@@ -108,10 +110,10 @@ final class Paginator implements PaginatorInterface
 
         if (strpos($this->url, $this->placeholder) !== false) {
             return str_replace($this->placeholder, $page, $this->url);
+        } else {
+            // Without placeholder, no substitution is done, therefore pagination links won't work
+            throw new LogicException('The URL string must contain at least one placeholder to make pagination links work');
         }
-
-        // By default
-        return $this->url;
     }
 
     /**

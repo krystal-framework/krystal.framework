@@ -32,9 +32,11 @@ interface PaginatorInterface
     public function setUrl($url);
 
     /**
-     * Returns permanent URL substituting a placeholder with a page number
+     * Returns permanent URL substituting a placeholder with current page number
      * 
-     * @param integer $page
+     * @param integer $page Current page number
+     * @throws \RuntimeException If URL isn't defined
+     * @throws \LogicException In case the URL string hasn't a placeholder
      * @return string
      */
     public function getUrl($page);

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Force to throw `\LogicException` if defined URL string doesn't have a placeholder
  * Made page placeholder configurable. It can be passed as a second argument to the constructor
  * Added `toArray()` and `toJson()` methods
 
