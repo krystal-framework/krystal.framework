@@ -15,17 +15,26 @@ use Krystal\Http\PersistentStorageInterface;
 
 final class LastCategoryKeeper extends AbstractGadget
 {
-    const PARAM_LAST_CATEGORY_ID = 'last_category_id';
+    /**
+     * Whether category id should be flashed or not (i.e automatically removed after returning)
+     * 
+     * @var boolean
+     */
+    private $flashed;
 
     /**
      * State initialization
      * 
      * @param \Krystal\Http\PersistentStorageInterface $storage
+     * @param string $key Key name to be allocated
+     * @param boolean $flashed
      * @return void
      */
-    public function __construct(PersistentStorageInterface $storage)
+    public function __construct(PersistentStorageInterface $storage, $key, $flashed = false)
     {
-        parent::__construct($storage, self::PARAM_LAST_CATEGORY_ID, false, array());
+        $this->flashed = $flashed;
+
+        parent::__construct($storage, $key, false, array());
     }
 
     /**
@@ -58,8 +67,11 @@ final class LastCategoryKeeper extends AbstractGadget
     public function getLastCategoryId()
     {
         $value = $this->getData();
-        // Clear data
-        $this->clearData();
+
+        if ($this->flashed === true) {
+            // Clear data
+            $this->clearData();
+        }
 
         return $value;
     }
