@@ -308,6 +308,54 @@ abstract class AbstractMapper
     }
 
     /**
+     * Counts the sum of a column by district id
+     * 
+     * @param string $columns
+     * @param array $averages
+     * @param array $constraints
+     * @param integer $precision Float precision
+     * @return string
+     */
+    final protected function getColumnSumWithAverages(array $columns, array $averages, array $constraints, $precision = 2)
+    {
+        $db = $this->db->select();
+
+        foreach ($columns as $column) {
+            $db->sum($column, $column);
+        }
+
+        foreach ($averages as $average) {
+            $db->avg($average, $average);
+        }
+
+        $db->from(static::getTableName());
+
+        if (!empty($constraints)) {
+            // Iteration counter
+            $iteration = 0;
+
+            foreach ($constraints as $key => $value) {
+                if ($iteration === 0) {
+                    $db->whereEquals($key, $value);
+                } else {
+                    $db->andWhereEquals($key, $value);
+                }
+
+                $iteration++;
+            }
+        }
+
+        $data = $db->queryAll();
+
+        if (isset($data[0])) {
+            return Math::roundCollection($data[0], $precision);
+        } else {
+            // No results
+            return array();
+        }
+    }
+
+    /**
      * Returns a sum of columns
      * 
      * @param array $columns

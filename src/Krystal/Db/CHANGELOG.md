@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `AbstractMapper` added `getColumnSumWithAverages()` to return column sum with averages
  * In `AbstractMapper` added `isPrimaryKeyValue()` shortcut to check if the value if a primary key
  * In query builder and database service added public `append()` method to append raw fragments when building complex SQL queries
  * In `\Krystal\Db\Sql\AbstractMapper` added `getColumsSum()` shortcut to count the sum of provided columns
