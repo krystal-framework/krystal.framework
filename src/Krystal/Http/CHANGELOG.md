@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `request` service added `getRawInput()`
  * In cookie bag service, added `setEncrypted()`, `getEncrypted()`
  * In response service added `redirectToHome()` and `redirectToPreviousPage()` shortcut methods
  * In response service added informal methods for HTTP responses

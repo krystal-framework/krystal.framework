@@ -175,6 +175,16 @@ final class Request implements RequestInterface
     }
 
     /**
+     * Returns raw HTTP POST input
+     * 
+     * @return array
+     */
+    public function getRawInput()
+    {
+        return file_get_contents('php://input');
+    }
+
+    /**
      * Return files, optionally the result-set can be filtered by field name
      * 
      * @param string $name

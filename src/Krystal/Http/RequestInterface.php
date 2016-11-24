@@ -58,6 +58,13 @@ interface RequestInterface
     public function hasFiles($name = null);
 
     /**
+     * Returns raw HTTP POST input
+     * 
+     * @return array
+     */
+    public function getRawInput();
+
+    /**
      * Return files
      * 
      * @return array
