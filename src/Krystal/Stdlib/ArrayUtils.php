@@ -273,7 +273,7 @@ abstract class ArrayUtils
                 $result[$name] = $text;
 
             } else {
-                trigger_error(sprintf('Nested arrays must container both %s and %s', $key, $value));
+                trigger_error(sprintf('Nested arrays must contain both %s and %s', $key, $value));
             }
         }
 
