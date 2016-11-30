@@ -129,6 +129,15 @@ interface SessionBagInterface
     public function get($key, $default = false);
 
     /**
+     * Returns flashed session key (will be removed after retrieval)
+     * 
+     * @param string $key
+     * @throws \RuntimeException If attempted to read non-existing key
+     * @return string
+     */
+    public function getFlashed($key);
+
+    /**
      * Removes a key from the storage
      * 
      * @param string $key

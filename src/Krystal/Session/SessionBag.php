@@ -15,6 +15,7 @@ use Krystal\Session\ManagerInterface;
 use Krystal\Session\Adapter\SaveHandlerInterface;
 use Krystal\Http\PersistentStorageInterface;
 use Krystal\Http\CookieBagInterface;
+use RuntimeException;
 
 final class SessionBag implements SessionBagInterface, PersistentStorageInterface
 {
@@ -285,6 +286,27 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
             return $this->session[$key];
         } else {
             return $default;
+        }
+    }
+
+    /**
+     * Returns flashed session key (will be removed after retrieval)
+     * 
+     * @param string $key
+     * @throws \RuntimeException If attempted to read non-existing key
+     * @return string
+     */
+    public function getFlashed($key)
+    {
+        if ($this->has($key)) {
+            // Save it before removing
+            $value = $this->get($key);
+
+            // And remove it
+            $this->remove($key);
+            return $value;
+        } else {
+            throw new RuntimeException(sprintf('Attempted to read non-existing session key "%s"', $key));
         }
     }
 
