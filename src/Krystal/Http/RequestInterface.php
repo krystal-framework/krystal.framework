@@ -60,13 +60,14 @@ interface RequestInterface
     /**
      * Returns raw HTTP POST input
      * 
-     * @return array
+     * @return string
      */
     public function getRawInput();
 
     /**
      * Return files
      * 
+     * @param string $name Optional field name
      * @return array
      */
     public function getFiles($name = null);

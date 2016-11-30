@@ -177,7 +177,7 @@ final class Request implements RequestInterface
     /**
      * Returns raw HTTP POST input
      * 
-     * @return array
+     * @return string
      */
     public function getRawInput()
     {
@@ -187,7 +187,7 @@ final class Request implements RequestInterface
     /**
      * Return files, optionally the result-set can be filtered by field name
      * 
-     * @param string $name
+     * @param string $name Optional field name
      * @return array
      */
     public function getFiles($name = null)
