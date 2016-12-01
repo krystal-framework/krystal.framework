@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In view service added `createQueryUrl()` to generate URLs with query string
  * In `AppConfig` added extra methods to generate paths for module views and templates
  * In module manager service, added `getUnloadedModules()` to compare a collection of modules against current loaded ones
  * In `PluginBag` service added `clearScripts()` and `clearStylesheets()`

@@ -162,6 +162,17 @@ interface ViewManagerInterface
     public function mapUrl($controller, array $args = array(), $index = 0);
 
     /**
+     * Creates query URL
+     * 
+     * @param string $controller
+     * @param array $args Key value pairs to be created as query string
+     * @param string $index Route map index
+     * @param boolean $decode Whether to perform urldecode() on a result-set
+     * @return string
+     */
+    public function createQueryUrl($controller, array $args = array(), $index = 0, $decode = true);
+
+    /**
      * Prints a string
      * 
      * @param string $message

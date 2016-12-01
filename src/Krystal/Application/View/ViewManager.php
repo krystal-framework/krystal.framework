@@ -359,6 +359,20 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
+     * Creates query URL
+     * 
+     * @param string $controller
+     * @param array $args Key value pairs to be created as query string
+     * @param string $index Route map index
+     * @param boolean $decode Whether to perform urldecode() on a result-set
+     * @return string
+     */
+    public function createQueryUrl($controller, array $args = array(), $index = 0, $decode = true)
+    {
+        return $this->urlBuilder->createQueryUrl($controller, $args, $index, $decode);
+    }
+
+    /**
      * Prints a string
      * 
      * @param string $message

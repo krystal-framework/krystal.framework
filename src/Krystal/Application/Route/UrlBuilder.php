@@ -81,6 +81,26 @@ final class UrlBuilder implements UrlBuilderInterface
     }
 
     /**
+     * Creates query URL
+     * 
+     * @param string $controller
+     * @param array $args
+     * @param string $index
+     * @param boolean $decode
+     * @return string
+     */
+    public function createQueryUrl($controller, array $args = array(), $index = 0, $decode = true)
+    {
+        $fragment = '?'.http_build_query($args);
+
+        if ($decode === true) {
+            $fragment = urldecode($fragment);
+        }
+
+        return $this->createUrl($controller, array($fragment), $index);
+    }
+
+    /**
      * Creates URL
      * 
      * @param string $controller In <Module:Path@method> format

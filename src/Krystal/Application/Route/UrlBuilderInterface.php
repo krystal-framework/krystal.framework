@@ -14,6 +14,17 @@ namespace Krystal\Application\Route;
 interface UrlBuilderInterface
 {
     /**
+     * Creates query URL
+     * 
+     * @param string $controller
+     * @param array $args
+     * @param string $index
+     * @param boolean $decode
+     * @return string
+     */
+    public function createQueryUrl($controller, array $args = array(), $index = 0, $decode = true);
+
+    /**
      * Creates URL
      * 
      * @param string $controller In <Module:Path@method> format
