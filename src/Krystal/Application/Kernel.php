@@ -217,6 +217,9 @@ final class Kernel implements KernelInterface
      */
     private function tweak()
     {
+        // Ignore recoverable GD errors
+        ini_set('gd.jpeg_ignore_warning', 1);
+
         // Handle error reporting
         if (isset($this->config['production']) && false === $this->config['production']) {
             // Custom exception handler should be registered on NON-AJAX requests only
