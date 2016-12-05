@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.3
+---
+
+ * Deprecated as of 1.3. Composer must be used instead
+
 1.1
 ---
 
