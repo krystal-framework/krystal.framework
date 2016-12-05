@@ -26,6 +26,83 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Returns months sequence
+     * 
+     * @param array $months
+     * @param string $target Target months
+     * @param boolean $withCurrent Whether to include target months in resultset
+     * @return array
+     */
+    private static function getMonthSequence(array $months, $target, $withCurrent)
+    {
+        $collection = array();
+
+        foreach ($months as $month) {
+            if ($month == $target) {
+                if ($withCurrent === true) {
+                    $collection[] = $month;
+                }
+                break;
+            } else {
+                $collection[] = $month;
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Returns a collection of previous months
+     * 
+     * @param string $target
+     * @param string $withCurrent Whether to include $target in resultset
+     * @return array
+     */
+    public static function getPreviousMonths($target, $withCurrent = true)
+    {
+        return self::getMonthSequence(self::getMonths(), $target, $withCurrent);
+    }
+
+    /**
+     * Returns a collection of next months
+     * 
+     * @param string $target
+     * @param string $withCurrent Whether to include $target in resultset
+     * @return array
+     */
+    public static function getNextMonths($target, $withCurrent = true)
+    {
+        $months = self::getMonths();
+        $months = array_reverse($months);
+
+        $result = self::getMonthSequence($months, $target, $withCurrent);
+        return array_reverse($result);
+    }
+
+    /**
+     * Returns a collection of month numbers with leading zeros
+     * 
+     * @return array
+     */
+    public static function getMonths()
+    {
+        return array(
+            '01',
+            '02',
+            '03',
+            '04',
+            '05',
+            '06',
+            '07',
+            '08',
+            '09',
+            '10',
+            '11',
+            '12'
+        );
+    }
+
+    /**
      * Return quarters
      * 
      * @return array
