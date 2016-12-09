@@ -1399,7 +1399,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             return $this;
         }
 
-        $this->append(sprintf(' WHERE %s IN (%s)', $this->quote($column), implode(', ', $values)));
+        $this->append(sprintf(' WHERE %s IN (%s) ', $this->quote($column), implode(', ', $values)));
         return $this;
     }
 
