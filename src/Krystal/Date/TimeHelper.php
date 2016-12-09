@@ -31,10 +31,17 @@ abstract class TimeHelper
      * @param array $months
      * @param string $target Target months
      * @param boolean $withCurrent Whether to include target months in resultset
+     * @throws \LogicException if $target is out of range
      * @return array
      */
     private static function getMonthSequence(array $months, $target, $withCurrent)
     {
+        if (!in_array($target, $months)) {
+            throw new LogicException(
+                sprintf('Target month "%s" is out of range. The range must be from 01 up to 12', $target)
+            );
+        }
+
         $collection = array();
 
         foreach ($months as $month) {
