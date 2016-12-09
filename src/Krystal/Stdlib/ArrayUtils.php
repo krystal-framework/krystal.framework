@@ -17,6 +17,23 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Round array values recursively
+     * 
+     * @param array $data Target array
+     * @param integer $precision The number of decimal digits to round to
+     * @return array
+     */
+    public static function roundValues(array $data, $precision = 2)
+    {
+        return self::filterValuesRecursively($data, function($value) use ($precision) {
+            $value = is_numeric($value) ? round($value, $precision) : $value;
+            $value = empty($value) ? 0 : $value;
+
+            return $value;
+        });
+    }
+
+    /**
      * Returns all column names from two dimensional array validating by count
      * 
      * @param array $data
