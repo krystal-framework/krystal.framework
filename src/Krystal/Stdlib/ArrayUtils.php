@@ -17,6 +17,37 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Sum columns with averages
+     * 
+     * @param array $entities A collection of data
+     * @param array $averages Columns that need to be counted as average ones
+     * @param integer $precision The number of decimal digits to round to
+     * @return array
+     */
+    public static function sumColumnsWithAverages(array $entities, array $averages = array(), $precision = 2)
+    {
+        // Count the sum of all columns
+        $sum = self::sumColumns($entities);
+
+        if (!empty($averages)) {
+            $count = count($entities);
+
+            // Make sure that the division by zero won't occur
+            if ($count === 0) {
+                $count = 1;
+            }
+
+            foreach ($averages as $average) {
+                if (isset($sum[$average])) {
+                    $sum[$average] = round($sum[$average] / $count, $precision);
+                }
+            }
+        }
+
+        return $sum;
+    }
+
+    /**
      * Round array values recursively
      * 
      * @param array $data Target array
