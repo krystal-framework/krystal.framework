@@ -16,6 +16,17 @@ use UnexpectedValueException;
 class TextUtils
 {
     /**
+     * Creates a unique string
+     * 
+     * @return string
+     */
+    public static function uniqueString()
+    {
+        $id = uniqid(time(), true);
+        return md5($id);
+    }
+
+    /**
      * Creates a random string with fixed length
      * 
      * @param integer $length
