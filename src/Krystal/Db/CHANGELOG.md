@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added optional argument in `\Krystal\Db\Sql\Db::execute()` called `$rowCount`, that lets to return a row count instead of boolean value
  * In `AbstractMapper` added `getColumnSumWithAverages()` to return column sum with averages
  * In `AbstractMapper` added `isPrimaryKeyValue()` shortcut to check if the value if a primary key
  * In query builder and database service added public `append()` method to append raw fragments when building complex SQL queries

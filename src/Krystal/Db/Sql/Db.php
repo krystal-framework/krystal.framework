@@ -631,13 +631,18 @@ final class Db implements DbInterface, RelationableServiceInterface
     /**
      * Executes a command
      * 
-     * @return boolean
+     * @param string $rowCount Whether to return a number of affected rows
+     * @return boolean|integer
      */
-    public function execute()
+    public function execute($rowCount = false)
     {
-        // Execute without doing anything with returned value
-        $this->getStmt();
-        return true;
+        $stmt = $this->getStmt();
+
+        if ($rowCount === true) {
+            return $stmt->rowCount();
+        } else {
+            return true;
+        }
     }
 
     /**

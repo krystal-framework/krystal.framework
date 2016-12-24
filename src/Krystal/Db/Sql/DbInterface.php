@@ -129,7 +129,8 @@ interface DbInterface extends QueryBuilderInterface
     /**
      * Executes a command
      * 
-     * @return boolean
+     * @param string $rowCount Whether to return a number of affected rows
+     * @return boolean|integer
      */
-    public function execute();
+    public function execute($rowCount = false);
 }
