@@ -153,6 +153,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             return true;
         }
 
+        // If empty array supplied
+        if (is_array($target) && empty($target)) {
+            return false;
+        }
+        
         $result = false;
 
         if ($state === false) {
@@ -1373,7 +1378,26 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
-     * Appends WHERE IN (..) expression
+     * Appends WHERE/AND/OR IN (..) expression
+     * 
+     * @param string $prepend Fragment to be prepended
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    private function createWhereIn($prepend, $column, array $values, $filter = false)
+    {
+        if (!$this->isFilterable($filter, $values)) {
+            return $this;
+        }
+
+        $this->append(sprintf(' %s %s IN (%s) ', $prepend, $this->quote($column), implode(', ', $values)));
+        return $this;
+    }
+
+    /**
+     * Appends WHERE column IN (..) expression
      * 
      * @param string $column
      * @param array $values
@@ -1382,25 +1406,33 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function whereIn($column, array $values, $filter = false)
     {
-        return $this->whereInValues($column, $values, $filter);
+        return $this->createWhereIn('WHERE', $column, $values, $filter);
     }
 
     /**
-     * Internal method to build WHERE IN ()
+     * Appends AND column IN (..) expression
      * 
-     * @param string $key
+     * @param string $column
      * @param array $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    private function whereInValues($column, array $values, $filter)
+    public function andWhereIn($column, array $values, $filter = false)
     {
-        if (!$this->isFilterable($filter, $values)) {
-            return $this;
-        }
+        return $this->createWhereIn('AND', $column, $values, $filter);
+    }
 
-        $this->append(sprintf(' WHERE %s IN (%s) ', $this->quote($column), implode(', ', $values)));
-        return $this;
+    /**
+     * Appends OR column IN (..) expression
+     * 
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function orWhereIn($column, array $values, $filter = false)
+    {
+        return $this->createWhereIn('OR', $column, $values, $filter);
     }
 
     /**

@@ -1317,7 +1317,7 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
-     * Appends WHERE IN (..) expression
+     * Appends WHERE column IN (..) expression
      * 
      * @param string $column
      * @param array $values
@@ -1325,6 +1325,32 @@ final class Db implements DbInterface, RelationableServiceInterface
      * @return \Krystal\Db\Sql\Db
      */
     public function whereIn($column, array $values, $filter = false)
+    {
+        return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+    }
+
+    /**
+     * Appends AND column IN (..) expression
+     * 
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function andWhereIn($column, array $values, $filter = false)
+    {
+        return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+    }
+
+    /**
+     * Appends AND column IN (..) expression
+     * 
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function orWhereIn($column, array $values, $filter = false)
     {
         return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
     }

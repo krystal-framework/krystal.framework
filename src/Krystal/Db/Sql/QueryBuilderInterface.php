@@ -542,7 +542,7 @@ interface QueryBuilderInterface
     public function andWhereNotLike($column, $value, $filter = false);
 
     /**
-     * Appends WHERE IN (..) expression
+     * Appends WHERE column IN (..) expression
      * 
      * @param string $column
      * @param array $values
@@ -550,6 +550,26 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function whereIn($column, array $values, $filter = false);
+
+    /**
+     * Appends AND column IN (..) expression
+     * 
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function andWhereIn($column, array $values, $filter = false);
+
+    /**
+     * Appends OR column IN (..) expression
+     * 
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function orWhereIn($column, array $values, $filter = false);
 
     /**
      * Appends NOW() function
