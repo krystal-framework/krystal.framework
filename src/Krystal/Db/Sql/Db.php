@@ -896,6 +896,19 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends raw $column IN (..) fragment
+     * 
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function in($column, array $values, $filter = false)
+    {
+        return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+    }
+
+    /**
      * Appends a raw comparison with = operator
      * 
      * @param string $column

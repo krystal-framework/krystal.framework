@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `in()` method in database service
  * Fixed `whereIn()` and added `andWhereIn()` or `orWhereIn()` methods in database service
  * Added optional argument in `\Krystal\Db\Sql\Db::execute()` called `$rowCount`, that lets to return a row count instead of boolean value
  * In `AbstractMapper` added `getColumnSumWithAverages()` to return column sum with averages

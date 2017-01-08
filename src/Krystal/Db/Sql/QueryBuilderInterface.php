@@ -229,6 +229,16 @@ interface QueryBuilderInterface
     public function compare($column, $operator, $value, $filter = false);
 
     /**
+     * Appends raw $column IN (..) fragment
+     * 
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function in($column, array $values, $filter = false);
+
+    /**
      * Appends a raw comparison with = operator
      * 
      * @param string $column

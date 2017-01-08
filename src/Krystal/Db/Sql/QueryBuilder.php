@@ -724,6 +724,24 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends raw $column IN (..) fragment
+     * 
+     * @param string $column
+     * @param array $values
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function in($column, array $values, $filter = false)
+    {
+        if (!$this->isFilterable($filter, $values)) {
+            return $this;
+        }
+
+        $this->append(sprintf(' %s IN (%s) ', $this->quote($column), implode(', ', $values)));
+        return $this;
+    }
+
+    /**
      * Appends a raw comparison with = operator
      * 
      * @param string $column
