@@ -208,16 +208,20 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * Generates SQL function fragment
      * 
      * @param string $func Function name
-     * @param string $column Column name to be passed as an argument to a function
+     * @param string|object $column Column name to be passed as an argument to a function
      * @param string $alias 
      * @return string
      */
     private function createFunction($func, $column, $alias = null)
     {
-        if (is_null($alias)) {
-            $fragment = sprintf(' %s(%s) ', $func, $this->quote($column));
+        if ($column instanceof RawSqlFragmentInterface) {
+            $fragment = sprintf(' %s(%s) ', $func, $column->getFragment());
         } else {
-            $fragment = sprintf(' %s(%s) AS %s ', $func, $this->quote($column), $this->quote($alias));
+            if (is_null($alias)) {
+                $fragment = sprintf(' %s(%s) ', $func, $this->quote($column));
+            } else {
+                $fragment = sprintf(' %s(%s) AS %s ', $func, $this->quote($column), $this->quote($alias));
+            }
         }
 
         // Append a comma if there was a function call before
