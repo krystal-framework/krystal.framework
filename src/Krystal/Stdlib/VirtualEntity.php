@@ -45,6 +45,16 @@ class VirtualEntity implements Sanitizeable
     }
 
     /**
+     * Returns defined properties
+     * 
+     * @return array
+     */
+    public function getProperties()
+    {
+        return $this->container;
+    }
+
+    /**
      * Checks whether bag has virtual property
      * 
      * @param string $property

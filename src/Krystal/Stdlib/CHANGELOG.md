@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `getProperties()` in `VirtualEntity`
  * Added `sumColumnsWithAverages()` in `Stdlib\ArrayUtils` to count a sum with averages
  * Added `roundValues()` in `Stdlib\ArrayUtils` to filter array values recursively with precision
  * Added `filterValuesRecursively()` in `Stdlib\ArrayUtils` to apply a callback function that filter array values recursively
