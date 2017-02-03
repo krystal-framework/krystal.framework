@@ -17,6 +17,24 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Duplicate array values into keys
+     * 
+     * @param array $data
+     * @param boolean $valueModue Whether to duplicate values, not keys
+     * @return array
+     */
+    public static function valuefy(array $data, $valueModue = true)
+    {
+        if ($valueModue === true) {
+            $values = array_values($data);
+        } else {
+            $values = array_keys($data);
+        }
+
+        return array_combine($values, $values);
+    }
+
+    /**
      * Sum columns with averages
      * 
      * @param array $entities A collection of data
