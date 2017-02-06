@@ -66,7 +66,7 @@ final class HtmlCompressor implements CompressorInterface
     /**
      * Removes comments from the document, excluding IE's conditional ones
      * 
-     * @param string $document
+     * @param string $content
      * @return string
      */
     private function removeComments($content)
