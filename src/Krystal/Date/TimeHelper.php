@@ -26,6 +26,18 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Returns amount of days associated with year & month
+     * 
+     * @param string $month
+     * @param string $year
+     * @return integer
+     */
+    public static function getMonthDaysCount($month, $year)
+    {
+        return $month == 2 ? ($year % 4 ? 28 : ($year % 100 ? 29 : ($year % 400 ? 28 : 29))) : (($month - 1) % 7 % 2 ? 30 : 31);
+    }
+
+    /**
      * Returns months sequence
      * 
      * @param array $months
