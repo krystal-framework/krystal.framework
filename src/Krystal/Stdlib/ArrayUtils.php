@@ -86,7 +86,6 @@ abstract class ArrayUtils
      * Returns all column names from two dimensional array validating by count
      * 
      * @param array $data
-     * @throws \LogicException If at least one key from collection differ from the rest of collection keys 
      * @return array|boolean
      */
     public static function arrayColumns(array $data)
@@ -100,14 +99,6 @@ abstract class ArrayUtils
 
         if ($count === 1) {
             return array_keys($data[0]);
-        }
-
-        $diff = call_user_func_array('array_diff_key', $data);
-
-        if (!empty($diff)) {
-            throw new LogicException(
-                sprintf('Each collection must contain same keys. Found different keys - %s', implode(', ', array_keys($diff)))
-            );
         }
 
         if (isset($data[0])) {
