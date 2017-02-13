@@ -130,7 +130,7 @@ class TextUtils
     public static function studly($input)
     {
         $input = mb_convert_case($input, \MB_CASE_TITLE, 'UTF-8');
-        $input = str_replace(['-', '_'], ' ', $input);
+        $input = str_replace(array('-', '_'), ' ', $input);
         $input = str_replace(' ', '', $input);
 
         return $input;
