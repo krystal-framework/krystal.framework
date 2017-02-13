@@ -854,7 +854,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function round($column, $decimals)
     {
-        $this->queryBuilder->len($column, $decimals);
+        $this->queryBuilder->round($column, $decimals);
         return $this;
     }
 
