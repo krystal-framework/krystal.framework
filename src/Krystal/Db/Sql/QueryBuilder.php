@@ -1463,12 +1463,13 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param string $column
      * @param string $a First value
      * @param string $b Second value
+     * @param string $prefix The first prefix such as WHERE or AND or OR
      * @param boolean $not Whether it must be NOT BETWEEN or not
      * @param string $operator Optional operator to be prep-ended before WHERE clause
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    private function between($column, $a, $b, $not = false, $operator = null, $filter = false)
+    private function between($column, $a, $b, $prefix, $not = false, $operator = null, $filter = false)
     {
         if (!$this->isFilterable($filter, array($a, $b))) {
             return $this;
@@ -1486,7 +1487,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $not = '';
         }
 
-        $this->append($operator.sprintf(' WHERE %s %s BETWEEN %s AND %s ', $this->quote($column), $not, $a, $b));
+        $this->append($operator.sprintf(' %s %s %s BETWEEN %s AND %s ', $prefix, $this->quote($column), $not, $a, $b));
         return $this;
     }
 
@@ -1501,7 +1502,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function orWhereBetween($column, $a, $b, $filter = false)
     {
-        return $this->between($column, $a, $b, false, 'OR', $filter);
+        return $this->between($column, $a, $b, null, false, 'OR', $filter);
     }
 
     /**
@@ -1515,7 +1516,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function andWhereBetween($column, $a, $b, $filter = false)
     {
-        return $this->between($column, $a, $b, false, 'AND', $filter);
+        return $this->between($column, $a, $b, null, false, 'AND', $filter);
     }
 
     /**
@@ -1529,7 +1530,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function whereBetween($column, $a, $b, $filter = false)
     {
-        return $this->between($column, $a, $b, false, null, $filter);
+        return $this->between($column, $a, $b, 'WHERE', false, null, $filter);
     }
 
     /**
@@ -1543,7 +1544,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function andWhereNotBetween($column, $a, $b, $filter = false)
     {
-        return $this->between($column, $a, $b, true, 'AND', $filter);
+        return $this->between($column, $a, $b, null, true, 'AND', $filter);
     }
 
     /**
@@ -1557,7 +1558,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function orWhereNotBetween($column, $a, $b, $filter = false)
     {
-        return $this->between($column, $a, $b, true, 'OR', $filter);
+        return $this->between($column, $a, $b, null, true, 'OR', $filter);
     }
 
     /**
@@ -1571,7 +1572,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function whereNotBetween($column, $a, $b, $filter = false)
     {
-        return $this->between($column, $a, $b, true, $filter);
+        return $this->between($column, $a, $b, 'WHERE', true, $filter);
     }
 
     /**
