@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `arrayRecovery()` in `Stdlib\ArrayUtils` to recover missing keys
  * Added `valuefy()` in `Stdlib\ArrayUtils` to duplicate either keys or values in arrays
  * Added `getProperties()` in `VirtualEntity`
  * Added `sumColumnsWithAverages()` in `Stdlib\ArrayUtils` to count a sum with averages

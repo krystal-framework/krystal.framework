@@ -17,6 +17,25 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Recoveries missing array keys
+     * 
+     * @param array $array Target array
+     * @param array $keys Missing array keys to be recovered
+     * @param mixed $value Value to be recovered
+     * @return array
+     */
+    public static function arrayRecovery(array $array, array $keys, $value)
+    {
+        foreach ($keys as $key) {
+            if (!isset($array[$key])) {
+                $array[$key] = $value;
+            }
+        }
+
+        return $array;
+    }
+
+    /**
      * Duplicate array values into keys
      * 
      * @param array $data
