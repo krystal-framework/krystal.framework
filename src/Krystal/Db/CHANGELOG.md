@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Ability to work with unlimited number of junction tables from a single mapper
  * Added raw binding support. To attach a value which must not be binded (e.g a column name) an instance of `\Krystal\Db\Sql\RawBinding` must be supplied as a value argument
  * In `AbstractMapper` added `getFullColumnName()` that returns a full column name (i.e prepending table name)
  * Aggregate function generators can now accept raw SQL fragments

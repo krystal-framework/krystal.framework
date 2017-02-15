@@ -94,21 +94,6 @@ abstract class AbstractMapper
     }
 
     /**
-     * Returns junction table name
-     * 
-     * @throws \RuntimeException If getJunctionTable() is not declared
-     * @return string
-     */
-    private function getJunction()
-    {
-        if (method_exists(get_called_class(), 'getJunctionTableName')) {
-            return static::getJunctionTableName();
-        } else {
-            throw new RuntimeException(sprintf('The getJunctionTableName() is not declared. You need to declare it to work junction shortcut methods'));
-        }
-    }
-
-    /**
      * Returns table name with a prefix
      * 
      * @param string $table
@@ -237,28 +222,29 @@ abstract class AbstractMapper
     /**
      * Synchronizes a junction table
      * 
+     * @param string $table Junction table name
      * @param string $masterColumn Master column name
      * @param string $masterValue Master value (shared for slaves)
      * @param string $slaveColumn Slave column name
      * @param array $slaves A collection of slave values
      * @return boolean
      */
-    final public function syncWithJunction($masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
+    final public function syncWithJunction($table, $masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
-        return $this->removeFromJunction($masterValue, $masterColumn) && $this->insertIntoJunction($masterValue, $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN);
+        return $this->removeFromJunction($table, $masterValue, $masterColumn) && 
+               $this->insertIntoJunction($table, $masterValue, $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN);
     }
 
     /**
      * Removes all records from junction table associated with master's key
      * 
+     * @param string $table Junction table name
      * @param string $masterValue Master value (shared for slaves)
      * @param string $masterColumn Master column name
      * @return boolean
      */
-    final public function removeFromJunction($masterValue, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN)
+    final public function removeFromJunction($table, $masterValue, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN)
     {
-        $table = $this->getJunction();
-
         return $this->db->delete()
                         ->from($table)
                         ->whereEquals($masterColumn, $masterValue)
@@ -268,16 +254,15 @@ abstract class AbstractMapper
     /**
      * Inserts a record into junction table
      * 
+     * @param string $table Junction table name
      * @param string $masterValue
      * @param array $slaves
      * @param string $masterColumn Master column name
      * @param string $slaveColumn Slave column name
      * @return boolean
      */
-    final public function insertIntoJunction($masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
+    final public function insertIntoJunction($table, $masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
-        $table = $this->getJunction();
-
         return $this->db->insertIntoJunction($table, array($masterColumn, $slaveColumn), $masterValue, $slaves)
                         ->execute();
     }
@@ -285,41 +270,42 @@ abstract class AbstractMapper
     /**
      * Fetches master values associated with a slave in junction table
      * 
+     * @param string $table Junction table name
      * @param string $value Slave value
      * @param string $masterColumn Master column name
      * @param string $slaveColumn Slave column name
      * @return array
      */
-    final public function getMasterIdsFromJunction($value, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
+    final public function getMasterIdsFromJunction($table, $value, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
-        return $this->getIdsFromJunction($masterColumn, $slaveColumn, $value);
+        return $this->getIdsFromJunction($table, $masterColumn, $slaveColumn, $value);
     }
 
     /**
      * Fetches master values associated with a slave in junction table
      * 
+     * @param string $table Junction table name
      * @param string $value Slave value
      * @param string $masterColumn Master column name
      * @param string $slaveColumn Slave column name
      * @return array
      */
-    final public function getSlaveIdsFromJunction($value, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
+    final public function getSlaveIdsFromJunction($table, $value, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
-        return $this->getIdsFromJunction($slaveColumn, $masterColumn, $value);
+        return $this->getIdsFromJunction($table, $slaveColumn, $masterColumn, $value);
     }
 
     /**
      * Fetches values from junction table
      * 
+     * @param string $table Junction table name
      * @param string $column Column to be selected
      * @param string $key
      * @param string $value
      * @return array
      */
-    private function getIdsFromJunction($column, $key, $value)
+    private function getIdsFromJunction($table, $column, $key, $value)
     {
-        $table = $this->getJunction();
-
         return $this->db->select($column)
                         ->from($table)
                         ->whereEquals($key, $value)
