@@ -60,6 +60,25 @@ abstract class AbstractMapper
     }
 
     /**
+     * Returns full column name prepending table name
+     * 
+     * @param string $column Column name
+     * @throws \LogicException if the getTableName() isn't defined in descending class
+     * @return string
+     */
+    public static function getFullColumnName($column)
+    {
+        // Make sure, the getTableName() is defined in calling class
+        if (method_exists(get_called_class(), 'getTableName')) {
+            return sprintf('%s.%s', static::getTableName(), $column);
+        } else {
+            throw new LogicException(
+                sprintf('The method getTableName() is not declared in %s, therefore a full column name cannot be generated', get_called_class())
+            );
+        }
+    }
+
+    /**
      * Returns table name if not null. Otherwise returns mapper's table name
      * 
      * @param string $table

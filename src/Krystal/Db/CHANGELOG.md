@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `AbstractMapper` added `getFullColumnName()` that returns a full column name (i.e prepending table name)
  * Aggregate function generators can now accept raw SQL fragments
  * Added `in()` method in database service
  * Fixed `whereIn()` and added `andWhereIn()` or `orWhereIn()` methods in database service
