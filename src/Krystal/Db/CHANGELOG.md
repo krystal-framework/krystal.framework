@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added raw binding support. To attach a value which must not be binded (e.g a column name) an instance of `\Krystal\Db\Sql\RawBinding` must be supplied as a value argument
  * In `AbstractMapper` added `getFullColumnName()` that returns a full column name (i.e prepending table name)
  * Aggregate function generators can now accept raw SQL fragments
  * Added `in()` method in database service

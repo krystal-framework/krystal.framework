@@ -559,7 +559,7 @@ interface QueryBuilderInterface
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function whereIn($column, array $values, $filter = false);
+    public function whereIn($column, $values, $filter = false);
 
     /**
      * Appends AND column IN (..) expression
@@ -569,7 +569,7 @@ interface QueryBuilderInterface
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function andWhereIn($column, array $values, $filter = false);
+    public function andWhereIn($column, $values, $filter = false);
 
     /**
      * Appends OR column IN (..) expression
@@ -579,7 +579,7 @@ interface QueryBuilderInterface
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function orWhereIn($column, array $values, $filter = false);
+    public function orWhereIn($column, $values, $filter = false);
 
     /**
      * Appends NOW() function

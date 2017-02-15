@@ -240,7 +240,8 @@ final class Db implements DbInterface, RelationableServiceInterface
         foreach ($data as $key => $value) {
             if ($value instanceof RawSqlFragmentInterface) {
                 $data[$key] = $value->getFragment();
-
+            } elseif ($value instanceof RawBindingInterface) {
+                $data[$key] = $value->getTarget();
             } else {
                 $placeholder = $this->getUniqPlaceholder();
 
@@ -262,6 +263,8 @@ final class Db implements DbInterface, RelationableServiceInterface
     {
         if ($key instanceof RawSqlFragment) {
             $placeholder = $key->getFragment();
+        } else if ($key instanceof RawBindingInterface) {
+            $placeholder = $key->getTarget();
         } else {
             // Create unique placeholder
             $placeholder = $this->getUniqPlaceholder();
@@ -1333,11 +1336,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends WHERE column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawBindingInterface $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\Db
      */
-    public function whereIn($column, array $values, $filter = false)
+    public function whereIn($column, $values, $filter = false)
     {
         return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
     }
@@ -1346,11 +1349,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends AND column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawBindingInterface $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\Db
      */
-    public function andWhereIn($column, array $values, $filter = false)
+    public function andWhereIn($column, $values, $filter = false)
     {
         return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
     }
@@ -1359,11 +1362,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends AND column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawBindingInterface $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\Db
      */
-    public function orWhereIn($column, array $values, $filter = false)
+    public function orWhereIn($column, $values, $filter = false)
     {
         return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
     }
@@ -1373,31 +1376,36 @@ final class Db implements DbInterface, RelationableServiceInterface
      * 
      * @param string $method
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawBindingInterface $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\Db
      */
-    private function whereInValues($method, $column, array $values, $filter)
+    private function whereInValues($method, $column, $values, $filter)
     {
         if (!$this->queryBuilder->isFilterable($filter, $values)) {
             return $this;
         }
 
-        // Prepare bindings, firstly
-        $bindings = array();
+        if ($values instanceof RawBindingInterface) {
+            call_user_func(array($this->queryBuilder, $method), $column, $values->getTarget(), $filter);
+        } else {
 
-        foreach ($values as $value) {
-            // Generate unique placeholder
-            $placeholder = $this->getUniqPlaceholder();
-            // Append to collection
-            $bindings[$placeholder] = $value;
-        }
+            // Prepare bindings, firstly
+            $bindings = array();
 
-        call_user_func(array($this->queryBuilder, $method), $column, array_keys($bindings), $filter);
+            foreach ($values as $value) {
+                // Generate unique placeholder
+                $placeholder = $this->getUniqPlaceholder();
+                // Append to collection
+                $bindings[$placeholder] = $value;
+            }
 
-        // Now bind what we have so far
-        foreach ($bindings as $key => $value) {
-            $this->bind($key, $value);
+            call_user_func(array($this->queryBuilder, $method), $column, array_keys($bindings), $filter);
+
+            // Now bind what we have so far
+            foreach ($bindings as $key => $value) {
+                $this->bind($key, $value);
+            }
         }
 
         return $this;

@@ -1426,7 +1426,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function whereIn($column, array $values, $filter = false)
+    public function whereIn($column, $values, $filter = false)
     {
         return $this->createWhereIn('WHERE', $column, $values, $filter);
     }
@@ -1439,7 +1439,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function andWhereIn($column, array $values, $filter = false)
+    public function andWhereIn($column, $values, $filter = false)
     {
         return $this->createWhereIn('AND', $column, $values, $filter);
     }
@@ -1452,7 +1452,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function orWhereIn($column, array $values, $filter = false)
+    public function orWhereIn($column, $values, $filter = false)
     {
         return $this->createWhereIn('OR', $column, $values, $filter);
     }
