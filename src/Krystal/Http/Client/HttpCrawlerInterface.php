@@ -14,21 +14,6 @@ namespace Krystal\Http\Client;
 interface HttpCrawlerInterface
 {
     /**
-     * Returns information about the last transfer
-     * 
-     * @param integer $opt
-     * @return mixed
-     */
-    public function getInfo($opt = 0);
-
-    /**
-     * Return error messages if any
-     * 
-     * @return array
-     */
-    public function getErrors();
-
-    /**
      * Performs a HTTP request
      * 
      * @param string $method

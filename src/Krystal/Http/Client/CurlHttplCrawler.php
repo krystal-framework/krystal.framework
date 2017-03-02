@@ -16,55 +16,6 @@ use UnexpectedValueException;
 final class CurlHttplCrawler implements HttpCrawlerInterface
 {
     /**
-     * cURL handler
-     * 
-     * @var \Krystal\Http\Client\CurlInterface
-     */
-    private $curl;
-
-    /**
-     * State initialization
-     * 
-     * @param \Krystal\Http\Client\CurlInterface $curl 
-     * @return void
-     */
-    public function __construct(CurlInterface $curl)
-    {
-        $this->curl = $curl;
-    }
-
-    /**
-     * Builds an instance
-     * 
-     * @return \Krystal\Http\Client\CurlHttplCrawler
-     */
-    public static function factory()
-    {
-        return new self(new Curl());
-    }
-
-    /**
-     * Returns information about the last transfer
-     * 
-     * @param integer $opt
-     * @return mixed
-     */
-    public function getInfo($opt = 0)
-    {
-        return $this->curl->getInfo($opt);
-    }
-
-    /**
-     * Return error messages if any
-     * 
-     * @return array
-     */
-    public function getErrors()
-    {
-        return $this->curl->getErrors();
-    }
-
-    /**
      * Performs a HTTP request
      * 
      * @param string $method
@@ -96,19 +47,6 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
     }
 
     /**
-     * Executes cURL
-     * 
-     * @param array $options
-     * @param array $extra
-     * @return mixed
-     */
-    private function exec(array $options, array $extra)
-    {
-        $this->curl->init(array_merge($options, $extra));
-        return $this->curl->exec();
-    }
-
-    /**
      * Performs HTTP GET request
      * 
      * @param string $url Target URL
@@ -119,12 +57,13 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      */
     public function get($url, array $data = array(), $prepend = '?', array $extra = array())
     {
-        return $this->exec(array(
+		$curl = new Curl(array(
             CURLOPT_URL => $url . $prepend . http_build_query($data),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false
-
         ), $extra);
+
+        return $curl->exec();
     }
 
     /**
@@ -137,7 +76,7 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      */
     public function post($url, array $data = array(), array $extra = array())
     {
-        return $this->exec(array(
+        $curl = new Curl(array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
@@ -145,6 +84,8 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
             CURLOPT_POSTFIELDS => http_build_query($data)
 
         ), $extra);
+
+        return $curl->exec();
     }
 
     /**
@@ -157,13 +98,14 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      */
     public function patch($url, array $data = array(), array $extra = array())
     {
-        return $this->exec(array(
+        $curl = new Curl(array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PATCH',
             CURLOPT_POSTFIELDS => http_build_query($data)
-
         ), $extra);
+
+        return $curl->exec();
     }
 
     /**
@@ -176,13 +118,14 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      */
     public function delete($url, array $data = array(), array $extra = array())
     {
-        return $this->exec(array(
+        $curl = new Curl(array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_POSTFIELDS => http_build_query($data)
-
         ), $extra);
+
+        return $curl->exec();
     }
 
     /**
@@ -195,13 +138,14 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      */
     public function put($url, array $data = array(), array $extra = array())
     {
-        return $this->exec(array(
+        $curl = new Curl(array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => http_build_query($data)
-
         ), $extra);
+
+        return $curl->exec();
     }
 
     /**
@@ -215,12 +159,13 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      */
     public function head($url, array $data = array(), $prepend = '?', array $extra = array())
     {
-        return $this->exec(array(
+        $curl = new Curl(array(
             CURLOPT_URL => $url . $prepend . http_build_query($data),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_NOBODY => true,
             CURLOPT_POSTFIELDS => http_build_query($data)
-
         ), $extra);
+
+        return $curl->exec();
     }
 }
