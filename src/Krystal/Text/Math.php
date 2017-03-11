@@ -51,6 +51,19 @@ class Math
     }
 
     /**
+     * Counts value from percentage
+     * 
+     * @param float $target Target value
+     * @param float $percentage Target percentage
+     * @return float
+     */ 
+    public static function fromPercentage($target, $percentage)
+    {
+        $result = $target * $percentage / 100;
+        return round($result, 2);
+    }
+
+    /**
      * Counts a percentage
      * 
      * @param float|integer $total
