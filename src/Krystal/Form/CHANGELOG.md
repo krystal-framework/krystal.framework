@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Removed `DropdownWigdet`
  * Added optional 5-th `$prompt` argument, that can a prompting text in `Element::select()`
  * Added `appendChildren()` in `NodeElement` to append several child nodes at once
  * Added `appendChildWithText()` in `NodeElement`
