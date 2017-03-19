@@ -223,10 +223,16 @@ class Element
      * @param array $list
      * @param string|array $select Select child option
      * @param array $attributes Extra attributes
+     * @param string|boolean $prompt Optional prompt text
      * @return string
      */
-    public static function select($name, array $list = array(), $selected, array $attributes = array())
+    public static function select($name, array $list = array(), $selected, array $attributes = array(), $prompt = false)
     {
+        if ($prompt !== false) {
+            // Merge keeping indexes
+            $list = array('' => $prompt) + $list;
+        }
+
         $node = new Node\Select($list, $selected);
 
         if ($name !== null) {
