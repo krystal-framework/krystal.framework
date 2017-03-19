@@ -156,7 +156,7 @@ final class FilterInvoker implements FilterInvokerInterface
      */
     private function getSortingColumn()
     {
-        return $this->getCurrentParam(self::FILTER_PARAM_SORT, '');
+        return $this->getCurrentParam(self::FILTER_PARAM_SORT, false);
     }
 
     /**
@@ -181,7 +181,7 @@ final class FilterInvoker implements FilterInvokerInterface
         if (isset($this->input[$param])) {
             return $this->input[$param];
         } else {
-            return 1;
+            return $default;
         }
     }
 

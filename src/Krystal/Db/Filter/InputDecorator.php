@@ -32,7 +32,7 @@ final class InputDecorator implements ArrayAccess
      * @param array $data
      * @return void
      */
-    public function __construct(array $data)
+    public function __construct(array $data = array())
     {
         $this->data = $data;
     }
