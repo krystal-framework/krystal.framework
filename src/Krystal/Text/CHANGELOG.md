@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `Text\CollectionManager` added `isEmpty()` method that determines whether collection is empty
  * Added `TextUtils::uniqueString()` to generate a very unique string based on MD5
  * In `CollectionManager` added `getKeys()`
  * Added static `Math` class with utility methods

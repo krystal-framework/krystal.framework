@@ -44,6 +44,13 @@ interface CollectionManagerInterface
     public function getContainer();
 
     /**
+     * Determines whether container is empty
+     * 
+     * @return boolean
+     */
+    public function isEmpty();
+
+    /**
      * Returns amount of keys
      * 
      * @return integer

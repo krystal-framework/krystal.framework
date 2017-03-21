@@ -94,6 +94,16 @@ final class CollectionManager implements CollectionManagerInterface
     }
 
     /**
+     * Determines whether container is empty
+     * 
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return empty($this->container);
+    }
+
+    /**
      * Returns amount of keys
      * 
      * @return integer
