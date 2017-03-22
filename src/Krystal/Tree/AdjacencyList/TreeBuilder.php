@@ -94,6 +94,18 @@ final class TreeBuilder implements TreeInterface
     }
 
     /**
+     * Finds very first parent node associated with provided child ID
+     * 
+     * @param string $id Child ID
+     * @return array
+     */
+    public function findTopParentNodeByChildId($id)
+    {
+        $nodes = $this->findParentNodesByChildId($id);
+        return array_pop($nodes);
+    }
+
+    /**
      * Finds all child nodes
      * 
      * @param array $id Child id
