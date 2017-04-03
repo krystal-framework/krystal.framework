@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `formAttribute` service
  * Ignore GD recoverable warnings on bootstrap
  * In view service added `createQueryUrl()` to generate URLs with query string
  * In `AppConfig` added extra methods to generate paths for module views and templates

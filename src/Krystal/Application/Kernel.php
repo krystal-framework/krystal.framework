@@ -83,6 +83,7 @@ final class Kernel implements KernelInterface
             new Component\Translator(),
             new Component\Response(),
             new Component\FlashBag(),
+            new Component\FormAttribute(),
             new Component\ValidatorFactory(),
             new Component\UrlBuilder(),
             new Component\View(),
