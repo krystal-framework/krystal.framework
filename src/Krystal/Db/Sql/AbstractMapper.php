@@ -232,7 +232,7 @@ abstract class AbstractMapper
     final public function syncWithJunction($table, $masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
         return $this->removeFromJunction($table, $masterValue, $masterColumn) && 
-               $this->insertIntoJunction($table, $masterValue, $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN);
+               $this->insertIntoJunction($table, $masterValue, $slaves, $masterColumn, $slaveColumn);
     }
 
     /**
@@ -285,7 +285,7 @@ abstract class AbstractMapper
      * Fetches master values associated with a slave in junction table
      * 
      * @param string $table Junction table name
-     * @param string $value Slave value
+     * @param string $value Master value
      * @param string $masterColumn Master column name
      * @param string $slaveColumn Slave column name
      * @return array
