@@ -130,9 +130,10 @@ final class AuthManager implements AuthManagerInterface
      * @param mixed $value
      * @return void
      */
-    private function storeData($key, $value)
+    public function storeData($key, $value)
     {
         $this->sessionBag->set($key, $value);
+        return $this;
     }
 
     /**
@@ -142,7 +143,7 @@ final class AuthManager implements AuthManagerInterface
      * @param mixed $default Default value to be returned in case requested key doesn't exist
      * @return mixed
      */
-    private function getData($key, $default = false)
+    public function getData($key, $default = false)
     {
         if ($this->sessionBag->has($key)){
             return $this->sessionBag->get($key);
