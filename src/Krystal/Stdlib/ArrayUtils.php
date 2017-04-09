@@ -76,7 +76,11 @@ abstract class ArrayUtils
 
             foreach ($averages as $average) {
                 if (isset($sum[$average])) {
-                    $sum[$average] = round($sum[$average] / $count, $precision);
+                    if ($precision !== false) {
+                    } else {
+                        $sum[$average] = $sum[$average] / $count;
+                    }
+                    
                 }
             }
         }
