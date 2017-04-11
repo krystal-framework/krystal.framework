@@ -127,6 +127,14 @@ interface DbInterface extends QueryBuilderInterface
     public function query($column = null, $mode = null);
 
     /**
+     * Queries for a single result-set returning a value of a first column
+     * 
+     * @param integer $mode Fetch mode. Can be overridden when needed
+     * @return string|boolean
+     */
+    public function queryScalar($mode = null);
+
+    /**
      * Executes a command
      * 
      * @param string $rowCount Whether to return a number of affected rows

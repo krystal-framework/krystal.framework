@@ -632,6 +632,25 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Queries for a single result-set returning a value of a first column
+     * 
+     * @param integer $mode Fetch mode. Can be overridden when needed
+     * @return string|boolean
+     */
+    public function queryScalar($mode = null)
+    {
+        $result = $this->query(null, $mode);
+
+        if (is_array($result)) {
+            // Filter by values
+            $result = array_values($result);
+            return isset($result[0]) ? $result[0] : false;
+        }
+
+        return false;
+    }
+
+    /**
      * Executes a command
      * 
      * @param string $rowCount Whether to return a number of affected rows
