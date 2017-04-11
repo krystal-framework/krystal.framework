@@ -660,7 +660,8 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
                 if (!is_numeric($column)) {
                     $push = sprintf('%s AS %s', $this->quote($column), $this->quote($alias));
                 } else {
-                    $push = $alias;
+                    // In case received a regular column name
+                    $push = $this->quote($alias);
                 }
 
                 array_push($collection, $push);

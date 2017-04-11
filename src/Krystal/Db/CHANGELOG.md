@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with quoting multiple columns
  * In database service added `queryScalar()` method
  * Bug fixes in Filter sub-component
  * Ability to work with unlimited number of junction tables from a single mapper
