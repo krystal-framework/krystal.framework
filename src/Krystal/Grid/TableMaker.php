@@ -124,7 +124,14 @@ final class TableMaker
             $name = $this->createInputName('filter', $row[self::GRID_PARAM_COLUMN]);
 
             if ($filter) {
-                $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, false);
+                // If filter is array, then assume its for select
+                if (is_array($filter)) {
+                    $filter = array_merge(array('0' => ''), $filter);
+                    $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, null, $filter);
+                } else {
+                    $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, false);
+                }
+
             } else {
                 $elements[] = $this->createRow(null, '');
             }
@@ -171,7 +178,9 @@ final class TableMaker
                 $id = $value;
             }
 
-            if ($this->findOptionByColumn($key, self::GRIG_PARAM_EDITABLE) == true) {
+            $options = $this->findOptionByColumn($key, self::GRIG_PARAM_EDITABLE);
+
+            if ($options) {
                 $name = $this->createInputName($key, $id);
                 $element = $this->createInput('createRow', $key, $name, $value);
             } else {
@@ -275,19 +284,15 @@ final class TableMaker
      * @param string $column Column name
      * @param string $name Column name to be used when generating input name
      * @param mixed $value Column value to be used when generating input name
+     * @param array $extra Extra options (i.e for select type - the options)
      * @return string
      */
-    private function createInput($method, $column, $name, $value)
+    private function createInput($method, $column, $name, $value, array $extra = array())
     {
         $options = $this->findOptionsByColumn($column);
+        $text = Element::dynamic($options[self::GRID_PARAM_TYPE], $name, $value, array('class' => $this->options['inputClass']), $extra);
 
-        switch ($options[self::GRID_PARAM_TYPE]) {
-            case 'text':
-                $element = new Element\Text();
-                $text = $element->render(array('name' => $name, 'value' => $value, 'class' => $this->options['inputClass']));
-
-            return call_user_func(array($this, $method), null, $text);
-        }
+        return call_user_func(array($this, $method), null, $text);
     }
 
     /**
