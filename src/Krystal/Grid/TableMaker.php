@@ -30,9 +30,14 @@ final class TableMaker
      * @var array
      */
     private $options = array(
-        'tableClass' => 'table table-hover',
+        'tableClass' => 'table table-hover table-bordered table-striped',
+        'tableHeaderClass' => 'text-center',
+        'tableDataClass' => 'text-center',
         'rowClass' => 'text-center',
-        'activeClass' => 'text-info'
+        'activeClass' => 'text-info',
+        'arrowDownIcon' => 'glyphicon glyphicon-arrow-down',
+        'arrowUpIcon' => 'glyphicon glyphicon-arrow-up',
+        'inputClass' => 'form-control'
     );
 
     const GRID_PARAM_ACTIONS = 'actions';
@@ -279,8 +284,8 @@ final class TableMaker
         switch ($options[self::GRID_PARAM_TYPE]) {
             case 'text':
                 $element = new Element\Text();
-                $text = $element->render(array('name' => $name, 'value' => $value, 'class' => 'form-control'));
-                
+                $text = $element->render(array('name' => $name, 'value' => $value, 'class' => $this->options['inputClass']));
+
             return call_user_func(array($this, $method), null, $text);
         }
     }
@@ -339,7 +344,7 @@ final class TableMaker
      */
     private function createTable(array $children)
     {
-        return $this->createElement('table', $children, 'table');
+        return $this->createElement('table', $children, $this->options['tableClass']);
     }
 
     /**
@@ -384,7 +389,7 @@ final class TableMaker
      */
     private function createTextHeader($text)
     {
-        return $this->createElement('th', array(), 'text-center', $text);
+        return $this->createElement('th', array(), $this->options['tableHeaderClass'], $text);
     }
 
     /**
@@ -395,7 +400,7 @@ final class TableMaker
      */
     private function createBodyHeader($text)
     {
-        return $this->createElement('td', array(), 'text-center', $text);
+        return $this->createElement('td', array(), $this->options['tableDataClass'], $text);
     }
 
     /**
@@ -407,7 +412,7 @@ final class TableMaker
      */
     private function createHeader($children = array(), $text = null)
     {
-        return $this->createElement('th', $children, 'text-center', $text);
+        return $this->createElement('th', $children, $this->options['tableHeaderClass'], $text);
     }
 
     /**
@@ -419,7 +424,7 @@ final class TableMaker
      */
     private function createRow($children = array(), $text = null)
     {
-        return $this->createElement('td', $children, 'text-center', $text);
+        return $this->createElement('td', $children, $this->options['tableDataClass'], $text);
     }
 
     /**
@@ -454,7 +459,7 @@ final class TableMaker
      */
     private function createHeaderLinkIcon($column)
     {
-        $class = ($column) ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up';
+        $class = ($column) ? $this->options['arrowDownIcon'] : $this->options['arrowUpIcon'];
         //$class = $this->filter->isSortedByDesc($column) ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up';
 
         return $this->createIcon($class);
