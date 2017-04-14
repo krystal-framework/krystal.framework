@@ -25,11 +25,15 @@ final class TableMaker
     private $data = array();
 
     /**
-     * All possible table options
+     * Default table options
      * 
      * @var array
      */
-    private $options = array();
+    private $options = array(
+        'tableClass' => 'table table-hover',
+        'rowClass' => 'text-center',
+        'activeClass' => 'text-info'
+    );
 
     const GRID_PARAM_ACTIONS = 'actions';
     const GRIG_PARAM_EDITABLE = 'editable';
@@ -51,7 +55,7 @@ final class TableMaker
     public function __construct(array $data, array $options, QueryContainerInterface $filter = null)
     {
         $this->data = $data;
-        $this->options = $options;
+        $this->options = array_merge($this->options, $options);
         $this->filter = $filter;
     }
 
@@ -238,7 +242,7 @@ final class TableMaker
     }
 
     /**
-     * Find out whether action settings have been defined in cofiguration
+     * Find out whether action settings have been defined in configuration
      * 
      * @return boolean
      */
@@ -262,11 +266,13 @@ final class TableMaker
     /**
      * Creates input element
      * 
-     * @param array $row
-     * @param boolean $value Whether to include a value attribute
+     * @param string $method Dynamic method to be called on this class
+     * @param string $column Column name
+     * @param string $name Column name to be used when generating input name
+     * @param mixed $value Column value to be used when generating input name
      * @return string
      */
-    private function createInput($builder, $column, $name, $value)
+    private function createInput($method, $column, $name, $value)
     {
         $options = $this->findOptionsByColumn($column);
 
@@ -275,7 +281,7 @@ final class TableMaker
                 $element = new Element\Text();
                 $text = $element->render(array('name' => $name, 'value' => $value, 'class' => 'form-control'));
                 
-            return call_user_func(array($this, $builder), null, $text);
+            return call_user_func(array($this, $method), null, $text);
         }
     }
 
@@ -298,7 +304,7 @@ final class TableMaker
         }
 
         if (!empty($children)) {
-            if ($children instanceof NodeElement){
+            if ($children instanceof NodeElement) {
                 $children = array($children);
             }
 
