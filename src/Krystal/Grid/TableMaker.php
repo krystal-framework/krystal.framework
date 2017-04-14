@@ -14,6 +14,7 @@ namespace Krystal\Grid;
 use Krystal\Form\NodeElement;
 use Krystal\Db\Filter\QueryContainerInterface;
 use Krystal\Form\Element;
+use Closure;
 
 final class TableMaker
 {
@@ -48,6 +49,7 @@ final class TableMaker
     const GRID_PARAM_LABEL = 'label';
     const GRID_PARAM_TYPE = 'type';
     const GRID_PARAM_PK = 'pk';
+    const GRID_PARAM_VALUE = 'value';
 
     /**
      * State initialization
@@ -180,6 +182,13 @@ final class TableMaker
 
             // Find out whether current row is editable or not
             $editable = $this->findOptionByColumn($column, self::GRIG_PARAM_EDITABLE);
+            // Get custom value (which is provided by a callback) if possible
+            $callback = $this->findOptionByColumn($column, self::GRID_PARAM_VALUE);
+
+            // If a callback function is provided for custom value, then use its returned value providing current row as argument
+            if ($callback instanceof Closure) {
+                $value = $callback($data);
+            }
 
             if ($editable == true) {
                 $name = $this->createInputName($column, $id);
