@@ -164,25 +164,33 @@ final class TableMaker
     /**
      * Create one single body row element
      * 
-     * @param array $row
+     * @param array $data
      * @return string
      */
-    private function createBodyRow(array $row)
+    private function createBodyRow(array $data)
     {
         $id = null;
         $elements = array();
 
-        foreach ($row as $key => $value) {
+        foreach ($data as $column => $value) {
             // Grab the ID
-            if ($this->isPkColumnName($key)) {
+            if ($this->isPkColumnName($column)) {
                 $id = $value;
             }
 
-            $options = $this->findOptionByColumn($key, self::GRIG_PARAM_EDITABLE);
+            // Find out whether current row is editable or not
+            $editable = $this->findOptionByColumn($column, self::GRIG_PARAM_EDITABLE);
 
-            if ($options) {
-                $name = $this->createInputName($key, $id);
-                $element = $this->createInput('createRow', $key, $name, $value);
+            if ($editable == true) {
+                $name = $this->createInputName($column, $id);
+                $filter = $this->findOptionByColumn($column, self::GRID_PARAM_FILTER);
+
+                if (is_array($filter)) {
+                    $element = $this->createInput('createRow', $column, $name, $value, $filter);
+                } else {
+                    $element = $this->createInput('createRow', $column, $name, $value);
+                }
+
             } else {
                 $element = $this->createRow(null, $value);
             }
