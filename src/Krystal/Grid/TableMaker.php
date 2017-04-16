@@ -38,7 +38,8 @@ final class TableMaker
         'activeClass' => 'text-info',
         'arrowDownIcon' => 'glyphicon glyphicon-arrow-down',
         'arrowUpIcon' => 'glyphicon glyphicon-arrow-up',
-        'inputClass' => 'form-control'
+        'inputClass' => 'form-control',
+        'batch' => true // Whether to generate batch selection
     );
 
     const GRID_PARAM_ACTIONS = 'actions';
@@ -96,6 +97,11 @@ final class TableMaker
     {
         $elements = array();
 
+        if ($this->options['batch'] === true) {
+            $checkbox = Element::checkbox(null, false, array(), false);
+            $elements[] = $this->createColumn(null, $checkbox);
+        }
+
         foreach ($rows as $row) {
             $column = isset($row[self::GRID_PARAM_COLUMN]) ? $row[self::GRID_PARAM_COLUMN] : null;
             $label = isset($row[self::GRID_PARAM_LABEL]) ? $row[self::GRID_PARAM_LABEL] : null;
@@ -119,6 +125,10 @@ final class TableMaker
     private function createBottomHeadingRow(array $rows)
     {
         $elements = array();
+
+        if ($this->options['batch'] === true) {
+            $elements[] = $this->createColumn(null, null);
+        }
 
         foreach ($rows as $row) {
             // Find out whether a column needs to have a filter
@@ -175,6 +185,11 @@ final class TableMaker
 
         // Columns to be used when creating a row
         $columns = array();
+
+        if ($this->options['batch'] === true) {
+            $checkbox = Element::checkbox(sprintf('batch[%s]', $data[$this->getPkColumn()]), false, array(), false);
+            $columns[] = $this->createColumn(null, $checkbox);
+        }
 
         foreach ($data as $column => $value) {
             // Grab the ID
