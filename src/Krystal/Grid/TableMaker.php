@@ -52,6 +52,7 @@ final class TableMaker
     const GRID_PARAM_PK = 'pk';
     const GRID_PARAM_VALUE = 'value';
     const GRID_PARAM_HIDDEN = 'hidden';
+    const GRID_PARAM_BATCH = 'batch';
 
     /**
      * State initialization
@@ -124,7 +125,7 @@ final class TableMaker
     {
         $elements = array();
 
-        if ($this->options['batch'] === true) {
+        if ($this->options[self::GRID_PARAM_BATCH] === true) {
             $checkbox = Element::checkbox(null, false, array(), false);
             $elements[] = $this->createColumn(null, $checkbox);
         }
@@ -158,7 +159,7 @@ final class TableMaker
     {
         $elements = array();
 
-        if ($this->options['batch'] === true) {
+        if ($this->options[self::GRID_PARAM_BATCH] === true) {
             $elements[] = $this->createColumn(null, null);
         }
 
@@ -169,8 +170,8 @@ final class TableMaker
             }
 
             // Find out whether a column needs to have a filter
-            $filter = $this->findOptionByColumn($row[self::GRID_PARAM_COLUMN], 'filter');
-            $name = $this->createInputName('filter', $row[self::GRID_PARAM_COLUMN]);
+            $filter = $this->findOptionByColumn($row[self::GRID_PARAM_COLUMN], self::GRID_PARAM_FILTER);
+            $name = $this->createInputName(self::GRID_PARAM_FILTER, $row[self::GRID_PARAM_COLUMN]);
 
             if ($filter) {
                 // If filter is array, then assume its for select
@@ -223,8 +224,8 @@ final class TableMaker
         // Columns to be used when creating a row
         $columns = array();
 
-        if ($this->options['batch'] === true) {
-            $checkbox = Element::checkbox(sprintf('batch[%s]', $data[$this->getPkColumn()]), false, array(), false);
+        if ($this->options[self::GRID_PARAM_BATCH] === true) {
+            $checkbox = Element::checkbox($this->createInputName(self::GRID_PARAM_BATCH, $data[$this->getPkColumn()]), false, array(), false);
             $columns[] = $this->createColumn(null, $checkbox);
         }
 
