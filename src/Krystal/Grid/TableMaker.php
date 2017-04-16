@@ -51,6 +51,7 @@ final class TableMaker
     const GRID_PARAM_TYPE = 'type';
     const GRID_PARAM_PK = 'pk';
     const GRID_PARAM_VALUE = 'value';
+    const GRID_PARAM_HIDDEN = 'hidden';
 
     /**
      * State initialization
@@ -98,8 +99,13 @@ final class TableMaker
         $columns = $this->options[self::GRID_PARAM_COLUMNS];
 
         foreach ($columns as $configuration) {
-            // Find linearly
-            if ($column == $configuration[self::GRID_PARAM_COLUMN]) {
+            // By default a column is considered as visible
+            if (!isset($configuration[self::GRID_PARAM_HIDDEN])) {
+                $configuration[self::GRID_PARAM_HIDDEN] = false;
+            }
+
+            // Find linearly (must exists and must not be hidden)
+            if ($column == $configuration[self::GRID_PARAM_COLUMN] && $configuration[self::GRID_PARAM_HIDDEN] != true) {
                 return true;
             }
         }
