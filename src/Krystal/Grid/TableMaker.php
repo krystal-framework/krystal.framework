@@ -135,7 +135,7 @@ final class TableMaker
                 }
 
             } else {
-                $elements[] = $this->createRow(null, '');
+                $elements[] = $this->createColumn(null, '');
             }
         }
 
@@ -172,7 +172,9 @@ final class TableMaker
     private function createBodyRow(array $data)
     {
         $id = null;
-        $elements = array();
+
+        // Columns to be used when creating a row
+        $columns = array();
 
         foreach ($data as $column => $value) {
             // Grab the ID
@@ -195,24 +197,31 @@ final class TableMaker
                 $filter = $this->findOptionByColumn($column, self::GRID_PARAM_FILTER);
 
                 if (is_array($filter)) {
-                    $element = $this->createInput('createRow', $column, $name, $value, $filter);
+                    $column = $this->createInput('createColumn', $column, $name, $value, $filter);
                 } else {
-                    $element = $this->createInput('createRow', $column, $name, $value);
+                    $column = $this->createInput('createColumn', $column, $name, $value);
                 }
 
             } else {
-                $element = $this->createRow(null, $value);
+                $column = $this->createColumn(null, $value);
             }
 
             // Push prepared element
-            $elements[] = $element;
+            $columns[] = $column;
         }
 
+        // If action columns provided, then create action links
         if ($this->hasActions()) {
-            $elements[] = $this->createBodyHeader('');
+            $links = array();
+
+            foreach ($this->options[self::GRID_PARAM_ACTIONS] as $name => $callback) {
+                $links[] = $callback($data);
+            }
+
+            $columns[] = $this->createColumn(null, join(PHP_EOL, $links));
         }
 
-        return $this->createTableRow($elements);
+        return $this->createTableRow($columns);
     }
 
     /**
@@ -444,7 +453,7 @@ final class TableMaker
      * @param string $text
      * @return \Krystal\Form\NodeElement
      */
-    private function createRow($children = array(), $text = null)
+    private function createColumn($children = array(), $text = null)
     {
         return $this->createElement('td', $children, $this->options['tableDataClass'], $text);
     }
