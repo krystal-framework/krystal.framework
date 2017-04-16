@@ -53,6 +53,7 @@ final class TableMaker
     const GRID_PARAM_VALUE = 'value';
     const GRID_PARAM_HIDDEN = 'hidden';
     const GRID_PARAM_BATCH = 'batch';
+    const GRID_PARAM_SORTING = 'sorting';
 
     /**
      * State initialization
@@ -139,7 +140,17 @@ final class TableMaker
             $column = isset($row[self::GRID_PARAM_COLUMN]) ? $row[self::GRID_PARAM_COLUMN] : null;
             $label = isset($row[self::GRID_PARAM_LABEL]) ? $row[self::GRID_PARAM_LABEL] : null;
 
-            $elements[] = $this->createHeader($this->createHeaderLink($column, ' ' . $label));
+            // If sorting isn't defined, then assume that it's true by default
+            if (!isset($row[self::GRID_PARAM_SORTING])) {
+                $row[self::GRID_PARAM_SORTING] = true;
+            }
+
+            // Creating a link or raw text here
+            if ($row[self::GRID_PARAM_SORTING] === true) {
+                $elements[] = $this->createHeader($this->createHeaderLink($column, ' ' . $label));
+            } else {
+                $elements[] = $this->createTextHeader($label);
+            }
         }
 
         if ($this->hasActions()) {
