@@ -88,6 +88,27 @@ final class TableMaker
     }
 
     /**
+     * Checks whether a column has corresponding configuration
+     * 
+     * @param string $column Target column to be checked
+     * @return boolean
+     */
+    private function hasColumnConfiguration($column)
+    {
+        $columns = $this->options[self::GRID_PARAM_COLUMNS];
+
+        foreach ($columns as $configuration) {
+            // Find linearly
+            if ($column == $configuration[self::GRID_PARAM_COLUMN]) {
+                return true;
+            }
+        }
+
+        // Not found by default
+        return false;
+    }
+
+    /**
      * Creates table header
      * 
      * @param array $rows
@@ -103,6 +124,11 @@ final class TableMaker
         }
 
         foreach ($rows as $row) {
+            // Ignore if configuration for current column isn't provided
+            if (!$this->hasColumnConfiguration($row[self::GRID_PARAM_COLUMN])) {
+                continue;
+            }
+
             $column = isset($row[self::GRID_PARAM_COLUMN]) ? $row[self::GRID_PARAM_COLUMN] : null;
             $label = isset($row[self::GRID_PARAM_LABEL]) ? $row[self::GRID_PARAM_LABEL] : null;
 
@@ -131,6 +157,11 @@ final class TableMaker
         }
 
         foreach ($rows as $row) {
+            // Ignore if configuration for current column isn't provided
+            if (!$this->hasColumnConfiguration($row[self::GRID_PARAM_COLUMN])) {
+                continue;
+            }
+
             // Find out whether a column needs to have a filter
             $filter = $this->findOptionByColumn($row[self::GRID_PARAM_COLUMN], 'filter');
             $name = $this->createInputName('filter', $row[self::GRID_PARAM_COLUMN]);
@@ -192,6 +223,11 @@ final class TableMaker
         }
 
         foreach ($data as $column => $value) {
+            // Ignore if configuration for current column isn't provided
+            if (!$this->hasColumnConfiguration($column)) {
+                continue;
+            }
+
             // Grab the ID
             if ($this->isPkColumnName($column)) {
                 $id = $value;
