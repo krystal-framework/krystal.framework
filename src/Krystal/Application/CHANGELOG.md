@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now shared `toEntity()` method can handle more than one argument
  * Added `formAttribute` service
  * Ignore GD recoverable warnings on bootstrap
  * In view service added `createQueryUrl()` to generate URLs with query string

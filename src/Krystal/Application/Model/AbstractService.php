@@ -36,13 +36,16 @@ abstract class AbstractService
     }
 
     /**
-     * Converts a raw array to entity
+     * Calls hydration method
      * 
-     * @param array $array
-     * @return \Krystal\Stdlib\VirtualEntity
+     * @param string $target
+     * @param array $args
+     * @return mixed
      */
-    protected function toEntity(array $array)
+    private function callHydrator($target, array $args)
     {
+        $callback = array($this, 'toEntity');
+        return call_user_func_array($callback, array_merge(array($target), $args));
     }
 
     /**
@@ -51,12 +54,15 @@ abstract class AbstractService
      * @param array $array
      * @return array
      */
-    final protected function prepareResults(array $array)
+    final protected function prepareResults()
     {
+        $args = func_get_args();
+        $array = array_shift($args);
+
         if (!empty($array)) {
             $result = array();
             foreach ($array as $target) {
-                array_push($result, $this->toEntity($target));
+                array_push($result, $this->callHydrator($target, $args));
             }
 
             return $result;
@@ -68,13 +74,15 @@ abstract class AbstractService
     /**
      * Prepares a result
      * 
-     * @param mixed $result
      * @return \Krystal\Stdlib\VirtualEntity|boolean
      */
-    final protected function prepareResult($result)
+    final protected function prepareResult()
     {
+        $args = func_get_args();
+        $result = array_shift($args);
+
         if ($result && $result !== false) {
-            return $this->toEntity($result);
+            return $this->callHydrator($result, $args);
         } else {
             return false;
         }
