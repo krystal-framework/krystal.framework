@@ -52,7 +52,6 @@ final class FilterInvoker implements FilterInvokerInterface
      * 
      * @param array $data
      * @param string $route
-     * @param string $placeholder
      * @return string
      */
     public static function createUrl(array $data, $route)
@@ -72,12 +71,11 @@ final class FilterInvoker implements FilterInvokerInterface
      * 
      * @param \Krystal\Db\Filter\FilterableServiceInterface $service
      * @param integer $perPageCount Amount of items to be display per page
-     * @return void
+     * @return mixed
      */
     public function invoke(FilterableServiceInterface $service, $perPageCount)
     {
         if ($this->hasQueryVals()) {
-
             $page = $this->getPageNumber();
             $sort = $this->getSortingColumn();
             $desc = $this->getDesc();
@@ -94,9 +92,7 @@ final class FilterInvoker implements FilterInvokerInterface
             }
 
             return $records;
-
         } else {
-
             return false;
         }
     }
@@ -192,7 +188,7 @@ final class FilterInvoker implements FilterInvokerInterface
      */
     private function getData()
     {
-        if (isset($this->input[self::FILTER_PARAM_NS])){
+        if (isset($this->input[self::FILTER_PARAM_NS])) {
             $data = $this->input[self::FILTER_PARAM_NS];
         } else {
             $data = array();
