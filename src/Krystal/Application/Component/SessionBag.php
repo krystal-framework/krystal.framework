@@ -54,7 +54,7 @@ final class SessionBag implements ComponentInterface
 
                         if (isset($config['options']['connection']) && isset($config['options']['table'])) {
                             // Grab connection's name
-                            $connection = $db[$config['options']['connection']];                            
+                            $connection = $db[$config['options']['connection']];
                             // Now alter default handler
                             $handler = new Adapter\Sql($connection->getPdo(), $config['options']['table']);
 
@@ -74,9 +74,10 @@ final class SessionBag implements ComponentInterface
         }
 
         $cookieBag = $container->get('request')->getCookieBag();
-        $sessionBag = new Component($cookieBag, new SessionValidator($input->getServer()), $handler);
 
+        $sessionBag = new Component($cookieBag, new SessionValidator($input->getServer()), $handler);
         $sessionBag->start($cookieParams);
+
         return $sessionBag;
     }
 
