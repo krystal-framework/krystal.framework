@@ -303,13 +303,34 @@ final class ModuleManager implements ModuleManagerInterface
     }
 
     /**
+     * Validates module name against a pattern
+     * 
+     * @param string $name Module name
+     * @return boolean
+     */
+    private function nameValid($name)
+    {
+        return ctype_alpha($name) && // Must contain only alphabetic characters
+               ctype_upper(substr($name, 0, 1)) && // The fist letter must be in uppercase
+               ctype_lower(substr($name, strlen($name + 1))); // The rest must be in lowercase
+    }
+
+    /**
      * Loads a module by its name
      * 
      * @param string $name Module name
+     * @throws \LogicException If invalid module name is being processed
      * @return \Krystal\Application\Module\AbstractModule|boolean
      */
     private function loadModuleByName($name)
     {
+        // First of all, make sure a valid module name is being processed
+        if (!$this->nameValid($name)) {
+            throw new LogicException(sprintf(
+                'Invalid module name "%s" is being processed. Module name must start from a capital letter and contain only alphabetic characters', $name
+            ));
+        }
+
         // Prepare PSR-0 compliant name
         $moduleNamespace = sprintf('%s\%s', $name, self::MODULE_CONFIG_FILE);
 
