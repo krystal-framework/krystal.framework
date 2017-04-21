@@ -23,7 +23,7 @@ final class RawSqlFragment implements RawSqlFragmentInterface
     /**
      * State initialization
      * 
-     * @param string $fragment
+     * @param string|\Krystal\Db\Sql\QueryBuilderInterface $fragment
      * @return void
      */
     public function __construct($fragment)
@@ -38,6 +38,10 @@ final class RawSqlFragment implements RawSqlFragmentInterface
      */
     public function getFragment()
     {
-        return $this->fragment;
+        if ($this->fragment instanceof QueryBuilderInterface) {
+            return $this->fragment->getQueryString();
+        } else {
+            return $this->fragment;
+        }
     }
 }

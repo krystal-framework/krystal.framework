@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now `RawSqlFragment` can accept an instance of `QueryBuilderInterface`
  * Added `whereNotIn()`, `andWhereNotIn()`, `orWhereNotIn()` in database service
  * Support for arbitrary SQL expressions in `whereIn()`, `andWhereIn()`, `orWhereIn()`. To do so, and instance of `\Krystal\Db\Sql\RawSqlFragment` must be passed as an argument
  * Fixed issue with quoting multiple columns
