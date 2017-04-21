@@ -1407,10 +1407,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param string $column
      * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
      * @param boolean $filter Whether to rely on filter
+     * @param boolean $not Whether to build NOT IN or IN
      * @throws \InvalidArgumentException If $in is neither array and instance of \Krystal\Db\Sql\RawSqlFragmentInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    private function createWhereIn($prepend, $column, $in, $filter = false)
+    private function createWhereIn($prepend, $column, $in, $not, $filter = false)
     {
         if (is_array($in)) {
             if (!$this->isFilterable($filter, $in)) {
@@ -1427,7 +1428,13 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             ));
         }
 
-        $this->append(sprintf(' %s %s IN (%s) ', $prepend, $this->quote($column), $target));
+        if ($not === true) {
+            $fragment = sprintf(' %s %s NOT IN (%s) ', $prepend, $this->quote($column), $target);
+        } else {
+            $fragment = sprintf(' %s %s IN (%s) ', $prepend, $this->quote($column), $target);
+        }
+
+        $this->append($fragment);
         return $this;
     }
 
@@ -1441,7 +1448,20 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function whereIn($column, $in, $filter = false)
     {
-        return $this->createWhereIn('WHERE', $column, $in, $filter);
+        return $this->createWhereIn('WHERE', $column, $in, false, $filter);
+    }
+
+    /**
+     * Appends WHERE column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function whereNotIn($column, $in, $filter = false)
+    {
+        return $this->createWhereIn('WHERE', $column, $in, true, $filter);
     }
 
     /**
@@ -1454,7 +1474,20 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function andWhereIn($column, $in, $filter = false)
     {
-        return $this->createWhereIn('AND', $column, $in, $filter);
+        return $this->createWhereIn('AND', $column, $in, false, $filter);
+    }
+
+    /**
+     * Appends AND column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function andWhereNotIn($column, $in, $filter = false)
+    {
+        return $this->createWhereIn('AND', $column, $in, true, $filter);
     }
 
     /**
@@ -1467,7 +1500,20 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function orWhereIn($column, $in, $filter = false)
     {
-        return $this->createWhereIn('OR', $column, $in, $filter);
+        return $this->createWhereIn('OR', $column, $in, false, $filter);
+    }
+
+    /**
+     * Appends OR column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function orWhereNotIn($column, $in, $filter = false)
+    {
+        return $this->createWhereIn('OR', $column, $in, true, $filter);
     }
 
     /**

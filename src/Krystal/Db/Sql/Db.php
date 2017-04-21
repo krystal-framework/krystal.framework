@@ -1365,6 +1365,19 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends WHERE column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawBindingInterface|\Krystal\Db\Sql\RawSqlFragmentInterface $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function whereNotIn($column, $values, $filter = false)
+    {
+        return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+    }
+
+    /**
      * Appends AND column IN (..) expression
      * 
      * @param string $column
@@ -1378,7 +1391,20 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
-     * Appends AND column IN (..) expression
+     * Appends AND column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawBindingInterface|\Krystal\Db\Sql\RawSqlFragmentInterface $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function andWhereNotIn($column, $values, $filter = false)
+    {
+        return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+    }
+
+    /**
+     * Appends OR column IN (..) expression
      * 
      * @param string $column
      * @param array|\Krystal\Db\Sql\RawBindingInterface|\Krystal\Db\Sql\RawSqlFragmentInterface $values
@@ -1386,6 +1412,19 @@ final class Db implements DbInterface, RelationableServiceInterface
      * @return \Krystal\Db\Sql\Db
      */
     public function orWhereIn($column, $values, $filter = false)
+    {
+        return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
+    }
+
+    /**
+     * Appends OR column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawBindingInterface|\Krystal\Db\Sql\RawSqlFragmentInterface $values
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function orWhereNotIn($column, $values, $filter = false)
     {
         return $this->whereInValues(__FUNCTION__, $column, $values, $filter);
     }
@@ -1410,7 +1449,6 @@ final class Db implements DbInterface, RelationableServiceInterface
         } elseif ($values instanceof RawSqlFragmentInterface) {
             call_user_func(array($this->queryBuilder, $method), $column, $values, $filter);
         } else {
-
             // Prepare bindings, firstly
             $bindings = array();
 

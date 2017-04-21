@@ -562,6 +562,16 @@ interface QueryBuilderInterface
     public function whereIn($column, $in, $filter = false);
 
     /**
+     * Appends WHERE column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function whereNotIn($column, $in, $filter = false);
+
+    /**
      * Appends AND column IN (..) expression
      * 
      * @param string $column
@@ -572,6 +582,16 @@ interface QueryBuilderInterface
     public function andWhereIn($column, $in, $filter = false);
 
     /**
+     * Appends AND column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function andWhereNotIn($column, $in, $filter = false);
+
+    /**
      * Appends OR column IN (..) expression
      * 
      * @param string $column
@@ -580,6 +600,16 @@ interface QueryBuilderInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     public function orWhereIn($column, $in, $filter = false);
+
+    /**
+     * Appends OR column NOT IN (..) expression
+     * 
+     * @param string $column
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
+     * @param boolean $filter Whether to rely on filter
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function orWhereNotIn($column, $in, $filter = false);
 
     /**
      * Appends NOW() function
