@@ -555,31 +555,31 @@ interface QueryBuilderInterface
      * Appends WHERE column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function whereIn($column, $values, $filter = false);
+    public function whereIn($column, $in, $filter = false);
 
     /**
      * Appends AND column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function andWhereIn($column, $values, $filter = false);
+    public function andWhereIn($column, $in, $filter = false);
 
     /**
      * Appends OR column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function orWhereIn($column, $values, $filter = false);
+    public function orWhereIn($column, $in, $filter = false);
 
     /**
      * Appends NOW() function

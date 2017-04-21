@@ -1405,17 +1405,29 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * 
      * @param string $prepend Fragment to be prepended
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
      * @param boolean $filter Whether to rely on filter
+     * @throws \InvalidArgumentException If $in is neither array and instance of \Krystal\Db\Sql\RawSqlFragmentInterface
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    private function createWhereIn($prepend, $column, array $values, $filter = false)
+    private function createWhereIn($prepend, $column, $in, $filter = false)
     {
-        if (!$this->isFilterable($filter, $values)) {
-            return $this;
+        if (is_array($in)) {
+            if (!$this->isFilterable($filter, $in)) {
+                return $this;
+            }
+
+            $target = implode(', ', $in);
+
+        } else if ($in instanceof RawSqlFragmentInterface) {
+            $target = $in->getFragment();
+        } else {
+            throw new InvalidArgumentException(
+                sprintf('A target must be either array or an instance of \Krystal\Db\Sql\RawSqlFragmentInterface, received "%s"', gettype($in)
+            ));
         }
 
-        $this->append(sprintf(' %s %s IN (%s) ', $prepend, $this->quote($column), implode(', ', $values)));
+        $this->append(sprintf(' %s %s IN (%s) ', $prepend, $this->quote($column), $target));
         return $this;
     }
 
@@ -1423,39 +1435,39 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * Appends WHERE column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function whereIn($column, $values, $filter = false)
+    public function whereIn($column, $in, $filter = false)
     {
-        return $this->createWhereIn('WHERE', $column, $values, $filter);
+        return $this->createWhereIn('WHERE', $column, $in, $filter);
     }
 
     /**
      * Appends AND column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function andWhereIn($column, $values, $filter = false)
+    public function andWhereIn($column, $in, $filter = false)
     {
-        return $this->createWhereIn('AND', $column, $values, $filter);
+        return $this->createWhereIn('AND', $column, $in, $filter);
     }
 
     /**
      * Appends OR column IN (..) expression
      * 
      * @param string $column
-     * @param array $values
+     * @param array|\Krystal\Db\Sql\RawSqlFragmentInterface $in
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function orWhereIn($column, $values, $filter = false)
+    public function orWhereIn($column, $in, $filter = false)
     {
-        return $this->createWhereIn('OR', $column, $values, $filter);
+        return $this->createWhereIn('OR', $column, $in, $filter);
     }
 
     /**

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Support for arbitrary SQL expressions in `whereIn()`, `andWhereIn()`, `orWhereIn()`. To do so, and instance of `\Krystal\Db\Sql\RawSqlFragment` must be passed as an argument
  * Fixed issue with quoting multiple columns
  * In database service added `queryScalar()` method
  * Bug fixes in Filter sub-component

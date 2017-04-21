@@ -1355,7 +1355,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends WHERE column IN (..) expression
      * 
      * @param string $column
-     * @param array|\Krystal\Db\Sql\RawBindingInterface $values
+     * @param array|\Krystal\Db\Sql\RawBindingInterface|\Krystal\Db\Sql\RawSqlFragmentInterface $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\Db
      */
@@ -1368,7 +1368,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends AND column IN (..) expression
      * 
      * @param string $column
-     * @param array|\Krystal\Db\Sql\RawBindingInterface $values
+     * @param array|\Krystal\Db\Sql\RawBindingInterface|\Krystal\Db\Sql\RawSqlFragmentInterface $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\Db
      */
@@ -1381,7 +1381,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends AND column IN (..) expression
      * 
      * @param string $column
-     * @param array|\Krystal\Db\Sql\RawBindingInterface $values
+     * @param array|\Krystal\Db\Sql\RawBindingInterface|\Krystal\Db\Sql\RawSqlFragmentInterface $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\Db
      */
@@ -1395,7 +1395,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      * 
      * @param string $method
      * @param string $column
-     * @param array|\Krystal\Db\Sql\RawBindingInterface $values
+     * @param array|\Krystal\Db\Sql\RawBindingInterface|\Krystal\Db\Sql\RawSqlFragmentInterface $values
      * @param boolean $filter Whether to rely on filter
      * @return \Krystal\Db\Sql\Db
      */
@@ -1407,6 +1407,8 @@ final class Db implements DbInterface, RelationableServiceInterface
 
         if ($values instanceof RawBindingInterface) {
             call_user_func(array($this->queryBuilder, $method), $column, $values->getTarget(), $filter);
+        } elseif ($values instanceof RawSqlFragmentInterface) {
+            call_user_func(array($this->queryBuilder, $method), $column, $values, $filter);
         } else {
 
             // Prepare bindings, firstly
