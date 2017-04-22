@@ -311,8 +311,7 @@ final class ModuleManager implements ModuleManagerInterface
     private function nameValid($name)
     {
         return ctype_alpha($name) && // Must contain only alphabetic characters
-               ctype_upper(substr($name, 0, 1)) && // The fist letter must be in uppercase
-               ctype_lower(substr($name, strlen($name + 1))); // The rest must be in lowercase
+               ctype_upper(substr($name, 0, 1)); // The fist letter must be in uppercase
     }
 
     /**
