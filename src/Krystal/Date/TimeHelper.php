@@ -12,6 +12,7 @@
 namespace Krystal\Date;
 
 use LogicException;
+use DateTime;
 
 /**
  * Time related helper methods 
@@ -24,6 +25,25 @@ abstract class TimeHelper
     const WEEK = 604800;
     const MONTH = 2592000;
     const YEAR = 31536000;
+
+    /**
+     * Returns time difference between two timestamps (in Hours:Minutes:Seconds format)
+     * 
+     * @param string $startTimestamp
+     * @param string $endTimestamp
+     * @return string
+     */
+    public static function getTakenTime($startTimestamp, $endTimestamp)
+    {
+        // Mostly used format
+        $format = 'Y-m-d H:i:s';
+
+        $datetime1 = new DateTime(date($format, $startTimestamp));
+        $datetime2 = new DateTime(date($format, $endTimestamp));
+
+        $interval = $datetime1->diff($datetime2);
+        return $interval->format('%H:%I:%S');    
+    }
 
     /**
      * Returns amount of days associated with year & month

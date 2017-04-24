@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `TimeHelper` added `getTakenTime()` that returns the time difference between two timestamp in `Hours:Minutes:Seconds` format
  * In `TimeHelper` added `getMonthDaysCount()` that returns day count that belongs to year & month
  * In `TimeHelper` added `getMonths()`, `getNextMonths()` and `getPreviousMonths()`
  * In `TimeHelper` added helper methods to work with quarters: `getQuarters()`, `getQuarter()` getMonthsByQuarter() and `getAllMonthsByQuarter()`
