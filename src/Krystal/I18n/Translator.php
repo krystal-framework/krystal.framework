@@ -107,7 +107,7 @@ final class Translator implements TranslatorInterface
 
         // Don't process anything if a dictionary is empty
         if (empty($this->dictionary)) {
-            return $message;
+            return vsprintf($message, $arguments);
         }
 
         // Ensure the proper message received
