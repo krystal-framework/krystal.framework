@@ -151,6 +151,24 @@ abstract class AbstractMapper
     }
 
     /**
+     * Determines whether column value already exists
+     * 
+     * @param string $column Column name
+     * @param string $value Column value to be checked
+     * @return boolean
+     */
+    final protected function valueExists($column, $value)
+    {
+        $this->validateShortcutData();
+
+        return (bool) $this->db->select()
+                               ->count($column)
+                               ->from(static::getTableName())
+                               ->whereEquals($column, $value)
+                               ->queryScalar();
+    }
+
+    /**
      * Deletes a row by associated PK's value
      * 
      * @param string $pk PK's value
