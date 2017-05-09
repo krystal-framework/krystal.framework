@@ -501,9 +501,21 @@ abstract class AbstractMapper
      */
     final public function updateColumnByPk($pk, $column, $value)
     {
+        return $this->updateColumnsByPk($pk, array($column => $value));
+    }
+
+    /**
+     * Updates column values by a primary key
+     * 
+     * @param string $pk
+     * @param array $data Columns and their values to be updated
+     * @return boolean
+     */
+    final public function updateColumnsByPk($pk, $data)
+    {
         $this->validateShortcutData();
 
-        return $this->db->update(static::getTableName(), array($column => $value))
+        return $this->db->update(static::getTableName(), $data)
                         ->whereEquals($this->getPk(), $pk)
                         ->execute();
     }

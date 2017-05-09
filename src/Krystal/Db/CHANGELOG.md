@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In shared mapper added `updateColumnByPk()` and `updateColumnsByPk()` to simplify updating column values
  * Added `valueExists()` shortcut method in `AbstractMapper`
  * Since now `RawSqlFragment` can accept an instance of `QueryBuilderInterface`
  * Added `whereNotIn()`, `andWhereNotIn()`, `orWhereNotIn()` in database service
