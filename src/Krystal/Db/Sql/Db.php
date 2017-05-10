@@ -876,7 +876,8 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function round($column, $decimals)
     {
-        return $this->func('ROUND', array($column, $decimals));
+        $this->queryBuilder->round($column, $alias);
+        return $this;
     }
 
     /**

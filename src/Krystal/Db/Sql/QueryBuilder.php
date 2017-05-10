@@ -613,8 +613,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function round($column, $decimals)
     {
-        $this->append(sprintf(' ROUND(%s, %s) ', $this->quote($column), $decimals));
-        return $this;
+        return $this->func('ROUND', array($column, $decimals));
     }
 
     /**
