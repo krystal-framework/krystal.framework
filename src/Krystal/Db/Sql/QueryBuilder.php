@@ -617,6 +617,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends REPLACE() function
+     * 
+     * @param string $column
+     * @param string $target
+     * @param string $replacement
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function replace($column, $target, $replacement)
+    {
+        return $this->func('REPLACE', array($column, $target, $replacement));
+    }
+
+    /**
      * Appends sorting condition
      * 
      * @param string $sort

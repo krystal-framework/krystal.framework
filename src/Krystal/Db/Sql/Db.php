@@ -881,6 +881,20 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends REPLACE() function
+     * 
+     * @param string $column
+     * @param string $target
+     * @param string $replacement
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function replace($column, $target, $replacement)
+    {
+        $this->queryBuilder->replace($column, $target, $replacement);
+        return $this;
+    }
+
+    /**
      * Appends DELETE expression
      * 
      * @return \Krystal\Db\Sql\Db

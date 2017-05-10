@@ -192,6 +192,16 @@ interface QueryBuilderInterface
     public function round($column, $decimals);
 
     /**
+     * Appends REPLACE() function
+     * 
+     * @param string $column
+     * @param string $target
+     * @param string $replacement
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function replace($column, $target, $replacement);
+
+    /**
      * Appends SELECT expression
      * 
      * @param mixed $type
