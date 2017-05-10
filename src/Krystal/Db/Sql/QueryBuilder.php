@@ -96,7 +96,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function guessCountQuery($column, $alias)
     {
-        return str_replace($this->selected, $this->createFunction('COUNT', $column, $alias), $this->getQueryString());
+        return str_replace($this->selected, $this->createFunction('COUNT', array($column), $alias), $this->getQueryString());
     }
 
     /**
@@ -208,20 +208,29 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * Generates SQL function fragment
      * 
      * @param string $func Function name
-     * @param string|object $column Column name to be passed as an argument to a function
+     * @param array $arguments
      * @param string $alias 
      * @return string
      */
-    private function createFunction($func, $column, $alias = null)
+    private function createFunction($func, array $arguments, $alias = null)
     {
-        if ($column instanceof RawSqlFragmentInterface) {
-            $fragment = sprintf(' %s(%s) ', $func, $column->getFragment());
-        } else {
-            if (is_null($alias)) {
-                $fragment = sprintf(' %s(%s) ', $func, $this->quote($column));
+        // Prepare function arguments
+        foreach ($arguments as $index => $argument) {
+            if ($argument instanceof RawSqlFragmentInterface) {
+                $item = $argument->getFragment();
             } else {
-                $fragment = sprintf(' %s(%s) AS %s ', $func, $this->quote($column), $this->quote($alias));
+                $item = $this->quote($argument);
             }
+
+            // Update item collection
+            $arguments[$index] = $item;
+        }
+
+        $fragment = sprintf(' %s(%s) ', $func, implode(', ', $arguments));
+
+        // Generate alias if provided
+        if (!is_null($alias)) {
+            $fragment .= sprintf(' AS %s ', $this->quote($alias));
         }
 
         // Append a comma if there was a function call before
@@ -237,12 +246,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * Appends SQL function
      * 
      * @param string $func Function name
-     * @param string $column Column name to be passed as an argument to a function
+     * @param string|array $column Column name (or collection) to be passed as an argument to a function
      * @param string $alias 
      * @return \Krystal\Db\Sql\QueryBuilder
      */
     private function func($func, $column, $alias = null)
     {
+        if (!is_array($column)) {
+            $column = array($column);
+        }
+
         $this->append($this->createFunction($func, $column, $alias));
         return $this;
     }

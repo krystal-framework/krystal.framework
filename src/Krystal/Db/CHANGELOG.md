@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Internal function generator in `QueryBuilder` can now accept arbitrary number of arguments
  * In shared mapper added `updateColumnByPk()` and `updateColumnsByPk()` to simplify updating column values
  * Added `valueExists()` shortcut method in `AbstractMapper`
  * Since now `RawSqlFragment` can accept an instance of `QueryBuilderInterface`
