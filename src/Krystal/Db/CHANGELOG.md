@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Minor fix in QueryBuilder - don't quote a string if it's already has quotes
  * Added `replace()` function in `QueryBuilder` and `Db` classes
  * Internal function generator in `QueryBuilder` can now accept arbitrary number of arguments
  * In shared mapper added `updateColumnByPk()` and `updateColumnsByPk()` to simplify updating column values

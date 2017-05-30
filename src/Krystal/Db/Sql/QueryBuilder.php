@@ -281,8 +281,9 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     {
         $isSqlFunction = strpos($target, '(') !== false || strpos($target, ')') !== false;
         $isColumn = strpos($target, '.') !== false;
+        $hasQuotes = strpos($target, '`') !== false; // Whether already has quotes
 
-        return !(is_numeric($target) || $isColumn || $isSqlFunction);
+        return !(is_numeric($target) || $isColumn || $isSqlFunction || $hasQuotes);
     }
 
     /**
