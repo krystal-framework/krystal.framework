@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `arrayPartition()` in `Stdlib\ArrayUtils` to drop result-sets into partitions
  * Added `arrayRecovery()` in `Stdlib\ArrayUtils` to recover missing keys
  * Added `valuefy()` in `Stdlib\ArrayUtils` to duplicate either keys or values in arrays
  * Added `getProperties()` in `VirtualEntity`

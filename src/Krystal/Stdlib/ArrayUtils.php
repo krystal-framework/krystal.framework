@@ -17,6 +17,41 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Drops an array into partitions
+     * 
+     * @param array $raw Raw array
+     * @param string $key The key to be considered as partition
+     * @return array Dropped array
+     */
+    public static function arrayPartition(array $raw, $key)
+    {
+        $result = array();
+
+        foreach ($raw as $index => $collection) {
+            // Make the the root partition exists
+            if (!isset($collection[$key])) {
+                throw new LogicException(sprintf(
+                    'The key "%s" does not exist in provided collection', $key
+                ));
+            }
+
+            // Extract module' name as a key and put the rest into its values
+            $target = array($collection[$key] => $collection);
+
+            foreach ($target as $module => $array) {
+                // When doesn't exist, then need to create a one
+                if (!isset($result[$module])) {
+                    $result[$module] = array();
+                }
+
+                $result[$module][] = $array;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Recoveries missing array keys
      * 
      * @param array $array Target array
