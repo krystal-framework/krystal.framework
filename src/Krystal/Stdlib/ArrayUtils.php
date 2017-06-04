@@ -17,6 +17,32 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Drops a raw result-set into partitions and creates inner array with key => value pairs
+     * 
+     * @param array $raw
+     * @param string $partition The key to be considered as partition
+     * @param string $key
+     * @param string $value
+     * @return array
+     */
+    public static function arrayDropdown(array $raw, $partition, $key, $value)
+    {
+        $output = array();
+
+        foreach (self::arrayPartition($raw, $partition) as $target => $data) {
+            foreach ($data as $innerKey => $innerValue) {
+                if (isset($innerValue[$key], $innerValue[$value])) {
+                    $output[$target][$innerValue[$key]] = $innerValue[$value];
+                } else {
+                    throw new LogicException('Either unknown key or value supplied, that can not be found in collection');
+                }
+            }
+        }
+
+        return $output;
+    }
+
+    /**
      * Drops an array into partitions
      * 
      * @param array $raw Raw array
