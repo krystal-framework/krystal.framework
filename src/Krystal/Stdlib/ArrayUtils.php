@@ -21,6 +21,7 @@ abstract class ArrayUtils
      * 
      * @param array $raw Raw array
      * @param string $key The key to be considered as partition
+     * @throws \LogicException if unknown partition key supplied
      * @return array Dropped array
      */
     public static function arrayPartition(array $raw, $key)
