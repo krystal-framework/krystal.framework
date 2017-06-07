@@ -257,15 +257,20 @@ abstract class AbstractMapper
      * Removes all records from junction table associated with master's key
      * 
      * @param string $table Junction table name
-     * @param string $masterValue Master value (shared for slaves)
+     * @param string|array $masterValue Master value (shared for slaves)
      * @param string $masterColumn Master column name
      * @return boolean
      */
     final public function removeFromJunction($table, $masterValue, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN)
     {
+        // Support for multiple removal
+        if (!is_array($masterValue)) {
+            $masterValue = array($masterValue);
+        }
+
         return $this->db->delete()
                         ->from($table)
-                        ->whereEquals($masterColumn, $masterValue)
+                        ->whereIn($masterColumn, $masterValue)
                         ->execute();
     }
 
