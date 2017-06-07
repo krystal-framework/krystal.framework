@@ -48,32 +48,7 @@ final class ManyToMany extends AbstractRelation
     private function getSlaveData($slaveTable, $slavePk, $junction, $column, $value, $columns)
     {
         $ids = $this->queryJunctionTable($junction, $column, $value, '*');
-        $result = array();
-
-        foreach ($ids as $id) {
-            $result[] = $this->queryTable($slaveTable, $slavePk, $id, $columns);
-        }
-
-        return $this->prepareResult($result);
-    }
-
-    /**
-     * Prepares finial result set
-     * 
-     * @param array $rows Raw set
-     * @return array Prepared set
-     */
-    private function prepareResult(array $rows)
-    {
-        $result = array();
-
-        foreach ($rows as $row) {
-            foreach ($row as $data) {
-                $result[] = $data;
-            }
-        }
-
-        return $result;
+        return $this->queryTable($slaveTable, $slavePk, $ids, $columns);
     }
 
     /**
@@ -126,7 +101,7 @@ final class ManyToMany extends AbstractRelation
      */
     private function queryJunctionTable($table, $column, $value, $columns)
     {
-        $rows = $this->queryTable($table, $column, $value, $columns);
+        $rows = $this->queryTable($table, $column, array($value), $columns);
 
         foreach ($rows as &$row) {
             $row = $this->leaveOnlyCurrent($row, $column);
@@ -141,15 +116,15 @@ final class ManyToMany extends AbstractRelation
      * @param string $table Slave table name
      * @param string $link Linking column name to be selected
      * @param string $column Slave column id name
-     * @param string $value Value of PK from master table
+     * @param array $values Value of PK from master table
      * @param mixed $columns Columns to be selected in slave table
      * @return array
      */
-    private function queryTable($table, $column, $value, $columns)
+    private function queryTable($table, $column, array $values, $columns)
     {
         return $this->db->select($columns)
                         ->from($table)
-                        ->whereEquals($column, $value)
+                        ->whereIn($column, $values)
                         ->getStmt()
                         ->fetchAll();
     }
