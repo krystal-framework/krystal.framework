@@ -33,8 +33,6 @@ abstract class ArrayUtils
             foreach ($data as $innerKey => $innerValue) {
                 if (isset($innerValue[$key], $innerValue[$value])) {
                     $output[$target][$innerValue[$key]] = $innerValue[$value];
-                } else {
-                    throw new LogicException('Either unknown key or value supplied, that can not be found in collection');
                 }
             }
         }
