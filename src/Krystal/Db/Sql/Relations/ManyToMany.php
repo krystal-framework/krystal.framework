@@ -48,9 +48,15 @@ final class ManyToMany extends AbstractRelation
     private function getSlaveData($slaveTable, $slavePk, $junction, $column, $value, $columns)
     {
         $ids = $this->queryJunctionTable($junction, $column, $value, '*');
-        return $this->queryTable($slaveTable, $slavePk, $ids, $columns);
-    }
 
+        if (empty($ids)) {
+            return array();
+        } else {
+            // Query only in case there attached IDs found
+            return $this->queryTable($slaveTable, $slavePk, $ids, $columns);
+        }
+    }
+    
     /**
      * Extracts only values. It's like array_values() supporting nested arrays
      * 
