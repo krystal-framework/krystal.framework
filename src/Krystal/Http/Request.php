@@ -473,7 +473,7 @@ final class Request implements RequestInterface
      */
     public function isSecure()
     {
-        return isset($this->server['HTTPS']);
+        return !empty($this->server['HTTPS']);
     }
 
     /**

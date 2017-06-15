@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed issue with HTTPs detection for some server environments
  * In `request` service added `getRawInput()`
  * In cookie bag service, added `setEncrypted()`, `getEncrypted()`
  * In response service added `redirectToHome()` and `redirectToPreviousPage()` shortcut methods
