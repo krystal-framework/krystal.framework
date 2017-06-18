@@ -235,7 +235,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 
         // Append a comma if there was a function call before
         if ($this->hasFunctionCall === true) {
-            $this->append(',');
+            $this->append(', ');
         }
 
         $this->hasFunctionCall = true;
@@ -254,6 +254,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     {
         if (!is_array($column)) {
             $column = array($column);
+        }
+
+        // Append a comma if there was a column selection and no function call
+        if (!empty($this->selected) && $this->hasFunctionCall === false) {
+            $this->append(', ');
         }
 
         $this->append($this->createFunction($func, $column, $alias));
