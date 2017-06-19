@@ -27,6 +27,18 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Checks whether a date expired regarding first one
+     * 
+     * @param string $startDate Starting date with time
+     * @param string $endDate Ending date with time
+     * @return boolean
+     */
+    public static function isExpired($startDate, $endDate)
+    {
+        return strtotime($startDate) - strtotime($endDate) <= 0;
+    }
+
+    /**
      * Returns time difference between two timestamps (in Hours:Minutes:Seconds format)
      * 
      * @param string $startTimestamp
