@@ -231,16 +231,20 @@ abstract class AbstractMapper
     /**
      * Returns last primary key
      * 
+     * @param string $table Optional table name override
      * @return integer
      */
-    final public function getLastPk()
+    final public function getLastPk($table = null)
     {
-        $this->validateShortcutData();
+        if ($table === null) {
+            $this->validateShortcutData();
+            $table = static::getTableName();
+        }
 
         return $this->db->select()
-                        ->max($this->getPk(), 'last')
-                        ->from(static::getTableName())
-                        ->query('last');
+                        ->max($this->getPk())
+                        ->from($table)
+                        ->queryScalar();
     }
 
     /**
