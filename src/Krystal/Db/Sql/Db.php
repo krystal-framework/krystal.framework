@@ -897,11 +897,12 @@ final class Db implements DbInterface, RelationableServiceInterface
     /**
      * Appends DELETE expression
      * 
+     * @param array $tables Optional tables
      * @return \Krystal\Db\Sql\Db
      */
-    public function delete()
+    public function delete(array $tables = array())
     {
-        $this->queryBuilder->delete();
+        $this->queryBuilder->delete($tables);
         return $this;
     }
 

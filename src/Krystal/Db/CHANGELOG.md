@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * The `delete()` method now accepts optional tables
  * Fixed issue with automatic comma appending when there are selected columns and there's a following function call
  * Minor fix in QueryBuilder - don't quote a string if it's already has quotes
  * Added `replace()` function in `QueryBuilder` and `Db` classes

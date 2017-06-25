@@ -169,9 +169,10 @@ interface QueryBuilderInterface
     /**
      * Appends DELETE expression
      * 
-     * @return \Krystal\Db\Sql\Db
+     * @param array $tables Optional tables
+     * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function delete();
+    public function delete(array $tables = array());
 
     /**
      * Appends LEN() aggregate function

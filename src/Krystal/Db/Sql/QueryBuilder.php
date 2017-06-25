@@ -1668,11 +1668,18 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     /**
      * Appends DELETE expression
      * 
+     * @param array $tables Optional tables
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function delete()
+    public function delete(array $tables = array())
     {
         $this->append(' DELETE ');
+
+        if (!empty($tables)) {
+            $tablesSequence = implode(', ', $tables);
+            $this->append($tablesSequence);
+        }
+
         return $this;
     }
 
