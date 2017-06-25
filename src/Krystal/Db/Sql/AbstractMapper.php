@@ -520,6 +520,29 @@ abstract class AbstractMapper
     }
 
     /**
+     * Update multiple columns at once
+     * 
+     * @param array $data
+     * @param array $allowedColumns Optional protection for columns to be updated (purely for protection purposes)
+     * @return boolean
+     */
+    final public function updateColumns(array $data, array $allowedColumns = array())
+    {
+        foreach ($data as $column => $values) {
+            foreach ($values as $id => $value) {
+                // Protection. Update only defined columns
+                if (!empty($allowedColumns) && !in_array($column, $allowedColumns)) {
+                    continue;
+                }
+
+                $this->updateColumnByPk($id, $column, $value);
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Updates column values by a primary key
      * 
      * @param string $pk
