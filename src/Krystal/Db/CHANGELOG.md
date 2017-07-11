@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Disabled strict mode for MySQL connector by default
  * In `AbstractMapper` added `updateColumns()` updates several columns at once
  * The `delete()` method now accepts optional tables
  * Fixed issue with automatic comma appending when there are selected columns and there's a following function call
