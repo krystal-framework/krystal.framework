@@ -26,8 +26,9 @@ final class MySQL implements ConnectorInterface
             $dsn .= ';dbname='.$config['dbname'];
         }
 
+        $dsn .= ';charset=utf8';
+
         return array($dsn, $config['username'], $config['password'], array(
-            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_EMULATE_PREPARES => true,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
