@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `Merge` renderer
  * In `TreeBuilder` added `findTopParentNodeByChildId()` that returns a first parent
  * Added optional `base.nested` class option for dropdown walker, that can be used for nested `ul` elements
 
