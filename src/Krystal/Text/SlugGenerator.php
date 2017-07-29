@@ -11,6 +11,8 @@
 
 namespace Krystal\Text;
 
+use InvalidArgumentException;
+
 final class SlugGenerator implements SlugGeneratorInterface
 {
     /**
@@ -104,6 +106,77 @@ final class SlugGenerator implements SlugGeneratorInterface
     {
         $slug = rtrim($slug);
         $slug = ltrim($slug);
+
+        return $slug;
+    }
+
+    /**
+     * Determines whether slug is numeric
+     * 
+     * @param string $slug
+     * @return boolean
+     */
+    private function isNumericSlug($slug)
+    {
+        return preg_match('~-[0-9]~', $slug);
+    }
+
+    /**
+     * Creates unique slug
+     * 
+     * @param string $slug
+     * @return string
+     */
+    private function createUniqueNumericSlug($slug)
+    {
+        if ($this->isNumericSlug($slug)) {
+            // Extract last number and increment it
+            $number = substr($slug, -1, 1);
+            $number++;
+
+            // Replace with new number
+            $string = substr($slug, 0, strlen($slug) - 1) . $number;
+
+            return $string;
+        } else {
+            return $slug;
+        }
+    }
+
+    /**
+     * Returns unique slug
+     * 
+     * @param callable $callback Callback function
+     * @param string $slug
+     * @param array $args Extra arguments to be passed to callback function
+     * @throws \InvalidArgumentException If $callback isn't callable
+     * @return string
+     */
+    public function getUniqueSlug($callback, $slug, array $args = array())
+    {
+        if (!is_callable($callback)) {
+            throw new InvalidArgumentException(
+                sprintf('First argument must be callable, received "%s"', gettype($callback))
+            );
+        }
+
+        $count = 0;
+
+        while (true) {
+            $count++;
+
+            if (call_user_func_array($callback, array_merge(array($slug), $args))) {
+                // If dash can't be found, then add first
+                if (!$this->isNumericSlug($slug)) {
+                    $slug = sprintf('%s-%s', $slug, $count);
+                } else {
+                    $slug = $this->createUniqueNumericSlug($slug);
+                }
+
+            } else {
+                break;
+            }
+        }
 
         return $slug;
     }
