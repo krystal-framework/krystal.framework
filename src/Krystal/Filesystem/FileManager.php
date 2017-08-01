@@ -31,6 +31,25 @@ class FileManager implements FileManagerInterface
     }
 
     /**
+     * Checks whether file has extension
+     * 
+     * @param string $baseName
+     * @param array $extensions
+     * @return boolean
+     */
+    public static function hasExtension($baseName, array $extensions)
+    {
+        // Lowercase names
+        $baseName = strtolower($baseName);
+
+        $extensions = array_map(function($key){
+            return strtolower($key);
+        }, $extensions);
+
+        return in_array(self::getExtension($baseName), $extensions);
+    }
+
+    /**
      * Returns a directory name from a path
      * 
      * @param string $path
