@@ -12,6 +12,8 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
+use UnexpectedValueException;
+use Closure;
 
 final class Select implements FormElementInterface
 {
@@ -37,18 +39,27 @@ final class Select implements FormElementInterface
     private $active;
 
     /**
+     * Optional visitor to add attributes
+     * 
+     * @var \Closure
+     */
+    private $optionVisitor;
+
+    /**
      * State initialization
      * 
      * @param array $data
      * @param string|array $active An active value or an array of active values
      * @param array $defaults Optional first elements to be prepended
+     * @param \Closure $optionVisitor Optional visitor to build attributes of option tag
      * @return void
      */
-    public function __construct(array $data, $active, array $defaults = array())
+    public function __construct(array $data, $active, array $defaults = array(), Closure $optionVisitor = null)
     {
         $this->data = $data;
         $this->active = $active;
         $this->defaults = $defaults;
+        $this->optionVisitor = $optionVisitor;
     }
 
     /**
@@ -92,6 +103,7 @@ final class Select implements FormElementInterface
      * 
      * @param string $value
      * @param string $text
+     * @throws \UnexpectedValueException If visitor is not returning an associative array
      * @return \Krystal\Form\NodeElement
      */
     private function createOptionNode($value, $text)
@@ -103,6 +115,21 @@ final class Select implements FormElementInterface
         // Mark as selected on demand
         if ($this->isActiveNode($value)) {
             $option->addProperty('selected');
+        }
+
+        // If callback is provided, then use it to build attributes
+        if ($this->optionVisitor instanceof Closure) {
+            $result = call_user_func($this->optionVisitor, $value, $text);
+
+            // Visitor must return an array containing these keys
+            if (is_array($result)) {
+                $option->addAttributes($result);
+            } else {
+                // Incorrect returned value
+                throw new UnexpectedValueException(
+                    sprintf('The visitor must return associative array with attribute names and their corresponding values. Received - "%s"', gettype($result))
+                );
+            }
         }
 
         $option->finalize()

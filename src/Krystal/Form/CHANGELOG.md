@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * `Krystal\Form\Element::select()` can now accept optional visitor for option nodes
  * Added Form Attribute sub-component
  * Removed `DropdownWigdet`
  * Added optional 5-th `$prompt` argument, that can a prompting text in `Element::select()`

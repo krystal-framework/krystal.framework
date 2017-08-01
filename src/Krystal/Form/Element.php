@@ -13,6 +13,7 @@ namespace Krystal\Form;
 
 use Krystal\Form\Element as Node;
 use UnexpectedValueException;
+use Closure;
 
 class Element
 {
@@ -224,16 +225,17 @@ class Element
      * @param string|array $select Select child option
      * @param array $attributes Extra attributes
      * @param string|boolean $prompt Optional prompt text
+     * @param \Closure $optionVisitor Optional visitor to build attributes of option tag
      * @return string
      */
-    public static function select($name, array $list = array(), $selected, array $attributes = array(), $prompt = false)
+    public static function select($name, array $list = array(), $selected, array $attributes = array(), $prompt = false, Closure $optionVisitor = null)
     {
         if ($prompt !== false) {
             // Merge keeping indexes
             $list = array('' => $prompt) + $list;
         }
 
-        $node = new Node\Select($list, $selected);
+        $node = new Node\Select($list, $selected, array(), $optionVisitor);
 
         if ($name !== null) {
             $attributes['name'] = $name;
