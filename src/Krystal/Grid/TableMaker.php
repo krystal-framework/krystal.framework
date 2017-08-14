@@ -84,7 +84,7 @@ final class TableMaker
             $this->createBottomHeadingRow($columns)
         ));
 
-        $body = $this->createTableBody($this->createBodyRows($this->data));
+        $body = $this->createTableBody($this->createBodyRows($columns, $this->data));
 
         return $this->createTable(array($head, $body))
                     ->render();
@@ -208,15 +208,16 @@ final class TableMaker
     /**
      * Create many body rows elements
      * 
+     * @param array $columns
      * @param array $data Column data
      * @return array
      */
-    private function createBodyRows(array $data)
+    private function createBodyRows(array $columns, array $data)
     {
         $rows = array();
 
         foreach ($data as $row) {
-            $rows[] = $this->createBodyRow($row);
+            $rows[] = $this->createBodyRow($columns, $row);
         }
 
         return $rows;
@@ -225,22 +226,26 @@ final class TableMaker
     /**
      * Create one single body row element
      * 
+     * @param array $columns
      * @param array $data
      * @return string
      */
-    private function createBodyRow(array $data)
+    private function createBodyRow(array $columns, array $data)
     {
         $id = null;
 
         // Columns to be used when creating a row
-        $columns = array();
+        $output = array();
 
         if ($this->options[self::GRID_PARAM_BATCH] === true) {
             $checkbox = Element::checkbox($this->createInputName(self::GRID_PARAM_BATCH, $data[$this->getPkColumn()]), false, array(), false);
-            $columns[] = $this->createColumn(null, $checkbox);
+            $output[] = $this->createColumn(null, $checkbox);
         }
 
-        foreach ($data as $column => $value) {
+        foreach ($columns as $configuration) {
+			$column = $configuration[self::GRID_PARAM_COLUMN];
+			$value = $data[$column];
+
             // Ignore if configuration for current column isn't provided
             if (!$this->hasColumnConfiguration($column)) {
                 continue;
@@ -276,7 +281,7 @@ final class TableMaker
             }
 
             // Push prepared element
-            $columns[] = $column;
+            $output[] = $column;
         }
 
         // If action columns provided, then create action links
@@ -287,10 +292,10 @@ final class TableMaker
                 $links[] = $callback($data);
             }
 
-            $columns[] = $this->createColumn(null, join(PHP_EOL, $links));
+            $output[] = $this->createColumn(null, join(PHP_EOL, $links));
         }
 
-        return $this->createTableRow($columns);
+        return $this->createTableRow($output);
     }
 
     /**
