@@ -60,6 +60,17 @@ abstract class AbstractMapper
     }
 
     /**
+     * Returns a column wrapping in \RawSqlFragment instance
+     * 
+     * @param string $column Column name
+     * @return \Krystal\Db\Sql\Db\RawSqlFragment
+     */
+    public static function getRawColumn($column)
+    {
+        return new RawSqlFragment(self::getFullColumnName($column));
+    }
+
+    /**
      * Returns full column name prepending table name
      * 
      * @param string $column Column name
