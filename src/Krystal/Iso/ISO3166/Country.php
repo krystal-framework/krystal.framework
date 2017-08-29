@@ -299,7 +299,7 @@ final class Country
      */
     public function getCountryByCode($code)
     {
-        return $this->countries[$code];
+        return isset($this->countries[$code]) ? $this->countries[$code] : null;
     }
 
     /**
