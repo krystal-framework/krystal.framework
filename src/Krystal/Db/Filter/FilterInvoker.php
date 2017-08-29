@@ -71,30 +71,26 @@ final class FilterInvoker implements FilterInvokerInterface
      * 
      * @param \Krystal\Db\Filter\FilterableServiceInterface $service
      * @param integer $perPageCount Amount of items to be display per page
-     * @return mixed
+     * @return array
      */
     public function invoke(FilterableServiceInterface $service, $perPageCount)
     {
-        if ($this->hasQueryVals()) {
-            $page = $this->getPageNumber();
-            $sort = $this->getSortingColumn();
-            $desc = $this->getDesc();
+        $page = $this->getPageNumber();
+        $sort = $this->getSortingColumn();
+        $desc = $this->getDesc();
 
-            $records = $service->filter($this->getData(), $page, $perPageCount, $sort, $desc);
+        $records = $service->filter($this->getData(), $page, $perPageCount, $sort, $desc);
 
-            // Tweak pagination if available
-            if (method_exists($service, 'getPaginator')) {
-                $paginator = $service->getPaginator();
+        // Tweak pagination if available
+        if (method_exists($service, 'getPaginator')) {
+            $paginator = $service->getPaginator();
 
-                if ($paginator instanceof PaginatorInterface) {
-                    $paginator->setUrl($this->getPaginationUrl($page, $sort, $desc));
-                }
+            if ($paginator instanceof PaginatorInterface) {
+                $paginator->setUrl($this->getPaginationUrl($page, $sort, $desc));
             }
-
-            return $records;
-        } else {
-            return false;
         }
+
+        return $records;
     }
 
     /**
