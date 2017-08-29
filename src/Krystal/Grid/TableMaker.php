@@ -227,11 +227,13 @@ final class TableMaker
 
             if ($filter) {
                 // If filter is array, then assume its for select
+                $selected = $this->filter->get($row[self::GRID_PARAM_COLUMN]);
+
                 if (is_array($filter)) {
-                    $filter = array_merge(array('0' => ''), $filter);
-                    $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, null, $filter);
+                    $filter = array_merge(array('' => ''), $filter);
+                    $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected, $filter);
                 } else {
-                    $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, false);
+                    $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected);
                 }
 
             } else {
