@@ -14,6 +14,7 @@ namespace Krystal\Grid;
 use Krystal\Form\NodeElement;
 use Krystal\Db\Filter\QueryContainerInterface;
 use Krystal\Form\Element;
+use Krystal\I18n\TranslatorInterface;
 use Closure;
 
 final class TableMaker
@@ -54,20 +55,41 @@ final class TableMaker
     const GRID_PARAM_HIDDEN = 'hidden';
     const GRID_PARAM_BATCH = 'batch';
     const GRID_PARAM_SORTING = 'sorting';
+    const GRID_PARAM_TRANSLATE = 'translate';
+    const GRID_PARAM_TRANSLATEABLE = 'translateable';
+
+    /**
+     * Any compliant translator instance
+     * 
+     * @var \Krystal\I18n\TranslatorInterface
+     */
+    private $translator;
 
     /**
      * State initialization
      * 
      * @param array $data
      * @param array $options
+     * @param \Krystal\I18n\TranslatorInterface $translator
      * @param \Krystal\Db\Filter\QueryContainerInterface $filter
      * @return void
      */
-    public function __construct(array $data, array $options, QueryContainerInterface $filter = null)
+    public function __construct(array $data, array $options, TranslatorInterface $translator = null, QueryContainerInterface $filter = null)
     {
         $this->data = $data;
         $this->options = array_merge($this->options, $options);
+        $this->translator = $translator;
         $this->filter = $filter;
+    }
+
+    /**
+     * Checks whether translation instance was injected
+     * 
+     * @return boolean
+     */
+    private function hasTranslator()
+    {
+        return $this->translator instanceof TranslatorInterface;
     }
 
     /**
@@ -145,6 +167,16 @@ final class TableMaker
                 $row[self::GRID_PARAM_SORTING] = true;
             }
 
+            // If translation isn't defined, assume true by default
+            if (!isset($row[self::GRID_PARAM_TRANSLATE])) {
+                $row[self::GRID_PARAM_TRANSLATE] = true;
+            }
+
+            // Translate if required
+            if ($row[self::GRID_PARAM_TRANSLATE] == true && $this->hasTranslator()) {
+                $label = $this->translator->translate($label);
+            }
+
             // Creating a link or raw text here
             if ($row[self::GRID_PARAM_SORTING] === true) {
                 $elements[] = $this->createHeader($this->createHeaderLink($column, ' ' . $label));
@@ -154,7 +186,9 @@ final class TableMaker
         }
 
         if ($this->hasActions()) {
-            $elements[] = $this->createTextHeader('Actions');
+            $actionLabel = 'Actions';
+            $actionLabel = $this->hasTranslator() ? $this->translator->translate($actionLabel) : $actionLabel;
+            $elements[] = $this->createTextHeader($actionLabel);
         }
 
         return $this->createTableRow($elements);
@@ -264,6 +298,16 @@ final class TableMaker
             // If a callback function is provided for custom value, then use its returned value providing current row as argument
             if ($callback instanceof Closure) {
                 $value = $callback($data);
+            }
+
+            // If translation isn't defined, assume true by default
+            if (!isset($configuration[self::GRID_PARAM_TRANSLATEABLE])) {
+                $configuration[self::GRID_PARAM_TRANSLATEABLE] = false;
+            }
+
+            // Translate if required
+            if ($configuration[self::GRID_PARAM_TRANSLATEABLE] == true && $this->hasTranslator()) {
+                $value = $this->translator->translate($value);
             }
 
             if ($editable == true) {
