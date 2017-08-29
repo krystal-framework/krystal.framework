@@ -66,6 +66,13 @@ final class TableMaker
     private $translator;
 
     /**
+     * Query container
+     * 
+     * @var \Krystal\Db\Filter\QueryContainerInterface
+     */
+    private $filter;
+
+    /**
      * State initialization
      * 
      * @param array $data
@@ -588,12 +595,11 @@ final class TableMaker
         $a = new NodeElement();
         $a->openTag('a');
 
-        //$this->filter->isSortedBy
-        if (($column)) {
+        if ($this->filter->isSortedBy($column)) {
             $a->setClass('text-info');
         }
 
-        $a->addAttribute('href', ($column))
+        $a->addAttribute('href', $this->filter->getColumnSortingUrl($column))
           ->appendChildWithText($this->createHeaderLinkIcon($column), $text)
           ->closeTag();
 
@@ -608,9 +614,7 @@ final class TableMaker
      */
     private function createHeaderLinkIcon($column)
     {
-        $class = ($column) ? $this->options['arrowDownIcon'] : $this->options['arrowUpIcon'];
-        //$class = $this->filter->isSortedByDesc($column) ? 'glyphicon glyphicon-arrow-down': 'glyphicon glyphicon-arrow-up';
-
+        $class = $this->filter->isSortedByDesc($column) ? $this->options['arrowDownIcon'] : $this->options['arrowUpIcon'];
         return $this->createIcon($class);
     }
 }
