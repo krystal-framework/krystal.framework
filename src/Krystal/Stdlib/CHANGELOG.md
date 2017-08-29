@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `ArrayCollection` that simplifies work with static collections
  * Added `arrayDropdown()` in `Stdlib\ArrayUtils` to drop result-sets into partitions and prepare them for dropdowns
  * Added `arrayPartition()` in `Stdlib\ArrayUtils` to drop result-sets into partitions
  * Added `arrayRecovery()` in `Stdlib\ArrayUtils` to recover missing keys
