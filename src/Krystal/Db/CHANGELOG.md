@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Support instances of `RawSqlFragment` in `select()`
  * In `AbstractMapper` added `getRawColumn()` that returns an instance of `RawSqlFragment`
  * Disabled strict mode for MySQL connector by default
  * In `AbstractMapper` added `updateColumns()` updates several columns at once

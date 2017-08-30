@@ -690,6 +690,9 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
                 // Did we receive an alias?
                 if (!is_numeric($column)) {
                     $push = sprintf('%s AS %s', $this->quote($column), $this->quote($alias));
+                } else if ($alias instanceof RawSqlFragmentInterface) {
+                    // Is raw SQL fragment needs to selected?
+                    $push = $alias->getFragment();
                 } else {
                     // In case received a regular column name
                     $push = $this->quote($alias);
