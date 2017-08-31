@@ -28,7 +28,9 @@ class ListView
      * 
      * @var array
      */
-    private $options = array();
+    private $options = array(
+        self::LISTVIEW_PARAM_TABLE_CLASS => 'table table-condensed table-bordered table-striped table-hover'
+    );
 
     /**
      * Any compliant translator instance
@@ -42,6 +44,7 @@ class ListView
     const LISTVIEW_PARAM_TRANSLATE = 'translate';
     const LISTVIEW_PARAM_VALUE = 'value';
     const LISTVIEW_PARAM_TITLE = 'title';
+    const LISTVIEW_PARAM_TABLE_CLASS = 'tableClass';
 
     /**
      * State initialization
@@ -54,7 +57,7 @@ class ListView
     public function __construct(array $data, array $options, TranslatorInterface $translator = null)
     {
         $this->data = $data;
-        $this->options = $options;
+        $this->options = array_merge($this->options, $options);
         $this->translator = $translator;
     }
 
@@ -66,7 +69,7 @@ class ListView
     public function render()
     {
         $data = $this->createData();
-        $table = $this->createTable($data);
+        $table = $this->createTable($data, $this->options[self::LISTVIEW_PARAM_TABLE_CLASS]);
         return $table->render();
     }
 
@@ -117,12 +120,14 @@ class ListView
      * Creates a table
      * 
      * @param array $data
+     * @param string $class Table class
      * @return \Krystal\Form\NodeElement
      */
-    private function createTable(array $data)
+    private function createTable(array $data, $class)
     {
         $table = new NodeElement();
-        $table->openTag('table');
+        $table->openTag('table')
+              ->setClass($class);
 
         $tbody = new NodeElement();
         $tbody->openTag('tbody');
