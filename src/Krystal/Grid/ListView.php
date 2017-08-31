@@ -41,6 +41,7 @@ class ListView
     const LISTVIEW_PARAM_COLUMN = 'column';
     const LISTVIEW_PARAM_TRANSLATE = 'translate';
     const LISTVIEW_PARAM_VALUE = 'value';
+    const LISTVIEW_PARAM_TITLE = 'title';
 
     /**
      * State initialization
@@ -94,8 +95,16 @@ class ListView
                     $value = $this->translator->translate($value);
                 }
 
+                // Title
+                if (isset($configuration[self::LISTVIEW_PARAM_TITLE])) {
+                    $key = $configuration[self::LISTVIEW_PARAM_TITLE];
+                } else {
+                    // Fallback to column name
+                    $key = $configuration[self::LISTVIEW_PARAM_COLUMN];
+                }
+
                 // Prepare key
-                $key = $hasTranslator ? $this->translator->translate($configuration[self::LISTVIEW_PARAM_COLUMN]) : $configuration[self::LISTVIEW_PARAM_COLUMN];
+                $key = $hasTranslator ? $this->translator->translate($key) : $key;
 
                 $output[$key] = $value;
             }
