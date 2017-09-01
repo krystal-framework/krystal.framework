@@ -13,6 +13,7 @@ namespace Krystal\Grid;
 
 use Krystal\Form\NodeElement;
 use Krystal\I18n\TranslatorInterface;
+use Krystal\Text\TextUtils;
 
 class ListView
 {
@@ -103,7 +104,7 @@ class ListView
                     $key = $configuration[self::LISTVIEW_PARAM_TITLE];
                 } else {
                     // Fallback to column name
-                    $key = $configuration[self::LISTVIEW_PARAM_COLUMN];
+                    $key = TextUtils::normalizeColumn($configuration[self::LISTVIEW_PARAM_COLUMN]);
                 }
 
                 // Prepare key
