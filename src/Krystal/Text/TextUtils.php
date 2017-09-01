@@ -16,6 +16,23 @@ use UnexpectedValueException;
 class TextUtils
 {
     /**
+     * Normalizes column name
+     * 
+     * @param string $string
+     * @return string
+     */
+    public static function normalizeColumn($string)
+    {
+        $parts = explode('_', $string);
+
+        foreach ($parts as &$part) {
+            $part = ucfirst($part);
+        }
+
+        return join(' ', $parts);
+    }
+
+    /**
      * Creates a unique string
      * 
      * @return string
