@@ -15,6 +15,7 @@ use Krystal\Form\NodeElement;
 use Krystal\Db\Filter\QueryContainerInterface;
 use Krystal\Form\Element;
 use Krystal\I18n\TranslatorInterface;
+use Krystal\Text\TextUtils;
 use Closure;
 
 final class TableMaker
@@ -167,7 +168,8 @@ final class TableMaker
             }
 
             $column = isset($row[self::GRID_PARAM_COLUMN]) ? $row[self::GRID_PARAM_COLUMN] : null;
-            $label = isset($row[self::GRID_PARAM_LABEL]) ? $row[self::GRID_PARAM_LABEL] : null;
+            // Use label if provided explicitly, otherwise use normalized column name as a fallback
+            $label = isset($row[self::GRID_PARAM_LABEL]) ? $row[self::GRID_PARAM_LABEL] : TextUtils::normalizeColumn($row[self::GRID_PARAM_COLUMN]);
 
             // If sorting isn't defined, then assume that it's true by default
             if (!isset($row[self::GRID_PARAM_SORTING])) {
