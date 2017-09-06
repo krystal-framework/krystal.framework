@@ -19,15 +19,16 @@ final class Grid
     /**
      * Renders the grid
      * 
-     * @param string $route
      * @param array $data
      * @param array $options
      * @param \Krystal\I18n\TranslatorInterface $translator
+     * @param string $route
+     * @param array $query
      * @return string
      */
-    public static function render($route, array $data, array $options, TranslatorInterface $translator = null)
+    public static function render(array $data, array $options, TranslatorInterface $translator = null, $route = null, array $query = array())
     {
-        $maker = new TableMaker($data, $options, $translator, new QueryContainer($_GET, $route));
+        $maker = new TableMaker($data, $options, $translator, new QueryContainer($query, $route));
         return $maker->render();
     }
 }
