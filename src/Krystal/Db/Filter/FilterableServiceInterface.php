@@ -22,7 +22,8 @@ interface FilterableServiceInterface
      * @param integer $itemsPerPage Items per page to be displayed
      * @param string $sortingColumn Column name to be sorted
      * @param string $desc Whether to sort in DESC order
+     * @param array $params Extra user-defined parameters to configure logic of the filter internally
      * @return array
      */
-    public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc);
+    public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc, array $parameters = array());
 }

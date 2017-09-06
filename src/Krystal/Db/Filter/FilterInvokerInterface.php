@@ -18,7 +18,8 @@ interface FilterInvokerInterface
      * 
      * @param \Krystal\Db\Filter\FilterableServiceInterface $service
      * @param integer $perPageCount Amount of items to be display per page
-     * @return void
+     * @param array $parameters Custom user-defined parameters
+     * @return array
      */
-    public function invoke(FilterableServiceInterface $service, $perPageCount);
+    public function invoke(FilterableServiceInterface $service, $perPageCount, array $parameters = array());
 }
