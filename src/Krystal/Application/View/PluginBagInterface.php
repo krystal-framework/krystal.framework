@@ -67,6 +67,22 @@ interface PluginBagInterface
     public function appendScripts(array $scripts);
 
     /**
+     * Appends last script
+     * 
+     * @param string $script
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function appendLastScript($script);
+
+    /**
+     * Appends a collection of last scripts
+     * 
+     * @param array $scripts
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function appendLastScripts(array $scripts);
+
+    /**
      * Returns all registered scripts
      * 
      * @return array

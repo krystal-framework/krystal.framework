@@ -28,6 +28,13 @@ final class PluginBag implements PluginBagInterface
     private $scripts = array();
 
     /**
+     * A collection of scripts that must be always loaded last
+     * 
+     * @var array
+     */
+    private $lastScripts = array();
+
+    /**
      * All stylesheets
      * 
      * @var array
@@ -42,6 +49,8 @@ final class PluginBag implements PluginBagInterface
     public function clearScripts()
     {
         $this->scripts = array();
+        $this->lastScripts = array();
+
         return $this;
     }
 
@@ -53,6 +62,20 @@ final class PluginBag implements PluginBagInterface
     public function clearStylesheets()
     {
         $this->stylesheets = array();
+        return $this;
+    }
+
+    /**
+     * Appends a unit
+     * 
+     * @param string $unit A path to unit
+     * @return \Krystal\Application\View\PluginBag
+     */
+    private function appendInternal($unit, array &$stack)
+    {
+        $unit = $this->normalizeAssetPath($unit);
+
+        array_push($stack, $unit);
         return $this;
     }
 
@@ -78,10 +101,7 @@ final class PluginBag implements PluginBagInterface
      */
     public function appendStylesheet($stylesheet)
     {
-        $stylesheet = $this->normalizeAssetPath($stylesheet);
-
-        array_push($this->stylesheets, $stylesheet);
-        return $this;
+        return $this->appendInternal($stylesheet, $this->stylesheets);
     }
 
     /**
@@ -95,7 +115,7 @@ final class PluginBag implements PluginBagInterface
         foreach ($stylesheets as $stylesheet) {
             $this->appendStylesheet($stylesheet);
         }
-        
+
         return $this;
     }
 
@@ -117,10 +137,7 @@ final class PluginBag implements PluginBagInterface
      */
     public function appendScript($script)
     {
-        $script = $this->normalizeAssetPath($script);
-
-        array_push($this->scripts, $script);
-        return $this;
+        return $this->appendInternal($script, $this->scripts);
     }
 
     /**
@@ -139,13 +156,39 @@ final class PluginBag implements PluginBagInterface
     }
 
     /**
+     * Appends last script
+     * 
+     * @param string $script
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function appendLastScript($script)
+    {
+        return $this->appendInternal($script, $this->lastScripts);
+    }
+
+    /**
+     * Appends a collection of last scripts
+     * 
+     * @param array $scripts
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function appendLastScripts(array $scripts)
+    {
+        foreach ($scripts as $script) {
+            $this->appendLastScript($script);
+        }
+
+        return $this;
+    }
+
+    /**
      * Returns all registered scripts
      * 
      * @return array
      */
     public function getScripts()
     {
-        return $this->scripts;
+        return array_merge($this->scripts, $this->lastScripts);
     }
 
     /**

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `\Krystal\Application\View\PluginBag` added `appendLastScript()` and `appendLastScripts()` that always append scripts last
  * Added extra constraint for module names. They must start from a capital letter and contain only alphabetic characters
  * Since now shared `toEntity()` method can handle more than one argument
  * Added `formAttribute` service
