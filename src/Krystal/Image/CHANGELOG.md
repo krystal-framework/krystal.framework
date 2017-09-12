@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added additional `deleteMany()` method to remove many images at once
  * Fixed exception message text in `Image\Tool\FileHandler::delete()` when throwing `LogicException`
 
 1.2

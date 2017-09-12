@@ -137,6 +137,17 @@ final class ImageManager implements ImageManagerInterface
     }
 
     /**
+     * Delete directories by their associated IDs
+     * 
+     * @param array $ids
+     * @return boolean
+     */
+    public function deleteMany(array $ids)
+    {
+        return $this->getFileHandler()->deleteMany($ids);
+    }
+
+    /**
      * Deletes a directory by its id
      * 
      * @param string $id

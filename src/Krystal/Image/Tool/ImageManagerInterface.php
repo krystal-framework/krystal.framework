@@ -33,6 +33,14 @@ interface ImageManagerInterface
     public function upload($id, array $files);
 
     /**
+     * Delete directories by their associated IDs
+     * 
+     * @param array $ids
+     * @return boolean
+     */
+    public function deleteMany(array $ids);
+
+    /**
      * Deletes a directory by its id
      * 
      * @param string $id

@@ -14,6 +14,14 @@ namespace Krystal\Image\Tool;
 interface FileHandlerInterface
 {
     /**
+     * Delete many image directories by their associated IDs at once
+     * 
+     * @param array $ids
+     * @return boolean
+     */
+    public function deleteMany(array $ids);
+
+    /**
      * Delete all images associated with target id
      * When no $image provided, then it will removed all images inside $id folder
      * 
