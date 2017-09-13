@@ -101,6 +101,24 @@ final class TableMaker
     }
 
     /**
+     * Determines whether current configuration has at least one defined fitler
+     * 
+     * @return boolean
+     */
+    private function hasAtLeastOneFilter()
+    {
+        $columns = $this->options[self::GRID_PARAM_COLUMNS];
+
+        foreach ($columns as $column) {
+            if (isset($column[self::GRID_PARAM_FILTER]) && $column[self::GRID_PARAM_FILTER] == true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Renders the grid
      * 
      * @return string
@@ -109,10 +127,16 @@ final class TableMaker
     {
         $columns = $this->options[self::GRID_PARAM_COLUMNS];
 
-        $head = $this->createTableHeader(array(
-            $this->createTopHeadingRow($columns), 
-            $this->createBottomHeadingRow($columns)
-        ));
+        if ($this->hasAtLeastOneFilter()) {
+            $head = $this->createTableHeader(array(
+                $this->createTopHeadingRow($columns),
+                $this->createBottomHeadingRow($columns)
+            ));
+        } else {
+            $head = $this->createTableHeader(array(
+                $this->createTopHeadingRow($columns)
+            ));
+        }
 
         $body = $this->createTableBody($this->createBodyRows($columns, $this->data));
 
@@ -172,8 +196,10 @@ final class TableMaker
             $label = isset($row[self::GRID_PARAM_LABEL]) ? $row[self::GRID_PARAM_LABEL] : TextUtils::normalizeColumn($row[self::GRID_PARAM_COLUMN]);
 
             // If sorting isn't defined, then assume that it's true by default
-            if (!isset($row[self::GRID_PARAM_SORTING])) {
+            if (!isset($row[self::GRID_PARAM_SORTING]) && isset($row[self::GRID_PARAM_FILTER]) && $row[self::GRID_PARAM_FILTER] == true) {
                 $row[self::GRID_PARAM_SORTING] = true;
+            } else {
+                $row[self::GRID_PARAM_SORTING] = false;
             }
 
             // If translation isn't defined, assume true by default
