@@ -74,7 +74,7 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * @param array $extra Extra options
      * @return mixed
      */
-    public function post($url, array $data = array(), array $extra = array())
+    public function post($url, $data = array(), array $extra = array())
     {
         $curl = new Curl(array(
             CURLOPT_URL => $url,
