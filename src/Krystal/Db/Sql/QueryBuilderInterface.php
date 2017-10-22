@@ -50,6 +50,16 @@ interface QueryBuilderInterface
     public function showKeys();
 
     /**
+     * Appends SQL function
+     * 
+     * @param string $func Function name
+     * @param string|array $column Column name (or collection) to be passed as an argument to a function
+     * @param string $alias
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function func($func, $column, $alias = null);
+
+    /**
      * Builds INSERT query
      * This regular insert query for most cases. It's not aware of ON DUPLICATE KEY
      * 

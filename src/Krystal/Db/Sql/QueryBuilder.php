@@ -247,10 +247,10 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * 
      * @param string $func Function name
      * @param string|array $column Column name (or collection) to be passed as an argument to a function
-     * @param string $alias 
+     * @param string $alias
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    private function func($func, $column, $alias = null)
+    public function func($func, $column, $alias = null)
     {
         if (!is_array($column)) {
             $column = array($column);

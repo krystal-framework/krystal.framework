@@ -501,6 +501,20 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends SQL function
+     * 
+     * @param string $func Function name
+     * @param string|array $column Column name (or collection) to be passed as an argument to a function
+     * @param string $alias
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function func($func, $column, $alias = null)
+    {
+        $this->queryBuilder->func($func, $column, $alias);
+        return $this;
+    }
+
+    /**
      * Appends raw SQL fragment
      * 
      * @param string $fragment

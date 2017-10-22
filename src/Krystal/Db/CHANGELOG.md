@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `func()` generator
  * Support optional user-defined parameters in filter's `invoke()` method
  * Support instances of `RawSqlFragment` in `select()`
  * In `AbstractMapper` added `getRawColumn()` that returns an instance of `RawSqlFragment`
