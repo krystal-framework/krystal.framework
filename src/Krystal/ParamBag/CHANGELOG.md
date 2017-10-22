@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `getAll()` method that returns all parameters
  * Added `hasMany()`
  * Renamed `exists()` to `has()`
  * Added `setMany()` method

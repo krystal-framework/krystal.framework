@@ -14,6 +14,13 @@ namespace Krystal\ParamBag;
 interface ParamBagInterface
 {
     /**
+     * Return parameters
+     * 
+     * @return array
+     */
+    public function getAll();
+
+    /**
      * Checks whether parameter is registered
      * 
      * @param string $param Param name to be checked for existence

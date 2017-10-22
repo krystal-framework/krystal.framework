@@ -35,6 +35,16 @@ final class ParamBag implements ParamBagInterface
     }
 
     /**
+     * Return parameters
+     * 
+     * @return array
+     */
+    public function getAll()
+    {
+        return $this->params;
+    }
+
+    /**
      * Checks whether parameter is registered
      * 
      * @param string $param Param name to be checked for existence
