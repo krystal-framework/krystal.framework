@@ -1346,16 +1346,34 @@ final class Db implements DbInterface, RelationableServiceInterface
             return $this;
         }
 
+        if ($a instanceof RawSqlFragmentInterface) {
+            $x = $a->getFragment();
+        }
+
+        if ($b instanceof RawSqlFragmentInterface) {
+            $y = $b->getFragment();
+        }
+
         // When doing betweens, unique placeholders come in handy
-        $x = $this->getUniqPlaceholder();
-        $y = $this->getUniqPlaceholder();
+        if (!isset($x)) {
+            $x = $this->getUniqPlaceholder();
+        }
+
+        if (!isset($y)) {
+            $y = $this->getUniqPlaceholder();
+        }
 
         // Prepare query string
         call_user_func(array($this->queryBuilder, $method), $column, $x, $y, $filter);
 
         // And finally bind values
-        $this->bind($x, $a);
-        $this->bind($y, $b);
+        if (!($a instanceof RawSqlFragmentInterface)) {
+            $this->bind($x, $a);
+        }
+
+        if (!($b instanceof RawSqlFragmentInterface)) {
+            $this->bind($y, $b);
+        }
 
         return $this;
     }

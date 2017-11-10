@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Between generators since now support instancef of `RawSqlFragment`
  * Added `func()` generator
  * Support optional user-defined parameters in filter's `invoke()` method
  * Support instances of `RawSqlFragment` in `select()`
