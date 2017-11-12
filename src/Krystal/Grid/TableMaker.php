@@ -481,17 +481,17 @@ final class TableMaker
      * 
      * @param string $type
      * @param array $children
-     * @param string $class Optional element class name
+     * @param array $attributes Optional element attributes
      * @param string $text
      * @return \Krystal\Form\NodeElement
      */
-    private function createElement($type, $children = array(), $class = null, $text = null)
+    private function createElement($type, $children = array(), array $attributes = array(), $text = null)
     {
         $element = new NodeElement();
         $element->openTag($type);
 
-        if ($class !== null) {
-            $element->setClass($class);
+        if (!empty($attributes)) {
+            $element->addAttributes($attributes);
         }
 
         if (!empty($children)) {
@@ -519,7 +519,7 @@ final class TableMaker
      */
     private function createIcon($class)
     {
-        return $this->createElement('i', array(), $class, false);
+        return $this->createElement('i', array(), array('class' => $class), false);
     }
 
     /**
@@ -530,7 +530,7 @@ final class TableMaker
      */
     private function createTable(array $children)
     {
-        return $this->createElement('table', $children, $this->options['tableClass']);
+        return $this->createElement('table', $children, array('class' => $this->options['tableClass']));
     }
 
     /**
@@ -564,7 +564,7 @@ final class TableMaker
      */
     private function createTableRow(array $children, $class = null)
     {
-        return $this->createElement('tr', $children, $class);
+        return $this->createElement('tr', $children, array('class' => $class));
     }
 
     /**
@@ -575,7 +575,7 @@ final class TableMaker
      */
     private function createTextHeader($text)
     {
-        return $this->createElement('th', array(), $this->options['tableHeaderClass'], $text);
+        return $this->createElement('th', array(), array('class' => $this->options['tableHeaderClass']), $text);
     }
 
     /**
@@ -586,7 +586,7 @@ final class TableMaker
      */
     private function createBodyHeader($text)
     {
-        return $this->createElement('td', array(), $this->options['tableDataClass'], $text);
+        return $this->createElement('td', array(), array('class' => $this->options['tableDataClass']), $text);
     }
 
     /**
@@ -598,7 +598,7 @@ final class TableMaker
      */
     private function createHeader($children = array(), $text = null)
     {
-        return $this->createElement('th', $children, $this->options['tableHeaderClass'], $text);
+        return $this->createElement('th', $children, array('class' => $this->options['tableHeaderClass']), $text);
     }
 
     /**
@@ -610,7 +610,7 @@ final class TableMaker
      */
     private function createColumn($children = array(), $text = null)
     {
-        return $this->createElement('td', $children, $this->options['tableDataClass'], $text);
+        return $this->createElement('td', $children, array('class' => $this->options['tableDataClass']), $text);
     }
 
     /**
