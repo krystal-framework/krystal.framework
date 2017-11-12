@@ -44,6 +44,7 @@ final class TableMaker
         'batch' => true // Whether to generate batch selection
     );
 
+    const GRID_PARAM_ROW_ATTRS = 'rowAttributes';
     const GRID_PARAM_ACTIONS = 'actions';
     const GRIG_PARAM_EDITABLE = 'editable';
     const GRID_PARAM_FILTER = 'filter';
@@ -376,7 +377,24 @@ final class TableMaker
             $output[] = $this->createColumn(null, join(PHP_EOL, $links));
         }
 
-        return $this->createTableRow($output);
+        // Now append row attributes if defined
+        $attributes = array();
+
+        if (isset($this->options[self::GRID_PARAM_ROW_ATTRS])) {
+            foreach($this->options[self::GRID_PARAM_ROW_ATTRS] as $name => $value) {
+                // If closure is provided, then execute it and get returned value
+                if (is_callable($value)) {
+                    $value = $value($data);
+                }
+
+                // Don't append NULL-like attributes
+                if ($value != null) {
+                    $attributes[$name] = $value;
+                }
+            }
+        }
+
+        return $this->createTableRow($output, $attributes);
     }
 
     /**
@@ -405,7 +423,7 @@ final class TableMaker
             // Make sure $collection is array
             if (is_array($collection)) {
                 foreach ($collection as $row) {
-                    if ($row[self::GRID_PARAM_COLUMN] == $column) {
+                    if (is_array($row) && $row[self::GRID_PARAM_COLUMN] == $column) {
                         return $row;
                     }
                 }
@@ -559,12 +577,12 @@ final class TableMaker
      * Creates TR element with child elements
      * 
      * @param array $children
-     * @param string $class
+     * @param array $attributes Optional attributes
      * @return \Krystal\Form\NodeElement
      */
-    private function createTableRow(array $children, $class = null)
+    private function createTableRow(array $children, $attributes = array())
     {
-        return $this->createElement('tr', $children, array('class' => $class));
+        return $this->createElement('tr', $children, $attributes);
     }
 
     /**
