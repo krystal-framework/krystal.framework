@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * `Krystal\Form\Element::select()` can now select all nodes if `*` provided as a selector for active nodes
  * `Krystal\Form\Element::select()` can now accept optional visitor for option nodes
  * Added Form Attribute sub-component
  * Removed `DropdownWigdet`

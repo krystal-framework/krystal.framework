@@ -93,6 +93,11 @@ final class Select implements FormElementInterface
             $actives = array_values($this->active);
             return in_array($value, $actives);
         } else {
+            // Select all if asterik is provided
+            if ($this->active === '*') {
+                return true;
+            }
+
             // Without type-casting it's error-prone
             return (string) $this->active == (string) $value;
         }
