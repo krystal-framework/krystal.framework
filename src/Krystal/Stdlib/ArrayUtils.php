@@ -405,7 +405,7 @@ abstract class ArrayUtils
         $result = array();
 
         foreach ($array as $row) {
-            if (isset($row[$key], $row[$value])) {
+            if (array_key_exists($key, $row) && array_key_exists($value, $row)) {
                 // References
                 $name =& $row[$key];
                 $text =& $row[$value];
