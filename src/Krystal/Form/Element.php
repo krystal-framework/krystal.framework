@@ -50,7 +50,7 @@ class Element
             case 'textarea':
                 return self::textarea($name, $value, $attributes);
             case 'radio':
-                return self::radio($name, $value, $attributes);
+                return self::radio($name, $value, (bool) $value, $attributes);
             case 'checkbox':
                 return self::checkbox($name, $value, $attributes);
             case 'select':
