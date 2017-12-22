@@ -51,6 +51,18 @@ class Math
     }
 
     /**
+     * Returns discount price (useful when calculating discount price)
+     * 
+     * @param float $target Initial price
+     * @param float $discount
+     * @return float
+     */
+    public static function getDiscount($price, $discount)
+    {
+        return $price - self::fromPercentage($price, $discount);
+    }
+
+    /**
      * Counts value from percentage
      * 
      * @param float $target Target value
