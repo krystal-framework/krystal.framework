@@ -52,7 +52,7 @@ class Element
             case 'radio':
                 return self::radio($name, $value, (bool) $value, $attributes);
             case 'checkbox':
-                return self::checkbox($name, $value, $attributes);
+                return self::checkbox($name, $value, $attributes, false);
             case 'select':
                 return self::select($name, $extra, $value, $attributes);
             default:
