@@ -758,6 +758,10 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             return $this;
         }
 
+        if ($value instanceof RawSqlFragmentInterface) {
+            $value = $value->getFragment();
+        }
+        
         $this->append(sprintf(' %s %s %s ', $this->quote($column), $operator, $value));
         return $this;
     }
@@ -1267,56 +1271,83 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * 
      * @param string $type JOIN type
      * @param string $table Right table (second)
+     * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    private function join($type, $table)
+    private function join($type, $table, array $relations = array())
     {
         $this->append(sprintf(' %s JOIN %s ', $type, $table));
+
+        // Append relations if provided
+        if (!empty($relations)) {
+            // First on
+            $this->on();
+
+            $i = 0; // Iteration counter
+            $count = count($relations);
+
+            foreach ($relations as $column => $value) {
+                // Increment iteration count
+                $i++;
+
+                $this->equals($column, $value);
+
+                // If last iteration
+                if ($i != $count) {
+                    $this->rawAnd();
+                }
+            }
+        }
+
         return $this;
     }
 
     /**
      * Appends INNER JOIN
      * 
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function innerJoin($table)
+    public function innerJoin($table, array $relations = array())
     {
-        return $this->join('INNER', $table);
+        return $this->join('INNER', $table, $relations);
     }
 
     /**
      * Appends LEFT JOIN
      * 
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function leftJoin($table)
+    public function leftJoin($table, array $relations = array())
     {
-        return $this->join('LEFT', $table);
+        return $this->join('LEFT', $table, $relations);
     }
 
     /**
      * Appends RIGHT JOIN
      * 
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function rightJoin($table)
+    public function rightJoin($table, array $relations = array())
     {
-        return $this->join('RIGHT', $table);
+        return $this->join('RIGHT', $table, $relations);
     }
 
     /**
      * Append FULL OUTER JOIN
      *
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function fullJoin($table)
+    public function fullJoin($table, array $relations = array())
     {
-        return $this->join('FULL OUTER', $table);
+        return $this->join('FULL OUTER', $table, $relations);
     }
 
     /**

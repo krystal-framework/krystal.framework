@@ -649,38 +649,37 @@ interface QueryBuilderInterface
     /**
      * Appends INNER JOIN
      * 
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function innerJoin($table);
+    public function innerJoin($table, array $relations = array());
 
     /**
      * Appends LEFT JOIN
      * 
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function leftJoin($table);
+    public function leftJoin($table, array $relations = array());
 
     /**
      * Appends RIGHT JOIN
      * 
      * @param string $table Right table (second)
-     * @param string $left A column from the left table (first)
-     * @param string $right A column from the right table (second)
+     * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function rightJoin($table);
+    public function rightJoin($table, array $relations = array());
 
     /**
      * Append FULL OUTER JOIN
      *
-     * @param string $table Right table (second)
-     * @param string $left A column from the left table (first)
-     * @param string $right A column from the right table (second)
+     * @param string $table
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function fullJoin($table);
+    public function fullJoin($table, array $relations = array());
 
     /**
      * Appends ON

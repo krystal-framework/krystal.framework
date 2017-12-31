@@ -1171,48 +1171,52 @@ final class Db implements DbInterface, RelationableServiceInterface
     /**
      * Appends INNER JOIN
      * 
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\Db
      */
-    public function innerJoin($table)
+    public function innerJoin($table, array $relations = array())
     {
-        $this->queryBuilder->innerJoin($table);
+        $this->queryBuilder->innerJoin($table, $relations);
         return $this;
     }
 
     /**
      * Appends LEFT JOIN
      * 
-     * @param string $table Right table (second)
+     * @param string $table Right table
+     * @param array $relations
      * @return \Krystal\Db\Sql\Db
      */
-    public function leftJoin($table)
+    public function leftJoin($table, array $relations = array())
     {
-        $this->queryBuilder->leftJoin($table);
+        $this->queryBuilder->leftJoin($table, $relations);
         return $this;
     }
 
     /**
      * Appends RIGHT JOIN
      * 
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\Db
      */
-    public function rightJoin($table)
+    public function rightJoin($table, array $relations = array())
     {
-        $this->queryBuilder->rightJoin($table);
+        $this->queryBuilder->rightJoin($table, $relations);
         return $this;
     }
 
     /**
      * Append FULL OUTER JOIN
      *
-     * @param string $table Right table (second)
+     * @param string $table
+     * @param array $relations
      * @return \Krystal\Db\Sql\Db
      */
-    public function fullJoin($table)
+    public function fullJoin($table, array $relations = array())
     {
-        $this->queryBuilder->fullJoin($table);
+        $this->queryBuilder->fullJoin($table, $relations);
         return $this;
     }
 

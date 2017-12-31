@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added optional relation short-cuts in JOIN methods
  * Between generators since now support instancef of `RawSqlFragment`
  * Added `func()` generator
  * Support optional user-defined parameters in filter's `invoke()` method
