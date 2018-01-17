@@ -17,6 +17,7 @@ use Krystal\Stdlib\ArrayUtils;
 use Krystal\Paginate\PaginatorInterface;
 use Krystal\Db\Sql\Relations\RelationProcessor;
 use Krystal\Db\Sql\Relations\RelationableServiceInterface;
+use Krystal\Text\TextUtils;
 
 /* This is just a bridge between PDO and QueryBuilder, that makes it all work */
 final class Db implements DbInterface, RelationableServiceInterface
@@ -294,7 +295,8 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     private function getUniqPlaceholder()
     {
-        return $this->toPlaceholder(uniqid());
+        $id = TextUtils::uniqueString();
+        return $this->toPlaceholder($id);
     }
 
     /**
