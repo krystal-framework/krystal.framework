@@ -12,6 +12,7 @@
 namespace Krystal\Db\Sql;
 
 use RuntimeException;
+use InvalidArgumentException;
 
 final class RawBinding implements RawBindingInterface
 {
@@ -33,10 +34,10 @@ final class RawBinding implements RawBindingInterface
     {
         if (is_array($target)) {
             $this->target = $this->quoteMany($target);
-        } elseif (is_string($target)) {
+        } elseif (is_scalar($target)) {
             $this->target = $this->quote($target);
         } else {
-            throw new InvalidArgumentException(sprintf('Raw binding only accepts arrays and strings. Received "%s"', gettype($target)));
+            throw new InvalidArgumentException(sprintf('Raw binding only accepts arrays and scalar values. Received "%s"', gettype($target)));
         }
     }
 
