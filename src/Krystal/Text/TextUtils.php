@@ -39,7 +39,7 @@ class TextUtils
      */
     public static function uniqueString()
     {
-        $id = uniqid(time(), true);
+        $id = uniqid(microtime() . rand(), true);
         return md5($id);
     }
 
