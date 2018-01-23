@@ -77,7 +77,7 @@ final class Checkbox implements FormElementInterface
             'value' => '1'
         );
 
-        $attrs = array_merge($attrs, $defaults);
+        $attrs = array_merge($defaults, $attrs);
 
         $node = new NodeElement();
         $node->openTag('input')
