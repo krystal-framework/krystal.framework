@@ -71,6 +71,19 @@ abstract class AbstractMapper
     }
 
     /**
+     * An alias for self::getFullColumnName()
+     * 
+     * @param string $column Column name
+     * @param string $table Table name. By default getTableName() is called
+     * @throws \LogicException if the getTableName() isn't defined in descending class
+     * @return string
+     */
+    public static function column($column, $table = null)
+    {
+        return self::getFullColumnName($column, $table);
+    }
+
+    /**
      * Returns full column name prepending table name
      * 
      * @param string $column Column name
