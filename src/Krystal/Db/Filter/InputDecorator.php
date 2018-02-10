@@ -12,12 +12,13 @@
 namespace Krystal\Db\Filter;
 
 use ArrayAccess;
+use Iterator;
 
 /**
  * Input decorator would help to prevent notices when accessing undefined array keys
  * returning an empty string instead
  */
-final class InputDecorator implements ArrayAccess
+final class InputDecorator implements ArrayAccess, Iterator
 {
     /**
      * Target data to be decorated
@@ -35,6 +36,57 @@ final class InputDecorator implements ArrayAccess
     public function __construct(array $data = array())
     {
         $this->data = $data;
+    }
+
+    /**
+     * Set the internal pointer of an array to its first element
+     * 
+     * @return mixed
+     */
+    public function rewind()
+    {
+        reset($this->data);
+    }
+
+    /**
+     * Return the current element in an array
+     * 
+     * @return mixed
+     */
+    public function current()
+    {
+        return current($this->data);
+    }
+
+    /**
+     * Returns next pointer
+     * 
+     * @return mixed
+     */
+    public function key()
+    {
+        return key($this->data);
+    }
+
+    /**
+     * Returns next pointer
+     * 
+     * @return mixed
+     */
+    public function next()
+    {
+        return next($this->data);
+    }
+
+    /**
+     * Checking for existence
+     * 
+     * @return boolean
+     */
+    public function valid()
+    {
+        $key = key($this->data);
+        return ($key !== null && $key !== false);
     }
 
     /**
