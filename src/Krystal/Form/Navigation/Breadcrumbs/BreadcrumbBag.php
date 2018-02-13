@@ -179,6 +179,16 @@ final class BreadcrumbBag implements BreadcrumbBagInterface
     }
 
     /**
+     * Returns count of collection
+     * 
+     * @return int
+     */
+    public function getCount()
+    {
+        return count($this->collection);
+    }
+
+    /**
      * Returns breadcrumb collection
      * 
      * @return array
