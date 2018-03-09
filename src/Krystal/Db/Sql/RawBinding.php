@@ -36,6 +36,8 @@ final class RawBinding implements RawBindingInterface
             $this->target = $this->quoteMany($target);
         } elseif (is_scalar($target)) {
             $this->target = $this->quote($target);
+        } elseif (is_null($target) || empty($target)) {
+            $this->target = $this->quote('');
         } else {
             throw new InvalidArgumentException(sprintf('Raw binding only accepts arrays and scalar values. Received "%s"', gettype($target)));
         }
