@@ -283,8 +283,14 @@ abstract class AbstractMapper
      */
     final public function syncWithJunction($table, $masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
-        return $this->removeFromJunction($table, $masterValue, $masterColumn) && 
-               $this->insertIntoJunction($table, $masterValue, $slaves, $masterColumn, $slaveColumn);
+        $this->removeFromJunction($table, $masterValue, $masterColumn);
+
+        // Make sure slaves ain't empty, before executing INSERT query
+        if (!empty($slaves)) {
+            $this->insertIntoJunction($table, $masterValue, $slaves, $masterColumn, $slaveColumn);
+        }
+
+        return true;
     }
 
     /**
