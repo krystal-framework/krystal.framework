@@ -1274,7 +1274,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * @param array $relations
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    private function join($type, $table, array $relations = array())
+    public function join($type, $table, array $relations = array())
     {
         $this->append(sprintf(' %s JOIN %s ', $type, $table));
 

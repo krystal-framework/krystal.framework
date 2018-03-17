@@ -1171,6 +1171,20 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends JOIN
+     * 
+     * @param string $type JOIN type
+     * @param string $table
+     * @param array $relations
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function join($type, $table, array $relations = array())
+    {
+        $this->queryBuilder->join($type, $table, $relations);
+        return $this;
+    }
+
+    /**
      * Appends INNER JOIN
      * 
      * @param string $table
