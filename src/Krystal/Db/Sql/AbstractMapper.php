@@ -537,6 +537,23 @@ abstract class AbstractMapper
     }
 
     /**
+     * Inserts or updates many records at once
+     * 
+     * @param array $collection
+     * @param array $fillable Optional fillable protection
+     * @throws \LogicException if failed on keys existence validation
+     * @return boolean
+     */
+    final public function persistMany(array $collection, array $fillable = array())
+    {
+        foreach ($collection as $item) {
+            $this->persist($item, $fillable);
+        }
+
+        return true;
+    }
+
+    /**
      * Updates column's value by a primary key
      * 
      * @param string $pk

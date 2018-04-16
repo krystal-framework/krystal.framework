@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added shared `persistMany()` method
  * Since now `InputDecorator` supports iteration over it
  * Added alias for `getFullColumnName()`
  * Added optional relation short-cuts in JOIN methods
