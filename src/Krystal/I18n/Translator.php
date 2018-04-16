@@ -81,7 +81,7 @@ final class Translator implements TranslatorInterface
         $result = array();
 
         foreach ($array as $key => $value) {
-            if (is_string($value)) {
+            if (is_scalar($value)) {
                 $result[$key] = $this->translate($value);
             } else {
                 throw new InvalidArgumentException('Invalid array supplied');
@@ -111,7 +111,7 @@ final class Translator implements TranslatorInterface
         }
 
         // Ensure the proper message received
-        if (!is_string($message)) {
+        if (!is_scalar($message)) {
             throw new InvalidArgumentException(sprintf('Argument #1 $default must be a string, received "%s"', gettype($message)));
         }
 
