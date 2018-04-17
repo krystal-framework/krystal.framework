@@ -16,6 +16,39 @@ use UnexpectedValueException;
 class TextUtils
 {
     /**
+     * Generates serial number like XXXXX-XXXXX-XXXXX-XXXXX, the mask can be overridden
+     * 
+     * @param string $id
+     * @param bool $unique Whether output must be always unique
+     * @param bool $upper Whether output must be in uppercase
+     * @param int $length The length of the serial itself
+     * @param int $portion The length of each portion
+     * @return string
+     */
+    public static function serial($id, $unique = true, $upper = true, $length = 25, $portion = 5)
+    {
+        // If unique is defined
+        if ($unique === true) {
+            $salt = substr(sha1(mt_rand()), 0, 20);
+            $id .= $salt;
+        }
+
+        // MD5 is great enough
+        $hash = md5($id);
+
+        // Make the hash more unique
+        for ($i = 0; $i < 10; $i++) {
+            $hash = md5($hash);
+        }
+
+        if ($upper === true) {
+            $hash = strtoupper($hash);
+        }
+
+        return implode('-', str_split(substr($hash, 0, $length), $portion));
+    }
+
+    /**
      * Normalizes column name
      * 
      * @param string $string
