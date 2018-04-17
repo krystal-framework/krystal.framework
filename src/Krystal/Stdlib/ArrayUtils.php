@@ -54,7 +54,7 @@ abstract class ArrayUtils
 
         foreach ($raw as $index => $collection) {
             // Make the the root partition exists
-            if (!isset($collection[$key])) {
+            if (!array_key_exists($key, $collection)) {
                 throw new LogicException(sprintf(
                     'The key "%s" does not exist in provided collection', $key
                 ));
