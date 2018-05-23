@@ -16,8 +16,9 @@ use Krystal\Security\Sanitizeable;
 use RuntimeException;
 use LogicException;
 use UnderflowException;
+use ArrayAccess;
 
-class VirtualEntity implements Sanitizeable
+class VirtualEntity implements Sanitizeable, ArrayAccess
 {
     /**
      * Entity container
@@ -42,6 +43,55 @@ class VirtualEntity implements Sanitizeable
     public function __construct($once = true)
     {
         $this->once = (bool) $once;
+    }
+
+    /**
+     * Checks whether offset exist
+     * 
+     * @param mixed $offset
+     * @return boolean
+     */
+    public function offsetExists($offset)
+    {
+        return $this->has($offset);
+    }
+
+    /**
+     * Returns an offset
+     * 
+     * @param mixed $offset
+     * @return boolean
+     */
+    public function offsetGet($offset)
+    {
+        if ($this->has($offset)) {
+            return $this->container[$offset];
+        }
+    }
+
+    /**
+     * Sets an offset
+     * 
+     * @param mixed $offset
+     * @param mixed $value
+     * @return boolean
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->container[$offset] = $value;
+    }
+
+    /**
+     * Unsets an offset
+     * 
+     * @param mixed $offset
+     * @return boolean
+     */
+    public function offsetUnset($offset)
+    {
+        if ($this->has($offset)) {
+            unset($this->container[$offset]);
+        }
     }
 
     /**
