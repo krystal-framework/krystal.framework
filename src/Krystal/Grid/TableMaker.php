@@ -17,6 +17,7 @@ use Krystal\Form\Element;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Text\TextUtils;
 use Closure;
+use Traversable;
 
 final class TableMaker
 {
@@ -284,7 +285,7 @@ final class TableMaker
      * @param array $data Column data
      * @return array
      */
-    private function createBodyRows(array $columns, array $data)
+    private function createBodyRows($columns, array $data)
     {
         $rows = array();
 
@@ -302,7 +303,7 @@ final class TableMaker
      * @param array $data
      * @return string
      */
-    private function createBodyRow(array $columns, array $data)
+    private function createBodyRow($columns, $data)
     {
         $id = null;
 
