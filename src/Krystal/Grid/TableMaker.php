@@ -260,7 +260,7 @@ final class TableMaker
                 $selected = $this->filter->get($row[self::GRID_PARAM_COLUMN]);
 
                 if (is_array($filter)) {
-                    $filter = array_merge(array('' => ''), $filter);
+                    $filter = array_replace(array('' => ''), $filter);
                     $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected, $filter);
                 } else {
                     $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected);
