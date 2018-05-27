@@ -14,6 +14,21 @@ namespace Krystal\Text;
 class Math
 {
     /**
+     * Formats a number without rounding it, unlike built-in function number_format()
+     * 
+     * @param float $number The number being formatted
+     * @@param int $decimals The number of decimal points.
+     * @param string $dec_point Separator for the decimal point.
+     * @param string $thousands_sep Thousands separator
+     * @return string
+     */
+    public static function numberFormat($number, $decimals = 2, $dec_point = '.', $thousands_sep  = ',')
+    {
+        $number = bcdiv($number, 1, $decimals);
+        return number_format($number, $decimals, $dec_point, $thousands_sep);
+    }
+
+    /**
      * Rounds a collection
      * 
      * @param array $data

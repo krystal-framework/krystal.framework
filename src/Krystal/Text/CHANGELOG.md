@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `Math::numberFormat()` to format numbers without rounding them
  * Added `TextUtils::serial()` that generates serial numbers like XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
  * Added `TextUtils::normalizeColumn()` to convert column names like `first_name` to `First Name`
  * In `Text\SlugGenerator` added `getUniqueSlug()` method to handle uniqueness
