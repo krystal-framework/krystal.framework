@@ -14,6 +14,18 @@ namespace Krystal\Text;
 class Math
 {
     /**
+     * An equivalent to Excel's precise function
+     * 
+     * @param float The value to be rounded
+     * @param int $significance The multiple to which number is to be rounded
+     * @return mixed
+     */
+    public static function ceiling($number, $significance = 1)
+    {
+        return (ceil($number / $significance) * $significance);
+    }
+
+    /**
      * Formats a number without rounding it, unlike built-in function number_format()
      * 
      * @param float $number The number being formatted
