@@ -143,6 +143,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function isFilterable($state, $target)
     {
+        // Empty string
+        if ($state === true && empty($target) && $target !== '0') {
+            return false;
+        }
+
         // Pure wildcards must be treated as empty values
         if ($state == true && ($target == '%%' || $target == '%')) {
             return false;
@@ -157,7 +162,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         if (is_array($target) && empty($target)) {
             return false;
         }
-        
+
         $result = false;
 
         if ($state === false) {
