@@ -58,6 +58,22 @@ interface RequestInterface
     public function hasFiles($name = null);
 
     /**
+     * Parses raw JSON body received from POST request and returns it as array
+     * 
+     * @throws \UnexpectedValueException if no POST parameters or JSON string has syntax errors
+     * @return array
+     */
+    public function getJsonBody();
+
+    /**
+     * Parses raw XML body received from POST request and returns it as array
+     * 
+     * @throws \UnexpectedValueException if no POST parameters or XML string has syntax errors
+     * @return object
+     */
+    public function getXmlBody();
+
+    /**
      * Returns raw HTTP POST input
      * 
      * @return string

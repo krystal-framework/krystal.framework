@@ -12,6 +12,7 @@
 namespace Krystal\Http;
 
 use Krystal\Http\FileTransfer\Input as FileInput;
+use UnexpectedValueException;
 
 final class Request implements RequestInterface
 {
@@ -172,6 +173,40 @@ final class Request implements RequestInterface
         }
 
         return $this->serialize($params);
+    }
+
+    /**
+     * Parses raw JSON body received from POST request and returns it as array
+     * 
+     * @throws \UnexpectedValueException if no POST parameters or JSON string has syntax errors
+     * @return array
+     */
+    public function getJsonBody()
+    {
+        $input = json_decode($this->getRawInput(), true);
+
+        if (json_last_error()) {
+            throw new UnexpectedValueException('JSON string has syntax errors or POST has no parameters');
+        }
+
+        return $input;
+    }
+
+    /**
+     * Parses raw XML body received from POST request and returns it as array
+     * 
+     * @throws \UnexpectedValueException if no POST parameters or XML string has syntax errors
+     * @return object
+     */
+    public function getXmlBody()
+    {
+        $body = simplexml_load_string($this->getRawInput());
+
+        if ($body === false) {
+            throw new UnexpectedValueException('XML string has syntax errors or POST has no parameters');
+        }
+
+        return $body;
     }
 
     /**
