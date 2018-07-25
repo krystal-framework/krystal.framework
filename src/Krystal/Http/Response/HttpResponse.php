@@ -79,6 +79,21 @@ final class HttpResponse implements HttpResponseInterface
     }
 
     /**
+     * Refresh current page
+     * 
+     * @return void
+     */
+    public function refresh()
+    {
+        $this->headerBag->clear()
+                        ->appendPair('Refresh', '0');
+
+        // Send all attached headers
+        $this->headerBag->send();
+        exit();
+    }
+
+    /**
      * Send HTTP headers that indicate that access isn't allowed
      * 
      * @return void
