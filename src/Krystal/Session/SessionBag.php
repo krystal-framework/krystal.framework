@@ -16,6 +16,7 @@ use Krystal\Session\Adapter\SaveHandlerInterface;
 use Krystal\Http\PersistentStorageInterface;
 use Krystal\Http\CookieBagInterface;
 use RuntimeException;
+use Closure;
 
 final class SessionBag implements SessionBagInterface, PersistentStorageInterface
 {
@@ -271,6 +272,24 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
         }
 
         return true;
+    }
+
+    /**
+     * Returns data invoking callback only once
+     * 
+     * @param string $key
+     * @param \Closure $callback Callback function that returns a value
+     * @return mixed
+     */
+    public function getOnce($key, Closure $callback)
+    {
+        if ($this->has($key) !== false) {
+            return $this->session[$key];
+        } else {
+            $value = $callback();
+            $this->set($key, $value);
+            return $value;
+        }
     }
 
     /**
