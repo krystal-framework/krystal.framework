@@ -21,22 +21,21 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * @param string $method
      * @param string $url Target URL
      * @param array $data Data to be sent
-     * @param string $prepend The character to be prepended to query string for GET request
      * @param array $extra Extra options
      * @param \UnexpectedValueException If unknown HTTP method provided
      * @return mixed
      */
-    public function request($method, $url, array $data = array(), $prepend = '?', array $extra = array())
+    public function request($method, $url, array $data = array(), array $extra = array())
     {
         switch (strtoupper($method)) {
             case 'POST':
                 return $this->post($url, $data, $extra);
             case 'GET':
-                return $this->get($url, $data, $prepend, $extra);
+                return $this->get($url, $data, $extra);
             case 'PATCH':
                 return $this->patch($url, $data, $extra);
             case 'HEAD':
-                return $this->head($url, $data, $prepend, $extra);
+                return $this->head($url, $data, $extra);
             case 'PUT':
                 return $this->put($url, $data, $extra);
             case 'DELETE':
@@ -51,14 +50,17 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * 
      * @param string $url Target URL
      * @param array $data Data to be sent
-     * @param string $prepend The character to be prepended to query string
      * @param array $extra Extra options
      * @return mixed
      */
-    public function get($url, array $data = array(), $prepend = '?', array $extra = array())
+    public function get($url, array $data = array(), array $extra = array())
     {
+        if (!empty($data)) {
+            $url = $url . '?' . http_build_query($data);
+        }
+
 		$curl = new Curl(array(
-            CURLOPT_URL => $url . $prepend . http_build_query($data),
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false
         ), $extra);
@@ -154,13 +156,16 @@ final class CurlHttplCrawler implements HttpCrawlerInterface
      * @param string $url Target URL
      * @param array $data Data to be sent
      * @param array $extra Extra options
-     * @param string $prepend The character to be prepended to query string
      * @return mixed
      */
-    public function head($url, array $data = array(), $prepend = '?', array $extra = array())
+    public function head($url, array $data = array(), array $extra = array())
     {
+        if (!empty($data)) {
+            $url = $url . '?' . http_build_query($data);
+        }
+
         $curl = new Curl(array(
-            CURLOPT_URL => $url . $prepend . http_build_query($data),
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_NOBODY => true,
             CURLOPT_POSTFIELDS => http_build_query($data)
