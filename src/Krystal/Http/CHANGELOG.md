@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `Request` service added `isLocal()` method that determines whether running from local machine or not
  * In `CookieBag` service added `getOnce()` method
  * In `Http\Response\HttpResponse` added refresh()
  * In Request service added `getJsonBody()` and `getXmlBody()` that grab and parse data from raw POST request

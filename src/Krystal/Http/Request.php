@@ -71,6 +71,16 @@ final class Request implements RequestInterface
     }
 
     /**
+     * Checks whether requires comes from local machine
+     * 
+     * @return boolean
+     */
+    public function isLocal()
+    {
+        return $this->server['SERVER_ADDR'] === $this->getClientIP();
+    }
+
+    /**
      * Checks whether a path looks as an URL
      * 
      * @param string $path
