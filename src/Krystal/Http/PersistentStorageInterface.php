@@ -11,6 +11,8 @@
 
 namespace Krystal\Http;
 
+use Closure;
+
 /* Cookie and Session Bags must implement this contract */
 interface PersistentStorageInterface
 {
@@ -34,6 +36,15 @@ interface PersistentStorageInterface
      * @return array
      */
     public function getAll();
+
+    /**
+     * Returns data invoking callback only once
+     * 
+     * @param string $key
+     * @param \Closure $callback Callback function that returns a value
+     * @return mixed
+     */
+    public function getOnce($key, Closure $callback);
 
     /**
      * Retrieves a key form storage

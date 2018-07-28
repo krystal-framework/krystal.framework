@@ -16,6 +16,7 @@ use Krystal\Security\CrypterInterface;
 use RuntimeException;
 use InvalidArgumentException;
 use UnexpectedValueException;
+use Closure;
 
 final class CookieBag implements CookieBagInterface, PersistentStorageInterface
 {
@@ -159,6 +160,25 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
     public function setEncrypted($key, $value, $ttl = TimeHelper::YEAR, $path = '/', $secure = false, $httpOnly = false, $raw = false)
     {
         return $this->set($key, $this->getCrypter()->encryptValue($value), $ttl, $path, $secure, $httpOnly, $raw);
+    }
+
+    /**
+     * Returns data invoking callback only once
+     * 
+     * @param string $key
+     * @param \Closure $callback Callback function that returns a value
+     * @return mixed
+     */
+    public function getOnce($key, Closure $callback)
+    {
+        if ($this->has($key)) {
+            return $this->cookies[$key];
+        } else {
+            $value = $callback();
+            $this->set($key, $value);
+
+            return $value;
+        }
     }
 
     /**
