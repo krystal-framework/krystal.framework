@@ -63,6 +63,16 @@ class ListView
     }
 
     /**
+     * Renders object as a string
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->render();
+    }
+
+    /**
      * Renders the list grid
      * 
      * @return string
