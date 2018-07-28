@@ -126,7 +126,15 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
 
         // Arguments to pass either to setrawcookie() or setcookie()
         // By doing it this way, we adhere to the DRY principle
-        $arguments = array($key, (string) $value, $ttl + abs(time()), $path, $_SERVER['HTTP_HOST'], $secure, $httpOnly);
+        $arguments = array(
+            $key, 
+            (string) $value, 
+            $ttl + abs(time()), 
+            $path, 
+            $_SERVER['HTTP_HOST'], 
+            $secure, 
+            $httpOnly
+        );
 
         // Quick workaround that makes a cookie available on the current HTTP request
         $this->cookies[$key] = $value;
@@ -139,7 +147,6 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
         }
 
         // If setcookie() successfully runs, it will return TRUE. However, this does not indicate whether the user accepted the cookie
-        // but anyway it's better than void
         return call_user_func_array($function, $arguments);
     }
 
