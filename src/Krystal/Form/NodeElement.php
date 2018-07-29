@@ -12,6 +12,7 @@
 namespace Krystal\Form;
 
 use LogicException;
+use Krystal\Security\Filter;
 
 final class NodeElement implements NodeElementInterface
 {
@@ -340,6 +341,9 @@ final class NodeElement implements NodeElementInterface
      */
     public function addAttribute($attribute, $value)
     {
+        // Escape special characters
+        $value = Filter::specialChars($value);
+
         if ($this->isProperty($attribute)) {
             $this->addPropertyOnDemand($attribute, $value);
         } else {

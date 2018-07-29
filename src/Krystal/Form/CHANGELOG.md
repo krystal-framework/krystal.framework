@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now automatically escape attribute values when rendering elements via `Element` class
  * In `BreadcrumbBag` added `getCount()` that returns a count of available breadcrumbs
  * `Krystal\Form\Element::select()` can now select all nodes if `*` provided as a selector for active nodes
  * `Krystal\Form\Element::select()` can now accept optional visitor for option nodes
