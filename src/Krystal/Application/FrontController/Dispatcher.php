@@ -72,7 +72,7 @@ final class Dispatcher implements DispatcherInterface
      */
     public function call($class, $action, array $params = array(), array $options = array())
     {
-        $controller = $this->controllerFactory->build($class, $options);
+        $controller = $this->controllerFactory->build($class, $action, $options);
 
         if (method_exists($controller, $action)) {
             return call_user_func_array(array($controller, $action), $params);

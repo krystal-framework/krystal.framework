@@ -39,10 +39,11 @@ final class ControllerFactory implements ControllerFactoryInterface
      * Builds a controller instance
      * 
      * @param string $controller PSR-0 Compliant path
+     * @param string $action Method to be invoked on controller
      * @param array $options Route options passed to corresponding controller
      * @return \Krystal\Application\Controller\AbstractController
      */
-    public function build($controller, array $options)
+    public function build($controller, $action, array $options)
     {
         $class = Ns::normalize($controller);
 
@@ -54,8 +55,7 @@ final class ControllerFactory implements ControllerFactoryInterface
             $controller = new $class($this->serviceLocator, $module, $options);
 
             if (method_exists($controller, 'initialize')) {
-
-                $controller->initialize();
+                $controller->initialize($action);
 
                 if ($controller->isHalted()) {
                     throw new DomainException('Controller halted its execution due to route options mismatch');

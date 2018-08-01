@@ -328,9 +328,10 @@ abstract class AbstractController
     /**
      * Invoked right after class instantiation
      * 
+     * @param string $action Current action to be executed
      * @return void
      */
-    final public function initialize()
+    final public function initialize($action)
     {
         $this->haltOnDemand();
 
@@ -339,7 +340,7 @@ abstract class AbstractController
                    ->setTheme($this->appConfig->getTheme());
 
         if (method_exists($this, 'bootstrap')) {
-            $this->bootstrap();
+            $this->bootstrap($action);
         }
 
         if (method_exists($this, 'onAuth')) {
