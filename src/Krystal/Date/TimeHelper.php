@@ -27,6 +27,24 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Returns current date (and time)
+     * 
+     * @param boolean $time
+     * @return string
+     */
+    public static function getNow($time = true)
+    {
+        // Dynamic format depending time requirement
+        if ($time === true) {
+            $format = 'Y-m-d H:i:s';
+        } else {
+            $format = 'Y-m-d';
+        }
+
+        return date($format);
+    }
+
+    /**
      * Checks whether a date expired regarding first one
      * 
      * @param string $startDate Starting date with time
