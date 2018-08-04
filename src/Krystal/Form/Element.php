@@ -61,6 +61,22 @@ class Element
     }
 
     /**
+     * Creates a link with inner icon
+     * 
+     * @param string $icon
+     * @param string $link
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function icon($icon, $link, array $attributes = array())
+    {
+        // Inner text
+        $text = sprintf('<i class="%s"></i> ', $icon);
+
+        return self::link($text, $link, $attributes);
+    }
+
+    /**
      * Creates link element
      * 
      * @param string $text
