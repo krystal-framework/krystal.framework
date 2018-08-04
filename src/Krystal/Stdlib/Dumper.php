@@ -11,7 +11,7 @@
 
 namespace Krystal\Stdlib;
 
-class Dumper
+final class Dumper
 {
     /**
      * Dumps a variable
@@ -22,12 +22,16 @@ class Dumper
      */
     public static function dump($variable, $exit = true)
     {
-        if (false === $variable) {
-            var_dump($variable);
+        if (is_object($variable) && method_exists($variable, '__toString')) {
+            echo $variable;
         } else {
+            if (false === $variable) {
+                var_dump($variable);
+            } else {
 
-            $text = sprintf('<pre>%s</pre>', print_r($variable, true));
-            print $text;
+                $text = sprintf('<pre>%s</pre>', print_r($variable, true));
+                print $text;
+            }
         }
 
         if ($exit === true) {
