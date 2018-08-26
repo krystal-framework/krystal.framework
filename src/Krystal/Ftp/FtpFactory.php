@@ -22,9 +22,9 @@ final class FtpFactory
      * @param string $host
      * @param string $username
      * @param string $password
-     * @param integer $timeout
-     * @param integer $port
-     * @param boolean $ssl
+     * @param integer $timeout Timeout to wait for connection success in seconds
+     * @param integer $port FTP port
+     * @param boolean $ssl Whether to connect via secure layer
      * @throws \RuntimeException If cannot connect to the remote host
      * @throws \LogicException If Invalid combination of username and password provided
      * @return \Krystal\Ftp\FtpManager
