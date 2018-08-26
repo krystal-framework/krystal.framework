@@ -15,6 +15,7 @@ use Krystal\InstanceManager\ServiceLocatorInterface;
 use Krystal\Application\View\Resolver\ModuleResolver;
 use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Db\Filter\FilterInvoker;
+use Krystal\Stdlib\ArrayUtils;
 use RuntimeException;
 
 abstract class AbstractController
@@ -109,7 +110,11 @@ abstract class AbstractController
      */
     final protected function createUrl($controller, array $args = array(), $index = 0)
     {
-        return $this->urlBuilder->createUrl($controller, $args, $index);
+        if (ArrayUtils::isAssoc($args)) {
+            return $this->urlBuilder->createQueryUrl($controller, $args, $index);
+        } else {
+            return $this->urlBuilder->createUrl($controller, $args, $index);
+        }
     }
 
     /**
