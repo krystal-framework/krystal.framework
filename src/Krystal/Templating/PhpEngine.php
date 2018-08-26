@@ -18,7 +18,7 @@ class PhpEngine
      * 
      * @param string $code PHP code
      * @param array $vars
-     * @return void
+     * @return string
      */
     public static function execute($code, array $vars = array())
     {

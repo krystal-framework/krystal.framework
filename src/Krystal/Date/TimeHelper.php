@@ -19,7 +19,7 @@ use DateTime;
  */
 abstract class TimeHelper
 {
-    const MINUTE = 60; 
+    const MINUTE = 60;
     const SECOND = 1;
     const DAY = 86400;
     const WEEK = 604800;
