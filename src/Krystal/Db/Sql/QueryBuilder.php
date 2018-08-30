@@ -620,11 +620,12 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * 
      * @param string $column The column to round
      * @param float $decimals Specifies the number of decimals to be returned
+     * @param string $alias Optional alias
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function round($column, $decimals)
+    public function round($column, $decimals, $alias = null)
     {
-        return $this->func('ROUND', array($column, $decimals));
+        return $this->func('ROUND', array($column, $decimals), $alias);
     }
 
     /**

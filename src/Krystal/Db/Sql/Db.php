@@ -888,11 +888,12 @@ final class Db implements DbInterface, RelationableServiceInterface
      * 
      * @param string $column The column to round
      * @param float $decimals Specifies the number of decimals to be returned
+     * @param string $alias Optional alias
      * @return \Krystal\Db\Sql\Db
      */
-    public function round($column, $decimals)
+    public function round($column, $decimals, $alias = null)
     {
-        $this->queryBuilder->round($column, $alias);
+        $this->queryBuilder->round($column, $decimals, $alias);
         return $this;
     }
 
