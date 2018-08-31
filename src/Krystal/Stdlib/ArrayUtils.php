@@ -45,10 +45,11 @@ abstract class ArrayUtils
      * 
      * @param array $raw Raw array
      * @param string $key The key to be considered as partition
+     * @param boolean $keepKey Whether to keep key in output
      * @throws \LogicException if unknown partition key supplied
      * @return array Dropped array
      */
-    public static function arrayPartition(array $raw, $key)
+    public static function arrayPartition(array $raw, $key, $keepKey = true)
     {
         $result = array();
 
@@ -63,10 +64,15 @@ abstract class ArrayUtils
             // Extract module' name as a key and put the rest into its values
             $target = array($collection[$key] => $collection);
 
+            
             foreach ($target as $module => $array) {
                 // When doesn't exist, then need to create a one
                 if (!isset($result[$module])) {
                     $result[$module] = array();
+                }
+
+                if ($keepKey == false) {
+                    unset($array[$key]);
                 }
 
                 $result[$module][] = $array;
