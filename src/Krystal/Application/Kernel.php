@@ -259,9 +259,6 @@ final class Kernel implements KernelInterface
         // Timezone
         if (isset($this->config['timezone'])) {
             date_default_timezone_set($this->config['timezone']);
-        } else {
-            // TODO: Attempt to read default one, and if no default one, then throw an exception
-            throw new LogicException('A timezone was not specified');
         }
 
         // And lastly, magic quotes filter

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Make timezone optional in configuration
  * Since now shared `createUrl()` can build both query URLs and simple ones. It detects the type of array provided in arguments
  * In base controller's `bootstrap()` added `$action` argument which can be used to determined which action is about to be executed
  * In `\Krystal\Application\View\PluginBag` added `appendLastScript()` and `appendLastScripts()` that always append scripts last
