@@ -317,7 +317,7 @@ final class TableMaker
 
         foreach ($columns as $configuration) {
 			$column = $configuration[self::GRID_PARAM_COLUMN];
-			$value = $data[$column];
+			$value = isset($data[$column]) ? $data[$column] : null;
 
             // Ignore if configuration for current column isn't provided
             if (!$this->hasColumnConfiguration($column)) {
