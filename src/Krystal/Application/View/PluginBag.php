@@ -35,6 +35,13 @@ final class PluginBag implements PluginBagInterface
     private $lastScripts = array();
 
     /**
+     * A collection of stylesheet files that must be always loaded last
+     * 
+     * @var array
+     */
+    private $lastStylesheets = array();
+
+    /**
      * All stylesheets
      * 
      * @var array
@@ -126,7 +133,33 @@ final class PluginBag implements PluginBagInterface
      */
     public function getStylesheets()
     {
-        return $this->stylesheets;
+        return array_merge($this->stylesheets, $this->lastStylesheets);
+    }
+
+    /**
+     * Appends last stylsheet
+     * 
+     * @param string $stylesheet
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function appendLastStylesheet($stylesheet)
+    {
+        return $this->appendInternal($stylesheet, $this->lastStylesheets);
+    }
+
+    /**
+     * Append last stylesheet files
+     * 
+     * @param array $stylesheets
+     * @return \Krystal\Application\View\PluginBag
+     */
+    public function appendLastStylesheets(array $stylesheets)
+    {
+        foreach ($stylesheets as $stylesheet) {
+            $this->appendLastStylesheet($stylesheet);
+        }
+
+        return $this;
     }
 
     /**

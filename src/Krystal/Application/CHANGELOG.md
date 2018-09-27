@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `\Krystal\Application\View\PluginBag` added `appendLastStylesheet()` and `appendLastStylesheets()` that always append last stylesheets
  * Make timezone optional in configuration
  * Since now shared `createUrl()` can build both query URLs and simple ones. It detects the type of array provided in arguments
  * In base controller's `bootstrap()` added `$action` argument which can be used to determined which action is about to be executed
