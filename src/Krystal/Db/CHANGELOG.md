@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In database service added `whereRandom()`, `andWhereRandom()` and `orWhereRandom()` to abstract building alternative query fragments of `ORDER BY RAND()`
  * Added shared `persistMany()` method
  * Since now `InputDecorator` supports iteration over it
  * Added alias for `getFullColumnName()`

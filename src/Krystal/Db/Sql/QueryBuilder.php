@@ -952,6 +952,72 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Creates alternative condition of ORDER BY RAND() that works much faster
+     * 
+     * @param string $column Column to be sorted by in random order
+     * @param string $table Target table name
+     * @throws \RuntimeException if no table is selected and no table name provided 
+     * @return string
+     */
+    private function createRandomCriteria($column, $table)
+    {
+        if ($table === null) {
+            if ($this->table !== null) {
+                $table = $this->table;
+            } else {
+                throw new RuntimeException('No table selected and no table name provided');
+            }
+        }
+
+        // Build inner query
+        $inner = new self();
+        $inner->select()
+              ->max($column)
+              ->from($table);
+
+        return sprintf('FLOOR(1 + RAND() * (%s))', $inner->getQueryString());
+    }
+
+    /**
+     * An alternative of ORDER BY RAND() for the first WHERE condition
+     * 
+     * @param string $column Column to be sorted by in random order
+     * @param string $table Target table name
+     * @throws \RuntimeException if no table is selected and no table name provided 
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function whereRandom($column, $table = null)
+    {
+        return $this->where($column, '>=', $this->createRandomCriteria($column, $table));
+    }
+
+    /**
+     * An alternative of ORDER BY RAND() for the second WHERE condition
+     * 
+     * @param string $column Column to be sorted by in random order
+     * @param string $table Target table name
+     * @throws \RuntimeException if no table is selected and no table name provided 
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function andWhereRandom($column, $table = null)
+    {
+        return $this->andWhere($column, '>=', $this->createRandomCriteria($column, $table));
+    }
+
+    /**
+     * An alternative of ORDER BY RAND() for the second WHERE ... OR condition
+     * 
+     * @param string $column Column to be sorted by in random order
+     * @param string $table Target table name
+     * @throws \RuntimeException if no table is selected and no table name provided 
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function orWhereRandom($column, $table = null)
+    {
+        return $this->orWhere($column, '>=', $this->createRandomCriteria($column, $table));
+    }
+
+    /**
      * Appends OR WHERE expression with equality operator
      * 
      * @param string $column

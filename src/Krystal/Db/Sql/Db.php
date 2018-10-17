@@ -1567,6 +1567,45 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * An alternative of ORDER BY RAND() for the first WHERE condition
+     * 
+     * @param string $column Column to be sorted by in random order
+     * @param string $table Target table name
+     * @throws \RuntimeException if no table is selected and no table name provided 
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function whereRandom($column, $table = null)
+    {
+        return $this->queryBuilder->whereRandom($column, $table);
+    }
+
+    /**
+     * An alternative of ORDER BY RAND() for the second WHERE condition
+     * 
+     * @param string $column Column to be sorted by in random order
+     * @param string $table Target table name
+     * @throws \RuntimeException if no table is selected and no table name provided 
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function andWhereRandom($column, $table = null)
+    {
+        return $this->queryBuilder->andWhereRandom($column, $table);
+    }
+
+    /**
+     * An alternative of ORDER BY RAND() for the second WHERE ... OR condition
+     * 
+     * @param string $column Column to be sorted by in random order
+     * @param string $table Target table name
+     * @throws \RuntimeException if no table is selected and no table name provided 
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function orWhereRandom($column, $table = null)
+    {
+        return $this->queryBuilder->orWhereRandom($column, $table);
+    }
+
+    /**
      * Appends OR WHERE expression with equality operator
      * 
      * @param string $column
