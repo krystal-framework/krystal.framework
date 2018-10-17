@@ -895,6 +895,26 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends constraint string
+     * 
+     * @param string $token
+     * @param string $column
+     * @param string $operator
+     * @param string $value
+     * @param boolean $filter Whether to filter by value
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    private function createConstraint($token, $column, $operator, $value, $filter)
+    {
+        if (!$this->isFilterable($filter, $value)) {
+            return $this;
+        }
+
+        $this->append(sprintf('%s %s %s %s ', $token, $this->quote($column), $operator, $value));
+        return $this;
+    }
+
+    /**
      * Appends WHERE expression
      * 
      * @param string $column
@@ -905,12 +925,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function where($column, $operator, $value, $filter = false)
     {
-        if (!$this->isFilterable($filter, $value)) {
-            return $this;
-        }
-
-        $this->append(sprintf(' WHERE %s %s %s ', $this->quote($column), $operator, $value));
-        return $this;
+        return $this->createConstraint(' WHERE', $column, $operator, $value, $filter);
     }
 
     /**
@@ -924,12 +939,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function andWhere($key, $operator, $value, $filter = false)
     {
-        if (!$this->isFilterable($filter, $value)) {
-            return $this;
-        }
-
-        $this->append(sprintf('AND %s %s %s ', $this->quote($key), $operator, $value));
-        return $this;
+        return $this->createConstraint('AND', $key, $operator, $value, $filter);
     }
 
     /**
@@ -943,12 +953,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function orWhere($key, $operator, $value, $filter = false)
     {
-        if (!$this->isFilterable($filter, $value)) {
-            return $this;
-        }
-
-        $this->append(sprintf(' OR %s %s %s ', $this->quote($key), $operator, $value));
-        return $this;
+        return $this->createConstraint(' OR', $key, $operator, $value, $filter);
     }
 
     /**
