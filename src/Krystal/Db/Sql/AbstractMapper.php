@@ -283,12 +283,11 @@ abstract class AbstractMapper
      */
     final public function syncWithJunction($table, $masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
+        // Remove previous ones
         $this->removeFromJunction($table, $masterValue, $masterColumn);
 
-        // Make sure slaves ain't empty, before executing INSERT query
-        if (!empty($slaves)) {
-            $this->insertIntoJunction($table, $masterValue, $slaves, $masterColumn, $slaveColumn);
-        }
+        // And insert new ones
+        $this->insertIntoJunction($table, $masterValue, $slaves, $masterColumn, $slaveColumn);
 
         return true;
     }
@@ -326,8 +325,13 @@ abstract class AbstractMapper
      */
     final public function insertIntoJunction($table, $masterValue, array $slaves, $masterColumn = self::PARAM_JUNCTION_MASTER_COLUMN, $slaveColumn = self::PARAM_JUNCTION_SLAVE_COLUMN)
     {
-        return $this->db->insertIntoJunction($table, array($masterColumn, $slaveColumn), $masterValue, $slaves)
-                        ->execute();
+        // Avoid executing empty query
+        if (!empty($slaves)) {
+            return $this->db->insertIntoJunction($table, array($masterColumn, $slaveColumn), $masterValue, $slaves)
+                            ->execute();
+        } else {
+            return false;
+        }
     }
 
     /**
