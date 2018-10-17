@@ -931,29 +931,29 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     /**
      * Appends AND WHERE expression
      * 
-     * @param string $key
+     * @param string $column
      * @param string $operator
      * @param string $value
      * @param boolean $filter Whether to filter by value
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function andWhere($key, $operator, $value, $filter = false)
+    public function andWhere($column, $operator, $value, $filter = false)
     {
-        return $this->createConstraint('AND', $key, $operator, $value, $filter);
+        return $this->createConstraint('AND', $column, $operator, $value, $filter);
     }
 
     /**
      * Appends AND WHERE expression
      * 
-     * @param string $key
+     * @param string $column
      * @param string $operator
      * @param string $value
      * @param boolean $filter Whether to filter by value
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function orWhere($key, $operator, $value, $filter = false)
+    public function orWhere($column, $operator, $value, $filter = false)
     {
-        return $this->createConstraint(' OR', $key, $operator, $value, $filter);
+        return $this->createConstraint(' OR', $column, $operator, $value, $filter);
     }
 
     /**
