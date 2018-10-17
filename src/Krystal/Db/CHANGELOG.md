@@ -9,7 +9,7 @@ CHANGELOG
  * Since now `InputDecorator` supports iteration over it
  * Added alias for `getFullColumnName()`
  * Added optional relation short-cuts in JOIN methods
- * Between generators since now support instancef of `RawSqlFragment`
+ * Between generators since now support instance of of `RawSqlFragment`
  * Added `func()` generator
  * Support optional user-defined parameters in filter's `invoke()` method
  * Support instances of `RawSqlFragment` in `select()`
@@ -43,7 +43,7 @@ CHANGELOG
  * In `\Krystal\Db\Sql\AbstractMapper` added `getMaxId()` to return the maximal PK's value
  * In `\Krystal\Db\Sql\AbstractMapper` added `persistRow()` to persist a data-set and return it after doing so with PK
  * Fixed issue with commas when appending several SQL functions after SELECT statement
- * Fixed issue with empty wildcarts appeinding to the query when invoking a filter
+ * Fixed issue with empty wildcarts appending to the query when invoking a filter
  * Fixed `getLastId()` in database service
  * Internal improvement with PDO placeholder bindings
  * In database service, added `paginateRaw()` to paginate result-sets without guessing
@@ -87,7 +87,7 @@ CHANGELOG
  * Improved internals of `Db\Sql\TableBuilder` . Now it can parse dumps via PDO natively
  * Since now `Db\Sql\TableBuilder` can load data from strings as well. Added new `loadFromString()` method
  * Added ability to re-define default fetching mode in `query()` and `queryAll()` methods
-   Since now, the second argument defines a fethcing mode
+   Since now, the second argument defines a fetching mode
  * Added missing LogicException import in `AbstractMapper`
  * Added asc() to `Db` service
 
