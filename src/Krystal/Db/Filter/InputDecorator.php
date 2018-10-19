@@ -147,7 +147,7 @@ final class InputDecorator implements ArrayAccess, Iterator
         $default = '';
 
         if ($this->has($key)) {
-            return $this->data[$key];
+            return (string) $this->data[$key];
         } else {
             return $default;
         }
