@@ -51,6 +51,7 @@ final class TableMaker
     const GRID_PARAM_FILTER = 'filter';
     const GRID_PARAM_COLUMNS = 'columns';
     const GRID_PARAM_COLUMN = 'column';
+    const GRID_PARAM_NAME = 'name';
     const GRID_PARAM_LABEL = 'label';
     const GRID_PARAM_TYPE = 'type';
     const GRID_PARAM_PK = 'pk';
@@ -253,7 +254,9 @@ final class TableMaker
 
             // Find out whether a column needs to have a filter
             $filter = $this->findOptionByColumn($row[self::GRID_PARAM_COLUMN], self::GRID_PARAM_FILTER);
-            $name = $this->createInputName(self::GRID_PARAM_FILTER, $row[self::GRID_PARAM_COLUMN]);
+
+            // Use provided name if available, otherwise name it as a column
+            $name = $this->createInputName(self::GRID_PARAM_FILTER, isset($row[self::GRID_PARAM_NAME]) ? $row[self::GRID_PARAM_NAME] : $row[self::GRID_PARAM_COLUMN]);
 
             if ($filter) {
                 // If filter is array, then assume its for select
