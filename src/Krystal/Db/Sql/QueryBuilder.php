@@ -1906,10 +1906,10 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function dropTable($target, $ifExists = true)
     {
-        $query = 'DROP TABLE';
+        $query = 'DROP TABLE ';
 
         if ($ifExists === true) {
-            $query .= ' IF EXISTS ';
+            $query .= 'IF EXISTS ';
         }
 
         if (!is_array($target)) {
@@ -1917,7 +1917,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         }
 
         $target = $this->quote($target);
-        $query .= sprintf('%s ;', implode(', ', $target));
+        $query .= sprintf('%s;', implode(', ', $target));
 
         $this->append($query);
         return $this;
