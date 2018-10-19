@@ -54,6 +54,17 @@ class Filter implements Sanitizeable
     }
 
     /**
+     * Decodes special HTML characters
+     * 
+     * @param string $value
+     * @return string
+     */
+    public static function charsDecode($value)
+    {
+        return htmlspecialchars_decode($value, \ENT_QUOTES);
+    }
+
+    /**
      * Convert special characters to HTML entities
      * 
      * @param string $value
