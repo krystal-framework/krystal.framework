@@ -40,7 +40,7 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     public function testCanGenerateSelectWithColumns()
     {
         $this->qb->select(array('id', 'name'));
-        $this->verify('SELECT id, name');
+        $this->verify('SELECT `id`, `name`');
     }
 
     public function testCanGenerateColumnsWithAlias()
@@ -50,7 +50,7 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
             'name'
         ));
 
-        $this->verify('SELECT table.column AS `alias`, name');
+        $this->verify('SELECT table.column AS `alias`, `name`');
     }
 
     public function testCanGenerateSelectWithAvg()
@@ -168,21 +168,21 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->qb->dropTable('users', false);
 
-        $this->verify('DROP TABLE `users`');
+        $this->verify('DROP TABLE `users`;');
     }
 
     public function testCanGenerateDropManyTables()
     {
         $this->qb->dropTable(array('users', 'passwords'), false);
 
-        $this->verify('DROP TABLE `users`, `passwords`');
+        $this->verify('DROP TABLE `users`, `passwords`;');
     }
 
     public function testCanGenerateDropTableIfExists()
     {
         $this->qb->dropTable('users');
 
-        $this->verify('DROP TABLE IF EXISTS `users`');
+        $this->verify('DROP TABLE IF EXISTS `users`;');
     }
 
     public function testCanGenerateIncrement()
