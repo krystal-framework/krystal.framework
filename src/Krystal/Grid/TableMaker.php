@@ -256,11 +256,14 @@ final class TableMaker
             $filter = $this->findOptionByColumn($row[self::GRID_PARAM_COLUMN], self::GRID_PARAM_FILTER);
 
             // Use provided name if available, otherwise name it as a column
-            $name = $this->createInputName(self::GRID_PARAM_FILTER, isset($row[self::GRID_PARAM_NAME]) ? $row[self::GRID_PARAM_NAME] : $row[self::GRID_PARAM_COLUMN]);
+            $inputName = isset($row[self::GRID_PARAM_NAME]) ? $row[self::GRID_PARAM_NAME] : $row[self::GRID_PARAM_COLUMN];
+
+            // Full-qualified input name
+            $name = $this->createInputName(self::GRID_PARAM_FILTER, $inputName);
 
             if ($filter) {
                 // If filter is array, then assume its for select
-                $selected = $this->filter->get($row[self::GRID_PARAM_COLUMN]);
+                $selected = $this->filter->get($inputName);
 
                 if (is_array($filter)) {
                     $filter = array_replace(array('' => ''), $filter);
