@@ -18,6 +18,16 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($fragment, $this->qb->getQueryString());
     }
 
+    public function testCanGenerateWhereRandom()
+    {
+        // Build query
+        $this->qb->select('*')
+                 ->from('table')
+                 ->whereRandom('id');
+
+        $this->verify('SELECT * FROM `table` WHERE `id` >= FLOOR(1 + RAND() * (SELECT  MAX(`id`)  FROM `table`)) ');
+    }
+
     public function testCanGenerateInsert()
     {
         $this->qb->insert('table', array('name' => "'Dave'", 'age' => '24'));
