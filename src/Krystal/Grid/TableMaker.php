@@ -42,7 +42,7 @@ final class TableMaker
         'arrowDownIcon' => 'glyphicon glyphicon-arrow-down',
         'arrowUpIcon' => 'glyphicon glyphicon-arrow-up',
         'inputClass' => 'form-control',
-        'batch' => true // Whether to generate batch selection
+        'batch' => false // Whether to generate batch selection
     );
 
     const GRID_PARAM_ROW_ATTRS = 'rowAttributes';
@@ -104,7 +104,7 @@ final class TableMaker
     }
 
     /**
-     * Determines whether current configuration has at least one defined fitler
+     * Determines whether current configuration has at least one defined filter
      * 
      * @return boolean
      */
