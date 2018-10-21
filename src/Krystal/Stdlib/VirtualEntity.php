@@ -13,6 +13,7 @@ namespace Krystal\Stdlib;
 
 use Krystal\Security\Filter;
 use Krystal\Security\Sanitizeable;
+use Krystal\Text\TextUtils;
 use RuntimeException;
 use LogicException;
 use UnderflowException;
@@ -127,11 +128,12 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
      */
     private function handle($method, array $arguments, $default)
     {
-        // Target method we're working with
-        $method = strtolower($method);
-
-        // Target property
+        // Target property (drop set or get word)
         $property = substr($method, 3);
+
+        // Convert to snake case
+        $property = TextUtils::snakeCase($property);
+
         $start = substr($method, 0, 3);
 
         // Are we dealing with a getter?

@@ -5,7 +5,7 @@ CHANGELOG
 ---
 
  * Since now `Dumper::dump()` renders objects if they implement `__toString()`
- * `VirtualEntity` since now can be treated as array
+ * `VirtualEntity` since now can be treated as array and its properties can be accessed via snake case
  * Added `ArrayCollection` that simplifies work with static collections
  * Added `arrayDropdown()` in `Stdlib\ArrayUtils` to drop result-sets into partitions and prepare them for dropdowns
  * Added `arrayPartition()` in `Stdlib\ArrayUtils` to drop result-sets into partitions
