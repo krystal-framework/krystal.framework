@@ -172,6 +172,27 @@ class TextUtils
     }
 
     /**
+     * Converts target string to snake case
+     * https://en.wikipedia.org/wiki/Snake_case
+     * 
+     * @param string $target Target string (i.e Hello World or camelCase)
+     * @return string (hello_world or camel_case)
+     */
+    public static function snakeCase($target)
+    {
+        // Common patterns
+        $patterns = array(
+            '/([a-z\d])([A-Z])/',
+            '/([^_])([A-Z][a-z])/'
+        );
+
+        $output = preg_replace($patterns, '$1_$2', $target);
+
+        // Ensure output is in lowercase
+        return strtolower($output);
+    }
+
+    /**
      * Converts a string to studly case
      * 
      * @param string $input
