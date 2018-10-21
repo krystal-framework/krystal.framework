@@ -122,7 +122,7 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
      * @param string $method
      * @param array $arguments
      * @param mixed $default Default value to be returned if getter fails
-     * @throws \RuntimeException If has and violated writing constraint
+     * @throws \RuntimeException If has and violated writing constraint or method doesn't start from get or get
      * @throws \LogicException If trying to get undefined property
      * @return mixed
      */
@@ -148,10 +148,9 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
             } else {
                 return $default;
             }
-        }
 
         // Are we dealing with a setter?
-        if ($start == 'set') {
+        } else if ($start == 'set') {
             if ($this->once === true && $this->has($property)) {
                 throw new RuntimeException(sprintf('You can write to "%s" only once', $property));
             }
@@ -174,6 +173,11 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
             // setter is being used
             $this->container[$property] = $value;
             return $this;
+
+        } else {
+            throw new RuntimeException(sprintf(
+                'Virtual method name must start either from "get" or "set". You provided "%s"', $method
+            ));
         }
     }
 
