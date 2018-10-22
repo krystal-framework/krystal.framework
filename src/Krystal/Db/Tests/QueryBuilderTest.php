@@ -3,6 +3,7 @@
 namespace Krystal\Db\Tests;
 
 use Krystal\Db\Sql\QueryBuilder;
+use Krystal\Db\Sql\RawSqlFragment;
 
 class QueryBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,6 +17,15 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
     private function verify($fragment)
     {
         $this->assertEquals($fragment, $this->qb->getQueryString());
+    }
+
+    public function testOrderByCanAcceptRawFragment()
+    {
+        $this->qb->select('*')
+                 ->from('table')
+                 ->orderBy(array('name', new RawSqlFragment('IF (true, 1, 0)')));
+
+        $this->verify('SELECT * FROM `table` ORDER BY `name`, IF (true, 1, 0)');
     }
 
     public function testCanGenerateWhereRandom()

@@ -1497,7 +1497,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         } elseif (is_array($type)) {
             // Special case for non-associative array
             if (!ArrayUtils::isAssoc($type)) {
-                $type = $this->quote($type);
+                // Check if at least one value represents a raw fragment
+                foreach ($type as &$option) {
+                    // If raw, then do nothing but get it
+                    if ($option instanceof RawSqlFragmentInterface) {
+                        $option = $option->getFragment();
+                    } else {
+                        // Not raw - OK, then just quote it
+                        $option = $this->quote($option);
+                    }
+                }
             } else {
                 // If associative array supplied then assume that values represent sort orders
                 $result = array();
