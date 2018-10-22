@@ -1512,6 +1512,16 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
                 $result = array();
 
                 foreach ($type as $column => $sortOrder) {
+                    // Force sorting method to be in upper case
+                    $sortOrder = strtoupper($sortOrder);
+
+                    // Ensure that only valid sorting methods provided
+                    if (!in_array($sortOrder, array('ASC', 'DESC'))) {
+                        throw new LogicException(sprintf(
+                            'Only ASC and DESC methods are supported. You provided "%s"', $sortOrder
+                        ));
+                    }
+
                     // Only column names should be wrapped around backticks
                     array_push($result, sprintf('%s %s', $this->quote($column), $sortOrder));
                 }
