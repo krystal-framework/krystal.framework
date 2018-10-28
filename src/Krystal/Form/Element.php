@@ -45,6 +45,8 @@ class Element
                 return self::hidden($name, $value, $attributes);
             case 'date':
                 return self::date($name, $value, $attributes);
+            case 'time':
+                return self::time($name, $value, $attributes);
             case 'color':
                 return self::color($name, $value, $attributes);
             case 'textarea':
@@ -312,6 +314,29 @@ class Element
     public static function color($name, $value, array $attributes = array())
     {
         $node = new Node\Color();
+
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
+
+        return $node->render($attributes);
+    }
+
+    /**
+     * Creates date input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function time($name, $value, array $attributes = array())
+    {
+        $node = new Node\Time();
 
         if (!is_null($name)) {
             $attributes['name'] = $name;
