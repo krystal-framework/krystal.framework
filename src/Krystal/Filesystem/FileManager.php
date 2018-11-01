@@ -173,6 +173,21 @@ class FileManager implements FileManagerInterface
     }
 
     /**
+     * Tries to create a directory
+     * 
+     * @param string $dir
+     * @return boolean
+     */
+    public static function createDir($dir)
+    {
+        if (!file_exists($dir)) {
+            return mkdir($dir, 0777, true);
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Removes everything in a directory but leaves directory itself
      * 
      * @param string $dir
@@ -180,7 +195,7 @@ class FileManager implements FileManagerInterface
      */
     public static function cleanDir($dir)
     {
-        return self::rmdir($dir) && mkdir($dir, 0777);
+        return self::rmdir($dir) && self::createDir($dir);
     }
 
     /**
