@@ -13,6 +13,7 @@ namespace Krystal\Image\Tool;
 
 use Krystal\Filesystem\FileManager;
 use LogicException;
+use RuntimeException;
 
 final class FileHandler implements FileHandlerInterface
 {
@@ -68,12 +69,17 @@ final class FileHandler implements FileHandlerInterface
         $path = sprintf('%s/%s', $this->dir, $id);
 
         if ($image !== null) {
-            $tree = FileManager::getDirTree($path);
+            try {
+                $tree = FileManager::getDirTree($path);
 
-            foreach ($tree as $file) {
-                if (FileManager::getBaseName($file) == $image && is_file($file)) {
-                    FileManager::rmfile($file);
+                foreach ($tree as $file) {
+                    if (FileManager::getBaseName($file) == $image && is_file($file)) {
+                        FileManager::rmfile($file);
+                    }
                 }
+                
+            } catch(RuntimeException $e){
+                return false;
             }
 
         } else {
