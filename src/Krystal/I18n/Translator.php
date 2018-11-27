@@ -81,7 +81,20 @@ final class Translator implements TranslatorInterface
         $result = array();
 
         foreach ($array as $key => $value) {
-            if (is_scalar($value)) {
+            // Group translation
+            if (is_array($value)) {
+                $key = $this->translate($key);
+
+                // If group is not created yet, create it
+                if (!isset($result[$key])){
+                    $result[$key] = array();
+                }
+
+                foreach($value as $index => $inner) {
+                    $result[$key][$index] = $this->translate($inner);
+                }
+                
+            } else if (is_scalar($value)) {
                 $result[$key] = $this->translate($value);
             } else {
                 throw new InvalidArgumentException('Invalid array supplied');
