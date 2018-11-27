@@ -767,7 +767,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         if ($value instanceof RawSqlFragmentInterface) {
             $value = $value->getFragment();
         }
-        
+
+        if ($value instanceof RawBindingInterface) {
+            $value = $value->getTarget();
+        }
+
         $this->append(sprintf(' %s %s %s ', $this->quote($column), $operator, $value));
         return $this;
     }
