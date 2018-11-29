@@ -14,6 +14,32 @@ namespace Krystal\Templating;
 final class StringTemplate
 {
     /**
+     * Wraps a key into a variable
+     * 
+     * @param string $key
+     * @return string
+     */
+    public static function wrap($key)
+    {
+        return sprintf('{$%s}', $key);
+    }
+
+    /**
+     * Wrap many keys
+     * 
+     * @param array $keys
+     * @return array
+     */
+    public static function wrapMany(array $keys)
+    {
+        foreach ($keys as &$key) {
+            $key = self::wrap($key);
+        }
+
+        return $keys;
+    }
+
+    /**
      * Replaces vars (must be as {$var}) in a string
      * 
      * $input = 'Today i was about to do this at {$time} with {$name}';
@@ -32,9 +58,7 @@ final class StringTemplate
     public static function template($input, array $vars = array())
     {
         foreach ($vars as $key => $value) {
-            $pattern = sprintf('{$%s}', $key);
-
-            $input = str_replace($pattern, $value, $input);
+            $input = str_replace(self::wrap($key), $value, $input);
         }
 
         return $input;
