@@ -427,7 +427,7 @@ abstract class ArrayUtils
     }
 
     /**
-     * Returns a copy of an array without keys
+     * Returns a copy of an array without keys. Handles two dimensional arrays as well
      * 
      * @param array $array Target array
      * @param array $keys Keys to be removed
@@ -435,13 +435,25 @@ abstract class ArrayUtils
      */
     public static function arrayWithout(array $array, array $keys)
     {
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $array)) {
-                unset($array[$key]);
+        // Shared filter function
+        $filter = function(array $array, array $keys) {
+            foreach ($keys as $key) {
+                if (array_key_exists($key, $array)) {
+                    unset($array[$key]);
+                }
             }
-        }
 
-        return $array;
+            return $array;
+        };
+
+        if (self::hasAtLeastOneArrayValue($array)) {
+            // Apply on nested arrays as well
+            return self::filterArray($array, function($collection) use ($keys, $filter){
+                return $filter($collection, $keys);
+            });
+        } else {
+            return $filter($array, $keys);
+        }
     }
 
     /**
