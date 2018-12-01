@@ -72,8 +72,8 @@ final class DefinitionParser implements ParserInterface
         $result = array();
 
         foreach ($definitions as $target => $configuration) {
-            if (!isset($source[$target])) {
-                throw new RuntimeException(sprintf('Invalid input name supplied "%s"', $target));
+            if (!array_key_exists($target, $source)) {
+                throw new RuntimeException(sprintf('Invalid input name supplied %s', $target));
             }
 
             if (is_array($configuration)) {
