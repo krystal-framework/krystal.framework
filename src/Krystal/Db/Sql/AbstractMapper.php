@@ -800,14 +800,27 @@ abstract class AbstractMapper
      * Drop several tables at once
      * 
      * @param array $tables
+     * @param boolean $fkChecks Whether to enabled Foreign Key checks
      * @return boolean
      */
-    final public function dropTables(array $tables)
+    final public function dropTables(array $tables, $fkChecks = false)
     {
+        // Whether FK checks are enabled
+        if ($fkChecks == false) {
+            $this->db->raw('SET FOREIGN_KEY_CHECKS=0')
+                     ->execute();
+        }
+
         foreach ($tables as $table) {
             if (!$this->dropTable($table)) {
                 return false;
             }
+        }
+
+        // Whether FK checks are enabled
+        if ($fkChecks == false) {
+            $this->db->raw('SET FOREIGN_KEY_CHECKS=1')
+                     ->execute();
         }
 
         return true;
