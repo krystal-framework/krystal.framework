@@ -11,10 +11,10 @@
 
 namespace Krystal\Http\FileTransfer;
 
-use LogicException;
-use InvalidArgumentException;
-use UnexpectedValueException;
+use RecursiveIteratorIterator;
+use RecursiveArrayIterator;
 use RuntimeException;
+use Krystal\Stdlib\ArrayUtils;
 
 final class Input implements InputInterface
 {
@@ -29,121 +29,34 @@ final class Input implements InputInterface
      * State initialization
      * 
      * @param array $files That must be $_FILES superglobal
-     * @throws \LogicException if maximal depth level of $_FILES exceeds
      * @return void
      */
     public function __construct(array $files)
     {
-        if ($this->isValid($files)) {
-            $this->files = $files;
-            $this->prepare();
-        } else {
-            throw new LogicException('Invalid depth level of $_FILES supplied');
-        }
-    }
-
-    /**
-     * Prepares an array, so that we'll be able to safely work with it
-     * 
-     * @return void
-     */
-    private function prepare()
-    {
-        $this->remapAll();
-
-        // Now remove empty elements
-        $prepared = array();
-
-        foreach ($this->files as $name => $files) {
-            $prepared[$name] = $this->removeEmpty($files);
-        }
-
-        // Override with modified one
-        $this->files = $prepared;
-    }
-
-    /**
-     * Remove empty values, i.e values with ERR_NO_FILE errors
-     * 
-     * @param array $files
-     * @return array
-     */
-    private function removeEmpty(array $files)
-    {
-        $result = array();
-        foreach ($files as $index => $array) {
-            if (!empty($array['name']) && !empty($array['tmp_name'])) {
-                $result[] = $array;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Checks whether $_FILES input array is valid
-     * That ensures that its nested level isn't too deep
-     * 
-     * @param array $target
-     * @throws \UnexpectedValueException if invalid input name supplied
-     * @return boolean True if input is valid, False if not
-     */
-    private function isValid(array $target)
-    {
-        // When testing the array, we don't care about names, but values only
-        $files = array_values($target);
-
-        // Ensure that $_FILES isn't empty, before we even start doing anything
-        if (empty($files)) {
-            throw new UnexpectedValueException('Invalid input name supplied');
-        }
-
-        // An array is not sorted yet, so that we'd do naive nested level testing
-        foreach ($files as $index => $value) {
-            $target = $files[$index]['type'];
-            // If its an array, then multi-upload assumed
-            if (is_array($target)) {
-                foreach ($target as $index => $value) {
-                    // Jeez, it can no longer be nested
-                    if (is_array($value)) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
+        $this->files = $this->remapFiles($files);
     }
 
     /**
      * Checks whether named input field is empty. If $name is null, then checks the whole array
      * 
      * @param string $name Optionally filtered by name
-     * @throws RuntimeException if $name isn't valid field
+     * @throws \RuntimeException if $name isn't valid field
      * @return boolean
      */
     public function hasFiles($name = null)
     {
-        if ($name !== null) {
-            // Ensure the field exists
-            if (!array_key_exists($name, $this->files)) {
-                throw new RuntimeException(sprintf(
-                    'Attempted to access non-existing field %s', $name
-                ));
-            }
+        $files = $this->getFiles($name);
 
-            return !empty($this->files[$name]);
-        } else {
-            // Global checking if all values are not empty
-            $target = array();
-
-            foreach ($this->files as $name => $array) {
-                if (!empty($array)) {
-                    array_push($target, $array);
+        if ($name === null) {
+            foreach ($files as $name => $file) {
+                if (empty($file)) {
+                    return false;
                 }
             }
 
-            return count($target) !== 0;
+            return true;
+        } else {
+            return !ArrayUtils::hasAllArrayValues($files);
         }
     }
 
@@ -151,7 +64,7 @@ final class Input implements InputInterface
      * Return all files. Optionally filtered by named input
      * 
      * @param string $name Name filter
-     * @throws RuntimeException if $name isn't valid field
+     * @throws \RuntimeException if $name isn't valid field
      * @return object
      */
     public function getFiles($name = null)
@@ -165,15 +78,15 @@ final class Input implements InputInterface
 
             return $this->toEntity($this->files[$name]);
         } else {
-            // When returning all files
-            $return = array();
-            $names = array_keys($this->files);
 
-            foreach ($names as $name) {
-                $return[$name] = $this->toEntity($this->files[$name]);
+            // To be returned
+            $output = array();
+
+            foreach ($this->files as $key => $value) {
+                $output[$key] = $this->toEntity($value);
             }
 
-            return $return;
+            return $output;
         }
     }
 
@@ -195,63 +108,50 @@ final class Input implements InputInterface
                    ->setSize($array['size'])
                    ->setError($array['error']);
 
-            array_push($entities, $entity);
+            // Append only non-empty
+            if ($entity->getError() == 0) {
+                $entities[$index] = $entity;
+            }
         }
 
         return $entities;
     }
 
     /**
-     * Sorts whole input array
+     * Remaps superglogal $_FILES array
+     * Taken from here: http://php.net/manual/en/reserved.variables.files.php#118294
      * 
-     * @return void
-     */
-    private function remapAll()
-    {
-        $names = array_keys($this->files);
-
-        foreach ($names as $name) {
-            $this->files[$name] = $this->remap($this->files[$name]);
-        }
-    }
-
-    /**
-     * Remaps the initial array
-     * 
-     * @param string|array $source
+     * @param array $input Raw $_FILES superglobal
      * @return array
      */
-    private function remap($source)
+    private function remapFiles(array $input)
     {
-        if (is_array($source['size'])) {
-            // This is what we are going to return
-            $files = array();
+        $output = array();
 
-            foreach ($source as $key => $array) {
-                foreach ($array as $index => $value) {
-                    // Make sure it's not an array:
-                    if (!isset($files[$index]) || !is_array($files[$index])) {
-                        $files[$index] = array();
-                        // This key we want to assign right here
-                        // otherwise it will be not available inside "else" block
-                        $files[$index]['name'] = $value;
+        foreach ($input as $name => $array) {
+            foreach ($array as $field => $value) {
+                $pointer = &$output[$name];
+                if (!is_array($value)) {
+                    $pointer[$field] = $value;
+                    continue;
+                }
 
-                    } else {
-                        // Ensure the key does not exist
-                        if (!array_key_exists($key, $files[$index])) {
-                            // If so, append a new one
-                            $files[$index][$key] = $value;
-                        }
+                $stack = array(&$pointer);
+                $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($value), RecursiveIteratorIterator::SELF_FIRST);
+
+                foreach ($iterator as $key => $value) {
+                    array_splice($stack, $iterator->getDepth() + 1);
+                    $pointer = &$stack[count($stack) - 1];
+                    $pointer = &$pointer[$key];
+                    $stack[] = &$pointer;
+
+                    if (!$iterator->hasChildren()) {
+                        $pointer[$field] = $value;
                     }
                 }
             }
-
-            $source = $files;
-        } else {
-            // Not an array, then single upload assumed
-            $source = array(0 => $source);
         }
 
-        return $source;
+        return $output;
     }
 }
