@@ -11,42 +11,61 @@
 
 namespace Krystal\Http\FileTransfer;
 
-final class FileEntity implements FileEntityInterface
+use ArrayAccess;
+use BadMethodCallException;
+
+final class FileEntity implements FileEntityInterface, ArrayAccess
 {
     /**
-     * Detected MIMI-type
+     * Entity data container
      * 
-     * @var string
+     * @var array
      */
-    private $type;
+    private $container = array();
 
     /**
-     * Original file name
+     * Sets an offset
      * 
-     * @var string
+     * @param string $offset
+     * @return void
      */
-    private $name;
+    public function offsetSet($offset, $value)
+    {
+        throw new BadMethodCallException('The offset can not be set');
+    }
 
     /**
-     * Auto-generated path to temporary file
+     * Checks whether offset is defined
      * 
-     * @var string
+     * @param string $offset
+     * @return boolean
      */
-    private $tmpName;
+    public function offsetExists($offset)
+    {
+        return isset($this->container[$offset]);
+    }
 
     /**
-     * Error code if present
+     * Unsets an offset
      * 
-     * @var string
+     * @param string $offset
+     * @return void
      */
-    private $error;
+    public function offsetUnset($offset)
+    {
+        throw new BadMethodCallException('The offset can not be unset');
+    }
 
     /**
-     * File size in bytes
+     * Returns a value of offset
      * 
-     * @var integer
+     * @param string $offset
+     * @return void
      */
-    private $size;
+    public function offsetGet($offset)
+    {
+        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+    }
 
     /**
      * Returns unique name for uploaded file
@@ -67,7 +86,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function setType($type)
     {
-        $this->type = $type;
+        $this->container['type'] = $type;
         return $this;
     }
 
@@ -78,7 +97,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function getType()
     {
-        return $this->type;
+        return $this->container['type'];
     }
 
     /**
@@ -89,7 +108,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->container['name'] = $name;
         return $this;
     }
 
@@ -100,7 +119,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function getName()
     {
-        return $this->name;
+        return $this->container['name'];
     }
 
     /**
@@ -111,7 +130,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function setTmpName($tmpName)
     {
-        $this->tmpName = $tmpName;
+        $this->container['tmp_name'] = $tmpName;
         return $this;
     }
 
@@ -122,7 +141,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function getTmpName()
     {
-        return $this->tmpName;
+        return $this->container['tmp_name'];
     }
 
     /**
@@ -133,7 +152,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function setError($error)
     {
-        $this->error = $error;
+        $this->container['error'] = $error;
         return $this;
     }
 
@@ -144,7 +163,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function getError()
     {
-        return $this->error;
+        return $this->container['error'];
     }
 
     /**
@@ -155,7 +174,7 @@ final class FileEntity implements FileEntityInterface
      */
     public function setSize($size)
     {
-        $this->size = $size;
+        $this->container['size'] = $size;
         return $this;
     }
 
@@ -166,6 +185,6 @@ final class FileEntity implements FileEntityInterface
      */
     public function getSize()
     {
-        return $this->size;
+        return $this->container['size'];
     }
 }

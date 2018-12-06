@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * When returning file entities from upload, they can be used as arrays as well
  * Made file input handler more robust. Removed deep limitations. Keep indexes on initial array.
  * In `Request` service added `isLocal()` method that determines whether running from local machine or not
  * In `CookieBag` service added `getOnce()` method
