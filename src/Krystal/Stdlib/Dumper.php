@@ -25,7 +25,7 @@ final class Dumper
         if (is_object($variable) && method_exists($variable, '__toString')) {
             echo $variable;
         } else {
-            if (false === $variable) {
+            if (is_bool($variable)) {
                 var_dump($variable);
             } else {
 
