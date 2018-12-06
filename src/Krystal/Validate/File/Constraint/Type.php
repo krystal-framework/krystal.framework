@@ -39,7 +39,7 @@ final class Type extends AbstractConstraint
 	/**
 	 * {@inheritDoc}
 	 */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         foreach ($files as $file) {
             if ($file->getType() != $this->type) {

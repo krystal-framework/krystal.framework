@@ -39,7 +39,7 @@ final class UploadAmount extends AbstractConstraint
 	/**
 	 * {@inheritDoc}
 	 */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         if (count(array_keys($files)) != $this->amount) {
             $this->violate(sprintf($this->message, $this->amount));

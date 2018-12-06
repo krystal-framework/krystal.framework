@@ -39,7 +39,7 @@ final class FilenameRegEx extends AbstractConstraint
     /**
      * {@inheritDoc}
      */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         foreach ($files as $file) {
             // @ - because the RegEx pattern itself could be wrong and issue E_WARNING

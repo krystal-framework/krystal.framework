@@ -19,5 +19,5 @@ abstract class AbstractConstraint extends \Krystal\Validate\AbstractConstraint
      * @param array $files
      * @return boolean
      */
-    abstract public function isValid(array $files);
+    abstract public function isValid($files);
 }

@@ -39,7 +39,7 @@ final class Extension extends AbstractConstraint
     /**
      * {@inheritDoc}
      */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         foreach ($files as $file) {
             if (!$this->hasValidExtension($file->getName())) {

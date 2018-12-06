@@ -121,7 +121,7 @@ final class FileSize extends AbstractConstraint
 	/**
 	 * {@inheritDoc}
 	 */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         foreach ($files as $file) {
             if (!$this->match($this->operator, $file->getSize())) {

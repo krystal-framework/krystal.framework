@@ -24,7 +24,7 @@ final class WriteFail extends AbstractConstraint
     /**
      * {@inheritDoc}
      */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         foreach ($files as $file) {
             if ($file->getError() == \UPLOAD_ERR_CANT_WRITE) {

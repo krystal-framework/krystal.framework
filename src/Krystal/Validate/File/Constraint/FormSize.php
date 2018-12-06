@@ -24,7 +24,7 @@ final class FormSize extends AbstractConstraint
     /**
      * {@inheritDoc}
      */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         foreach ($files as $file) {
             if ($file->getError() == UPLOAD_ERR_FORM_SIZE) {

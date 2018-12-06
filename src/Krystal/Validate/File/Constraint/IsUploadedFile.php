@@ -21,7 +21,7 @@ final class IsUploadedFile extends AbstractConstraint
     /**
      * {@inhertitDoc}
      */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         foreach ($files as $file) {
             if (!is_uploaded_file($file->getTmpName())) {

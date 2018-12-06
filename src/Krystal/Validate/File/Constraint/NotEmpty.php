@@ -21,7 +21,7 @@ final class NotEmpty extends AbstractConstraint
     /**
      * {@inheritDoc}
      */
-    public function isValid(array $files)
+    public function isValid($files)
     {
         if (empty($files)) {
             $this->violate($this->message);
