@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `hasAllArrayValues()` in `Stdlib\ArrayUtils` to determine if all array values are arrays
  * `VirtualEntity` since now throws `\RuntimeException` if a method being called is not starting with "get" or "set"
  * Since now `Dumper::dump()` renders objects if they implement `__toString()`
  * `VirtualEntity` since now can be treated as array and its properties can be accessed via snake case

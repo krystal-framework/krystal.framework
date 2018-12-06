@@ -446,7 +446,7 @@ abstract class ArrayUtils
             return $array;
         };
 
-        if (self::hasAtLeastOneArrayValue($array)) {
+        if (self::hasAllArrayValues($array)) {
             // Apply on nested arrays as well
             return self::filterArray($array, function($collection) use ($keys, $filter){
                 return $filter($collection, $keys);
@@ -505,6 +505,23 @@ abstract class ArrayUtils
         }
 
         return $array;
+    }
+
+    /**
+     * Checks whether array values are arrays
+     * 
+     * @param array $array Target array
+     * @return boolean
+     */
+    public static function hasAllArrayValues(array $array)
+    {
+        foreach ($array as $key => $value) {
+            if (!is_array($value)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
