@@ -76,45 +76,54 @@ final class Input implements InputInterface
                 ));
             }
 
-            return $this->toEntity($this->files[$name]);
+            return $this->hydrateAll($this->files[$name]);
         } else {
-
-            // To be returned
-            $output = array();
-
-            foreach ($this->files as $key => $value) {
-                $output[$key] = $this->toEntity($value);
-            }
-
-            return $output;
+            return $this->hydrateAll($this->files);
         }
     }
 
     /**
-     * Converts an array to entity object
+     * Recursively hydrate array entires skipping empty files
      * 
-     * @param array $files
+     * @param array $files Remapped array
      * @return array
      */
-    private function toEntity(array $files)
+    private function hydrateAll(array $files)
     {
-        $entities = array();
-
-        foreach ($files as $index => $array) {
-            $entity = new FileEntity();
-            $entity->setType($array['type'])
-                   ->setName($array['name'])
-                   ->setTmpName($array['tmp_name'])
-                   ->setSize($array['size'])
-                   ->setError($array['error']);
-
-            // Append only non-empty
-            if ($entity->getError() == 0) {
-                $entities[$index] = $entity;
+        foreach ($files as $name => $file) {
+            foreach ($file as $key => $value) {
+                if (is_array($value)) {
+                    $files[$name] = $this->hydrateAll($files[$name]);
+                } else {
+                    $files[$name] = $this->hydrate($file);
+                }
             }
         }
 
-        return $entities;
+        return $files;
+    }
+
+    /**
+     * Hydrates a single file
+     * 
+     * @param array $file
+     * @return mixed
+     */
+    private function hydrate(array $file)
+    {
+        $entity = new FileEntity();
+        $entity->setType($file['type'])
+               ->setName($file['name'])
+               ->setTmpName($file['tmp_name'])
+               ->setSize($file['size'])
+               ->setError($file['error']);
+
+        if ($entity->getError() != 4) {
+            return $entity;
+        } else {
+            // Default value
+            return false;
+        }
     }
 
     /**
