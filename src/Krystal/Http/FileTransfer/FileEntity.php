@@ -68,14 +68,31 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
     }
 
     /**
+     * Returns file extension
+     * 
+     * @return string
+     */
+    public function getExtension()
+    {
+        $extension = pathinfo($this->getName(), \PATHINFO_EXTENSION);
+        return strtolower($extension);
+    }
+
+    /**
      * Returns unique name for uploaded file
      * 
      * @return string
      */
     public function getUniqueName()
     {
-        $extension = strtolower(pathinfo($this->getName(), \PATHINFO_EXTENSION));
-        return sprintf('%s.%s', uniqid(), $extension);
+        $key = 'uniq';
+
+        // Lazy initialization
+        if (!isset($this->container[$key])) {
+            $this->container[$key] = sprintf('%s.%s', uniqid(), $this->getExtension());
+        }
+
+        return $this->container[$key];
     }
 
     /**
