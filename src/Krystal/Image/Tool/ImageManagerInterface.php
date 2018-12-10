@@ -27,10 +27,10 @@ interface ImageManagerInterface
      * Uploads an image from $files
      * 
      * @param string $id
-     * @param array $files Files collection
+     * @param array/FileEntity $files Files collection
      * @return boolean
      */
-    public function upload($id, array $files);
+    public function upload($id, $files);
 
     /**
      * Delete directories by their associated IDs

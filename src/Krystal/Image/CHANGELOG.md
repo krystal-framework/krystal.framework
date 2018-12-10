@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * `ImageManager::upload()` since now may accept both - single file entities or an array of them
  * Since now uploader plugins get unique name from file entities
  * Improved internals in `FileHandler::delete()` to make it more reliable
  * Added additional `deleteMany()` method to remove many images at once

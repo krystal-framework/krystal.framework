@@ -128,11 +128,15 @@ final class ImageManager implements ImageManagerInterface
      * Uploads an image from $files
      * 
      * @param string $id
-     * @param array $files Files collection
+     * @param array/FileEntity $files Files collection
      * @return boolean
      */
-    public function upload($id, array $files)
+    public function upload($id, $files)
     {
+        if (!is_array($files)) {
+            $files = array($files);
+        }
+
         return $this->getUploader()->upload($id, $files);
     }
 
