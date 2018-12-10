@@ -100,7 +100,7 @@ final class Thumb implements UploaderAwareInterface
                         mkdir($destination, 0777, true);
                     }
 
-                    $to = sprintf('%s/%s', $destination, $file->getName());
+                    $to = sprintf('%s/%s', $destination, $file->getUniqueName());
 
                     $imageProcessor = new ImageProcessor($file->getTmpName());
                     $imageProcessor->thumb($width, $height);

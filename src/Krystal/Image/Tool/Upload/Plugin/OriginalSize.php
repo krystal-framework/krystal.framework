@@ -99,7 +99,7 @@ final class OriginalSize implements UploaderAwareInterface
                 $imageProcessor = new ImageProcessor($file->getTmpName());
                 $imageProcessor->thumb($this->maxWidth, $this->maxHeight);
 
-                $to = sprintf('%s/%s', $destination, $file->getName());
+                $to = sprintf('%s/%s', $destination, $file->getUniqueName());
 
                 // Ensure that destination actually exists
                 if (!is_dir($destination)) {

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now uploader plugins get unique name from file entities
  * Improved internals in `FileHandler::delete()` to make it more reliable
  * Added additional `deleteMany()` method to remove many images at once
  * Fixed exception message text in `Image\Tool\FileHandler::delete()` when throwing `LogicException`
