@@ -90,11 +90,11 @@ interface HttpResponseInterface
     public function redirectToHome();
 
     /**
-     * Redirects to previous page
+     * Redirects back if possible
      * 
      * @return void
      */
-    public function redirectToPreviousPage();
+    public function back();
 
     /**
      * Enables internal HTTP cache mechanism

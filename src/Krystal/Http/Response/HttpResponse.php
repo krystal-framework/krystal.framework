@@ -231,11 +231,11 @@ final class HttpResponse implements HttpResponseInterface
     }
 
     /**
-     * Redirects to previous page
+     * Redirects back if possible
      * 
      * @return void
      */
-    public function redirectToPreviousPage()
+    public function back()
     {
         // Do that in case it's possible
         if (isset($this->server['HTTP_REFERER'])) {
