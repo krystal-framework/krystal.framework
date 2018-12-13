@@ -225,7 +225,7 @@ final class HttpResponse implements HttpResponseInterface
      * 
      * @return void
      */
-    public function redirectToHome()
+    public function home()
     {
         $this->redirect('/');
     }

@@ -87,7 +87,7 @@ interface HttpResponseInterface
      * 
      * @return void
      */
-    public function redirectToHome();
+    public function home();
 
     /**
      * Redirects back if possible

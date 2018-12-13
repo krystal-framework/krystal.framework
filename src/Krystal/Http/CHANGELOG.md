@@ -15,7 +15,7 @@ CHANGELOG
  * Fixed issue with HTTPs detection for some server environments
  * In `request` service added `getRawInput()`
  * In cookie bag service, added `setEncrypted()`, `getEncrypted()`
- * In response service added `redirectToHome()` and `back()` shortcut methods
+ * In response service added `home()` and `back()` shortcut methods
  * In response service added informal methods for HTTP responses
  * In response service added `getStatusCode()` to return assigned HTTP status code
  * In request service added `isUrlLike()` method
