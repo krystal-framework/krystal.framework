@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now `Krystal\Http\FileTransfer\FileUploader::upload()` uses unique names when uploading
  * In `Krystal\Http\FileTransfer\FileEntity::getUniqueName()` forced to return file name only once
  * In `Krystal\Http\FileTransfer\FileEntity` added `getExtension()` method that returns an extension of uploaded file
  * When returning file entities from upload, they can be used as arrays as well

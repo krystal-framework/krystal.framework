@@ -63,7 +63,7 @@ final class FileUploader implements FileUploaderInterface
             // Gotta ensure again, UPLOAD_ERR_OK means there are no errors
             if ($file->getError() == \UPLOAD_ERR_OK) {
                 // Start trying to move a file
-                if (!$this->move($destination, $file->getTmpName(), $file->getName())) {
+                if (!$this->move($destination, $file->getTmpName(), $file->getUniqueName())) {
                     return false;
                 }
             } else {
