@@ -511,6 +511,26 @@ class Element
     }
 
     /**
+     * Renders object element
+     * 
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public static function object($width, $height, $data)
+    {
+        $node = new Node\Object();
+
+        $attributes = array(
+            'width' => $width,
+            'height' => $height,
+            'data' => $data
+        );
+
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates image element
      * 
      * @param string $src Path to image

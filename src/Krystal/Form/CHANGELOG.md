@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `Element` added `object()` - object element generator
  * In `Element` added `time()` input generator
  * In `Element` added `icon()` shortcut method
  * Since now automatically escape attribute values when rendering elements via `Element` class
