@@ -331,7 +331,7 @@ final class TableMaker
             }
 
             // Grab the ID
-            if ($this->isPkColumnName($column)) {
+            if ($this->getPkColumn() !== false && $this->isPkColumnName($column)) {
                 $id = $value;
             }
 
@@ -458,7 +458,11 @@ final class TableMaker
      */
     private function getPkColumn()
     {
-        return $this->options[self::GRID_PARAM_PK];
+        if (isset($this->options[self::GRID_PARAM_PK])) {
+            return $this->options[self::GRID_PARAM_PK];
+        } else {
+            return false;
+        }
     }
 
     /**
