@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Removed BooleanWidget. This is no longer required, since Grid itself can generate boolean values.
  * In `Element` added `object()` - object element generator
  * In `Element` added `time()` input generator
  * In `Element` added `icon()` shortcut method
