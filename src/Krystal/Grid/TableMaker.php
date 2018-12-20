@@ -268,6 +268,21 @@ final class TableMaker
                 if (is_array($filter)) {
                     $filter = array_replace(array('' => ''), $filter);
                     $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected, $filter);
+                    // If explicit boolean filter provided
+                } else if ($filter === 'boolean') {
+                    $options = array(
+                        '0' => 'No',
+                        '1' => 'Yes'
+                    );
+
+                    // Translate boolean values on demand
+                    if ($this->hasTranslator()) {
+                        $options = $this->translator->translateArray($options);
+                    }
+
+                    $filter = array_replace(array('' => ''), $options);
+                    $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected, $filter);
+                    
                 } else {
                     $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected);
                 }
@@ -499,10 +514,11 @@ final class TableMaker
      */
     private function createInput($method, $column, $name, $value, array $extra = array())
     {
+        $options = $this->findOptionsByColumn($column);
+
         // Input type. If not provided explicitly, use text
         $type = isset($options[self::GRID_PARAM_TYPE]) ? $options[self::GRID_PARAM_TYPE] : 'text';
 
-        $options = $this->findOptionsByColumn($column);
         $text = Element::dynamic($type, $name, $value, array('class' => $this->options['inputClass']), $extra);
 
         return call_user_func(array($this, $method), null, $text);
