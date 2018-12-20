@@ -499,8 +499,11 @@ final class TableMaker
      */
     private function createInput($method, $column, $name, $value, array $extra = array())
     {
+        // Input type. If not provided explicitly, use text
+        $type = isset($options[self::GRID_PARAM_TYPE]) ? $options[self::GRID_PARAM_TYPE] : 'text';
+
         $options = $this->findOptionsByColumn($column);
-        $text = Element::dynamic($options[self::GRID_PARAM_TYPE], $name, $value, array('class' => $this->options['inputClass']), $extra);
+        $text = Element::dynamic($type, $name, $value, array('class' => $this->options['inputClass']), $extra);
 
         return call_user_func(array($this, $method), null, $text);
     }
