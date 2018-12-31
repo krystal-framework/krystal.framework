@@ -89,7 +89,17 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
 
         // Lazy initialization
         if (!isset($this->container[$key])) {
-            $this->container[$key] = sprintf('%s.%s', uniqid(), $this->getExtension());
+            $extension = $this->getExtension();
+
+            // If extension avaiable, use it
+            if ($extension) {
+                $name = sprintf('%s.%s', uniqid(), $extension);
+            } else {
+                // Otherwise just filename without extension
+                $name = uniqid();
+            }
+
+            $this->container[$key] = $name;
         }
 
         return $this->container[$key];
