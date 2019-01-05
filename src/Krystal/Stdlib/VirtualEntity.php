@@ -36,14 +36,23 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
     protected $once;
 
     /**
+     * Whether mode is strict
+     * 
+     * @var boolean
+     */
+    protected $strict;
+
+    /**
      * State initialization
      * 
      * @param boolean $once Whether writing can be done only once
+     * @param boolean $strict Whether mode is strict
      * @return void
      */
-    public function __construct($once = true)
+    public function __construct($once = true, $strict = false)
     {
         $this->once = (bool) $once;
+        $this->strict = (bool) $strict;
     }
 
     /**
@@ -175,9 +184,12 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
             return $this;
 
         } else {
-            throw new RuntimeException(sprintf(
-                'Virtual method name must start either from "get" or "set". You provided "%s"', $method
-            ));
+            // Throw exception only on strict mode
+            if ($this->strict == true) {
+                throw new RuntimeException(sprintf(
+                    'Virtual method name must start either from "get" or "set". You provided "%s"', $method
+                ));
+            }
         }
     }
 

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * VirtualEntity since now accepts optional 2nd argument called `strict`, that defines whether strict mode is enabled.
  * Added `hasAllArrayValues()` in `Stdlib\ArrayUtils` to determine if all array values are arrays
  * `VirtualEntity` since now throws `\RuntimeException` if a method being called is not starting with "get" or "set"
  * Since now `Dumper::dump()` renders objects if they implement `__toString()`
