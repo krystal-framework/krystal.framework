@@ -160,10 +160,7 @@ final class Request implements RequestInterface
         } else {
             $result = array();
             $result['data'] = $data;
-
-            if (!empty($files)) {
-                $result['files'] = $files;
-            }
+            $result['files'] = !empty($files) ? $files : array();
 
             return $result;
         }
