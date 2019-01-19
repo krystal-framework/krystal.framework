@@ -217,7 +217,10 @@ final class TableMaker
 
             // Creating a link or raw text here
             if ($row[self::GRID_PARAM_SORTING] === true) {
-                $elements[] = $this->createHeader($this->createHeaderLink($column, ' ' . $label));
+                // Use explicit key parameter for sorting if provided
+                $inputName = isset($row[self::GRID_PARAM_NAME]) ? $row[self::GRID_PARAM_NAME] : $column;
+
+                $elements[] = $this->createHeader($this->createHeaderLink($inputName, ' ' . $label));
             } else {
                 $elements[] = $this->createTextHeader($label);
             }
