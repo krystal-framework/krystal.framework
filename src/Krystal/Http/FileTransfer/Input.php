@@ -28,7 +28,7 @@ final class Input implements InputInterface
     /**
      * State initialization
      * 
-     * @param array $files That must be $_FILES superglobal
+     * @param array $files That must be $_FILES superglobal in its initial raw structure
      * @return void
      */
     public function __construct(array $files)
