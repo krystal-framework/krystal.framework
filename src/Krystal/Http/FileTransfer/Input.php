@@ -91,9 +91,15 @@ final class Input implements InputInterface
     private function hydrateAll(array $files)
     {
         foreach ($files as $name => $file) {
+            // Recursive protection
+            if (!is_array($file)) {
+                continue;
+            }
+
             foreach ($file as $key => $value) {
                 if (is_array($value)) {
-                    $files[$name] = $this->hydrateAll($files[$name]);
+                    // Recursive call
+                    $files[$name] = call_user_func(array($this, __FUNCTION__), $files[$name]);
                 } else {
                     $files[$name] = $this->hydrate($file);
                 }
@@ -118,12 +124,30 @@ final class Input implements InputInterface
                ->setSize($file['size'])
                ->setError($file['error']);
 
-        if ($entity->getError() != 4) {
-            return $entity;
-        } else {
-            // Default value
-            return false;
+        return $entity;
+    }
+
+    /**
+     * Remove broken ones from target array
+     * A broken file is empty one
+     * 
+     * @param array $files Remapped files array
+     * @return array
+     */
+    private function removeBrokenFiles(array $files)
+    {
+        // Recursive logic to replace broken arrays with empty ones (which to be removed later)
+        if (isset($files['error'])) {
+            return $files['error'] == 4 ? array() : $files;
         }
+
+        foreach ($files as $key => $value) {
+            // Recursive call
+            $files[$key] = call_user_func(array($this, __FUNCTION__), $value);
+        }
+
+        // Now remove empty arrays
+        return array_filter($files);
     }
 
     /**
@@ -161,6 +185,7 @@ final class Input implements InputInterface
             }
         }
 
-        return $output;
+        // Remove broken files as well
+        return $this->removeBrokenFiles($output);
     }
 }
