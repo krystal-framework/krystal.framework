@@ -342,7 +342,13 @@ final class ViewManager implements ViewManagerInterface
         $args = func_get_args();
         $controller = array_shift($args);
 
-        return $this->urlBuilder->createUrl($controller, $args);
+        $url = $this->urlBuilder->createUrl($controller, $args);
+
+        if ($url === false) {
+            return $controller;
+        } else {
+            return $url;
+        }
     }
 
     /**
