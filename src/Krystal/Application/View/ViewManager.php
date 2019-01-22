@@ -12,6 +12,7 @@
 namespace Krystal\Application\View;
 
 use RuntimeException;
+use LogicException;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Application\View\Resolver\ResolverInterface;
 use Krystal\Form\Navigation\Breadcrumbs\BreadcrumbBag;
@@ -611,10 +612,16 @@ final class ViewManager implements ViewManagerInterface
      * @param string $template Template's name without extension in themes directory
      * @param array $vars
      * @throws \RuntimeException if wrong template file provided
+     * @throws \LogicException If empty template name provided
      * @return string
      */
     public function render($template, array $vars = array())
     {
+        // Make sure template file isn't empty string
+        if (empty($template)) {
+            throw new LogicException('Empty template name provided');
+        }
+
         if (!$this->templateExists($template)) {
             $base = $this->createPath(self::TEMPLATE_PARAM_BASE_DIR, dirname($this->moduleDir), $this->module, $this->theme);
             throw new RuntimeException(sprintf('Cannot find "%s.%s" in %s', $template, self::TEMPLATE_PARAM_EXTENSION, $base));
