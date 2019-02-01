@@ -24,43 +24,38 @@ final class Video extends AbstractMediaElement implements FormElementInterface
      * Renders video element
      * 
      * @param array $sources
-     * @param boolean $autoplay Whether autoplay is required
-     * @param boolean $loop Specifies that the video will start over again, every time it is finished
-     * @param boolean $muted Specifies that the audio output of the video should be muted
-     * @param int $width Optional width
-     * @param int $height Optional height
-     * @param string $poster Specifies an image to be shown while the video is downloading, or until the user hits the play button
+     * @param array $attrs Element attributes
      * @return string
      */
-    private function createVideo(array $sources, $autoplay, $loop, $muted, $width, $height, $poster)
+    private function createVideo(array $sources, array $attrs)
     {
         $node = new NodeElement();
 
         $node->openTag('video')
              ->addProperty('controls');
 
-        if ($autoplay === true) {
+        if (isset($attrs['autoplay']) && $attrs['autoplay'] == true) {
             $node->addProperty('autoplay');
         }
 
-        if ($loop === true) {
+        if (isset($attrs['loop']) && $attrs['loop'] == true) {
             $node->addProperty('loop');
         }
 
-        if ($muted === true) {
+        if (isset($attrs['muted']) && $attrs['muted'] == true) {
             $node->addProperty('muted');
         }
 
-        if ($width !== null) {
-            $node->addAttribute('width', $width);
+        if (isset($attrs['width'])) {
+            $node->addAttribute('width', $attrs['width']);
         }
 
-        if ($height !== null) {
-            $node->addAttribute('height', $height);
+        if (isset($attrs['height'])) {
+            $node->addAttribute('height', $attrs['height']);
         }
 
-        if ($poster !== null) {
-            $node->addAttribute('poster', $poster);
+        if (isset($attrs['poster'])) {
+            $node->addAttribute('poster', $attrs['poster']);
         }
 
         return $node->finalize(false)
@@ -77,6 +72,6 @@ final class Video extends AbstractMediaElement implements FormElementInterface
     {
         $sources = $this->createSourceElements($this->sources);
 
-        return $this->createVideo($sources, $attrs['autoplay'], $attrs['loop'], $attrs['muted'], $attrs['width'], $attrs['height'], $attrs['poster']);
+        return $this->createVideo($sources, $attrs);
     }
 }
