@@ -531,6 +531,20 @@ class Element
     }
 
     /**
+     * Renders audio element
+     * 
+     * @param string $sources
+     * @param string $error Error message can be overriden on demand
+     * @return string
+     */
+    public static function audio(array $sources, $error = null)
+    {
+        $node = new Node\Audio($sources, $error);
+
+        return $node->render(array());
+    }
+
+    /**
      * Creates image element
      * 
      * @param string $src Path to image
