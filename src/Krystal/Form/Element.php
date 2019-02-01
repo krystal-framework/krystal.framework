@@ -515,6 +515,7 @@ class Element
      * 
      * @param int $width
      * @param int $height
+     * @param string $data
      * @return string
      */
     public static function object($width, $height, $data)
