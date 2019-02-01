@@ -29,9 +29,10 @@ final class Video extends AbstractMediaElement implements FormElementInterface
      * @param boolean $muted Specifies that the audio output of the video should be muted
      * @param int $width Optional width
      * @param int $height Optional height
+     * @param string $poster Specifies an image to be shown while the video is downloading, or until the user hits the play button
      * @return string
      */
-    private function createVideo(array $sources, $autoplay, $loop, $muted, $width, $height)
+    private function createVideo(array $sources, $autoplay, $loop, $muted, $width, $height, $poster)
     {
         $node = new NodeElement();
 
@@ -58,6 +59,10 @@ final class Video extends AbstractMediaElement implements FormElementInterface
             $node->addAttribute('height', $height);
         }
 
+        if ($poster !== null) {
+            $node->addAttribute('poster', $poster);
+        }
+
         return $node->finalize(false)
                     ->appendChildren($sources)
                     ->setText($this->error)
@@ -72,6 +77,6 @@ final class Video extends AbstractMediaElement implements FormElementInterface
     {
         $sources = $this->createSourceElements($this->sources);
 
-        return $this->createVideo($sources, $attrs['autoplay'], $attrs['loop'], $attrs['muted'], $attrs['width'], $attrs['height']);
+        return $this->createVideo($sources, $attrs['autoplay'], $attrs['loop'], $attrs['muted'], $attrs['width'], $attrs['height'], $attrs['poster']);
     }
 }
