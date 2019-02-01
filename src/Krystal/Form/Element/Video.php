@@ -12,6 +12,7 @@
 namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
+use UnexpectedValueException;
 
 final class Video extends AbstractMediaElement implements FormElementInterface
 {
@@ -25,6 +26,7 @@ final class Video extends AbstractMediaElement implements FormElementInterface
      * 
      * @param array $sources
      * @param array $attrs Element attributes
+     * @throws \UnexpectedValueException if unknown value for "preload" attribute supplied
      * @return string
      */
     private function createVideo(array $sources, array $attrs)
@@ -56,6 +58,15 @@ final class Video extends AbstractMediaElement implements FormElementInterface
 
         if (isset($attrs['poster'])) {
             $node->addAttribute('poster', $attrs['poster']);
+        }
+
+        if (isset($attrs['preload'])) {
+            // Make sure only valid that only one of valid values supplied
+            if (in_array($attrs['preload'], array('auto', 'metadata', 'none'))) {
+                $node->addAttribute('preload', $attrs['preload']);
+            } else {
+                throw new UnexpectedValueException('Unexpected value for "preload" attribute supplied');
+            }
         }
 
         return $node->finalize(false)
