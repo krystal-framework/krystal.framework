@@ -71,6 +71,22 @@ final class Request implements RequestInterface
     }
 
     /**
+     * Run HTTP to HTTPs redirect
+     * 
+     * @return void
+     */
+    public function sslRedirect()
+    {
+        if ($this->isSecure()) {
+            $redirect = 'https://' . $this->server['HTTP_HOST'] . $this->server['REQUEST_URI'];
+
+            header('HTTP/1.1 301 Moved Permanently');
+            header('Location: ' . $redirect);
+            exit();
+        }
+    }
+
+    /**
      * Checks whether requires comes from local machine
      * 
      * @return boolean
