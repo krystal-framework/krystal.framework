@@ -29,7 +29,7 @@ final class Video extends AbstractMediaElement implements FormElementInterface
      * @throws \UnexpectedValueException if unknown value for "preload" attribute supplied
      * @return string
      */
-    private function createVideo(array $sources, array $attrs)
+    private function renderVideo(array $sources, array $attrs)
     {
         $node = new NodeElement();
 
@@ -83,6 +83,6 @@ final class Video extends AbstractMediaElement implements FormElementInterface
     {
         $sources = $this->createSourceElements($this->sources);
 
-        return $this->createVideo($sources, $attrs);
+        return $this->renderVideo($sources, $attrs);
     }
 }

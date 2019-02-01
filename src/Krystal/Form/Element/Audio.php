@@ -21,12 +21,12 @@ final class Audio extends AbstractMediaElement implements FormElementInterface
     protected $error = 'Your browser does not support the audio element';
 
     /**
-     * Creates audio element
+     * Renders audio element
      * 
      * @param array $sources
      * @return string
      */
-    private function createAudio(array $sources)
+    private function renderAudio(array $sources)
     {
         $node = new NodeElement();
 
@@ -46,6 +46,6 @@ final class Audio extends AbstractMediaElement implements FormElementInterface
     {
         $sources = $this->createSourceElements($this->sources);
 
-        return $this->createAudio($sources);
+        return $this->renderAudio($sources);
     }
 }
