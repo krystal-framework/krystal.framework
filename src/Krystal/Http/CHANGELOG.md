@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Improved detection of secure connection in `Request::isSecure()`
  * Forced `Request::getAll()` to return empty array of files on absence, rather than nothing at all
  * Since now `Krystal\Http\FileTransfer\FileUploader::upload()` uses unique names when uploading
  * In `Krystal\Http\FileTransfer\FileEntity::getUniqueName()` forced to return file name only once
