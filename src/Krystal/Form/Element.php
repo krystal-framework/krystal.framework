@@ -545,6 +545,29 @@ class Element
     }
 
     /**
+     * Renders video element
+     * 
+     * @param array $sources
+     * @param boolean $autoplay Whether autoplay is required
+     * @param int $width Optional width
+     * @param int $height Optional height
+     * @param string $error Error message
+     * @return string
+     */
+    public static function video(array $sources, $autoplay = false, $width = null, $height = null, $error = null)
+    {
+        $attrs = array(
+            'autoplay' => $autoplay,
+            'width' => $width,
+            'height' => $height
+        );
+
+        $node = new Node\Video($sources, $error);
+
+        return $node->render($attrs);
+    }
+
+    /**
      * Creates image element
      * 
      * @param string $src Path to image
