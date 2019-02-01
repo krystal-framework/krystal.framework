@@ -13,78 +13,12 @@ namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
 
-final class Video implements FormElementInterface
+final class Video extends AbstractMediaElement implements FormElementInterface
 {
     /**
-     * Sources with their MIME-types
-     * 
-     * @var array
+     * {@inheritDoc}
      */
-    private $sources;
-
-    /**
-     * Error message in case the element is not supported
-     * 
-     * @var string
-     */
-    private $error = 'Your browser does not support the video element';
-
-    /**
-     * State initialization
-     * 
-     * @param array $sources
-     * @param string $error Error message
-     * @return void
-     */
-    public function __construct(array $sources, $error = null)
-    {
-        $this->sources = $sources;
-
-        // Override on demand
-        if ($error !== null) {
-            $this->error = $error;
-        }
-    }
-
-    /**
-     * Create source node elements
-     * 
-     * @param array $sources
-     * @return array
-     */
-    private function createSourceElements(array $sources)
-    {
-        // To be returned
-        $output = array();
-
-        foreach ($sources as $type => $src) {
-            $output[] = $this->createSourceElement($type, $src);
-        }
-
-        return $output;
-    }
-
-    /**
-     * Create inner source node element
-     * 
-     * @param string $type MIME-type
-     * @param string $src Path to audio file
-     * @return \Krystal\Form\NodeElement
-     */
-    private function createSourceElement($type, $src)
-    {
-        // Tag attributes
-        $attrs = array(
-            'src' => $src,
-            'type' => $type
-        );
-
-        $node = new NodeElement();
-
-        return $node->openTag('source')
-                    ->addAttributes($attrs)
-                    ->finalize(true);
-    }
+    protected $error = 'Your browser does not support the video element';
 
     /**
      * Renders video element
