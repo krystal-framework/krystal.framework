@@ -156,6 +156,11 @@ final class Kernel implements KernelInterface
         $dispatcher = $sl->get('dispatcher');
         $response = $sl->get('response');
 
+        // Do we need to perform SSL redirect?
+        if (isset($this->config['components']['router']['ssl']) && $this->config['components']['router']['ssl'] == true) {
+            $request->sslRedirect();
+        }
+
         // We will start from route matching firstly
         $router = new Router();
 

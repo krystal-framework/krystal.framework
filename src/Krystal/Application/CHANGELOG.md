@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In router configuration section added `ssl`. Now HTTP to HTTPs redirection can be turned on via this parameter
  * The method `render()` in view service since now throws `LogicException` if empty template filename provided
  * In view since now the method `$this->url()` returns target string on failure, rather than false
  * In `\Krystal\Application\View\PluginBag` added `appendLastStylesheet()` and `appendLastStylesheets()` that always append last stylesheets
