@@ -25,11 +25,13 @@ final class Video extends AbstractMediaElement implements FormElementInterface
      * 
      * @param array $sources
      * @param boolean $autoplay Whether autoplay is required
+     * @param boolean $loop Specifies that the video will start over again, every time it is finished
+     * @param boolean $muted Specifies that the audio output of the video should be muted
      * @param int $width Optional width
      * @param int $height Optional height
      * @return string
      */
-    private function createVideo(array $sources, $autoplay, $width, $height)
+    private function createVideo(array $sources, $autoplay, $loop, $muted, $width, $height)
     {
         $node = new NodeElement();
 
@@ -38,6 +40,14 @@ final class Video extends AbstractMediaElement implements FormElementInterface
 
         if ($autoplay === true) {
             $node->addProperty('autoplay');
+        }
+
+        if ($loop === true) {
+            $node->addProperty('loop');
+        }
+
+        if ($muted === true) {
+            $node->addProperty('muted');
         }
 
         if ($width !== null) {
@@ -62,6 +72,6 @@ final class Video extends AbstractMediaElement implements FormElementInterface
     {
         $sources = $this->createSourceElements($this->sources);
 
-        return $this->createVideo($sources, $attrs['autoplay'], $attrs['width'], $attrs['height']);
+        return $this->createVideo($sources, $attrs['autoplay'], $attrs['loop'], $attrs['muted'], $attrs['width'], $attrs['height']);
     }
 }

@@ -550,15 +550,19 @@ class Element
      * 
      * @param array $sources
      * @param boolean $autoplay Whether autoplay is required
+     * @param boolean $loop Specifies that the video will start over again, every time it is finished
+     * @param boolean $muted Specifies that the audio output of the video should be muted
      * @param int $width Optional width
      * @param int $height Optional height
      * @param string $error Error message
      * @return string
      */
-    public static function video(array $sources, $autoplay = false, $width = null, $height = null, $error = null)
+    public static function video(array $sources, $autoplay = false, $loop = false, $muted = false, $width = null, $height = null, $error = null)
     {
         $attrs = array(
             'autoplay' => $autoplay,
+            'loop' => $loop,
+            'muted' => $muted,
             'width' => $width,
             'height' => $height
         );
