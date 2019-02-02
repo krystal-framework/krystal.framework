@@ -45,6 +45,7 @@ final class TableMaker
         'batch' => false // Whether to generate batch selection
     );
 
+    const GRID_PARAM_BATCH_CALLBACK = 'batchCallback';
     const GRID_PARAM_ROW_ATTRS = 'rowAttributes';
     const GRID_PARAM_ACTIONS = 'actions';
     const GRIG_PARAM_EDITABLE = 'editable';
@@ -334,10 +335,26 @@ final class TableMaker
         // Columns to be used when creating a row
         $output = array();
 
+        // Handle batch callback and state
         if ($this->options[self::GRID_PARAM_BATCH] === true) {
-            $checkbox = Element::checkbox($this->createInputName(self::GRID_PARAM_BATCH, $data[$this->getPkColumn()]), false, array(), false);
-            $output[] = $this->createColumn(null, $checkbox);
+            // Apply callback if provided
+            if (isset($this->options[self::GRID_PARAM_BATCH_CALLBACK]) && is_callable($this->options[self::GRID_PARAM_BATCH_CALLBACK])) {
+                // Result of batch callback function call
+                $batchRequired = (bool) call_user_func($this->options[self::GRID_PARAM_BATCH_CALLBACK], $data);
+            } else {
+                // By default, batch is required for all rows
+                $batchRequired = true;
+            }
+
+            if ($batchRequired) {
+                $batchOutput = Element::checkbox($this->createInputName(self::GRID_PARAM_BATCH, $data[$this->getPkColumn()]), false, array(), false);
+            } else {
+                $batchOutput = null;
+            }
+
+            $output[] = $this->createColumn(null, $batchOutput);
         }
+        // Done handling batch
 
         foreach ($columns as $configuration) {
 			$column = $configuration[self::GRID_PARAM_COLUMN];
