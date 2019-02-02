@@ -12,6 +12,7 @@
 namespace Krystal\Tree\AdjacencyList\Render;
 
 use Krystal\Tree\AdjacencyList\RelationBuilder;
+use Krystal\Text\TextUtils;
 use RuntimeException;
 
 final class Merge extends AbstractRenderer
@@ -69,13 +70,13 @@ final class Merge extends AbstractRenderer
                 // That's array's value
                 $value = sprintf('%s %s', str_repeat($this->separator, $this->level - 1), $row[$this->column]);
                 $row[$this->column] = $value;
-                $result[uniqid()] = $row;
+                $result[TextUtils::uniqueString()] = $row;
 
                 // subsequent items will be indented one level
                 $this->level++;
 
                 // Recursive call
-                $result = ($result + $this->render($data, $active, $itemId));
+                $result = array_replace_recursive($result, $this->render($data, $active, $itemId));
 
                 // recursive call has returned, so restore a level
                 $this->level--;
