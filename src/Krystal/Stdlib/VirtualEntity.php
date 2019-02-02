@@ -122,7 +122,7 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
      */
     public function has($property)
     {
-        return array_key_exists($property, $this->container);
+        return array_key_exists((string) $property, $this->container);
     }
 
     /**
