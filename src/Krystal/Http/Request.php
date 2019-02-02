@@ -531,7 +531,11 @@ final class Request implements RequestInterface
      */
     public function isSecure()
     {
-        return !(isset($this->server['HTTPS']) && ($this->server['HTTPS'] == 'on' || $this->server['HTTPS'] == 1) || isset($this->server['HTTP_X_FORWARDED_PROTO']) && $this->server['HTTP_X_FORWARDED_PROTO'] == 'https');
+        return (
+            (!empty($this->server['HTTPS']) && $this->server['HTTPS'] != 'off') || 
+            (!empty($this->server['HTTP_HTTPS']) && $this->server['HTTP_HTTPS'] != 'off') || 
+            $this->server['REQUEST_SCHEME'] == 'https' || $this->server['SERVER_PORT'] == 443
+        );
     }
 
     /**
