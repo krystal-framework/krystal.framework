@@ -45,6 +45,7 @@ final class TableMaker
         'batch' => false // Whether to generate batch selection
     );
 
+    const GRID_PARAM_TD_ATTRIBUTES = 'attributes';
     const GRID_PARAM_BATCH_CALLBACK = 'batchCallback';
     const GRID_PARAM_ROW_ATTRS = 'rowAttributes';
     const GRID_PARAM_ACTIONS = 'actions';
@@ -333,7 +334,7 @@ final class TableMaker
         $id = null;
 
         // Columns to be used when creating a row
-        $output = array();
+        $children = array();
 
         // Handle batch callback and state
         if ($this->options[self::GRID_PARAM_BATCH] === true) {
@@ -352,7 +353,7 @@ final class TableMaker
                 $batchOutput = null;
             }
 
-            $output[] = $this->createColumn(null, $batchOutput);
+            $children[] = $this->createColumn(null, $batchOutput);
         }
         // Done handling batch
 
@@ -369,6 +370,9 @@ final class TableMaker
             if ($this->getPkColumn() !== false && $this->isPkColumnName($column)) {
                 $id = $value;
             }
+
+            // Grab column attributes if present
+            $tdAttributes = isset($configuration[self::GRID_PARAM_TD_ATTRIBUTES]) ? $configuration[self::GRID_PARAM_TD_ATTRIBUTES] : array();
 
             // Find out whether current row is editable or not
             $editable = $this->findOptionByColumn($column, self::GRIG_PARAM_EDITABLE);
@@ -401,11 +405,11 @@ final class TableMaker
                 }
 
             } else {
-                $column = $this->createColumn(null, $value);
+                $column = $this->createColumn(null, $value, $tdAttributes);
             }
 
             // Push prepared element
-            $output[] = $column;
+            $children[] = $column;
         }
 
         // If action columns provided, then create action links
@@ -416,7 +420,7 @@ final class TableMaker
                 $links[] = $callback($data);
             }
 
-            $output[] = $this->createColumn(null, join(PHP_EOL, $links));
+            $children[] = $this->createColumn(null, join(PHP_EOL, $links));
         }
 
         // Now append row attributes if defined
@@ -436,7 +440,7 @@ final class TableMaker
             }
         }
 
-        return $this->createTableRow($output, $attributes);
+        return $this->createTableRow($children, $attributes);
     }
 
     /**
@@ -674,11 +678,17 @@ final class TableMaker
      * 
      * @param array|null $children
      * @param string $text
+     * @param array $attributes Optional attributes to be merged
      * @return \Krystal\Form\NodeElement
      */
-    private function createColumn($children = array(), $text = null)
+    private function createColumn($children = array(), $text = null, array $attributes = array())
     {
-        return $this->createElement('td', $children, array('class' => $this->options['tableDataClass']), $text);
+        $attributes = array_merge(
+            array('class' => $this->options['tableDataClass']),
+            $attributes
+        );
+
+        return $this->createElement('td', $children, $attributes, $text);
     }
 
     /**
