@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Improved slug generator. Remove quotes from Word as well.
  * Extended dictionary in foreign chars
  * Added `TextUtils::snakeCase()` to convert strings to snake case
  * Added `Math::ceiling()` to round values like in Excel ceiling function
