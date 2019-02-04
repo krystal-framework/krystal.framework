@@ -173,7 +173,7 @@ class ImageFile implements ImageFileInterface
                 'height' => $image[1],
                 'type' => $image[2],
                 'mime' => $image['mime'],
-                'bits' => $image['bits']
+                'bits' => isset($image['bits']) ? $image['bits'] : null
             );
         } else {
             return false;
