@@ -17,6 +17,24 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Unsets an item from an array by its value, not by key
+     * 
+     * @param array $array
+     * @param mixed $value Value to be removed
+     * @return array
+     */
+    public static function unsetByValue(array $array, $value)
+    {
+        $key = array_search($value, $array);
+
+        if (false !== $key) {
+            unset($array[$key]);
+        }
+
+        return $array;
+    }
+
+    /**
      * Drops a raw result-set into partitions and creates inner array with key => value pairs
      * 
      * @param array $raw
