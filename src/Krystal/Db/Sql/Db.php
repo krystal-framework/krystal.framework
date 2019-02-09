@@ -492,6 +492,20 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Gets primary out of a table
+     * 
+     * @param string $table
+     * @return string|boolean False if no primary key available
+     */
+    public function getPrimaryKey($table)
+    {
+        $db = $this->showKeys()->from($table)
+                               ->whereEquals('Key_name', new RawBinding('PRIMARY'));
+
+        return $db->query('Column_name');
+    }
+
+    /**
      * Appends SHOW KEYS expression
      * 
      * @return \Krystal\Db\Sql\Db
