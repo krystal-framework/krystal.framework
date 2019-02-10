@@ -68,6 +68,10 @@ final class Router implements RouterInterface
     private function createRegEx($uriTemplate)
     {
         $pattern = str_replace($this->getPlaceholders(), $this->getPatterns(), $uriTemplate);
+
+        // Match everything after question mark, if present
+        $pattern .= '(\?(.*))?';
+
         return '~^' . $pattern . '$~i';
     }
 
