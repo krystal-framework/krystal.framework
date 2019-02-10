@@ -132,7 +132,11 @@ class FileManager implements FileManagerInterface
 
         $target = array();
         $tree = array();
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir), RecursiveIteratorIterator::SELF_FIRST);
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS), 
+            RecursiveIteratorIterator::SELF_FIRST
+        );
 
         if ($self !== false) {
             array_push($target, $dir);
