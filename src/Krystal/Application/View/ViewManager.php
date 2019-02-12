@@ -18,9 +18,18 @@ use Krystal\Application\View\Resolver\ResolverInterface;
 use Krystal\Form\Navigation\Breadcrumbs\BreadcrumbBag;
 use Krystal\Form\Compressor\HtmlCompressor;
 use Krystal\Application\Route\UrlBuilderInterface;
+use Krystal\Widget\WidgetInterface;
+use Krystal\Widget\WidgetFactory;
 
 final class ViewManager implements ViewManagerInterface
 {
+    /**
+     * Widget factory instance
+     * 
+     * @var \Krystal\Widget\WidgetFactory
+     */
+    private $widgetFactory;
+
     /**
      * Message translator to be used in templates
      * 
@@ -111,16 +120,30 @@ final class ViewManager implements ViewManagerInterface
      * @param \Krystal\Application\View\PluginBagInterface $pluginBag
      * @param \Krystal\I18n\TranslatorInterface $translator
      * @param \Krystal\Application\Route\UrlBuilderInterface $urlBuilder
+     * @param \Krystal\Widget\WidgetFactory $widgetFactory
      * @param $compress Whether to compress an output
      * @return void
      */
-    public function __construct($moduleDir, PluginBagInterface $pluginBag, TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, $compress)
+    public function __construct($moduleDir, PluginBagInterface $pluginBag, TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, WidgetFactory $widgetFactory, $compress)
     {
         $this->moduleDir = $moduleDir;
         $this->pluginBag = $pluginBag;
         $this->translator = $translator;
         $this->urlBuilder = $urlBuilder;
+        $this->widgetFactory = $widgetFactory;
         $this->setCompress($compress);
+    }
+
+    /**
+     * Renders a widget
+     * 
+     * @param \Krystal\Widget\WidgetInterface $widget
+     * @param array $args Widget options
+     * @return string
+     */
+    public function widget(WidgetInterface $widget)
+    {
+        return $this->widgetFactory->build($widget);
     }
 
     /**

@@ -37,6 +37,7 @@ final class View implements ComponentInterface
             new PluginBag(), 
             $container->get('translator'), 
             $container->get('urlBuilder'), 
+            $container->get('widgetFactory'),
             $compress
         );
 

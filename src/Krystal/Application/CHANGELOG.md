@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Introduced conception of view widgets. A widget in templates can be rendered via `$this->widget()`
  * Make router match everything after ? mark, so that as of now, there's no need to create another route to grab GET variables
  * In router configuration section added `ssl`. Now HTTP to HTTPs redirection can be turned on via this parameter
  * The method `render()` in view service since now throws `LogicException` if empty template filename provided

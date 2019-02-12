@@ -85,6 +85,7 @@ final class Kernel implements KernelInterface
             new Component\FlashBag(),
             new Component\FormAttribute(),
             new Component\ValidatorFactory(),
+            new Component\WidgetFactory(),
             new Component\UrlBuilder(),
             new Component\View(),
             new Component\Profiler(),
