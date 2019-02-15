@@ -29,7 +29,7 @@ abstract class TimeHelper
     /**
      * Returns current date (and time)
      * 
-     * @param boolean $time
+     * @param boolean $time Whether to append current time
      * @return string
      */
     public static function getNow($time = true)
