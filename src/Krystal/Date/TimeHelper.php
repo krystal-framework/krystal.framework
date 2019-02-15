@@ -27,6 +27,17 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Returns month days
+     * 
+     * @return array
+     */
+    public static function getDays()
+    {
+        $range = range(1, 31);
+        return array_combine($range, $range);
+    }
+
+    /**
      * Returns current date (and time)
      * 
      * @param boolean $time Whether to append current time

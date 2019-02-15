@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `TimeHelper` added `getDays()` that month days
  * In `TimeHelper` added `getNow()` that returns current date (and time)
  * In `TimeHelper` added `isExpired()` that boolean indicating if the second date is expired regarding first one
  * In `TimeHelper` added `getTakenTime()` that returns the time difference between two timestamp in `Hours:Minutes:Seconds` format
