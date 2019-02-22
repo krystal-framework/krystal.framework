@@ -77,7 +77,7 @@ final class Request implements RequestInterface
      */
     public function sslRedirect()
     {
-        if ($this->isSecure()) {
+        if (!$this->isSecure()) {
             $redirect = 'https://' . $this->server['HTTP_HOST'] . $this->server['REQUEST_URI'];
 
             header('HTTP/1.1 301 Moved Permanently');
