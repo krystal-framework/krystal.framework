@@ -32,11 +32,11 @@ abstract class AbstractMediaElement
     /**
      * State initialization
      * 
-     * @param array $sources
+     * @param array|string $sources
      * @param string $error Error message
      * @return void
      */
-    final public function __construct(array $sources, $error = null)
+    final public function __construct($sources, $error = null)
     {
         $this->sources = $sources;
 

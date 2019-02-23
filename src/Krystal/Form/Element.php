@@ -548,7 +548,7 @@ class Element
     /**
      * Renders video element
      * 
-     * @param array $sources
+     * @param array|string $src
      * @param array $attrs
      *   Available attributes
      *
@@ -562,9 +562,9 @@ class Element
      * @param string $error Error message
      * @return string
      */
-    public static function video(array $sources, array $attrs = array(), $error = null)
+    public static function video($src, array $attrs = array(), $error = null)
     {
-        $node = new Node\Video($sources, $error);
+        $node = new Node\Video($src, $error);
 
         return $node->render($attrs);
     }

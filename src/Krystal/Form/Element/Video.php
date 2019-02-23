@@ -24,12 +24,12 @@ final class Video extends AbstractMediaElement implements FormElementInterface
     /**
      * Renders video element
      * 
-     * @param array $sources
+     * @param array|string $src Video path or collection of video paths
      * @param array $attrs Element attributes
      * @throws \UnexpectedValueException if unknown value for "preload" attribute supplied
      * @return string
      */
-    private function renderVideo(array $sources, array $attrs)
+    private function renderVideo($src, array $attrs)
     {
         $node = new NodeElement();
 
@@ -69,11 +69,19 @@ final class Video extends AbstractMediaElement implements FormElementInterface
             }
         }
 
-        return $node->finalize(false)
-                    ->appendChildren($sources)
-                    ->setText($this->error)
-                    ->closeTag()
-                    ->render();
+        // If multi paths provided
+        if (is_array($src)) {
+            $node->finalize(false)
+                 ->appendChildren($src);
+        } else {
+            // Single path assumed
+            $node->addAttribute('src', $src);
+        }
+
+        $node->setText($this->error)
+             ->closeTag();
+
+        return $node->render();
     }
 
     /**
@@ -81,8 +89,8 @@ final class Video extends AbstractMediaElement implements FormElementInterface
      */
     public function render(array $attrs)
     {
-        $sources = $this->createSourceElements($this->sources);
+        $src = is_array($this->sources) ? $this->createSourceElements($this->sources) : $this->sources;
 
-        return $this->renderVideo($sources, $attrs);
+        return $this->renderVideo($src, $attrs);
     }
 }
