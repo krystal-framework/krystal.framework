@@ -9,13 +9,13 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Widget;
+namespace Krystal\Widget\ListView;
 
-use Krystal\Grid\ListView;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
+use Krystal\Widget\WidgetInterface;
 
-final class ListWidget implements WidgetInterface
+final class ListViewWidget implements WidgetInterface
 {
     /**
      * Data source
@@ -54,8 +54,9 @@ final class ListWidget implements WidgetInterface
     public function render(DependencyInjectionContainerInterface $container, InputInterface $input)
     {
         $translator = $container->get('translator');
-        $widget = new ListView($this->data, $this->options, $translator);
 
-        return $widget->render();
+        $maker = new ListViewMaker($this->data, $this->options, $translator);
+
+        return $maker->render();
     }
 }

@@ -9,13 +9,13 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Grid;
+namespace Krystal\Widget\ListView;
 
 use Krystal\Form\NodeElement;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Text\TextUtils;
 
-class ListView
+class ListViewMaker
 {
     /**
      * Data to be rendered
