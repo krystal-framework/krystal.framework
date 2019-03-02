@@ -534,15 +534,16 @@ class Element
     /**
      * Renders audio element
      * 
-     * @param string $sources
+     * @param array|string $src
+     * @param array $attrs
      * @param string $error Error message can be overriden on demand
      * @return string
      */
-    public static function audio(array $sources, $error = null)
+    public static function audio($src, array $attrs = array(), $error = null)
     {
-        $node = new Node\Audio($sources, $error);
+        $node = new Node\Audio($src, $error);
 
-        return $node->render(array());
+        return $node->render($attrs);
     }
 
     /**

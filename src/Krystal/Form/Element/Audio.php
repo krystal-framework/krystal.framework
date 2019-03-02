@@ -23,20 +23,31 @@ final class Audio extends AbstractMediaElement implements FormElementInterface
     /**
      * Renders audio element
      * 
-     * @param array $sources
+     * @param array|string $src Audio file path or collection of audio file paths
+     * @param array $attrs Element attributes
      * @return string
      */
-    private function renderAudio(array $sources)
+    private function renderAudio($src, array $attrs)
     {
         $node = new NodeElement();
 
-        return $node->openTag('audio')
-                    ->addProperty('controls')
-                    ->finalize(false)
-                    ->appendChildren($sources)
-                    ->setText($this->error)
-                    ->closeTag()
-                    ->render();
+        $node->openTag('audio')
+             ->addAttributes($attrs);
+
+        // If multi paths provided
+        if (is_array($src)) {
+            $node->finalize(false)
+                 ->appendChildren($src);
+        } else {
+            // Single path assumed
+            $node->addAttribute('src', $src)
+                 ->finalize(false);
+        }
+
+        $node->setText($this->error)
+             ->closeTag();
+
+        return $node->render();
     }
 
     /**
@@ -44,8 +55,8 @@ final class Audio extends AbstractMediaElement implements FormElementInterface
      */
     public function render(array $attrs)
     {
-        $sources = $this->createSourceElements($this->sources);
+        $src = is_array($this->sources) ? $this->createSourceElements($this->sources) : $this->sources;
 
-        return $this->renderAudio($sources);
+        return $this->renderAudio($src, $attrs);
     }
 }
