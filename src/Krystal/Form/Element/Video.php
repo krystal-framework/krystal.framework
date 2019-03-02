@@ -14,7 +14,7 @@ namespace Krystal\Form\Element;
 use Krystal\Form\NodeElement;
 use UnexpectedValueException;
 
-final class Video extends AbstractMediaElement implements FormElementInterface
+final class Video extends AbstractMediaElement
 {
     /**
      * {@inheritDoc}
@@ -22,14 +22,9 @@ final class Video extends AbstractMediaElement implements FormElementInterface
     protected $error = 'Your browser does not support the video element';
 
     /**
-     * Renders video element
-     * 
-     * @param array|string $src Video path or collection of video paths
-     * @param array $attrs Element attributes
-     * @throws \UnexpectedValueException if unknown value for "preload" attribute supplied
-     * @return string
+     * {@inheritDoc}
      */
-    private function renderVideo($src, array $attrs)
+    protected function renderElement($src, array $attrs)
     {
         $node = new NodeElement();
 
@@ -82,15 +77,5 @@ final class Video extends AbstractMediaElement implements FormElementInterface
              ->closeTag();
 
         return $node->render();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function render(array $attrs)
-    {
-        $src = is_array($this->sources) ? $this->createSourceElements($this->sources) : $this->sources;
-
-        return $this->renderVideo($src, $attrs);
     }
 }

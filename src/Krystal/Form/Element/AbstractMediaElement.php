@@ -13,7 +13,7 @@ namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
 
-abstract class AbstractMediaElement
+abstract class AbstractMediaElement implements FormElementInterface
 {
     /**
      * Sources with their MIME-types
@@ -84,5 +84,24 @@ abstract class AbstractMediaElement
         return $node->openTag('source')
                     ->addAttributes($attrs)
                     ->finalize(true);
+    }
+
+    /**
+     * Renders media element
+     * 
+     * @param array|string $src File path or collection of file paths
+     * @param array $attrs Element attributes
+     * @return string
+     */
+    abstract protected function renderElement($src, array $attrs);
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render(array $attrs)
+    {
+        $src = is_array($this->sources) ? $this->createSourceElements($this->sources) : $this->sources;
+
+        return $this->renderElement($src, $attrs);
     }
 }

@@ -13,7 +13,7 @@ namespace Krystal\Form\Element;
 
 use Krystal\Form\NodeElement;
 
-final class Audio extends AbstractMediaElement implements FormElementInterface
+final class Audio extends AbstractMediaElement
 {
     /**
      * {@inheritDoc}
@@ -21,13 +21,9 @@ final class Audio extends AbstractMediaElement implements FormElementInterface
     protected $error = 'Your browser does not support the audio element';
 
     /**
-     * Renders audio element
-     * 
-     * @param array|string $src Audio file path or collection of audio file paths
-     * @param array $attrs Element attributes
-     * @return string
+     * {@inheritDoc}
      */
-    private function renderAudio($src, array $attrs)
+    protected function renderElement($src, array $attrs)
     {
         $node = new NodeElement();
 
@@ -48,15 +44,5 @@ final class Audio extends AbstractMediaElement implements FormElementInterface
              ->closeTag();
 
         return $node->render();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function render(array $attrs)
-    {
-        $src = is_array($this->sources) ? $this->createSourceElements($this->sources) : $this->sources;
-
-        return $this->renderAudio($src, $attrs);
     }
 }
