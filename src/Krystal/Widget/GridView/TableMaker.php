@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Grid;
+namespace Krystal\Widget\GridView;
 
 use Krystal\Form\NodeElement;
 use Krystal\Db\Filter\QueryContainerInterface;
@@ -17,7 +17,6 @@ use Krystal\Form\Element;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Text\TextUtils;
 use Closure;
-use Traversable;
 
 final class TableMaker
 {

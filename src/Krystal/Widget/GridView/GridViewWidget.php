@@ -9,13 +9,14 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Widget;
+namespace Krystal\Widget\GridView;
 
-use Krystal\Grid\Grid;
 use Krystal\Application\InputInterface;
 use Krystal\InstanceManager\DependencyInjectionContainerInterface;
+use Krystal\Widget\WidgetInterface;
+use Krystal\Db\Filter\QueryContainer;
 
-final class GridWidget implements WidgetInterface
+final class GridViewWidget implements WidgetInterface
 {
     /**
      * Data source
@@ -62,9 +63,9 @@ final class GridWidget implements WidgetInterface
      */
     public function render(DependencyInjectionContainerInterface $container, InputInterface $input)
     {
-        $query = $input->getQuery();
         $translator = $container->get('translator');
 
-        return Grid::render($this->data, $this->options, $translator, $this->route, $query);
+        $maker = new TableMaker($this->data, $this->options, $translator, new QueryContainer($input->getQuery(), $this->route));
+        return $maker->render();
     }
 }
