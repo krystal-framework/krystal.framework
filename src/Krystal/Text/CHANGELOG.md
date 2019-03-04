@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `TextUtils::strModified()` that can determine whether a string has been modified or not
  * Improved slug generator. Remove quotes from Word as well.
  * Extended dictionary in foreign chars
  * Added `TextUtils::snakeCase()` to convert strings to snake case

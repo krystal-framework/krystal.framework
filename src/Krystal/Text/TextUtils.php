@@ -12,9 +12,24 @@
 namespace Krystal\Text;
 
 use UnexpectedValueException;
+use Closure;
 
 class TextUtils
 {
+    /**
+     * Checks whether string has been modified
+     * 
+     * @param string $target Input string
+     * @param \Closure $callback Comparison function
+     * @return boolean
+     */
+    public static function strModified($target, Closure $callback)
+    {
+        $modified = $callback($target);
+
+        return md5($target) !== md5($modified);
+    }
+
     /**
      * Generates serial number like XXXXX-XXXXX-XXXXX-XXXXX, the mask can be overridden
      * 
