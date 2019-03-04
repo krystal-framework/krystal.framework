@@ -13,6 +13,7 @@ namespace Krystal\Security;
 
 use InvalidArgumentException;
 use UnexpectedValueException;
+use Krystal\Text\TextUtils;
 
 class Filter implements Sanitizeable
 {
@@ -51,6 +52,30 @@ class Filter implements Sanitizeable
             default:
                 throw new UnexpectedValueException('Unknown filter type provided');
         }
+    }
+
+    /**
+     * Filters attribute value
+     * 
+     * @param string $value Attribute value
+     * @return string
+     */
+    public static function filterAttribute($value)
+    {
+        // Check whether current string has already been encoded
+        $isEncoded = TextUtils::strModified($value, function($target){
+            return self::escape($target);
+        });
+
+        // Decode if previous encoded or escaped
+        if ($isEncoded) {
+            $value = self::charsDecode($value);
+        }
+
+        // Convert special characters to make safe use of them
+        $value = self::specialChars($value);
+
+        return $value;
     }
 
     /**
