@@ -342,7 +342,7 @@ final class NodeElement implements NodeElementInterface
     public function addAttribute($attribute, $value)
     {
         // Escape special characters
-        $value = Filter::specialChars($value);
+        $value = Filter::filterAttribute($value);
 
         if ($this->isProperty($attribute)) {
             $this->addPropertyOnDemand($attribute, $value);

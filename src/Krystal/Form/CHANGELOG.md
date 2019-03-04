@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Improved internal attribute filter in `NodeElement`
  * Added HTML5 video tag generator via `Element::video()` method
  * Added HTML5 audio tag generator via `Element::audio()` method
  * Removed BooleanWidget. This is no longer required, since Grid itself can generate boolean values.
