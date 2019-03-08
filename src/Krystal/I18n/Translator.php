@@ -118,6 +118,10 @@ final class Translator implements TranslatorInterface
         $arguments = func_get_args();
         $message = array_shift($arguments);
 
+        if (is_null($message)) {
+            return $message;
+        }
+
         // Don't process anything if a dictionary is empty
         if (empty($this->dictionary)) {
             return vsprintf($message, $arguments);
