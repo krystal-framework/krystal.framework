@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In Request service added `getServerSoftware()` that returns current server software
  * In Request service added `sslRedirect()` method for internal usage in Kernel
  * Improved detection of secure connection in `Request::isSecure()`
  * Forced `Request::getAll()` to return empty array of files on absence, rather than nothing at all

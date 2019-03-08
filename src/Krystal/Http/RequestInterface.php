@@ -131,6 +131,13 @@ interface RequestInterface
     public function getClientIP($proxy = false);
 
     /**
+     * Returns server software
+     * 
+     * @return string
+     */
+    public function getServerSoftware();
+
+    /**
      * Returns the document root directory 
      * under which the current script is executing, as defined in the server's configuration file.
      * 

@@ -365,6 +365,16 @@ final class Request implements RequestInterface
     }
 
     /**
+     * Returns server software
+     * 
+     * @return string
+     */
+    public function getServerSoftware()
+    {
+        return isset($this->server['SERVER_SOFTWARE']) ? $this->server['SERVER_SOFTWARE'] : false;
+    }
+
+    /**
      * Returns the document root directory 
      * 
      * @return string
