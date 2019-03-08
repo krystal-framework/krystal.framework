@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In database service added `getVersion()` that returns current database version
  * In database service, added `getPrimaryKey()` that can determine a PK out of a table
  * The `orderBy()` method since now throws `LogicException` if in associative array provided unknown sorting method
  * The `orderBy()` method since now can accept an array with `RawSqlFragment` instances

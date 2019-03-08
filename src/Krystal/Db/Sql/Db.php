@@ -83,6 +83,18 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Gets current database version
+     * 
+     * @return mixed
+     */
+    public function getVersion()
+    {
+        return $this->select()
+                    ->version()
+                    ->queryScalar();
+    }
+
+    /**
      * Appends many-to-many grabber to the queue
      * 
      * @param string $alias Alias name
