@@ -213,11 +213,11 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * Generates SQL function fragment
      * 
      * @param string $func Function name
-     * @param array $arguments
-     * @param string $alias 
+     * @param array $arguments Optional function arguments
+     * @param string $alias Optional alias
      * @return string
      */
-    private function createFunction($func, array $arguments, $alias = null)
+    private function createFunction($func, array $arguments = array(), $alias = null)
     {
         // Prepare function arguments
         foreach ($arguments as $index => $argument) {
