@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `FileManager::humanSize()` to convert bytes into human readable sizes
  * In `getDirTree()` forced to ignore dots when making a tree
  * Added `createDir()` to create empty directory
  * Added `hasExtension()` in `Krystal\Filesystem\FileManager`
