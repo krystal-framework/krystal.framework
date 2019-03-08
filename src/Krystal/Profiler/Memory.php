@@ -11,6 +11,8 @@
 
 namespace Krystal\Profiler;
 
+use Krystal\Filesystem\FileManager;
+
 class Memory
 {
     /**
@@ -21,12 +23,6 @@ class Memory
     public static function getUsage()
     {
         $size = memory_get_usage(true);
-        $unit = array('b', 'kb', 'mb', 'gb', 'tb', 'pb');
-
-        // Count the exponent 
-        $exp = floor(log($size, 1024));
-        $pow = pow(1024, $exp);
-
-        return round($size / $pow, 2).' '.strtoupper($unit[$exp]);
+        return FileManager::humanSize($size);
     }
 }
