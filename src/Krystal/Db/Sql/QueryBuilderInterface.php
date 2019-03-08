@@ -50,6 +50,13 @@ interface QueryBuilderInterface
     public function showKeys();
 
     /**
+     * Appends VERSION() function
+     * 
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function version();
+
+    /**
      * Appends SQL function
      * 
      * @param string $func Function name

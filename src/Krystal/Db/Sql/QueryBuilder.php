@@ -210,6 +210,19 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends VERSION() function
+     * 
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function version()
+    {
+        $function = $this->createFunction('VERSION');
+        $this->append($function);
+
+        return $this;
+    }
+
+    /**
      * Generates SQL function fragment
      * 
      * @param string $func Function name

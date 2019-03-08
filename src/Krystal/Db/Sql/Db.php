@@ -702,6 +702,17 @@ final class Db implements DbInterface, RelationableServiceInterface
      * 
      * @return \Krystal\Db\Sql\Db
      */
+    public function version()
+    {
+        $this->queryBuilder->version();
+        return $this;
+    }
+
+    /**
+     * Appends RAND() function
+     * 
+     * @return \Krystal\Db\Sql\Db
+     */
     public function now()
     {
         $this->queryBuilder->now();
