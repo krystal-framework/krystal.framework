@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * The method `findByKey()` since now accepts and optional 2-nd argument to return default value in `ArrayCollection` and `ArrayGroupCollection`
  * In `ArrayUtils` added `unsetByValue()`
  * VirtualEntity since now accepts optional 2nd argument called `strict`, that defines whether strict mode is enabled.
  * Added `hasAllArrayValues()` in `Stdlib\ArrayUtils` to determine if all array values are arrays

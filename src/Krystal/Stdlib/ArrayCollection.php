@@ -35,14 +35,15 @@ class ArrayCollection
      * Find a value by its associated key
      * 
      * @param string $key
+     * @param mixed $default Default value to be returned
      * @return mixed
      */
-    public function findByKey($key)
+    public function findByKey($key, $default = '')
     {
         if ($this->hasKey($key)) {
             return $this->collection[$key];
         } else {
-            return '';
+            return $default;
         }
     }
 

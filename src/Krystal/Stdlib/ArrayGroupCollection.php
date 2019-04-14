@@ -35,9 +35,10 @@ class ArrayGroupCollection extends ArrayCollection
      * Find a value by its associated key
      * 
      * @param string $key
+     * @param mixed $default Default value to be returned
      * @return mixed
      */
-    public function findByKey($target)
+    public function findByKey($target, $default = '')
     {
         foreach ($this->collection as $group => $hashMap) {
             if (array_key_exists($target, $hashMap)) {
@@ -45,6 +46,6 @@ class ArrayGroupCollection extends ArrayCollection
             }
         }
 
-        return '';
+        return $default;
     }
 }
