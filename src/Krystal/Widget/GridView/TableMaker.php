@@ -416,7 +416,10 @@ final class TableMaker
             $links = array();
 
             foreach ($this->options[self::GRID_PARAM_ACTIONS] as $name => $callback) {
-                $links[] = $callback($data);
+                // Append only if callable type provided as a value
+                if (is_callable($callback)) {
+                    $links[] = $callback($data);
+                }
             }
 
             $children[] = $this->createColumn(null, join(PHP_EOL, $links));
