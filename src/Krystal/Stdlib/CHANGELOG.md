@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `isIterable()` in `ArrayUtils` to check whether variable is array-like
  * The method `findByKey()` since now accepts and optional 2-nd argument to return default value in `ArrayCollection` and `ArrayGroupCollection`
  * In `ArrayUtils` added `unsetByValue()`
  * VirtualEntity since now accepts optional 2nd argument called `strict`, that defines whether strict mode is enabled.

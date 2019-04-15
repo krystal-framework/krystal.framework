@@ -17,6 +17,21 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Checks whether variable is array-like
+     * 
+     * @param mixed $var
+     * @return boolean
+     */
+    public function isIterable($var)
+    {
+        return is_array($var) ||
+               ($var instanceof ArrayAccess  ||
+                $var instanceof Traversable  ||
+                $var instanceof Serializable ||
+                $var instanceof Countable);
+    }
+
+    /**
      * Unsets an item from an array by its value, not by key
      * 
      * @param array $array
