@@ -25,10 +25,10 @@ abstract class ArrayUtils
     public function isIterable($var)
     {
         return is_array($var) ||
-               ($var instanceof ArrayAccess  ||
-                $var instanceof Traversable  ||
-                $var instanceof Serializable ||
-                $var instanceof Countable);
+               ($var instanceof \ArrayAccess  ||
+                $var instanceof \Traversable  ||
+                $var instanceof \Serializable ||
+                $var instanceof \Countable);
     }
 
     /**
