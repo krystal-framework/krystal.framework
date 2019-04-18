@@ -22,7 +22,7 @@ abstract class ArrayUtils
      * @param mixed $var
      * @return boolean
      */
-    public function isIterable($var)
+    public static function isIterable($var)
     {
         return is_array($var) ||
                ($var instanceof \ArrayAccess  ||
