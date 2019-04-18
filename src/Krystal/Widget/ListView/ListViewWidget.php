@@ -34,11 +34,12 @@ final class ListViewWidget implements WidgetInterface
     /**
      * State initialization
      * 
-     * @param array $data Data source
+     * @param mixed $data Data source
      * @param array $options Widget options
+     * @throws \RuntimeException if not array-like data provided
      * @return void
      */
-    public function __construct(array $data, array $options)
+    public function __construct($data, array $options)
     {
         $this->data = $data;
         $this->options = $options;

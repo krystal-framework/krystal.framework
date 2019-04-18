@@ -14,6 +14,8 @@ namespace Krystal\Widget\ListView;
 use Krystal\Form\NodeElement;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Text\TextUtils;
+use Krystal\Stdlib\ArrayUtils;
+use RuntimeException;
 
 class ListViewMaker
 {
@@ -50,13 +52,19 @@ class ListViewMaker
     /**
      * State initialization
      * 
-     * @param array $data
+     * @param mixed $data
      * @param array $options
      * @param \Krystal\I18n\TranslatorInterface $translator
+     * @throws \RuntimeException if not array-like data provided
      * @return array
      */
-    public function __construct(array $data, array $options, TranslatorInterface $translator = null)
+    public function __construct($data, array $options, TranslatorInterface $translator = null)
     {
+        // Stop, if data is not array-like
+        if (!ArrayUtils::isIterable($data)) {
+            throw new RuntimeException(sprintf('Unexpected type of data provided. It must be array-like, but got "%s"', gettype($data)));
+        }
+
         $this->data = $data;
         $this->options = array_merge($this->options, $options);
         $this->translator = $translator;
