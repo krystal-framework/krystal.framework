@@ -38,8 +38,8 @@ final class TableMaker
         'tableDataClass' => 'text-center',
         'rowClass' => 'text-center',
         'activeClass' => 'text-info',
-        'arrowDownIcon' => 'glyphicon glyphicon-arrow-down',
-        'arrowUpIcon' => 'glyphicon glyphicon-arrow-up',
+        'arrowDownIcon' => 'fas fa-angle-down',
+        'arrowUpIcon' => 'fas fa-angle-up',
         'inputClass' => 'form-control',
         'batch' => false // Whether to generate batch selection
     );
