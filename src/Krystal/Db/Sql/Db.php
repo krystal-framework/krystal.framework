@@ -468,13 +468,16 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function paginate($page, $itemsPerPage, $column = '1')
     {
-        $count = $this->getCount($column);
+        // Extra checking if values are number before querying a database
+        if (is_numeric($page) && is_numeric($itemsPerPage)) {
+            $count = $this->getCount($column);
 
-        if ($this->isDriver('mysql') || $this->isDriver('sqlite')) {
-            // Alter paginator's state
-            $this->paginateRaw($count, $page, $itemsPerPage);
-        } else {
-            throw new RuntimeException('Smart pagination algorithm is currently supported only for MySQL and SQLite');
+            if ($this->isDriver('mysql') || $this->isDriver('sqlite')) {
+                // Alter paginator's state
+                $this->paginateRaw($count, $page, $itemsPerPage);
+            } else {
+                throw new RuntimeException('Smart pagination algorithm is currently supported only for MySQL and SQLite');
+            }
         }
 
         return $this;

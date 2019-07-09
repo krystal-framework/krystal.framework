@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * The `Krystal\Db\Sql\Db::paginate()` method runs only if first two arguments are numeric. Otherwise just returns an instance of itself
  * In database service added `getVersion()` that returns current database version
  * In database service, added `getPrimaryKey()` that can determine a PK out of a table
  * The `orderBy()` method since now throws `LogicException` if in associative array provided unknown sorting method
