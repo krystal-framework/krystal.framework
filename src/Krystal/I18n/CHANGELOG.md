@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * The main `translate()` method no longer throws an exception if first argument isn't scalar. It ignores this and returns nothing instead
  * Since now `translateArray()` can translate two dimensional arrays
  * Fixed issue with scalar placeholders
  * Renamed `exists()` method to `has()`

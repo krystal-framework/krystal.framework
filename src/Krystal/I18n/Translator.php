@@ -109,7 +109,6 @@ final class Translator implements TranslatorInterface
      * 
      * @param string $default Default message
      * @param string|array $placeholders Number of placeholder according to specified string
-     * @throws \InvalidArgumentException if first argument $message wasn't string
      * @return string Translated string
      */
     public function translate()
@@ -129,7 +128,7 @@ final class Translator implements TranslatorInterface
 
         // Ensure the proper message received
         if (!is_scalar($message)) {
-            throw new InvalidArgumentException(sprintf('Argument #1 $default must be a string, received "%s"', gettype($message)));
+            return;
         }
 
         // The variables we are going to deal with
