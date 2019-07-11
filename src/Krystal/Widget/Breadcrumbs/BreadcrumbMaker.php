@@ -67,8 +67,8 @@ final class BreadcrumbMaker extends AbstractListWidget
      */
     private function createBreadcrumbItems()
     {
-        $itemClass = $this->getOption('itemClass', null);
-        $itemActiveClass = $this->getOption('itemActiveClass', 'active');
+        $itemClass = $this->getOption('itemClass', 'breadcrumb-item');
+        $itemActiveClass = $this->getOption('itemActiveClass', 'breadcrumb-item active');
         $linkClass = $this->getOption('linkClass', null);
 
         $items = array();
