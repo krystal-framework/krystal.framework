@@ -105,18 +105,14 @@ final class Translator implements TranslatorInterface
     }
 
     /**
-     * Translates a string
+     * Translates a single string
      * 
-     * @param string $default Default message
-     * @param string|array $placeholders Number of placeholder according to specified string
-     * @return string Translated string
+     * @param string $message Message string to be translated
+     * @param array $arguments String variables, if any
+     * @return string
      */
-    public function translate()
+    private function translateSingle($message, array $arguments)
     {
-        // Receive arguments
-        $arguments = func_get_args();
-        $message = array_shift($arguments);
-
         if (is_null($message)) {
             return $message;
         }
@@ -153,5 +149,20 @@ final class Translator implements TranslatorInterface
         }
 
         return vsprintf($message, $variables);
+    }
+
+    /**
+     * Translates a string
+     * 
+     * @param string $default Default message
+     * @param string|array $placeholders Number of placeholder according to specified string
+     * @return string Translated string
+     */
+    public function translate()
+    {
+        $arguments = func_get_args();
+        $message = array_shift($arguments);
+        
+        return $this->translateSingle($message, $arguments);
     }
 }
