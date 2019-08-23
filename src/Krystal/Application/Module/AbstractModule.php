@@ -102,7 +102,7 @@ abstract class AbstractModule
      * 
      * @return string
      */
-    final protected function getCurrentModuleName()
+    final public function getCurrentModuleName()
     {
         return $this->moduleName;
     }
