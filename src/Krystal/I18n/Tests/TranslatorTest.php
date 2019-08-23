@@ -8,7 +8,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
 {
     private $translator;
     private $defaults = array(
-        'To do something' => 'Zu machen etwas'
+        'Site' => array(
+            'To do something' => 'Zu machen etwas'
+        )
     );
 
     public function setUp()
@@ -16,20 +18,27 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         $this->translator = new Translator($this->defaults);
     }
 
-    public function testCanTranslate()
+    public function testCanTranslateLocal()
+    {
+        $this->assertEquals($this->translator->translateFrom('Site', 'To do something'), 'Zu machen etwas');
+    }
+
+    public function testCanTranslateGlobal()
     {
         $this->assertEquals($this->translator->translate('To do something'), 'Zu machen etwas');
     }
 
     public function testTargetSentenceExists()
     {
-        $this->assertTrue($this->translator->has('To do something'));
+        $this->assertTrue($this->translator->has('To do something', null));
     }
 
     public function testCanBeExtended()
     {
         $this->translator->extend(array(
-            'I must do it' => 'Ich muss machen das'
+            'Site' => array(
+                'I must do it' => 'Ich muss machen das'
+            )
         ));
 
         $this->assertEquals($this->translator->translate('I must do it'), 'Ich muss machen das');
