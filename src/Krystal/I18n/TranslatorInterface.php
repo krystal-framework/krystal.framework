@@ -44,10 +44,11 @@ interface TranslatorInterface
     public function extend();
 
     /**
-     * Check whether a string exists in a stack
+     * Check whether a message translation exists in a stack
      * 
-     * @param string $string The target string
+     * @param string $message The target string
+     * @param string $module Optional module constraint
      * @return boolean
      */
-    public function has($string);
+    public function has($message, $module = null);
 }

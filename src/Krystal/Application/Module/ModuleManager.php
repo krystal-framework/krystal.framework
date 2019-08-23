@@ -453,9 +453,9 @@ final class ModuleManager implements ModuleManagerInterface
 
             // Only array must be provided, otherwise ignore another type
             if (is_array($translations)) {
-                // If that's an array, then append translations
-                foreach ($translations as $string => $translation) {
-                    $this->translations[$string] = $translation;
+                // If that's an array, then append translations that correspond to a module
+                foreach ($translations as $message => $translation) {
+                    $this->translations[$module->getCurrentModuleName()][$message] = $translation;
                 }
 
                 // And indicate success

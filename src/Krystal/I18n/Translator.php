@@ -12,6 +12,7 @@
 namespace Krystal\I18n;
 
 use InvalidArgumentException;
+use RuntimeException;
 
 final class Translator implements TranslatorInterface
 {
@@ -34,7 +35,35 @@ final class Translator implements TranslatorInterface
             $this->extend($dictionary);
         }
     }
-    
+
+    /**
+     * Filter message variables
+     * 
+     * @param array $arguments
+     * @return array
+     */
+    private static function filterVariables(array $arguments)
+    {
+        // The variables we are going to deal with
+        $variables = array();
+
+        // Iterate over arguments we have (message is stripped away)
+        foreach ($arguments as $argument) {
+            if (is_array($argument)) {
+                // Array supplied as second argument, so here we don't need anything to do
+                $variables = $argument;
+                break;
+            }
+
+            // Only strings and integers are supported to be passed as arguments
+            if (is_string($argument) || is_numeric($argument)) {
+                array_push($variables, $argument);
+            }
+        }
+        
+        return $variables;
+    }
+
     /**
      * Clears a dictionary
      * 
@@ -59,14 +88,29 @@ final class Translator implements TranslatorInterface
     }
 
     /**
-     * Check whether a string exists in a stack
+     * Check whether a message translation exists in a stack
      * 
-     * @param string $string The target string
+     * @param string $message The target string
+     * @param string $module Optional module constraint
      * @return boolean
      */
-    public function has($string)
+    public function has($message, $module = null)
     {
-        return in_array($string, array_keys($this->dictionary));
+        if ($module === null) {
+            // Global check
+            foreach ($this->dictionary as $target => $translations){
+                // Linear search
+                if (isset($translations[$message])) {
+                    return true;
+                }
+
+                // Not found by default
+                return false;
+            }
+
+        } else {
+            return isset($this->dictionary[$module][$message]);
+        }
     }
 
     /**
@@ -105,50 +149,58 @@ final class Translator implements TranslatorInterface
     }
 
     /**
-     * Translates a single string
+     * Translates message string from a dictionary, optionally filtering by a module
      * 
+     * @param string $module Current module
      * @param string $message Message string to be translated
-     * @param array $arguments String variables, if any
+     * @param array $arguments String variables, if available
+     * @throws \RuntimeException if trying to translate a string from non-loaded module
      * @return string
      */
-    private function translateSingle($message, array $arguments)
+    public function translateFrom($module, $message, array $arguments = array())
     {
+        // If NULL supplied, then stop and return original message
         if (is_null($message)) {
             return $message;
         }
+        
+        // Ensure the proper message data type supplied
+        if (!is_scalar($message)) {
+            return null;
+        }
+
+        $arguments = self::filterVariables($arguments);
 
         // Don't process anything if a dictionary is empty
         if (empty($this->dictionary)) {
             return vsprintf($message, $arguments);
         }
 
-        // Ensure the proper message received
-        if (!is_scalar($message)) {
-            return;
+        // Immediately stop, if invalid module name provided
+        if ($module !== null && !isset($this->dictionary[$module][$message])) {
+            throw new RuntimeException(sprintf(
+                'The module "%s" is not loaded. You should either use global look up or provide module name which is loaded', $module
+            ));
         }
 
-        // The variables we are going to deal with
-        $variables = array();
+        // Look up in a module only
+        if (isset($this->dictionary[$module][$message])) {
+            $source = $this->dictionary[$module][$message];
+        } else {
+            // Global look up
+            foreach ($this->dictionary as $target => $translations) {
+                if (isset($translations[$message])) {
+                    $source = $translations[$message];
 
-        // Iterate over arguments we have (message is stripped away)
-        foreach ($arguments as $argument) {
-            if (is_array($argument)) {
-                // Array supplied as second argument, so here we don't need anything to do
-                $variables = $argument;
-                break;
+                    // No reason to continue search, since we just found a translation
+                    break;
+                } else {
+                    $source = $message;
+                }
             }
-
-            // Only strings and integers are supported to be passed as arguments
-            if (is_string($argument) || is_numeric($argument)) {
-                array_push($variables, $argument);
-            }
         }
 
-        if (isset($this->dictionary[$message])) {
-            return vsprintf($this->dictionary[$message], $variables);
-        }
-
-        return vsprintf($message, $variables);
+        return vsprintf($source, $arguments);
     }
 
     /**
@@ -162,7 +214,7 @@ final class Translator implements TranslatorInterface
     {
         $arguments = func_get_args();
         $message = array_shift($arguments);
-        
-        return $this->translateSingle($message, $arguments);
+
+        return $this->translateFrom(null, $message, $arguments);
     }
 }
