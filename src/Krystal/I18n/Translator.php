@@ -163,7 +163,7 @@ final class Translator implements TranslatorInterface
         if (is_null($message)) {
             return $message;
         }
-        
+
         // Ensure the proper message data type supplied
         if (!is_scalar($message)) {
             return null;
@@ -177,15 +177,16 @@ final class Translator implements TranslatorInterface
         }
 
         // Immediately stop, if invalid module name provided
-        if ($module !== null && !isset($this->dictionary[$module][$message])) {
+        if ($module !== null && !isset($this->dictionary[$module])) {
             throw new RuntimeException(sprintf(
                 'The module "%s" is not loaded. You should either use global look up or provide module name which is loaded', $module
             ));
         }
 
         // Look up in a module only
-        if (isset($this->dictionary[$module][$message])) {
-            $source = $this->dictionary[$module][$message];
+        if ($module !== null) {
+            // Grab the message if available in current module
+            $source = isset($this->dictionary[$module][$message]) ? $this->dictionary[$module][$message] : $message;
         } else {
             // Global look up
             foreach ($this->dictionary as $target => $translations) {
