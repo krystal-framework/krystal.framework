@@ -117,17 +117,18 @@ final class Translator implements TranslatorInterface
      * Translate array values if possible
      * 
      * @param array $array
+     * @param mixed $module Optional module constraint
      * @throws \InvalidArgumentException if at least one array's value isn't a string
      * @return array
      */
-    public function translateArray(array $array)
+    public function translateArray(array $array, $module = null)
     {
         $result = array();
 
         foreach ($array as $key => $value) {
             // Group translation
             if (is_array($value)) {
-                $key = $this->translate($key);
+                $key = $this->translateFrom($module, $key);
 
                 // If group is not created yet, create it
                 if (!isset($result[$key])){
@@ -135,11 +136,11 @@ final class Translator implements TranslatorInterface
                 }
 
                 foreach($value as $index => $inner) {
-                    $result[$key][$index] = $this->translate($inner);
+                    $result[$key][$index] = $this->translateFrom($module, $inner);
                 }
                 
             } else if (is_scalar($value)) {
-                $result[$key] = $this->translate($value);
+                $result[$key] = $this->translateFrom($module, $value);
             } else {
                 throw new InvalidArgumentException('Invalid array supplied');
             }

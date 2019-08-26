@@ -24,9 +24,11 @@ interface TranslatorInterface
      * Translate array values if possible
      * 
      * @param array $array
+     * @param mixed $module Optional module constraint
+     * @throws \InvalidArgumentException if at least one array's value isn't a string
      * @return array
      */
-    public function translateArray(array $array);
+    public function translateArray(array $array, $module = null);
 
     /**
      * Translates a string
