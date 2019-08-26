@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * In PluginBag, all appended scripts and stylesheets are now included only once by default
+ * In PluginBag, methods that append scripts and stylesheets are now accept optional `$once` boolean parameter
  * Introduced conception of view widgets. A widget in templates can be rendered via `$this->widget()`
  * Make router match everything after ? mark, so that as of now, there's no need to create another route to grab GET variables
  * In router configuration section added `ssl`. Now HTTP to HTTPs redirection can be turned on via this parameter

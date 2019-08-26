@@ -76,12 +76,20 @@ final class PluginBag implements PluginBagInterface
      * Appends a unit
      * 
      * @param string $unit A path to unit
+     * @param array $stack Data container
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    private function appendInternal($unit, array &$stack)
+    private function appendInternal($unit, array &$stack, $once)
     {
         $unit = $this->normalizeAssetPath($unit);
 
+        // If it's already in stack, just ignore this call
+        if ($once === true && in_array($unit, $stack)) {
+            return $this;
+        }
+
+        // Otherwise, push
         array_push($stack, $unit);
         return $this;
     }
@@ -104,23 +112,25 @@ final class PluginBag implements PluginBagInterface
      * Appends a stylesheet
      * 
      * @param string $stylesheet
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    public function appendStylesheet($stylesheet)
+    public function appendStylesheet($stylesheet, $once = true)
     {
-        return $this->appendInternal($stylesheet, $this->stylesheets);
+        return $this->appendInternal($stylesheet, $this->stylesheets, $once);
     }
 
     /**
      * Appends a collection of stylesheets
      * 
      * @param array $stylesheets
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    public function appendStylesheets(array $stylesheets)
+    public function appendStylesheets(array $stylesheets, $once = true)
     {
         foreach ($stylesheets as $stylesheet) {
-            $this->appendStylesheet($stylesheet);
+            $this->appendStylesheet($stylesheet, $once);
         }
 
         return $this;
@@ -140,23 +150,25 @@ final class PluginBag implements PluginBagInterface
      * Appends last stylsheet
      * 
      * @param string $stylesheet
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    public function appendLastStylesheet($stylesheet)
+    public function appendLastStylesheet($stylesheet, $once = true)
     {
-        return $this->appendInternal($stylesheet, $this->lastStylesheets);
+        return $this->appendInternal($stylesheet, $this->lastStylesheets, $once);
     }
 
     /**
      * Append last stylesheet files
      * 
      * @param array $stylesheets
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    public function appendLastStylesheets(array $stylesheets)
+    public function appendLastStylesheets(array $stylesheets, $once = true)
     {
         foreach ($stylesheets as $stylesheet) {
-            $this->appendLastStylesheet($stylesheet);
+            $this->appendLastStylesheet($stylesheet, $once);
         }
 
         return $this;
@@ -166,23 +178,25 @@ final class PluginBag implements PluginBagInterface
      * Appends a script
      * 
      * @param string $script
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    public function appendScript($script)
+    public function appendScript($script, $once = true)
     {
-        return $this->appendInternal($script, $this->scripts);
+        return $this->appendInternal($script, $this->scripts, $once);
     }
 
     /**
      * Appends a collection of scripts
      * 
      * @param array $scripts
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    public function appendScripts(array $scripts)
+    public function appendScripts(array $scripts, $once = true)
     {
         foreach ($scripts as $script) {
-            $this->appendScript($script);
+            $this->appendScript($script, $once);
         }
 
         return $this;
@@ -192,23 +206,25 @@ final class PluginBag implements PluginBagInterface
      * Appends last script
      * 
      * @param string $script
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    public function appendLastScript($script)
+    public function appendLastScript($script, $once = true)
     {
-        return $this->appendInternal($script, $this->lastScripts);
+        return $this->appendInternal($script, $this->lastScripts, $once);
     }
 
     /**
      * Appends a collection of last scripts
      * 
      * @param array $scripts
+     * @param boolean $once Whether to append the same resource twice (i.e don't append if appended before)
      * @return \Krystal\Application\View\PluginBag
      */
-    public function appendLastScripts(array $scripts)
+    public function appendLastScripts(array $scripts, $once = true)
     {
         foreach ($scripts as $script) {
-            $this->appendLastScript($script);
+            $this->appendLastScript($script, $once);
         }
 
         return $this;
