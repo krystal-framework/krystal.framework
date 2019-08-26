@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Added `Longitude` and `Latitude` validators
  * Added `Percentage` validation pattern
  * Added `Collection` validator
  * Added support for uniqueness in Login and Email constraints
