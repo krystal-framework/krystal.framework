@@ -106,9 +106,14 @@ final class DefinitionParser implements ParserInterface
     private function processData($target, array $rules, $required, &$result)
     {
         foreach ($rules as $constraintName => $options) {
+            // If current constraint has no options:
+            if (is_numeric($constraintName)) {
+                $constraintName = $options;
+                $options = array();
+            }
+
             // Step first: Build constraint instance 
             if (isset($options['value'])) {
-
                 // When an array is provided then we should merge values and dynamically call a method
                 if (is_array($options['value'])) {
 
@@ -122,7 +127,6 @@ final class DefinitionParser implements ParserInterface
                 }
 
             } else {
-
                 $constraint = $this->constraintFactory->build($constraintName);
             }
 
