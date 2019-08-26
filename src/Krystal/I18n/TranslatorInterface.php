@@ -31,6 +31,17 @@ interface TranslatorInterface
     public function translateArray(array $array, $module = null);
 
     /**
+     * Translates message string from a dictionary, optionally filtering by a module
+     * 
+     * @param string $module Current module
+     * @param string $message Message string to be translated
+     * @param array $arguments String variables, if available
+     * @throws \RuntimeException if trying to translate a string from non-loaded module
+     * @return string
+     */
+    public function translateFrom($module, $message, array $arguments = array());
+
+    /**
      * Translates a string
      * 
      * @return string
