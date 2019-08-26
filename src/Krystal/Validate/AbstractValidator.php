@@ -94,10 +94,17 @@ abstract class AbstractValidator
 
         foreach ($data as $target => $constraints) {
             foreach ($constraints as $constraint) {
-                $key = $this->source[$target];
+                $value = $this->source[$target];
+
+                // Not required and empty - don't validate. Otherwise do
+                if ($constraint->getRequired() === false && !empty($value)) {
+                    $constraint->setRequired(true);
+                }
+
                 // Start validation only in case the constraint has required set to true
                 if ($constraint->getRequired()) {
-                    if (!$constraint->isValid($key)) {
+                    // Run validation
+                    if (!$constraint->isValid($value)) {
                         if (!isset($this->errors[$target])) {
                             $this->errors[$target] = array();
                         }

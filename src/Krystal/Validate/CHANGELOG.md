@@ -4,6 +4,7 @@ CHANGELOG
 1.2
 ---
 
+ * Fixed issue with `required` option
  * Ability to omit constraint parameters
  * Added `Longitude` and `Latitude` validators
  * Added `Percentage` validation pattern
