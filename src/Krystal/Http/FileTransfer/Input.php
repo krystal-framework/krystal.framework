@@ -45,7 +45,11 @@ final class Input implements InputInterface
      */
     public function hasFiles($name = null)
     {
-        $files = $this->getFiles($name);
+        try {
+            $files = $this->getFiles($name);
+        } catch (RuntimeException $e) {
+            return false;
+        }
 
         if ($name === null) {
             foreach ($files as $name => $file) {
