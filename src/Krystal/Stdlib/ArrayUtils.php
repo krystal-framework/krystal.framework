@@ -332,15 +332,11 @@ abstract class ArrayUtils
      */
     public static function keysExist(array $collection, array $keys)
     {
-        $collection = array_flip($collection);
-
-        foreach ($keys as $key) {
-            if (!in_array($key, $collection)) {
-                return false;
-            }
+        if (count($collection) !== count($keys)) {
+            return false;
         }
 
-        return true;
+        return !array_diff_key(array_flip($keys), $collection);
     }
 
     /**
