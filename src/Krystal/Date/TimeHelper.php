@@ -27,6 +27,22 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Calculates an from a date of birth
+     * 
+     * @param string $birth (Any date format supported by DateTime)
+     * @return int
+     */
+    public static function age($birth)
+    {
+        $date = new DateTime($birth);
+        $now = new DateTime();
+
+        $interval = $now->diff($date);
+
+        return $interval->y;
+    }
+
+    /**
      * Returns month days
      * 
      * @return array

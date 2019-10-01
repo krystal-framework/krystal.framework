@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `TimeHelper` added `age()` that counts user's age from a birthday
  * In `TimeHelper` added `getDays()` that month days
  * In `TimeHelper` added `getNow()` that returns current date (and time)
  * In `TimeHelper` added `isExpired()` that boolean indicating if the second date is expired regarding first one
