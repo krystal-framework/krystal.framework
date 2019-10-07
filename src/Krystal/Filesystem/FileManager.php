@@ -290,12 +290,12 @@ class FileManager implements FileManagerInterface
     /**
      * Copies a directory to another directory
      * 
-     * @param string $file The path to the file
+     * @param string $src The path to the file
      * @param string $dir The dir file will be copied in
      * @throws \RuntimeException if $src isn't a path to directory
      * @return boolean Depending on success
      */
-    public static function copy($src, $dst)
+    public static function copy($src, $dir)
     {
         if (!is_dir($src)) {
             throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $src));
