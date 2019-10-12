@@ -57,6 +57,15 @@ interface QueryBuilderInterface
     public function version();
 
     /**
+     * Appends raw SQL expressing wrapping in brackets and setting alias
+     * 
+     * @param string $expression
+     * @param string $alias
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function expression($expression, $alias);
+
+    /**
      * Appends SQL function
      * 
      * @param string $func Function name

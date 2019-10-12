@@ -532,6 +532,19 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends raw SQL expressing wrapping in brackets and setting alias
+     * 
+     * @param string $expression
+     * @param string $alias
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function expression($expression, $alias)
+    {
+        $this->queryBuilder->expression($expression, $alias);
+        return $this;
+    }
+
+    /**
      * Appends SQL function
      * 
      * @param string $func Function name

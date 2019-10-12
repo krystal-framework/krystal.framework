@@ -261,6 +261,24 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends raw SQL expressing wrapping in brackets and setting alias
+     * 
+     * @param string $expression
+     * @param string $alias
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function expression($expression, $alias)
+    {
+        // Append a comma if there was a column selection and no function call
+        if (!empty($this->selected) && $this->hasFunctionCall === false) {
+            $this->append(', ');
+        }
+
+        $this->append(sprintf(' (%s) AS %s ', $expression, $this->quote($alias)));
+        return $this;
+    }
+
+    /**
      * Appends SQL function
      * 
      * @param string $func Function name
