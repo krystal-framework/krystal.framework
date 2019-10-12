@@ -1302,6 +1302,30 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Appends EXISTS
+     * 
+     * @param string $expression
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function exists($expression)
+    {
+        $this->queryBuilder->exists($expression);
+        return $this;
+    }
+
+    /**
+     * Appends NOT EXISTS
+     * 
+     * @param string $expression
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function notExists($expression)
+    {
+        $this->queryBuilder->notExists($expression);
+        return $this;
+    }
+
+    /**
      * Appends HAVING() clause
      * 
      * @param string $function Aggregate function

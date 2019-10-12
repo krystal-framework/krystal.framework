@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In database service, added `exists()` and `notExists()` generators
  * In database service, added `expression()` to append raw SQL expression after `select()`
  * The `Krystal\Db\Sql\Db::paginate()` method runs only if first two arguments are numeric. Otherwise just returns an instance of itself
  * In database service added `getVersion()` that returns current database version

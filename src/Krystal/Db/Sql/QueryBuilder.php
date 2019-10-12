@@ -1474,6 +1474,30 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
+     * Appends EXISTS
+     * 
+     * @param string $expression
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function exists($expression)
+    {
+        $this->append(sprintf(' EXISTS (%s) ', $expression));
+        return $this;
+    }
+
+    /**
+     * Appends NOT EXISTS
+     * 
+     * @param string $expression
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function notExists($expression)
+    {
+        $this->append(' NOT');
+        return $this->exists($expression);
+    }
+
+    /**
      * Appends HAVING() clause
      * 
      * @param string $function Aggregate function

@@ -735,6 +735,22 @@ interface QueryBuilderInterface
     public function on();
 
     /**
+     * Appends EXISTS
+     * 
+     * @param string $expression
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function exists($expression);
+
+    /**
+     * Appends NOT EXISTS
+     * 
+     * @param string $expression
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function notExists($expression);
+
+    /**
      * Appends HAVING() clause
      * 
      * @param string $function Aggregate function
