@@ -782,7 +782,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
         }
 
         $this->append(' FROM ' . $table);
-        
+
         if ($alias !== null) {
             $this->append(' ' . $alias);
         }
