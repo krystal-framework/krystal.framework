@@ -767,16 +767,26 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      * Appends FROM expression
      * 
      * @param string $table Optional table name
+     * @param string $alias Optional table alias
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function from($table = null)
+    public function from($table = null, $alias = null)
     {
         if ($table !== null) {
             $this->table = $table;
-            $table = $this->quote($table);
+
+            // Do quote only if no alias provided
+            if ($alias === null) {
+                $table = $this->quote($table);
+            }
         }
 
         $this->append(' FROM ' . $table);
+        
+        if ($alias !== null) {
+            $this->append(' ' . $alias);
+        }
+
         return $this;
     }
 

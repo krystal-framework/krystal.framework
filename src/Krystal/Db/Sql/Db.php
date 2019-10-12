@@ -980,11 +980,12 @@ final class Db implements DbInterface, RelationableServiceInterface
      * Appends FROM expression
      * 
      * @param string $table
+     * @param string $alias Optional table alias
      * @return \Krystal\Db\Sql\Db
      */
-    public function from($table = null)
+    public function from($table = null, $alias = null)
     {
-        $this->queryBuilder->from($table);
+        $this->queryBuilder->from($table, $alias);
         return $this;
     }
 

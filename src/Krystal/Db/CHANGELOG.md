@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Since now the `from()` method supports optional table alias, which can be provided as a second argument
  * In database service, added `exists()` and `notExists()` generators
  * In database service, added `expression()` to append raw SQL expression after `select()`
  * The `Krystal\Db\Sql\Db::paginate()` method runs only if first two arguments are numeric. Otherwise just returns an instance of itself

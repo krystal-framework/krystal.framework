@@ -250,9 +250,10 @@ interface QueryBuilderInterface
      * Appends FROM expression
      * 
      * @param string $table Optional table name
+     * @param string $alias Optional table alias
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function from($table = null);
+    public function from($table = null, $alias = null);
 
     /**
      * Appends a raw comparison
