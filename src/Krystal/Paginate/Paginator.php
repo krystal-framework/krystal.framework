@@ -60,10 +60,10 @@ final class Paginator implements PaginatorInterface
      * State initialization
      * 
      * @param \Krystal\Paginate\Style\StyleInterface $style Optional style adapter
-     * @param string $uri Current URI string
+     * @param string $uri Current URI string for dynamic configuration
      * @return void
      */
-    public function __construct(StyleInterface $style = null, $uri)
+    public function __construct(StyleInterface $style = null, $uri = null)
     {
         $this->style = $style;
         $this->uri = $uri;
@@ -72,11 +72,12 @@ final class Paginator implements PaginatorInterface
     /**
      * Adjusts URL from URI string to make entire pagination work
      * 
+     * @param string $uri Current URI string for dynamic configuration
      * @return boolean Depending on success
      */
-    private function tweakUrl()
+    private function tweakUrl($uri)
     {
-        $parsed = parse_url($this->uri);
+        $parsed = parse_url($uri);
 
         // If could parse current URI, process the rest
         if (isset($parsed['path'])) {
@@ -120,7 +121,9 @@ final class Paginator implements PaginatorInterface
         $this->setCurrentPage($page);
 
         // Dynamic tweak by default
-        $this->tweakUrl();
+        if ($this->uri !== null) {
+            $this->tweakUrl($this->uri);
+        }
 
         return $this;
     }
