@@ -12,10 +12,53 @@
 namespace Krystal\Stdlib;
 
 use LogicException;
+use InvalidArgumentException;
 use Closure;
 
 abstract class ArrayUtils
 {
+    /**
+     * Normalize arguments from another variadic function
+     * 
+     * @param array $args Arguments of another function
+     * @param boolean $strict Whether strict validation is enabled
+     * @return array
+     */
+    public static function parseArgs(array $args, $strict = true)
+    {
+        // First argument
+        $first = array_shift($args);
+
+        // If arguments provided
+        if (isset($args[0])) {
+            // Count
+            $count = count($args);
+
+            // If in strict mode, ensure we get expected behavior
+            if ($strict == true && is_array($args[0]) && $count > 1) {
+                throw new InvalidArgumentException('In strict mode, you can either provide an array of arguments or a list of arguments without array');
+            }
+            
+            // Turn into one structure
+            if ($count >= 1) {
+                $params = is_array($args[0]) ? $args[0] : array($args[0]);
+            }
+
+            if ($count > 1) {
+                $params = $args;
+            }
+
+        } else {
+            // No arguments provided
+            $params = array();
+        }
+
+        return array(
+            'master' => $first,
+            'arguments' => $params
+        );
+    }
+
     /**
      * Checks whether variable is array-like
      * 

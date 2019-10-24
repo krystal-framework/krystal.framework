@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `parseArgs()` in `ArrayUtils` to parse arguments from variadic functions
  * Added `isIterable()` in `ArrayUtils` to check whether variable is array-like
  * The method `findByKey()` since now accepts and optional 2-nd argument to return default value in `ArrayCollection` and `ArrayGroupCollection`
  * In `ArrayUtils` added `unsetByValue()`
