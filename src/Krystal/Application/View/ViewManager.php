@@ -20,6 +20,7 @@ use Krystal\Form\Compressor\HtmlCompressor;
 use Krystal\Application\Route\UrlBuilderInterface;
 use Krystal\Widget\WidgetInterface;
 use Krystal\Widget\WidgetFactory;
+use Krystal\Stdlib\ArrayUtils;
 
 final class ViewManager implements ViewManagerInterface
 {
@@ -363,10 +364,14 @@ final class ViewManager implements ViewManagerInterface
      */
     public function url()
     {
-        $args = func_get_args();
-        $controller = array_shift($args);
+        $index = 0;
+        $args = ArrayUtils::parseArgs(func_get_args());
 
-        $url = $this->urlBuilder->createUrl($controller, $args);
+        if (ArrayUtils::isAssoc($args['arguments'])) {
+            $url = $this->urlBuilder->createQueryUrl($args['master'], $args['arguments'], $index);
+        } else {
+            $url = $this->urlBuilder->createUrl($args['master'], $args['arguments'], $index);
+        }
 
         if ($url === false) {
             return $controller;
