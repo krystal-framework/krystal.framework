@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Dropped option to override a placeholder. Made it as a constant internally
  * By default, URL is now generated automatically from current URI string
  * Force to throw `\LogicException` if defined URL string doesn't have a placeholder
  * Made page placeholder configurable. It can be passed as a second argument to the constructor

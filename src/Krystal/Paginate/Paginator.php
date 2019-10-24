@@ -17,6 +17,10 @@ use Krystal\Paginate\Style\StyleInterface;
 
 final class Paginator implements PaginatorInterface
 {
+    /* Defaults */
+    const PARAM_PLACEHOLDER = '(:var)';
+    const PARAM_QUERY_PARAM = 'page';
+
     /**
      * Optional pagination style adapter
      * 
@@ -53,25 +57,16 @@ final class Paginator implements PaginatorInterface
     private $uri;
 
     /**
-     * Placeholder to be replaced with actual page number in URL
-     * 
-     * @var string
-     */
-    private $placeholder;
-
-    /**
      * State initialization
      * 
      * @param \Krystal\Paginate\Style\StyleInterface $style Optional style adapter
      * @param string $uri Current URI string
-     * @param string $placeholder
      * @return void
      */
-    public function __construct(StyleInterface $style = null, $uri, $placeholder = '(:var)')
+    public function __construct(StyleInterface $style = null, $uri)
     {
         $this->style = $style;
         $this->uri = $uri;
-        $this->placeholder = $placeholder;
     }
 
     /**
@@ -94,11 +89,11 @@ final class Paginator implements PaginatorInterface
             }
 
             // 2. Append page parameter to current query string
-            $params = array_replace_recursive($query, array('page' => $this->placeholder));
+            $params = array_replace_recursive($query, array(self::PARAM_QUERY_PARAM => self::PARAM_PLACEHOLDER));
 
             // 3. Build current URI appending page parameter
             $url = $parsed['path'] . '?' . http_build_query($params);
-            $url = str_replace(rawurlencode($this->placeholder), $this->placeholder, $url);
+            $url = str_replace(rawurlencode(self::PARAM_PLACEHOLDER), self::PARAM_PLACEHOLDER, $url);
 
             // 4. Assign prepared URL
             $this->setUrl($url);
@@ -156,8 +151,8 @@ final class Paginator implements PaginatorInterface
             throw new RuntimeException('URL template must be defined');
         }
 
-        if (strpos($this->url, $this->placeholder) !== false) {
-            return str_replace($this->placeholder, $page, $this->url);
+        if (strpos($this->url, self::PARAM_PLACEHOLDER) !== false) {
+            return str_replace(self::PARAM_PLACEHOLDER, $page, $this->url);
         } else {
             // Without placeholder, no substitution is done, therefore pagination links won't work
             throw new LogicException('The URL string must contain at least one placeholder to make pagination links work');
