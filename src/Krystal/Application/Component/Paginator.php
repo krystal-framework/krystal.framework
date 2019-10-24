@@ -49,10 +49,11 @@ final class Paginator implements ComponentInterface
                 }
             }
 
-            return new Component($style);
+            $uri = $container->get('request')->getUri();
+
+            return new Component($style, $uri);
 
         } else {
-
             // No configuration provided
             return false;
         }

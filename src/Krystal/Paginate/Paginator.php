@@ -46,6 +46,13 @@ final class Paginator implements PaginatorInterface
     private $url;
 
     /**
+     * Current URI string
+     * 
+     * @var string
+     */
+    private $uri;
+
+    /**
      * Placeholder to be replaced with actual page number in URL
      * 
      * @var string
@@ -56,13 +63,51 @@ final class Paginator implements PaginatorInterface
      * State initialization
      * 
      * @param \Krystal\Paginate\Style\StyleInterface $style Optional style adapter
+     * @param string $uri Current URI string
      * @param string $placeholder
      * @return void
      */
-    public function __construct(StyleInterface $style = null, $placeholder = '(:var)')
+    public function __construct(StyleInterface $style = null, $uri, $placeholder = '(:var)')
     {
         $this->style = $style;
+        $this->uri = $uri;
         $this->placeholder = $placeholder;
+    }
+
+    /**
+     * Adjusts URL from URI string to make entire pagination work
+     * 
+     * @return boolean Depending on success
+     */
+    private function tweakUrl()
+    {
+        $parsed = parse_url($this->uri);
+
+        // If could parse current URI, process the rest
+        if (isset($parsed['path'])) {
+            // 1. Parse query string
+            if (isset($parsed['query'])) {
+                parse_str($parsed['query'], $result);
+                $query = $result;
+            } else {
+                $query = array();
+            }
+
+            // 2. Append page parameter to current query string
+            $params = array_replace_recursive($query, array('page' => $this->placeholder));
+
+            // 3. Build current URI appending page parameter
+            $url = $parsed['path'] . '?' . http_build_query($params);
+            $url = str_replace(rawurlencode($this->placeholder), $this->placeholder, $url);
+
+            // 4. Assign prepared URL
+            $this->setUrl($url);
+
+            return true;
+        } else {
+            // Failed to parse URI
+            return false;
+        }
     }
 
     /**
@@ -78,6 +123,9 @@ final class Paginator implements PaginatorInterface
         $this->totalAmount = (int) $totalAmount;
         $this->itemsPerPage = (int) $itemsPerPage;
         $this->setCurrentPage($page);
+
+        // Dynamic tweak by default
+        $this->tweakUrl();
 
         return $this;
     }

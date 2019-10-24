@@ -31,7 +31,7 @@ final class PaginationWidget implements WidgetInterface
      * @var array
      */
     private $options = array();
-    
+
     /**
      * State initialization
      * 
