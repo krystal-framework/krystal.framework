@@ -97,7 +97,7 @@ final class UrlBuilder implements UrlBuilderInterface
             $fragment = urldecode($fragment);
         }
 
-        return $this->createUrl($controller, array($fragment), $index);
+        return $this->createUrl($controller, array(), $index) . $fragment;
     }
 
     /**
