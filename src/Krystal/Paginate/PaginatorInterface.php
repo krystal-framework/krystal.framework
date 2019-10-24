@@ -85,13 +85,6 @@ interface PaginatorInterface
     public function getEnd();
 
     /**
-     * Resets the paginator's instance
-     * 
-     * @return void
-     */
-    public function reset();
-
-    /**
      * Checks whether its a current page
      * 
      * @param integer $page

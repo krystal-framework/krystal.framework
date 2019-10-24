@@ -226,21 +226,6 @@ final class Paginator implements PaginatorInterface
     }
 
     /**
-     * Resets the paginator's instance
-     * 
-     * @return \Krystal\Paginate\Paginator
-     */
-    public function reset()
-    {
-        $this->itemsPerPage = null;
-        $this->currentPage = null;
-        $this->totalAmount = null;
-        $this->url = null;
-
-        return $this;
-    }
-
-    /**
      * Checks whether its a current page
      * 
      * @param integer $page
