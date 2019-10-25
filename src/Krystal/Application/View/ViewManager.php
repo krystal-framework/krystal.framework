@@ -374,7 +374,7 @@ final class ViewManager implements ViewManagerInterface
         }
 
         if ($url === false) {
-            return $controller;
+            return $args['master'];
         } else {
             return $url;
         }
