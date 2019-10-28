@@ -73,9 +73,9 @@ final class Paginator implements PaginatorInterface
      * Adjusts URL from URI string to make entire pagination work
      * 
      * @param string $uri Current URI string for dynamic configuration
-     * @return boolean Depending on success
+     * @return string|boolean Depending on success
      */
-    private function tweakUrl($uri)
+    private static function tweakUrl($uri)
     {
         $parsed = parse_url($uri);
 
@@ -96,10 +96,7 @@ final class Paginator implements PaginatorInterface
             $url = $parsed['path'] . '?' . http_build_query($params);
             $url = str_replace(rawurlencode(self::PARAM_PLACEHOLDER), self::PARAM_PLACEHOLDER, $url);
 
-            // 4. Assign prepared URL
-            $this->setUrl($url);
-
-            return true;
+            return $url;
         } else {
             // Failed to parse URI
             return false;
@@ -122,7 +119,8 @@ final class Paginator implements PaginatorInterface
 
         // Dynamic tweak by default
         if ($this->uri !== null) {
-            $this->tweakUrl($this->uri);
+            $url = self::tweakUrl($this->uri);
+            $this->setUrl($url);
         }
 
         return $this;
