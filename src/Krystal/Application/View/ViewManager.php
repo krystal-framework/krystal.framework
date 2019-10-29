@@ -724,6 +724,7 @@ final class ViewManager implements ViewManagerInterface
      * 
      * @param string $name
      * @param array $vars Additional variables if needed
+     * @param \LogicException If no partial file can be found
      * @return void
      */
     public function loadPartial($name, array $vars = array())
