@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In view service, added `loadPartialIfPossible()` method
  * In PluginBag, all appended scripts and stylesheets are now included only once by default
  * In PluginBag, methods that append scripts and stylesheets are now accept optional `$once` boolean parameter
  * Introduced conception of view widgets. A widget in templates can be rendered via `$this->widget()`

@@ -740,6 +740,21 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
+     * Loads a partial safely. If no one can be found it doesn't throw an exception
+     * 
+     * @param string $name
+     * @param array $vars Additional variables if needed
+     * @return void
+     */
+    public function loadPartialIfPossible($name, array $vars = array())
+    {
+        try {
+            $this->loadPartial($name, $vars);
+        } catch (LogicException $e) {
+        }
+    }
+
+    /**
      * Translates a string
      * 
      * @param string $message
