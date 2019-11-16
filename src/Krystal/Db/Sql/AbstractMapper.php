@@ -721,10 +721,11 @@ abstract class AbstractMapper
     {
         $this->validateShortcutData();
 
-        return $this->db->delete()
-                        ->from(static::getTableName())
-                        ->whereEquals($column, $value)
-                        ->execute();
+        $db = $this->db->delete()
+                       ->from(static::getTableName())
+                       ->whereEquals($column, $value);
+
+        return (bool) $db->execute(true);
     }
 
     /**

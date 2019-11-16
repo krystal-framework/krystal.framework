@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Fixed return value of `Krystal\Db\Sql\AbstractMapper::deleteByColumn()`. Since now it returns boolean value depending on success, rather than a result of execution
  * Since now the `from()` method supports optional table alias, which can be provided as a second argument
  * In database service, added `exists()` and `notExists()` generators
  * In database service, added `expression()` to append raw SQL expression after `select()`
