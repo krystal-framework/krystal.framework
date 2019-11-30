@@ -30,7 +30,7 @@ abstract class ArrayUtils
         $first = array_shift($args);
 
         // If arguments provided
-        if (isset($args[0])) {
+        if (array_key_exists(0, $args)) {
             // Count
             $count = count($args);
 
