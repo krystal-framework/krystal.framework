@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `PluginBag` service fixed issue with broken link generation, when URL string contains `@`
  * In view service, added `loadPartialIfPossible()` method
  * In PluginBag, all appended scripts and stylesheets are now included only once by default
  * In PluginBag, methods that append scripts and stylesheets are now accept optional `$once` boolean parameter

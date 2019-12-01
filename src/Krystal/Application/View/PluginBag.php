@@ -102,6 +102,11 @@ final class PluginBag implements PluginBagInterface
      */
     private function normalizeAssetPath($path)
     {
+        // Do nothing with URL (to avoid issues in case URL string contains @)
+        if (filter_var($path, \FILTER_VALIDATE_URL)) {
+            return $path;
+        }
+
         $pattern = '~@(\w+)~';
         $replacement = sprintf('/%s/$1/%s', ViewManager::TEMPLATE_PARAM_MODULES_DIR, ViewManager::TEMPLATE_PARAM_ASSETS_DIR);
 
