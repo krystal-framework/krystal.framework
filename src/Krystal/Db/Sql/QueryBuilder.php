@@ -715,7 +715,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     private function createSelectData($type)
     {
         // * is a special keyword, which doesn't need to be wrapped
-        if ($type !== '*' && $type !== null && !is_array($type)) {
+        if ($type !== '*' && $type !== null && !is_array($type) && !($type instanceof RawSqlFragmentInterface)) {
             $type = $this->quote($type);
         }
 
@@ -740,6 +740,8 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
 
             // And finally, separate via commas
             $type = implode(', ', $collection);
+        } else if ($type instanceof RawSqlFragmentInterface) {
+            $type = $type->getFragment();
         }
 
         return $type;
