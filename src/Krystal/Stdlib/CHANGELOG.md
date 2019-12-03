@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `ArrayUtils::categorize()` method to categorize raw set with count of internal items
  * Added `parseArgs()` in `ArrayUtils` to parse arguments from variadic functions
  * Added `isIterable()` in `ArrayUtils` to check whether variable is array-like
  * The method `findByKey()` since now accepts and optional 2-nd argument to return default value in `ArrayCollection` and `ArrayGroupCollection`

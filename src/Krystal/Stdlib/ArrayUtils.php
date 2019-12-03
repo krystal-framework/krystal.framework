@@ -18,6 +18,30 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Categories an array dropping by partition and adding count key
+     * 
+     * @param array $rows Raw result set
+     * @param string $key Partition key
+     * @return array
+     */
+    public static function categorize(array $rows, $key)
+    {
+        $dropdown = self::arrayPartition($rows, $key, false);
+
+        $output = array();
+
+        foreach ($dropdown as $partition => $rows) {
+            $output[] = array(
+                'name' => $partition,
+                'count' => count($dropdown[$partition]),
+                'items' => $rows
+            );
+        }
+
+        return $output;
+    }
+
+    /**
      * Normalize arguments from another variadic function
      * 
      * @param array $args Arguments of another function
