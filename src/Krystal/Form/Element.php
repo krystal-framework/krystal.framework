@@ -214,6 +214,23 @@ class Element
     }
 
     /**
+     * Renders file input with hidden name under the same name
+     * 
+     * @param string $name Shared name for both inputs
+     * @param string $value Input value
+     * @param string $accept What type of files the input should accept
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function fileData($name, $value, $accept, array $attributes = array())
+    {
+        $hidden = self::hidden($name, $value);
+        $file = self::file($name, $accept, $attributes);
+
+        return $hidden . $file;
+    }
+
+    /**
      * Creates "File" node element
      * 
      * @param string $name
