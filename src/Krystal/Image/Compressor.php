@@ -47,7 +47,7 @@ final class Compressor
             // In order not to waste much memory, we're gonna first check if its image file by its extension
             if (FileManager::hasExtension($file, $extensions)) {
                 $image = new ImageFile($file);
-                $image->save($file, $quality);
+                $image->compress($quality);
 
                 $counter++;
             }
