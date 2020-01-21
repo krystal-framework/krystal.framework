@@ -57,6 +57,14 @@ interface ImageFileInterface
     public function done();
 
     /**
+     * Compress and save current image file
+     * 
+     * @param integer $quality Image quality Medium quality by default
+     * @return boolean
+     */
+    public function compress($quality = 75);
+
+    /**
      * Saves an image to a file
      * 
      * @param string $path Full absolute path on the file system to save the image

@@ -267,6 +267,17 @@ class ImageFile implements ImageFileInterface
     }
 
     /**
+     * Compress and save current image file
+     * 
+     * @param integer $quality Image quality Medium quality by default
+     * @return boolean
+     */
+    final public function compress($quality = 75)
+    {
+        return $this->save($this->file, $quality);
+    }
+
+    /**
      * Saves an image to a file
      * 
      * @param string $path Full absolute path on the file system to save the image

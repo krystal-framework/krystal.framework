@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `ImageFile` added shorthand `compress()` method
  * Added image compressor
  * Fixed issue with loading GIF file
  * `ImageManager::upload()` since now may accept both - single file entities or an array of them
