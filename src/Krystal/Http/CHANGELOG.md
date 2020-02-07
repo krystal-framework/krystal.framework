@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `\Krystal\Http\FileTransfer\FileUploadTrait` to handle uploads from `fileData()` input
  * In Request service added `getServerSoftware()` that returns current server software
  * In Request service added `sslRedirect()` method for internal usage in Kernel
  * Improved detection of secure connection in `Request::isSecure()`
