@@ -22,7 +22,7 @@ trait FileUploadTrait
      * @param string $attribute Relative path
      * @return boolean Depending on success
      */
-    final protected function removeFileData($attribute)
+    final protected function removeFileDataIfExists($attribute)
     {
         if (!empty($attribute)) {
             // Current path, we're going to check for existence
@@ -55,7 +55,7 @@ trait FileUploadTrait
         // If background image provided
         if ($file instanceof FileEntityInterface) {
             // Remove previous one, if exists
-            $this->removeFileData($attribute);
+            $this->removeFileDataIfExists($attribute);
 
             // Absolute path to working directory
             $dirPath = realpath($destination);
