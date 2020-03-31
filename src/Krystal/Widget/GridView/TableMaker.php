@@ -372,6 +372,7 @@ final class TableMaker
 
             // Grab column attributes if present
             $tdAttributes = isset($configuration[self::GRID_PARAM_TD_ATTRIBUTES]) ? $configuration[self::GRID_PARAM_TD_ATTRIBUTES] : array();
+            $tdAttributes = $this->parseAttributes($tdAttributes, $data);
 
             // Find out whether current row is editable or not
             $editable = $this->findOptionByColumn($column, self::GRIG_PARAM_EDITABLE);
@@ -426,23 +427,39 @@ final class TableMaker
         }
 
         // Now append row attributes if defined
-        $attributes = array();
+        $trAttributes = array();
 
         if (isset($this->options[self::GRID_PARAM_ROW_ATTRS])) {
-            foreach($this->options[self::GRID_PARAM_ROW_ATTRS] as $name => $value) {
-                // If closure is provided, then execute it and get returned value
-                if (is_callable($value)) {
-                    $value = $value($data);
-                }
+            $trAttributes = $this->parseAttributes($this->options[self::GRID_PARAM_ROW_ATTRS], $data);
+        }
 
-                // Don't append NULL-like attributes
-                if ($value != null) {
-                    $attributes[$name] = $value;
-                }
+        return $this->createTableRow($children, $trAttributes);
+    }
+
+    /**
+     * Parse attributes
+     * 
+     * @param array $attributes
+     * @param mixed $data
+     * @return array Normalized attributes
+     */
+    private function parseAttributes(array $attributes, $data)
+    {
+        $output = array();
+
+        foreach ($attributes as $name => $value) {
+            // If closure is provided, then execute it and get returned value
+            if (is_callable($value)) {
+                $value = $value($data);
+            }
+
+            // Don't append NULL-like attributes
+            if ($value != null) {
+                $output[$name] = $value;
             }
         }
 
-        return $this->createTableRow($children, $attributes);
+        return $output;
     }
 
     /**
