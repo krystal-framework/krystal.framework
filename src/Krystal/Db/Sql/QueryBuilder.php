@@ -1751,7 +1751,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     /**
      * Appends WHERE with BETWEEN operator
      * 
-     * @param string $column
+     * @param string|\Krystal\Db\Sql\RawSqlFragmentInterface $column
      * @param string $a First value
      * @param string $b Second value
      * @param string $prefix The first prefix such as WHERE or AND or OR
@@ -1778,7 +1778,13 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $not = '';
         }
 
-        $this->append($operator.sprintf(' %s %s %s BETWEEN %s AND %s ', $prefix, $this->quote($column), $not, $a, $b));
+        if ($column instanceof RawSqlFragmentInterface) {
+            $column = $column->getFragment();
+        } else {
+            $column = $this->quote($column);
+        }
+
+        $this->append($operator.sprintf(' %s %s %s BETWEEN %s AND %s ', $prefix, $column, $not, $a, $b));
         return $this;
     }
 
