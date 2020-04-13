@@ -13,6 +13,7 @@ namespace Krystal\Date;
 
 use LogicException;
 use DateTime;
+use Exception;
 
 /**
  * Time related helper methods 
@@ -25,6 +26,23 @@ abstract class TimeHelper
     const WEEK = 604800;
     const MONTH = 2592000;
     const YEAR = 31536000;
+
+
+    /**
+     * Checks whether datetime format is valid
+     * 
+     * @param string $datetime
+     * @return boolean
+     */
+    public static function formatValid($datetime)
+    {
+        try {
+            new Datetime($datetime);
+            return true;
+        } catch(Exception $e){
+            return false;
+        }
+    }
 
     /**
      * Calculates an from a date of birth
