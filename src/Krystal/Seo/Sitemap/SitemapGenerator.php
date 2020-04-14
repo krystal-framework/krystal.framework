@@ -64,7 +64,7 @@ final class SitemapGenerator extends AbstractGenerator
     }
 
     /**
-     * Creates URL element
+     * Add single URL
      * 
      * @param string $loc URL of the page.
      * @param string $lastmod The date of last modification of the file. This date should be in W3C Datetime format.
