@@ -64,6 +64,21 @@ final class SitemapGenerator
     }
 
     /**
+     * Creates child element
+     * 
+     * @param string $tagName
+     * @param string $value Element value
+     * @return \DOMElement
+     */
+    private function createNode($tagName, $value)
+    {
+        $element = $this->document->createElement($tagName);
+        $element->nodeValue = $value;
+
+        return $element;
+    }
+
+    /**
      * Creates URL element
      * 
      * @param string $loc URL of the page.
@@ -77,23 +92,18 @@ final class SitemapGenerator
         // Root element
         $urlElement = $this->document->createElement('url');
 
-        $locElement = $this->document->createElement('loc');
-        $locElement->nodeValue = $loc;
-
-        $lastmodElement = $this->document->createElement('lastmod');
-        $lastmodElement->nodeValue = $lastmod;
-
-        $changefreqElement = $this->document->createElement('changefreq');
-        $changefreqElement->nodeValue = $changefreq;
-
-        $priorityElement = $this->document->createElement('priority');
-        $priorityElement->nodeValue = $priority;
+        $elements = array(
+            $this->createNode('loc', $loc),
+            $this->createNode('lastmod', $lastmod),
+            $this->createNode('changefreq', $changefreq),
+            $this->createNode('priority', $priority)
+        );
 
         // Append items to URL set
-        foreach (array($locElement, $lastmodElement, $priorityElement, $changefreqElement) as $item) {
+        foreach ($elements as $element) {
             // Append only non-empty values
-            if ($item->nodeValue) {
-                $urlElement->appendChild($item);
+            if ($element->nodeValue) {
+                $urlElement->appendChild($element);
             }
         }
 
