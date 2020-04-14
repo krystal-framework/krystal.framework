@@ -27,8 +27,19 @@ final class SitemapGenerator
      * 
      * @var array
      */
-    private $urls = array();
-    
+    private $items = array();
+
+    /**
+     * Default URLset attributes (for root element)
+     * 
+     * @var array
+     */
+    private $urlSetAttributes = array(
+        'xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
+        'xmlns:image' => 'http://www.google.com/schemas/sitemap-image/1.1',
+        'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance'
+    );
+
     /**
      * State initialization
      * 
@@ -38,6 +49,7 @@ final class SitemapGenerator
     public function __construct($encoding = 'UTF-8')
     {
         $this->document = new DOMDocument('1.0', $encoding);
+        $this->document->formatOutput = true;
     }
 
     /**
@@ -47,14 +59,9 @@ final class SitemapGenerator
      */
     public function render()
     {
-        $this->document->formatOutput = true;
+        $urlset = $this->createNode('urlset', null, $this->urlSetAttributes);
 
-        $urlset = $this->document->createElement('urlset');
-        $urlset->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-        $urlset->setAttribute('xmlns:image', 'http://www.google.com/schemas/sitemap-image/1.1');
-        $urlset->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-
-        foreach ($this->urls as $url) {
+        foreach ($this->items as $url) {
             $urlset->appendChild($url);
         }
 
@@ -68,14 +75,49 @@ final class SitemapGenerator
      * 
      * @param string $tagName
      * @param string $value Element value
+     * @param array $attributes Element attributes
      * @return \DOMElement
      */
-    private function createNode($tagName, $value)
+    private function createNode($tagName, $value = null, array $attributes = array())
     {
         $element = $this->document->createElement($tagName);
-        $element->nodeValue = $value;
+
+        // Set value if provided
+        if ($value !== null) {
+            $element->nodeValue = $value;
+        }
+
+        // Set attributes, if provided
+        foreach ($attributes as $key => $value) {
+            $element->setAttribute($key, $value);
+        }
 
         return $element;
+    }
+
+    /**
+     * Creates root element with its children
+     * 
+     * @param string $root Root element tag name
+     * @param array $branches
+     * @return \DOMElement
+     */
+    private function createBranch($root, array $branches)
+    {
+        // Root element
+        $rootNode = $this->createNode($root);
+
+        // Append items to URL set
+        foreach ($branches as $tagName => $tagValue) {
+            $childNode = $this->createNode($tagName, $tagValue);
+
+            // Append only non-empty values
+            if ($childNode->nodeValue) {
+                $rootNode->appendChild($childNode);
+            }
+        }
+
+        return $rootNode;
     }
 
     /**
@@ -112,24 +154,13 @@ final class SitemapGenerator
      */
     public function addUrl($loc, $lastmod = null, $changefreq = null, $priority = null)
     {
-        // Root element
-        $urlElement = $this->document->createElement('url');
+        $node = $this->createBranch('url', array(
+            'loc' => $loc,
+            'lastmod' => $lastmod,
+            'changefreq' => $changefreq,
+            'priority' => $priority
+        ));
 
-        $elements = array(
-            $this->createNode('loc', $loc),
-            $this->createNode('lastmod', $lastmod),
-            $this->createNode('changefreq', $changefreq),
-            $this->createNode('priority', $priority)
-        );
-
-        // Append items to URL set
-        foreach ($elements as $element) {
-            // Append only non-empty values
-            if ($element->nodeValue) {
-                $urlElement->appendChild($element);
-            }
-        }
-
-        $this->urls[] = $urlElement;
+        $this->items[] = $node;
     }
 }
