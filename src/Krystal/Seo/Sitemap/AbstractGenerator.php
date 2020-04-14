@@ -12,6 +12,8 @@
 namespace Krystal\Seo\Sitemap;
 
 use DOMDocument;
+use DateTime;
+use Exception;
 
 abstract class AbstractGenerator
 {
@@ -39,6 +41,27 @@ abstract class AbstractGenerator
     {
         $this->document = new DOMDocument('1.0', $encoding);
         $this->document->formatOutput = true;
+    }
+
+    /**
+     * Properly formats lastmod value
+     * 
+     * @param string $lastmod
+     * @return mixed
+     */
+    protected static function formatLastmod($lastmod)
+    {
+        // Do we even need to process this one?
+        if ($lastmod == null) {
+            return $lastmod;
+        }
+
+        try {
+            $datetime = new DateTime($lastmod);
+            return $datetime->format('Y-m-d\TH:i:sP');
+        } catch (Exception $e){
+            return null;
+        }
     }
 
     /**

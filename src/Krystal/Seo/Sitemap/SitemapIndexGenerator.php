@@ -57,7 +57,7 @@ final class SitemapIndexGenerator extends AbstractGenerator
     {
         $node = $this->createBranch('sitemap', array(
             'loc' => $loc,
-            'lastmod' => $lastmod
+            'lastmod' => self::formatLastmod($lastmod)
         ));
 
         $this->items[] = $node;

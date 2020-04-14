@@ -61,7 +61,7 @@ final class SitemapGenerator extends AbstractGenerator
     {
         $node = $this->createBranch('url', array(
             'loc' => $loc,
-            'lastmod' => $lastmod,
+            'lastmod' => self::formatLastmod($lastmod),
             'changefreq' => $changefreq,
             'priority' => $priority
         ));
