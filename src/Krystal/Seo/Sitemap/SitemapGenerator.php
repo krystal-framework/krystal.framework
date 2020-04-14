@@ -11,24 +11,8 @@
 
 namespace Krystal\Seo\Sitemap;
 
-use DOMDocument;
-
-final class SitemapGenerator
+final class SitemapGenerator extends AbstractGenerator
 {
-    /**
-     * Root document instance
-     * 
-     * @var \DOMDocument
-     */
-    private $document;
-
-    /**
-     * URL DOMElements to be rendered
-     * 
-     * @var array
-     */
-    private $items = array();
-
     /**
      * Default URLset attributes (for root element)
      * 
@@ -41,21 +25,7 @@ final class SitemapGenerator
     );
 
     /**
-     * State initialization
-     * 
-     * @param string $encoding Document encoding
-     * @return void
-     */
-    public function __construct($encoding = 'UTF-8')
-    {
-        $this->document = new DOMDocument('1.0', $encoding);
-        $this->document->formatOutput = true;
-    }
-
-    /**
-     * Generates and renders Sitemap as a string
-     * 
-     * @return string
+     * {@inheritDoc}
      */
     public function render()
     {
@@ -68,56 +38,6 @@ final class SitemapGenerator
         $this->document->appendChild($urlset);
 
         return $this->document->saveXML();
-    }
-
-    /**
-     * Creates child element
-     * 
-     * @param string $tagName
-     * @param string $value Element value
-     * @param array $attributes Element attributes
-     * @return \DOMElement
-     */
-    private function createNode($tagName, $value = null, array $attributes = array())
-    {
-        $element = $this->document->createElement($tagName);
-
-        // Set value if provided
-        if ($value !== null) {
-            $element->nodeValue = $value;
-        }
-
-        // Set attributes, if provided
-        foreach ($attributes as $key => $value) {
-            $element->setAttribute($key, $value);
-        }
-
-        return $element;
-    }
-
-    /**
-     * Creates root element with its children
-     * 
-     * @param string $root Root element tag name
-     * @param array $branches
-     * @return \DOMElement
-     */
-    private function createBranch($root, array $branches)
-    {
-        // Root element
-        $rootNode = $this->createNode($root);
-
-        // Append items to URL set
-        foreach ($branches as $tagName => $tagValue) {
-            $childNode = $this->createNode($tagName, $tagValue);
-
-            // Append only non-empty values
-            if ($childNode->nodeValue) {
-                $rootNode->appendChild($childNode);
-            }
-        }
-
-        return $rootNode;
     }
 
     /**
