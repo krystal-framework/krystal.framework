@@ -49,6 +49,25 @@ abstract class AbstractGenerator
     abstract public function render();
 
     /**
+     * Renders XML document
+     * 
+     * @param string $tagName Root element name
+     * @return string
+     */
+    final protected function createTree($tagName)
+    {
+        $rootNode = $this->createNode($tagName, null, $this->rootAttributes);
+
+        foreach ($this->items as $child) {
+            $rootNode->appendChild($child);
+        }
+
+        $this->document->appendChild($rootNode);
+
+        return $this->document->saveXML();
+    }
+    
+    /**
      * Creates child element
      * 
      * @param string $tagName

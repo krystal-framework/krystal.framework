@@ -14,11 +14,9 @@ namespace Krystal\Seo\Sitemap;
 final class SitemapGenerator extends AbstractGenerator
 {
     /**
-     * Default URLset attributes (for root element)
-     * 
-     * @var array
+     * {@inheritDoc}
      */
-    private $urlSetAttributes = array(
+    protected $rootAttributes = array(
         'xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
         'xmlns:image' => 'http://www.google.com/schemas/sitemap-image/1.1',
         'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance'
@@ -29,15 +27,7 @@ final class SitemapGenerator extends AbstractGenerator
      */
     public function render()
     {
-        $urlset = $this->createNode('urlset', null, $this->urlSetAttributes);
-
-        foreach ($this->items as $url) {
-            $urlset->appendChild($url);
-        }
-
-        $this->document->appendChild($urlset);
-
-        return $this->document->saveXML();
+        return $this->createTree('urlset');
     }
 
     /**

@@ -18,7 +18,7 @@ final class SitemapIndexGenerator extends AbstractGenerator
      * 
      * @var array
      */
-    private $attributes = array(
+    protected $rootAttributes = array(
         'xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9'
     );
 
@@ -27,17 +27,9 @@ final class SitemapIndexGenerator extends AbstractGenerator
      */
     public function render()
     {
-        $sitemapindex = $this->createNode('sitemapindex', null, $this->attributes);
-
-        foreach ($this->items as $item) {
-            $sitemapindex->appendChild($item);
-        }
-
-        $this->document->appendChild($sitemapindex);
-
-        return $this->document->saveXML();
+        return $this->createTree('sitemapindex');
     }
-    
+
     /**
      * Add single Sitemap
      * 
