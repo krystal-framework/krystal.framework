@@ -79,6 +79,29 @@ final class SitemapGenerator
     }
 
     /**
+     * Add many URLs
+     * 
+     * @param array $urls
+     * @return void
+     */
+    public function addUrls(array $urls)
+    {
+        // Returns key from array
+        $get = function($key, $row){
+            return isset($row[$key]) ? $row[$key] : null;
+        };
+
+        foreach ($urls as $url) {
+            $this->addUrl(
+                $get('loc', $url),
+                $get('lastmod', $url),
+                $get('changefreq', $url),
+                $get('priority', $url)
+            );
+        }
+    }
+
+    /**
      * Creates URL element
      * 
      * @param string $loc URL of the page.
