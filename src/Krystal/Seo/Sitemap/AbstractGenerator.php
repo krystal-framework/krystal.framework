@@ -42,6 +42,18 @@ abstract class AbstractGenerator
     }
 
     /**
+     * Safely return a value from array
+     * 
+     * @param array $row
+     * @param string $key
+     * @return mixed
+     */
+    protected static function safeValue(array $row, $key)
+    {
+        return isset($row[$key]) ? $row[$key] : null;
+    }
+
+    /**
      * Generates and renders Sitemap as a string
      * 
      * @return string

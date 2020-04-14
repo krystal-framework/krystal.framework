@@ -38,17 +38,12 @@ final class SitemapGenerator extends AbstractGenerator
      */
     public function addUrls(array $urls)
     {
-        // Returns key from array
-        $get = function($key, $row){
-            return isset($row[$key]) ? $row[$key] : null;
-        };
-
         foreach ($urls as $url) {
             $this->addUrl(
-                $get('loc', $url),
-                $get('lastmod', $url),
-                $get('changefreq', $url),
-                $get('priority', $url)
+                self::safeValue('loc', $url),
+                self::safeValue('lastmod', $url),
+                self::safeValue('changefreq', $url),
+                self::safeValue('priority', $url)
             );
         }
     }

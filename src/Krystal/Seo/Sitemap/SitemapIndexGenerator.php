@@ -38,15 +38,10 @@ final class SitemapIndexGenerator extends AbstractGenerator
      */
     public function addSitemaps(array $sitemaps)
     {
-        // Returns key from array
-        $get = function($key, $row){
-            return isset($row[$key]) ? $row[$key] : null;
-        };
-
         foreach ($urls as $url) {
             $this->addUrl(
-                $get('loc', $url),
-                $get('lastmod', $url)
+                self::safeValue('loc', $url),
+                self::safeValue('lastmod', $url)
             );
         }
     }
