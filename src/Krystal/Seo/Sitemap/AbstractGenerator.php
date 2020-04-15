@@ -54,6 +54,17 @@ abstract class AbstractGenerator
     }
 
     /**
+     * Escape special chars found in URL
+     * 
+     * @param string $url Target URL
+     * @return string
+     */
+    protected static function escapeUrl($url)
+    {
+        return htmlspecialchars($url, \ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
      * Properly formats lastmod value
      * 
      * @param string $lastmod
