@@ -41,6 +41,26 @@ final class Robots
     }
 
     /**
+     * Add single or many lines at once
+     * 
+     * @param string $key
+     * @param string|array $value Optional value
+     * @return \Krystal\Seo\Robots
+     */
+    private function addLines($key, $value = null)
+    {
+        if (is_array($value)) {
+            foreach ($value as $item) {
+                $this->addLine($key, $item);
+            }
+        } else {
+            $this->addLine($key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
      * Renders content of robots
      * 
      * @return string
@@ -74,45 +94,45 @@ final class Robots
     /**
      * Adds a user-agent directive
      * 
-     * @param string $value
+     * @param string|array $value
      * @return \Krystal\Seo\Robots
      */
     public function addUserAgent($value)
     {
-        return $this->addLine('User-agent', $value);
+        return $this->addLines('User-agent', $value);
     }
 
     /**
      * Adds Allow directive
      * 
-     * @param string $value
+     * @param string|array $value
      * @return \Krystal\Seo\Robots
      */
     public function addAllow($value)
     {
-        return $this->addLine('Allow', $value);
+        return $this->addLines('Allow', $value);
     }
 
     /**
      * Adds Disallow directive
      * 
-     * @param string $value
+     * @param string|array $value
      * @return \Krystal\Seo\Robots
      */
     public function addDisallow($value)
     {
-        return $this->addLine('Disallow', $value);
+        return $this->addLines('Disallow', $value);
     }
 
     /**
      * Adds Sitemap directive
      * 
-     * @param string $value
+     * @param string|array $value
      * @return \Krystal\Seo\Robots
      */
     public function addSitemap($value)
     {
-        return $this->addLine('Sitemap', $value);
+        return $this->addLines('Sitemap', $value);
     }
 
     /**
