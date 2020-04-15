@@ -3,6 +3,50 @@ SEO component
 
 This component provides tools related to SEO
 
+
+## Robots
+
+Using this tool, you can generate content for the `robots.txt` file easily. Quick example:
+
+    <?php
+    
+    use Krystal\Seo\Robots;
+    
+    $robots = new Robots();
+    $robots->addComment('Default generated robots.txt')
+           ->addUserAgent('*')
+           ->addDisallow([
+                '/config/',
+                '/modules/'
+           ])
+           ->addAllow([
+                '/images/'
+           ])
+           ->addBreak()
+           ->addHost('domain.com')
+           ->addBreak()
+           ->addSitemap([
+                'https://domain.com/sitemap-1.xml',
+                'https://domain.com/sitemap-2.xml'
+           ]);
+    
+    echo $robots->render();
+
+This outputs the following:
+
+    # Default generated robots.txt
+    User-agent: *
+    Disallow: /config/
+    Disallow: /modules/
+    Allow: /images/
+    
+    Host: domain.com
+    
+    Sitemap: https://domain.com/sitemap-1.xml
+    Sitemap: https://domain.com/sitemap-2.xml
+
+Methods such as `addUserAgent()`, `addDisallow()`, `addAllow()` and `addSitemap()` accept an array of values or a single value.
+
 # Sitemap
 
 You can use this component to generate sitemaps. It's real fast and super easy to use! Key features:
@@ -16,6 +60,8 @@ You can use this component to generate sitemaps. It's real fast and super easy t
 
 This one is typically used if your site has only one sitemap (or you group all of your URLs into a one).
 
+    <?php
+    
     use Krystal\Seo\Sitemap\SitemapGenerator;
     
     $generator = new SitemapGenerator();
@@ -78,7 +124,9 @@ Alternatively, when adding URLs, you can also provide an array of entires, like 
 ## Multiple sitemaps
 
 You can also generate a grouped sitemap that points to another sitemaps. It goes like this:
-
+    
+    <?php
+    
     use Krystal\Seo\Sitemap\SitemapIndexGenerator;
     
     $generator = new SitemapIndexGenerator();
@@ -118,4 +166,5 @@ Alternatively, when adding sitemaps, you can also provide an array of entires, l
 ## Notes
 
 By default, it checks wheter all supplied values are valid. In case you need to disable validation, just pass `false` to constructor, like this `$generator = new SitemapIndexGenerator(false)` or `$generator = new SitemapGenerator(false)`
+
 
