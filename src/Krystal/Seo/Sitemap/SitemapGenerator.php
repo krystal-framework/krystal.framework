@@ -59,6 +59,24 @@ final class SitemapGenerator extends AbstractGenerator
      */
     public function addUrl($loc, $lastmod = null, $changefreq = null, $priority = null)
     {
+        // Do we need to run validation?
+        if ($this->validate == true) {
+            // Validate loc
+            if (!Validator::isLoc($loc)) {
+                Validator::throwError('loc', $loc);
+            }
+
+            // Validate changefreq
+            if ($changefreq !== null && !Validator::isChangefreq($changefreq)) {
+                Validator::throwError('changefreq', $changefreq);
+            }
+            
+            // Validate priority
+            if ($priority !== null && !Validator::isPriority($priority)) {
+                Validator::throwError('priority', $priority);
+            }
+        }
+
         $node = $this->createBranch('url', array(
             'loc' => $loc,
             'lastmod' => self::formatLastmod($lastmod),

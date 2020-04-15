@@ -32,13 +32,23 @@ abstract class AbstractGenerator
     protected $items = array();
 
     /**
+     * Whether to validate supplied values
+     * 
+     * @var boolean
+     */
+    protected $validate;
+
+    /**
      * State initialization
      * 
+     * @param boolean $validate Whether to validate supplied values
      * @param string $encoding Document encoding
      * @return void
      */
-    public function __construct($encoding = 'UTF-8')
+    public function __construct($validate = true, $encoding = 'UTF-8')
     {
+        $this->validate = $validate;
+
         $this->document = new DOMDocument('1.0', $encoding);
         $this->document->formatOutput = true;
     }

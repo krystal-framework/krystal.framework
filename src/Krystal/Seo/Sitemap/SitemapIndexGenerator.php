@@ -50,11 +50,18 @@ final class SitemapIndexGenerator extends AbstractGenerator
      * Add single Sitemap
      * 
      * @param string $loc
-     * @param string $loc
+     * @param string $lastmod
      * @return void
      */
     public function addSitemap($loc, $lastmod = null)
     {
+        if ($this->validate == true) {
+            // Validate loc
+            if (!Validator::isLoc($loc)) {
+                Validator::throwError('loc', $loc);
+            }
+        }
+
         $node = $this->createBranch('sitemap', array(
             'loc' => $loc,
             'lastmod' => self::formatLastmod($lastmod)
