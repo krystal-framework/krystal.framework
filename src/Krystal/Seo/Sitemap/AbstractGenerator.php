@@ -77,11 +77,11 @@ abstract class AbstractGenerator
     /**
      * Safely return a value from array
      * 
-     * @param array $row
      * @param string $key
+     * @param array $row
      * @return mixed
      */
-    protected static function safeValue(array $row, $key)
+    protected static function safeValue($key, array $row)
     {
         return isset($row[$key]) ? $row[$key] : null;
     }

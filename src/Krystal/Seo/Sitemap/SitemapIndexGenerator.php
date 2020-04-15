@@ -38,10 +38,10 @@ final class SitemapIndexGenerator extends AbstractGenerator
      */
     public function addSitemaps(array $sitemaps)
     {
-        foreach ($urls as $url) {
-            $this->addUrl(
-                self::safeValue('loc', $url),
-                self::safeValue('lastmod', $url)
+        foreach ($sitemaps as $sitemap) {
+            $this->addSitemap(
+                self::safeValue('loc', $sitemap),
+                self::safeValue('lastmod', $sitemap)
             );
         }
     }
