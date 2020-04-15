@@ -77,7 +77,7 @@ final class Robots
      */
     public function addBreak()
     {
-        return $this->addLine(PHP_EOL);
+        return $this->addLine(null);
     }
 
     /**
