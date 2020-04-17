@@ -126,6 +126,17 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
     }
 
     /**
+     * Returns a property
+     * 
+     * @param string $property
+     * @return string
+     */
+    public function get($property)
+    {
+        return $this->container[$property];
+    }
+
+    /**
      * Handles the Data Value object logic
      * 
      * @param string $method
