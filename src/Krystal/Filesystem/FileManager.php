@@ -20,27 +20,6 @@ use UnexpectedValueException;
 class FileManager implements FileManagerInterface
 {
     /**
-     * Turns raw bytes into human-readable format
-     * 
-     * @param int $bytes
-     * @return string
-     */
-    public static function humanSize($bytes)
-    {
-        // Make sure we can't divide by zero
-        if ($bytes == 0) {
-            return '0 B';
-        }
-
-        $value = floor(log($bytes, 1024));
-
-        $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
-        $unit = $units[$value]; // Chosen unit
-
-        return sprintf('%.02F', $bytes / pow(1024, $value)) * 1 . ' ' . $unit;
-    }
-
-    /**
      * Returns a directory name from a path
      * 
      * @param string $path
@@ -49,25 +28,6 @@ class FileManager implements FileManagerInterface
     public static function getBaseName($path)
     {
         return pathinfo($path, \PATHINFO_BASENAME);
-    }
-
-    /**
-     * Checks whether file has extension
-     * 
-     * @param string $baseName
-     * @param array $extensions
-     * @return boolean
-     */
-    public static function hasExtension($baseName, array $extensions)
-    {
-        // Lowercase names
-        $baseName = strtolower($baseName);
-
-        $extensions = array_map(function($key){
-            return strtolower($key);
-        }, $extensions);
-
-        return in_array(self::getExtension($baseName), $extensions);
     }
 
     /**
@@ -101,6 +61,46 @@ class FileManager implements FileManagerInterface
     public static function getFileName($path)
     {
         return pathinfo($path, \PATHINFO_FILENAME);
+    }
+
+    /**
+     * Turns raw bytes into human-readable format
+     * 
+     * @param int $bytes
+     * @return string
+     */
+    public static function humanSize($bytes)
+    {
+        // Make sure we can't divide by zero
+        if ($bytes == 0) {
+            return '0 B';
+        }
+
+        $value = floor(log($bytes, 1024));
+
+        $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        $unit = $units[$value]; // Chosen unit
+
+        return sprintf('%.02F', $bytes / pow(1024, $value)) * 1 . ' ' . $unit;
+    }
+
+    /**
+     * Checks whether file has extension
+     * 
+     * @param string $baseName
+     * @param array $extensions
+     * @return boolean
+     */
+    public static function hasExtension($baseName, array $extensions)
+    {
+        // Lowercase names
+        $baseName = strtolower($baseName);
+
+        $extensions = array_map(function($key){
+            return strtolower($key);
+        }, $extensions);
+
+        return in_array(self::getExtension($baseName), $extensions);
     }
 
     /**
