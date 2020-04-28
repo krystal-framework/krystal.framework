@@ -121,11 +121,20 @@ interface QueryBuilderInterface
     public function insertIntoJunction($table, array $columns, $master, array $slaves);
 
     /**
-     * Builds UPDATE query
+     * Generates SET key = value fragment
      * 
+     * @param array $values
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function update($table, array $data);
+    public function set(array $values);
+
+    /**
+     * Builds UPDATE query
+     * 
+     * @param array $data Optional data to be updated
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function update($table, array $data = array());
 
     /**
      * Increments a value of a column

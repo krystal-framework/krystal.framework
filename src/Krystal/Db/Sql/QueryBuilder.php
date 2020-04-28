@@ -509,23 +509,43 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
     }
 
     /**
-     * Builds UPDATE query
+     * Generates SET key = value fragment
      * 
-     * @param string $table
-     * @param array $data Data to be updated
+     * @param array $values
      * @return \Krystal\Db\Sql\QueryBuilder
      */
-    public function update($table, array $data)
+    public function set(array $values)
     {
         $conditions = array();
 
-        foreach ($data as $key => $value) {
+        foreach ($values as $key => $value) {
             // Wrap column names into back-ticks
             $conditions[] = sprintf('%s = %s', $this->quote($key), $value);
         }
 
-        $query = sprintf('UPDATE %s SET %s', $this->quote($table), implode(', ', $conditions));
+        $fragment = sprintf('SET %s', implode(', ', $conditions));
+
+        $this->append($fragment);
+        return $this;
+    }
+
+    /**
+     * Builds UPDATE query
+     * 
+     * @param string $table
+     * @param array $data Optional data to be updated
+     * @return \Krystal\Db\Sql\QueryBuilder
+     */
+    public function update($table, array $data = array())
+    {
+        // Initial fragment
+        $query = sprintf('UPDATE %s ', $this->quote($table));
+
         $this->append($query);
+
+        if (!empty($data)) {
+            $this->set($data);
+        }
 
         return $this;
     }

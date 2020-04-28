@@ -1134,13 +1134,25 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Generates SET key = value fragment
+     * 
+     * @param array $values
+     * @return \Krystal\Db\Sql\Db
+     */
+    public function set(array $values)
+    {
+        $this->queryBuilder->set($this->asData($values));
+        return $this;
+    }
+
+    /**
      * Updates a table
      * 
      * @param string $table
-     * @param array $data
+     * @param array $data Optional data to be updated
      * @return \Krystal\Db\Sql\Db
      */
-    public function update($table, array $data)
+    public function update($table, array $data = array())
     {
         $this->queryBuilder->update($table, $this->asData($data));
         return $this;
