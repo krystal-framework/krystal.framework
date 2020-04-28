@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Improved `update()` method and added standalone `set()` method. This is useful when update needs to be done using JOINs
  * Between generators now accept an instance of `RawSqlFragment` in addition to raw strings when supplying column names
  * The method `QueryBuilder::select()` as of now accepts an instance of `RawSqlFragment`
  * Fixed return value of `Krystal\Db\Sql\AbstractMapper::deleteByColumn()`. Since now it returns boolean value depending on success, rather than a result of execution
