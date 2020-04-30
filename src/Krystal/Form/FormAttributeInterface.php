@@ -31,6 +31,15 @@ interface FormAttributeInterface
     public function setOldAttributes(array $attributes);
 
     /**
+     * Append new attribute
+     * 
+     * @param string $key
+     * @param string $value
+     * @return \Krystal\Form\FormAttribute
+     */
+    public function setNewAttribute($key, $value);
+
+    /**
      * Set a collection of new attributes
      * 
      * @param array $attributes

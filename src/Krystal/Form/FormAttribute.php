@@ -129,6 +129,19 @@ final class FormAttribute implements FormAttributeInterface
     }
 
     /**
+     * Append new attribute
+     * 
+     * @param string $key
+     * @param string $value
+     * @return \Krystal\Form\FormAttribute
+     */
+    public function setNewAttribute($key, $value)
+    {
+        $this->attributes[$key] = $value;
+        return $this;
+    }
+
+    /**
      * Set a collection of new attributes
      * 
      * @param array $attributes
