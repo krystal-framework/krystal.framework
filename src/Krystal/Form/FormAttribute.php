@@ -183,10 +183,15 @@ final class FormAttribute implements FormAttributeInterface
      * Determines whether attribute has been changed or not
      * 
      * @param string $name Attribute name
+     * @oaram string $value New value
      * @return boolean
      */
-    public function hasChanged($name)
+    public function hasChanged($name, $value = null)
     {
+        if ($value !== null) {
+            $this->setNewAttribute($name, $value);
+        }
+
         if ($this->hasOldAttribute($name) && $this->hasNewAttribute($name)) {
             return $this->getOldAttribute($name) != $this->getNewAttribute($name);
         } else {

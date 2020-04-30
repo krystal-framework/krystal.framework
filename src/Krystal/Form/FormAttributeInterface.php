@@ -67,9 +67,10 @@ interface FormAttributeInterface
      * Determines whether attribute has been changed or not
      * 
      * @param string $name Attribute name
+     * @oaram string $value New value
      * @return boolean
      */
-    public function hasChanged($name);
+    public function hasChanged($name, $value = null);
 
     /**
      * Returns a collection of changed attributes
