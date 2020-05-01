@@ -133,7 +133,8 @@ class Field
             $div->appendChild($label);
         }
 
-        $div->appendChild($inputDiv);
+        $div->appendChild($inputDiv)
+            ->closeTag();
 
         return $div->render();
     }
