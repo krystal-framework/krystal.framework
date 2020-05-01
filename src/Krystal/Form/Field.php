@@ -121,7 +121,7 @@ class Field
         if (!empty($text)) {
             $label = new NodeElement();
             $label->openTag('label')
-                  ->addAttribute('class', 'col-lg-2')
+                  ->addAttribute('class', 'col-lg-10')
                   ->setText($text)
                   ->closeTag();
         }
