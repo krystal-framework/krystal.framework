@@ -21,6 +21,7 @@ use Krystal\Application\Route\UrlBuilderInterface;
 use Krystal\Widget\WidgetInterface;
 use Krystal\Widget\WidgetFactory;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Form\Field;
 
 final class ViewManager implements ViewManagerInterface
 {
@@ -133,6 +134,24 @@ final class ViewManager implements ViewManagerInterface
         $this->urlBuilder = $urlBuilder;
         $this->widgetFactory = $widgetFactory;
         $this->setCompress($compress);
+    }
+
+    /**
+     * Renders a field
+     * 
+     * @param string $label
+     * @return string
+     */
+    public function field($label = null)
+    {
+        static $field = null;
+
+        if (is_null($field)) {
+            $field = new Field($this->translator);
+        }
+
+        $field->label($label);
+        return $field;
     }
 
     /**
