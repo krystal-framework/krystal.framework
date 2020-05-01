@@ -34,6 +34,13 @@ class Field
     private $input;
 
     /**
+     * Last dynamic method call
+     * 
+     * @var string
+     */
+    private $method = null;
+
+    /**
      * Optional translator
      * 
      * @var \Krystal\I18n\TranslatorInterface
@@ -76,6 +83,7 @@ class Field
         $input = $this->createInputField($method, $args);
 
         if ($input) {
+            $this->method = $method;
             $this->input = $input;
             return $this;
         } else {
@@ -161,11 +169,15 @@ class Field
      */
     private function render()
     {
-        $label = $this->translate($this->label);
+        // We don't render groups for hidden inputs, as it makes no sense
+        if ($this->method !== 'hidden') {
+            $label = $this->translate($this->label);
+            $output = $this->createInputGroup($label, $this->input);
+        } else {
+            $output = $this->input;
+        }
 
-        $output = $this->createInputGroup($label, $this->input);
         $this->clear();
-
         return $output;
     }
 
@@ -178,6 +190,7 @@ class Field
     {
         $this->label = null;
         $this->input = null;
+        $this->method = null;
     }
 
     /**
