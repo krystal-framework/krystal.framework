@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added field generator
  * In `Element` added `fileData()` - file input with its hidden field generator
  * Improved internal attribute filter in `NodeElement`
  * Added HTML5 video tag generator via `Element::video()` method
