@@ -2118,7 +2118,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function addColumn($column, $type)
     {
-        $this->queryBuilder->addColumn($table, $column, $type);
+        $this->queryBuilder->addColumn($column, $type);
         return $this;
     }
 
