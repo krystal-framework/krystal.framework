@@ -275,8 +275,8 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
      * 
      * @param integer $width
      * @param integer $height
-     * @param integer $starX X offset
-     * @param integer $starY Y offset
+     * @param integer $startX X offset
+     * @param integer $startY Y offset
      * @return \Krystal\Image\Processor\GD\ImageProcessor
      */
     public function crop($width, $height, $startX = null, $startY = null)
