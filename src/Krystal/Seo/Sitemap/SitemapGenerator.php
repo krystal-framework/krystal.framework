@@ -86,5 +86,6 @@ final class SitemapGenerator extends AbstractGenerator
         ));
 
         $this->items[] = $node;
+        return $this;
     }
 }
