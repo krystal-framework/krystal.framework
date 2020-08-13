@@ -162,7 +162,8 @@ abstract class AbstractGenerator
 
         // Append items to URL set
         foreach ($branches as $tagName => $tagValue) {
-            $childNode = $this->createNode($tagName, $tagValue);
+            // Do we need recursion?
+            $childNode = is_array($tagValue) ? $this->createBranch($tagName, $tagValue) : $this->createNode($tagName, $tagValue);
 
             // Append only non-empty values
             if ($childNode->nodeValue) {
