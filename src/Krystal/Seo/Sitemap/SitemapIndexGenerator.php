@@ -34,7 +34,7 @@ final class SitemapIndexGenerator extends AbstractGenerator
      * Add single Sitemap
      * 
      * @param array $sitemaps
-     * @return void
+     * @return \Krystal\Seo\Sitemap\SitemapIndexGenerator
      */
     public function addSitemaps(array $sitemaps)
     {
@@ -44,6 +44,8 @@ final class SitemapIndexGenerator extends AbstractGenerator
                 self::safeValue('lastmod', $sitemap)
             );
         }
+
+        return $this;
     }
 
     /**
@@ -51,7 +53,7 @@ final class SitemapIndexGenerator extends AbstractGenerator
      * 
      * @param string $loc
      * @param string $lastmod
-     * @return void
+     * @return \Krystal\Seo\Sitemap\SitemapIndexGenerator
      */
     public function addSitemap($loc, $lastmod = null)
     {
@@ -68,5 +70,6 @@ final class SitemapIndexGenerator extends AbstractGenerator
         ));
 
         $this->items[] = $node;
+        return $this;
     }
 }
