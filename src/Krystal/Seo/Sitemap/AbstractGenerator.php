@@ -122,7 +122,7 @@ abstract class AbstractGenerator
 
         return $this->document->saveXML();
     }
-    
+
     /**
      * Creates child element
      * 
