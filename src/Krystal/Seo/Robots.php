@@ -14,6 +14,13 @@ namespace Krystal\Seo;
 final class Robots
 {
     /**
+     * Default filename used by search engines
+     * 
+     * @const string
+     */
+    const FILENAME = 'robots.txt';
+
+    /**
      * Lines to be rendered
      * 
      * @var array
@@ -36,7 +43,6 @@ final class Robots
         }
 
         $this->lines[] = $line;
-
         return $this;
     }
 
