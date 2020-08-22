@@ -60,11 +60,11 @@ final class ImageSitemap extends AbstractGenerator
         foreach ($images as $image) {
             // Internal image
             $node = $this->createBranch('image:image', array(
-                'image:loc' => self::safeValue('loc', $image),
-                'image:caption' => self::safeValue('caption', $image),
-                'image:geo_location' => self::safeValue('geo_location', $image),
-                'image:title' => self::safeValue('title', $image),
-                'image:license' => self::safeValue('license', $image)
+                'image:loc' => $image['loc'], // Required
+                'image:caption' => self::safeValue('caption', $image), // Optional
+                'image:geo_location' => self::safeValue('geo_location', $image),  // Optional
+                'image:title' => self::safeValue('title', $image),  // Optional
+                'image:license' => self::safeValue('license', $image)  // Optional
             ));
 
             $url->appendChild($this->createNode('loc', $loc));
