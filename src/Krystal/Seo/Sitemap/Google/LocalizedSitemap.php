@@ -82,6 +82,7 @@ final class LocalizedSitemap extends AbstractGenerator
             $urlNode->appendChild($internalNode);
         }
 
+        // Append self
         $baseNode = $this->createLocaleNode($hreflang, $href);
         $urlNode->appendChild($baseNode);
 
