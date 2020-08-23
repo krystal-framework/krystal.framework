@@ -61,10 +61,22 @@ final class VideoSitemap extends AbstractGenerator
      */
     private function createFromParams(array $params)
     {
+        // Output
         $videoNodes = array();
+
+        // Values of this keys will be formated to W3 date format
+        $dtKeys = array(
+            'expiration_date',
+            'publication_date'
+        );
 
         // Turn parameters into video nodes
         foreach ($params as $key => $value) {
+            // Do we require to format date?
+            if (in_array($key, $dtKeys) && is_string($value)) {
+                $value = self::formatLastmod($value);
+            }
+
             $videoNodes[] = $this->createItem($key, $value);
         }
 
