@@ -65,6 +65,7 @@ final class SitemapGenerator extends AbstractGenerator
      * @param string $lastmod The date of last modification of the file. This date should be in W3C Datetime format.
      * @param string $changefreq How frequently the page is likely to change.
      * @param string $priority The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0.
+     * @throws \UnexpectedValueException On invalid value when encountered
      * @return \Krystal\Seo\Sitemap\SitemapGenerator
      */
     public function addUrl($loc, $lastmod = null, $changefreq = null, $priority = null)
