@@ -75,7 +75,7 @@ This one is typically used if your site has only one sitemap (or you group all o
 This outputs the following:
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <url>
         <loc>http://domain.com/our-story</loc>
         <lastmod>2020-11-23T00:01:03+00:00</lastmod>
@@ -105,14 +105,14 @@ Alternatively, when adding URLs, you can also provide an array of entires, like 
             'changefreq' => 'daily',
             'priority' => '1.0'
         ],
-    
+
         [
             'loc' => 'http://domain.com/team',
             'lastmod' => '2020-11-25 00:01:03',
             'changefreq' => 'weekly',
             'priority' => '0.8'
         ],
-    
+
         [
             'loc' => 'http://domain.com/news',
             'lastmod' => '2020-11-22 00:01:03',
