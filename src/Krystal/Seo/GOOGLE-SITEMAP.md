@@ -204,3 +204,92 @@ You can also use alternate method `addUrls()` to define many items at once. It g
     ]);
 
 
+
+## Video Sitemap
+
+For better crawling of Video sites, Google recommends using their dedicated Video Sitemap. You can learn more about this extension [here](https://support.google.com/webmasters/answer/80471?hl=en&ref_topic=4581190).
+
+    <?php
+    
+    use Krystal\Seo\Sitemap\Google\VideoSitemap;
+    
+    $sitemap = new VideoSitemap();
+    $sitemap->addUrl('http://www.example.com/videos/some_video_landing_page.html', [
+        'thumbnail_loc' => 'http://www.example.com/thumbs/123.jpg', // Required
+        'title' => 'Grilling steaks for summer', // Required
+        'description' => 'Alkis shows you how to get perfectly done steaks every time', // Required
+        'content_loc' => 'http://streamserver.example.com/video123.mp4',
+        'player_loc' => 'http://www.example.com/videoplayer.php?video=123',
+        'duration' => 600, // Recommended
+        'expiration_date' => '2021-11-05T19:20:30+08:00', // Recommended
+        'rating' => 4.2, //
+        'view_count' => 12345, // Optional
+        'publication_date' => '2007-11-05T19:20:30+08:00', // Optional
+        'family_friendly' => 'yes', // Optional
+        'restriction' => [ // Optional
+            'relationship' => 'allow',
+            'restriction' => 'IE GB US CA'
+        ],
+        'platform' => 'web', // Optional
+        'price' => [ // Optional
+            'price' => 1.99,
+            'currency' => 'EUR'
+        ],
+        'requires_subscription' => 'yes', // Optional
+        'uploader' => [ // Optional
+            'uploader' => 'GrillyMcGrillerson',
+            'info' => 'http://www.example.com/users/grillymcgrillerson'
+        ],
+        'live' => 'yes', // Optional
+        'tag' => 'video', // Optional
+        'category' => 'Family' // Optional
+    ]);
+
+The above example outputs the following Sitemap:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+      <url>
+        <loc>http://www.example.com/videos/some_video_landing_page.html</loc>
+        <video:video>
+          <video:thumbnail_loc>http://www.example.com/thumbs/123.jpg</video:thumbnail_loc>
+          <video:title>Grilling steaks for summer</video:title>
+          <video:description>Alkis shows you how to get perfectly done steaks every time</video:description>
+          <video:content_loc>http://streamserver.example.com/video123.mp4</video:content_loc>
+          <video:player_loc>http://www.example.com/videoplayer.php?video=123</video:player_loc>
+          <video:duration>600</video:duration>
+          <video:expiration_date>2021-11-05T19:20:30+08:00</video:expiration_date>
+          <video:rating>4.2</video:rating>
+          <video:view_count>12345</video:view_count>
+          <video:publication_date>2007-11-05T19:20:30+08:00</video:publication_date>
+          <video:family_friendly>yes</video:family_friendly>
+          <video:restriction relationship="allow">IE GB US CA</video:restriction>
+          <video:platform>web</video:platform>
+          <video:price currency="EUR">1.99</video:price>
+          <video:requires_subscription>yes</video:requires_subscription>
+          <video:uploader info="http://www.example.com/users/grillymcgrillerson">GrillyMcGrillerson</video:uploader>
+          <video:live>yes</video:live>
+          <video:tag>video</video:tag>
+          <video:category>Family</video:category>
+        </video:video>
+      </url>
+    </urlset>
+
+The method `addUrl()` takes two arguments:
+
+ * The first one is target URL to be indexed
+ * The second one is an array with parameters
+
+You can also add many URLs at once with `addUrls()`. It takes an array, like this:
+
+    $sitemap = new VideoSitemap();
+    $sitemap->addUrls([
+        [
+            'loc' => 'https://some-url.ltd',
+            'params' => [
+                // Params as above
+            ]
+        ],
+        // Add as many as required
+    ]);
+
