@@ -13,6 +13,15 @@ namespace Krystal\Seo\Sitemap;
 
 final class SitemapGenerator extends AbstractGenerator
 {
+    /* Available frequencies */
+    const FREQ_ALWAYS = 'always';
+    const FREQ_HOURLY = 'hourly';
+    const FREQ_DAILY = 'daily';
+    const FREQ_WEEKLY = 'weekly';
+    const FREQ_MONTHLY = 'monthly';
+    const FREQ_YEARLY = 'yearly';
+    const FREQ_NEVER = 'never';
+
     /**
      * {@inheritDoc}
      */
@@ -71,7 +80,7 @@ final class SitemapGenerator extends AbstractGenerator
             if ($changefreq !== null && !Validator::isChangefreq($changefreq)) {
                 Validator::throwError('changefreq', $changefreq);
             }
-            
+
             // Validate priority
             if ($priority !== null && !Validator::isPriority($priority)) {
                 Validator::throwError('priority', $priority);
