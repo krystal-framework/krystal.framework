@@ -170,3 +170,14 @@ Alternatively, when adding sitemaps, you can also provide an array of entires, l
 By default, it checks wheter all supplied values are valid. In case you need to disable validation, just pass `false` to constructor, like this `$generator = new SitemapIndexGenerator(false)` or `$generator = new SitemapGenerator(false)`
 
 
+## Submit Sitemap to Search Engines
+
+You can easily submit your sitemap using `Query` class, like this:
+
+    <?php
+    
+    use Krystal\Seo\Sitemap\Query;
+    
+    $query = new Query('http://example.com/sitemap.xml');
+    $query->ping(); // Submit your sitemap to all major search engines
+    
