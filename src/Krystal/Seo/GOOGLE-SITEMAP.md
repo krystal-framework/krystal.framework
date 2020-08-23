@@ -137,3 +137,70 @@ You can also use `addUrls()` method to add many values at once, like this:
     
         // Add more URLs with their translation maps ...
     ]);
+
+
+## News Sitemap
+
+Google highly recommends using their News Sitemap for news/blog web-sites. You can learn more about it [here](https://support.google.com/webmasters/answer/9606710?hl=en&ref_topic=4581190).
+
+You can generate News Sitemap like this:
+
+    <?php
+    
+    use Krystal\Seo\Sitemap\Google\NewsSitemap;
+    
+    $sitemap = new NewsSitemap();
+    
+    $sitemap->addUrl('http://www.domain.com/some-another-post', 'Some another post', 'en', '2018-05-10');
+    $sitemap->addUrl('http://www.domain.com/some-yet-another-post', 'Some yet another post', 'en', '2018-05-10', 'Get It Started');
+    
+    echo $sitemap->render();
+
+This outputs the following result:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+      <url>
+        <loc>http://www.domain.com/some-another-post</loc>
+        <news:news>
+          <news:publication>
+            <news:name>Some another post</news:name>
+            <news:language>en</news:language>
+          </news:publication>
+          <news:publication_date>2018-05-10</news:publication_date>
+          <news:title>Some another post</news:title>
+        </news:news>
+      </url>
+      <url>
+        <loc>http://www.domain.com/some-yet-another-post</loc>
+        <news:news>
+          <news:publication>
+            <news:name>Some yet another post</news:name>
+            <news:language>en</news:language>
+          </news:publication>
+          <news:publication_date>2018-05-10</news:publication_date>
+          <news:title>Get It Started</news:title>
+        </news:news>
+      </url>
+    </urlset>
+
+You can also use alternate method `addUrls()` to define many items at once. It goes like this:
+
+    $sitemap->addUrls([
+        [
+            'loc' => 'http://www.domain.com/some-another-post',
+            'name' => 'Some another post',
+            'locale' => 'en',
+            'date' => '2018-05-10'
+        ],
+    
+        [
+            'loc' => 'http://www.domain.com/some-yet-another-post',
+            'name' => 'Some yet another post',
+            'locale' => 'Ru',
+            'date' => '2018-05-10',
+            'title' => 'Get It Started'
+        ]
+    ]);
+
+
