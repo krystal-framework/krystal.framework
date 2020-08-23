@@ -71,13 +71,13 @@ final class Validator
     public static function isChangefreq($changefreq)
     {
         return in_array($changefreq, array(
-            'always',
-            'hourly',
-            'daily',
-            'weekly',
-            'monthly',
-            'yearly',
-            'never'
+            SitemapGenerator::FREQ_ALWAYS
+            SitemapGenerator::FREQ_HOURLY
+            SitemapGenerator::FREQ_DAILY
+            SitemapGenerator::FREQ_WEEKLY
+            SitemapGenerator::FREQ_MONTHLY
+            SitemapGenerator::FREQ_YEARLY
+            SitemapGenerator::FREQ_NEVER
         ));
     }
 }

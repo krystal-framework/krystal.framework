@@ -123,6 +123,21 @@ Alternatively, when adding URLs, you can also provide an array of entires, like 
         ]
     ]);
 
+You can also use these constants when supplying third argument `$changefreq`
+
+    SitemapGenerator::FREQ_ALWAYS
+    SitemapGenerator::FREQ_HOURLY
+    SitemapGenerator::FREQ_DAILY
+    SitemapGenerator::FREQ_WEEKLY
+    SitemapGenerator::FREQ_MONTHLY
+    SitemapGenerator::FREQ_YEARLY
+    SitemapGenerator::FREQ_NEVER
+
+Like this:
+
+    $generator->addUrl('http://domain.com/our-story', '2020-11-23 00:01:03', SitemapGenerator::FREQ_WEEKLY);
+
+
 ## Multiple sitemaps
 
 You can also generate a grouped sitemap that points to another sitemaps. It goes like this:
