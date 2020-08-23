@@ -28,6 +28,28 @@ final class Robots
     private $lines = array();
 
     /**
+     * Renders content of robots
+     * 
+     * @return string
+     */
+    public function render()
+    {
+        return implode(PHP_EOL, $this->lines);
+    }
+
+    /**
+     * Writes robots.txt into a directory
+     * 
+     * @param string $dir Directory path
+     * @return boolean Depending on success
+     */
+    public function save($dir)
+    {
+        $path = $dir . '/' . self::FILENAME;
+        return file_put_contents($path, $this->render());
+    }
+
+    /**
      * Adds a line to the internal stack
      * 
      * @param string $key
@@ -64,16 +86,6 @@ final class Robots
         }
 
         return $this;
-    }
-
-    /**
-     * Renders content of robots
-     * 
-     * @return string
-     */
-    public function render()
-    {
-        return implode(PHP_EOL, $this->lines);
     }
 
     /**

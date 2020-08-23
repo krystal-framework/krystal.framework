@@ -47,6 +47,8 @@ This outputs the following:
 
 Methods such as `addUserAgent()`, `addDisallow()`, `addAllow()` and `addSitemap()` accept an array of values or a single value.
 
+You can also save generated robots file into a directory. For that use `save($dir)` method, where `$dir` is a path to directory where file should be saved.
+
 # Sitemap
 
 You can use this component to generate sitemaps. It's real fast and super easy to use! Key features:
