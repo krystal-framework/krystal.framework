@@ -16,7 +16,7 @@ interface SessionBagInterface
     /**
      * Removes all data from session
      * 
-     * @return boolean
+     * @return void
      */
     public function removeAll();
 

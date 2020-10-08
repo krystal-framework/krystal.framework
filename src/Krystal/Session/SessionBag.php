@@ -90,7 +90,7 @@ final class SessionBag implements SessionBagInterface, PersistentStorageInterfac
     /**
      * Removes all data from session
      * 
-     * @return boolean
+     * @return void
      */
     public function removeAll()
     {
