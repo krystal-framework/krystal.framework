@@ -36,7 +36,7 @@ final class Validator
      */
     public static function isLoc($loc)
     {
-        return (bool) filter_var($loc, \FILTER_VALIDATE_URL, \FILTER_FLAG_SCHEME_REQUIRED);
+        return (bool) filter_var($loc, \FILTER_VALIDATE_URL);
     }
 
     /**
