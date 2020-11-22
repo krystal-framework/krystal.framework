@@ -14,6 +14,16 @@ namespace Krystal\Stdlib;
 final class MagicQuotesFilter implements MagicQuotesFilterInterface
 {
     /**
+     * Checks whether magic quotes are deprecated
+     * 
+     * @return boolean
+     */
+    private function isDeprecated()
+    {
+        return function_exists('set_magic_quotes_runtime');
+    }
+
+    /**
      * Deactivates magic quotes at runtime
      * 
      * @return void
@@ -21,7 +31,7 @@ final class MagicQuotesFilter implements MagicQuotesFilterInterface
     public function deactivate()
     {
         // This function is deprecated as of 5.4
-        if (function_exists('set_magic_quotes_runtime')) {
+        if (!$this->isDeprecated()) {
             set_magic_quotes_runtime(false);
         }
     }
@@ -33,7 +43,11 @@ final class MagicQuotesFilter implements MagicQuotesFilterInterface
      */
     public function enabled()
     {
-        return (bool) get_magic_quotes_gpc();
+        if ($this->isDeprecated()) {
+            return (bool) get_magic_quotes_gpc();
+        } else {
+            return false;
+        }
     }
 
     /**
