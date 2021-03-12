@@ -28,8 +28,11 @@ final class Video extends AbstractMediaElement
     {
         $node = new NodeElement();
 
-        $node->openTag('video')
-             ->addProperty('controls');
+        $node->openTag('video');
+
+        if (isset($attrs['controls']) && $attrs['controls'] == true) {
+            $node->addProperty('controls');
+        }
 
         if (isset($attrs['autoplay']) && $attrs['autoplay'] == true) {
             $node->addProperty('autoplay');
