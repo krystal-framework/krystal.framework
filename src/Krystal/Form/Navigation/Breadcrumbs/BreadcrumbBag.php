@@ -80,7 +80,7 @@ final class BreadcrumbBag implements BreadcrumbBagInterface
      */
     public function removeFirst()
     {
-        array_pop($this->collection);
+        array_shift($this->collection);
         return $this;
     }
 
