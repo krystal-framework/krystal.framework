@@ -105,7 +105,9 @@ final class Input implements InputInterface
                     // Recursive call
                     $files[$name] = call_user_func(array($this, __FUNCTION__), $files[$name]);
                 } else {
-                    $files[$name] = $this->hydrate($file);
+                    if (!is_object($value)) {
+                        $files[$name] = $this->hydrate($file);
+                    }
                 }
             }
         }
