@@ -22,7 +22,7 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
      * @param string $text Text to be printed on current image
      * @param string $fontFile Path to the font file
      * @param string $size The font size to be used when writing the text
-     * @param array $rbg The optional RGB pallete
+     * @param array $rgb The optional RGB pallete
      * @param integer $corner Corner position
      * @param integer $offsetX
      * @param integer $offsetY
@@ -66,7 +66,7 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
             break;
 
             default:
-                throw new UnexpectedValueException('unsupported corner value supplied');
+                throw new UnexpectedValueException('Unsupported corner value supplied');
         }
 
         $color = imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]);
@@ -147,7 +147,6 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 
         // Walk through supported values
         switch ($corner) {
-
             case self::IMG_RIGHT_BOTTOM_CORNER:
                 $x = $this->width - $watermark->getWidth() - $offsetX;
                 $y = $this->height - $watermark->getHeight() - $offsetY;
@@ -257,7 +256,6 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
 
         // Done calculating. Create a new image in memory
         $image = imagecreatetruecolor($width, $height);
-
         $this->preserveTransparency($image);
 
         imagecopyresampled($image, $this->image, 0, 0, 0, 0, $width, $height, $this->width, $this->height);
