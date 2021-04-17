@@ -480,7 +480,7 @@ abstract class AbstractMapper
      * @throws \LogicException if failed on keys existence validation
      * @return array|boolean
      */
-    private function persistRecord(array $data, array $fillable = array(), $set)
+    private function persistRecord(array $data, array $fillable, $set)
     {
         if (!empty($fillable) && !ArrayUtils::keysExist($data, $fillable)) {
             throw new LogicException('Can not persist the entity due to fillable protection. Make sure all fillable keys exist in the entity');

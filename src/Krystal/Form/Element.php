@@ -238,7 +238,7 @@ class Element
      * @param array $attributes Extra attributes
      * @return string
      */
-    public static function file($name, $accept = null, array $attributes = array())
+    public static function file($name, $accept, array $attributes = array())
     {
         if (!is_null($name)) {
             $attributes['name'] = $name;
