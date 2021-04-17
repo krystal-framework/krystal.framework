@@ -159,7 +159,13 @@ class TextUtils
      */
     public static function trim($string, $maxLen, $after = ' .... ')
     {
-        return mb_substr($string, 0, $maxLen, 'UTF-8') . $after;
+        $encoding = 'UTF-8';
+
+        if (mb_strlen($string, $encoding) > $maxLen) {
+            return mb_substr($string, 0, $maxLen, $encoding) . $after;
+        } else {
+            return $string;
+        }
     }
 
     /**
