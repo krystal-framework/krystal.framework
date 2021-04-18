@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `TimeHelper` added `guessSeason()` to determine current season
  * In `TimeHelper` added `formatValid()` methods that checks whether date/time format is valid
  * In `TimeHelper` added `age()` that counts user's age from a birthday
  * In `TimeHelper` added `getDays()` that month days

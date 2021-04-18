@@ -27,6 +27,32 @@ abstract class TimeHelper
     const MONTH = 2592000;
     const YEAR = 31536000;
 
+    /**
+     * Guess current season
+     * 
+     * @return string
+     */
+    public static function guessSeason()
+    {
+        $date = new DateTime();
+
+        // Get the season dates
+        $winter = new DateTime('December 21');
+        $spring = new DateTime('March 20');
+        $summer = new DateTime('June 20');
+        $fall = new DateTime('September 22');
+
+        switch (true) {
+            case $date >= $spring && $date < $summer:
+                return 'Spring';
+            case $date >= $summer && $date < $fall:
+                return 'Summer';
+            case $date >= $fall && $date < $winter:
+                return 'Fall';
+            default:
+                return 'Winter';
+        }
+    }
 
     /**
      * Checks whether datetime format is valid
