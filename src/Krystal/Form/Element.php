@@ -263,7 +263,7 @@ class Element
      * @param \Closure $optionVisitor Optional visitor to build attributes of option tag
      * @return string
      */
-    public static function select($name, array $list = array(), $selected, array $attributes = array(), $prompt = false, Closure $optionVisitor = null)
+    public static function select($name, array $list, $selected, array $attributes = array(), $prompt = false, Closure $optionVisitor = null)
     {
         if ($prompt !== false) {
             // Merge keeping indexes
