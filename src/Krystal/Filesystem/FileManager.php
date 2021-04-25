@@ -198,14 +198,14 @@ class FileManager implements FileManagerInterface
     }
 
     /**
-     * Tries to create a directory
+     * Tries to create a directory if one doesn't exist
      * 
-     * @param string $dir
+     * @param string $dir Path to a directory
      * @return boolean
      */
     public static function createDir($dir)
     {
-        if (!file_exists($dir)) {
+        if (!is_dir($dir)) {
             return mkdir($dir, 0777, true);
         } else {
             return false;
