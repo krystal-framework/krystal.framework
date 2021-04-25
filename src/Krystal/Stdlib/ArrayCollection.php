@@ -21,6 +21,23 @@ class ArrayCollection
     protected $collection;
 
     /**
+     * Check whether many keys exist
+     * 
+     * @param array $keys
+     * @return boolean
+     */
+    public function hasKeys(array $keys)
+    {
+        foreach ($keys as $key) {
+            if (!$this->hasKey($key)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Checks whether key in collection exist
      * 
      * @param string $key
