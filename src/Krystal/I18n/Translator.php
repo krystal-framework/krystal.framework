@@ -174,7 +174,7 @@ final class Translator implements TranslatorInterface
 
         // Don't process anything if a dictionary is empty
         if (empty($this->dictionary)) {
-            return vsprintf($message, $arguments);
+            return $this->translateInternal($message, $arguments);
         }
 
         // Immediately stop, if invalid module name provided
@@ -202,7 +202,23 @@ final class Translator implements TranslatorInterface
             }
         }
 
-        return vsprintf($source, $arguments);
+        return $this->translateInternal($source, $arguments);
+    }
+
+    /**
+     * Translates a string replacing internal placeholders
+     * 
+     * @param string $source
+     * @param array $arguments
+     * @return string
+     */
+    private function translateInternal($source, array $arguments)
+    {
+        if (empty($arguments)) {
+            return $source;
+        } else {
+            return vsprintf($source, $arguments);
+        }
     }
 
     /**
