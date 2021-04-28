@@ -60,7 +60,7 @@ final class Translator implements TranslatorInterface
                 array_push($variables, $argument);
             }
         }
-        
+
         return $variables;
     }
 
@@ -131,14 +131,14 @@ final class Translator implements TranslatorInterface
                 $key = $this->translateFrom($module, $key);
 
                 // If group is not created yet, create it
-                if (!isset($result[$key])){
+                if (!isset($result[$key])) {
                     $result[$key] = array();
                 }
 
-                foreach($value as $index => $inner) {
+                foreach ($value as $index => $inner) {
                     $result[$key][$index] = $this->translateFrom($module, $inner);
                 }
-                
+
             } else if (is_scalar($value)) {
                 $result[$key] = $this->translateFrom($module, $value);
             } else {
