@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Forced to count distinct values, when using smart pagination
  * Improved `update()` method and added standalone `set()` method. This is useful when update needs to be done using JOINs
  * Between generators now accept an instance of `RawSqlFragment` in addition to raw strings when supplying column names
  * The method `QueryBuilder::select()` as of now accepts an instance of `RawSqlFragment`

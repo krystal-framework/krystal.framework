@@ -96,7 +96,8 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
      */
     public function guessCountQuery($column, $alias)
     {
-        return str_replace($this->selected, $this->createFunction('COUNT', array($column), $alias), $this->getQueryString());
+        $target = $column == 1 ? $column : 'DISTINCT ' . $column;
+        return str_replace($this->selected, $this->createFunction('COUNT', array($target), $alias), $this->getQueryString());
     }
 
     /**
