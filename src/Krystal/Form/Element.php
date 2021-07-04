@@ -63,6 +63,18 @@ class Element
     }
 
     /**
+     * Renders JSON+LD element
+     * 
+     * @param array $data
+     * @return string
+     */
+    public static function jsonLd(array $data)
+    {
+        $node = new Node\JsonLd($data);
+        return $node->render(array());
+    }
+
+    /**
      * Creates a link with inner icon
      * 
      * @param string $icon

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In Element added `jsonLd()` - to generate JSON LD data
  * Added field generator
  * In `Element` added `fileData()` - file input with its hidden field generator
  * Improved internal attribute filter in `NodeElement`
