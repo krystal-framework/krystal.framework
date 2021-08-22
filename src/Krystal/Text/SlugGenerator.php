@@ -199,6 +199,9 @@ final class SlugGenerator implements SlugGeneratorInterface
         $string = $this->replaceWt($string);
         $string = $this->removeExtraDashes($string);
 
+        // Strip all invisible characters
+        $string = preg_replace('/\p{C}+/u', '', $string);
+
         return $string;
     }
 }

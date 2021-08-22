@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `SlugGenerator::generate` added internal method strip out all invisible characters
  * Added `TextUtils::strModified()` that can determine whether a string has been modified or not
  * Improved slug generator. Remove quotes from Word as well.
  * Extended dictionary in foreign chars
