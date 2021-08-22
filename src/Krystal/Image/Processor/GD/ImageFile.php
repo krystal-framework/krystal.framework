@@ -184,6 +184,7 @@ class ImageFile implements ImageFileInterface
      * Loads an image into the memory from a file-system or URL
      * 
      * @param string $file
+     * @param string $type Image type
      * @throws \LogicException When attempting to create from unsupported format
      * @return resource
      */
