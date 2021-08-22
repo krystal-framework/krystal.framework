@@ -42,7 +42,7 @@ class Filter implements Sanitizeable
             case self::FILTER_INT:
                 return (int) $value;
             case self::FILTER_HTML:
-                return self::escape($value);
+                return self::specialChars($value);
             case self::FILTER_TAGS:
                 return self::stripTags($value);
             case self::FILTER_SAFE_TAGS:
@@ -62,18 +62,15 @@ class Filter implements Sanitizeable
      */
     public static function filterAttribute($value)
     {
+        return $value;
+
         // Check whether current string has already been encoded
-        $isEncoded = TextUtils::strModified($value, function($target){
-            return self::escape($target);
-        });
+        $decoded = html_entity_decode($value);
 
-        // Decode if previous encoded or escaped
-        if ($isEncoded) {
-            $value = self::charsDecode($value);
+        // If has been decoded before
+        if ($value != $decoded) {
+           #$value = $decoded;
         }
-
-        // Convert special characters to make safe use of them
-        $value = self::specialChars($value);
 
         return $value;
     }
