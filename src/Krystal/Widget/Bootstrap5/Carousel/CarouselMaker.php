@@ -226,14 +226,20 @@ final class CarouselMaker
                 ->addAttribute('class', 'carousel-inner');
 
         foreach ($items as $index => $item) {
-            $child = $this->createItem($item['src'], isset($item['alt']) ? $item['alt'] : null, $index == 0);
+            $child = $this->createItem(
+                $item['src'],
+                isset($item['alt']) ? $item['alt'] : null,
+                $index == 0, 
+                isset($item['caption']) ? $item['caption'] : null
+            );
+
             $wrapper->appendChild($child);
         }
 
         $wrapper->closeTag();
         return $wrapper;
     }
-    
+
     /**
      * Create inner item element
      * 
@@ -242,7 +248,7 @@ final class CarouselMaker
      * @param boolean $active Whether this one is active
      * @return \Krystal\Form\NodeElement
      */
-    private function createItem($src, $alt, $active)
+    private function createItem($src, $alt, $active, $caption)
     {
         // Create image element
         $img = new NodeElement();
@@ -257,9 +263,57 @@ final class CarouselMaker
         $item = new NodeElement();
         $item->openTag('div')
              ->addAttribute('class', $active ? 'carousel-item active' : 'carousel-item')
-             ->appendChild($img)
-             ->closeTag();
+             ->appendChild($img);
 
+        if ($caption !== null){
+            $item->appendChild($this->createItemCaption($caption));
+        }
+
+        $item->closeTag();
         return $item;
+    }
+
+    /**
+     * Create item caption
+     * 
+     * @param string|array $caption
+     * @return \Krystal\Form\NodeElement
+     */
+    private function createItemCaption($caption)
+    {
+        $wrapper = new NodeElement();
+        $wrapper->openTag('div')
+                ->addAttribute('class', 'carousel-caption d-none d-md-block')
+                ->finalize();
+
+        if (is_array($caption)) {
+            if (isset($caption['title'])) {
+                $title = new NodeElement();
+                $title->openTag('h5')
+                      ->finalize()
+                      ->setText($caption['title'])
+                      ->closeTag();
+
+                // Append title element
+                $wrapper->appendChild($title);
+            }
+
+            if (isset($caption['description'])) {
+                $description = new NodeElement();
+                $description->openTag('p')
+                            ->finalize()
+                            ->setText($caption['description'])
+                            ->closeTag();
+
+                // Append description element
+                $wrapper->appendChild($description);
+            }
+        } else {
+            // Append raw HTML
+            $wrapper->append($caption);
+        }
+
+        $wrapper->closeTag();
+        return $wrapper;
     }
 }
