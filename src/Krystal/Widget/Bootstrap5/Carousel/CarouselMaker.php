@@ -194,6 +194,7 @@ final class CarouselMaker
      * 
      * @param string $target Name of parent container
      * @param int $index
+     * @param boolean $active Whether current indicator is active
      * @return \Krystal\Form\NodeElement
      */
     private function createIndicator($target, $index, $active)
@@ -246,6 +247,7 @@ final class CarouselMaker
      * @param string $src Image path
      * @param string $alt Alternate name
      * @param boolean $active Whether this one is active
+     * @param string|array Optional caption
      * @return \Krystal\Form\NodeElement
      */
     private function createItem($src, $alt, $active, $caption)
