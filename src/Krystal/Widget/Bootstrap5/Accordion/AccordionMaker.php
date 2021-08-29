@@ -52,13 +52,14 @@ final class AccordionMaker
         // Default options
         $defaults = array(
             'flush' => false,
-            'always_open' => false
+            'always_open' => false,
+            'first_open' => true
         );
         
         $options = array_merge($defaults, $this->options);
         
         $id = sprintf('accordion-%s', time());
-        $accordion = $this->createItems($id, $options['always_open'], $options['flush'], $this->items);
+        $accordion = $this->createItems($id, $options['always_open'], $options['first_open'], $options['flush'], $this->items);
 
         return $accordion->render();
     }
@@ -68,11 +69,12 @@ final class AccordionMaker
      * 
      * @param string $parent Id of parent container
      * @param boolean $alwaysOpen Whether accordion is always open by default
+     * @param boolean $firstOpen Whether first item must be opened by default
      * @param boolean $flush Remove default styling
      * @param array $items
      * @return array
      */
-    private function createItems($parent, $alwaysOpen, $flush, array $items)
+    private function createItems($parent, $alwaysOpen, $firstOpen, $flush, array $items)
     {
         $wrapper = new NodeElement();
         $wrapper->openTag('div')
@@ -82,7 +84,14 @@ final class AccordionMaker
                 ));
 
         foreach ($items as $index => $item) {
-            $child = $this->createItem(!$alwaysOpen ? $parent : null, $index, $item['header'], $item['body']);
+            $child = $this->createItem(
+                !$alwaysOpen ? $parent : null,
+                $firstOpen == true && $index == 0,
+                $index,
+                $item['header'],
+                $item['body']
+            );
+
             $wrapper->appendChild($child);
         }
 
@@ -95,16 +104,14 @@ final class AccordionMaker
      * Create item
      * 
      * @param string $parent Id of parent container
+     * @param boolean $expanded Whether current item is expanded
      * @param int $index Current index
      * @param string $header
      * @param string $content
      * @return \Krystal\Form\NodeElement
      */
-    private function createItem($parent, $index, $header, $content)
+    private function createItem($parent, $expanded, $index, $header, $content)
     {
-        // Whether item is expanded
-        $expanded = $index == 0;
-
         $button = new NodeElement();
         $button->openTag('button')
                ->addAttributes(array(
