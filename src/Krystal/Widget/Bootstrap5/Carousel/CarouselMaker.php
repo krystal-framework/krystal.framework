@@ -56,11 +56,11 @@ final class CarouselMaker
             'controls' => true,
             'touch' => true,
             'dark' => false,
-            'interval' => 5000
+            'interval' => 5000 // 5 Seconds
         );
 
         // Generate unique carousel ID
-        $target = 'carousel-id-' . time();
+        $target = isset($this->options['id']) ? $this->options['id'] : 'carousel-id-' . time();
 
         // Merge defaults with overridden options
         $options = array_merge($defaults, $this->options);
