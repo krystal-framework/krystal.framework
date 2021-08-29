@@ -57,6 +57,7 @@ final class CarouselMaker
             'touch' => true,
             'dark' => false,
             'pause' => 'hover',
+            'keyboard' => true,
             'interval' => 5000 // 5 Seconds
         );
 
@@ -95,7 +96,8 @@ final class CarouselMaker
                     'class' => $carouselClass,
                     'data-bs-ride' => 'carousel',
                     'data-bs-touch' => $options['touch'] == true ? 'true' : 'false',
-                    'data-bs-interval' => is_numeric($options['interval']) ? $options['interval'] : 'false'
+                    'data-bs-interval' => is_numeric($options['interval']) ? $options['interval'] : 'false',
+                    'data-bs-keyboard' => $options['keyboard']) == true ? 'true' : 'false'
                 ));
 
         // Hovering on active carousel
