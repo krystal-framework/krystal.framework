@@ -49,8 +49,15 @@ final class AccordionMaker
      */
     public function render()
     {
+        // Default options
+        $defaults = array(
+            'flush' => false
+        );
+        
+        $options = array_merge($defaults, $this->options);
+        
         $id = sprintf('accordion-%s', time());
-        $accordion = $this->createItems($id, $this->items);
+        $accordion = $this->createItems($id, $options['flush'], $this->items);
 
         return $accordion->render();
     }
@@ -59,15 +66,16 @@ final class AccordionMaker
      * Create items
      * 
      * @param string $parent Id of parent container
+     * @param boolean $flush Remove default styling
      * @param array $items
      * @return array
      */
-    private function createItems($parent, array $items)
+    private function createItems($parent, $flush, array $items)
     {
         $wrapper = new NodeElement();
         $wrapper->openTag('div')
                 ->addAttributes(array(
-                    'class' => 'accordion',
+                    'class' => $flush == true ? 'accordion accordion-flush' : 'accordion',
                     'id' => $parent
                 ));
 
