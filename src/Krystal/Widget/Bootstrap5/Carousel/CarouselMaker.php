@@ -170,7 +170,6 @@ final class CarouselMaker
                     'data-bs-target' => '#' . $target,
                     'data-bs-slide' => $type
                 ))
-                ->finalize()
                 ->appendChildren(array($icon, $hidden))
                 ->closeTag();
 
