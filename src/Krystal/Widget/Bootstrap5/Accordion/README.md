@@ -67,15 +67,15 @@ Sometimes, you might want to use index value to create counter dynamically. In c
     $items = [
         [
             'header' => function($index){
-			     return 'Accordion Item #' . $index + 1;
-			 },
+	        return 'Accordion Item #' . $index + 1;
+             },
             'body' => "This is the first item's accordion body"
         ],
     
         [
             'header' => function($index){
-			     return 'Accordion Item #' . $index + 1;
-			 },
+	        return 'Accordion Item #' . $index + 1;
+             },
             'body' => "This is the second"
         ]
     ];
