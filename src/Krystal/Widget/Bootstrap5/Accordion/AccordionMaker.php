@@ -51,13 +51,14 @@ final class AccordionMaker
     {
         // Default options
         $defaults = array(
-            'flush' => false
+            'flush' => false,
+            'always_open' => false
         );
         
         $options = array_merge($defaults, $this->options);
         
         $id = sprintf('accordion-%s', time());
-        $accordion = $this->createItems($id, $options['flush'], $this->items);
+        $accordion = $this->createItems($id, $options['always_open'], $options['flush'], $this->items);
 
         return $accordion->render();
     }
@@ -66,11 +67,12 @@ final class AccordionMaker
      * Create items
      * 
      * @param string $parent Id of parent container
+     * @param boolean $alwaysOpen Whether accordion is always open by default
      * @param boolean $flush Remove default styling
      * @param array $items
      * @return array
      */
-    private function createItems($parent, $flush, array $items)
+    private function createItems($parent, $alwaysOpen, $flush, array $items)
     {
         $wrapper = new NodeElement();
         $wrapper->openTag('div')
@@ -80,7 +82,7 @@ final class AccordionMaker
                 ));
 
         foreach ($items as $index => $item) {
-            $child = $this->createItem($parent, $index, $item['header'], $item['body']);
+            $child = $this->createItem(!$alwaysOpen ? $parent : null, $index, $item['header'], $item['body']);
             $wrapper->appendChild($child);
         }
 
@@ -139,7 +141,7 @@ final class AccordionMaker
                     'id' => sprintf('collapse-%s', $index),
                     'class' => $expanded ? 'accordion-collapse collapse show' : 'accordion-collapse collapse',
                     'aria-labelledby' => sprintf('heading-%s', $index),
-                    'data-bs-parent' => '#' . $parent
+                    'data-bs-parent' => $parent !== null ? '#' . $parent : null
                  ))
                  ->appendChild($body)
                  ->closeTag();
