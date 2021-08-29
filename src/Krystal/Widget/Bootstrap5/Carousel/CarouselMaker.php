@@ -231,7 +231,8 @@ final class CarouselMaker
                 $item['src'],
                 isset($item['alt']) ? $item['alt'] : null,
                 $index == 0, 
-                isset($item['caption']) ? $item['caption'] : null
+                isset($item['caption']) ? $item['caption'] : null,
+                isset($item['interval']) ? $item['interval'] : null
             );
 
             $wrapper->appendChild($child);
@@ -248,9 +249,10 @@ final class CarouselMaker
      * @param string $alt Alternate name
      * @param boolean $active Whether this one is active
      * @param string|array Optional caption
+     * @param int $interval Individual interval
      * @return \Krystal\Form\NodeElement
      */
-    private function createItem($src, $alt, $active, $caption)
+    private function createItem($src, $alt, $active, $caption, $interval = null)
     {
         // Create image element
         $img = new NodeElement();
@@ -264,8 +266,14 @@ final class CarouselMaker
 
         $item = new NodeElement();
         $item->openTag('div')
-             ->addAttribute('class', $active ? 'carousel-item active' : 'carousel-item')
-             ->appendChild($img);
+             ->addAttribute('class', $active ? 'carousel-item active' : 'carousel-item');
+
+        // Item interval
+        if (is_numeric($interval)) {
+            $item->addAttribute('data-bs-interval', $interval);
+        }
+
+        $item->appendChild($img);
 
         if ($caption !== null){
             $item->appendChild($this->createItemCaption($caption));
