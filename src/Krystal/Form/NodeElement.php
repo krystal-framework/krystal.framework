@@ -92,7 +92,7 @@ final class NodeElement implements NodeElementInterface
      * @param string $string String to be appended
      * @return void
      */
-    private function append($string)
+    public function append($string)
     {
         $this->string .= $string;
     }
