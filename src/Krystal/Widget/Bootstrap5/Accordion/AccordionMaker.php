@@ -88,7 +88,7 @@ final class AccordionMaker
                 !$alwaysOpen ? $parent : null,
                 $firstOpen == true && $index == 0,
                 $index,
-                $item['header'],
+                is_callable($item['header']) ? ($item['header'])($index) : $item['header'],
                 $item['body']
             );
 
