@@ -36,7 +36,7 @@ final class CarouselMaker
      * @param array $options
      * @return void
      */
-    public function __construct(array $slides, array $options)
+    public function __construct(array $slides, array $options = array())
     {
         $this->slides = $slides;
         $this->options = $options;
