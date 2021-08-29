@@ -56,6 +56,7 @@ final class CarouselMaker
             'controls' => true,
             'touch' => true,
             'dark' => false,
+            'pause' => 'hover',
             'interval' => 5000 // 5 Seconds
         );
 
@@ -96,6 +97,11 @@ final class CarouselMaker
                     'data-bs-touch' => $options['touch'] == true ? 'true' : 'false',
                     'data-bs-interval' => is_numeric($options['interval']) ? $options['interval'] : 'false'
                 ));
+
+        // Hovering on active carousel
+        if (isset($options['pause'])) {
+            $wrapper->addAttribute('data-bs-pause', (bool) $options['pause'] ? 'hover' : 'false');
+        }
 
         // Do we need indicators?
         if ($options['indicators'] == true && !$singular) {
