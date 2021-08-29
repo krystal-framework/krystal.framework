@@ -42,7 +42,7 @@ Here's a basic usage example:
             'src' => 'https://via.placeholder.com/800x600?text=2',
             'caption' => [ // Adding optional caption
                 'title' => 'Hello there',
-                'description' => 'First slide'
+                'description' => 'The slide'
             ]
         ]
     ];
@@ -73,7 +73,8 @@ Which renders HTML like this:
             <div class="carousel-item">
                 <img src="https://via.placeholder.com/800x600?text=2" class="img-fluid d-block w-100" alt="">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Hello there</h5><p>First slide</p>
+                    <h5>Hello there</h5>
+                    <p>The slide</p>
                 </div>
             </div>
         </div>
