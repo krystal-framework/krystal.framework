@@ -28,7 +28,7 @@ final class AccordionMaker
      * @var array
      */
     private $options = array();
-    
+
     /**
      * State initialization
      * 
