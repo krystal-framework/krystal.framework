@@ -55,9 +55,9 @@ final class AccordionMaker
             'always_open' => false,
             'first_open' => true
         );
-        
+
         $options = array_merge($defaults, $this->options);
-        
+
         $id = sprintf('accordion-%s', time());
         $accordion = $this->createItems($id, $options['always_open'], $options['first_open'], $options['flush'], $this->items);
 
