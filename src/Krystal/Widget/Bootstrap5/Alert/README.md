@@ -7,9 +7,13 @@ Alert is a simple way to notify users about that something is happened. One comm
 The constructor of `\Krystal\Widget\Bootstrap5\AlertMaker` accepts 5 arguments:
 
 `$type (string)` - Required. The type of the alert to be rendered (See below)
+
 `$content (string)` - Required. HTML/Text content of the Alert
+
 `$header (string)` - Optional. The heading caption of the alert.
+
 `$dismissible (boolean)` - Optional. Whether close button must be rendered. By default is `true`.
+
 `$animate (boolean)` - Optional. Whether animation must be performed on close. By default is `true`.
 
 Usage example:
