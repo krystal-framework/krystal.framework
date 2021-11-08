@@ -90,11 +90,12 @@ final class NodeElement implements NodeElementInterface
      * Appends to a stack
      * 
      * @param string $string String to be appended
-     * @return void
+     * @return \Krystal\Form\NodeElement
      */
     public function append($string)
     {
         $this->string .= $string;
+        return $this;
     }
 
     /**

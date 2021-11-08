@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * The method `NodeElement::append()` now returns self
  * In Element added `jsonLd()` - to generate JSON LD data
  * Added field generator
  * In `Element` added `fileData()` - file input with its hidden field generator
