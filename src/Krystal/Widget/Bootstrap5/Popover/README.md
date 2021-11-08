@@ -1,3 +1,4 @@
+
 Popover
 =======
 
@@ -6,26 +7,28 @@ This widget provides implementation of Bootstrap 5 Popover component.
 Usage example
 ----
 
-Here's the basic example:
+Here's the basic usage example:
 
-<?php
+    <?php
+    
+    use Krystal\Widget\Bootstrap5\Popover\PopoverMaker;
+    
+    $popover = new PopoverMaker('Button text', [
+        'data-bs-content' => 'And here is some amazing content. It is very engaging. Right?',
+        'data-bs-title' => 'Popover title',
+        'cssClass' => 'btn btn-lg btn-danger'
+    ]);
+    
+    echo $popover->render();
 
-use Krystal\Widget\Bootstrap5\Popover\PopoverMaker;
+The following will render HTML like this:
 
-$popover = new PopoverMaker('Button text', [
-    'data-bs-content' => 'And here is some amazing content. It is very engaging. Right?',
-    'data-bs-title' => 'Popover title',
-    'cssClass' => 'btn btn-lg btn-danger'
-]);
-
-echo $popover->render();
-
+    <a class="btn btn-lg btn-danger text-nowrap" tabindex="0" role="button" data-bs-title="Popover title" data-bs-content="And here is some amazing content. It is very engaging. Right?" data-placement="left" data-bs-animation="true" data-bs-container="body" data-bs-delay="0" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="false" data-bs-selector="false" data-bs-boundary="clippingParents" data-bs-offset="[0, 8]">Button text</a>
 
 Available options
 ----
 
-You can override most default options, but some of them should be handled in JavaScript manually.
-For more details please refer to its official documentation.
+You can override most default options, but some of them should be handled in JavaScript manually. For more details please refer to its [official documentation](https://getbootstrap.com/docs/5.1/components/popovers/).
 
 | Option            | Description                                                                                            | Default value   |
 |-------------------|--------------------------------------------------------------------------------------------------------|-----------------|
@@ -42,3 +45,4 @@ For more details please refer to its official documentation.
 | data-bs-title     | Popover title                                                                                          |                 |
 | data-bs-placement | How to position the popover - auto \| top \| bottom \| left \| right.                                  | left            |
 | cssClass          | Custom CSS class to be applied to target element                                                       |                 |
+
