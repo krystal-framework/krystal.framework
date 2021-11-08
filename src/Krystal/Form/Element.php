@@ -292,6 +292,30 @@ class Element
     }
 
     /**
+     * Renders datalist element
+     * 
+     * @param string $name Element name
+     * @param string $value
+     * @param array $list An array of list items
+     * @param array $attributes Optional attributes
+     * @return string
+     */
+    public static function datalist($name, $value, array $list, array $attributes = [])
+    {
+        $node = new Node\Datalist($list);
+
+        if ($name !== null) {
+            $attributes['name'] = $name;
+        }
+
+        if ($value !== null) {
+            $attributes['value'] = $value;
+        }
+
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates textarea element
      * 
      * @param string $name Element name
