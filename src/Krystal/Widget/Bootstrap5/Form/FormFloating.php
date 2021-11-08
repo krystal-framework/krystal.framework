@@ -22,9 +22,10 @@ final class FormFloating
      * 
      * @param string $label
      * @param callable $elementVisitor Callback function that returns input element
+     * @param string $hint Optional field hint
      * @return string
      */
-    private static function createWrapper($label, Closure $elementVisitor)
+    private static function createWrapper($label, Closure $elementVisitor, $hint = null)
     {
         // Unique element ID
         $id = sprintf('float-%s', md5($label));
@@ -35,6 +36,18 @@ final class FormFloating
               ->finalize()
               ->append($elementVisitor($id, $label))
               ->append(Element::label($label, $id));
+
+        // Append hint, if provided
+        if ($hint !== null) {
+            $span = new NodeElement();
+            $span->openTag('span')
+                 ->addAttribute('class', 'form-text')
+                 ->finalize()
+                 ->setText($hint)
+                 ->closeTag();
+
+            $float->appendChild($span);
+        }
 
         return $float->closeTag()
                      ->render();
@@ -47,9 +60,10 @@ final class FormFloating
      * @param string $name Input's name attribute
      * @param string $value Input's value attribute
      * @param array $attributes Optional attributes
+     * @param string $hint Optional field hint
      * @return string
      */
-    public static function field($label, $name = null, $value = null, array $attributes = [])
+    public static function field($label, $name = null, $value = null, array $attributes = [], $hint = null)
     {
         return self::createWrapper($label, function($id, $label) use ($name, $value, $attributes){
             return Element::text($name, $value, array_merge([
@@ -57,7 +71,7 @@ final class FormFloating
                 'class' => 'form-control',
                 'id' => $id
             ], $attributes));
-        });
+        }, $hint);
     }
 
     /**
@@ -67,9 +81,10 @@ final class FormFloating
      * @param string $name Input's name attribute
      * @param string $value Input's value attribute
      * @param array $attributes Optional attributes
+     * @param string $hint Optional field hint
      * @return string
      */
-    public static function textarea($label, $name = null, $value = null, array $attributes = [])
+    public static function textarea($label, $name = null, $value = null, array $attributes = [], $hint = null)
     {
         return self::createWrapper($label, function($id, $label) use ($name, $value, $attributes){
             return Element::textarea($name, $value, array_merge([
@@ -77,7 +92,7 @@ final class FormFloating
                 'class' => 'form-control',
                 'id' => $id
             ], $attributes));
-        });
+        }, $hint);
     }
 
     /**
