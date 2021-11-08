@@ -57,6 +57,8 @@ class Element
                 return self::checkbox($name, $value, $attributes, false);
             case 'select':
                 return self::select($name, $extra, $value, $attributes);
+            case 'datalist':
+                return self::datalist($name, $value, $extra, $attributes);
             default:
                 throw new UnexpectedValueException(sprintf('Unexpected value supplied %s', $type));
         }
