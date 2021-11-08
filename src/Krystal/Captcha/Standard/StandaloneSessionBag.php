@@ -60,7 +60,8 @@ final class StandaloneSessionBag
     /**
      * Writes data
      * 
-     * @param array $data
+     * @param string $key
+     * @param string $value
      * @return void
      */
     public function set($key, $value)
