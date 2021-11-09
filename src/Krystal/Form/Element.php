@@ -111,6 +111,39 @@ class Element
     }
 
     /**
+     * Creates E-mail link
+     * 
+     * @param string $email
+     * @param string $class Optional CSS class
+     * @param boolean $newWindow Whether should be opened in new window
+     * @return string
+     */
+    public static function linkEmail($email, $class = null, $newWindow = true)
+    {
+        return self::link($email, sprintf('mailto:%s', $email), [
+            'target' => $newWindow ? '_blank' : '_self',
+            'class' => $class
+        ]);
+    }
+
+    /**
+     * Creates phone link
+     * 
+     * @param string $phone
+     * @param string $class Optional CSS class
+     * @return string
+     */
+    public static function linkPhone($phone, $class = null)
+    {
+        // Strip out all chars except numbers and +
+        $filtered = str_replace(['(', ')', '-', ' '], '', $phone);
+
+        return self::link($phone, sprintf('tel:%s', $filtered), [
+            'class' => $class
+        ]);
+    }
+
+    /**
      * Creates label element
      * 
      * @param string $caption

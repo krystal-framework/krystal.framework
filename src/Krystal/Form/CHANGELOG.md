@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In Element class added two methods `linkEmail()` and `linkPhone()`
  * Added `Element::datalist()` method
  * The method `NodeElement::append()` now returns self
  * In Element added `jsonLd()` - to generate JSON LD data
