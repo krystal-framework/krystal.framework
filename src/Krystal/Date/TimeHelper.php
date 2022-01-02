@@ -13,6 +13,7 @@ namespace Krystal\Date;
 
 use LogicException;
 use DateTime;
+use IntlDateFormatter;
 use Exception;
 
 /**
@@ -26,6 +27,23 @@ abstract class TimeHelper
     const WEEK = 604800;
     const MONTH = 2592000;
     const YEAR = 31536000;
+
+    /**
+     * Formats date in localized format
+     * 
+     * @param string $target Any datetime that can be handled by native \DateTime class. If NULL - then current date and time used
+     * @param string $locale
+     * @param string $pattern The documentation can be found at https://unicode-org.github.io/icu/userguide/format_parse/datetime/
+     * @return string
+     */
+    public static function formatLocalized($target, $locale, $pattern)
+    {
+        $dt = new DateTime($target);
+        $intlFormatter = new IntlDateFormatter($locale, IntlDateFormatter::FULL, IntlDateFormatter::FULL);
+        $intlFormatter->setPattern($pattern);
+
+        return $intlFormatter->format($dt);
+    }
 
     /**
      * Guess current season
