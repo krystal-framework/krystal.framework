@@ -29,6 +29,7 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
      * @param string $offset
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new BadMethodCallException('The offset can not be set');
@@ -40,6 +41,7 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
      * @param string $offset
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->container[$offset]);
@@ -51,6 +53,7 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
      * @param string $offset
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new BadMethodCallException('The offset can not be unset');
@@ -62,6 +65,7 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
      * @param string $offset
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;

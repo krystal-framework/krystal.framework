@@ -61,6 +61,7 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
      * @param mixed $offset
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->has($offset);
@@ -72,6 +73,7 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
      * @param mixed $offset
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if ($this->has($offset)) {
@@ -86,6 +88,7 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
      * @param mixed $value
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->container[$offset] = $value;
@@ -97,6 +100,7 @@ class VirtualEntity implements Sanitizeable, ArrayAccess
      * @param mixed $offset
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         if ($this->has($offset)) {
