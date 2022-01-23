@@ -43,6 +43,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * 
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         reset($this->data);
@@ -53,6 +54,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * 
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return current($this->data);
@@ -63,6 +65,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * 
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return key($this->data);
@@ -73,6 +76,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * 
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         return next($this->data);
@@ -83,6 +87,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * 
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         $key = key($this->data);
@@ -107,6 +112,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * @param string $value
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->data[$offset] = $value;
@@ -118,6 +124,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * @param string $key
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($key)
     {
         return $this->has($key);
@@ -129,6 +136,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * @param string $key
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($key)
     {
         if ($this->has($key)) {
@@ -142,6 +150,7 @@ final class InputDecorator implements ArrayAccess, Iterator
      * @param string $key
      * @return string
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($key)
     {
         $default = '';
