@@ -29,6 +29,22 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Checks whether string is a UNIX timestamp
+     * 
+     * @param string $string
+     * @return boolean
+     */
+    public function isTimestamp($value)
+    {
+        try {
+            new DateTime('@' . $value);
+            return true;
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * Formats date in localized format
      * 
      * @param string $target Any datetime that can be handled by native \DateTime class. If NULL - then current date and time used
