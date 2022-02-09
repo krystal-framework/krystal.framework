@@ -33,6 +33,24 @@ final class Router implements RouterInterface
     );
 
     /**
+     * Process redirect
+     * 
+     * @param string $uri Current URI
+     * @param array $map Map of old => new relations
+     * @return void
+     */
+    public function processRedirect($uri, array $map)
+    {
+        foreach ($map as $old => $new) {
+            if ($uri == $old) {
+                header('HTTP/1.1 301 Moved Permanently'); 
+                header(sprintf('Location: %s', $new)); 
+                exit();
+            }
+        }
+    }
+
+    /**
      * Matches a URI string against a route map
      * 
      * @param string $segment The actual segment to match against

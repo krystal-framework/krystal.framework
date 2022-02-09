@@ -165,6 +165,11 @@ final class Kernel implements KernelInterface
         // We will start from route matching firstly
         $router = new Router();
 
+        // Routes
+        if (isset($this->config['components']['router']['redirects'])) {
+            $router->processRedirect($request->getURI(), $this->config['components']['router']['redirects']);
+        }
+
         // Returns RouteMatch on success, false on failure
         $route = $router->match($request->getURI(), $dispatcher->getURIMap());
         $notFound = false;

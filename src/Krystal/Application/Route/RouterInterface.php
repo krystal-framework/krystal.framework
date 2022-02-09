@@ -14,6 +14,15 @@ namespace Krystal\Application\Route;
 interface RouterInterface
 {
     /**
+     * Process redirect
+     * 
+     * @param string $uri Current URI
+     * @param array $map Map of old => new relations
+     * @return void
+     */
+    public function processRedirect($uri, array $map);
+
+    /**
      * Matches a URI string against a route map
      * 
      * @param string $uri The actual segment to match against

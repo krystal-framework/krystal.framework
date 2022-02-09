@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Router now supports redirection
  * Added `field()` method to generate fields in `ViewManager` service
  * In `PluginBag` service fixed issue with broken link generation, when URL string contains `@`
  * In view service, added `loadPartialIfPossible()` method
