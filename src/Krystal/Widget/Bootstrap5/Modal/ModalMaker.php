@@ -103,6 +103,31 @@ final class ModalMaker
     }
 
     /**
+     * Renders button to trigger modal element
+     * 
+     * @param string $text Button text
+     * @param array $attributes Button attributes
+     * @return string
+     */
+    public function renderButton($text, array $attributes = [])
+    {
+        // Merge custom attributes with default ones
+        $attributes = array_merge($attributes, [
+            'href' => '#',
+            'data-bs-toggle' => 'modal',
+            'data-bs-target' => $this->getTarget()
+        ]);
+
+        $a = new NodeElement();
+        $a->openTag('a')
+          ->addAttributes($attributes)
+          ->setText($text)
+          ->closeTag();
+
+        return $a->render();
+    }
+
+    /**
      * Renders a modal
      * 
      * @return string
