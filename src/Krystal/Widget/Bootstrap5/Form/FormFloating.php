@@ -66,7 +66,7 @@ final class FormFloating
     public static function field($label, $name = null, $value = null, array $attributes = [], $hint = null)
     {
         return self::createWrapper($label, function($id, $label) use ($name, $value, $attributes){
-            return Element::text($name, $value, array_merge([
+            return Element::input($name, $value, array_merge([
                 'placeholder' => $label,
                 'class' => 'form-control',
                 'id' => $id
