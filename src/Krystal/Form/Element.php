@@ -369,6 +369,29 @@ class Element
     }
 
     /**
+     * Creates input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function input($name, $value, array $attributes = array())
+    {
+        $node = new Node\Input();
+
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
+
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates text input element
      * 
      * @param string $name Element name
