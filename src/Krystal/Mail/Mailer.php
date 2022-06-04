@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Mail\Mailer;
+namespace Krystal\Mail;
 
 use Closure;
 use Krystal\Http\FileTransfer\FileEntityInterface;
@@ -65,7 +65,7 @@ final class Mailer
         $mail->CharSet = 'UTF-8';
 
         // If we have SMTP transport turned on, then we'd use appropriate transport
-        if (isset($this->configuration['smtp']) && $this->configuration['smtp'] == true) {
+        if (isset($this->configuration['smtp']) && $this->configuration['enabled'] == true) {
             $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
             $mail->isSMTP(); //Send using SMTP
 
