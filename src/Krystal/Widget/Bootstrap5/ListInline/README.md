@@ -20,7 +20,8 @@ This widget generates inline list with optional links.
     
         [
             'link' => 'https://microsoft.com',
-            'text' => 'Microsoft'
+            'text' => 'Microsoft',
+            'blank' => true // Boolean value. Whether to open link in new window or not
         ]
     ];
     

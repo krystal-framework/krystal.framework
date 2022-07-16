@@ -85,6 +85,11 @@ final class ListMaker
                     $a->addAttribute('class', $this->classes['a']);
                 }
 
+                // Whether to open in new window
+                if (isset($item['blank']) && $item['blank'] === true){
+                    $a->addAttribute('target', '_blank');
+                }
+                
                 $a->addAttribute('href', $item['link'])
                   ->setText($item['text'])
                   ->closeTag();
