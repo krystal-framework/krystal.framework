@@ -56,3 +56,7 @@ This will generate the following output:
         <li class="list-inline-item fw-bold"><a class="text-decoration-none" href="https://gmail.com">Gmail</a></li>
     </ul>
     
+# TODO
+
+ - Add optional icon
+ - Add optional callback method to generate items
