@@ -43,9 +43,8 @@ final class ListMaker
     }
 
     /**
-     * State initialization
+     * Renders a list
      * 
-     * @param array $items
      * @return void
      */
     public function render()
