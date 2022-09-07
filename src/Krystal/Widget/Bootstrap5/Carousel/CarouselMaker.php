@@ -63,7 +63,7 @@ final class CarouselMaker
         );
 
         // Generate unique carousel ID
-        $target = isset($this->options['id']) ? $this->options['id'] : 'carousel-id-' . time();
+        $target = isset($this->options['id']) ? $this->options['id'] : 'carousel-id-' . uniqid();
 
         // Merge defaults with overridden options
         $options = array_merge($defaults, $this->options);
