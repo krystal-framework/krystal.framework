@@ -302,7 +302,7 @@ final class CarouselMaker
     {
         $wrapper = new NodeElement();
         $wrapper->openTag('div')
-                ->addAttribute('class', 'carousel-caption d-none d-md-block')
+                ->addAttribute('class', 'carousel-caption')
                 ->finalize();
 
         if (is_array($caption)) {
@@ -321,7 +321,7 @@ final class CarouselMaker
                 $description = new NodeElement();
                 $description->openTag('p')
                             ->finalize()
-                            ->setText($caption['description'])
+                            ->setText(nl2br($caption['description']))
                             ->closeTag();
 
                 // Append description element
