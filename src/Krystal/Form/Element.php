@@ -484,6 +484,29 @@ class Element
     }
 
     /**
+     * Creates datetime input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function datetime($name, $value, array $attributes = array())
+    {
+        $node = new Node\Datetime();
+
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
+
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates email input element
      * 
      * @param string $name Element name
