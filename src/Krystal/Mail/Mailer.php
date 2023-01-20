@@ -65,24 +65,24 @@ final class Mailer
         $mail->CharSet = 'UTF-8';
 
         // If we have SMTP transport turned on, then we'd use appropriate transport
-        if (isset($this->configuration['smtp']) && isset($this->configuration['enabled']) && $this->configuration['enabled'] == true) {
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
+        if (isset($this->configuration['smtp']) && isset($this->configuration['smtp']['enabled']) && $this->configuration['smtp']['enabled'] == true) {
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
             $mail->isSMTP(); //Send using SMTP
 
-            $mail->Host = $this->configuration['host']; //Set the SMTP server to send through
+            $mail->Host = $this->configuration['smtp']['host']; //Set the SMTP server to send through
 
             // Enable SMTP authentication, if required
-            if (isset($this->configuration['username'], $this->configuration['password'])) {
+            if (isset($this->configuration['smtp']['username'], $this->configuration['smtp']['password'])) {
                 $mail->SMTPAuth = true;
-                $mail->Username = $this->configuration['username']; // SMTP username
-                $mail->Password = $this->configuration['password']; // SMTP password
+                $mail->Username = $this->configuration['smtp']['username']; // SMTP username
+                $mail->Password = $this->configuration['smtp']['password']; // SMTP password
             }
 
-            $mail->SMTPSecure = $this->configuration['encryption']; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port = $this->configuration['port']; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-        } else {
-            $mail->setFrom($this->configuration['from']);
+            $mail->SMTPSecure = $this->configuration['smtp']['protocol']; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port = $this->configuration['smtp']['port']; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
         }
+
+        $mail->setFrom($this->configuration['from'], $this->configuration['from']);
 
         // if files provided, then attach them
         if (!empty($files)) {
