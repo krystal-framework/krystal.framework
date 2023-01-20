@@ -119,6 +119,87 @@ class Element
     }
 
     /**
+     * Creates link to social media
+     * 
+     * @param array $data Values generator
+     * @param string $class Link class
+     * @param boolean $newWindow Whether should be opened in new window
+     * @param string $icon Optional icon class
+     * @return string
+     */
+    private static function linkSocial(array $data, $class, $newWindow = true, $icon = null)
+    {
+        if ($icon != null) {
+            $icon = self::iconInternal($icon);
+        }
+
+        return self::link($icon . $data['text'], $data['url'], [
+            'class' => $class,
+            'target' => $newWindow ? '_blank' : '_self',
+        ]);
+    }
+
+    /**
+     * Creates Facebook link
+     * 
+     * @param string $username Facebook username
+     * @param string $text Link text. If not provided, username is used
+     * @param string $class Optional link class
+     * @param boolean $newWindow Whether should be opened in new window
+     * @param string $icon Optional icon class
+     * @return string
+     */
+    public static function linkFacebook($username, $text = null, $class = null, $newWindow = true, $icon = 'bi bi-facebook')
+    {
+        $data = [
+            'url' => sprintf('https://www.facebook.com/%s', $username),
+            'text' => $text == null ? $username : $text
+        ];
+
+        return self::linkSocial($data, $class, $newWindow, $icon);
+    }
+
+    /**
+     * Creates Instagram link
+     * 
+     * @param string $username Instagram username
+     * @param string $text Link text. If not provided, username is used
+     * @param string $class Optional link class
+     * @param boolean $newWindow Whether should be opened in new window
+     * @param string $icon Optional icon class
+     * @return string
+     */
+    public static function linkInstagram($username, $text = null, $class = null, $newWindow = true, $icon = 'bi bi-instagram')
+    {
+        $data = [
+            'url' => sprintf('https://www.instagram.com/%s/', $username),
+            'text' => $text == null ? $username : $text
+        ];
+
+        return self::linkSocial($data, $class, $newWindow, $icon);
+    }
+
+    /**
+     * Creates Telegram link
+     * 
+     * @param string $username Telegram username
+     * @param string $text Link text. If not provided, username is used
+     * @param string $class Optional link class
+     * @param boolean $newWindow Whether should be opened in new window
+     * @param string $icon Optional icon class
+     * @return string
+     */
+    public static function linkTelegram($username, $text = null, $class = null, $newWindow = true, $icon = 'bi bi-telegram')
+    {
+        $data = [
+            'url' => sprintf('https://t.me/%s', $username),
+            'text' => $text == null ? $username : $text
+        ];
+
+        return self::linkSocial($data, $class, $newWindow, $icon);
+    }
+
+    /**
      * Creates E-mail link
      * 
      * @param string $email
@@ -129,7 +210,7 @@ class Element
      */
     public static function linkEmail($email, $class = null, $newWindow = true, $icon = null)
     {
-        if ($icon !== null) {
+        if ($icon != null) {
             $icon = self::iconInternal($icon);
         }
 
@@ -149,7 +230,7 @@ class Element
      */
     public static function linkPhone($phone, $class = null, $icon = null)
     {
-        if ($icon !== null) {
+        if ($icon != null) {
             $icon = self::iconInternal($icon);
         }
 
