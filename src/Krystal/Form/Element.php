@@ -77,6 +77,17 @@ class Element
     }
 
     /**
+     * Creates icon element
+     * 
+     * @param string $class
+     * @return string
+     */
+    private static function iconInternal($class)
+    {
+        return sprintf('<i class="%s"></i> ', $class);
+    }
+
+    /**
      * Creates a link with inner icon
      * 
      * @param string $icon
@@ -86,10 +97,7 @@ class Element
      */
     public static function icon($icon, $link, array $attributes = array())
     {
-        // Inner text
-        $text = sprintf('<i class="%s"></i> ', $icon);
-
-        return self::link($text, $link, $attributes);
+        return self::link(self::iconInternal($icon) . $text, $link, $attributes);
     }
 
     /**
@@ -116,11 +124,16 @@ class Element
      * @param string $email
      * @param string $class Optional CSS class
      * @param boolean $newWindow Whether should be opened in new window
+     * @param string $icon Optional icon class
      * @return string
      */
-    public static function linkEmail($email, $class = null, $newWindow = true)
+    public static function linkEmail($email, $class = null, $newWindow = true, $icon = null)
     {
-        return self::link($email, sprintf('mailto:%s', $email), [
+        if ($icon !== null) {
+            $icon = self::iconInternal($icon);
+        }
+
+        return self::link($icon . $email, sprintf('mailto:%s', $email), [
             'target' => $newWindow ? '_blank' : '_self',
             'class' => $class
         ]);
@@ -131,14 +144,19 @@ class Element
      * 
      * @param string $phone
      * @param string $class Optional CSS class
+     * @param string $icon Optional icon class
      * @return string
      */
-    public static function linkPhone($phone, $class = null)
+    public static function linkPhone($phone, $class = null, $icon = null)
     {
+        if ($icon !== null) {
+            $icon = self::iconInternal($icon);
+        }
+
         // Strip out all chars except numbers and +
         $filtered = str_replace(['(', ')', '-', ' '], '', $phone);
 
-        return self::link($phone, sprintf('tel:%s', $filtered), [
+        return self::link($icon . $phone, sprintf('tel:%s', $filtered), [
             'class' => $class
         ]);
     }
