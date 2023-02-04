@@ -97,7 +97,7 @@ class Element
      */
     public static function icon($icon, $link, array $attributes = array())
     {
-        return self::link(self::iconInternal($icon) . $text, $link, $attributes);
+        return self::link(self::iconInternal($icon), $link, $attributes);
     }
 
     /**
