@@ -64,6 +64,17 @@ class FileManager implements FileManagerInterface
     }
 
     /**
+     * Returns filesize in human-readable format
+     * 
+     * @param string $filename
+     * @return string
+     */
+    public static function filesize($filename)
+    {
+        return self::humanSize(filesize($filename));
+    }
+
+    /**
      * Turns raw bytes into human-readable format
      * 
      * @param int $bytes
