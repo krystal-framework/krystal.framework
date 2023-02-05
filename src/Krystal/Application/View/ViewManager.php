@@ -735,7 +735,9 @@ final class ViewManager implements ViewManagerInterface
      */
     public function loadPartials(array $partials)
     {
-        return array_walk($partials, array($this, 'loadPartial'));
+        foreach ($partials as $partial) {
+            $this->loadPartial($partial);
+        }
     }
 
     /**
