@@ -53,7 +53,8 @@ final class FileType
             'jpg',
             'jpeg',
             'png',
-            'bmp'
+            'bmp',
+            'svg'
         ));
     }
 }
