@@ -83,7 +83,11 @@ class Filter implements Sanitizeable
      */
     public static function charsDecode($value)
     {
-        return htmlspecialchars_decode($value, \ENT_QUOTES);
+        if ($value != null) {
+            return htmlspecialchars_decode($value, \ENT_QUOTES);
+        }
+
+        return $value;
     }
 
     /**
@@ -94,7 +98,11 @@ class Filter implements Sanitizeable
      */
     public static function specialChars($value)
     {
-        return htmlspecialchars($value, \ENT_QUOTES, 'UTF-8');
+        if ($value != null) {
+            return htmlspecialchars($value, \ENT_QUOTES, 'UTF-8');
+        }
+
+        return $value;
     }
 
     /**
