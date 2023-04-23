@@ -56,7 +56,7 @@ Here's a basic usage example:
                 'title' => 'Hello there',
                 'description' => 'The slide with clickable button',
                 'button' => [
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-primary', // Optional. By default 'btn btn-primary' is used.
                     'href' => 'http://example.com',
                     'text' => 'Learn more',
                     'self' => true // Optional. By default true. If false, then will be opened in a new window.
