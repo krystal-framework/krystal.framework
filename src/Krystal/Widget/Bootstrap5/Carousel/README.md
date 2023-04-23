@@ -17,7 +17,8 @@ The optional alt attribute for the image.
 
 `caption`
 
-Either string containing HTML for caption element or an array with `title` and `description` keys. Optional parameter.
+Optional parameter. Either string containing HTML for caption element or an array with `title` and `description` keys.
+It might also contain `button` key with `href`, `text`, `class` keys for button link.
 
 `interval`
 
@@ -35,14 +36,30 @@ Here's a basic usage example:
     
     $slides = [
         [
+            // Slide without caption
             'src' => 'https://via.placeholder.com/800x600?text=1',
         ],
     
         [
+            // Slide with caption
             'src' => 'https://via.placeholder.com/800x600?text=2',
-            'caption' => [ // Adding optional caption
+            'caption' => [
                 'title' => 'Hello there',
                 'description' => 'The slide'
+            ]
+        ],
+        
+        [
+            // Slide with caption and button link
+            'src' => 'https://via.placeholder.com/800x600?text=3',
+            'caption' => [
+                'title' => 'Hello there',
+                'description' => 'The slide with clickable button',
+                'button' => [
+                    'class' => 'btn btn-primary',
+                    'href' => 'http://example.com',
+                    'text' => 'Learn more'
+                ]
             ]
         ]
     ];
