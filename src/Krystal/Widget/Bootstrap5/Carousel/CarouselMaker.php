@@ -296,17 +296,19 @@ final class CarouselMaker
      * Create button element for caption (link)
      * 
      * @param string $text Inner text
-     * @param string $href Button URL
      * @param string $class Button class
+     * @param string $href Button URL
+     * @param boolean $self Whether to open in new window or not
      * @return \Krystal\Form\NodeElement
      */
-    private function createButton($text, $href, $class)
+    private function createButton($text, $class, $href, $self)
     {
         $button = new NodeElement();
         $button->openTag('a')
                ->addAttributes([
                     'class' => $class,
-                    'href' => $href
+                    'href' => $href,
+                    'target' => ($self ? '_self' : '_blank')
                 ])
                ->setText($text)
                ->closeTag();
@@ -354,8 +356,9 @@ final class CarouselMaker
             if (isset($caption['button'])) {
                 $button = $this->createButton(
                     isset($caption['button']['text']) ? $caption['button']['text'] : '',
+                    isset($caption['button']['class']) ? $caption['button']['class'] : 'btn btn-primary',
                     isset($caption['button']['href']) ? $caption['button']['href'] : '#',
-                    isset($caption['button']['class']) ? $caption['button']['class'] : 'btn btn-primary'
+                    isset($caption['button']['self']) ? $caption['button']['self'] : true
                 );
 
                 // Append description element
