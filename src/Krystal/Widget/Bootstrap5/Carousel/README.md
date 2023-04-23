@@ -18,7 +18,7 @@ The optional alt attribute for the image.
 `caption`
 
 Optional parameter. Either string containing HTML for caption element or an array with `title` and `description` keys.
-It might also contain `button` key with `href`, `text`, `class` keys for button link.
+It might also contain `button` key with `href`, `text`, `class`, `self` keys for button link. The `self` is a boolean key indicating whether a link should be opened in new window or not.
 
 `interval`
 
@@ -58,7 +58,8 @@ Here's a basic usage example:
                 'button' => [
                     'class' => 'btn btn-primary',
                     'href' => 'http://example.com',
-                    'text' => 'Learn more'
+                    'text' => 'Learn more',
+                    'self' => true // Optional. By default true. If false, then will be opened in a new window.
                 ]
             ]
         ]
