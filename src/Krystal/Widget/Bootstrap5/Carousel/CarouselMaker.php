@@ -284,12 +284,34 @@ final class CarouselMaker
 
         $item->appendChild($img);
 
-        if ($caption !== null){
+        if ($caption !== null) {
             $item->appendChild($this->createItemCaption($caption));
         }
 
         $item->closeTag();
         return $item;
+    }
+
+    /**
+     * Create button element for caption (link)
+     * 
+     * @param string $text Inner text
+     * @param string $href Button URL
+     * @param string $class Button class
+     * @return \Krystal\Form\NodeElement
+     */
+    private function createButton($text, $href, $class)
+    {
+        $button = new NodeElement();
+        $button->openTag('a')
+               ->addAttributes([
+                    'class' => $class,
+                    'href' => $href
+                ])
+               ->setText($text)
+               ->closeTag();
+
+        return $button;
     }
 
     /**
@@ -327,6 +349,19 @@ final class CarouselMaker
                 // Append description element
                 $wrapper->appendChild($description);
             }
+
+            // Append button, if provided
+            if (isset($caption['button'])) {
+                $button = $this->createButton(
+                    isset($caption['button']['text']) ? $caption['button']['text'] : '',
+                    isset($caption['button']['href']) ? $caption['button']['href'] : '#',
+                    isset($caption['button']['class']) ? $caption['button']['class'] : 'btn btn-primary'
+                );
+
+                // Append description element
+                $wrapper->appendChild($button);
+            }
+
         } else {
             // Append raw HTML
             $wrapper->append($caption);
