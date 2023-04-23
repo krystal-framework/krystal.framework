@@ -28,7 +28,7 @@ final class Request implements RequestInterface
      * 
      * @var array
      */
-    private $get = array();
+    private $query = array();
 
     /**
      * Server data
