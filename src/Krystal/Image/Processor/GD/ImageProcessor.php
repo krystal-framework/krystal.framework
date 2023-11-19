@@ -346,7 +346,7 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
     }
 
     /**
-     * We need this for GIFs and PNGs
+     * Preserve transparency for load images
      * 
      * @param resource $image
      * @return void
@@ -363,7 +363,7 @@ final class ImageProcessor extends ImageFile implements ImageProcessorInterface
                 imagetruecolortopalette($image, false, 256);
             break;
 
-            case \IMAGETYPE_PNG:
+            case (\IMAGETYPE_PNG || \IMAGETYPE_WEBP):
                 imagealphablending($image, false);
 
                 $color = imagecolorallocatealpha($image, $transparencyColor[0], $transparencyColor[1], $transparencyColor[2], 0);

@@ -17,6 +17,10 @@ if (!extension_loaded('gd')) {
     throw new RuntimeException('Image processor requires GD library');
 }
 
+if (!defined('IMAGETYPE_WEBP')) {
+    define('IMAGETYPE_WEBP', 18);
+}
+
 use LogicException;
 use Krystal\Image\Processor\ImageFileInterface;
 
@@ -199,7 +203,10 @@ class ImageFile implements ImageFileInterface
 
             case \IMAGETYPE_PNG:
                 return imagecreatefrompng($file);
-    
+
+            case \IMAGETYPE_WEBP:
+				return imagecreatefromwebp($file);
+
             default:
                 throw new LogicException(sprintf('Can not create image from "%s"', $file));
         }
@@ -307,6 +314,10 @@ class ImageFile implements ImageFileInterface
                 $result = imagepng($this->image, $path, 9);
             break;
 
+            case \IMAGETYPE_WEBP:
+                $result = imagewebp($this->image, $path, $quality);
+            break;
+
             default:
                 throw new LogicException(sprintf(
                     'Can not save image format (%s) to %s', $type, $path
@@ -314,6 +325,7 @@ class ImageFile implements ImageFileInterface
         }
 
         $this->done();
+
         // Returns boolean value indicating success or failure
         return $result;
     }
@@ -350,6 +362,10 @@ class ImageFile implements ImageFileInterface
 
             case \IMAGETYPE_PNG:
                 imagepng($this->image, null, 9);
+            break;
+
+            case \IMAGETYPE_WEBP:
+                imagepng($this->image, null, $quality);
             break;
 
             default:

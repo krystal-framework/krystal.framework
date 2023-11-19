@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added support for WEBP
  * In `ImageFile` added shorthand `compress()` method
  * Added image compressor
  * Fixed issue with loading GIF file
