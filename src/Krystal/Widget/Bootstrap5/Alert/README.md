@@ -21,7 +21,7 @@ Usage example:
 
     <?php
     
-    use Krystal\Widget\Bootstrap5\AlertMaker;
+    use Krystal\Widget\Bootstrap5\Alert\AlertMaker;
     
     $text = 'We will contact you soon';
     $header = 'Thank you!';
