@@ -365,7 +365,7 @@ class ImageFile implements ImageFileInterface
             break;
 
             case \IMAGETYPE_WEBP:
-                imagepng($this->image, null, $quality);
+                imagewebp($this->image, null, $quality);
             break;
 
             default:
