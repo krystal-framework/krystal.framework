@@ -50,11 +50,12 @@ class Tabs
     /**
      * Renders navs and tabs
      * 
+     * @param string $fade Whether to append fade class to have fading effect
      * @return string
      */
-    public function render()
+    public function render($fade = true)
     {
-        return $this->renderNav() . $this->renderTabs();
+        return $this->renderNav() . $this->renderTabs($fade);
     }
 
     /**
@@ -101,9 +102,10 @@ class Tabs
     /**
      * Render tabs
      * 
+     * @param string $fade Whether to append fade class to have fading effect
      * @return string
      */
-    public function renderTabs()
+    public function renderTabs($fade = true)
     {
         $wrap = new NodeElement();
         $wrap->openTag('div')
@@ -111,7 +113,8 @@ class Tabs
              ->finalize();
 
         foreach ($this->items as $index => $item) {
-            $divClass = $index == 0 ? 'tab-pane fade active show' : 'tab-pane fade';
+            // Constuct div's class depending on fade class
+            $divClass = ($index == 0 ? 'tab-pane active show' : 'tab-pane') . ($fade ? ' fade' : '');
 
             $div = new NodeElement();
             $div->openTag('div')
