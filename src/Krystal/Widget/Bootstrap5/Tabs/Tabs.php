@@ -26,10 +26,24 @@ class Tabs
      * State initialization
      * 
      * @param array $items
+     * @param boolean $hide Whether to hide empty tabs
      * @return void
      */
-    public function __construct($items)
+    public function __construct($items, $hide = false)
     {
+        // Do we need to hide empty tabs? If so, remove empty entries from target array
+        if ($hide) {
+            foreach ($items as $index => $item) {
+                if (isset($item['text'])) {
+                    $item['text'] = trim($item['text']);
+                }
+
+                if (!isset($item['text']) || empty($item['text'])) {
+                    unset($items[$index]);
+                }
+            }
+        }
+
         $this->items = $items;
     }
 
