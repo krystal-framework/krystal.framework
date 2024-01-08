@@ -33,7 +33,7 @@ In case you require to render navigation items and tabsseparately, you can use t
 
 ## Omit empty tabs
 
-In case you want to omit tabs that have content, you can input `false` as a second argument in widget's contructor:
+In case you want to omit tabs that have no content, you can input `false` as a second argument in widget's contructor:
 
     // This will render only non-empty items (i.e the ones that have non-empty 'text' key item 
     $tabs = new Tabs($items, false);
