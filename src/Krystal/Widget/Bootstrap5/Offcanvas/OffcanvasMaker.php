@@ -11,6 +11,7 @@
 
 namespace Krystal\Widget\Bootstrap5\Offcanvas;
 
+use InvalidArgumentException;
 use Krystal\Form\NodeElement;
 
 final class OffcanvasMaker
