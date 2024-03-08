@@ -23,14 +23,23 @@ final class OffcanvasMaker
     private $id;
 
     /**
+     * Offcanvas options
+     * 
+     * @var array
+     */
+    private $options = [];
+
+    /**
      * State initialization
      * 
      * @param string $id offcanvas id
+     * @param array $options
      * @return void
      */
-    public function __construct($id = null)
+    public function __construct($id = null, array $options = [])
     {
         $this->id = $id;
+        $this->options = $options;
     }
 
     /**
@@ -139,14 +148,22 @@ final class OffcanvasMaker
      */
     public function renderOffcanvas($header, $content)
     {
+        $attributes = [
+            'class' => 'offcanvas offcanvas-start',
+            'tabindex' => '-1',
+            'id' => $this->getId(),
+            'aria-labelledby' => 'offcanvasExampleLabel'
+        ];
+
+        // Is body scrolling required?
+        if (isset($this->options['scrolling']) && $this->options['scrolling'] == true) {
+            $attributes['data-bs-scroll'] = 'true';
+            $attributes['data-bs-backdrop'] = 'false';
+        }
+
         $div = new NodeElement();
         $div->openTag('div')
-            ->addAttributes([
-                'class' => 'offcanvas offcanvas-start',
-                'tabindex' => '-1',
-                'id' => $this->getId(),
-                'aria-labelledby' => 'offcanvasExampleLabel'
-            ]);
+            ->addAttributes($attributes);
 
         $div->appendChild($this->renderHeader($header))
             ->appendChild($this->renderBody($content));

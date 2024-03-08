@@ -14,3 +14,11 @@ echo $offcanvas->renderButton('Open canvas', 'btn btn-primary');
 echo $offcanvas->renderOffcanvas('Header', 'Body');
 
 ?>
+
+
+Options
+-------
+
+`scrolling`
+
+Whether to enabled body scrolling
