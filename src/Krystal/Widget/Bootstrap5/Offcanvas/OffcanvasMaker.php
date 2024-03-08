@@ -161,6 +161,11 @@ final class OffcanvasMaker
             $attributes['data-bs-backdrop'] = 'false';
         }
 
+        // Is static backdrop required?
+        if (isset($this->options['static']) && $this->options['static'] == true) {
+            $attributes['data-bs-backdrop'] = 'static';
+        }
+
         $div = new NodeElement();
         $div->openTag('div')
             ->addAttributes($attributes);

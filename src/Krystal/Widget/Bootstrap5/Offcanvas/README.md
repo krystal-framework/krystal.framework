@@ -22,3 +22,7 @@ Options
 `scrolling`
 
 Whether to enabled body scrolling
+
+`static`
+
+Whether static backdrop required
