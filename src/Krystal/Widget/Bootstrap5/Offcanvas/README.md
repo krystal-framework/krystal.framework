@@ -26,3 +26,7 @@ Whether to enabled body scrolling
 `static`
 
 Whether static backdrop required
+
+`placement`
+
+Whether to place Offcanvas. Possible values are: `top, bottom, start, end`

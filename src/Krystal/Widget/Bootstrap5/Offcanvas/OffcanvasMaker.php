@@ -30,6 +30,16 @@ final class OffcanvasMaker
     private $options = [];
 
     /**
+     * Placement positions
+     * 
+     * @const string
+     */
+    const PLACEMENT_START = 'start';
+    const PLACEMENT_END = 'end';
+    const PLACEMENT_TOP = 'top';
+    const PLACEMENT_BOTTOM = 'bottom';
+
+    /**
      * State initialization
      * 
      * @param string $id offcanvas id
@@ -40,6 +50,42 @@ final class OffcanvasMaker
     {
         $this->id = $id;
         $this->options = $options;
+    }
+    
+    /**
+     * Get placement value
+     * 
+     * @return string
+     */
+    private function getPlacement()
+    {
+        $key = 'placement';
+
+        // Possible values
+        $values = [
+            self::PLACEMENT_START,
+            self::PLACEMENT_END,
+            self::PLACEMENT_TOP,
+            self::PLACEMENT_BOTTOM
+        ];
+
+        // Is there custome defined placement?
+        if (isset($this->options[$key])) {
+            $this->options[$key] = strtolower($this->options[$key]);
+
+            if (in_array($this->options[$key], $values)) {
+                return $this->options[$key];
+            } else {
+                // Defined, but invalid value
+                throw new InvalidArgumentException(sprintf(
+                    'Invalid placement position supplied: %s', $this->options['placement']
+                ));
+            }
+
+        } else {
+            // By default
+            return self::PLACEMENT_START;
+        }
     }
 
     /**
@@ -149,7 +195,7 @@ final class OffcanvasMaker
     public function renderOffcanvas($header, $content)
     {
         $attributes = [
-            'class' => 'offcanvas offcanvas-start',
+            'class' => sprintf('offcanvas offcanvas-%s', $this->getPlacement()),
             'tabindex' => '-1',
             'id' => $this->getId(),
             'aria-labelledby' => 'offcanvasExampleLabel'
