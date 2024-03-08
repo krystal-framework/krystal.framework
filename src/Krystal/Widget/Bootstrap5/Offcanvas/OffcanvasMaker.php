@@ -198,7 +198,7 @@ final class OffcanvasMaker
             'class' => sprintf('offcanvas offcanvas-%s', $this->getPlacement()),
             'tabindex' => '-1',
             'id' => $this->getId(),
-            'aria-labelledby' => 'offcanvasExampleLabel'
+            'aria-labelledby' => $this->getPlacement()
         ];
 
         // Is body scrolling required?
