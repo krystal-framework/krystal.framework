@@ -54,6 +54,7 @@ final class OffcanvasMaker
      * Renders a button
      * 
      * @param string $text
+     * @param string $class Button class
      * @return string
      */
     public function renderButton($text, $class)
