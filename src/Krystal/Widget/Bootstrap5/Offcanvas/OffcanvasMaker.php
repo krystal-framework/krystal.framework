@@ -146,7 +146,7 @@ final class OffcanvasMaker
         // Create header
         $h5 = new NodeElement();
         $h5->openTag('h5')
-           ->addAttribute('class', 'Offcanvas-title')
+           ->addAttribute('class', 'offcanvas-title')
            ->setText($text)
            ->closeTag();
 
@@ -218,7 +218,8 @@ final class OffcanvasMaker
             ->addAttributes($attributes);
 
         $div->appendChild($this->renderHeader($header))
-            ->appendChild($this->renderBody($content));
+            ->appendChild($this->renderBody($content))
+            ->closeTag();
 
         return $div;
     }
