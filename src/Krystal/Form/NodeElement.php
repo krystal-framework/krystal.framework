@@ -197,7 +197,7 @@ final class NodeElement implements NodeElementInterface
      */
     public function render()
     {
-        return $this->string;
+        return $this->string . PHP_EOL;
     }
 
     /**
