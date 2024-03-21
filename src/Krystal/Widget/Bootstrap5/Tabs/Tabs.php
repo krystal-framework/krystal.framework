@@ -13,7 +13,7 @@ namespace Krystal\Widget\Bootstrap5\Tabs;
 
 use Krystal\Form\NodeElement;
 
-class Tabs
+final class Tabs
 {
     /**
      * Items to be rendered
@@ -29,7 +29,7 @@ class Tabs
      * @param boolean $hide Whether to hide empty tabs
      * @return void
      */
-    public function __construct($items, $hide = false)
+    public function __construct(array $items, $hide = false)
     {
         // Do we need to hide empty tabs? If so, remove empty entries from target array
         if ($hide) {
@@ -42,6 +42,9 @@ class Tabs
                     unset($items[$index]);
                 }
             }
+
+            // Reset index after removal
+            $items = array_values($items);
         }
 
         $this->items = $items;
