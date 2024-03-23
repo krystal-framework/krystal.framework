@@ -52,7 +52,7 @@ final class OffcanvasMaker
         $this->id = $id;
         $this->options = $options;
     }
-    
+
     /**
      * Get placement value
      * 
