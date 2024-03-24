@@ -1,4 +1,4 @@
-Floating form
+List inline widge
 ----
 
 This widget generates inline list with optional links.
