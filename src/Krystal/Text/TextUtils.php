@@ -17,6 +17,24 @@ use Closure;
 class TextUtils
 {
     /**
+     * Converts string into array
+     * 
+     * @param string $string
+     * @return array
+     */
+    public static function breakString($string)
+    {
+        $parts = explode("\n", $string);
+
+        foreach ($parts as &$part) {
+            $part = rtrim($part);
+            $part = ltrim($part);
+        }
+
+        return $parts;
+    }
+
+    /**
      * Checks whether string has been modified
      * 
      * @param string $target Input string
