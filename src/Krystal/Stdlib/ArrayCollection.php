@@ -21,6 +21,26 @@ class ArrayCollection
     protected $collection;
 
     /**
+     * Returns internal collection
+     * 
+     * @return array
+     */
+    protected function getCollection()
+    {
+        if (ArrayUtils::hasAtLeastOneArrayValue($this->collection)) {
+            $output = [];
+
+            foreach ($this->collection as $key => $array) {
+                $output = $output + $array;
+            }
+
+            return $output;
+        } else {
+            return $this->collection;
+        }
+    }
+
+    /**
      * Check whether many keys exist
      * 
      * @param array $keys
@@ -45,7 +65,7 @@ class ArrayCollection
      */
     public function hasKey($key)
     {
-        return array_key_exists($key, $this->collection);
+        return array_key_exists($key, $this->getCollection());
     }
 
     /**
@@ -58,7 +78,8 @@ class ArrayCollection
     public function findByKey($key, $default = '')
     {
         if ($this->hasKey($key)) {
-            return $this->collection[$key];
+            $collection = $this->getCollection();
+            return $collection[$key];
         } else {
             return $default;
         }
