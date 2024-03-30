@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added Image Optimizer tool
  * Added support for WEBP
  * In `ImageFile` added shorthand `compress()` method
  * Added image compressor
