@@ -12,6 +12,7 @@
 namespace Krystal\Widget\Bootstrap5\Tabs;
 
 use Krystal\Form\NodeElement;
+use InvalidArgumentException;
 
 final class Tabs
 {
@@ -23,13 +24,21 @@ final class Tabs
     private $items = [];
 
     /**
+     * Current active index
+     * 
+     * @var int
+     */
+    private $index;
+
+    /**
      * State initialization
      * 
      * @param array $items
      * @param boolean $hide Whether to hide empty tabs
+     * @param int $index Active index
      * @return void
      */
-    public function __construct(array $items, $hide = false)
+    public function __construct(array $items, $hide = false, $index = 0)
     {
         // Do we need to hide empty tabs? If so, remove empty entries from target array
         if ($hide) {
@@ -47,7 +56,13 @@ final class Tabs
             $items = array_values($items);
         }
 
+        // Is index withing a range?
+        if (!empty($items) && !isset($items[$index])) {
+            throw new InvalidArgumentException('Provided active index is out of range');
+        }
+
         $this->items = $items;
+        $this->index = $index;
     }
 
     /**
@@ -73,7 +88,7 @@ final class Tabs
            ->addAttribute('class', 'nav nav-tabs');
 
         foreach ($this->items as $index => $item) {
-            $aClass = $index == 0 ? 'nav-link active' : 'nav-link';
+            $aClass = $index == $this->index ? 'nav-link active' : 'nav-link';
 
             $li = new NodeElement();
             $li->openTag('li')
@@ -117,7 +132,7 @@ final class Tabs
 
         foreach ($this->items as $index => $item) {
             // Constuct div's class depending on fade class
-            $divClass = ($index == 0 ? 'tab-pane active show' : 'tab-pane') . ($fade ? ' fade' : '');
+            $divClass = ($index == $this->index ? 'tab-pane active show' : 'tab-pane') . ($fade ? ' fade' : '');
 
             $div = new NodeElement();
             $div->openTag('div')
