@@ -20,6 +20,19 @@ use UnexpectedValueException;
 class FileManager implements FileManagerInterface
 {
     /**
+     * Replaces file extension
+     * 
+     * @param string $path Current path
+     * @param string $new New extension
+     * @return string
+     */
+    public static function replaceExtension($path, $new)
+    {
+        $info = pathinfo($path);
+        return ($info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '') . $info['filename'] . '.' . $new;
+    }
+
+    /**
      * Returns a directory name from a path
      * 
      * @param string $path

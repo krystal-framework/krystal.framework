@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `FileManager::replaceExtension()` to replace extension
  * Added `FileManager::filesize()` to count file size and returns its value in human readable format
  * Added `FileType` class with helper methods
  * Added `FileManager::humanSize()` to convert bytes into human readable sizes
