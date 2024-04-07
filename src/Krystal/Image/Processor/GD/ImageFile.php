@@ -207,6 +207,9 @@ class ImageFile implements ImageFileInterface
             case \IMAGETYPE_WEBP:
 				return imagecreatefromwebp($file);
 
+            case \IMAGETYPE_AVIF:
+                return imagecreatefromavif($file);
+
             default:
                 throw new LogicException(sprintf('Can not create image from "%s"', $file));
         }
@@ -318,6 +321,10 @@ class ImageFile implements ImageFileInterface
                 $result = imagewebp($this->image, $path, $quality);
             break;
 
+            case \IMAGETYPE_AVIF:
+                $result = imageavif($this->image, $path, $quality);
+            break;
+
             default:
                 throw new LogicException(sprintf(
                     'Can not save image format (%s) to %s', $type, $path
@@ -366,6 +373,10 @@ class ImageFile implements ImageFileInterface
 
             case \IMAGETYPE_WEBP:
                 imagewebp($this->image, null, $quality);
+            break;
+
+            case \IMAGETYPE_AVIF:
+                imageavif($this->image, null, $quality);
             break;
 
             default:

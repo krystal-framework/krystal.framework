@@ -5,7 +5,7 @@ CHANGELOG
 ---
 
  * Added Image Optimizer tool
- * Added support for WEBP
+ * Added support for WEBP/AVIF
  * In `ImageFile` added shorthand `compress()` method
  * Added image compressor
  * Fixed issue with loading GIF file
