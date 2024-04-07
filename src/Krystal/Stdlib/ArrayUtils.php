@@ -18,6 +18,18 @@ use Closure;
 abstract class ArrayUtils
 {
     /**
+     * Returns unique array signature
+     * 
+     * @param array $array Target array
+     * @return string
+     */
+    public static function fingerprint(array $array)
+    {
+        $raw = serialize($array);
+        return hash('crc32b', $raw);
+    }
+
+    /**
      * Categories an array dropping by partition and adding count key
      * 
      * @param array $rows Raw result set

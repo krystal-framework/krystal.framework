@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `ArrayUtils::fingerprint()` method to create a unique signature of arrays
  * Added `get()` method in `VirtualEntity`
  * Added `ArrayUtils::categorize()` method to categorize raw set with count of internal items
  * Added `parseArgs()` in `ArrayUtils` to parse arguments from variadic functions
