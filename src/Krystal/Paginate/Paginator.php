@@ -57,6 +57,13 @@ final class Paginator implements PaginatorInterface
     private $uri;
 
     /**
+     * Current page
+     * 
+     * @var int
+     */
+    private $currentPage;
+
+    /**
      * State initialization
      * 
      * @param \Krystal\Paginate\Style\StyleInterface $style Optional style adapter
