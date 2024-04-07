@@ -34,7 +34,7 @@ final class ReAuth implements ReAuthInterface
      * 
      * @var \Krystal\Authentication\HashProviderInterface
      */
-    private $hashProvier;
+    private $hashProvider;
 
     /**
      * State initialization
