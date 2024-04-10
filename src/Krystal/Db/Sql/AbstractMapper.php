@@ -200,6 +200,28 @@ abstract class AbstractMapper
     }
 
     /**
+     * Checks whether there's at least one row matching constraints
+     * 
+     * @param array $constraints
+     * @return boolean
+     */
+    final protected function valuesExist(array $constraints)
+    {
+        $this->validateShortcutData();
+
+        $db = $this->db->select()
+                       ->count($this->getPk())
+                       ->from(static::getTableName())
+                       ->whereEquals('1', '1');
+
+        foreach ($constraints as $column => $value) {
+            $db->andWhereEquals($column, $value);
+        }
+
+        return (bool) $db->queryScalar();
+    }
+
+    /**
      * Deletes a row by associated PK's value
      * 
      * @param string $pk PK's value
