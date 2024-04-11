@@ -1560,7 +1560,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             $columns = $target;
 
         } elseif (is_array($target)) {
-            $columns = implode(', ', $target);
+            $columns = implode(', ', $this->quote($target));
 
         } else {
             throw new InvalidArgumentException(sprintf(
