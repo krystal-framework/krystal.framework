@@ -29,7 +29,7 @@ class FileManager implements FileManagerInterface
     public static function replaceExtension($path, $new)
     {
         $info = pathinfo($path);
-        return ($info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '') . $info['filename'] . '.' . $new;
+        return ($info['dirname'] ? $info['dirname'] . '/' : '') . $info['filename'] . '.' . $new;
     }
 
     /**
