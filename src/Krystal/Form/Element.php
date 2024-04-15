@@ -606,6 +606,52 @@ class Element
     }
 
     /**
+     * Creates week input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function week($name, $value, array $attributes = array())
+    {
+        $node = new Node\Week();
+
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
+
+        return $node->render($attributes);
+    }
+
+    /**
+     * Creates month input element
+     * 
+     * @param string $name Element name
+     * @param string $value Element value
+     * @param array $attributes Extra attributes
+     * @return string
+     */
+    public static function month($name, $value, array $attributes = array())
+    {
+        $node = new Node\Month();
+
+        if (!is_null($name)) {
+            $attributes['name'] = $name;
+        }
+
+        if (!is_null($value)) {
+            $attributes['value'] = $value;
+        }
+
+        return $node->render($attributes);
+    }
+
+    /**
      * Creates email input element
      * 
      * @param string $name Element name

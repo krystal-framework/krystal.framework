@@ -4,6 +4,8 @@ CHANGELOG
 1.3
 ---
 
+ * In Element class `month()` method to generate month input
+ * In Element class `week()` method to generate week input
  * In Element class added two methods `linkEmail()` and `linkPhone()`
  * Added `Element::datalist()` method
  * The method `NodeElement::append()` now returns self
