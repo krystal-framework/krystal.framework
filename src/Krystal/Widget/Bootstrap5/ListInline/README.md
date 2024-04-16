@@ -15,7 +15,9 @@ This widget generates inline list with optional links.
         ],
     
         [
-            'text' => 'Google'
+            'text' => 'Google',
+            'icon' => 'bi bi-google', // optional font icon
+            'link' => 'https://google.to'
         ],
     
         [
@@ -58,5 +60,4 @@ This will generate the following output:
     
 # TODO
 
- - Add optional icon
  - Add optional callback method to generate items

@@ -51,7 +51,7 @@ final class ListMaker
     {
         $ulClass = 'list-inline';
         $liClass = 'list-inline-item';
-        
+
         if (isset($this->classes['ul'])) {
             $ulClass .= ' ' . $this->classes['ul'];
         }
@@ -85,12 +85,24 @@ final class ListMaker
                 }
 
                 // Whether to open in new window
-                if (isset($item['blank']) && $item['blank'] === true){
+                if (isset($item['blank']) && $item['blank'] === true) {
                     $a->addAttribute('target', '_blank');
                 }
-                
-                $a->addAttribute('href', $item['link'])
-                  ->setText($item['text'])
+
+                $a->addAttribute('href', $item['link']);
+
+                // Icon
+                if (isset($item['icon'])) {
+                    $i = new NodeElement();
+                    $i->openTag('i')
+                      ->addAttribute('class', $item['icon'])
+                      ->finalize()
+                      ->closeTag();
+
+                    $item['text'] = $i->render() . ' ' . $item['text'];
+                }
+
+                $a->setText($item['text'])
                   ->closeTag();
 
                 $li->appendChild($a);
