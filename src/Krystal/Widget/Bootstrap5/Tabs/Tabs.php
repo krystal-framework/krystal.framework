@@ -35,10 +35,10 @@ final class Tabs
      * 
      * @param array $items
      * @param boolean $hide Whether to hide empty tabs
-     * @param int $index Active index
+     * @param int $active Active index
      * @return void
      */
-    public function __construct(array $items, $hide = false, $index = 0)
+    public function __construct(array $items, $hide = false, $active = 0)
     {
         // Do we need to hide empty tabs? If so, remove empty entries from target array
         if ($hide) {
@@ -57,8 +57,8 @@ final class Tabs
         }
 
         // Is index withing a range?
-        if (!empty($items) && !isset($items[$index])) {
-            throw new InvalidArgumentException('Provided active index is out of range');
+        if (!empty($items) && !isset($items[$active])) {
+            throw new InvalidArgumentException(sprintf('Provided active index "%s" is out of range', $active));
         }
 
         $this->items = $items;
