@@ -12,7 +12,6 @@
 namespace Krystal\Form;
 
 use LogicException;
-use Krystal\Security\Filter;
 
 final class NodeElement implements NodeElementInterface
 {
@@ -342,8 +341,7 @@ final class NodeElement implements NodeElementInterface
      */
     public function addAttribute($attribute, $value)
     {
-        // Escape special characters
-        $value = Filter::filterAttribute($value);
+        $value = htmlentities($value, \ENT_QUOTES, 'UTF-8');
 
         if ($this->isProperty($attribute)) {
             $this->addPropertyOnDemand($attribute, $value);
