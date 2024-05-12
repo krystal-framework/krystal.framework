@@ -48,6 +48,29 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
     }
 
     /**
+     * Returns base domain
+     * 
+     * @param string $host Current host
+     * @return string
+     */
+    private static function parseDomain($host)
+    {
+        $delimiter = '.';
+        $target = strtolower(trim($host));
+        $count = substr_count($target, $delimiter);
+
+        if ($count === 2) {
+            if (strlen(explode($delimiter, $target)[1]) > 3) {
+                $target = explode($delimiter, $target, 2)[1];
+            }
+        } else if ($count > 2) {
+            $target = self::parseDomain(explode($delimiter, $target, 2)[1]);
+        }
+
+        return $target;
+    }
+
+    /**
      * Returns a crypter
      * 
      * @throws \RuntimeException If the instance wasn't provided
@@ -131,7 +154,7 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
             (string) $value, 
             $ttl + abs(time()), 
             $path, 
-            $_SERVER['HTTP_HOST'], 
+            self::parseDomain($_SERVER['HTTP_HOST']), 
             $secure, 
             $httpOnly
         );
