@@ -74,7 +74,7 @@ abstract class ArrayUtils
             if ($strict == true && is_array($args[0]) && $count > 1) {
                 throw new InvalidArgumentException('In strict mode, you can either provide an array of arguments or a list of arguments without array');
             }
-            
+
             // Turn into one structure
             if ($count >= 1) {
                 $params = is_array($args[0]) ? $args[0] : array($args[0]);

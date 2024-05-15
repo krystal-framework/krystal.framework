@@ -41,12 +41,8 @@ class Filter implements Sanitizeable
                 return (float) $value;
             case self::FILTER_INT:
                 return (int) $value;
-            case self::FILTER_HTML:
-                return self::specialChars($value);
-            case self::FILTER_TAGS:
+            case self::FILTER_HTML || self::FILTER_TAGS:
                 return self::stripTags($value);
-            case self::FILTER_SAFE_TAGS:
-                return self::safeTags($value);
             case self::FILTER_HTML_CHARS:
                 return self::specialChars($value);
             default:
@@ -55,24 +51,14 @@ class Filter implements Sanitizeable
     }
 
     /**
-     * Filters attribute value
+     * Escapes special HTML values
      * 
-     * @param string $value Attribute value
+     * @param string $value
      * @return string
      */
-    public static function filterAttribute($value)
+    public static function escape($value)
     {
-        return $value;
-
-        // Check whether current string has already been encoded
-        $decoded = html_entity_decode($value);
-
-        // If has been decoded before
-        if ($value != $decoded) {
-           #$value = $decoded;
-        }
-
-        return $value;
+        return htmlentities($value, \ENT_QUOTES, 'UTF-8');
     }
 
     /**
@@ -106,17 +92,6 @@ class Filter implements Sanitizeable
     }
 
     /**
-     * Removes all unwanted tags
-     * 
-     * @param string $string
-     * @return string
-     */
-    public static function safeTags($string)
-    {
-        return $string;
-    }
-
-    /**
      * Determines whether a string has HTML tags
      * 
      * @param string $target
@@ -143,27 +118,5 @@ class Filter implements Sanitizeable
         return preg_replace_callback('/<\/?([^>\s]+)[^>]*>/i', function ($matches) use (&$allowed) {
             return in_array(strtolower($matches[1]), $allowed) ? $matches[0] : '';
         }, $text);
-    }
-
-    /**
-     * Escapes special HTML values
-     * 
-     * @param string $value
-     * @return string
-     */
-    public static function escape($value)
-    {
-        return htmlentities($value, \ENT_QUOTES, 'UTF-8');
-    }
-
-    /**
-     * Escapes HTML content
-     * 
-     * @param string $content
-     * @return string
-     */
-    public static function escapeContent($content)
-    {
-        return $content;
     }
 }
