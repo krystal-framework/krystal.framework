@@ -34,7 +34,7 @@ abstract class TimeHelper
      * @param string $string
      * @return boolean
      */
-    public function isTimestamp($value)
+    public static function isTimestamp($value)
     {
         try {
             new DateTime('@' . $value);
