@@ -29,6 +29,23 @@ abstract class TimeHelper
     const YEAR = 31536000;
 
     /**
+     * Returns a year range for copyrights
+     * 
+     * @param string $start Starting year
+     * @return string
+     */
+    public static function getCopyright($start)
+    {
+        $currentYear = date('Y');
+
+        if ($currentYear == $start) {
+            return $start;
+        } else {
+            return sprintf('%s - %s', $start, $currentYear);
+        }
+    }
+
+    /**
      * Checks whether string is a UNIX timestamp
      * 
      * @param string $string

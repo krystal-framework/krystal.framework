@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * In `TimeHelper` added `getCopyright()` to get a range of years for copyrights
  * In `TimeHelper` added `isTimestamp()` to test whether given string is UNIX-timestamp
  * In `TimeHelper` added `formatLocalized()` to format dates with localization support
  * In `TimeHelper` added `guessSeason()` to determine current season
