@@ -39,7 +39,7 @@ final class APC implements CacheEngineInterface
     public function getInfo()
     {
         return array(
-            'sma_info' =>  apc_sma_info(), 
+            'sma_info' => apc_sma_info(), 
             'cache_info' => apc_cache_info(),
         );
     }
