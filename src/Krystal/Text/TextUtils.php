@@ -17,6 +17,23 @@ use Closure;
 class TextUtils
 {
     /**
+     * Checks whether string contains another string
+     * 
+     * @param string $haystack string
+     * @param string $needle Target word
+     * @return boolean
+     */
+    public static function contains($haystack, $needle)
+    {
+        if (function_exists('str_contains')) {
+            return str_contains($haystack, $needle);
+        } else {
+            // Polyfill for legacy PHP versions
+            return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+        }
+    }
+
+    /**
      * Converts string into array
      * 
      * @param string $string
