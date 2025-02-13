@@ -341,7 +341,10 @@ final class NodeElement implements NodeElementInterface
      */
     public function addAttribute($attribute, $value)
     {
-        $value = htmlentities($value, \ENT_QUOTES, 'UTF-8');
+        // Avoid passing NULL-like value
+        if (!empty($value)) {
+            $value = htmlentities($value, \ENT_QUOTES, 'UTF-8');
+        }
 
         if ($this->isProperty($attribute)) {
             $this->addPropertyOnDemand($attribute, $value);
