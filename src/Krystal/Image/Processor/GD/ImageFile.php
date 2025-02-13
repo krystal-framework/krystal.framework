@@ -21,6 +21,10 @@ if (!defined('IMAGETYPE_WEBP')) {
     define('IMAGETYPE_WEBP', 18);
 }
 
+if (!defined('IMG_WEBP')) {
+    define('IMG_WEBP', 32);
+}
+
 use LogicException;
 use Krystal\Image\Processor\ImageFileInterface;
 
