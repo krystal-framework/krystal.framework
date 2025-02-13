@@ -112,6 +112,10 @@ class Filter implements Sanitizeable
      */
     public static function stripTags($text, array $allowed = array())
     {
+        if (empty($text)) {
+            return $text;
+        }
+
         // Based on [fernando at zauber dot es]'s solution
         $allowed = array_map('strtolower', $allowed);
 
