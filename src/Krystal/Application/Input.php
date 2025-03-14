@@ -14,6 +14,13 @@ namespace Krystal\Application;
 final class Input implements InputInterface
 {
     /**
+     * Cookie data
+     * 
+     * @var array
+     */
+    private $cookie = array();
+
+    /**
      * Holds query data
      * 
      * @var array
