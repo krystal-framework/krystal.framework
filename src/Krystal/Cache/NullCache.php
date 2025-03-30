@@ -13,6 +13,8 @@ namespace Krystal\Cache;
 
 final class NullCache implements CacheEngineInterface
 {
+    use CacheTrait;
+
     /**
      * Increments a numeric value
      * 

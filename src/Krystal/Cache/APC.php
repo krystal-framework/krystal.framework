@@ -12,6 +12,7 @@
 namespace Krystal\Cache;
 
 use BadMethodCallException;
+use Krystal\Cache\CacheTrait;
 
 /**
  * The Alternative PHP Cache (APC) is a free and open opcode cache for PHP.
@@ -21,6 +22,8 @@ use BadMethodCallException;
  */
 final class APC implements CacheEngineInterface
 {
+    use CacheTrait;
+
     /**
      * Returns all cache data
      * 

@@ -12,12 +12,15 @@
 namespace Krystal\Cache\Sql;
 
 use Krystal\Cache\CacheEngineInterface;
+use Krystal\Cache\CacheTrait;
 
 /**
  * MySQL PDO cache storage. The table must be created before using it
  */
 final class SqlCacheEngine implements CacheEngineInterface
 {
+    use CacheTrait;
+
     /**
      * Any-compliant cache mapper
      * 

@@ -13,9 +13,12 @@ namespace Krystal\Cache\Memcached;
 
 use Memcached;
 use Krystal\Cache\CacheEngineInterface;
+use Krystal\Cache\CacheTrait;
 
 final class MemcachedEngine implements CacheEngineInterface
 {
+    use CacheTrait;
+
     /**
      * Prepared \Memcached instance
      * 

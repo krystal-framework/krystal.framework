@@ -15,6 +15,8 @@ use InvalidArgumentException;
 
 final class MemoryCache implements CacheEngineInterface
 {
+    use CacheTrait;
+
     /**
      * Data container
      * 

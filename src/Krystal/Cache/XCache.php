@@ -20,6 +20,8 @@ use BadMethodCallException;
  */
 final class XCache implements CacheEngineInterface
 {
+    use CacheTrait;
+
     /**
      * Returns all cache data
      * 

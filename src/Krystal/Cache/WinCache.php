@@ -24,6 +24,8 @@ use RuntimeException;
  */
 final class WinCache implements CacheEngineInterface
 {
+    use CacheTrait;
+
     /**
      * Returns all cache data
      * 

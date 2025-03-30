@@ -11,10 +11,13 @@
 
 namespace Krystal\Cache\FileEngine;
 
+use Krystal\Cache\CacheTrait;
 use Krystal\Cache\CacheEngineInterface;
 
 final class CacheEngine implements CacheEngineInterface
 {
+    use CacheTrait;
+
     /**
      * An abstraction over cache's array
      * 
