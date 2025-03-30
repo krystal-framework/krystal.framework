@@ -11,6 +11,8 @@
 
 namespace Krystal\Cache;
 
+use Closure;
+
 /**
  * A wrapper around a cache engine that provides namespace-based key management for cached data.
  * It ensures that all cache keys are prefixed with a specific namespace, allowing for:
@@ -116,6 +118,20 @@ final class CacheNamespace implements CacheEngineInterface
     public function get($key, $default = false)
     {
         return $this->engine->get($this->convertKey($key), $default);
+    }
+
+    /**
+     * Returns value from a cache by key.
+     * Only calls the callback when the cache key is missing
+     * 
+     * @param string $key
+     * @param \Closure Callback function that returns if key is missing
+     * @param integer $ttl Time to live in seconds
+     * @return mixed
+     */
+    public function getOnce($key, Closure $callback, $ttl)
+    {
+        return $this->engine->getOnce($key, $callback, $ttl);
     }
 
     /**
