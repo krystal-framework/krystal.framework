@@ -42,7 +42,7 @@ final class RegExMatch extends AbstractConstraint
 	 */
     public function isValid($target)
     {
-        // @ - intentionally since a regular expression might malformed
+        // @ - intentionally since a regular expression could be malformed
         if (@preg_match($this->regex, $target)) {
             return true;
 		} else {

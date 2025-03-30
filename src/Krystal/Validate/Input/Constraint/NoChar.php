@@ -50,8 +50,7 @@ final class NoChar extends AbstractConstraint
     {
         foreach ($this->chars as $char) {
             if (strpos($target, $char) !== false) {
-
-                $this->vioate($this->message);
+                $this->violate($this->message);
                 return false;
             }
         }
