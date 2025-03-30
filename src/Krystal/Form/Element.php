@@ -200,6 +200,24 @@ class Element
     }
 
     /**
+     * Creates mailto attribute
+     * 
+     * @param string $email
+     * @param array $params Optional params
+     * @return string
+     */
+    public static function createMailTo($email, array $params = [])
+    {
+        if (!empty($params)) {
+            $attribute = $email . '?' . http_build_query($params);
+        } else {
+            $attribute = $email;
+        }
+
+        return sprintf('mailto:%s', $attribute);
+    }
+
+    /**
      * Creates E-mail link
      * 
      * @param string $email
@@ -214,10 +232,24 @@ class Element
             $icon = self::iconInternal($icon);
         }
 
-        return self::link($icon . $email, sprintf('mailto:%s', $email), [
+        return self::link($icon . $email, self::createMailTo($email), [
             'target' => $newWindow ? '_blank' : '_self',
             'class' => $class
         ]);
+    }
+
+    /**
+     * Creates tel attribute
+     * 
+     * @param string $phone Raw phone string
+     * @return string
+     */
+    public static function createTel($phone)
+    {
+        // Strip out all chars except numbers and +
+        $filtered = preg_replace('/[^0-9+]/', '', $phone);
+
+        return sprintf('tel:%s', $filtered);
     }
 
     /**
@@ -234,10 +266,7 @@ class Element
             $icon = self::iconInternal($icon);
         }
 
-        // Strip out all chars except numbers and +
-        $filtered = preg_replace('/[^0-9+]/', '', $phone);
-
-        return self::link($icon . $phone, sprintf('tel:%s', $filtered), [
+        return self::link($icon . $phone, self::createTel($phone), [
             'class' => $class
         ]);
     }
