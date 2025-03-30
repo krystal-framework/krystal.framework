@@ -235,7 +235,7 @@ class Element
         }
 
         // Strip out all chars except numbers and +
-        $filtered = str_replace(['(', ')', '-', ' '], '', $phone);
+        $filtered = preg_replace('/[^0-9+]/', '', $phone);
 
         return self::link($icon . $phone, sprintf('tel:%s', $filtered), [
             'class' => $class
