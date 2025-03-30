@@ -131,7 +131,7 @@ final class CacheNamespace implements CacheEngineInterface
      */
     public function getOnce($key, Closure $callback, $ttl)
     {
-        return $this->engine->getOnce($key, $callback, $ttl);
+        return $this->engine->getOnce($this->convertKey($key), $callback, $ttl);
     }
 
     /**
