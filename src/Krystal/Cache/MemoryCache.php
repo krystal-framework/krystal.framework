@@ -114,4 +114,14 @@ final class MemoryCache implements CacheEngineInterface
     {
         return $this->cache;
     }
+
+    /**
+     * Flushes the cache
+     * 
+     * @return boolean
+     */
+    public function flush()
+    {
+        return false;
+    }
 }
