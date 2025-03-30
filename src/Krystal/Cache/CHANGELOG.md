@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Added `CacheNamespace` - A wrapper around a cache engine that provides namespace-based key management for cached data.
  * Added `NullCache`
 
 1.1
