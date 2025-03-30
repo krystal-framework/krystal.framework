@@ -52,6 +52,16 @@ final class CacheEngine implements CacheEngineInterface
     }
 
     /**
+     * Saves on destruction
+     * 
+     * @return void
+     */
+    public function __destruct()
+    {
+        return $this->save();
+    }
+
+    /**
      * Initializes the engine
      * Should be called right after state initialization
      * 
@@ -120,7 +130,7 @@ final class CacheEngine implements CacheEngineInterface
      * 
      * @return boolean
      */
-    public function save()
+    private function save()
     {
         $data = $this->arrayCache->getData();
 
