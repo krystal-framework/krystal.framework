@@ -50,10 +50,25 @@ final class ImagickProcessor
      * @param int $quality
      * @return \Krystal\Image\Processor\ImagickProcessor
      */
-    public function toAvif($quality = 50)
+    public function toAvif($quality = 80)
     {
         $this->image->setImageFormat('avif');
-        $this->image->setImageCompression(Imagick::COMPRESSION_JPEG);
+
+        // Critical Safari-compatible settings
+        $this->image->setOption('avif:speed', '6');         // Faster = more compatible
+        $this->image->setOption('avif:chroma', '4:2:0');    // 4:2:0 subsampling
+        $this->image->setImageColorspace(Imagick::COLORSPACE_SRGB);
+        $this->image->profileImage('icc', NULL);             // Strip ICC profiles
+        $this->image->setImageDepth(8);                     // 8-bit depth
+        $this->image->setImageAlphaChannel(Imagick::ALPHACHANNEL_OFF); // Disable alpha
+
+        // Explicit AV1 compression if supported
+        if (defined('Imagick::COMPRESSION_AV1')) {
+            $this->image->setImageCompression(Imagick::COMPRESSION_AV1);
+        }
+
+        // Clamp quality for Safari
+        $quality = max(50, min(90, $quality));
         $this->image->setCompressionQuality($quality);
 
         return $this;
