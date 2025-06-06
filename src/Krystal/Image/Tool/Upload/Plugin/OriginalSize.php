@@ -95,9 +95,12 @@ final class OriginalSize implements UploaderAwareInterface
 
         if ($this->maxWidth != 0 && $this->maxHeight != 0) {
             foreach ($files as $file) {
+                $processParse = $file->getExtension() != 'svg';
 
-                $imageProcessor = new ImageProcessor($file->getTmpName());
-                $imageProcessor->thumb($this->maxWidth, $this->maxHeight);
+                if ($processParse) {
+                    $imageProcessor = new ImageProcessor($file->getTmpName());
+                    $imageProcessor->thumb($this->maxWidth, $this->maxHeight);
+                }
 
                 $to = sprintf('%s/%s', $destination, $file->getUniqueName());
 
@@ -106,8 +109,12 @@ final class OriginalSize implements UploaderAwareInterface
                     mkdir($destination, 0777, true);
                 }
 
-                // This might fail sometimes
-                $imageProcessor->save($to, $this->quality);
+                if ($processParse) {
+                    // This might fail sometimes
+                    $imageProcessor->save($to, $this->quality);
+                } else {
+                    move_uploaded_file($file->getTmpName(), $to);
+                }
             }
 
         } else {
