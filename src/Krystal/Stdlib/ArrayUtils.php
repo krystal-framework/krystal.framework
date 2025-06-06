@@ -163,32 +163,35 @@ abstract class ArrayUtils
      */
     public static function arrayPartition(array $raw, $key, $keepKey = true)
     {
-        $result = array();
+        $result = [];
 
-        foreach ($raw as $index => $collection) {
-            // Make the the root partition exists
-            if (!array_key_exists($key, $collection)) {
+        foreach ($raw as $collection) {
+            // Determine if key exists in array or object
+            if (is_array($collection)) {
+                $exists = array_key_exists($key, $collection);
+            } elseif (is_object($collection)) {
+                if ($collection instanceof VirtualEntity) {
+                    $exists = isset($collection[$key]);
+                } else {
+                    $exists = property_exists($collection, $key);
+                }
+            } else {
+                throw new InvalidArgumentException('Each collection must be an array or object. Got: ' . gettype($collection));
+            }
+
+            if (!$exists) {
                 throw new LogicException(sprintf(
                     'The key "%s" does not exist in provided collection', $key
                 ));
             }
 
-            // Extract module' name as a key and put the rest into its values
-            $target = array($collection[$key] => $collection);
+            $module = $collection[$key];
 
-            
-            foreach ($target as $module => $array) {
-                // When doesn't exist, then need to create a one
-                if (!isset($result[$module])) {
-                    $result[$module] = array();
-                }
-
-                if ($keepKey == false) {
-                    unset($array[$key]);
-                }
-
-                $result[$module][] = $array;
+            if (!$keepKey) {
+                unset($collection[$key]);
             }
+
+            $result[$module][] = $collection;
         }
 
         return $result;
