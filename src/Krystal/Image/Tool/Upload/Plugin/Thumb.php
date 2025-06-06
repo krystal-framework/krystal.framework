@@ -102,11 +102,15 @@ final class Thumb implements UploaderAwareInterface
 
                     $to = sprintf('%s/%s', $destination, $file->getUniqueName());
 
-                    $imageProcessor = new ImageProcessor($file->getTmpName());
-                    $imageProcessor->thumb($width, $height);
+                    if ($file->getExtension() == 'svg') {
+                        move_uploaded_file($file->getTmpName(), $to);
+                    } else {
+                        $imageProcessor = new ImageProcessor($file->getTmpName());
+                        $imageProcessor->thumb($width, $height);
 
-                    // This might fail sometimes
-                    $imageProcessor->save($to, $this->quality);
+                        // This might fail sometimes
+                        $imageProcessor->save($to, $this->quality);
+                    }
                 }
             }
         }
