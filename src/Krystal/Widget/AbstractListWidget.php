@@ -67,7 +67,6 @@ abstract class AbstractListWidget
         $ul = new NodeElement();
         $ul->openTag('ul')
            ->addAttribute('class', $class)
-           ->finalize(true)
            ->appendChildren($children)
            ->closeTag();
 
