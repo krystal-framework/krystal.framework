@@ -117,9 +117,8 @@ final class DefinitionParser implements ParserInterface
                 // When an array is provided then we should merge values and dynamically call a method
                 if (is_array($options['value'])) {
                     // Quick trick
-                    $args = array_merge(array($constraintName), array($options['value']));
+                    $args = array_merge(array($constraintName), $options['value']);
                     $constraint = call_user_func_array(array($this->constraintFactory, 'build'), $args);
-
                 } else {
                     $constraint = $this->constraintFactory->build($constraintName, $options['value']);
                 }
