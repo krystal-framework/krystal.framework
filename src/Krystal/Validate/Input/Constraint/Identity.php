@@ -19,6 +19,13 @@ final class Identity extends AbstractConstraint
     protected $message = 'A value is not equal';
 
     /**
+     * Target value
+     * 
+     * @var mixed
+     */
+    private $value;
+
+    /**
      * State initialization
      * 
      * @param mixed $value
