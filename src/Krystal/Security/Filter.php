@@ -58,7 +58,11 @@ class Filter implements Sanitizeable
      */
     public static function escape($value)
     {
-        return htmlentities($value, \ENT_QUOTES, 'UTF-8');
+        if ($value != null) {
+            return htmlentities($value, \ENT_QUOTES, 'UTF-8');
+        }
+
+        return $value;
     }
 
     /**
