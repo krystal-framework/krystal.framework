@@ -200,6 +200,26 @@ class Element
     }
 
     /**
+     * Creates WhatsApp link
+     * 
+     * @param string $username WhatsApp username
+     * @param string $text Link text. If not provided, username is used
+     * @param string $class Optional link class
+     * @param boolean $newWindow Whether should be opened in new window
+     * @param string $icon Optional icon class
+     * @return string
+     */
+    public static function linkWhatsApp($username, $text = null, $class = null, $newWindow = true, $icon = 'bi bi-whatsapp')
+    {
+        $data = [
+            'url' => sprintf('https://wa.me/%s', $username),
+            'text' => $text == null ? $username : $text
+        ];
+
+        return self::linkSocial($data, $class, $newWindow, $icon);
+    }
+
+    /**
      * Creates mailto attribute
      * 
      * @param string $email
