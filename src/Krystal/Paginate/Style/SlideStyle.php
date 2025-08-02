@@ -23,7 +23,7 @@ final class SlideStyle implements StyleInterface
     /**
      * State initialization
      * 
-     * @param integer $amount
+     * @param integer $step
      * @return void
      */
     public function __construct($step)
