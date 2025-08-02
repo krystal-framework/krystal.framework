@@ -11,282 +11,126 @@
 
 namespace Krystal\Date;
 
-use UnexpectedValueException;
-use OutOfRangeException;
+use DateTime;
+use InvalidArgumentException;
+use RuntimeException;
 
+/**
+ * Determines zodiac signs based on date ranges
+ */
 final class Zodiacal implements ZodiacalInterface
 {
     /**
-     * Current month
+     * DateTime instance
      * 
-     * @var string
+     * @var \DateTime
      */
-    private $month;
+    private $date;
 
     /**
-     * Current day
+     * Zodiac sign date ranges
      * 
-     * @var integer
+     * @var array
      */
-    private $day;
-
-    const MONTH_JANUARY = 'January';
-    const MONTH_FEBRUARY = 'February';
-    const MONTH_MARCH = 'March';
-    const MONTH_APRIL = 'April';
-    const MONTH_MAY = 'May';
-    const MONTH_JUNE = 'June';
-    const MONTH_JULY = 'July';
-    const MONTH_AUGUST = 'August';
-    const MONTH_SEPTEMBER = 'September';
-    const MONTH_OCTOBER = 'October';
-    const MONTH_NOVEMBER = 'November';
-    const MONTH_DECEMBER = 'December';
+    private $signRanges = array(
+        'Aries'       => array('03-21', '04-19'),
+        'Taurus'      => array('04-20', '05-20'),
+        'Gemini'      => array('05-21', '06-20'),
+        'Cancer'      => array('06-21', '07-22'),
+        'Leo'         => array('07-23', '08-22'),
+        'Virgo'       => array('08-23', '09-22'),
+        'Libra'       => array('09-23', '10-22'),
+        'Scorpio'     => array('10-23', '11-21'),
+        'Sagittarius' => array('11-22', '12-21'),
+        'Capricorn'   => array('12-22', '01-19'),
+        'Aquarius'    => array('01-20', '02-18'),
+        'Pisces'      => array('02-19', '03-20')
+    );
 
     /**
      * State initialization
      * 
-     * @param string $month
-     * @param integer $day
-     * @throws \UnexpectedValueException If unknown month supplied
-     * @throws \OutOfRangeException If a day is out of range
-     * @return void
+     * @param int $month 1-12
+     * @param int $day
+     * @throws \InvalidArgumentException
      */
     public function __construct($month, $day)
     {
-        $month = $this->normalize($month);
-        $day = (int) $day;
-
-        if (!$this->isValidMonth($month)) {
-            throw new UnexpectedValueException(sprintf('Unknown month supplied "%s"', $month));
+        if (!is_numeric($month) || $month < 1 || $month > 12) {
+            throw new InvalidArgumentException('Month must be between 1-12');
         }
 
-        if (!$this->dayInRange($day)) {
-            throw new OutOfRangeException(sprintf('A day must be in rage of 1-31. Invalid number supplied "%s"'));
+        if (!is_numeric($day)) {
+            throw new InvalidArgumentException('Day must be numeric');
         }
 
-        $this->month = $month;
-        $this->day = $day;
+        $year = date('Y'); // Current year for leap year calculation
+        $this->date = DateTime::createFromFormat('!Y-n-j', "$year-$month-$day");
+
+        if (!$this->date) {
+            throw new InvalidArgumentException('Invalid date');
+        }
     }
 
     /**
-     * Manually checks whether $sign equals to calculated one
+     * Create from DateTime object
+     * 
+     * @param DateTime $dateTime
+     * @return \Krystal\Date\Zodiacal
+     */
+    public static function fromDateTime(DateTime $dateTime)
+    {
+        $instance = new self(1, 1);
+        $instance->date = $dateTime;
+
+        return $instance;
+    }
+
+    /**
+     * Check if date matches specific sign
      * 
      * @param string $sign
-     * @return boolean
+     * @return bool
      */
     public function is($sign)
     {
-        return $this->getSign() === $this->normalize($sign);
+        return $this->getSign() === ucfirst(strtolower($sign));
     }
 
     /**
-     * Gets a zodiacal sign based on a month and a day
+     * Get zodiac sign for current date
      * 
-     * @return string|boolean The name, false on failure
+     * @return string
      */
     public function getSign()
     {
-        foreach ($this->getMap() as $name => $method) {
-            // Call associated method dynamically
-            if (call_user_func(array($this, $method))) {
-                return $name;
+        $dateStr = $this->date->format('m-d');
+        $year = $this->date->format('Y');
+
+        foreach ($this->signRanges as $sign => $range) {
+            $start = DateTime::createFromFormat('!Y-m-d', "$year-{$range[0]}");
+            $end = DateTime::createFromFormat('!Y-m-d', "$year-{$range[1]}");
+
+            // Handle Capricorn (crosses year boundary)
+            if ($sign === 'Capricorn' && $end < $start) {
+                $end->modify('+1 year');
+            }
+
+            if ($this->date >= $start && $this->date <= $end) {
+                return $sign;
             }
         }
 
-        // On failure
-        return false;
+        throw new RuntimeException('Failed to determine zodiac sign');
     }
 
     /**
-     * Checks whether day is in range
-     * 
-     * @param integer $day
-     * @return boolean
-     */
-    private function dayInRange($day)
-    {
-        return (1 <= $day && $day <= 31);
-    }
-
-    /**
-     * Checks whether month is supported
-     * 
-     * @param string $month
-     * @return boolean
-     */
-    private function isValidMonth($month)
-    {
-        $list = array(
-            self::MONTH_JANUARY,
-            self::MONTH_FEBRUARY,
-            self::MONTH_MARCH,
-            self::MONTH_APRIL,
-            self::MONTH_MAY,
-            self::MONTH_JUNE,
-            self::MONTH_JULY,
-            self::MONTH_AUGUST,
-            self::MONTH_SEPTEMBER,
-            self::MONTH_OCTOBER,
-            self::MONTH_NOVEMBER,
-            self::MONTH_DECEMBER
-        );
-
-        return in_array($month, $list);
-    }
-
-    /**
-     * Returns a map of zodiacal sign names with their associated method names
+     * Get all available zodiac signs
      * 
      * @return array
      */
-    private function getMap()
+    public function getAvailableSigns()
     {
-        // Zodiacal sing name => the method that confirms if it matches
-        return array(
-            'Aries' => 'isAries',
-            'Taurus' => 'isTaurus',
-            'Gemini' => 'isGemini',
-            'Cancer' => 'isCancer',
-            'Leo' => 'isLeo',
-            'Virgo' => 'isVirgo',
-            'Scorpio' => 'isScorpio',
-            'Libra' => 'isLibra',
-            'Sagittarius' => 'isSagittarius',
-            'Capricorn' => 'isCapricorn',
-            'Aquarius' => 'isAquarius',
-            'Pisces' => 'isPisces',
-        );
-    }
-
-    /**
-     * Normalizes a month
-     * 
-     * @param string $month
-     * @return string
-     */
-    private function normalize($month)
-    {
-        return ucfirst(strtolower($month));
-    }
-
-    /**
-     * Checks whether the sign is Aries
-     * 
-     * @return boolean
-     */
-    public function isAries()
-    {
-        return ($this->month === self::MONTH_MARCH) && ($this->day >= 21) && ($this->day <= 31) || ($this->month === self::MONTH_APRIL) && ($this->day <= 20);
-    }
-
-    /**
-     * Checks whether the sign is Taurus
-     * 
-     * @return boolean
-     */
-    public function isTaurus()
-    {
-        return ($this->month === self::MONTH_APRIL) && ($this->day >= 21) && ($this->day <= 30) || ($this->month === self::MONTH_MAY) && ($this->day <= 21);
-    }
-
-    /**
-     * Checks whether the sign is Gemini
-     * 
-     * @return boolean
-     */
-    public function isGemini()
-    {
-        return ($this->month === self::MONTH_MAY) && ($this->day >= 22) && ($this->day <= 31) || ($this->month === self::MONTH_JULY) && ($this->day <= 21);
-    }
-
-    /**
-     * Checks whether the sign is Cancer
-     * 
-     * @return boolean
-     */
-    public function isCancer()
-    {
-        return ($this->month === self::MONTH_JUNE) && ($this->day >= 22) && ($this->day <= 30) || ($this->month === self::MONTH_JULY) && ($this->day <= 22);
-    }
-
-    /**
-     * Checks whether the sign is Leo
-     * 
-     * @return boolean
-     */
-    public function isLeo()
-    {
-        return ($this->month === self::MONTH_JULY) && ($this->day >= 23) && ($this->day <= 30) || ($this->month === self::MONTH_MAY) && ($this->day <= 22);
-    }
-
-    /**
-     * Checks whether the sign is Virgo
-     * 
-     * @return boolean
-     */
-    public function isVirgo()
-    {
-        return ($this->month === self::MONTH_AUGUST) && ($this->day >= 23) && ($this->day <= 30) || ($this->month === self::MONTH_SEPTEMBER) && ($this->day <= 23);
-    }
-
-    /**
-     * Checks whether the sign is Scorpio
-     * 
-     * @return boolean
-     */
-    public function isScorpio()
-    {
-        return ($this->month === self::MONTH_OCTOBER) && ($this->day >= 24) && ($this->day <= 30) || ($this->month === self::MONTH_NOVEMBER) && ($this->day <= 22);
-    }
-
-    /**
-     * Checks whether the sign is Libra
-     * 
-     * @return boolean
-     */
-    public function isLibra()
-    {
-        return ($this->month === self::MONTH_SEPTEMBER) && ($this->day >= 24) && ($this->day <= 30) || ($this->month === self::MONTH_OCTOBER) && ($this->day <= 23);
-    }
-
-    /**
-     * Checks whether the sign is Sagittarius
-     * 
-     * @return boolean
-     */
-    public function isSagittarius()
-    {
-        return ($this->month === self::MONTH_NOVEMBER) && ($this->day >= 23) && ($this->day <= 30) || ($this->month === self::MONTH_DECEMBER) && ($this->day <= 21);
-    }
-
-    /**
-     * Checks whether the sign is Capricorn
-     * 
-     * @return boolean
-     */
-    public function isCapricorn()
-    {
-        return ($this->month === self::MONTH_DECEMBER) && ($this->day >= 22) && ($this->day <= 30) || ($this->month === self::MONTH_JANUARY) && ($this->day <= 20);
-    }
-
-    /**
-     * Checks whether the sign is Aquarius
-     * 
-     * @return boolean
-     */
-    public function isAquarius()
-    {
-        return ($this->month === self::MONTH_JANUARY) && ($this->day >= 21) && ($this->day <= 30) || ($this->month === self::MONTH_FEBRUARY) && ($this->day <= 19);
-    }
-
-    /**
-     * Checks whether the sign is Pisces
-     * 
-     * @return boolean
-     */
-    public function isPisces()
-    {
-        return ($this->month === self::MONTH_FEBRUARY) && ($this->day >= 20) && ($this->day <= 30) || ($this->month === self::MONTH_MARCH) && ($this->day <= 20);
+        return array_keys($this->signRanges);
     }
 }
