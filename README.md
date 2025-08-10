@@ -1,28 +1,63 @@
-Krystal PHP Framework
-====================
+# Krystal Framework
 
-Started back in 2014 as a lightweight PHP framework, Krystal remained its simplicity and extensible architecture. Krystal's philosophy is about modularity and maintainable APIs.
+I’ve worked with many popular PHP frameworks over the years, and I kept running into the same problems:
+
+-   Overcomplicating simple tasks
+-   Tight coupling between components
+-   Steeper-than-necessary learning curves
+-   Missing basic tools and components
+-   Overly bloated documentation
+-   Dozens of unnecessary dependencies you’ll never actually use
+    
+
+I created **Krystal Framework** to solve these issues.
+
+**Why Choose Krystal Framework?**
+
+-   **Insanely simple API**  
+    Simplicity is at the heart of Krystal. The API is designed to be as clear and intuitive as possible, so you can focus on building, not deciphering.
+    
+-   **MVC done right**  
+    Krystal delivers a precise MVC implementation with a dynamic routing system and controller-based architecture.  
+    There are no heavy models or ActiveRecord patterns—models are composed of data mappers and service objects for clean, maintainable code.
+    
+-   **Built-in code generator**  
+    Kickstart development with Krystal’s built-in code generator, making repetitive tasks effortless.
+
+**Components**
+
+-   **Routing & Controllers**  
+    Simple yet powerful—routes are defined with a straightforward array and mapped directly to controller actions.
+    
+-   **Powerful Grid**  
+    Create beautiful, data-rich tables with built-in filtering, sorting, and pagination—no extra setup required.
+    
+-   **Membership**  
+    The built-in membership module includes all the essentials: login, registration, and password recovery.
+    
+-   **Image Tools**  
+    Crop, resize, generate thumbnails, batch compress, and convert JPGs to AVIF or WebP—quickly and easily.
+    
+-   **Administration panel**  
+    A fully pre-configured admin panel comes ready to use, complete with authentication and an RBAC (role-based access control) system.
+    
+
+**...and much more!**
+
+
+# Documentation
+
+You can find documentation and tutorials on the [official website](https://krystal-framework.dev).
 
 # License
 
 The framework is licensed under BSD-3.
 
-# Official documentation
-
-The documentation is hosted on ReadTheDocs and can be found [here](http://krystal-docs.readthedocs.org/en/latest/README/).
-
 # Contributing
 
-All work is managed via GitHub, so you need to create an account if you don't have a one.
+Fork the repo, create a branch, make your changes, push them, and open a pull request for review.
 
-The steps are following:
 
-1. Fork the framework
-2. Make changes
-3. Open a pull-request
+# Security vulnerabilities
 
-When opening a pull-request, please include all relevant information when describing changes you've made.
-
-# Security Vulnerabilities
-
-If you discovered a vulnerability, please don't open a new issue, but send an email to the author [daworld.ny@gmail.com] directly explaining steps you took to reproduce it.
+If you discover a vulnerability, please do not open a public issue. Instead, email the author at [contact@krystal-framework.dev] with a detailed description of the steps to reproduce it.
