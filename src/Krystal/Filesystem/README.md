@@ -1,4 +1,5 @@
-## Working with file-system
+Working with file-system
+========================
 
 `FileManager` is a utility class that provides a wide range of common filesystem operations — removing files, traversing directories, copying, cleaning, and more — all with built-in error handling.
 
