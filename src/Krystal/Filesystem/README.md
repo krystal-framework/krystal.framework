@@ -1,5 +1,5 @@
 Working with file-system
-========================
+====================
 
 `FileManager` is a utility class that provides a wide range of common filesystem operations — removing files, traversing directories, copying, cleaning, and more — all with built-in error handling.
 
@@ -18,7 +18,7 @@ Throws `RuntimeException` if the given path is not a valid file.
 
 **Usage:**
 
-`FileManager::rmfile('/path/to/file.txt');`
+    FileManager::rmfile('/path/to/file.txt');
 
 ### Get directory tree
 
@@ -27,7 +27,7 @@ Throws `RuntimeException` if the path is not a valid directory.
 
 **Usage:**
 
-`$files = FileManager::getDirTree('/path/to/dir', true);`
+    $files = FileManager::getDirTree('/path/to/dir', true);
 
 ### Get total directory size
 Calculates the total size in bytes of all files in a directory (including subdirectories).  
@@ -106,7 +106,7 @@ Usage:
 
 Determines the MIME type of a given file using PHP’s `finfo` or similar internal methods.   Throws `RuntimeException` if the given path is not a valid file.
 
-`$mimeType = FileManager::getMimeType('/path/to/image.jpg'); // e.g., returns "image/jpeg"`
+    $mimeType = FileManager::getMimeType('/path/to/image.jpg'); // e.g., returns "image/jpeg"
 
 ### Check if a file has a specific extension
 
@@ -124,7 +124,7 @@ Takes a file size in bytes and converts it to a more readable format (KB, MB, GB
 
 Usage:
 
-`echo  FileManager::humanSize(1048576); // Output: "1 MB"`
+    echo  FileManager::humanSize(1048576); // Output: "1 MB"
 
 ### Get file size
 
@@ -142,14 +142,14 @@ Extracts just the file name from a full file path.
 
 Usage:
 
-`$name = FileManager::getFileName('/var/www/index.php'); // Output: "index"`
+    $name = FileManager::getFileName('/var/www/index.php'); // Output: "index"
 
 ### Get directory name from a path
 Returns the directory portion of a file path.
 
 Usage:
 
-`$dir = FileManager::getDirName('/var/www/index.php'); // Output: "/var/www"`
+    $dir = FileManager::getDirName('/var/www/index.php'); // Output: "/var/www"
 
 ### Get file extension
 
@@ -157,7 +157,7 @@ Retrieves the extension of a given file (without the dot).
 
 Usage:
 
-`$ext = FileManager::getExtension('/var/www/index.php'); // Output: "php"`
+    $ext = FileManager::getExtension('/var/www/index.php'); // Output: "php"
 
 ### Get base name
 
@@ -165,11 +165,11 @@ Returns the base file name including its extension.
 
 Usage:
 
-`$base = FileManager::getBaseName('/var/www/index.php'); // Output: "index.php"`
+    $base = FileManager::getBaseName('/var/www/index.php'); // Output: "index.php"
 
 ### Replace file extension
 Replaces the extension of a given file with a new one.
 
 Usage:
 
-`$newFile = FileManager::replaceExtension('/var/www/index.php', 'html'); // Output: "/var/www/index.html"`
+    $newFile = FileManager::replaceExtension('/var/www/index.php', 'html'); // Output: "/var/www/index.html"
