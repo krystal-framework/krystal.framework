@@ -1,9 +1,9 @@
-
 Google-specific Sitemap generators
 ==========
-This document covers usage of specific Google Sitemap implementations
 
-## Image sitemap
+This document explains how to use specific implementations of Google Sitemaps.
+
+### Image sitemap
 
 Google provides a special type of Sitemap for better image indexing. You can learn more about it [here](https://support.google.com/webmasters/answer/178636?hl=en&ref_topic=4581190).
 
@@ -34,7 +34,6 @@ You can generate image-specific Sitemap like this:
     
     echo $sitemap->render();
     
-We have just added one URL with corresponding images. You can add as much URLs as needed.
 The following snippet will generate the following output:
 
     <?xml version="1.0" encoding="UTF-8"?>
@@ -59,7 +58,7 @@ The following snippet will generate the following output:
       </url>
     </urlset>
 
-The method `addUrl()` takes two arguments. The first one is primary URL string and the second one is an array of corresponding images to that URL.
+The `addUrl()` method accepts two arguments: the primary URL as a string, and an array of images associated with that URL.
 
 You can also use alternate `addUrls()` method to add many URLs at once, like this:
 
@@ -69,15 +68,12 @@ You can also use alternate `addUrls()` method to add many URLs at once, like thi
 
     $sitemap = new ImageSitemap();
     $sitemap->addUrls([
-        // First URL with its corresponding image items
         [
             'loc' => 'http://example.com',
             'images' => [
                 // .. As above
             ]
         ],
-        
-        // Second URL with its corresponding image items
         [
             'loc' => 'http://example.ltd',
             'images' => [
@@ -87,7 +83,7 @@ You can also use alternate `addUrls()` method to add many URLs at once, like thi
     ]);
 
 
-## Localized Sitemap
+### Localized Sitemap
 
 Google recommends using their localized version of Sitemap for better crawling. You can learn more about it [here](https://support.google.com/webmasters/answer/189077#sitemap%29).
 
@@ -139,7 +135,7 @@ You can also use `addUrls()` method to add many values at once, like this:
     ]);
 
 
-## News Sitemap
+### News Sitemap
 
 Google highly recommends using their News Sitemap for news/blog web-sites. You can learn more about it [here](https://support.google.com/webmasters/answer/9606710?hl=en&ref_topic=4581190).
 
@@ -197,7 +193,7 @@ You can also use alternate method `addUrls()` to define many items at once. It g
         [
             'loc' => 'http://www.domain.com/some-yet-another-post',
             'name' => 'Some yet another post',
-            'locale' => 'Ru',
+            'locale' => 'de',
             'date' => '2018-05-10',
             'title' => 'Get It Started'
         ]
@@ -205,7 +201,7 @@ You can also use alternate method `addUrls()` to define many items at once. It g
 
 
 
-## Video Sitemap
+### Video Sitemap
 
 For better crawling of Video sites, Google recommends using their dedicated Video Sitemap. You can learn more about this extension [here](https://support.google.com/webmasters/answer/80471?hl=en&ref_topic=4581190).
 
@@ -292,4 +288,3 @@ You can also add many URLs at once with `addUrls()`. It takes an array, like thi
         ],
         // Add as many as required
     ]);
-
