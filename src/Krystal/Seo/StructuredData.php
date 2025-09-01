@@ -14,6 +14,62 @@ namespace Krystal\Seo;
 class StructuredData
 {
     /**
+     * Generate CollectionPage schema markup.
+     * 
+     * This schema is useful for category pages, listing pages (blog, shop, partners),
+     * or any page that displays a list of entities (articles, products, organizations, etc.).
+     *
+     * @param array $pageData [
+     *     'url' => (string) Page URL,
+     *     'name' => (string) Page title,
+     *     'description' => (string|null) Page description,
+     *     'language' => (string|null) Language code (e.g., 'en-US'),
+     *     'items' => (array) List of items, each item should contain:
+     *         [
+     *             'id'   => (string) Unique identifier (URL or URL#fragment),
+     *             'url'  => (string) Item URL,
+     *             'name' => (string) Item title/headline,
+     *             ...    => (mixed) Other schema.org properties depending on type
+     *         ],
+     *     'itemType' => (string) Schema.org type of the items, e.g. "Article", "Product", "Organization"
+     * ]
+     *
+     * @return array
+     */
+    public function generateCollectionPageSchema(array $pageData)
+    {
+        $items = [];
+
+        foreach ($pageData['items'] ?? [] as $item) {
+            $items[] = array_merge(
+                [
+                    '@type' => $pageData['itemType'] ?? 'Thing',
+                    '@id'   => $item['id'] ?? ($item['url'] ?? null),
+                    'url'   => $item['url'] ?? null,
+                    'name'  => $item['name'] ?? null,
+                ],
+                $item // allow extra props like datePublished, image, etc.
+            );
+        }
+
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            '@id' => ($pageData['url'] ?? '') . '#webpage',
+            'url' => $pageData['url'] ?? null,
+            'name' => $pageData['name'] ?? null,
+            'description' => $pageData['description'] ?? null,
+            'inLanguage' => $pageData['language'] ?? null,
+            'isPartOf' => [
+                '@id' => ($pageData['siteUrl'] ?? '') . '/#website'
+            ],
+            'mainEntity' => $items
+        ];
+
+        return $this->removeEmpty($schema);
+    }
+
+    /**
      * Generate Schema.org Article structured data.
      *
      * This method creates a JSON-LD array for an Article, which can be embedded

@@ -368,3 +368,86 @@ This will output:
       "dateModified": "2023-07-20T14:30:00+00:00",
       "inLanguage": "en-US"
     }
+
+
+## Collection Page
+
+A **CollectionPage** is a schema.org type that describes a webpage which groups together a list of **items**.
+
+Examples of where it can be used:
+
+- Blog category pages (e.g., `/blog/seo/`)    
+- Product listing pages (e.g., `/shop/shoes/`)
+- Portfolio overview pages (e.g., `/projects/`)
+- Events listing (e.g., `/events/`)
+ 
+Usage example:
+
+    <?php
+    
+    use Krystal\Seo\StructuredData;
+    use Krystal\Form\Element;
+    
+    $pageData = [
+        'url' => 'https://example.com/blog/seo',
+        'name' => 'SEO Articles',
+        'description' => 'Read our latest blog posts and guides about SEO.',
+        'language' => 'en-US',
+        'siteUrl' => 'https://example.com',
+        'itemType' => 'Article',
+        'items' => [
+            [
+                'id' => 'https://example.com/blog/seo-guide#article',
+                'url' => 'https://example.com/blog/seo-guide',
+                'name' => 'Ultimate Guide to SEO',
+                'datePublished' => '2023-07-12',
+                'dateModified' => '2023-08-05'
+            ],
+            [
+                'id' => 'https://example.com/blog/link-building#article',
+                'url' => 'https://example.com/blog/link-building',
+                'name' => 'Top 10 Link Building Strategies',
+                'datePublished' => '2026-06-20',
+                'dateModified' => '2026-07-01'
+            ]
+        ]
+    ];
+    
+    $schema = (new StructuredData())->generateCollectionPageSchema($items);
+    echo Element::jsonLd($schema);
+
+This will output the following:
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": "https://example.com/blog/seo#webpage",
+      "url": "https://example.com/blog/seo",
+      "name": "SEO Articles",
+      "description": "Read our latest blog posts and guides about SEO.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://example.com/#website"
+      },
+      "mainEntity": [
+        {
+          "@type": "Article",
+          "@id": "https://example.com/blog/seo-guide#article",
+          "url": "https://example.com/blog/seo-guide",
+          "name": "Ultimate Guide to SEO",
+          "datePublished": "2023-07-12",
+          "dateModified": "2023-08-05"
+        },
+        {
+          "@type": "Article",
+          "@id": "https://example.com/blog/link-building#article",
+          "url": "https://example.com/blog/link-building",
+          "name": "Top 10 Link Building Strategies",
+          "datePublished": "2026-06-20",
+          "dateModified": "2026-07-01"
+        }
+      ]
+    }
+    </script>
+
