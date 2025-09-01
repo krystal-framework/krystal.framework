@@ -14,6 +14,44 @@ namespace Krystal\Seo;
 class StructuredData
 {
     /**
+     * Generate Website Schema.org markup.
+     *
+     * @param array $params {
+     *     @type string $siteUrl   The website URL.
+     *     @type string $siteName  The website name.
+     *     @type string $language  The language code (e.g., "en", "en-US").
+     *     @type string $searchUrl Optional. The URL pattern for search, e.g. "https://example.com/search?q={search_term_string}".
+     * }
+     *
+     * @return array JSON-LD Website schema
+     */
+    public function generateWebsiteSchema(array $params): array
+    {
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type'    => 'WebSite',
+            '@id'      => $params['siteUrl'] . '/#website',
+            'url'      => $params['siteUrl'] ?? null,
+            'name'     => $params['siteName'] ?? null,
+            'publisher'=> [
+                '@id' => $params['siteUrl'] . '/#organization',
+            ],
+            'inLanguage' => $params['language'] ?? null,
+        ];
+
+        // Add search action only if a search URL is provided
+        if (!empty($params['searchUrl'])) {
+            $schema['potentialAction'] = [
+                '@type'       => 'SearchAction',
+                'target'      => $params['searchUrl'],
+                'query-input' => 'required name=search_term_string'
+            ];
+        }
+
+        return $this->removeEmpty($schema);
+    }
+
+    /**
      * Generates a Schema.org Organization structured data array.
      *
      * This method creates a valid JSON-LD representation of an Organization,
@@ -197,19 +235,20 @@ class StructuredData
     }
 
     /**
-     * Remove empty values
-     * 
+     * Recursively remove empty values (null, empty string, empty array) from schema arrays.
+     *
      * @param array $data
      * @return array
      */
     private function removeEmpty(array $data)
     {
-        return array_filter($data, function($value) {
+        return array_filter(array_map(function ($value) {
             if (is_array($value)) {
-                return count($this->removeEmpty($value)) > 0;
+                return $this->removeEmpty($value);
             }
-
-            return $value !== '' && $value !== null;
+            return $value;
+        }, $data), function ($value) {
+            return !($value === null || $value === '' || (is_array($value) && empty($value)));
         });
     }
 }

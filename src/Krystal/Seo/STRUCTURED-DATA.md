@@ -222,3 +222,45 @@ This will output the following:
     }
     </script>
 
+## Web site
+
+The **WebSite schema** is a type of **structured data** (JSON-LD) defined by Schema.org. It helps search engines understand the **overall identity of your website**.
+
+Instead of describing a single page, article, or product, the `WebSite` schema gives **context about the entire site**.
+
+    <?php
+    
+    use Krystal\Seo\StructuredData;
+    use Krystal\Form\Element;
+    
+    $params = [
+        'siteUrl'  => 'https://example.com',
+        'siteName' => 'My Awesome Website',
+        'language' => 'en-US',
+        'searchUrl'=> 'https://example.com/search?q={search_term_string}' //  Optional
+    ];
+    
+     $schema = (new StructuredData())->generateWebsiteSchema($items);
+     echo Element::jsonLd($schema);
+
+This will output:
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://example.com/#website",
+      "url": "https://example.com",
+      "name": "My Awesome Website",
+      "publisher": {
+        "@id": "https://example.com/#organization"
+      },
+      "inLanguage": "en-US",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://example.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
