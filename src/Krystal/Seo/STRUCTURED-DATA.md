@@ -264,3 +264,51 @@ This will output:
     }
     </script>
 
+
+## Web page
+
+**WebPage schema** is a type of structured data defined by [Schema.org](https://schema.org?utm_source=chatgpt.com) that provides search engines with detailed information about an individual web page.
+
+Usage example:
+
+    <?php
+    
+    use Krystal\Seo\StructuredData;
+    use Krystal\Form\Element;
+    
+    $pageData = [
+        'url'         => 'https://example.com/about-us',
+        'name'        => 'About Us',
+        'description' => 'Learn more about our company and mission.',
+        'createdAt'   => '2020-05-01 10:00:00',
+        'updatedAt'   => 'August 15, 2025 14:45',
+        'language'    => 'en-US',
+        'siteUrl'     => 'https://example.com',
+        'author'      => 'Jane Doe'
+    ];
+    
+    $schema = (new StructuredData())->generateWebPageSchema($items);
+    echo Element::jsonLd($schema);
+
+This will output:
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://example.com/about-us#webpage",
+      "url": "https://example.com/about-us",
+      "name": "About Us",
+      "description": "Learn more about our company and mission.",
+      "datePublished": "2020-05-01T10:00:00+00:00",
+      "dateModified": "2025-08-15T14:45:00+00:00",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://example.com/#website"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Jane Doe"
+      }
+    }
+    </script>

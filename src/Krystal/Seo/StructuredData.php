@@ -14,6 +14,50 @@ namespace Krystal\Seo;
 class StructuredData
 {
     /**
+     * Generate Schema.org WebPage structured data.
+     *
+     * Accepts arbitrary date formats (anything PHP's strtotime() can parse) for
+     * `createdAt` and `updatedAt` and normalizes them into ISO 8601 (W3C) format,
+     * which is required for structured data.
+     *
+     * @param array $pageData {
+     *     @type string $url         Canonical URL of the page.
+     *     @type string $name        Page title.
+     *     @type string $description Meta description of the page.
+     *     @type string $createdAt   Date when the page was published (any parsable format).
+     *     @type string $updatedAt   Date when the page was last modified (any parsable format).
+     *     @type string $language    Page language code (e.g. "en", "en-US").
+     *     @type string $siteUrl     Website base URL (used to link WebSite schema).
+     *     @type string $author      (Optional) Author of the page.
+     * }
+     *
+     * @return array JSON-LD representation of the WebPage schema.
+     */
+    public function generateWebPageSchema(array $pageData)
+    {
+        $schema = [
+            '@context'      => 'https://schema.org',
+            '@type'         => 'WebPage',
+            '@id'           => ($pageData['url'] ?? '') . '#webpage',
+            'url'           => $pageData['url'] ?? null,
+            'name'          => $pageData['name'] ?? null,
+            'description'   => $pageData['description'] ?? null,
+            'datePublished' => $this->formatDate($pageData['createdAt'] ?? null),
+            'dateModified'  => $this->formatDate($pageData['updatedAt'] ?? null),
+            'inLanguage'    => $pageData['language'] ?? null,
+            'isPartOf'      => isset($pageData['siteUrl']) ? [
+                '@id' => $pageData['siteUrl'] . '/#website'
+            ] : null,
+            'author' => !empty($pageData['author']) ? [
+                '@type' => 'Person',
+                'name'  => $pageData['author']
+            ] : null,
+        ];
+
+        return $this->removeEmpty($schema);
+    }
+
+    /**
      * Generate Website Schema.org markup.
      *
      * @param array $params {
@@ -232,6 +276,27 @@ class StructuredData
             '@type'    => 'BreadcrumbList',
             'itemListElement' => $itemListElement,
         ];
+    }
+
+    /**
+     * Normalize a date into ISO 8601 format (W3C).
+     *
+     * @param string|null $date Any valid date string PHP's strtotime() can parse.
+     * @return string|null ISO 8601 formatted date, or null if invalid.
+     */
+    private function formatDate($date)
+    {
+        if (empty($date)) {
+            return null;
+        }
+
+        $timestamp = strtotime($date);
+
+        if ($timestamp === false) {
+            return null;
+        }
+
+        return date(DATE_W3C, $timestamp); // e.g. 2025-08-28T14:30:00+00:00
     }
 
     /**
