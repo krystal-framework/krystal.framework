@@ -14,6 +14,50 @@ namespace Krystal\Seo;
 class StructuredData
 {
     /**
+     * Generates a Schema.org Organization structured data array.
+     *
+     * This method creates a valid JSON-LD representation of an Organization,
+     * including its name, URL, logo, and associated social profiles.
+     * It follows Schema.org's "Organization" specification and can be
+     * embedded on the website using <script type="application/ld+json">.
+     *
+     * Expected keys in $params:
+     * - siteName (string, required)          The name of the organization.
+     * - siteUrl (string, required)           The canonical URL of the organization.
+     * - logo (array, optional)               Organization logo metadata:
+     *     - url (string, required)           Logo image URL.
+     *     - width (int, optional)            Logo width in pixels (default 112).
+     *     - height (int, optional)           Logo height in pixels (default 112).
+     * - socialProfiles (array, optional)     List of social profile URLs (e.g., Facebook, Twitter).
+     *
+     * @param array $params Organization details and metadata.
+     *
+     * @return array Structured data representing the Organization schema.
+     *
+     * @see https://schema.org/Organization
+     */
+    public function generateOrganizationSchema(array $params = [])
+    {
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => $params['siteName'] ?? null,
+            'url' => $params['siteUrl'] ?? null,
+            'logo' => [
+                '@type' => 'ImageObject',
+                '@id' => ($params['siteUrl'] ?? '') . '/#logo',
+                'url' => $params['logo']['url'] ?? null,
+                'width' => $params['logo']['width'] ?? 112,
+                'height' => $params['logo']['height'] ?? 112,
+                'caption' => $params['siteName'] ?? null,
+            ],
+            'sameAs' => $params['socialProfiles'] ?? [],
+        ];
+
+        return $this->removeEmpty($schema);
+    }
+
+    /**
      * Generate LocalBusiness structured data (Schema.org JSON-LD).
      *
      * This method creates a Schema.org representation of a LocalBusiness entity
@@ -44,7 +88,7 @@ class StructuredData
      * @see https://schema.org/LocalBusiness
      * @see https://developers.google.com/search/docs/appearance/structured-data/local-business
      */
-    public function generateLocalBusinessSchema(array $businessData): array
+    public function generateLocalBusinessSchema(array $businessData)
     {
         $schema = [
             '@context' => 'https://schema.org',

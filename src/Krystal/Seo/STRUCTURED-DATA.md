@@ -170,3 +170,55 @@ This will output the following:
       "priceRange": "$$"
     }
     </script>
+
+## Organization
+
+**Organization schema** is a type of **structured data markup** (from Schema.org) that describes details about an organization — like a business, non-profit, school, or brand.
+
+Usage example:
+
+    <?php
+        
+    use Krystal\Seo\StructuredData;
+    use Krystal\Form\Element;
+
+    $params = [
+        'siteName' => "My Awesome Company",
+        'siteUrl' => "https://example.com",
+        'logo' => [
+            'url' => "https://example.com/logo.png",
+            'width' => 200,
+            'height' => 50
+        ],
+        'socialProfiles' => [
+            "https://facebook.com/mycompany",
+            "https://x.com/mycompany"
+        ]
+    ];
+    
+    $schema = (new StructuredData())->generateOrganizationSchema($items);
+    echo Element::jsonLd($schema);
+
+This will output the following:
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "My Awesome Company",
+      "url": "https://example.com",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://example.com/#logo",
+        "url": "https://example.com/logo.png",
+        "width": 200,
+        "height": 50,
+        "caption": "My Awesome Company"
+      },
+      "sameAs": [
+        "https://facebook.com/mycompany",
+        "https://x.com/mycompany"
+      ]
+    }
+    </script>
+
