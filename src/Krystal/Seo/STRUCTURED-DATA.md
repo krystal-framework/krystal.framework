@@ -145,10 +145,10 @@ This will output the following:
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "@id": "https://joespizza.com/#localbusiness",
-      "name": "Joe's Pizza",
-      "url": "https://joespizza.com",
-      "image": "https://joespizza.com/logo.png",
+      "@id": "https://example.com/#localbusiness",
+      "name": "Dave's Pizza",
+      "url": "https://example.com",
+      "image": "https://example.com/logo.png",
       "telephone": "+1-555-123-4567",
       "address": {
         "@type": "PostalAddress",
