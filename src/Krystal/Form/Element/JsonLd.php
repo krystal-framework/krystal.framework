@@ -43,7 +43,7 @@ final class JsonLd implements FormElementInterface
         return $node->openTag('script')
                     ->addAttribute('type', 'application/ld+json')
                     ->finalize(false)
-                    ->setText(json_encode($this->data))
+                    ->setText(json_encode($this->data, \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES))
                     ->closeTag()
                     ->render();
     }
