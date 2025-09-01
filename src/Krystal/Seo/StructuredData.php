@@ -14,6 +14,58 @@ namespace Krystal\Seo;
 class StructuredData
 {
     /**
+     * Generate Schema.org Article structured data.
+     *
+     * This method creates a JSON-LD array for an Article, which can be embedded
+     * in a web page to improve SEO and help search engines understand the content.
+     *
+     * @param array $postData {
+     *     @type string      $url         The canonical URL of the article.
+     *     @type string      $title       The headline/title of the article.
+     *     @type string      $description A short description or meta description.
+     *     @type string      $image       A URL of the main article image.
+     *     @type array       $author      Author details.
+     *     @type string      $author.name The name of the author.
+     *     @type string      $siteName    Name of the publishing site/organization.
+     *     @type string      $logo        URL of the publisher’s logo image.
+     *     @type string      $publishedAt Publish date (any format strtotime can parse).
+     *     @type string      $updatedAt   Modified date (any format strtotime can parse).
+     *     @type string      $language    Language code (e.g., "en", "en-US").
+     * }
+     *
+     * @return array JSON-LD structured data for an Article.
+     */
+    public function generateArticleSchema(array $postData)
+    {
+        $schema = [
+            '@context'      => 'https://schema.org',
+            '@type'         => $postData['type'] ?? 'Article', // "Article" or "BlogPosting"
+            '@id'           => isset($postData['url']) ? $postData['url'] . '#article' : null,
+            'url'           => $postData['url'] ?? null,
+            'headline'      => $postData['title'] ?? null,
+            'description'   => $postData['description'] ?? null,
+            'image'         => $postData['image'] ?? null,
+            'author'        => [
+                '@type' => 'Person',
+                'name'  => $postData['author']['name'] ?? 'Admin'
+            ],
+            'publisher'     => [
+                '@type' => 'Organization',
+                'name'  => $postData['siteName'] ?? null,
+                'logo'  => [
+                    '@type' => 'ImageObject',
+                    'url'   => $postData['logo'] ?? null
+                ]
+            ],
+            'datePublished' => $this->formatDate($postData['publishedAt'] ?? null),
+            'dateModified'  => $this->formatDate($postData['updatedAt'] ?? null),
+            'inLanguage'    => $postData['language'] ?? null
+        ];
+
+        return $this->removeEmpty($schema);
+    }
+
+    /**
      * Generate Schema.org WebPage structured data.
      *
      * Accepts arbitrary date formats (anything PHP's strtotime() can parse) for

@@ -312,3 +312,59 @@ This will output:
       }
     }
     </script>
+
+
+## Article
+
+**Article schema** is a type of structured data defined by Schema.org. It helps search engines understand that a piece of content on your site is an **article** — such as a news story, blog post, or general written content.
+
+Usage example:
+
+    <?php
+    
+    use Krystal\Seo\StructuredData;
+    use Krystal\Form\Element;
+    
+    $postData = [
+        'url'         => 'https://example.com/blog/seo-tips',
+        'title'       => '10 Essential SEO Tips for Beginners',
+        'description' => 'Learn the top 10 SEO tips every beginner should know.',
+        'image'       => 'https://example.com/images/seo-tips.jpg',
+        'author'      => ['name' => 'Jane Doe'],
+        'siteName'    => 'Example Blog',
+        'logo'        => 'https://example.com/images/logo.png',
+        'publishedAt' => '2023-07-15 10:00:00',
+        'updatedAt'   => '2023-07-20 14:30:00',
+        'language'    => 'en-US',
+    ];
+    
+        
+    $schema = (new StructuredData())->generateArticleSchema($items);
+    echo Element::jsonLd($schema);
+
+This will output:
+
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://example.com/blog/seo-tips#article",
+      "url": "https://example.com/blog/seo-tips",
+      "headline": "10 Essential SEO Tips for Beginners",
+      "description": "Learn the top 10 SEO tips every beginner should know.",
+      "image": "https://example.com/images/seo-tips.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "Jane Doe"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Example Blog",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://example.com/images/logo.png"
+        }
+      },
+      "datePublished": "2023-07-15T10:00:00+00:00",
+      "dateModified": "2023-07-20T14:30:00+00:00",
+      "inLanguage": "en-US"
+    }
