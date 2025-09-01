@@ -14,6 +14,38 @@ namespace Krystal\Seo;
 class StructuredData
 {
     /**
+     * Generate FAQPage JSON-LD structured data.
+     *
+     * @param array<int, array{question: string, answer: string}> $questions
+     * @return array<string, mixed>
+     */
+    public function generateFAQSchema(array $questions)
+    {
+        $mainEntity = [];
+
+        foreach ($questions as $question) {
+            if (empty($question['question']) || empty($question['answer'])) {
+                continue;
+            }
+
+            $mainEntity[] = [
+                '@type' => 'Question',
+                'name' => strip_tags($question['question']),
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => strip_tags($question['answer'])
+                ]
+            ];
+        }
+
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'FAQPage',
+            'mainEntity' => $mainEntity,
+        ];
+    }
+
+    /**
      * Generate a Schema.org BreadcrumbList JSON-LD structure.
      *
      * Each item must have at least a "name" (string).

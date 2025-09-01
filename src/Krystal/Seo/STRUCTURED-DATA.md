@@ -52,3 +52,55 @@ This will output the following:
     }
     </script>
 
+## FAQ
+
+**FAQ structured data** is a type of Schema.org markup you can add to a webpage that contains a list of **frequently asked questions and their answers**.
+
+It helps **search engines** understand that the content is a Q&A format, and it allows them to display those questions and answers directly in search results as **rich results** (collapsible FAQ dropdowns under your page link).
+
+    <?php
+    
+    use Krystal\Seo\StructuredData;
+    use Krystal\Form\Element;
+    
+    $items = [
+        [
+            'question' => 'What is your return policy?',
+            'answer' => 'You can return any item within 30 days of purchase.'
+        ],
+        [
+            'question' => 'Do you ship internationally?',
+            'answer' => 'Yes, we ship to most countries worldwide.'
+        ]
+    ];
+    
+    $schema = (new StructuredData())->generateFAQSchema($items);
+    echo Element::jsonLd($schema);
+    
+
+This will output the following:
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is your return policy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can return any item within 30 days of purchase."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you ship internationally?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we ship to most countries worldwide."
+          }
+        }
+      ]
+    }
+    </script>
