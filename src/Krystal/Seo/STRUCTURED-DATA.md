@@ -104,3 +104,69 @@ This will output the following:
       ]
     }
     </script>
+    
+    
+## Local business
+
+**Local Business Schema** is a type of structured data markup that you add to your website so that **search engines  can better understand details about your business**.
+
+Usage example
+
+    <?php
+        
+    use Krystal\Seo\StructuredData;
+    use Krystal\Form\Element;
+    
+    $businessData = [
+        'name' => "Dave's Pizza",
+        'url' => "https://example.com",
+        'image' => "https://example.com/logo.png",
+        'phone' => "+1-555-123-4567",
+        'address' => "123 Main Street",
+        'city' => "New York",
+        'region' => "NY",
+        'postalCode' => "10001",
+        'country' => "US",
+        'latitude' => 40.7128,
+        'longitude' => -74.0060,
+        'openingHours' => [
+            "Mo-Fr 11:00-22:00",
+            "Sa-Su 12:00-23:00"
+        ],
+        'priceRange' => "$$"
+    ];
+    
+    $schema = (new StructuredData())->generateLocalBusinessSchema($items);
+        echo Element::jsonLd($schema);
+
+This will output the following:
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://joespizza.com/#localbusiness",
+      "name": "Joe's Pizza",
+      "url": "https://joespizza.com",
+      "image": "https://joespizza.com/logo.png",
+      "telephone": "+1-555-123-4567",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Main Street",
+        "addressLocality": "New York",
+        "addressRegion": "NY",
+        "postalCode": "10001",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 40.7128,
+        "longitude": -74.006
+      },
+      "openingHours": [
+        "Mo-Fr 11:00-22:00",
+        "Sa-Su 12:00-23:00"
+      ],
+      "priceRange": "$$"
+    }
+    </script>
