@@ -413,7 +413,7 @@ Usage example:
         ]
     ];
     
-    $schema = (new StructuredData())->generateCollectionPageSchema($items);
+    $schema = (new StructuredData())->generateCollectionPageSchema($pageData);
     echo Element::jsonLd($schema);
 
 This will output the following:
