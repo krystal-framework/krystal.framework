@@ -18,7 +18,7 @@ final class JsonSerializer extends AbstractSerializer
      */
     public function serialize($var)
     {
-        return json_encode($var);
+        return json_encode($var, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     /**
