@@ -19,8 +19,6 @@ This implementation provides two main methods:
 -   **`decode(string $jwt)`** / **`decodeFromBearer()`** → Decode and verify a token.
     
 
-----------
-
 ## Step 1: Create a token (Server-side)
 
 Once the user is authenticated, you can generate a token that stores your data in the `$payload` array.  
@@ -44,7 +42,6 @@ This token can then be sent to your frontend (e.g., JavaScript) for later use.
     // Generate a token and send it to JavaScript
     echo $jwt->create($payload, $ttl);
 
-----------
 
 ## Step 2: Decode and verify a Token (Server-side)
 
@@ -69,7 +66,6 @@ On subsequent requests, you can verify the token either from a query parameter o
         // Invalid or expired token
     }
 
-----------
 
 ## Step 3: JavaScript Client Example
 
@@ -122,10 +118,10 @@ If successful, the server returns a **JWT** which you can store and send with ea
 
 ----------
 
-## Flow Summary
+# Flow Summary
 
-1.  **Client sends login credentials** → `/auth/login`.
-2.  **Server verifies credentials** → issues a JWT.
-3.  **Client stores the token** (localStorage, sessionStorage, or HttpOnly cookie).
-4.  **Client sends the token** with every request in `Authorization: Bearer <token>`.    
-5.  **Server decodes and validates** the token before serving protected resources.
+1.  Client sends login credentials → `/auth/login`.
+2.  Server verifies credentials → issues a JWT.
+3.  Client stores the token (localStorage, sessionStorage, or HttpOnly cookie).
+4.  Client sends the token with every request in `Authorization: Bearer <token>`.    
+5.  Server decodes and validates the token before serving protected resources.
