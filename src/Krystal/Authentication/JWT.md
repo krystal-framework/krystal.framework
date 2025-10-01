@@ -27,7 +27,7 @@ This token can then be sent to your frontend (e.g., JavaScript) for later use.
 
     <?php
     
-    namespace Krystal\Authentication\JWT;
+    use Krystal\Authentication\JWT;
     
     $secret = 'my-secret'; // Your unique secret key (keep it in configuration)
     $ttl = 3600;           // Time-to-live in seconds
@@ -49,7 +49,7 @@ On subsequent requests, you can verify the token either from a query parameter o
 
     <?php
     
-    namespace Krystal\Authentication\JWT;
+    use Krystal\Authentication\JWT;
     
     $secret = 'my-secret';
     $jwt = new JWT($secret);
