@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Text;
+namespace Krystal\Money;
 
 use RuntimeException;
 
