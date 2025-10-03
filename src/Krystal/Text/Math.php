@@ -14,25 +14,32 @@ namespace Krystal\Text;
 class Math
 {
     /**
+     * Rounds a number up to the nearest multiple of a given significance.
      * An equivalent to Excel's precise function
      * 
-     * @param float The value to be rounded
-     * @param int $significance The multiple to which number is to be rounded
-     * @return mixed
+     * @param float|int $number The number to round up.
+     * @param float|int $significance The significance (multiple) to round up to. Defaults to 1.
+     *
+     * @return float|int The rounded number.
      */
     public static function ceiling($number, $significance = 1)
     {
+        if (!is_numeric($number) || !is_numeric($significance) || $significance == 0) {
+            return 0;
+        }
+
         return (ceil($number / $significance) * $significance);
     }
 
     /**
-     * Formats a number without rounding it, unlike built-in function number_format()
-     * 
-     * @param float $number The number being formatted
-     * @@param int $decimals The number of decimal points.
+     * Formats a number without rounding it, unlike PHP's built-in number_format().
+     *
+     * @param float|int $number The number being formatted.
+     * @param int $decimals Number of decimal places.
      * @param string $dec_point Separator for the decimal point.
-     * @param string $thousands_sep Thousands separator
-     * @return string
+     * @param string $thousands_sep Thousands separator.
+     *
+     * @return string Formatted number as a string.
      */
     public static function numberFormat($number, $decimals = 2, $dec_point = '.', $thousands_sep  = ',')
     {
@@ -41,48 +48,48 @@ class Math
     }
 
     /**
-     * Rounds a collection
-     * 
-     * @param array $data
-     * @param integer $precision
-     * @return array
+     * Rounds all numeric values in a collection to the given precision.
+     *
+     * @param array $data The input array with numeric values.
+     * @param int $precision Number of decimal places. Defaults to 2.
+     *
+     * @return array The array with rounded values.
      */
     public static function roundCollection(array $data, $precision = 2)
     {
         $output = array();
 
         foreach ($data as $key => $value){
-            $output[$key] = round($value, $precision);
+            $output[$key] = is_numeric($value) ? round($value, $precision) : $value;
         }
 
         return $output;
     }
 
     /**
-     * Finds the average
-     * 
-     * @param array $values
-     * @return float
+     * Finds the arithmetic average (mean) of values in an array.
+     *
+     * @param array $values A collection of numeric values.
+     * @return float The average value. Returns 0 if the array is empty or contains no numeric values.
      */
     public static function average($values)
     {
+        if (!is_array($values) || empty($values)) {
+            return 0.0;
+        }
+
         $sum = array_sum($values);
         $count = count($values);
 
-        // Avoid useless calculations
-        if ($count == 0) {
-            return 0;
-        }
-
-        return $sum / $count;
+        return $count > 0 ? $sum / $count : 0.0;
     }
 
     /**
-     * Returns discount price (useful when calculating discount price)
-     * 
-     * @param float $target Initial price
-     * @param float $discount
-     * @return float
+     * Returns the discounted price after applying a percentage discount.
+     *
+     * @param float|int $price Initial price before discount.
+     * @param float|int $discount Discount percentage (e.g. 20 = 20%).
+     * @return float Final price after discount.
      */
     public static function getDiscount($price, $discount)
     {
@@ -90,39 +97,38 @@ class Math
     }
 
     /**
-     * Counts value from percentage
-     * 
-     * @param float $target Target value
-     * @param float $percentage Target percentage
-     * @return float
-     */ 
+     * Calculates the value from a percentage of a target.
+     *
+     * @param float|int $target The base target value.
+     * @param float|int $percentage The percentage to apply.
+     * @return float The calculated value, rounded to 2 decimals.
+     */
     public static function fromPercentage($target, $percentage)
     {
-        $result = $target * $percentage / 100;
+        if (!is_numeric($target) || !is_numeric($percentage)) {
+            return 0.0;
+        }
+
+        $result = ($target * $percentage) / 100;
         return round($result, 2);
     }
 
     /**
-     * Counts a percentage
-     * 
-     * @param float|integer $total
-     * @param float|integer $actual
-     * @param integer $round 
-     * @return mixed
+     * Calculates what percentage the actual value is of the total.
+     *
+     * @param float|int $total  The total or maximum value.
+     * @param float|int $actual The actual (part) value.
+     * @param int $round  Number of decimal places to round to. Defaults to 1.
+     * @return float The calculated percentage. Returns 0 if $total or $actual is 0.
      */
     public static function percentage($total, $actual, $round = 1)
     {
-        // Avoid useless calculations
-        if ($total == 0 || $actual == 0) {
-            return 0;
+        if (!is_numeric($total) || !is_numeric($actual) || $total == 0) {
+            return 0.0;
         }
 
-        $value = 100 * $actual / $total;
+        $value = (100 * $actual) / $total;
 
-        if (is_integer($round)) {
-            $value = round($value, $round);
-        }
-
-        return $value;
+        return is_int($round) ? round($value, $round) : $value;
     }
 }
