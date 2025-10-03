@@ -17,11 +17,13 @@ use Closure;
 class TextUtils
 {
     /**
-     * Checks whether string contains another string
-     * 
-     * @param string $haystack string
-     * @param string $needle Target word
-     * @return boolean
+     * Checks whether a string contains a given substring.
+     *
+     * This method works with both modern and legacy PHP versions.
+     *
+     * @param string $haystack The string to search in.
+     * @param string $needle The substring to search for.
+     * @return bool True if $needle is found in $haystack, false otherwise.
      */
     public static function contains($haystack, $needle)
     {
@@ -34,10 +36,10 @@ class TextUtils
     }
 
     /**
-     * Converts string into array
-     * 
-     * @param string $string
-     * @return array
+     * Splits a string into an array of lines, trimming whitespace from each line.
+     *
+     * @param string $string The input string containing one or more lines.
+     * @return array An array of trimmed lines.
      */
     public static function breakString($string)
     {
@@ -52,11 +54,11 @@ class TextUtils
     }
 
     /**
-     * Checks whether string has been modified
-     * 
-     * @param string $target Input string
-     * @param \Closure $callback Comparison function
-     * @return boolean
+     * Checks whether a string has been modified by a callback function.
+     *
+     * @param string $target Input string.
+     * @param \Closure $callback Function that processes the string.
+     * @return bool True if the string was modified, false otherwise.
      */
     public static function strModified($target, Closure $callback)
     {
@@ -66,14 +68,15 @@ class TextUtils
     }
 
     /**
-     * Generates serial number like XXXXX-XXXXX-XXXXX-XXXXX, the mask can be overridden
-     * 
-     * @param string $id
-     * @param bool $unique Whether output must be always unique
-     * @param bool $upper Whether output must be in uppercase
-     * @param int $length The length of the serial itself
-     * @param int $portion The length of each portion
-     * @return string
+     * Generates a serial number in the format XXXXX-XXXXX-XXXXX-XXXXX.
+     * The format, length, and portion size can be customized.
+     *
+     * @param string $id Base string to generate the serial from.
+     * @param bool $unique Whether the output must always be unique.
+     * @param bool $upper Whether the output should be in uppercase.
+     * @param int $length Total length of the serial (excluding dashes).
+     * @param int $portion Length of each portion separated by dashes.
+     * @return string Generated serial number.
      */
     public static function serial($id, $unique = true, $upper = true, $length = 25, $portion = 5)
     {
@@ -99,10 +102,11 @@ class TextUtils
     }
 
     /**
-     * Normalizes column name
-     * 
-     * @param string $string
-     * @return string
+     * Normalizes a database column name by converting underscores to spaces
+     * and capitalizing each word.
+     *
+     * @param string $string Column name to normalize (e.g., "first_name").
+     * @return string Normalized column name (e.g., "First Name").
      */
     public static function normalizeColumn($string)
     {
@@ -116,9 +120,9 @@ class TextUtils
     }
 
     /**
-     * Creates a unique string
-     * 
-     * @return string
+     * Generates a unique string using the current time and random values.
+     *
+     * @return string A unique MD5-hashed string.
      */
     public static function uniqueString()
     {
@@ -127,12 +131,17 @@ class TextUtils
     }
 
     /**
-     * Creates a random string with fixed length
-     * 
-     * @param integer $length
-     * @param string $method Dictionary method
-     * @throws \UnexpectedValueException If unsupported dictionary method provided
-     * @return string
+     * Generates a random string of a fixed length using a specified character set.
+     *
+     * Supported dictionary methods:
+     *  - "alpha"   : letters only (a-z, A-Z)
+     *  - "alnum"   : letters and numbers (default)
+     *  - "numeric" : numbers only (0-9)
+     *
+     * @param int $length Length of the random string to generate.
+     * @param string $method Dictionary method to use ("alpha", "alnum", "numeric").
+     * @throws \UnexpectedValueException If an unsupported dictionary method is provided.
+     * @return string The generated random string.
      */
     public static function randomString($length, $method = 'alnum')
     {
@@ -158,11 +167,11 @@ class TextUtils
     }
 
     /**
-     * Returns needle positions
-     * 
-     * @param string $haystack
-     * @param string $needle
-     * @return array An array with starting and ending positions for each match
+     * Returns the starting and ending positions of all occurrences of a substring in a string.
+     *
+     * @param string $haystack The string to search in.
+     * @param string $needle The substring to search for.
+     * @return array An associative array where keys are start positions and values are end positions.
      */
     public static function getNeedlePositions($haystack, $needle)
     {
@@ -185,12 +194,12 @@ class TextUtils
     }
 
     /**
-     * Trims a string
-     * 
-     * @param string $string
-     * @param integer $maxLen
-     * @param string $after
-     * @return string
+     * Trims a string to a maximum length and appends a suffix if truncated.
+     *
+     * @param string $string The input string to trim.
+     * @param int $maxLen Maximum allowed length of the string.
+     * @param string $after Suffix to append if the string is truncated (default: ' .... ').
+     * @return string The trimmed string with the suffix if truncated, otherwise the original string.
      */
     public static function trim($string, $maxLen, $after = ' .... ')
     {
@@ -204,11 +213,11 @@ class TextUtils
     }
 
     /**
-     * Sluggifies a string
-     * 
-     * @param string $string
-     * @param boolean $romanize Whether to romanize the string as well
-     * @return string
+     * Generates a URL-friendly slug from a string.
+     *
+     * @param string $string The input string to convert to a slug.
+     * @param bool $romanize Whether to romanize non-Latin characters (default: true).
+     * @return string The generated slug.
      */
     public static function sluggify($string, $romanize = true)
     {
@@ -217,10 +226,10 @@ class TextUtils
     }
 
     /**
-     * Romanizes a string
-     * 
-     * @param string $string
-     * @return string
+     * Converts a string with non-Latin characters to a Latin (romanized) representation.
+     *
+     * @param string $string The input string to romanize.
+     * @return string The romanized string.
      */
     public static function romanize($string)
     {
@@ -228,11 +237,14 @@ class TextUtils
     }
 
     /**
-     * Converts target string to snake case
-     * https://en.wikipedia.org/wiki/Snake_case
-     * 
-     * @param string $target Target string (i.e Hello World or camelCase)
-     * @return string (hello_world or camel_case)
+     * Converts a string to snake_case.
+     *
+     * Examples:
+     *  - "Hello World"  → "hello_world"
+     *  - "camelCase"    → "camel_case"
+     *
+     * @param string $target The string to convert.
+     * @return string The snake_case version of the string.
      */
     public static function snakeCase($target)
     {
@@ -249,10 +261,14 @@ class TextUtils
     }
 
     /**
-     * Converts a string to studly case
-     * 
-     * @param string $input
-     * @return string
+     * Converts a string to StudlyCase (each word capitalized and concatenated).
+     *
+     * Examples:
+     *  - "hello world"   → "HelloWorld"
+     *  - "my_variable"   → "MyVariable"
+     *
+     * @param string $input The string to convert.
+     * @return string The StudlyCase version of the string.
      */
     public static function studly($input)
     {
@@ -264,11 +280,13 @@ class TextUtils
     }
 
     /**
-     * Explodes a text into sentences
-     * 
-     * @param string $text
-     * @param string $carriage Carriage return to be used to detect new lines
-     * @return array
+     * Splits a text into sentences using common sentence delimiters.
+     *
+     * Default delimiters are: '.', '!', '?' and optionally a custom carriage return.
+     *
+     * @param string $text The input text to split.
+     * @param string $carriage Optional carriage return character to detect new lines (default: "\r").
+     * @return array An array of sentences.
      */
     public static function explodeText($text, $carriage = "\r")
     {
@@ -283,12 +301,14 @@ class TextUtils
     }
 
     /**
-     * Explodes a string into array supporting several delimiters
-     * 
-     * @param string $string
-     * @param array $delimiters A collection of delimiters
-     * @param boolean $keepDelimiters Whether to keep delimiters on exploding
-     * @return array
+     * Splits a string into an array using multiple delimiters.
+     *
+     * Can optionally keep the delimiters in the resulting array.
+     *
+     * @param string $string The input string to split.
+     * @param array $delimiters An array of delimiters to use.
+     * @param bool $keepDelimiters Whether to keep the delimiters in the output (default: true).
+     * @return array An array of split string segments.
      */
     public static function multiExplode($string, array $delimiters, $keepDelimiters = true)
     {
