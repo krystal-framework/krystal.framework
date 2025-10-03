@@ -9,9 +9,9 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\Stdlib;
+namespace Krystal\Application;
 
-final class MagicQuotesFilter implements MagicQuotesFilterInterface
+final class MagicQuotesFilter
 {
     /**
      * Checks whether magic quotes are deprecated

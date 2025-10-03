@@ -12,7 +12,6 @@
 namespace Krystal\Application;
 
 use Krystal\Debug\Exception\Handler as ExceptionHandler;
-use Krystal\Stdlib\MagicQuotesFilter;
 use Krystal\InstanceManager\ServiceLocator;
 use Krystal\InstanceManager\DependencyInjectionContainer;
 use Krystal\Application\Route\Router;
