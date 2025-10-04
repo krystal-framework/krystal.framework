@@ -58,7 +58,6 @@ This will output
     [
         'site_name' => 'My Website',
         'debug' => false,
-        'items_per_page' => 10,
         'timezone' => 'UTC',
         'api_key' => '12345',
         'version' => '2.0.1',
