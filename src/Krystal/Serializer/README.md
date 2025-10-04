@@ -1,5 +1,5 @@
-Serializer component
-====================
+Serializer
+==========
 
 **Serialization** is the process of converting a PHP variable — such as an array or object — into a string representation that can be **stored**, **transmitted**, or **reconstructed later**.
 
