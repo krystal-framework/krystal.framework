@@ -11,6 +11,11 @@
 
 namespace Krystal\Serializer;
 
+/**
+ * Handles serialization using the JSON format.
+ *
+ * Provides legacy-compatible and modern (PHP 8.3+) JSON validation.
+ */
 final class JsonSerializer extends AbstractSerializer
 {
     /**
@@ -18,7 +23,7 @@ final class JsonSerializer extends AbstractSerializer
      */
     public function serialize($var)
     {
-        return json_encode($var, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return json_encode($var, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -32,9 +37,19 @@ final class JsonSerializer extends AbstractSerializer
     /**
      * {@inheritDoc}
      */
-    public function isSerialized($var)
+    public function isSerialized($string)
     {
-        json_decode($var);
+        if (!is_string($string)) {
+            return false;
+        }
+
+        // Use native json_validate() if available (PHP 8.3+)
+        if (function_exists('json_validate')) {
+            return json_validate($string);
+        }
+
+        // Fallback for older PHP versions. @ - intentionally
+        @json_decode($string);
         return (json_last_error() === \JSON_ERROR_NONE);
     }
 }

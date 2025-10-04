@@ -14,21 +14,12 @@ namespace Krystal\Serializer;
 abstract class AbstractSerializer
 {
     /**
-     * Builds a hash of an array
-     * 
-     * @param array $array
-     * @return string
-     */
-    public function buildHash(array $array)
-    {
-        return md5(serialize($array));
-    }
-
-    /**
-     * Checks whether given $var can be serialized
-     * 
-     * @param mixed $var
-     * @return boolean, TRUE if it is, FALSE otherwise
+     * Determines whether the given variable can be serialized.
+     *
+     * Supports serialization of arrays and objects only.
+     *
+     * @param mixed $var The variable to evaluate.
+     * @return bool TRUE if serializable, FALSE otherwise.
      */
     public function isSerializeable($var)
     {
@@ -36,26 +27,28 @@ abstract class AbstractSerializer
     }
 
     /**
-     * Checks whether given string is serialized
-     * 
-     * @param string $string
-     * @return boolean TRUE if serialized, FALSE otherwise
+     * Checks whether the given string contains valid serialized data.
+     *
+     * Implementations define the serialization format (e.g., JSON or PHP native).
+     *
+     * @param string $string The string to check.
+     * @return bool TRUE if the string is valid serialized data, FALSE otherwise.
      */
     abstract public function isSerialized($string);
 
     /**
-     * Serializes a variable
-     * 
-     * @param object|array $var
-     * @return string
+     * Serializes the given variable.
+     *
+     * @param array|object $var The variable to serialize.
+     * @return string The serialized representation.
      */
     abstract public function serialize($var);
 
     /**
-     * Attempts to unserialize a string
-     * 
-     * @param string $serialized Serialized string
-     * @return object|array
+     * Restores a variable from its serialized representation.
+     *
+     * @param string $serialized The serialized string.
+     * @return array|object The unserialized value.
      */
     abstract public function unserialize($serialized);
 }

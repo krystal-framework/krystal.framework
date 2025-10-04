@@ -11,16 +11,11 @@
 
 namespace Krystal\Serializer;
 
+/**
+ * Handles serialization using PHP's native serialize()/unserialize() functions.
+ */
 final class NativeSerializer extends AbstractSerializer
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function isSerialized($string)
-    {
-        return $string == serialize(false) || @unserialize($string) !== false;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -35,5 +30,17 @@ final class NativeSerializer extends AbstractSerializer
     public function unserialize($string)
     {
         return unserialize($string);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isSerialized($string)
+    {
+        if (!is_string($string)) {
+            return false;
+        }
+
+        return $string == serialize(false) || @unserialize($string) !== false;
     }
 }
