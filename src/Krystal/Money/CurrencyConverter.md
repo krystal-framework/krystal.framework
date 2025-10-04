@@ -58,4 +58,4 @@ The `isAvailable()` method checks whether a given currency code exists in the co
 
     $isAvailable = $converter->isAvailable('JPY');
     
-    var_dump($isAvailable); // False
+    var_dump($isAvailable); // True
