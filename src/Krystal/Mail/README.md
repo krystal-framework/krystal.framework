@@ -79,5 +79,4 @@ Key features:
 
     $mailer->send('team@example.com', 'Monthly Report', '<p>See attached report.</p>', $attachments);
 
-You can also grab file entities from request`$attachments = $this->request->getFiles()` in your controller.
-
+You can also retrieve uploaded file entities directly from the request object in your controller: `$attachments = $this->request->getFiles()`
