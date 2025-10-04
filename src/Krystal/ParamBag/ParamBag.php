@@ -26,7 +26,7 @@ final class ParamBag implements ParamBagInterface
     /**
      * State initialization
      * 
-     * @param array $defaults Default parameters
+     * @param array $params Default parameters
      * @return void
      */
     public function __construct(array $params = array())
