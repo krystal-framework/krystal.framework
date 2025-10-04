@@ -16,68 +16,91 @@ use Closure;
 interface EventManagerInterface
 {
     /**
-     * Attaches a new event
+     * Registers a new event listener under a given event name.
      * 
-     * @param string $event Event name
-     * @param \Closure $listener
-     * @throws \InvalidArgumentException If either listener isn't callable or event name's isn't a string
-     * @return \Krystal\Event\EventManager
+     * The listener must be a valid callable (Closure). When the event is triggered,
+     * the assigned listener will be executed. If the same event name already exists,
+     * the previous listener will be overwritten.
+     *
+     * @param string $event The name of the event to register.
+     * @param \Closure $listener The callback to be executed when the event is triggered.
+     * @throws \InvalidArgumentException If the event name is not a string or the listener is not callable.
+     * @return \Krystal\Event\EventManager Returns the current instance for method chaining.
      */
     public function attach($event, Closure $listener);
 
     /**
-     * Attaches several events at once
+     * Registers multiple event listeners at once.
      * 
-     * @param array $collection
-     * @return \Krystal\Event\EventManager
+     * Accepts an associative array where each key represents an event name
+     * and each value is a corresponding listener (Closure). Existing listeners
+     * with the same event names will be overwritten.
+     *
+     * @param array $collection An associative array of event names mapped to listeners.
+     * @return \Krystal\Event\EventManager Returns the current instance for method chaining.
      */
     public function attachMany(array $collection);
 
     /**
-     * Detaches an event
+     * Removes a previously registered event listener by its event name.
      * 
-     * @param string $event Event name
-     * @throws \RuntimeException If attempted to detach non-existing event
+     * If the specified event does not exist, a RuntimeException will be thrown.
+     * This method is useful for dynamically disabling specific event hooks at runtime.
+     *
+     * @param string $event The name of the event to detach.
+     * @throws \RuntimeException If attempting to detach a non-existing event.
      * @return void
      */
     public function detach($event);
 
     /**
-     * Detaches all events
+     * Removes all registered event listeners.
+     * 
+     * Clears the entire event registry, effectively disabling all attached events.
+     * Useful for resetting the event manager to an empty state.
      * 
      * @return void
      */
     public function detachAll();
 
     /**
-     * Triggers an event
+     * Triggers a registered event by its name.
      * 
-     * @param string $event Event name to be triggered
-     * @throws \RuntimeException If trying to trigger non-existing event
-     * @return mixed
+     * Executes the listener (Closure) associated with the specified event.
+     * If the event does not exist, a RuntimeException will be thrown.
+     * The return value depends on the listener’s callback result.
+     *
+     * @param string $event The name of the event to trigger.
+     * @throws \RuntimeException If attempting to trigger a non-existing event.
+     * @return mixed Returns the result of the executed listener callback.
      */
     public function trigger($event);
 
     /**
-     * Checks whether an event is defined
-     * 
-     * @param string $event Event name to be checked for existence
-     * @return boolean
+     * Determines whether an event with the given name is registered.
+     * Returns true if the specified event exists in the registry, false otherwise.
+     *
+     * @param string $event The name of the event to check.
+     * @return bool True if the event is registered, false otherwise.
      */
     public function has($event);
 
     /**
-     * Checks whether event names are registered
+     * Determines whether all specified events are registered.
      * 
-     * @param array $events
-     * @return boolean
+     * Accepts an array of event names and checks if each one exists
+     * in the event registry. Returns true only if all events are found.
+     *
+     * @param array $events A list of event names to verify.
+     * @return bool True if all events exist, false otherwise.
      */
     public function hasMany(array $events);
 
     /**
-     * Counts amount of defined events
+     * Returns the total number of registered events.
+     * Counts how many event listeners are currently defined in the event registry.
      * 
-     * @return integer
+     * @return int The total number of registered events.
      */
     public function countAll();
 }
