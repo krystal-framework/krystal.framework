@@ -5,6 +5,8 @@ Utility class for working with time and date, providing constants, date calculat
 
 ## Constants
 
+Provides predefined time-related constants in seconds for convenience, including seconds, minutes, days, weeks, months, and years.
+
     <?php
     
     use Krystal\Date\TimeHelper;
