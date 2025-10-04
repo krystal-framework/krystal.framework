@@ -5,21 +5,16 @@ Utility class for working with time and date, providing constants, date calculat
 
 ## Constants
 
-| Constant | Value   | Description                 |
-|----------|--------|-----------------------------|
-| SECOND   | 1      | One second in seconds       |
-| MINUTE   | 60     | One minute in seconds       |
-| DAY      | 86400  | One day in seconds          |
-| WEEK     | 604800 | One week in seconds         |
-| MONTH    | 2592000| Approximate month in seconds|
-| YEAR     | 31536000| Approximate year in seconds|
-
     <?php
     
     use Krystal\Date\TimeHelper;
     
-    echo TimeHelper::SECOND; // 1
-    echo TimeHelper::DAY;    // 86400
+    echo TimeHelper::SECOND;
+    echo TimeHelper::MINUTE;
+    echo TimeHelper::DAY;
+    echo TimeHelper::WEEK;
+    echo TimeHelper::MONTH;
+    echo TimeHelper::YEAR;
 
 
 ## Getting copyright year
