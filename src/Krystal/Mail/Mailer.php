@@ -11,7 +11,6 @@
 
 namespace Krystal\Mail;
 
-use Closure;
 use Krystal\Http\FileTransfer\FileEntityInterface;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -50,13 +49,25 @@ final class Mailer
     }
 
     /**
-     * Sends e-mail
-     * 
-     * @param string|array Email of receiver
-     * @param string $subject
-     * @param string $body
-     * @param array $files
-     * @return boolean
+     * Sends an email message using the configured transport (SMTP or PHP mail).
+     *
+     * This method builds and dispatches an email message with support for:
+     * - Multiple recipients (array of addresses or single string)
+     * - File attachments (paths or FileEntityInterface instances)
+     * - HTML body with automatic plain-text alternative
+     *
+     * @param string|array $to One or more recipient email addresses.
+     *                         Can be a string for a single address or an array for multiple.
+     * @param string $subject  The subject line of the email message.
+     * @param string $body     The HTML body content of the email message.
+     * @param array $files     Optional attachments.
+     *                         Each item can be either:
+     *                         - a string representing a file path, or
+     *                         - an instance of Krystal\Http\FileTransfer\FileEntityInterface.
+     *
+     * @throws \PHPMailer\PHPMailer\Exception If the mailer encounters a transport or configuration error.
+     *
+     * @return boolean Returns TRUE on successful send, or FALSE on failure.
      */
     public function send($to, $subject, $body, array $files = [])
     {
