@@ -24,6 +24,8 @@ Example:
     
     namespace Site\Controller;
     
+    use Krystal\Http\RateLimiter
+    
     final class Site extends AbstractSiteController
     {
         /**

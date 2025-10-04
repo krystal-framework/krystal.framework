@@ -9,9 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Krystal\RateLimiter;
-
-use Krystal\Http\PersistentStorageInterface;
+namespace Krystal\Http\RateLimiter;
 
 final class RateLimiter
 {
