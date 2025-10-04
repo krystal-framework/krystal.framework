@@ -14,18 +14,18 @@ namespace Krystal\Security;
 interface CrypterInterface
 {
     /**
-     * Encrypts a value
-     * 
-     * @param string $value
-     * @return string
+     * Encrypts a string
+     *
+     * @param string $value Plain text to encrypt
+     * @return string Base64-encoded encrypted string including IV
      */
-    public function encryptValue($value);
+    public function encrypt($value);
 
     /**
-     * Decrypts a value
-     * 
-     * @param string $value
-     * @return string
+     * Decrypts a string
+     *
+     * @param string $value Base64-encoded string produced by encrypt()
+     * @return string Decrypted plain text
      */
-    public function decryptValue($value);
+    public function decrypt($value);
 }

@@ -13,80 +13,69 @@ namespace Krystal\Security;
 
 use RuntimeException;
 
+/**
+ * Crypter service for symmetric encryption and decryption using OpenSSL.
+ *
+ * Any arbitrary salt/key string is hashed internally to fit AES-256-CBC requirements.
+ */
 final class Crypter implements CrypterInterface
 {
     /**
-     * Shared salt for both encryption and decryption
-     * 
+     * Encryption key derived from salt
+     *
      * @var string
      */
-    private $salt;
+    private $key;
 
     /**
-     * Supported salt lengths
-     * 
-     * @var array
+     * Cipher method
+     *
+     * @var string
      */
-    private $validLength = array(16, 24, 32);
+    private $cipher = 'AES-256-CBC';
 
     /**
      * State initialization
-     * 
-     * @param string $key
-     * @throws \RuntimeException If the string's length doesn't match expected length
+     *
+     * @param string $salt Any string used as encryption key
      * @return void
      */
     public function __construct($salt)
     {
-        if ($this->validLength($salt)) {
-            $this->salt = $salt;
-        } else {
-            throw new RuntimeException(
-                sprintf('The length of salt must match one of these values: %s. Current one is %s', implode(', ', $this->validLength), mb_strlen($salt, 'UTF-8')
-            ));
-        }
+        // Use SHA-256 to get a 32-byte key
+        $this->key = hash('sha256', $salt, true);
     }
 
     /**
-     * Checks whether salt's length is valid
-     * 
-     * @param string $salt
-     * @return boolean
+     * Encrypts a string
+     *
+     * @param string $value Plain text to encrypt
+     * @return string Base64-encoded encrypted string including IV
      */
-    private function validLength($salt)
+    public function encrypt($value)
     {
-        $length = mb_strlen($salt, 'UTF-8');
-        return in_array($length, $this->validLength);
+        $ivLength = openssl_cipher_iv_length($this->cipher);
+        $iv = openssl_random_pseudo_bytes($ivLength);
+
+        $encrypted = openssl_encrypt($value, $this->cipher, $this->key, \OPENSSL_RAW_DATA, $iv);
+
+        return base64_encode($iv . $encrypted);
     }
 
     /**
-     * Encrypts a value
-     * 
-     * @param string $value
-     * @return string
+     * Decrypts a string
+     *
+     * @param string $value Base64-encoded string produced by encrypt()
+     * @return string Decrypted plain text
      */
-    public function encryptValue($value)
+    public function decrypt($value)
     {
-        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
-        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-        $text = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->salt, $value, MCRYPT_MODE_ECB, $iv);
+        $data = base64_decode($value);
+        $ivLength = openssl_cipher_iv_length($this->cipher);
 
-        return trim(base64_encode($text));
-    }
+        $iv = substr($data, 0, $ivLength);
+        $encrypted = substr($data, $ivLength);
 
-    /**
-     * Decrypts a value
-     * 
-     * @param string $value
-     * @return string
-     */
-    public function decryptValue($value)
-    {
-        $decoded = base64_decode($value);
-        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
-        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-        $text = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->salt, $decoded, MCRYPT_MODE_ECB, $iv);
-
-        return trim($text);
+        return openssl_decrypt($encrypted, $this->cipher, $this->key, \OPENSSL_RAW_DATA, $iv);
     }
 }
