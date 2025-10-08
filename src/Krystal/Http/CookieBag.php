@@ -189,7 +189,19 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
      */
     public function setEncrypted($key, $value, $ttl = TimeHelper::YEAR, $path = '/', $secure = false, $httpOnly = false, $raw = false)
     {
-        return $this->set($key, $this->getCrypter()->encryptValue($value), $ttl, $path, $secure, $httpOnly, $raw);
+        return $this->set($key, $this->getCrypter()->encrypt($value), $ttl, $path, $secure, $httpOnly, $raw);
+    }
+
+    /**
+     * Retrieves a key form cookies decoding its value
+     * 
+     * @param string $key
+     * @throws \RuntimeException if $key does not exist in cookies`
+     * @return string
+     */
+    public function getEncrypted($key)
+    {
+        return $this->getCrypter()->decrypt($this->get($key));
     }
 
     /**
@@ -227,18 +239,6 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
                 'Attempted to read non-existing cookie "%s"', $key
             ));
         }
-    }
-
-    /**
-     * Retrieves a key form cookies decoding its value
-     * 
-     * @param string $key
-     * @throws \RuntimeException if $key does not exist in cookies`
-     * @return string
-     */
-    public function getEncrypted($key)
-    {
-        return $this->getCrypter()->decryptValue($this->get($key));
     }
 
     /**
