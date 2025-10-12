@@ -815,15 +815,10 @@ abstract class ArrayUtils
      * Not sequential: [1 => 'a', 2 => 'b'] or ['a' => 'x', 'b' => 'y']
      *
      * @param array $array The array to check.
-     *
      * @return bool True if the array is sequential, false otherwise.
      */
     public static function isSequential(array $array)
     {
-        if (empty($array)) {
-            return false;
-        }
-
         $count = count($array);
 
         for ($i = 0; $i < $count; $i++) {
