@@ -42,7 +42,7 @@ final class MemcachedEngine implements CacheEngineInterface
      */
     public function flush()
     {
-        return $this->memcached->flush(); 
+        return $this->memcached->flush();
     }
 
     /**

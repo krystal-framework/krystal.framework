@@ -1,3 +1,4 @@
+
 Database component
 ==================
 
@@ -64,7 +65,7 @@ To get started, you need to create some data mapper class, that extends `\Krysta
     
     namespace SomeNamespace;
     
-    use Krystal\Sql\AbstractMapper;
+    use Krystal\Db\Sql\AbstractMapper;
     
     final class BookMapper extends AbstractMapper
     {

@@ -70,7 +70,7 @@ Note that the `paginate()` method doesn’t belong to the Pagination component �
 Sometimes, when working with complex SQL queries — such as those involving subqueries or advanced aggregations — the `paginate()` method may not be able to calculate the total count correctly, as it’s primarily designed for simple queries. 
 
 In these situations, you can implement a custom counter method to handle counting correctly, and use `paginateRaw()` instead of `paginate()`.
-> > 
+
     class BookMapper extends AbstractMapper
     {
             private function countRecords()
@@ -81,8 +81,8 @@ In these situations, you can implement a custom counter method to handle countin
             public function fetchBooks($page, $itemsPerPage)
             {
                   db = $this->db->select('*')
-                            ->from('my_table')
-                            ->paginateRaw($this->countRecords(), $page, $itemsPerPage);
+                                ->from('my_table')
+                                ->paginateRaw($this->countRecords(), $page, $itemsPerPage);
     
                   return $db->queryAll();
              }            
