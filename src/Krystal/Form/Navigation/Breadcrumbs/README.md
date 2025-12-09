@@ -1,4 +1,5 @@
-# Breadcrumbs
+Breadcrumbs
+===========
 
 Breadcrumbs help visitors understand their current location within your site.   This component is designed to make breadcrumb management simple and flexible.
 
@@ -41,7 +42,7 @@ After populating the breadcrumb bag in your controller, you can render the bread
 
 There are two primary approaches:
 
-### 1. Via widget
+### Via widget
 
 This is the simplest and preferred method.  In your template:
 
@@ -70,7 +71,7 @@ You can customize default classes using the widget options:
         'linkClass'  => 'custom <a> class'
     ])); ?>
 
-### 2. Rendering manually
+### Rendering manually
 
 If you need completely custom markup, you may manually iterate through the breadcrumb array:
 
