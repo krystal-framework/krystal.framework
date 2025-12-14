@@ -9,49 +9,108 @@
 
 namespace Krystal\Http\Client;
 
-
 interface CurlInterface
 {
     /**
-     * Get information regarding a specific transfer
-     * 
-     * @param integer $opt
-     * @return mixed
+     * Initialize cURL session
+     *
+     * @param array $options
+     * @return void
      */
-    public function getInfo($opt = 0);
+    public function init(array $options = array());
 
     /**
-     * Closes cURL connection
+     * Reset cURL handle state
+     * 
+     * @return void
+     */
+    public function reset();
+
+    /**
+     * Execute cURL request
      *
+     * @return mixed|false
+     */
+    public function exec();
+
+    /**
+     * Close cURL session
+     * 
      * @return void
      */
     public function close();
 
     /**
-     * Return last error messages like [Code => Text]
-     * 
+     * Set a single cURL option
+     *
+     * @param int $option
+     * @param mixed $value
+     * @return bool
+     */
+    public function setOption($option, $value);
+
+    /**
+     * Set multiple cURL options
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function setOptions(array $options);
+
+    /**
+     * Get transfer info
+     *
+     * @param int $opt
+     * @return mixed
+     */
+    public function getInfo($opt = 0);
+
+    /**
+     * Get all transfer info
+     *
+     * @return array
+     */
+    public function getInfoAll();
+
+    /**
+     * Get last error number
+     *
+     * @return int
+     */
+    public function getErrno();
+
+    /**
+     * Get last error message
+     *
+     * @return string
+     */
+    public function getError();
+
+    /**
+     * Get collected errors
+     *
      * @return array
      */
     public function getErrors();
 
     /**
-     * Sends a request
-     * 
-     * @return mixed, FALSE on failure
+     * Check if last execution had errors
+     *
+     * @return bool
      */
-    public function exec();
+    public function hasError();
 
     /**
-     * Set curl options
-     * 
-     * @param array $options
+     * Get raw cURL handle (advanced usage)
+     *
+     * @return mixed
      */
-    public function setOptions(array $options);
+    public function getHandle();
 
     /**
-     * Returns cURL version
-     * 
-     * @return string
+     * Get cURL version information
+     *
+     * @return array
      */
     public function getVersion();
 }
