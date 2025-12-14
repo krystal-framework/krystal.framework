@@ -106,7 +106,7 @@ Upload files using multipart/form-data:
         ]
     ]);
 
-## # Concurrent HTTP Requests
+## Concurrent HTTP Requests
 
 `CurlMulti` is a wrapper around PHP's `curl_multi_*` functions that provides a clean, object-oriented interface for concurrent HTTP requests. It manages multiple `Curl` instances and executes them in parallel.
 
