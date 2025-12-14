@@ -53,10 +53,6 @@ final class Curl implements CurlInterface
      */
     public function __clone()
     {
-        if (PHP_MAJOR_VERSION >= 8) {
-            throw new RuntimeException('Cloning CurlHandle is not supported in PHP 8+');
-        }
-
         if ($this->isHandleValid()) {
             $copy = curl_copy_handle($this->ch);
 
@@ -156,17 +152,14 @@ final class Curl implements CurlInterface
     public function exec()
     {
         $this->ensureInitialized();
-        $this->errors = array(); // Always reset errors first
+        $this->errors = array();
 
         $result = curl_exec($this->ch);
 
-        $errno = curl_errno($this->ch);
-        $error = curl_error($this->ch);
-
-        if ($errno !== CURLE_OK) {
+        if ($result === false) {
             $this->errors[] = array(
-                'code' => $errno,
-                'message' => $error,
+                'code'    => curl_errno($this->ch),
+                'message' => curl_error($this->ch),
             );
         }
 
@@ -247,6 +240,17 @@ final class Curl implements CurlInterface
     }
 
     /**
+     * Get HTTP status code from last request
+     *
+     * @return int|null
+     */
+    public function getStatusCode()
+    {
+        $code = $this->getInfo(CURLINFO_HTTP_CODE);
+        return $code ? (int)$code : null;
+    }
+
+    /**
      * Get last error number
      *
      * @return int
@@ -314,18 +318,24 @@ final class Curl implements CurlInterface
      */
     private function applyDefaults()
     {
-        $this->setOptions(array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_MAXREDIRS      => 10,
-            CURLOPT_CONNECTTIMEOUT => 10,
-            CURLOPT_TIMEOUT        => 30,
-            CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2,
-            CURLOPT_AUTOREFERER    => true,
-            CURLOPT_ENCODING       => '', // Accept all encodings
-            CURLOPT_USERAGENT      => 'Krystal HTTP Client (PHP 5.6+)'
-        ));
+        try {
+            $this->setOptions(array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_CONNECTTIMEOUT => 10,
+                CURLOPT_TIMEOUT        => 30,
+                CURLOPT_SSL_VERIFYPEER => true,
+                CURLOPT_SSL_VERIFYHOST => 2,
+                CURLOPT_AUTOREFERER    => true,
+                CURLOPT_ENCODING       => '', // Accept all encodings
+                CURLOPT_USERAGENT      => 'Krystal HTTP Client (PHP 5.6+)'
+            ));
+        } catch (InvalidArgumentException $e) {
+            // This should never happen with default options, but if it does, close handle
+            $this->close();
+            throw new RuntimeException('Failed to apply default cURL options: ' . $e->getMessage());
+        }
     }
 
     /**
