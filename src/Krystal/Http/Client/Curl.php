@@ -154,16 +154,40 @@ final class Curl implements CurlInterface
         $this->ensureInitialized();
         $this->errors = array();
 
+        // Enable header capture
+        $headers = [];
+
+        $this->setOption(CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$headers) {
+            $length = strlen($header);
+
+            // Parse header line
+            if (strpos($header, ':') !== false) {
+                list($name, $value) = explode(':', $header, 2);
+                $headers[trim($name)] = trim($value);
+            }
+
+            return $length;
+        });
+
         $result = curl_exec($this->ch);
 
+        $info = $this->getInfoAll();
+        $statusCode = $info['http_code'] ?? 0;
+
         if ($result === false) {
-            $this->errors[] = array(
+            $error = array(
                 'code'    => curl_errno($this->ch),
                 'message' => curl_error($this->ch),
             );
-        }
 
-        return $result;
+            $this->errors[] = $error;
+
+            // Error response
+            return new HttpResponse($result, $statusCode, $headers, $error, $info);
+        }
+        
+        // Successful response
+        return new HttpResponse($result, $statusCode, $headers, null, $info);
     }
 
     /**
