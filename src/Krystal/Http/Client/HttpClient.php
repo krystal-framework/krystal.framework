@@ -11,6 +11,7 @@ namespace Krystal\Http\Client;
 
 use UnexpectedValueException;
 use RuntimeException;
+use InvalidArgumentException;
 
 final class HttpClient implements HttpClientInterface
 {
@@ -61,6 +62,51 @@ final class HttpClient implements HttpClientInterface
             default:
                 throw new UnexpectedValueException(sprintf('Unsupported HTTP method: "%s"', $method));
         }
+    }
+
+    /**
+     * Perform a JSON request with automatic Content-Type header
+     * 
+     * This method sends JSON data for methods that support request bodies (POST, PUT, PATCH, DELETE).
+     * It automatically sets the Content-Type and Accept headers to application/json.
+     * 
+     * @param string $method HTTP method (POST, PUT, PATCH, DELETE)
+     * @param string $url Target URL
+     * @param array $data Data to encode as JSON
+     * @param array $extra Additional cURL options
+     * @throws \InvalidArgumentException If method doesn't exist or JSON encoding fails
+     * @return HttpResponse
+     */
+    public function jsonRequest($method, $url, array $data = [], array $extra = [])
+    {
+        $method = strtoupper($method);
+
+        // Validate allowed methods for JSON
+        $allowedMethods = ['POST', 'PUT', 'PATCH', 'DELETE'];
+
+        if (!in_array($method, $allowedMethods)) {
+            throw new InvalidArgumentException(sprintf(
+                'JSON body not allowed for %s method. Allowed: %s', $method, implode(', ', $allowedMethods)
+            ));
+        }
+
+        // Merge headers: default JSON headers < user headers (user wins)
+        $jsonHeaders = ['Content-Type: application/json', 'Accept: application/json'];
+        $userHeaders = $extra[CURLOPT_HTTPHEADER] ?? [];
+
+        // Avoid potential header duplication
+        $extra[CURLOPT_HTTPHEADER] = array_unique(array_merge($jsonHeaders, $userHeaders));
+
+        // Encode data to JSON
+        $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new InvalidArgumentException('Failed to encode data to JSON: ' . json_last_error_msg());
+        }
+
+        $extra[CURLOPT_POSTFIELDS] = $json;
+
+        return $this->{strtolower($method)}($url, [], $extra);
     }
 
     /**

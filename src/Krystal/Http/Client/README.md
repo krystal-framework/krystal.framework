@@ -82,18 +82,52 @@ Add custom HTTP headers to your requests:
 
 ## JSON Requests
 
-Send and receive JSON data:
+Send JSON data with automatic Content-Type header configuration for methods supporting request bodies.
 
-    $response = $client->post('https://api.example.com/users', [], [
+**Parameters:**
+
+-   `$method` (string): HTTP method - POST, PUT, PATCH, or DELETE
+    
+-   `$url` (string): Target URL endpoint
+    
+-   `$data` (array): Data to encode as JSON request body (default: empty array)
+    
+-   `$extra` (array): Additional cURL options to merge (default: empty array)
+    
+
+**Returns:**  `HttpResponse` instance
+
+**Throws:**  `InvalidArgumentException` for invalid methods or JSON encoding failures
+
+**Basic usage:**
+
+    // Send POST JSON request
+    $client->jsonRequest('POST', '/api/users', ['name' => 'John']);
+    
+    // Send PUT JSON request 
+    $client->jsonRequest('PUT', '/api/users/123', ['name' => 'John Updated']);
+    
+    // Send PATCH JSON request
+    $client->jsonRequest('PATCH', '/api/users/123', ['email' => 'new@example.com']);
+    
+    // Send DELETE with JSON body (if your API requires it)
+    $client->jsonRequest('DELETE', '/api/users/123', ['reason' => 'inactive']);
+
+
+**With extra headers:**
+
+    // Add custom headers
+    $response = $client->jsonRequest('POST', '/api/auth/login', [
+        'username' => 'admin',
+        'password' => 'secret'
+    ], [
         CURLOPT_HTTPHEADER => [
-            'Content-Type: application/json',
-            'Accept: application/json'
-        ],
-        CURLOPT_POSTFIELDS => json_encode([
-            'name' => 'Jane',
-            'email' => 'jane@example.com'
-        ])
+            'X-API-Key: your-api-key',
+            'X-Custom-Header: value'
+        ]
     ]);
+    
+    // Headers to be sent: Content-Type, Accept, X-API-Key, X-Custom-Header
 
 ## File Uploads
 
