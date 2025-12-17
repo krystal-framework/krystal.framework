@@ -12,7 +12,7 @@ namespace Krystal\Http\Client;
 use UnexpectedValueException;
 use RuntimeException;
 
-final class HttpClient implements HttpCrawlerInterface
+final class HttpClient implements HttpClientInterface
 {
     /**
      * Default cURL options
@@ -100,7 +100,7 @@ final class HttpClient implements HttpCrawlerInterface
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $this->buildRequestBody($data)
+            CURLOPT_POSTFIELDS => http_build_query($data)
         );
 
         return $this->executeRequest($options, $extra);
@@ -120,7 +120,7 @@ final class HttpClient implements HttpCrawlerInterface
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'PATCH',
-            CURLOPT_POSTFIELDS => $this->buildRequestBody($data)
+            CURLOPT_POSTFIELDS => http_build_query($data)
         );
 
         return $this->executeRequest($options, $extra);
@@ -140,7 +140,7 @@ final class HttpClient implements HttpCrawlerInterface
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
-            CURLOPT_POSTFIELDS => $this->buildRequestBody($data)
+            CURLOPT_POSTFIELDS => http_build_query($data)
         );
 
         return $this->executeRequest($options, $extra);
@@ -160,7 +160,7 @@ final class HttpClient implements HttpCrawlerInterface
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'PUT',
-            CURLOPT_POSTFIELDS => $this->buildRequestBody($data)
+            CURLOPT_POSTFIELDS => http_build_query($data)
         );
 
         return $this->executeRequest($options, $extra);
@@ -228,17 +228,6 @@ final class HttpClient implements HttpCrawlerInterface
         $separator = (strpos($url, '?') === false) ? '?' : '&';
 
         return $url . $separator . $query;
-    }
-
-    /**
-     * Build request body from data
-     *
-     * @param array $data
-     * @return string|array Can return array for multipart/form-data
-     */
-    private function buildRequestBody(array $data)
-    {
-        return http_build_query($data);
     }
 
     /**

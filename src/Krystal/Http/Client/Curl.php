@@ -74,7 +74,7 @@ final class Curl implements CurlInterface
     {
         $this->close();
     }
-    
+
     /**
      * Prevent serialization of cURL handle
      * 
