@@ -10,7 +10,7 @@ You only need to supply your data (usually fetched from a database) and configur
 The GridViewWidget provides a rich set of built-in features to enhance your data tables:
 
 -   **Inline editing** - Allows users to edit cell values directly in the table without leaving the page.
--   **Column filtering** - Adds filter controls to column headers. Supports text inputs as well as <select> dropdowns for predefined options.
+-   **Column filtering** - Adds filter controls to column headers. Supports text inputs as well as `<select>` dropdowns for predefined options.
 -   **Sorting** - clickable column headers enable client-side or server-side sorting of rows (ascending/descending).
 -   **Batch Operations** - enables checkboxes for selecting multiple rows, with support for bulk actions such as batch deletion/removal.
 -   **Custom action buttons** - Add per-row action buttons (e.g., Edit, View, Delete) or global toolbar buttons with custom callbacks or URLs.
