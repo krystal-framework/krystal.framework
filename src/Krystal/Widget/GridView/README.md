@@ -1,3 +1,4 @@
+
 Grid widget
 =========
 
@@ -154,7 +155,7 @@ The value option accepts a **callback function** that receives the current row d
 
 **How it works**
 
--   The callback receives $row — an array representing the **current row** being rendered.
+-   The callback receives `$row` — an array representing the **current row** being rendered.
 -   Whatever the callback returns will be displayed in the table cell for that column.
 -   If the callback returns null or nothing (no return statement for a case), the cell will be empty.
 
@@ -215,3 +216,57 @@ Batch operations (e.g., delete multiple rows, change status in bulk) are support
 -   A checkbox column is automatically added as the first column.
 -   Each checkbox has the value of the row’s primary key (defined by `'pk' => 'id'`).
 -   When the form is submitted, selected IDs are sent as an array in `$_POST['batch']` (or `$_GET['batch']` if using GET).
+
+### Filters and sorting
+
+The widget supports per-column filtering and sorting directly in the table header. By default, columns have sorting enabled (with clickable header links) when rendering a filter.
+
+**Enabling basic text filtering**
+
+To add a filter input to a column, set the `filter` option to `true`. This renders a text input field by default.
+
+    [
+        'column' => 'name',
+        'label'  => 'Product Name',
+        'filter' => true
+    ]
+
+
+**Dropdown (select) filtering**
+
+For a dropdown filter instead of a text input, provide an associative array of value-label pairs to the `filter` option and set `'type' => 'select'`.
+
+    [
+        'column' => 'color',
+        'label'  => 'Product Color',
+        'type'   => 'select',
+        'filter' => [
+            'r' => 'Red',
+            'b' => 'Blue',
+            'y' => 'Yellow'
+        ]
+    ]
+
+**Notes**
+
+-   The array keys represent the actual values in your data.
+-   The array values are the display labels shown in the dropdown.
+
+
+**Disabling sorting**
+
+Sorting is enabled by default for all columns (header becomes clickable with asc/desc indicators). To disable sorting on a specific column, explicitly set sorting to `false`.
+
+    [
+        'column' => 'name',
+        'label'  => 'Product Name',
+        'filter' => true,
+        'sorting' => false // Prevents sorting on this column
+    ]
+
+
+**Important notes**
+
+-   Filters and sorting typically work via GET parameters (e.g., ?`filter[name]=foo&sort=price&order=desc`).
+-   Your controller or data provider must handle these query parameters to apply filtering and sorting to the dataset.
+-   The filter form is automatically wrapped and submitted when inputs change (usually via JavaScript auto-submit or a dedicated "Apply" button, depending on your implementation).
