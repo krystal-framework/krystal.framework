@@ -1,5 +1,4 @@
-﻿
-Pagination
+﻿Pagination
 =========
 
 Splitting a large dataset from a database table into smaller, manageable chunks is a common task when displaying extensive results.

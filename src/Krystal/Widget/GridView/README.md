@@ -14,7 +14,7 @@ The GridViewWidget provides a rich set of built-in features to enhance your data
 -   **Sorting** - clickable column headers enable client-side or server-side sorting of rows (ascending/descending).
 -   **Batch Operations** - enables checkboxes for selecting multiple rows, with support for bulk actions such as batch deletion/removal.
 -   **Custom action buttons** - Add per-row action buttons (e.g., Edit, View, Delete) or global toolbar buttons with custom callbacks or URLs.
--   **Custom data rendering** Flexible output formatting per column — use callbacks, HTML markup, conditional styling, or transform raw data (e.g., dates, prices, status badges).
+-   **Custom data rendering** - Flexible output formatting per column — use callbacks, HTML markup, conditional styling, or transform raw data (e.g., dates, prices, status badges).
 
 These features can be enabled individually or combined, giving you full control over the grid's behavior while keeping the implementation lightweight and intuitive.
 
@@ -102,34 +102,42 @@ The key `tableClass` defines a class that generated table will have. If you omit
 
 The key `columns` expects a collection of arrays. Each array represents a column to be rendered in a table.
 
-## Advanced usage
-
-The aforementioned example shows a very basic example of usage. In real-world scenarios, you would expect table generator to handle more cases.
-
 ### Overriding default label
 
-By default, when rendering a column, its name is normalized and then used to display in heading row. For example the following column configuration:
+By default, when rendering a table column, the component automatically generates the header label by normalizing the column name (e.g., converting underscores to spaces and capitalizing words).
+
+**For a column defined as:**
 
     [
        'column' => 'name'
     ]
 
-will have a heading row labeled as *Name*. If you want to override default heading label, you can do it by providing `label` key with its value:
+The header will be rendered as **Name**.
+For a column like `first_name`, it would become **First name**.
+
+To specify a custom header label, add the label key to the column configuration:
+
 
     [
        'column' => 'name',
        'label' => 'Customer name'
     ]
 
-It will render a column name with labeled heading row *Customer name*
+This will render the column header as **Customer name**.
+
+**Additional notes**
+
+-   The label value completely overrides the automatically generated one.
+-   You can use any string, including HTML.
 
 ### Overriding default value
 
-Sometimes your source array might contain some status codes or constants, like `-1`, `0` or `1`. In most cases, you would usually want to convert them to some readable values for your users. For example, instead of showing `-1` or `0` in table columns, you would want to show `Canceled` and `Success` respectively.
 
-Here comes the option `value` to handle this. As a value it expects a callback function that returns some new value.
+Your data source may contain numeric codes, constants, or raw values (e.g., -1, 0, 1) that are not user-friendly. To display more meaningful text in table cells, you can transform these values using the value option.
 
-Consider this:
+The value option accepts a **callback function** that receives the current row data and returns the desired display value.
+
+**Basic usage**
 
     [
        'column' => 'status',
@@ -144,14 +152,19 @@ Consider this:
        }
     ]
 
-Here in `value` callback function, we use conditional logic to render text. Pay attention to `$row` parameter, which is internally represents current row when iterating over all rows.
+**How it works**
 
-So now, when table is rendered, all values in `status` column will be replaced to `Canceled` and `Success`.
+-   The callback receives $row — an array representing the **current row** being rendered.
+-   Whatever the callback returns will be displayed in the table cell for that column.
+-   If the callback returns null or nothing (no return statement for a case), the cell will be empty.
+
 
 
 ### Hiding columns
 
-Sometimes, you would want to show or hide some columns conditionally. By default, all columns are visible. To change this, you can set optional parameter `hidden` to `true`, like this:
+By default, all defined columns are visible in the rendered table. To hide a specific column, set the optional hidden parameter to true in its configuration.
+
+**Basic usage**
 
     [
        'column' => 'name',
@@ -159,20 +172,29 @@ Sometimes, you would want to show or hide some columns conditionally. By default
        'label' => 'Customer name'
     ]
 
+This will exclude the `name` column from being rendered.
+
 ### Enabling batch operations
 
-Whenever you need batch removal or status change, you can set `batch` option to true. However, this won't work by itself. You also need to provide column name which should be considered as a primary key.
+Batch operations (e.g., delete multiple rows, change status in bulk) are supported via checkboxes that appear in the first column of the table. 
 
-In order to accept selected checkboxes, you should also wrap entire table in `form` tag.
+**To enable this feature:**
+
+1.  Set the batch option to true.
+2.  Specify the primary key column name using the `pk` option (this column must exist in your data rows).
+3.  Wrap the entire table in a `<form>` tag so selected items can be submitted.
+4.  Add a submit button to process the batch action.
+
+**Basic usage**
 
     <?php
     
-    // Import Grid component
     use Krystal\Widget\GridView\GridViewWidget;
     
     ?>
     
     <form action="....">
+	    
 	    <div class="table-responsive">
 	        <?= $this->widget(new GridViewWidget($rows, [
 	            'batch' => true,
@@ -182,9 +204,14 @@ In order to accept selected checkboxes, you should also wrap entire table in `fo
 	            ]
 	        ])); ?>
 	    </div>     
-     <button type="submit">Apply batch</submit>
-     
+       
+       <button type="submit">Apply batch</submit>
+       
     </form>
 
-On form submission, you can accept selected items in `$_POST['batch']` or `$_GET['batch']` (depending on form method).
 
+**How it works**
+
+-   A checkbox column is automatically added as the first column.
+-   Each checkbox has the value of the row’s primary key (defined by `'pk' => 'id'`).
+-   When the form is submitted, selected IDs are sent as an array in `$_POST['batch']` (or `$_GET['batch']` if using GET).
