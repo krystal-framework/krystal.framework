@@ -104,6 +104,26 @@ The key `tableClass` defines a class that generated table will have. If you omit
 
 The key `columns` expects a collection of arrays. Each array represents a column to be rendered in a table.
 
+
+### Cell attributes
+
+You can add custom HTML attributes to individual table cells on a per-column basis. This is useful for applying specific classes, data attributes, styles, or other properties to all cells in a column.
+
+Use the `attributes` option and provide an associative array of attribute names and values.
+
+    [
+        'column' => 'name',
+        'attributes' => [
+            'class' => 'text-start'
+        ]
+    ],
+
+**Notes**
+
+- The attributes array applies to body cells (`<td>`) only, not header cells (`<th>`)
+- Attribute values must be strings
+- Always escape or validate attributes if they contain user-generated content to prevent XSS
+
 ### Overriding default label
 
 By default, when rendering a table column, the component automatically generates the header label by normalizing the column name (e.g., converting underscores to spaces and capitalizing words).
