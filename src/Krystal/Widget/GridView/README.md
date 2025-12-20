@@ -333,3 +333,44 @@ This means:
 
 -   Row with ID 5 had its name changed to "John Doe" and email to john@example.com
 -   Row with ID 7 had its name changed to "Jane Smith".
+
+## Actions
+
+The `actions` option allows you to add custom action links or buttons to each table row. These are typically rendered in a dedicated "Actions" column at the end of the table (e.g., Edit, View, Delete buttons).
+
+The `actions` key accepts an array of callback functions. Each callback receives the current `$row` array as its parameter and must return a string (usually HTML for a link or button).
+
+**Basic usage**
+
+    <?php
+    
+    use Krystal\Widget\GridView\GridViewWidget;
+    
+    ?>
+    
+    <div class="table-responsive">
+        <?= $this->widget(new GridViewWidget($rows, [
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => [
+                [
+                    'column' => 'name'
+                ],
+                // ....
+            ],
+            'actions' => [
+                function($row){
+                    // Here could be a hyperlink
+                    return 'Delete #' . $row['id']
+                },
+                function($row){
+                    // Here could be a hyperlink
+                    return 'Edit #' . $row['id']
+                },
+            ]
+        ])); ?>
+    </div>
+
+**Notes**
+
+- Actions are automatically grouped in a final column labeled Actions.
+- Return any valid HTML string — links, buttons, icons, dropdowns, etc.
