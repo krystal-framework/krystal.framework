@@ -1,4 +1,5 @@
-﻿Pagination
+﻿
+Pagination
 =========
 
 Splitting a large dataset from a database table into smaller, manageable chunks is a common task when displaying extensive results.
@@ -141,6 +142,27 @@ That’s how it works. Let’s quickly review what we’ve done: first, we creat
 
 Finally, let’s take a look at the list of available methods provided by the `$paginator` service object.
 
+## Rendering
+
+You can easily add pagination to your templates using the built-in `PaginationWidget`. To use it, ensure that the `$paginator` object is properly passed from your controller.
+
+**Usage in templates**
+
+    <?php
+    
+    use Krystal\Widget\Pagination\PaginationWidget;
+    
+    ?>
+    
+    <div>
+        <!-- Your list items, table rows, grid, or other paginated content here -->
+    </div>
+    
+    <nav aria-label="Pagination">
+        <?= $this->widget(new PaginationWidget($paginator)) ?>
+    </nav>
+
+
 ## Available methods
 
 Typically, you’ll use these methods within your view templates to render the pagination block.
@@ -240,4 +262,5 @@ Returns per page count number.
     \Krystal\Paginate\Paginator::getTotalAmount()
 
 Returns total amount of records.
+
 
