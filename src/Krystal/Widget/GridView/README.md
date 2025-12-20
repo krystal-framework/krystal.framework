@@ -1,4 +1,5 @@
 
+
 Grid widget
 =========
 
@@ -97,7 +98,7 @@ You can further customize headers, add sorting, filters, actions, or custom rend
 
 ## Table class
 
-The key `tableClass` defines a class that generated table will have. If you omit this, then the default CSS class `table table-hover table-bordered table-striped`will be used.
+The key `tableClass` defines a class that generated table will have. If you omit this, then the default CSS class `table table-hover table-bordered table-striped` will be used.
 
 ## Columns 
 
@@ -270,3 +271,45 @@ Sorting is enabled by default for all columns (header becomes clickable with asc
 -   Filters and sorting typically work via GET parameters (e.g., ?`filter[name]=foo&sort=price&order=desc`).
 -   Your controller or data provider must handle these query parameters to apply filtering and sorting to the dataset.
 -   The filter form is automatically wrapped and submitted when inputs change (usually via JavaScript auto-submit or a dedicated "Apply" button, depending on your implementation).
+
+
+### Inline editing
+
+The widget supports inline editing, allowing users to quickly update individual cell values directly in the table without opening a separate edit form.
+
+To make a column editable, set the `editable` option to `true`. This renders the cell content inside a text input field (by default).
+
+    [
+        'column'   => 'name',
+        'label'    => 'Customer Name',
+        'editable' => true
+    ]
+
+
+**Handling submitted data**
+
+On form submission, edited values are sent in the `$_POST['editable']` array, structured as:
+
+    $_POST['editable'] = [
+        'column_name' => [
+            'row_primary_key' => 'new_value',
+            // ...
+        ]
+    ];
+
+**Example of received data:**
+
+    $_POST['editable'] = [
+        'name'  => [
+            '5' => 'John Doe',
+            '7' => 'Jane Smith',
+        ],
+        'email' => [
+            '5' => 'john@example.com',
+        ],
+    ];
+
+This means:
+
+-   Row with ID 5 had its name changed to "John Doe" and email to john@example.com
+-   Row with ID 7 had its name changed to "Jane Smith".

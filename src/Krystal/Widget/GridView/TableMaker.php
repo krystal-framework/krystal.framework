@@ -15,6 +15,7 @@ use Krystal\Form\Element;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Text\TextUtils;
 use Closure;
+use LogicException;
 
 final class TableMaker
 {
@@ -46,7 +47,7 @@ final class TableMaker
     const GRID_PARAM_BATCH_CALLBACK = 'batchCallback';
     const GRID_PARAM_ROW_ATTRS = 'rowAttributes';
     const GRID_PARAM_ACTIONS = 'actions';
-    const GRIG_PARAM_EDITABLE = 'editable';
+    const GRID_PARAM_EDITABLE = 'editable';
     const GRID_PARAM_FILTER = 'filter';
     const GRID_PARAM_COLUMNS = 'columns';
     const GRID_PARAM_COLUMN = 'column';
@@ -373,7 +374,7 @@ final class TableMaker
             $tdAttributes = self::parseAttributes($tdAttributes, $data);
 
             // Find out whether current row is editable or not
-            $editable = $this->findOptionByColumn($column, self::GRIG_PARAM_EDITABLE);
+            $editable = $this->findOptionByColumn($column, self::GRID_PARAM_EDITABLE);
             // Get custom value (which is provided by a callback) if possible
             $callback = $this->findOptionByColumn($column, self::GRID_PARAM_VALUE);
 
@@ -393,7 +394,15 @@ final class TableMaker
             }
 
             if ($editable == true) {
-                $name = $this->createInputName($column, $id);
+                $pk = $this->getPkColumn();
+
+                if ($pk === false) {
+                    throw new LogicException(
+                        'Editable columns are defined in the grid configuration, but no primary key ("pk") option is provided. The "pk" option is required to generate unique input names for inline editing.'
+                    );
+                }
+
+                $name = sprintf("%s[%s][%s]", self::GRID_PARAM_EDITABLE, $column, $data[$pk]);
                 $filter = $this->findOptionByColumn($column, self::GRID_PARAM_FILTER);
 
                 if (is_array($filter)) {
@@ -401,7 +410,6 @@ final class TableMaker
                 } else {
                     $column = $this->createInput('createColumn', $column, $name, $value);
                 }
-
             } else {
                 $column = $this->createColumn(null, $value, $tdAttributes);
             }
@@ -620,7 +628,7 @@ final class TableMaker
     }
 
     /**
-     * Creates table header
+     * Creates table body
      * 
      * @param array $children
      * @return \Krystal\Form\NodeElement
