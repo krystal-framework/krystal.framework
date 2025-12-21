@@ -334,6 +334,59 @@ This means:
 -   Row with ID 5 had its name changed to "John Doe" and email to john@example.com
 -   Row with ID 7 had its name changed to "Jane Smith".
 
+
+## Row attributes
+
+The `rowAttributes` option allows you to dynamically apply HTML attributes to individual table rows (`<tr>` elements). This is particularly useful for highlighting rows based on data conditions (e.g., status, priority, expiration).
+
+The `rowAttributes` key accepts an array where:
+
+- Keys are attribute names (e.g., class, data-id).
+- Values can be either:
+  - A string (static value applied to all rows).
+  - A callback function that receives the current `$row` and returns a string value.
+
+**Dynamic row class example (Conditional highlighting)**
+
+Highlight rows with `status == 0` using Bootstrap's `bg-danger` class:
+
+    <?php
+    
+    use Krystal\Widget\GridView\GridViewWidget;
+    
+    ?>
+    
+    <form action="....">
+	    <div class="table-responsive">
+	        <?= $this->widget(new GridViewWidget($rows, [
+                'rowAttributes' => [
+                    'class' => function ($row) {
+                        // Red background for failed/inactive
+                        if ($row['status'] == 0) {
+                            return 'bg-danger text-white';
+                        }
+
+                        // Green for success/active
+                        if ($row['status'] == 1) {
+                            return 'bg-success text-white';
+                        }
+
+                        return ''; // No additional class
+                    },
+                    // Example: add static attributes to all rows
+                    'data-type' => 'order-row'
+                ],
+	            'columns' => [
+	                // ...
+	            ]
+	        ])); ?>
+	    </div>     
+       
+       <button type="submit">Apply</submit>
+       
+    </form>
+
+
 ## Actions
 
 The `actions` option allows you to add custom action links or buttons to each table row. These are typically rendered in a dedicated "Actions" column at the end of the table (e.g., Edit, View, Delete buttons).
