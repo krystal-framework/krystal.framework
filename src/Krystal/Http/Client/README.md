@@ -302,3 +302,135 @@ Return total request duration in seconds including DNS, connection, and transfer
     } else {
         echo "Request failed with status: " . $response->getStatusCode();
     }
+
+
+## API client example
+
+It is **strongly recommended** to create a custom API client class when interacting with external APIs. This approach provides several benefits:
+
+-   Centralizes all API endpoints and logic in one place.
+-   Makes it easy to switch HTTP clients or add global headers, authentication, error handling, or logging.
+-   Improves code readability and maintainability.
+-   Allows consistent response handling (e.g., automatic JSON decoding).
+
+**Implementation example**
+
+    <?php
+    
+    use Krystal\Http\Client\HttpClient;
+    
+    /**
+     * Custom API client for interacting with JSON-based APIs.
+     *
+     * This class assumes the external API communicates exclusively via JSON:
+     * 
+     * - Requests with payloads are sent as JSON.
+     * - All responses are expected to be valid JSON strings that are automatically decoded.
+     *
+     * Public methods always return decoded associative arrays.
+     */
+    final class ApiClient
+    {
+        /** @var string Base URL for the API */
+        private const BASE_URL = 'https://example.com/api/v1';
+    
+        /** @var HttpClient Instance of the HTTP client used for requests */
+        private $httpClient;
+    
+        /**
+         * State initialization
+         *
+         * @param HttpClient|null $httpClient Optional custom HTTP client. If not provided, a new instance will be created.
+         */
+        public function __construct(HttpClient $httpClient = null)
+        {
+            $this->httpClient = $httpClient ?: new HttpClient();
+        }
+    
+        /**
+         * Decode a JSON response string into an associative array.
+         *
+         * Called internally by all public methods.
+         *
+         * @param string $response The raw JSON response
+         * @return array           Decoded data as associative array
+         * @throws RuntimeException If JSON is invalid
+         */
+        private function decodeResponse($response)
+        {
+            $data = json_decode($response, true);
+    
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new RuntimeException('Invalid JSON response from API: ' . json_last_error_msg());
+            }
+    
+            return $data;
+        }
+    
+        /**
+         * Fetch all books.
+         *
+         * @return array Decoded list of books (associative arrays)
+         */
+        public function getBooks()
+        {
+            $response = $this->httpClient->get(self::BASE_URL . '/books/all');
+            return $this->decodeResponse($response);
+        }
+    
+        /**
+         * Fetch a single book by ID.
+         *
+         * @param int|string $id The book identifier
+         * @return array         Decoded book data (associative array)
+         */
+        public function getBook($id)
+        {
+            $response = $this->httpClient->get(self::BASE_URL . '/books/single/' . $id);
+            return $this->decodeResponse($response);
+        }
+    
+        /**
+         * Delete a book by ID.
+         *
+         * @param int|string $id The book identifier
+         * @return array         Decoded response (typically success/failure message)
+         */
+        public function deleteBook($id)
+        {
+            $response = $this->httpClient->post(self::BASE_URL . '/books/delete/' . $id);
+            return $this->decodeResponse($response);
+        }
+    
+        /**
+         * Add a new book.
+         *
+         * @param array $book Associative array of book data
+         * @return array      Decoded response (typically the created book or success message)
+         */
+        public function addBook(array $book)
+        {
+            $response = $this->httpClient->jsonRequest(self::BASE_URL . '/books/add', $book);
+            return $this->decodeResponse($response);
+        }
+    }
+
+**Usage example**
+
+    <?php
+    
+    $apiClient = new ApiClient();
+    
+    $books = $apiClient->getBooks(); // Returns array of associative arrays
+    $book  = $apiClient->getBook(42); // Single book as associative array
+    
+    print_r($books);
+    
+    // Add a book
+    $result = $apiClient->addBook(array(
+        'title'  => 'New Book',
+        'author' => 'Jane Doe',
+    ));
+    
+    var_dump($result);
+
