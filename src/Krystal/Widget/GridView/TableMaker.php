@@ -37,12 +37,27 @@ final class TableMaker
         'tableDataClass' => 'text-center',
         'rowClass' => 'text-center',
         'activeClass' => 'text-info',
+        'inputClass' => 'form-control',
         'arrowDownIcon' => 'fas fa-angle-down',
         'arrowUpIcon' => 'fas fa-angle-up',
-        'inputClass' => 'form-control',
         'batch' => false // Whether to generate batch selection
     );
 
+    /**
+     * Any compliant translator instance
+     * 
+     * @var \Krystal\I18n\TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * Query container
+     * 
+     * @var \Krystal\Db\Filter\QueryContainerInterface
+     */
+    private $filter;
+
+    /* @const string */
     const GRID_PARAM_TD_ATTRIBUTES = 'attributes';
     const GRID_PARAM_BATCH_CALLBACK = 'batchCallback';
     const GRID_PARAM_ROW_ATTRS = 'rowAttributes';
@@ -61,20 +76,6 @@ final class TableMaker
     const GRID_PARAM_SORTING = 'sorting';
     const GRID_PARAM_TRANSLATE = 'translate';
     const GRID_PARAM_TRANSLATEABLE = 'translateable';
-
-    /**
-     * Any compliant translator instance
-     * 
-     * @var \Krystal\I18n\TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * Query container
-     * 
-     * @var \Krystal\Db\Filter\QueryContainerInterface
-     */
-    private $filter;
 
     /**
      * State initialization
