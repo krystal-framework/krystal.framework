@@ -344,6 +344,7 @@ Usage example:
 
 This will output:
 
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Article",
@@ -368,6 +369,7 @@ This will output:
       "dateModified": "2023-07-20T14:30:00+00:00",
       "inLanguage": "en-US"
     }
+    </script>
 
 
 ## Collection Page
