@@ -21,9 +21,9 @@ Use this option when your site has only one sitemap.
     
     $generator = new SitemapGenerator();
     
-    $generator->addUrl('http://domain.com/our-story', '2020-11-23 00:01:03', 'daily', '1.0');
-    $generator->addUrl('http://domain.com/team', '2020-11-25 00:01:03', 'weekly', '0.8');
-    $generator->addUrl('http://domain.com/news', '2020-11-22 00:01:03', 'weekly', '0.8');
+    $generator->addUrl('http://example.com/our-story', '2020-11-23 00:01:03', 'daily', '1.0');
+    $generator->addUrl('http://example.com/team', '2020-11-25 00:01:03', 'weekly', '0.8');
+    $generator->addUrl('http://example.com/news', '2020-11-22 00:01:03', 'weekly', '0.8');
     
     echo $generator->render();
 
@@ -32,19 +32,19 @@ This outputs the following:
     <?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <url>
-        <loc>http://domain.com/our-story</loc>
+        <loc>http://example.com/our-story</loc>
         <lastmod>2020-11-23T00:01:03+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
       </url>
       <url>
-        <loc>http://domain.com/team</loc>
+        <loc>http://example.com/team</loc>
         <lastmod>2020-11-25T00:01:03+00:00</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
       </url>
       <url>
-        <loc>http://domain.com/news</loc>
+        <loc>http://example.com/news</loc>
         <lastmod>2020-11-22T00:01:03+00:00</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -55,21 +55,21 @@ Alternatively, when adding URLs, you can also provide an array of entires, like 
 
     $generator->addUrls([
         [
-            'loc' => 'http://domain.com/our-story',
+            'loc' => 'http://example.com/our-story',
             'lastmod' => '2020-11-23 00:01:03',
             'changefreq' => 'daily',
             'priority' => '1.0'
         ],
 
         [
-            'loc' => 'http://domain.com/team',
+            'loc' => 'http://example.com/team',
             'lastmod' => '2020-11-25 00:01:03',
             'changefreq' => 'weekly',
             'priority' => '0.8'
         ],
 
         [
-            'loc' => 'http://domain.com/news',
+            'loc' => 'http://example.com/news',
             'lastmod' => '2020-11-22 00:01:03',
             'changefreq' => 'weekly',
             'priority' => '0.8'
@@ -88,7 +88,7 @@ These constants can also be used when providing the $changefreq argument.
 
 Like this:
 
-    $generator->addUrl('http://domain.com/our-story', '2020-11-23 00:01:03', SitemapGenerator::FREQ_WEEKLY);
+    $generator->addUrl('http://example.com/our-story', '2020-11-23 00:01:03', SitemapGenerator::FREQ_WEEKLY);
 
 
 ## Multiple sitemaps
@@ -101,8 +101,8 @@ You can also generate a grouped sitemap that references other sitemaps. Here’s
     
     $generator = new SitemapIndexGenerator();
     
-    $generator->addSitemap('http://domain.com/sitemaps/blog.xml');
-    $generator->addSitemap('http://domain.com/sitemaps/shop.xml', '2020-11-25 00:01:03');
+    $generator->addSitemap('http://example.com/sitemaps/blog.xml');
+    $generator->addSitemap('http://example.com/sitemaps/shop.xml', '2020-11-25 00:01:03');
     
     echo $generator->render();
 
@@ -111,10 +111,10 @@ This outputs the following:
     <?xml version="1.0" encoding="UTF-8"?>
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <sitemap>
-        <loc>http://domain.com/sitemaps/blog.xml</loc>
+        <loc>http://example.com/sitemaps/blog.xml</loc>
       </sitemap>
       <sitemap>
-        <loc>http://domain.com/sitemaps/shop.xml</loc>
+        <loc>http://example.com/sitemaps/shop.xml</loc>
         <lastmod>2020-11-25T00:01:03+00:00</lastmod>
       </sitemap>
     </sitemapindex>
@@ -123,11 +123,11 @@ Alternatively, when adding sitemaps, you can provide an array of entries, like t
 
     $generator->addSitemaps([
         [
-            'loc' => 'http://domain.com/sitemaps/blog.xml',
+            'loc' => 'http://example.com/sitemaps/blog.xml',
         ],
     
         [
-            'loc' => 'http://domain.com/sitemaps/shop.xml',
+            'loc' => 'http://example.com/sitemaps/shop.xml',
             'lastmod' => '2020-11-25 00:01:03'
         ]
     ]);
