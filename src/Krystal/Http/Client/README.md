@@ -1,12 +1,12 @@
+
 HTTP Client
 ===========
 
-The Krystal HTTP Client is a robust, PHP 5.6+ compatible HTTP client built on top of cURL. It provides a clean, object-oriented interface for making HTTP requests with comprehensive error handling and configuration options.
+The Krystal HTTP Client is a robust HTTP client built on top of cURL. It provides a clean, object-oriented interface for making HTTP requests with comprehensive error handling and configuration options.
 
 ## Features
 
 - Full HTTP Method Support: GET, POST, PUT, PATCH, DELETE, HEAD
-- PHP 5.6 to 8+ Compatibility: Works across all supported PHP versions
 - Thread-Safe: Multiple instances can be used concurrently
 - Exception-Based Error Handling: Clear error messages for debugging
 - Configurable Defaults: Set once, use everywhere
@@ -25,49 +25,46 @@ The Krystal HTTP Client is a robust, PHP 5.6+ compatible HTTP client built on to
     <?php
     
     use Krystal\Http\Client\HttpClient;
-    use RuntimeException;
     
     $client = new HttpClient();
+    $client->setDefaultOptions([
+        // cURL constants => values, if required
+    ])
     
-    try {
-        // Simple GET request
-        $response = $client->get('https://api.example.com/users');
-        
-        // GET with query parameters
-        $response = $client->get('https://api.example.com/users', [
-            'page' => 1,
-            'limit' => 20
-        ]);
-        
-        // POST request with form data
-        $response = $client->post('https://api.example.com/login', [
-            'username' => 'john',
-            'password' => 'secret'
-        ]);
-        
-        // PUT request
-        $response = $client->put('https://api.example.com/users/1', [
-            'name' => 'John Updated',
-            'email' => 'john@example.com'
-        ]);
-        
-        // PATCH request
-        $response = $client->patch('https://api.example.com/users/1', [
-            'name' => 'John Modified'
-        ]);
-        
-        // DELETE request
-        $response = $client->delete('https://api.example.com/users/1');
-        
-        // HEAD request (returns headers only)
-        $headers = $client->head('https://api.example.com/users');
+    $response = $client->get('https://api.example.com/users');
     
-        // Generic request method
-        $response = $client->request('POST', 'https://api.example.com/users', $data);
+    // GET with query parameters
+    $response = $client->get('https://api.example.com/users', [
+        'page' => 1,
+        'limit' => 20
+    ]);
+    
+    // POST request with form data
+    $response = $client->post('https://api.example.com/login', [
+        'username' => 'john',
+        'password' => 'secret'
+    ]);
+    
+    // PUT request
+    $response = $client->put('https://api.example.com/users/1', [
+        'name' => 'John Updated',
+        'email' => 'john@example.com'
+    ]);
+    
+    // PATCH request
+    $response = $client->patch('https://api.example.com/users/1', [
+        'name' => 'John Modified'
+    ]);
+    
+    // DELETE request
+    $response = $client->delete('https://api.example.com/users/1');
+    
+    // HEAD request (returns headers only)
+    $headers = $client->head('https://api.example.com/users');
+
+    // Generic request method
+    $response = $client->request('POST', 'https://api.example.com/users', $data);
         
-    } catch (RuntimeException $e) {
-        echo 'Request failed: ' . $e->getMessage();
-    }
 
 ## Custom Headers
 
