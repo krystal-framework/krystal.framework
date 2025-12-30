@@ -181,13 +181,11 @@ final class Curl implements CurlInterface
             );
 
             $this->errors[] = $error;
+        } else [
+            $error = null;
+        ]
 
-            // Error response
-            return new HttpResponse($result, $statusCode, $headers, $error, $info);
-        }
-        
-        // Successful response
-        return new HttpResponse($result, $statusCode, $headers, null, $info);
+        return new HttpResponse($result, $statusCode, $headers, $error, $info);
     }
 
     /**
