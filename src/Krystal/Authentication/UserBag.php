@@ -67,5 +67,5 @@ final class UserBag implements UserBagInterface
     {
         $this->passwordHash = $passwordHash;
         return $this;
-    }   
+    }
 }
