@@ -1,3 +1,4 @@
+
 Robots
 ======
 
@@ -16,12 +17,20 @@ This tool provides a simple, fluent API for generating valid `robots.txt` files 
     $robots = new Robots(); 
     $robots->addComment('Default generated robots.txt')
            ->addUserAgent('*')
-           ->addDisallow(['/config/', '/modules/'])
+           ->addDisallow([
+              '/config/',
+              '/modules/'
+           ])
            ->addAllow('/images/')
            ->addBreak()
            ->addHost('example.com')
            ->addBreak()
-           ->addSitemap([ 'https://example.com/sitemap-1.xml', 'https://example.com/sitemap-2.xml' ]); echo  $robots->render();
+           ->addSitemap([
+               'https://example.com/sitemap-1.xml', 
+               'https://example.com/sitemap-2.xml'
+           ]);
+           
+    echo $robots->render();
 
 This outputs:
 
