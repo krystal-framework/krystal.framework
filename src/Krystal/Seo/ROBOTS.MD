@@ -92,8 +92,6 @@ Invalid values result in an `InvalidArgumentException`.
 
 You can save the generated `robots.txt` file to a directory using the `save($dir)` method:
 
-`$robots->save('/var/www/html');` 
+    $robots->save('/var/www/html');
 
 The method returns a boolean value indicating whether the save operation was successful.
-
-----------
