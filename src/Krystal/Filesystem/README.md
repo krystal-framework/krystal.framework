@@ -13,7 +13,7 @@ To start using it, import the class at the top of your script:
 
 ### Remove a file
 
-Deletes a file after setting permissions to `0777`.  
+Deletes a file.  
 Throws `RuntimeException` if the given path is not a valid file.
 
 **Usage:**
@@ -79,7 +79,7 @@ Usage:
 
 ### Move a directory
 
-Moves (copies then deletes) a directory.
+Moves a directory.
 
 Usage:
 
@@ -115,7 +115,7 @@ Throws `RuntimeException` if the given path is not a valid file.
 
 Usage:
 
-    $hasExt = FileManager::hasExtension('/path/to/document.pdf', 'pdf');
+    $hasExt = FileManager::hasExtension('/path/to/document.pdf', ['pdf']);
 
 
 ### Convert bytes to a human-readable size

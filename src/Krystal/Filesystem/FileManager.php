@@ -27,11 +27,11 @@ class FileManager implements FileManagerInterface
     public static function replaceExtension($path, $new)
     {
         $info = pathinfo($path);
-        return ($info['dirname'] ? $info['dirname'] . '/' : '') . $info['filename'] . '.' . $new;
+        return ($info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '') . $info['filename'] . '.' . $new;        
     }
 
     /**
-     * Returns a directory name from a path
+     * Returns basename of a path
      * 
      * @param string $path
      * @return string
@@ -42,7 +42,7 @@ class FileManager implements FileManagerInterface
     }
 
     /**
-     * Returns a directory name from a path
+     * Returns extension from a path
      * 
      * @param string $path
      * @return string
@@ -103,7 +103,7 @@ class FileManager implements FileManagerInterface
         $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
         $unit = $units[$value]; // Chosen unit
 
-        return sprintf('%.02F', $bytes / pow(1024, $value)) * 1 . ' ' . $unit;
+        return sprintf('%.02F %s', $bytes / pow(1024, $value), $unit);
     }
 
     /**
@@ -136,7 +136,7 @@ class FileManager implements FileManagerInterface
         $mimeType = new MimeTypeGuesser();
         $extension = self::getExtension($file);
 
-        return $mimeType->getTypeByExtension($file);
+        return $mimeType->getTypeByExtension($extension);
     }
 
     /**
@@ -149,7 +149,7 @@ class FileManager implements FileManagerInterface
     public static function rmfile($file)
     {
         if (is_file($file)) {
-            return chmod($file, 0777) && unlink($file);
+            return unlink($file);
         } else {
             throw new RuntimeException(sprintf(
                 'Invalid file path supplied "%s"', $file
@@ -168,29 +168,22 @@ class FileManager implements FileManagerInterface
     public static function getDirTree($dir, $self = false)
     {
         if (!is_dir($dir)) {
-            throw new RuntimeException(sprintf(
-                'Can not build directory tree because of invalid path "%s"', $dir
-            ));
+            throw new RuntimeException("Invalid directory path: $dir");
         }
 
-        $target = array();
-        $tree = array();
+        $tree = $self ? [$dir] : [];
 
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS), 
             RecursiveIteratorIterator::SELF_FIRST
         );
 
-        if ($self !== false) {
-            array_push($target, $dir);
-        }
-
         foreach ($iterator as $file) {
-            array_push ($target, $file);
-        }
+            if ($file->isLink()) {
+                continue; // skip symlinks
+            }
 
-        foreach ($target as $index => $file) {
-            array_push($tree, (string) $file);
+            $tree[] = (string) $file;
         }
 
         return $tree;
@@ -210,10 +203,18 @@ class FileManager implements FileManagerInterface
         }
 
         $count = 0.00;
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS)
+        );
 
         foreach ($iterator as $file) {
-            $count += $file->getSize(); 
+            if ($file->isLink()) {
+                continue; // skip symlinks
+            }
+
+            if ($file->isFile()) {
+                $count += $file->getSize();
+            }
         }
 
         return $count;
@@ -228,7 +229,7 @@ class FileManager implements FileManagerInterface
     public static function createDir($dir)
     {
         if (!is_dir($dir)) {
-            return mkdir($dir, 0777, true);
+            return mkdir($dir, 0755, true);
         } else {
             return false;
         }
@@ -242,46 +243,95 @@ class FileManager implements FileManagerInterface
      */
     public static function cleanDir($dir)
     {
-        return self::rmdir($dir) && self::createDir($dir);
-    }
+        if (!is_dir($dir)) {
+            throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $dir));
+        }
 
-    /**
-     * Recursively applies chmod to given directory
-     * 
-     * @param string $file
-     * @param integer $mode
-     * @param array $ignored Items that unreadable or accessible
-     * @throws \UnexpectedValueException if $file is neither a directory and a file
-     * @return boolean Depending on success
-     */
-    public static function chmod($file, $mode, array &$ignored = array())
-    {
-        if (is_file($file)) {
-            if (!chmod($file, $mode)) {
-                array_push($ignored, $file);
-                return false;
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($iterator as $item) {
+            if ($item->isLink()) {
+                continue; // skip symlinks
             }
 
-        } else if (is_dir($file)) {
-            $items = self::getDirTree($file, true);
+            $path = $item->getPathname();
 
-            foreach ($items as $item) {
-                if (!chmod($item, $mode)) {
-                    array_push($ignored, $item);
-                }
+            if ($item->isDir()) {
+                self::rmdir($path);
+            } else {
+                unlink($path);
             }
-
-        } else {
-            throw new UnexpectedValueException(sprintf(
-                '%s expects a path to be a directory or a file as first argument', __METHOD__
-            ));
         }
 
         return true;
     }
 
     /**
-     * Removes a directory (recursively)
+     * Recursively applies chmod to given directory
+     * 
+     * @param string $path
+     * @param integer $mode
+     * @param array $ignored Items that unreadable or accessible
+     * @throws \UnexpectedValueException if $path is neither a directory and a file
+     * @return boolean Depending on success
+     */
+    public static function chmod($path, $mode, array &$ignored = array())
+    {
+        if (is_file($path)) {
+            return chmod($path, $mode) ?: (bool) array_push($ignored, $path);
+        }
+
+        if (is_dir($path)) {
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+
+            foreach ($iterator as $item) {
+                if ($item->isLink()) {
+                    continue; // skip symlinks
+                }
+
+                // Use getRealPath() to avoid issues with relative paths
+                if (!chmod($item->getRealPath(), $mode)) {
+                    $ignored[] = $item->getRealPath();
+                }
+            }
+
+            // Finally, chmod the parent directory itself
+            chmod($path, $mode);
+            return empty($ignored);
+        }
+
+        throw new UnexpectedValueException(sprintf(
+            '%s expects a path to be a directory or a file', __METHOD__
+        ));
+    }
+
+    /**
+     * Deletes a file or a directory
+     * 
+     * @param string $path
+     * @return boolean
+     */
+    public static function delete($path)
+    {
+        if (is_dir($path)) {
+            return self::rmdir($path);
+        }
+
+        if (is_file($path)) {
+            return self::rmfile($path);
+        }
+
+        return false;
+    }
+
+    /**
+     * Removes a directory recursively using memory-efficient Iterators
      * 
      * @param string $dir
      * @throws \RuntimeException if $dir isn't a path to directory
@@ -293,16 +343,21 @@ class FileManager implements FileManagerInterface
             throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $dir));
         }
 
-        $files = array_diff(scandir($dir), array('.', '..'));
+        $items = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
 
-        foreach ($files as $file) {
-            $path = sprintf('%s/%s', $dir, $file);
+        foreach ($items as $item) {
+            if ($item->isLink()) {
+                continue; // skip symlinks
+            }
 
-            if (is_dir($path)) {
-                self::rmdir($path);
+            // Check if it's a directory or a file/link
+            if ($item->isDir()) {
+                rmdir($item->getPathname());
             } else {
-                chmod($path, 0777);
-                unlink($path);
+                unlink($item->getPathname());
             }
         }
 
@@ -312,36 +367,50 @@ class FileManager implements FileManagerInterface
     /**
      * Copies a directory to another directory
      * 
-     * @param string $src The path to the file
+     * @param string $src The path to the current directory
      * @param string $dir The dir file will be copied in
+     * @param int $mode Default permissions for new directories
      * @throws \RuntimeException if $src isn't a path to directory
      * @return boolean Depending on success
      */
-    public static function copy($src, $dir)
+    public static function copy($src, $dst, $mode = 0755)
     {
         if (!is_dir($src)) {
-            throw new RuntimeException(sprintf('Invalid directory path supplied "%s"', $src));
+                throw new RuntimeException(sprintf('Source is not a directory: "%s"', $src));
         }
-
-        $dir = opendir($src);
 
         if (!is_dir($dst)) {
-            mkdir($dst, 0777);
-        }
-
-        while (false !== ($file = readdir($dir))) {
-            // We must ensure a file isn't a dot
-            if (($file != '.' ) && ($file != '..' )) {
-                if (is_dir($src . '/' . $file)) {
-                    // Recursive call
-                    call_user_func(__METHOD__, $src . '/' . $file, $dst . '/' . $file); 
-                } else {
-                    copy($src . '/' . $file, $dst . '/' . $file); 
-                }
+            if (!mkdir($dst, $mode, true)) {
+                throw new RuntimeException(sprintf('Failed to create destination directory: "%s"', $dst));
             }
         }
 
-        closedir($dir);
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($src, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        foreach ($iterator as $item) {
+            if ($item->isLink()) {
+                continue; // skip symlinks
+            }
+
+            $target = $dst . DIRECTORY_SEPARATOR . $iterator->getSubPathName();
+
+            if ($item->isDir()) {
+                if (!is_dir($target) && !mkdir($target, $mode, true)) {
+                    throw new RuntimeException(sprintf('Failed to create internal directory: "%s"', $target));
+                }
+            } else {
+                if (!copy($item->getRealPath(), $target)) {
+                    throw new RuntimeException(sprintf('Failed to copy file: "%s"', $item->getRealPath()));
+                }
+
+                // Optional: Match the file permissions of the source file
+                @chmod($target, fileperms($item->getRealPath()));
+            }
+        }
+
         return true;
     }
 
@@ -354,7 +423,19 @@ class FileManager implements FileManagerInterface
      */
     public static function move($from, $to)
     {
-        return self::copy($from, $to) && self::delete($from);
+        if (!file_exists($from)) {
+            return false;
+        }
+
+        // Ensure the destination directory exists
+        $parentDir = dirname($to);
+
+        if (!is_dir($parentDir)) {
+            self::createDir($parentDir);
+        }
+
+        // rename() is much faster as it doesn't copy data bits
+        return rename($from, $to);
     }
 
     /**
@@ -367,17 +448,18 @@ class FileManager implements FileManagerInterface
     public static function isFileEmpty($file)
     {
         if (!is_file($file)) {
-            throw new RuntimeException(sprintf('Invalid file path supplied'));
+            throw new RuntimeException(sprintf('Invalid file path supplied: "%s"', $file));
         }
 
-        return mb_strlen(file_get_contents($file, 2), 'UTF-8') > 0 ? false : true;
+        // filesize() is cached by PHP and very fast
+        return filesize($file) === 0;
     }
 
     /**
      * Returns nested directories inside provided one
      * 
      * @param string $dir
-     * @throws \UnexpectedValueException If can't open a directory
+     * @throws \Exception If can't open a directory
      * @return array
      */
     public static function getFirstLevelDirs($dir)
