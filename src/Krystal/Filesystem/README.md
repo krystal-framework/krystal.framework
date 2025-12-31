@@ -50,7 +50,7 @@ Removes all contents from a directory but keeps the directory itself.
 
     FileManager::cleanDir('/var/www/html/tmp');
 
-Change permissions recursively*
+### Change permissions recursively
 
 Applies the given permission mode to a file or directory recursively.  
 Populates `$ignored` with paths that failed.  
