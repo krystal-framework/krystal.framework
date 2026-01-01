@@ -73,7 +73,7 @@ interface FtpManagerInterface
      * @param integer $mode
      * @return boolean
      */
-    public function chmod($filename, $mode = 0777);
+    public function chmod($filename, $mode = 0755);
 
     /**
      * Deletes a file on the FTP server
@@ -164,10 +164,10 @@ interface FtpManagerInterface
      * @param resource $handle An open file pointer on the local file. Reading stops at end of file
      * @param string $remoteFile The remote file path
      * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
-     * @param integer $starpos The position in the remote file to start uploading to
+     * @param integer $startpos The position in the remote file to start uploading to
      * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
      */
-    public function nbfput($handle, $remoteFile, $mode, $starpos = 0);
+    public function nbfput($handle, $remoteFile, $mode, $startpos = 0);
 
     /**
      * Retrieves a file from the FTP server and writes it to a local file (non-blocking)
@@ -186,10 +186,10 @@ interface FtpManagerInterface
      * @param string $remoteFile The link identifier of the FTP connection
      * @param string $localFile The remote file path
      * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
-     * @param integer $starpos The position in the remote file to start uploading to
+     * @param integer $startpos The position in the remote file to start uploading to
      * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
      */
-    public function nbput($remoteFile, $localFile, $mode, $starpos = 0);
+    public function nbput($remoteFile, $localFile, $mode, $startpos = 0);
 
     /**
      * Returns a list of files in the given directory

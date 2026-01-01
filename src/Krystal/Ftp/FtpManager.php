@@ -134,7 +134,7 @@ final class FtpManager implements FtpManagerInterface
      * @param integer $mode
      * @return boolean
      */
-    public function chmod($filename, $mode = 0777)
+    public function chmod($filename, $mode = 0755)
     {
         return ftp_chmod($this->link->getStream(), $mode, $filename);
     }
@@ -246,7 +246,7 @@ final class FtpManager implements FtpManagerInterface
      */
     public function nbfget($handle, $remoteFile, $mode, $resumepos = 0)
     {
-        return ftp_nb_fget($this->link->getStream(), $hamdle, $remoteFile, $mode, $resumepos);
+        return ftp_nb_fget($this->link->getStream(), $handle, $remoteFile, $mode, $resumepos);
     }
 
     /**
@@ -255,12 +255,12 @@ final class FtpManager implements FtpManagerInterface
      * @param resource $handle An open file pointer on the local file. Reading stops at end of file
      * @param string $remoteFile The remote file path
      * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
-     * @param integer $starpos The position in the remote file to start uploading to
+     * @param integer $startpos The position in the remote file to start uploading to
      * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
      */
-    public function nbfput($handle, $remoteFile, $mode, $starpos = 0)
+    public function nbfput($handle, $remoteFile, $mode, $startpos = 0)
     {
-        return ftp_nb_fput($this->link->getStream(), $remoteFile, $handle, $mode, $starpos);
+        return ftp_nb_fput($this->link->getStream(), $remoteFile, $handle, $mode, $startpos);
     }
 
     /**
@@ -280,15 +280,15 @@ final class FtpManager implements FtpManagerInterface
     /**
      * Stores a file on the FTP server (non-blocking)
      * 
-     * @param string $remoteFile The link identifier of the FTP connection
+     * @param string $remoteFile The link to remote file
      * @param string $localFile The remote file path
      * @param integer $mode The transfer mode. Must be either \FTP_ASCII or \FTP_BINARY
-     * @param integer $starpos The position in the remote file to start uploading to
+     * @param integer $startpos The position in the remote file to start uploading to
      * @return integer \FTP_FAILED or \FTP_FINISHED or \FTP_MOREDATA
      */
-    public function nbput($remoteFile, $localFile, $mode, $starpos = 0)
+    public function nbput($remoteFile, $localFile, $mode, $startpos = 0)
     {
-        return ftp_nb_put($this->link->getStream(), $remoteFile, $localFile, $mode, $starpos);
+        return ftp_nb_put($this->link->getStream(), $remoteFile, $localFile, $mode, $startpos);
     }
 
     /**
