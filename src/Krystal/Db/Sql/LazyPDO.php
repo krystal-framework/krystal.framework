@@ -10,11 +10,12 @@
 namespace Krystal\Db\Sql;
 
 use Krystal\InstanceManager\InstanceBuilder;
-use ReflectionClass;
+use BadMethodCallException;
 use PDO;
 
 /**
  * Acts as a real PDO instance, but connects on demand
+ * @mixin \PDO
  */
 final class LazyPDO
 {
@@ -24,6 +25,13 @@ final class LazyPDO
      * @var array
      */
     private $args = array();
+
+    /**
+     * Current PDO instance
+     * 
+     * @var \PDO
+     */
+    private $pdo = null;
 
     /**
      * State initialization
@@ -42,14 +50,12 @@ final class LazyPDO
      */
     private function getPdo()
     {
-        static $pdo = null;
-
-        if (is_null($pdo)) {
+        if (is_null($this->pdo)) {
             $builder = new InstanceBuilder();
-            $pdo = $builder->build('PDO', $this->args);
+            $this->pdo = $builder->build('PDO', $this->args);
         }
 
-        return $pdo;
+        return $this->pdo;
     }
 
     /**
@@ -57,17 +63,17 @@ final class LazyPDO
      * 
      * @param string $method Target method
      * @param array $args Array of arguments to be passed into the method
-     * @return array
+     * @throws \BadMethodCallException When calling undefined method
+     * @return mixed
      */
     public function __call($method, array $args)
     {
         $pdo = $this->getPdo();
 
-        if (method_exists($pdo, $method)) {
+        if (is_callable(array($pdo, $method))) {
             return call_user_func_array(array($pdo, $method), $args);
-
         } else {
-            trigger_error(sprintf('Attempted to call non-existing method on PDO %s', $method));
+            throw new BadMethodCallException(sprintf('Attempted to call non-existing method on PDO: %s', $method));
         }
     }
 }
