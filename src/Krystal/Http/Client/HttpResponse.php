@@ -9,6 +9,8 @@
 
 namespace Krystal\Http\Client;
 
+use RuntimeException;
+
 final class HttpResponse
 {
     /**
@@ -44,16 +46,17 @@ final class HttpResponse
      *
      * @var array
      */
-    private $info;
+    private $info = [];
 
     /**
-     * Constructor
+     * State initialization
      *
      * @param string $body Response body
      * @param int $statusCode HTTP status code
      * @param array $headers Response headers
      * @param array|null $error cURL error info
      * @param array $info cURL transfer info
+     * @return void
      */
     public function __construct($body, $statusCode, array $headers = [], $error = null, array $info = [])
     {
@@ -72,6 +75,59 @@ final class HttpResponse
     public function __toString()
     {
         return $this->getBody();
+    }
+
+    /**
+     * Parse JSON string to array
+     * 
+     * @throws RuntimeException if failed to parse JSON string
+     * @return array
+     */
+    public function parseJSON()
+    {
+        $data = json_decode($this->getBody(), true);
+
+        if (json_last_error() !== \JSON_ERROR_NONE) {
+            throw new RuntimeException('Invalid JSON response from API: ' . json_last_error_msg());
+        }
+
+        return $data;
+    }
+
+    /**
+     * Parse XML string to array
+     * 
+     * @throws RuntimeException if failed to parse XML string or body is invalid
+     * @return array
+     */
+    public function parseXML()
+    {
+        $body = $this->getBody();
+
+        if (trim($body) === '') {
+            throw new RuntimeException('Empty response body cannot be parsed as XML');
+        }
+
+        // Suppress warnings and capture errors manually
+        libxml_use_internal_errors(true);
+        libxml_clear_errors();
+
+        $xml = simplexml_load_string($body, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+        if ($xml === false) {
+            $errors = libxml_get_errors();
+            $errorMessages = [];
+
+            foreach ($errors as $error) {
+                $errorMessages[] = trim($error->message);
+            }
+
+            libxml_clear_errors();
+            throw new RuntimeException('Invalid XML response from API: ' . implode('; ', $errorMessages));
+        }
+
+        // Convert SimpleXMLElement to array and handle JSON encoding for proper conversion
+        return json_decode(json_encode($xml), true);
     }
 
     /**
@@ -200,7 +256,7 @@ final class HttpResponse
      */
     public function getEffectiveUrl()
     {
-        return $this->info['url'] ?? null;
+        return isset($this->info['url']) ? $this->info['url'] : null;
     }
 
     /**
@@ -210,6 +266,6 @@ final class HttpResponse
      */
     public function getTotalTime()
     {
-        return $this->info['total_time'] ?? null;
+        return isset($this->info['total_time']) ? $this->info['total_time'] : null;        
     }
 }
