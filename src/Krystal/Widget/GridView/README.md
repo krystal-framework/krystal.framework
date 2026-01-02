@@ -334,6 +334,89 @@ This means:
 -   Row with ID 5 had its name changed to "John Doe" and email to john@example.com
 -   Row with ID 7 had its name changed to "Jane Smith".
 
+## Virual columns
+
+Sometimes you need to output a **column** that doesn't exist as a direct key in your source array. You can create it just like any regular column, but compute its value dynamically using a closure that accesses nested data, performs calculations, or fetches external values.
+
+This is perfect for:
+
+-   Summarizing nested data
+-   Formatting/combining fields
+-   Conditional rendering based on row data
+
+### Example source data
+
+Here is a sample dataset representing users with their basic info and nested order details:
+
+    $users = [
+        [
+            'name' => 'Jane Doe',
+            'email' => 'jane@example.com',
+            'order' => [
+                'status' => [
+                    'total' => '1842',
+                    'currency' => 'USD',
+                    'qty' => 2
+                ]
+            ]
+        ],
+        [
+            'name' => 'John Smith',
+            'email' => 'john@example.com',
+            'order' => [
+                'status' => [
+                    'total' => '950',
+                    'currency' => 'EUR',
+                    'qty' => 1
+                ]
+            ]
+        ]
+    ];
+
+
+### Usage
+
+Define a column name and a value closure that receives the current `$row` and returns the cell content as a string.
+
+    <?php
+    
+    use Krystal\Widget\GridView\GridViewWidget;
+    
+    ?>
+    
+    <div class="table-responsive">
+        <?= $this->widget(new GridViewWidget($rows, [
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => [
+                [
+                    'column' => 'name',
+                    'label' => 'Full name'  // Optional: custom header
+                ],
+                [
+                    'column' => 'email'
+                ],
+                [
+                    'column' => 'details',  // This is virtual column (no source key)
+                    'label' => 'Order Summary',
+                    'value' => function($row) {
+                        // Access nested data safely
+                        $status = $row['order']['status'] ?? [];
+                        $total = $status['total'] ?? '0';
+                        $currency = $status['currency'] ?? 'N/A';
+                        $qty = $status['qty'] ?? 0;
+                        
+                        return sprintf(
+                            '<strong>Total: %s %s</strong><br><small>QTY: %d</small>',
+                            number_format($total),  // Auto-format numbers
+                            $currency,
+                            $qty
+                        );
+                    }
+                ],
+            ]
+        ])); ?>
+    </div>
+
 
 ## Row attributes
 
