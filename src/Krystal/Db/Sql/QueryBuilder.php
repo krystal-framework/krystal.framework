@@ -123,7 +123,7 @@ final class QueryBuilder implements QueryBuilderInterface, QueryObjectInterface
             case self::LIKE_RAW:
                 return $target;
             case self::LIKE_STARTS:
-                return $word.'%';
+                return $target.'%';
             case self::LIKE_ENDS:
                 return '%'.$target;
             case self::LIKE_CONTAINS:
