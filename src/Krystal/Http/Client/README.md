@@ -203,11 +203,21 @@ While `echo $response` outputs the body directly, additional methods provide det
 
 The `HttpResponse` class encapsulates HTTP response data from cURL requests, providing methods to access response body, headers, status codes, and request metadata. 
 
-### Retrieve raw response body
+### Retrieve response body
 
-Return complete response content as string.
+You can retrieve the HTTP response content in several ways, depending on your needs:
 
-    $response->getBody(); // Returns string
+    $response->getBody();   // Returns the raw response body as a string
+    $response->parseJSON(); // Parses JSON and returns an associative array
+    $response->parseXML();  // Parses XML and returns an associative array
+    
+**Key details**
+
+-   **getBody()** Returns the unmodified response body exactly as received from the server.
+-   **parseJSON()** Decodes a JSON-formatted response into  associative array. Throws a `\RuntimeException` if the body is empty, not valid JSON, or parsing fails.
+-   **parseXML()** Parses an XML-formatted response using SimpleXMLElement and converts it to associative array. Throws a `RuntimeException` if the body is empty, not valid XML, or parsing fails.
+
+Both `parseJSON()` and `parseXML()` provide safe, convenient access to structured data while giving you meaningful exceptions on malformed or unexpected content.
 
 ## Status code methods
 
@@ -306,9 +316,9 @@ Return total request duration in seconds including DNS, connection, and transfer
 It is **strongly recommended** to create a custom API client class when interacting with external APIs. This approach provides several benefits:
 
 -   Centralizes all API endpoints and logic in one place.
--   Makes it easy to switch HTTP clients or add global headers, authentication, error handling, or logging.
+-   Makes it easy to add global headers, authentication, error handling, or logging.
 -   Improves code readability and maintainability.
--   Allows consistent response handling (e.g., automatic JSON decoding).
+
 
 **Implementation example**
 
@@ -345,26 +355,6 @@ It is **strongly recommended** to create a custom API client class when interact
         }
     
         /**
-         * Decode a JSON response string into an associative array.
-         *
-         * Called internally by all public methods.
-         *
-         * @param string $response The raw JSON response
-         * @return array           Decoded data as associative array
-         * @throws RuntimeException If JSON is invalid
-         */
-        private function decodeResponse($response)
-        {
-            $data = json_decode($response, true);
-    
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new RuntimeException('Invalid JSON response from API: ' . json_last_error_msg());
-            }
-    
-            return $data;
-        }
-    
-        /**
          * Fetch all books.
          *
          * @return array Decoded list of books (associative arrays)
@@ -372,31 +362,31 @@ It is **strongly recommended** to create a custom API client class when interact
         public function getBooks()
         {
             $response = $this->httpClient->get(self::BASE_URL . '/books/all');
-            return $this->decodeResponse($response);
+            return $response->parseJSON();
         }
     
         /**
          * Fetch a single book by ID.
          *
          * @param int|string $id The book identifier
-         * @return array         Decoded book data (associative array)
+         * @return array
          */
         public function getBook($id)
         {
             $response = $this->httpClient->get(self::BASE_URL . '/books/single/' . $id);
-            return $this->decodeResponse($response);
+            return $response->parseJSON();
         }
     
         /**
          * Delete a book by ID.
          *
          * @param int|string $id The book identifier
-         * @return array         Decoded response (typically success/failure message)
+         * @return array
          */
         public function deleteBook($id)
         {
             $response = $this->httpClient->post(self::BASE_URL . '/books/delete/' . $id);
-            return $this->decodeResponse($response);
+            return $response->parseJSON();
         }
     
         /**
@@ -408,7 +398,7 @@ It is **strongly recommended** to create a custom API client class when interact
         public function addBook(array $book)
         {
             $response = $this->httpClient->jsonRequest(self::BASE_URL . '/books/add', $book);
-            return $this->decodeResponse($response);
+            return $response->parseJSON();
         }
     }
 
@@ -430,4 +420,5 @@ It is **strongly recommended** to create a custom API client class when interact
     ));
     
     var_dump($result);
+
 
