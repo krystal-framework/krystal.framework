@@ -276,6 +276,6 @@ final class HttpResponse
      */
     public function getTotalTime()
     {
-        return isset($this->info['total_time']) ? $this->info['total_time'] : null;        
+        return isset($this->info['total_time']) ? $this->info['total_time'] : null;
     }
 }

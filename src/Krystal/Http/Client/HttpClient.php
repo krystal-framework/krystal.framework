@@ -84,7 +84,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $extra Extra cURL options
      * @throws \UnexpectedValueException If unknown HTTP method provided
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
     public function request($method, $url, array $data = array(), array $extra = array())
     {
@@ -119,7 +119,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $data Data to encode as JSON
      * @param array $extra Additional cURL options
      * @throws \InvalidArgumentException If method doesn't exist or JSON encoding fails
-     * @return HttpResponse
+     * @return \Krystal\Http\Client\HttpResponse
      */
     public function jsonRequest($method, $url, array $data = [], array $extra = [])
     {
@@ -160,7 +160,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $data Query parameters
      * @param array $extra Extra cURL options
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
     public function get($url, array $data = array(), array $extra = array())
     {
@@ -183,7 +183,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $data POST data
      * @param array $extra Extra cURL options
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
     public function post($url, array $data = array(), array $extra = array())
     {
@@ -203,7 +203,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $data PATCH data
      * @param array $extra Extra cURL options
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
     public function patch($url, array $data = array(), array $extra = array())
     {
@@ -223,7 +223,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $data DELETE data
      * @param array $extra Extra cURL options
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
     public function delete($url, array $data = array(), array $extra = array())
     {
@@ -243,7 +243,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $data PUT data
      * @param array $extra Extra cURL options
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
     public function put($url, array $data = array(), array $extra = array())
     {
@@ -263,7 +263,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $data Query parameters
      * @param array $extra Extra cURL options
      * @throws \RuntimeException If request fails
-     * @return string Response headers (empty body for HEAD)
+     * @return \Krystal\Http\Client\HttpResponse
      */
     public function head($url, array $data = array(), array $extra = array())
     {
@@ -286,7 +286,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $methodOptions Method-specific options
      * @param array $extraOptions User-provided extra options
      * @throws \RuntimeException If request fails
-     * @return string Response
+     * @return \Krystal\Http\Client\HttpResponse
      */
     private function executeRequest(array $methodOptions, array $extraOptions = array())
     {
@@ -296,10 +296,12 @@ final class HttpClient implements HttpClientInterface
         $curl = new Curl($options);
         $result = $curl->exec();
 
-        if ($result === false) {
-            $error = $curl->getError();
-            $errno = $curl->getErrno();
-            throw new RuntimeException(sprintf('HTTP request failed: %s (cURL error %d)', $error, $errno));
+        if ($result->hasError()) {
+            $error = $result->getError();
+            $msg = $error['message'] ?? 'Unknown error';
+            $code = $error['code'] ?? 0;
+
+            throw new RuntimeException(sprintf('HTTP request failed: %s (cURL error %d)', $msg, $code));            
         }
 
         return $result;
