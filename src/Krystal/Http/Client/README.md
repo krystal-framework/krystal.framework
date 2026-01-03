@@ -1,4 +1,5 @@
 
+
 HTTP Client
 ===========
 
@@ -126,7 +127,7 @@ Send JSON data with automatic Content-Type header configuration for methods supp
     
     // Headers to be sent: Content-Type, Accept, X-API-Key, X-Custom-Header
 
-## File Uploads
+## File uploads
 
 Upload files using multipart/form-data:
 
@@ -136,6 +137,41 @@ Upload files using multipart/form-data:
             'description' => 'My photo'
         ]
     ]);
+
+
+## File downloads
+
+Download binary files (images, archives, PDFs, etc.) directly to disk with streaming support and full exception-based error handling.
+
+The `download()` method streams the response body directly to a local file, avoiding loading the entire file into memory – ideal for large downloads.
+
+    <?php
+    
+    use Krystal\Http\Client\HttpClient;
+    
+    $client = new HttpClient();
+    
+    $from = 'https://example.com/files/large-archive.zip'';
+    $to = __DIR__ . '/path/to/downloads/archive.zip';
+    
+    try {
+        $client->download($from,$to);
+        echo "File downloaded successfully!";
+        
+    } catch (\RuntimeException $e) {
+        echo "Download failed: " . $e->getMessage();
+    }
+
+With custom headers (e.g., authentication):
+    
+    $client->download($from, $to, [
+            CURLOPT_HTTPHEADER => [
+                'Authorization: Bearer your-token-here',
+                'Accept: application/pdf'
+            ]
+        ]
+    );
+
 
 ## Concurrent HTTP Requests
 
