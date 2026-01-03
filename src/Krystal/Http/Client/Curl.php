@@ -159,11 +159,33 @@ final class Curl implements CurlInterface
 
         $this->setOption(CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$headers) {
             $length = strlen($header);
+            $header = trim($header); // Remove \r\n
 
-            // Parse header line
+            // Skip empty lines (header/body separator)
+            if ($header === '') {
+                return $length;
+            }
+
+            // Skip HTTP status line (e.g., "HTTP/1.1 200 OK")
+            if (strpos($header, 'HTTP/') === 0) {
+                return $length;
+            }
+
+            // Parse normal header
             if (strpos($header, ':') !== false) {
                 list($name, $value) = explode(':', $header, 2);
-                $headers[trim($name)] = trim($value);
+                $name = trim($name);
+                $value = trim($value);
+
+                // Support multiple headers with same name (e.g., Set-Cookie)
+                if (isset($headers[$name])) {
+                    if (!is_array($headers[$name])) {
+                        $headers[$name] = [$headers[$name]];
+                    }
+                    $headers[$name][] = $value;
+                } else {
+                    $headers[$name] = $value;
+                }
             }
 
             return $length;
