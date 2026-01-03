@@ -16,6 +16,13 @@ use InvalidArgumentException;
 final class HttpClient implements HttpClientInterface
 {
     /**
+     * Default options
+     * 
+     * @var array
+     */
+    private $defaultOptions = [];
+
+    /**
      * Download a binary file and save it to disk
      *
      * @param string $url The URL to download
@@ -30,7 +37,7 @@ final class HttpClient implements HttpClientInterface
         $fp = fopen($saveToPath, 'w+');
 
         if ($fp === false) {
-            throw new Exception("Could not open local file for writing.");
+            throw new RuntimeException("Could not open local file for writing.");
         }
 
         try {
@@ -40,8 +47,8 @@ final class HttpClient implements HttpClientInterface
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_BINARYTRANSFER => true,
                 CURLOPT_MAXREDIRS      => 10,
-                CURLOPT_CONNECTTIMEOUT => 3600,
-                CURLOPT_TIMEOUT        => 3000,
+                CURLOPT_CONNECTTIMEOUT => 30,
+                CURLOPT_TIMEOUT        => 300,
                 CURLOPT_SSL_VERIFYPEER => true,
                 CURLOPT_SSL_VERIFYHOST => 2,
                 CURLOPT_AUTOREFERER    => true,
@@ -65,6 +72,10 @@ final class HttpClient implements HttpClientInterface
                 }
 
                 throw new RuntimeException("cURL error while downloading '{$url}': {$errorMsg}");
+            }
+
+            if (!$result->isSuccessful()) { 
+                throw new RuntimeException("Download failed with HTTP status {$result->getStatusCode()}"); 
             }
 
             return true;
@@ -291,7 +302,7 @@ final class HttpClient implements HttpClientInterface
     private function executeRequest(array $methodOptions, array $extraOptions = array())
     {
         // Merge: method options < user options (user wins)
-        $options = array_replace($methodOptions, $extraOptions);
+        $options = array_replace($this->defaultOptions, $methodOptions, $extraOptions);
 
         $curl = new Curl($options);
         $result = $curl->exec();
