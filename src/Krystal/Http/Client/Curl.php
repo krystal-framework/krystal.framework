@@ -203,9 +203,9 @@ final class Curl implements CurlInterface
             );
 
             $this->errors[] = $error;
-        } else [
+        } else {
             $error = null;
-        ]
+        }
 
         return new HttpResponse($result, $statusCode, $headers, $error, $info);
     }
@@ -362,24 +362,18 @@ final class Curl implements CurlInterface
      */
     private function applyDefaults()
     {
-        try {
-            $this->setOptions(array(
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_MAXREDIRS      => 10,
-                CURLOPT_CONNECTTIMEOUT => 10,
-                CURLOPT_TIMEOUT        => 30,
-                CURLOPT_SSL_VERIFYPEER => true,
-                CURLOPT_SSL_VERIFYHOST => 2,
-                CURLOPT_AUTOREFERER    => true,
-                CURLOPT_ENCODING       => '', // Accept all encodings
-                CURLOPT_USERAGENT      => 'Krystal HTTP Client (PHP 5.6+)'
-            ));
-        } catch (InvalidArgumentException $e) {
-            // This should never happen with default options, but if it does, close handle
-            $this->close();
-            throw new RuntimeException('Failed to apply default cURL options: ' . $e->getMessage());
-        }
+        $this->setOptions(array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS      => 10,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
+            CURLOPT_AUTOREFERER    => true,
+            CURLOPT_ENCODING       => '', // Accept all encodings
+            CURLOPT_USERAGENT      => 'Krystal HTTP Client (PHP 5.6+)'
+        ));
     }
 
     /**
