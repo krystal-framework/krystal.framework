@@ -16,22 +16,6 @@ use InvalidArgumentException;
 final class HttpClient implements HttpClientInterface
 {
     /**
-     * Default cURL options
-     *
-     * @var array
-     */
-    private $defaultOptions = array(
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true,
-        CURLOPT_SSL_VERIFYHOST => 2,
-        CURLOPT_USERAGENT => 'Krystal HTTP Client'
-    );
-
-    /**
      * Performs a HTTP request
      * 
      * @param string $method
@@ -246,8 +230,8 @@ final class HttpClient implements HttpClientInterface
      */
     private function executeRequest(array $methodOptions, array $extraOptions = array())
     {
-        // Merge: defaults < method options < user options (user wins)
-        $options = array_replace($this->defaultOptions, $methodOptions, $extraOptions);
+        // Merge: method options < user options (user wins)
+        $options = array_replace($methodOptions, $extraOptions);
 
         $curl = new Curl($options);
         $result = $curl->exec();
