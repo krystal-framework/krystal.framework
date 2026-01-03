@@ -191,6 +191,16 @@ final class HttpResponse
     }
 
     /**
+     * Determine if there was a cURL-level error (connection, timeout, SSL, etc.)
+     *
+     * @return bool
+     */
+    public function hasError()
+    {
+        return $this->error !== null;
+    }
+
+    /**
      * Determine if the request failed
      *
      * @return bool
