@@ -11,28 +11,36 @@ First, we need to set up a style adapter. The adapter accepts a single option ca
 
 ### Digg
 
-If your dataset contains a large number of pages, this style adapter is an excellent choice. For instance, if there are 40 pages, the rendered page array would look like this:
+If your dataset contains a large number of pages, this style adapter is an excellent choice. It creates a sliding window around the current page and keeps the first and last pages visible.
 
-    1  2  3  ... 40
-    1  ...  3  4  5  6  7 ... 40
+**Configuration** 
 
-This similar to [StackOverFlow's style](http://stackoverflow.com/users)
+The Digg adapter accepts an optional integer in its constructor (defaulting to 3) that defines a start range — how many initial pages to show before collapsing the rest into an ellipsis.
+
+-   **Example (Start range = 3):** `1 2 3 ... 468`  
+-   **Example (Start range = 10):** `1 2 3 4 5 6 7 8 9 10 ... 468`
+
 
 
 ### Slide
 
-If you prefer the pagination style used by Yahoo, this adapter is the right choice. The rendered page array will look something like this:
- 
-    3  5  6  7  8
+If you prefer the pagination style used by Yahoo, this adapter is the right choice. It centered the current page within a small range. For example, if the current page is 5:
 
-If the page number is 5
+`3 4 5 6 7`
 
 
 ## Configuring the service
 
-Open the configuration file, typically located at `config/app.php`. In the `components` section, you’ll find a `paginator` subsection with a single option named `style`. This option accepts either `Digg` or `Slide` as the style adapter. If the option is omitted, no style adapter will be applied.
+Open the configuration file, typically located at `config/app.php`. In the `components` section, you’ll find a `paginator` subsection:
 
-That’s all for the configuration! 
+    'paginator' => [
+        'style' => 'Digg', // Supports 'Digg' or 'Slide'
+        'options' => [
+            'start' => 10 // Only for Digg style: sets the initial visible range
+        ]
+    ]
+
+If the `style` option is omitted, no style adapter will be applied, and `getPageNumbers()` will return all available pages.
 
 ## Usage
 
@@ -261,5 +269,6 @@ Returns per page count number.
     \Krystal\Paginate\Paginator::getTotalAmount()
 
 Returns total amount of records.
+
 
 

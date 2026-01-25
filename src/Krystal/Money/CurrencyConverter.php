@@ -85,7 +85,7 @@ final class CurrencyConverter implements CurrencyConverterInterface
      * defined at initialization. All subsequent calls to {@see convert()} 
      * will use this normalized base for calculations.
      * 
-     * @param float  $amount   The amount of money in the specified currency
+     * @param float  $amount The amount of money in the specified currency
      * @param string $currency The currency code of the amount (must exist in the rate map)
      * 
      * @throws \RuntimeException If the specified currency is not available in the rates map
