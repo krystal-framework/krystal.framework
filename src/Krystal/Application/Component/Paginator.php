@@ -30,7 +30,14 @@ final class Paginator implements ComponentInterface
             if (isset($options['style'])) {
                 switch (strtolower($options['style'])) {
                     case 'digg':
-                        $style = new Style\DiggStyle();
+                        $start = 3;
+
+                        // Alter default value if specified explicitly in configuration array
+                        if (isset($options['options']['start']) && is_numeric($options['options']['start'])) {
+                            $start = (int) $options['options']['start'];
+                        }
+
+                        $style = new Style\DiggStyle($start);
                     break;
 
                     case 'slide':

@@ -4,6 +4,7 @@ CHANGELOG
 1.3
 ---
 
+ * Made the Digg style pagination range configurable via the $start parameter.
  * Removed `reset()` method. A new instance should be created instead of resetting available one
  * Dropped option to override a placeholder. Made it as a constant internally
  * By default, URL is now generated automatically from current URI string

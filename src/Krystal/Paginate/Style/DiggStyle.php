@@ -12,6 +12,24 @@ namespace Krystal\Paginate\Style;
 final class DiggStyle implements StyleInterface
 {
     /**
+     * Start from
+     * 
+     * @var integer
+     */
+    private $start;
+
+    /**
+     * State initialization
+     * 
+     * @param integer $start
+     * @return void
+     */
+    public function __construct($start = 3)
+    {
+        $this->start = $start;
+    }
+
+    /**
      * Returns filtered array via this style adapter
      * 
      * @param array $page Array of page numbers
@@ -22,41 +40,48 @@ final class DiggStyle implements StyleInterface
     {
         $result = array();
         $amount = count($pages);
-        $start = 3;
 
-        if ($amount > $start) {
+        // If we have fewer pages than the start limit, just show them all
+        if ($amount <= $this->start) {
+            return range(1, $amount);
+        }
 
-            // this specifies the range of pages we want to show in the middle
-            $min = max($current - 2, 2);
-            $max = min($current + 2, $amount - 1);
+        // 1. Always show the first page
+        $result[] = 1;
 
-            // we always show the first page
-            $result[] = 1;
+        // 2. Define the sliding window
+        // We want to show a range of pages. If current is near the start, 
+        // we show up to $this->start.
+        $min = max($current - 2, 2);
+        $max = min($current + 2, $amount - 1);
 
-            // we're more than one space away from the beginning, so we need a separator
-            if ($min > 2) {
-                $result[] = '...';
-            }
+        // If we are near the beginning, ensure we show up to $this->start
+        if ($current <= $this->start) {
+            $min = 2;
+            $max = max($this->start, $max);
+        }
 
-            // generate the middle numbers
-            for ($i = $min; $i < $max + 1; $i++) {
+        // 3. Add separator if there's a gap between 1 and our min
+        if ($min > 2) {
+            $result[] = '...';
+        }
+
+        // 4. Generate the middle numbers
+        for ($i = $min; $i <= $max; $i++) {
+            // Ensure we don't duplicate the first or last page
+            if ($i > 1 && $i < $amount) {
                 $result[] = $i;
             }
-
-            // we're more than one space away from the end, so we need a separator
-            if ($max < $amount - 1) {
-                $result[] = '...';
-            }
-
-            // we always show the last page, which is the same as amount
-            $result[] = $amount;
-
-            return $result;
-
-        } else {
-
-            // It's not worth using a style adapter, because amount of pages is less than 3
-            return range(1, $start);
         }
+
+        // 5. Add separator if there's a gap between our max and the end
+        if ($max < $amount - 1) {
+            $result[] = '...';
+        }
+
+        // 6. Always show the last page
+        $result[] = $amount;
+
+        return $result;
     }
 }
