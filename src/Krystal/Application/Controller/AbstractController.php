@@ -68,10 +68,14 @@ abstract class AbstractController
      * @param integer Native encoding options
      * @return string
      */
-    final protected function json(array $data, $options = 0)
+    final protected function json(array $data, $options = null)
     {
         // Set JSON header
         $this->response->respondAsJson();
+
+        if ($options === null) {
+            $options = JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
+        }
 
         return json_encode($data, $options);
     }
