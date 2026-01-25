@@ -74,7 +74,7 @@ final class HttpClient implements HttpClientInterface
                 throw new RuntimeException("cURL error while downloading '{$url}': {$errorMsg}");
             }
 
-            if (!$result->isSuccessful()) { 
+            if (!$result->isSuccessful()) {
                 throw new RuntimeException("Download failed with HTTP status {$result->getStatusCode()}"); 
             }
 
