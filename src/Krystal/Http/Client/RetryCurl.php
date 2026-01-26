@@ -121,11 +121,14 @@ final class RetryCurl extends Curl
 
             // Common retryable cURL errors (network/connection related)
             $retryableErrnos = array(
+                5,   // CURLE_COULDNT_RESOLVE_PROXY
+                6,   // CURLE_COULDNT_RESOLVE_HOST (DNS flakes)
                 7,   // CURLE_COULDNT_CONNECT
                 28,  // CURLE_OPERATION_TIMEDOUT
-                56,  // CURLE_RECV_ERROR
+                35,  // CURLE_SSL_CONNECT_ERROR (TLS handshake issues)
+                52,  // CURLE_GOT_NOTHING (server hung up early)
                 55,  // CURLE_SEND_ERROR
-                // to add: 52 (CURLE_GOT_NOTHING), 35 (CURLE_SSL_CONNECT_ERROR), etc.
+                56,  // CURLE_RECV_ERROR
             );
 
             return in_array($errno, $retryableErrnos, true);
