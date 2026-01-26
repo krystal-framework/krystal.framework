@@ -1,3 +1,4 @@
+
 HTTP Client
 ===========
 
@@ -169,6 +170,109 @@ With custom headers (e.g., authentication):
             ]
         ]
     );
+
+## Paginated API Responses
+
+Many APIs return large result sets in pages (e.g. 100 items per request). The `processPaginatedResponse()` method simplifies fetching **all pages** automatically. It iterates through pages, calls your callback for each page's items, and handles both **GET** and **POST**-based pagination.
+
+This method does **not** collect items automatically — your callback receives the items of each page and decides what to do (merge into array, save to database, process, etc.).
+
+### Method signature
+
+    processPaginatedResponse(array $config, callable $callback): void
+
+**Parameters:**
+
+
+**Parameters:**
+
+-   $config (array) — All settings in one place (required keys marked with *)
+    -   url * (string) — Initial endpoint URL
+    -   method (string) — 'GET' or 'POST' (default: 'GET')
+    -   payload (array) — Base body data for POST requests (default: [])
+    -   query (array) — Base query parameters (default: [])
+    -   extra (array) — Additional cURL options (headers, timeout, etc.) (default: [])
+    -   per_page (int) — Items per page (default: 100)
+    -   max_pages (int|null) — Maximum pages to process (default: null = all pages)
+    -   data_key (string) — Key containing the array of items (default: 'data')
+    -   next_page_key (string) — Key with next page URL (if present, preferred) (default: 'next_page_url')
+    -   page_key (string) — Key with current page number in response (default: 'page')
+    -   total_pages_key (string) — Key with total number of pages (default: 'total_pages')
+    -   total_count_key (string) — Alternative: total number of items (default: 'total_count')
+    -   per_page_param (string) — Name of "per page" query/POST parameter (default: 'per_page')
+    -   page_param (string) — Name of "page number" query/POST parameter (default: 'page')
+-   $callback (callable) — Required function called for each page Signature: function(array $itemsData, int $page): void
+
+**Throws:**
+
+-   InvalidArgumentException — Missing required config keys
+-   RuntimeException — Fetch or JSON parsing failure
+**Throws:**
+
+-   InvalidArgumentException — Missing required config keys
+-   RuntimeException — Fetch or JSON parsing failure
+
+### Basic usage (GET pagination)
+
+    $client->processPaginatedResponse([
+        'url'          => 'https://api.example.com/products',
+        'per_page'     => 50,
+        'data_key'     => 'products',
+        'total_pages_key' => 'totalPages',
+        'extra'        => [
+            CURLOPT_HTTPHEADER => ['Authorization: Bearer your-token']
+        ],
+    ], function (array $items, $page) use (&$allProducts) {
+        $allProducts = array_merge($allProducts, $items);
+        echo "Processed page $page (" . count($items) . " items)\n";
+    });
+
+### POST-based pagination (common for search/filter APIs)
+
+    $client->processPaginatedResponse([
+        'url'           => 'https://api.crm.com/search',
+        'method'        => 'POST',
+        'per_page'      => 200,
+        'per_page_param'=> 'page_size',
+        'page_param'    => 'page_number',
+        'payload'       => [
+            'filter' => ['status' => 'active'],
+            'sort'   => 'desc'
+        ],
+        'data_key'      => 'records',
+        'total_count_key' => 'total_records',
+    ], function (array $records, $page) {
+        foreach ($records as $record) {
+            // saveToDatabase($record);
+        }
+        echo "Saved page $page\n";
+    });
+
+### Customizing pagination keys (for unusual APIs)
+
+    $client->processPaginatedResponse([
+        'url'             => 'https://api.service.com/list',
+        'per_page'        => 30,
+        'per_page_param'  => 'count',       // API uses "count" instead of "per_page"
+        'page_param'      => 'offset',      // API uses offset instead of page
+        'data_key'        => 'items',
+        'next_page_key'   => 'nextLink',    // API-specific key
+    ], function ($items, $page) use (&$collection) {
+        $collection = array_merge($collection, $items);
+    });
+
+### Notes
+
+-   The method automatically stops when:
+    -   No more data (data_key missing or empty array)
+    -   No next page URL and calculated total pages reached
+    -   max_pages limit reached
+-   A small delay (0.25s) is added between requests to be polite to the API
+-   Works with **automatic retries** if enabled globally
+-   For very large datasets, consider processing/saving items inside the callback instead of collecting everything in memory
+
+This method makes it easy to work with virtually any paginated JSON API — whether it uses page numbers, total counts, next URLs, or custom parameter names.
+
 
 
 ## Automatic retries

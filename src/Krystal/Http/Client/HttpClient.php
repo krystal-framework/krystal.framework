@@ -343,6 +343,116 @@ final class HttpClient implements HttpClientInterface
     }
 
     /**
+     * Iterates over all pages of a paginated API and calls the provided callback
+     * for each page's items.
+     *
+     * All configuration is passed via a single $config array.
+     *
+     * @param array $config All settings (url, method, pagination keys, per_page, etc.)
+     * @param callable $callback Required: function(array $itemsData, int $page): void
+     * @return void
+     *
+     * @throws \InvalidArgumentException If required config keys are missing
+     * @throws \RuntimeException         On fetch or parsing failure
+     */
+    public function processPaginatedResponse(array $config, callable $callback)
+    {
+        // Required
+        if (empty($config['url'])) {
+            throw new InvalidArgumentException("Missing required 'url' in config");
+        }
+
+        // Defaults
+        $defaults = [
+            'method'            => 'GET',
+            'payload'           => [], // base body data for POST
+            'query'             => [], // base query params (for GET or extra POST params)
+            'extra'             => [], // extra cURL options
+            'per_page'          => 100, // number of items per page (value)
+            'max_pages'         => null,
+            'data_key'          => 'data',
+            'next_page_key'     => 'next_page_url',
+            'page_key'          => 'page',
+            'total_pages_key'   => 'total_pages',
+            'total_count_key'   => 'total_count',
+            'per_page_param'    => 'per_page', // name of the param sent to API
+            'page_param'        => 'page', // name of the page param sent to API
+        ];
+
+        $config = array_replace($defaults, $config);
+        $method = strtoupper($config['method']);
+
+        if (!in_array($method, ['GET', 'POST'])) {
+            throw new InvalidArgumentException("Only 'GET' and 'POST' methods are supported");
+        }
+
+        $currentPage = 1;
+        $currentUrl  = $config['url'];
+
+        do {
+            // Prepare page-specific parameters
+            $pageParams = $config['query'];
+            $pageParams[$config['per_page_param']] = $config['per_page'];
+            $pageParams[$config['page_param']]     = $currentPage;
+
+            // Fetch
+            if ($method === 'POST') {
+                $pagePayload = array_replace($config['payload'], $pageParams);
+                $response = $this->jsonRequest('POST', $currentUrl, $pagePayload, $config['extra']);
+            } else {
+                $response = $this->get($currentUrl, $pageParams, $config['extra']);
+            }
+
+            if (!$response->isSuccessful()) {
+                throw new RuntimeException(
+                    "Page {$currentPage} failed with status " . $response->getStatusCode()
+                );
+            }
+
+            $data = $response->parseJSON();
+
+            if (!isset($data[$config['data_key']]) || !is_array($data[$config['data_key']])) {
+                break;
+            }
+
+            $itemsData = $data[$config['data_key']];
+            call_user_func($callback, $itemsData, $currentPage);
+
+            // Next page detection
+            $hasNext = false;
+
+            if (!empty($data[$config['next_page_key']])) {
+                $currentUrl = $data[$config['next_page_key']];
+                $hasNext = true;
+            } else {
+                $currentPageNum = isset($data[$config['page_key']]) ? (int)$data[$config['page_key']] : $currentPage;
+
+                if (isset($data[$config['total_pages_key']])) {
+                    $hasNext = $currentPageNum < (int)$data[$config['total_pages_key']];
+                } elseif (isset($data[$config['total_count_key']])) {
+                    $totalCount = (int)$data[$config['total_count_key']];
+                    $hasNext = $currentPageNum < ceil($totalCount / $config['per_page']);
+                }
+
+                if ($hasNext) {
+                    $currentPage++;
+                }
+            }
+
+            if ($config['max_pages'] !== null && $currentPage > $config['max_pages']) {
+                break;
+            }
+
+            if (!$hasNext) {
+                break;
+            }
+
+            usleep(250000);
+
+        } while (true);
+    }
+
+    /**
      * Execute cURL request with merged options
      *
      * @param array $methodOptions Method-specific options
