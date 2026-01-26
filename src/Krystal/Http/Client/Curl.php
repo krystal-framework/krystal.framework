@@ -12,21 +12,21 @@ namespace Krystal\Http\Client;
 use RuntimeException;
 use InvalidArgumentException;
 
-final class Curl implements CurlInterface
+class Curl implements CurlInterface
 {
     /**
      * cURL handle (resource|CurlHandle|null)
      *
      * @var mixed
      */
-    private $ch = null;
+    protected $ch = null;
 
     /**
      * Errors from last execution
      *
      * @var array
      */
-    private $errors = array();
+    protected $errors = array();
 
     /**
      * State initialization

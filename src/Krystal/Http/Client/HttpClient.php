@@ -23,6 +23,57 @@ final class HttpClient implements HttpClientInterface
     private $defaultOptions = [];
 
     /**
+     * Default retry configuration (can be overridden per request)
+     * 
+     * @var array
+     */
+    private $retryConfig = array(
+        'enabled'        => false, // retry disabled by default
+        'maxRetries'     => 3,
+        'retryStatuses'  => array(429, 502, 503, 504),
+        'backoffStrategy'=> array(0, 2, 8, 30),
+        'addJitter'      => true,
+    );
+
+    /**
+     * State initialization
+     *
+     * @param array $options Default cURL options (will be merged with internal defaults)
+     * @param array $retryConfig Default retry settings (or empty array to disable retry globally)
+     */
+    public function __construct(array $options = array(), array $retryConfig = array())
+    {
+        // Merge user-provided cURL defaults
+        $this->defaultOptions = array_replace($this->defaultOptions, $options);
+
+        // Merge / override retry defaults (if user wants global retry)
+        if (!empty($retryConfig)) {
+            $this->retryConfig = array_replace($this->retryConfig, $retryConfig);
+        }
+    }
+    
+    /**
+     * Creates appropriate cURL instance
+     * 
+     * @param array $options cURL options
+     * @return mixed
+     */
+    private function createCurl(array $options)
+    {
+        if ($this->retryConfig['enabled'] == true) {
+            return new RetryCurl(
+                $options,
+                $this->retryConfig['maxRetries'],
+                $this->retryConfig['retryStatuses'],
+                $this->retryConfig['backoffStrategy'],
+                $this->retryConfig['addJitter']
+            );
+        } else {
+            return new Curl($options);
+        }
+    }
+
+    /**
      * Download a binary file and save it to disk
      *
      * @param string $url The URL to download
@@ -41,7 +92,7 @@ final class HttpClient implements HttpClientInterface
         }
 
         try {
-            $curl = new Curl([
+            $curl = $this->createCurl([
                 CURLOPT_URL            => $url,
                 CURLOPT_FILE           => $fp,
                 CURLOPT_FOLLOWLOCATION => true,
@@ -304,7 +355,7 @@ final class HttpClient implements HttpClientInterface
         // Merge: method options < user options (user wins)
         $options = array_replace($this->defaultOptions, $methodOptions, $extraOptions);
 
-        $curl = new Curl($options);
+        $curl = $this->createCurl($options);
         $result = $curl->exec();
 
         if ($result->hasError()) {
