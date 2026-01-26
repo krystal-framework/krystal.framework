@@ -181,12 +181,10 @@ This method does **not** collect items automatically — your callback receives 
 
     processPaginatedResponse(array $config, callable $callback): void
 
-**Parameters:**
-
 
 **Parameters:**
 
--   $config (array) — All settings in one place (required keys marked with *)
+-   `$config` (array) — All settings in one place (required keys marked with *)
     -   url * (string) — Initial endpoint URL
     -   method (string) — 'GET' or 'POST' (default: 'GET')
     -   payload (array) — Base body data for POST requests (default: [])
@@ -201,7 +199,7 @@ This method does **not** collect items automatically — your callback receives 
     -   total_count_key (string) — Alternative: total number of items (default: 'total_count')
     -   per_page_param (string) — Name of "per page" query/POST parameter (default: 'per_page')
     -   page_param (string) — Name of "page number" query/POST parameter (default: 'page')
--   $callback (callable) — Required function called for each page Signature: function(array $itemsData, int $page): void
+-   `$callback` (callable) — Required function called for each page Signature: function(array $itemsData, int $page): void
 
 **Throws:**
 
