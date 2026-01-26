@@ -1,5 +1,3 @@
-
-
 HTTP Client
 ===========
 
@@ -172,6 +170,76 @@ With custom headers (e.g., authentication):
         ]
     );
 
+
+## Automatic retries
+
+The HTTP client supports **automatic retries** for failed requests. Retries are applied globally (configured once at construction time) and work for both regular requests and file downloads.
+
+Retries are triggered on:
+- Specific HTTP status codes (default: 429, 502, 503, 504)
+- Certain cURL-level errors (connection failures, timeouts, receive/send errors)
+
+Features include:
+- Configurable maximum retry attempts
+- Customizable backoff delays (fixed array or dynamic callable)
+- Optional random jitter to prevent thundering herd problem
+
+### Configuration
+
+Retry is **disabled by default**. Enable and customize it via the constructor:
+
+    <?php
+    
+    use Krystal\Http\Client\HttpClient;
+    
+    // Basic enable with defaults (3 attempts, default statuses & backoff)
+    $client = new HttpClient([], [
+        'enabled' => true,
+    ]);
+    
+    // Customized retry settings
+    $client = new HttpClient([], [
+        'enabled'         => true,
+        'maxRetries'      => 5,
+        'retryStatuses'   => [429, 503],  // only rate-limit & service unavailable
+        'backoffStrategy' => [1, 4, 10, 30, 60], // seconds before each retry
+        'addJitter'       => true, // adds small random variation
+    ]);
+    
+    // Exponential backoff example
+    $client = new HttpClient([], [
+        'enabled'         => true,
+        'maxRetries'      => 4,
+        'backoffStrategy' => function ($attempt) {
+            return min(120, (int) pow(2, $attempt)); // 2, 4, 8, 16 seconds (capped at 120)
+        },
+        'addJitter'       => true,
+    ]);
+
+### Behavior
+
+-   Retries apply to **all requests** made with the client (GET, POST, PUT, PATCH, DELETE, HEAD, download)
+-   No per-request or per-method override — retry policy is global
+-   On final failure (after max retries), the last response is returned and an exception is thrown (same as without retry)
+
+### Example
+
+    $client = new HttpClient([], [
+        'enabled'     => true,
+        'maxRetries'  => 4,
+        'retryStatuses' => [429, 502, 503, 504],
+    ]);
+    
+    // This request will be automatically retried up to 4 times if it fails with 429/5xx or connection error
+    $response = $client->get('https://api.example.com/data');
+    
+    // File download will also retry automatically
+    $client->download(
+        'https://example.com/large-file.zip',
+        __DIR__ . '/backup.zip'
+    );
+
+> **Note**: Retries add delay to failed requests. Use conservative backoff values in production to avoid long hangs. For non-idempotent methods (POST/PATCH) retries are still performed — if your API doesn't support safe retries on these methods, consider disabling retry globally or handling failures manually.
 
 ## Concurrent HTTP Requests
 
@@ -456,5 +524,7 @@ It is **strongly recommended** to create a custom API client class when interact
     ));
     
     var_dump($result);
+
+
 
 
