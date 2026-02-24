@@ -151,7 +151,7 @@ The `download()` method streams the response body directly to a local file, avoi
     
     $client = new HttpClient();
     
-    $from = 'https://example.com/files/large-archive.zip'';
+    $from = 'https://example.com/files/large-archive.zip';
     $to = __DIR__ . '/path/to/downloads/archive.zip';
     
     try {
