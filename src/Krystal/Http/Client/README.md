@@ -27,9 +27,10 @@ The Krystal HTTP Client is a robust HTTP client built on top of cURL. It provide
     use Krystal\Http\Client\HttpClient;
     
     $client = new HttpClient();
+    // cURL constants => values, if required
     $client->setDefaultOptions([
-        // cURL constants => values, if required
-    ])
+        
+    ]);
     
     $response = $client->get('https://api.example.com/users');
     
