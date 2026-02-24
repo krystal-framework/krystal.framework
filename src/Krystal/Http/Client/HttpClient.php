@@ -239,6 +239,23 @@ final class HttpClient implements HttpClientInterface
     }
 
     /**
+     * Prepare data form CURLOPT_POSTFIELDS
+     * 
+     * @param array $data
+     * @return mixed
+     */
+    private function prepareFields(array $data)
+    {
+        foreach ($data as $value) {
+            if ($value instanceof \CURLFile) {
+                return $data;
+            }
+        }
+
+        return http_build_query($data);
+    }
+
+    /**
      * Performs HTTP POST request
      * 
      * @param string $url Target URL
@@ -252,7 +269,7 @@ final class HttpClient implements HttpClientInterface
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => http_build_query($data)
+            CURLOPT_POSTFIELDS => $this->prepareFields($data)
         );
 
         return $this->executeRequest($options, $extra);
@@ -272,7 +289,7 @@ final class HttpClient implements HttpClientInterface
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'PATCH',
-            CURLOPT_POSTFIELDS => http_build_query($data)
+            CURLOPT_POSTFIELDS => $this->prepareFields($data)
         );
 
         return $this->executeRequest($options, $extra);
@@ -292,7 +309,7 @@ final class HttpClient implements HttpClientInterface
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
-            CURLOPT_POSTFIELDS => http_build_query($data)
+            CURLOPT_POSTFIELDS => $this->prepareFields($data)
         );
 
         return $this->executeRequest($options, $extra);
@@ -312,7 +329,7 @@ final class HttpClient implements HttpClientInterface
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'PUT',
-            CURLOPT_POSTFIELDS => http_build_query($data)
+            CURLOPT_POSTFIELDS => $this->prepareFields($data)
         );
 
         return $this->executeRequest($options, $extra);
