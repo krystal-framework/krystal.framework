@@ -33,7 +33,7 @@ Logging helps you track application behavior, diagnose bugs, and analyze perform
     $logger->info('Application started');
     $logger->error('Database connection failed', ['host' => 'localhost', 'port' => 3306]);
 
-### 2. Setup via Factory (Recommended)
+### 2. Setup via Factory
 
 The `LoggerFactory` allows you to define configuration in an array, making it easy to integrate with configuration files.
 
@@ -55,6 +55,46 @@ The `LoggerFactory` allows you to define configuration in an array, making it ea
     
     // Log messages
     $logger->warning('This is a warning message');
+
+### 3. Using as a Component
+
+The logger is automatically available in controllers, module files, when configured in the main configuration file.
+
+**Step 1 – Configuration (`config/app.php`)**
+
+Define the logger in your main application configuration file. 
+
+    <?php
+    
+    return [
+        'components' => [
+            'logger' => [
+                'writers' => [
+                    [
+                        'type' => 'file',
+                        'path' => dirname(__DIR__) . '/data/logs/app-' . date('Y-m-d') . '.log',
+                    ],
+                    [
+                        'type'  => 'console'
+                    ]
+                ]
+            ],
+            // other components...
+        ]
+    ];
+
+
+**Tip**: In real production setups, move the `date('Y-m-d')` logic to a bootstrap file or environment variable so you can override it later.
+
+**Step 2 – Usage in Controllers**
+
+Then use it in controllers like this
+
+    public function addAction()
+    {
+        $this->logger->warning('This is a warning message');
+    }
+
 
 ## Logging Levels
 
@@ -88,6 +128,8 @@ To create a new adapter, implement the `Krystal\Logging\Adapter\LogWriterInterfa
         }
     }
 
-Then add it to the factory switch case or manually add it:
+Then add manually add it:
 
     $logger->addWriter(new SlackWriter());
+
+
