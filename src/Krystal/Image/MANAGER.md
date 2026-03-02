@@ -1,19 +1,30 @@
 Image manager
 ========
 
-Dealing with images of different dimensions is a very common task in many web applications.  For example, you would be dealing with it when developing a photo album, or some kind of social network where each user must have an avatar, or some kind of e-commerce system where each product must have an image with different dimensions.
+Handling images of different sizes is a frequent requirement in web applications — avatars, product galleries, photo albums, blog thumbnails, etc. Krystal provides a clean and flexible **ImageManager** service to simplify this task.
 
-Krystal provides a dedicated service to deal with that.
+## Basic concept
 
-    \Krystal\Image\Tool\ImageManager
+ImageManager works with a dedicated upload path and applies processing rules (plugins) during upload. It automatically creates versioned subfolders for each processed variant (thumbnails, optimized originals, etc.).
 
-To start using it, you have to tweak it first. This is done when instantiating the class. The constructor requires the following arguments:
+**Constructor parameters**
 
-    $path, $rootDir, $rootUrl, array $plugins
+    <?php
+    
+    use Krystal\Image\Tool\ImageManager;
+    
+    $manager = new ImageManager(
+        string $path,           // relative path inside rootDir (e.g. '/data/uploads/album/')
+        string $rootDir,        // filesystem root (usually $_SERVER['DOCUMENT_ROOT'])
+        string $rootUrl,        // public URL base (usually '/')
+        array  $plugins = []    // array of plugin configurations
+    )
 
-Where `$path` is a shared path for `$rootDir` and `$rootUrl`. For example, its value might be `/data/uploads/module/album/` in case you have a photo album. The `$rootDir` and `$rootUrl` are self-explanatory variables - they expect paths of root directory and a root URL respectively.  
+Example common values:
 
-The `$plugins` is an array of image handlers. Now let's learn about it.
+    $path     = '/data/uploads/album/';
+    $rootDir  = $_SERVER['DOCUMENT_ROOT'];
+    $rootUrl  = '/';
 
 ## Plugins
 
@@ -27,7 +38,7 @@ A thumb plugin can make thumbs of uploaded images on the fly. You can make an im
 
 `dimensions` - is an array of arrays with desired image dimensions. A nested array, as a first arguments takes desired width, and a height as a second.
 
-#### Example
+**Example**
 
     <?php
     
@@ -70,7 +81,7 @@ This plugins uploads an original image to the file system. Optionally it can low
 `quality` - optionally can be overridden with another quality. The range of quality must be between 1 and 100
 
 
-#### Example
+**Example**
 
     <?php
     
@@ -111,6 +122,8 @@ Removes either a whole directory by its associated id, or a single image file (i
 
 This method returns a special service that can build paths to images. Before it can be used, it need to be configured - you have to defined a unique id and a file name by calling `setId()` and `setCover()`. For example:
 
+Krystal provides a clean and flexible **ImageManager** service to simplify this task:
+
     // Configure the bag
     $imageBag = $im->getImageBag();
     $imageBag->setId('1');
@@ -123,3 +136,5 @@ Once you've done, you can use it to build paths by calling `getUrl()` providing 
 The output will be:
 
     /data/uploads/module/album/1/200x200/foo.jpg
+
+
