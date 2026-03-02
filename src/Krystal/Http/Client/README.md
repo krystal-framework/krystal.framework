@@ -206,10 +206,6 @@ This method does **not** collect items automatically — your callback receives 
 
 -   InvalidArgumentException — Missing required config keys
 -   RuntimeException — Fetch or JSON parsing failure
-**Throws:**
-
--   InvalidArgumentException — Missing required config keys
--   RuntimeException — Fetch or JSON parsing failure
 
 ### Basic usage (GET pagination)
 
