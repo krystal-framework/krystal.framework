@@ -19,14 +19,14 @@ final class FileWriter implements LogWriterInterface
      * 
      * @var string
      */
-    private string $filePath;
+    private $filePath;
 
     /**
      * FileWriter constructor.
      *
      * @param string $filePath Path to the log file.
      */
-    public function __construct(string $filePath)
+    public function __construct($filePath)
     {
         if ($filePath === '') {
             throw new InvalidArgumentException('Log file path cannot be empty');

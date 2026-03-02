@@ -9,6 +9,8 @@
 
 namespace Krystal\Logging;
 
+use Krystal\Logging\Adapter\LogWriterInterface;
+
 /**
  * Main Logger class that manages multiple writers (adapters).
  */
@@ -25,14 +27,16 @@ final class Logger
     const DEBUG     = 7;
 
     /**
-     * @var LogWriterInterface[]
+     * A collection of writers
+     * 
+     * @var \Krystal\Logging\Adapter\LogWriterInterface[]
      */
-    private array $writers = [];
+    private $writers = [];
 
     /**
      * Adds a writer (adapter) to the logger.
      * 
-     * @param LogWriterInterface $writer
+     * @param \Krystal\Logging\Adapter\LogWriterInterface $writer
      * @return void
      */
     public function addWriter(LogWriterInterface $writer)
