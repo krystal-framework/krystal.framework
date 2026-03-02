@@ -9,30 +9,8 @@
 
 namespace Krystal\Application\Model;
 
-use Krystal\Http\FileTransfer\Filter\NameFilter;
-use Krystal\Http\FileTransfer\Filter\Type\Unique as UniqueType;
-
 abstract class AbstractService
 {
-    /**
-     * Filters file input names
-     * 
-     * @param array $files
-     * @return void
-     */
-    final protected function filterFileInput(array $files)
-    {
-        // Cache method calls
-        static $filter = null;
-
-        if ($filter === null) {
-            $filter = new NameFilter(new UniqueType());
-        }
-
-        // By reference anyway
-        $filter->filter($files);
-    }
-
     /**
      * Calls hydration method
      * 
