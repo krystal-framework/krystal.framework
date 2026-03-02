@@ -31,7 +31,18 @@ final class ConsoleWriter implements LogWriterInterface
             $formattedMessage .= "Context: " . json_encode($context, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL;
         }
 
-        $result = fwrite(STDERR, $formattedMessage);
+        if (defined('STDERR')) {
+            $result = fwrite(STDERR, $formattedMessage);
+        } else {
+            $stderr = fopen('php://stderr', 'w');
+
+            if ($stderr) {
+                $result = fwrite($stderr, $formattedMessage);
+                fclose($stderr);
+            } else {
+                $result = false;
+            }
+        }
 
         return $result !== false;
     }
