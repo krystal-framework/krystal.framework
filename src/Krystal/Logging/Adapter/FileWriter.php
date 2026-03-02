@@ -25,6 +25,7 @@ final class FileWriter implements LogWriterInterface
      * FileWriter constructor.
      *
      * @param string $filePath Path to the log file.
+     * @return void
      */
     public function __construct($filePath)
     {

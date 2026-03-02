@@ -89,6 +89,7 @@ final class Kernel implements KernelInterface
             new Component\Cache(),
             new Component\CsrfProtector(),
             new Component\Captcha(),
+            new Component\Logger(),
             // Dispatcher always must be very last component to be registered
             new Component\Dispatcher()
         );
