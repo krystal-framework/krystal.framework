@@ -1,48 +1,74 @@
-# Krystal Framework
+Krystal Framework
+=====
 
-I’ve worked with many popular PHP frameworks over the years, and I kept running into the same problems:
+**Modern. Lightweight. Developer-first PHP framework.**
 
--   Overcomplicating simple tasks
--   Tight coupling between components
--   Steeper-than-necessary learning curves
--   Missing basic tools and components
--   Overly bloated documentation
--   Dozens of unnecessary dependencies you’ll never actually use
-    
+Krystal Framework is designed for developers who want a clean, efficient, and productive environment without unnecessary complexity.
 
-I created **Krystal Framework** to solve these issues.
+## Why Krystal?
 
-**Why Choose Krystal Framework?**
+**Extremely simple and intuitive API** 
 
--   **Insanely simple API**  
-    Simplicity is at the heart of Krystal. The API is designed to be as clear and intuitive as possible, so you can focus on building, not deciphering.
-    
--   **MVC done right**  
-    Krystal delivers a precise MVC implementation with a dynamic routing system and controller-based architecture.  
-    There are no heavy models or ActiveRecord patterns—models are composed of data mappers and service objects for clean, maintainable code.
-    
--   **Built-in code generator**  
-    Kickstart development with Krystal’s built-in code generator, making repetitive tasks effortless.
+Predictable naming, minimal boilerplate, and clear conventions let you focus on building features instead of fighting the framework.
 
-**Components**
+**Clean MVC architecture — done right**
 
--   **Routing & Controllers**  
-    Simple yet powerful—routes are defined with a straightforward array and mapped directly to controller actions.
-    
--   **Powerful Grid**  
-    Create beautiful, data-rich tables with built-in filtering, sorting, and pagination—no extra setup required.
-    
--   **Membership**  
-    The built-in membership module includes all the essentials: login, registration, and password recovery.
-    
--   **Image Tools**  
-    Crop, resize, generate thumbnails, batch compress, and convert JPGs to AVIF or WebP—quickly and easily.
-    
--   **Administration panel**  
-    A fully pre-configured admin panel comes ready to use, complete with authentication and an RBAC (role-based access control) system.
-    
+Straightforward controllers, views, and dynamic routing. **No heavy ORM or ActiveRecord.** Lightweight **Data Mappers** + **Service objects** encourage clean separation of concerns, testability, and maintainable code.
 
-**...and much more!**
+**All essential tools included out of the box**
+
+- Logging, caching, validation, form handling, pagination, flash messages, data mappers, SEO helpers.
+- Image processing (resize, crop, thumbnails, AVIF/WebP conversion, batch optimization)
+- And many other common tools — no need for dozens of third-party packages.
+
+**Built-in code generator**
+
+Quickly scaffold controllers, services, forms, migrations, admin CRUD interfaces, and more.
+
+**Minimal footprint**
+
+Small core size (~2 MB), fast boot time, very few dependencies. Performs well even in resource-constrained environments.
+
+**Clear and concise documentation**
+
+Straightforward examples, no overwhelming walls of text — easy to get started and productive quickly.
+
+## Who is Krystal for?
+
+- Developers who value simplicity and speed of development
+- Small to medium-sized projects, MVPs, internal tools, admin panels, and APIs
+- Teams that prefer explicit, maintainable code over heavy abstractions 
+- Anyone building modern PHP applications (PHP 8.2+) without framework fatigue
+
+## License
+
+Licensed under the **BSD-3-Clause** License.
+
+## Contributing
+
+Fork the repo, create a feature branch, make your changes, push the branch, and open a pull request.
+
+## Security vulnerabilities
+
+If you believe you have discovered a **security vulnerability** in Krystal Framework, please help us keep our users safe by following responsible disclosure practices.
+
+**Do not** report security issues via public GitHub issues, pull requests, discussions, or any other public channels — this could expose users before a fix is available.
+
+### How to report a vulnerability
+
+Please send a detailed report privately to the project maintainer:
+
+**Email**: contact@krystal-framework.dev  
+
+Include the following in your report (the more details, the faster we can respond and verify):
+
+- A clear description of the vulnerability
+- Steps to reproduce (PoC code / script is extremely helpful)
+- Affected versions / components
+- Potential impact (e.g. XSS, SQL injection, RCE, privilege escalation, data leak…)
+- Any suggested mitigation or fix (optional but very appreciated)
+- Your name/handle and contact info (if you want credit / acknowledgment)
+
 
 
 # Documentation
