@@ -54,7 +54,7 @@ If you believe you have discovered a **security vulnerability** in Krystal Frame
 
 **Do not** report security issues via public GitHub issues, pull requests, discussions, or any other public channels — this could expose users before a fix is available.
 
-### How to report a vulnerability
+**How to report a vulnerability**
 
 Please send a detailed report privately to the project maintainer:
 
@@ -68,22 +68,3 @@ Include the following in your report (the more details, the faster we can respon
 - Potential impact (e.g. XSS, SQL injection, RCE, privilege escalation, data leak…)
 - Any suggested mitigation or fix (optional but very appreciated)
 - Your name/handle and contact info (if you want credit / acknowledgment)
-
-
-
-# Documentation
-
-You can find documentation and tutorials on the [official website](https://krystal-framework.dev).
-
-# License
-
-The framework is licensed under BSD-3.
-
-# Contributing
-
-Fork the repo, create a branch, make your changes, push them, and open a pull request for review.
-
-
-# Security vulnerabilities
-
-If you discover a vulnerability, please do not open a public issue. Instead, email the author at [contact@krystal-framework.dev] with a detailed description of the steps to reproduce it.
