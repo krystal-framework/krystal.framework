@@ -1,95 +1,139 @@
 Modules
 =======
 
-A module itself is standalone application, that typically consists of controllers, assets, services and template views.
+A **module** is a self-contained mini-application. It typically includes:
 
-# Registering a new module
+- Controllers (to map routes to actions)
+- Views (widgets and templates) 
+- Data mappers (to work with databases)
+- Services  (to handle business logic)
+- Configuration
+- Translations
+- Assets (CSS, JS, images)
 
-To register a new module, you have to create a folder named as a module itself with `Module.php` inside it. This file is called module definition. All module definition files, must extend  `\Krystal\Application\Module\AbstractModule` and must follow PSR-0. So each new module definition file should look like so:
+Modules promote clean separation of concerns and make large applications easier to maintain and extend.
 
-    namespace YourModule;
+## Creating a new module
+
+1. Create a folder with the module name (use **UpperCamelCase** recommended) Example: `News`, `Gallery`, `Shop`
+
+2. Inside the folder, create a file named `Module.php`
+
+3. The file must follow **PSR-4**  autoloading and extend `AbstractModule`
+
+**Example**
+
+    <?php
+    
+    namespace News;
     
     use Krystal\Application\Module\AbstractModule;
     
     class Module extends AbstractModule
     {
-    	// ...
+        /**
+         * Returns routes defined by this module
+         */
+        public function getRoutes()
+        {
+            return include __DIR__ . '/config/routes.php';
+        }
+    
+        /**
+         * Returns service providers for this module
+         */
+        public function getServiceProviders()
+        {
+            return [
+                'postManager' => new stdclass
+            ];
+        }
+    
+        /**
+         * Optional: module-specific configuration
+         */
+        public function getConfigData()
+        {
+            return [
+                'version'     => '1.2.3',
+                'author'      => 'Your Name',
+                'description' => 'News & Blog module',
+            ];
+        }
+    
+        /**
+         * Optional: module translations per language
+         */
+        public function getTranslations($lang)
+        {
+            return include __DIR__ . "/Translations/$lang.php";
+        }
     }
 
-## getRoutes()
 
-Returns an array of routes for current module. To learn how to define routes, refer to controller documentation.
+## Inherited methods
 
-## getServiceProviders()
+These are inherited from AbstractModule and are mostly used inside controllers:
 
-Returns an array of module services. To learn what a service is, refer to model documentation.
+    $this->getService($name) // Get a service registered in this module
+    $this->getServices() // Get all services of this module
+    $this->hasService($name) // Check if a service exists
+    $this->hasConfig($key = null) // Check if module config exists (or if a specific key exists)
 
-## getConfigData()
+## Methods
+| Method                  | Required? | Returns                                      | Purpose                                      |
+|-------------------------|-----------|----------------------------------------------|----------------------------------------------|
+| `getRoutes()`             | Yes       | array                                        | Module routes (see Routing docs)             |
+| `getServiceProviders()`   | Yes       | array (name => factory / class)              | Registers services for dependency injection  |
+| `getConfigData()`         | Optional  | array                                        | Module metadata, settings, version info      |
+| `getTranslations($lang)`  | Optional  | array                                        | Language-specific translation arrays         |
 
-Returns user-defined configuration for the target module. You can use this, things such as module version. This method is optional.
+## Working with modules
 
-## getTranslations($lang)
+### Get a service from current module
 
-Returns an array of translations for the target module. The `$lang` argument is defined in configuration under `translator` section. This method is optional.
-
-# Inherited methods:
-
-Since module definition class extends `\Krystal\Application\Module\AbstractModule`, there are some useful inherited methods as well. You probably shouldn't use them in the definition class, but rather in controllers.
-
-## getService($name)
-
-Returns a service object by its associated name. That name must be registered in `getServiceProviders()`.
-
-## getServices()
-
-Returns an array of the target module services.
-
-## hasService($name)
-
-Determines whether service has been registered by its name.
-
-## hasConfig($key = null)
-
-If no arguments passed, it determines whether the target module has implemented `getConfigData()` and has returned a configuration array. Otherwise, it determines whether `$key` exists in target configuration.
+    public function indexAction()
+    {
+        $postManager = $this->getModuleService('postManager');
+        $posts = $postManager->getLatest(10);
+    }
 
 
-# Working with modules
-
-You would usually want to get a module service or its custom configuration in controllers. To do so, you can call `getModule()` on `moduleManager` property (which a framework service itself) providing a module name.
-
-For example, if you want to get a service called `PostManager` in `News` module, you'd do it like this:
+### Get a service from any module
 
     public function someAction()
     {
-    	// Grab the News module (i.e module definition object)
-    	$module = $this->moduleManeger->getModule('News');
-    
-    	// Grab its registered service called "postManager"
-    	$postManager = $module->getService('postManager');
-    
-    	// ....
+        $userManager = $this->getService('Users', 'userManager');
+        $user = $userManager->findById(42);
     }
 
-To determine a name of the current module, you can use `moduleName` property.
+### Get full module object
 
-## Shortcut methods
+    $newsModule = $this->moduleManager->getModule('News');
+    $postManager = $newsModule->getService('postManager');
 
-There are two shortcut methods available in controllers.
+### Get current module name
 
-# getModuleService($name)
+    $currentModule = $this->moduleName; // e.g. 'News'
 
-Returns a service of the current module, when a controller is being executed. That's an equivalent to:
+## Summary
 
-    $this->moduleManager->getModule($this->moduleName)->getService($name)
+Inside any controller
 
-# getService($module, $name)
+    <?php
+    
+    // Current module service
+    $this->getModuleService('postManager');
+    
+    // Specific module service
+    $this->getService('Shop', 'cartManager');
+    
+    // Current module name
+    $this->moduleName;
+    
+    // Full module instance (advanced)
+    $this->moduleManager->getModule('Gallery');
 
-Returns a service from particular module.
+Modules are the foundation for building modular, maintainable applications . Keep your module folders clean, follow naming conventions, and leverage services for business logic.
 
-That's an equivalent to:
-
-    $this->moduleManager->getModule($module)->getService($name)
-
-
-And that's all you need to know about modules!
 
