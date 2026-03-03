@@ -1,81 +1,84 @@
 Models
 ======
 
-Despite that you have seen model classes in many popular frameworks, there are no models in MVC. Those frameworks call classes that extend ActiveRecord implementation as "models".
+Krystal implements MVC more precisely than many popular frameworks, avoiding the common misuse of "Model" for ActiveRecord.
 
-Krystal is different. It respects SOLID, follows SoC and avoids ActiveRecord.
+## What is a model?
 
-# What is a model?
+The **model** is not a single class — it is a **composition** of three main responsibilities:
 
-A model itself a concept of data/logic abstraction. When it comes to web-applications, it consist of these parts:
+1. **Data Mapper**. Low-level abstraction for database table access. Contains query methods (`find`, `fetchAll`, `insert`, `update`, `delete`, etc.). Returns raw arrays or booleans — no business logic here.
 
-- Data Mapper
+2. **Domain Object / Entity.** (optional) Rich object that represents a business concept (e.g. `Book`, `User`, `Order`). Contains getters, setters, behavior, validation rules, or calculations. Often implemented as a simple DTO, `VirtualEntity`, or a custom class.
 
-It provides a set of methods that abstract table access.
+3. **Service.** The central piece — orchestrates data access and business logic. Constructor typically receives the mapper (and optionally other dependencies). All services are registered in the module's `getServiceProviders()` method.
 
-- Domain object/layer
+## Recommended structure
 
-It provides an object that performs calculation or processes business rules. A domain object is optional. For example, if your form has an ability to upload images putting a watermarks on them, then a class that does image processing would be domain object.
+Organize your model layer following this clean, scalable folder layout inside each module. This separation keeps data access, business logic, and domain representation clearly divided.
 
-- Service
+```
+News/
+├── Module.php
+├── config/
+│   └── routes.php
+├── Service/
+│   └── PostManager.php          ← Service / Manager
+├── Storage/
+│   └── MySQL/
+│       └── PostMapper.php       ← Data Mapper
+└── Entity/
+    └── Post.php                 ← Optional rich domain entity
+```
+## Example
 
-A service is just a brigde between domain objects (if you have them) and data mappers. When instantiating a service class, its constructor usually accepts a data mapper and a domain object (if present).
+When fetching raw data from a mapper, it's best to convert it into safe, object-oriented entities before passing it to templates. This protects against XSS, ensures consistent data shape, and makes templates cleaner.
 
-All service objects must be registered within `getServiceProviders()` in module definition class. There's no a generalized answer on creating models (services). It's always up to you to decide how to build that.
+Extend `AbstractManager` and implement `toEntity()` to transform each row:
 
-
-# Best practice
-
-When working with services, you'd probably want to turn raw result-sets that you receive from mappers to entities. For example, when passing an array of raw-result set from mappers to templates, the iteration process typically looks like so:
-
-    <?php foreach ($books as $book)?>
-    
-    <h2><?php echo $book['title']; ?></h2>
-    <article><?php echo $book['description']; ?></article>
-    
-    <?php endforeach; ?>
-
-That's easy to write, but we didn't filter our data we got from a data mapper. As a best practice, you can extend `\Krystal\Application\Model\AbstractManager` and implement protected `toEntity()` method that returns an entity object and then use either `prepareResult()` or `prepareResults()` depending what you used in mapper to retrieve a result-set - `query()` or `queryAll()`.
-
-For example, the service might look so:
 
     <?php
     
+    namespace Book\Service;
+    
     use Krystal\Application\Model\AbstractManager;
-    use Krystal\VirtualEntity;
+    use Krystal\Stdlib\VirtualEntity;
+    use Book\Storage\MySQL\BookMapper;
     
-    class BookManager extends AbstractManager
+    final class BookService extends AbstractManager
     {
-        private $bookMapper;
+        private BookMapper $mapper;
     
-        public function __construct($bookMapper)
+        public function __construct(BookMapper $mapper)
         {
-            $this->bookMapper = $bookMapper;
+            $this->mapper = $mapper;
         }
     
-        protected function toEntity(array $row)
+        /**
+         * Convert raw DB row into a safe entity
+         */
+        protected function toEntity(array $row): VirtualEntity
         {
             $book = new VirtualEntity();
-            $book->setId($row['id'])
-                 // Filter undesired characters
-                 ->setTitle(htmlentities($row['title']))
-                 ->setDescription(htmlentities($row['description']));
-            
+            $book->setId((int) $row['id'])
+                 ->setTitle(htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'))
+                 ->setDescription(htmlspecialchars($row['description'], ENT_QUOTES, 'UTF-8'))
+                 ->setCreatedAt($row['created_at']);
+    
             return $book;
         }
     
-        public function getAll()
+        /**
+         * Fetch all books as safe entities
+         */
+        public function getAll(): array
         {
-            $books = $this->bookMapper->fetchAll();
-            return $this->prepareResults($books);
+            $rows = $this->mapper->fetchAll();
+            
+            // Or use for single row
+            // $this->prepareResult($row);
+
+            return $this->prepareResults($rows);
         }
     }
 
-Then in a template, you can safely render the result-set like this:
-
-    <?php foreach ($books as $book)?>
-    
-    <h2><?php echo $book->getTitle(); ?></h2>
-    <article><?php echo $book->getDescription(); ?></article>
-    
-    <?php endforeach; ?>
