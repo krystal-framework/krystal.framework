@@ -1,5 +1,4 @@
 Cookies
-
 =======
 
 There's a built-in service called `CookieBag`, you can use to work with cookies. It's a part of request service, so you can access it by calling `getCookieBag()` on it. As a best practice you should only work with cookies in controllers only, since cookies are part of the HTTP request. As an example, it might look like this:

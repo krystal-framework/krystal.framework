@@ -1,23 +1,32 @@
 Controllers
 ===========
 
-A controller is just a standalone class that implements so-called "action methods" that respond to route matches. A route map itself must be defined in your `Module.php` in `getRoutes()` method. All controller classes must follow PSR-0 and must be located under `Controller` directories.
+A **controller** is a simple class responsible for handling HTTP requests and returning responses. Controllers should stay **slim**: they only coordinate — they call services, prepare data, and render views. 
 
-A typical directory structure, looks like so:
+Business logic, data access, and complex processing belong in the model layer.
 
-    module
-     - Site
-       - Controller
-         - Main.php
+## Controller requirements
 
-Here two rules for all controllers:
-
-[1] All your controller classes must extend `\Krystal\Controller\AbstractController`.
-[2] Action methods must be public and must return a response string.
+1. Must extend `\Krystal\Controller\AbstractController` 
+2. Must be placed in a `Controller/` subdirectory inside a module 
+3.  Action methods must be **public** and return a **string** (response content)
 
 
+**Typical folder structure**
 
+```
+module
+  - Site
+    - Controller
+     - Main.php
+```
 
+## Minimal Controller example
+
+As a best practice, controllers must be slim. That means, they only have to know how to call methods and pass resulting values to view. They should never process data, and contain complicated logic.
+
+    <?php
+    
     namespace Site\Controller;
     
     use Krystal\Controller\AbstractController;
@@ -26,120 +35,99 @@ Here two rules for all controllers:
     {
         public function indexAction()
         {
-            return 'Welcome';
+            return 'Welcome to Krystal!';
         }
     }
 
-As a best practice, controllers must be slim. That means, they only have to know how to call methods and pass resulting values to view. They should never process data, and contain complicated logic. If you have a logic, that must be in your model layer.
 
-Routes
-======
+## Routes
 
-As mentioned before, routes are declared in `getRoutes()` method in your `Module.php`.
-
+Routes are defined in the module's `getRoutes()` method (in `Module.php`).
 
     <?php
     
     namespace Site;
     
-    use Krystal\Module\AbstractModule;
+    use Krystal\Application\Module\AbstractModule;
     
     class Module extends AbstractModule
     {
-        // ...
-    
         public function getRoutes()
         {
-            return array(
-                '/' => array(
-                    'controller' => 'Welcome@indexAction'
-                )
-            );
-        }
-    
-        // ...
-    }
-    
-    ?>
-
-That means, when route `/` is matched, the controller under target module (which is `Site`) named `Welcome` will be instantiated and its `indexAction` method will be executed and its response will be returned automatically.
-
-Route configuration
-===================
-
-There's only one thing that can be configured - default action, that's a method which gets executed when no route maches found. It can be found in configuration file (which is usually located at `/config/app.php`) under `components -> route` section. Here's how it looks like:
-
-    // ...
-    
-    'router' => array(
-        'default' => '...',
-    ),
-    
-    // ...
-
-To define a default method when no route match is found, simply define a controller as if you were defining it in route map, prepending module name. For example,
-
-    'default' => 'Site:Welcome@notFoundAction'
-
-Then `/Site/Controller/Welcome::notFoundAction` will be executed when no route matches are found.
-
-# Route variables
-
-It's very common to have variables in URI string. Route variables are defined in route map as `(:var)` keyword, like this:
-
-    /page/(:var) => array(
-        'controller' => 'Foo@indexAction'
-    )
-
-Then variables are automatically become available as arguments in controller actions.
-
-    public function indexAction($id) // <- The value of (:var) will be passed here
-    {
-    
-    }
-
-If you define several variables, they will be passed as arguments exactly as in defined order.
-
-# Triggering 404 error
-
-To trigger 404 error manually, you can return `false` in controller's action. Once you do, then the default action will be executed. That is useful, if you want to handle call to invalid parameters.
-
-For example, here's a typical triggering case:
-
-    public function indexAction($id)
-    {
-        $id = '... do fetch some record ...';
-    
-        if (!$id) {
-            // If record isn't valid, then trigger 404
-            return false;
-        } else {
-            // Otherwise, process it...
+            return [
+                '/' => [
+                    'controller' => 'Main@indexAction'
+                ],
+                '/about' => [
+                    'controller' => 'Main@aboutAction'
+                ]
+            ];
         }
     }
 
-# Controller shortcuts
+Format: `Module:Controller@Method`
 
-There are several shortcut methods available in each controller.
+### Default action (404 / Not Found)
 
-## redirectToRoute($route)
+Set in `config/app.php` under the router component:
 
-Performs HTTP redirect to route's URL. The route itself must be framework-compliant, like `Site:Welcome@testAction`.
+    'router' => [
+        'default' => 'Site:Main@notFoundAction',
+    ],
 
-## forward($route, array $args = array())
+When no route matches, `Main::notFoundAction()` will be called.
 
-Calls another controller's action from within current one. The second `$args` is an optional array of arguments to the action which is being called. Returns a response as a string. For example:
+### Route parameters
 
-    public function someAction()
+Use `(:var)` to capture URI segments. They are passed as action method arguments in order.
+
+Define
+
+    '/user/(:var)' => [
+        'controller' => 'User@profileAction'
+    ],
+
+Use
+
+    public function profileAction($username)
     {
-        // Grab a response from another controller's action
-        $response = $this->forward('Site:Welcome@testAction');
+        // $username contains the value from /user/var
     }
 
-## getWithAssetPath($path, $module = null)
+**Multiple parameters:**
 
-Returns asset path appending target path. By default it assumes the current module to generate the path from. Passing second module name as a second argument, you can override it.
+Define
 
-## getWithViewPath($path, $module, $theme)
+    '/post/(:var)/comment/(:var)' => 'Post@showCommentAction'
 
-Generates and returns a path to view folder on the file-system. The first `$path` argument is a path to be prepended, the second `$module` is a module name, and the third `$theme` is a theme name in views.
+Matches
+
+    showCommentAction($postId, $commentId)
+
+### Manually Trigger 404
+
+Return `false` from an action to invoke the default (not found) handler:
+
+    public function viewAction($id)
+    {
+        $post = $this->getModuleService('PostManager')->getById($id);
+    
+        if (!$post) {
+            return false; // → triggers 404 (default action)
+        }
+    
+        return $this->view->render('post/view', ['post' => $post]);
+    }
+
+
+### Controller shortcuts
+
+These methods are inherited from `AbstractController`:
+
+| Method                              | Description                                                                 | Example / Usage                                                                 |
+|-------------------------------------|-----------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| `redirectToRoute($route)`             | Performs HTTP redirect to the specified route                               | $this->redirectToRoute('Site:Main@dashboard');                                 |
+| `forward($route, array $args = [])`   | Calls another controller's action internally and returns its response       | $sidebar = $this->forward('Site:Sidebar@latestNews', ['limit' => 5]);          |
+| `getWithAssetPath($path, $module = null)` | Generates full public URL to an asset (CSS/JS/image) in current or specified module | $css = $this->getWithAssetPath('/css/style.css');                              |
+| `getWithViewPath($path, $module = null, $theme = null)` | Returns filesystem path to a view file                             | $path = $this->getWithViewPath('partial/header.phtml', 'Site', 'default');     |
+
