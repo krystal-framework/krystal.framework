@@ -13,13 +13,12 @@ use RuntimeException;
 use LogicException;
 use Krystal\I18n\TranslatorInterface;
 use Krystal\Application\View\Resolver\ResolverInterface;
+use Krystal\Application\Route\UrlBuilderInterface;
 use Krystal\Form\Navigation\Breadcrumbs\BreadcrumbBag;
 use Krystal\Form\Compressor\HtmlCompressor;
-use Krystal\Application\Route\UrlBuilderInterface;
 use Krystal\Widget\WidgetInterface;
 use Krystal\Widget\WidgetFactory;
 use Krystal\Stdlib\ArrayUtils;
-use Krystal\Form\Field;
 
 final class ViewManager implements ViewManagerInterface
 {
@@ -124,8 +123,14 @@ final class ViewManager implements ViewManagerInterface
      * @param $compress Whether to compress an output
      * @return void
      */
-    public function __construct($moduleDir, PluginBagInterface $pluginBag, TranslatorInterface $translator, UrlBuilderInterface $urlBuilder, WidgetFactory $widgetFactory, $compress)
-    {
+    public function __construct(
+        $moduleDir,
+        PluginBagInterface $pluginBag,
+        TranslatorInterface $translator,
+        UrlBuilderInterface $urlBuilder,
+        WidgetFactory $widgetFactory,
+        $compress
+    ){
         $this->moduleDir = $moduleDir;
         $this->pluginBag = $pluginBag;
         $this->translator = $translator;
@@ -135,28 +140,9 @@ final class ViewManager implements ViewManagerInterface
     }
 
     /**
-     * Renders a field
-     * 
-     * @param string $label
-     * @return string
-     */
-    public function field($label = null)
-    {
-        static $field = null;
-
-        if (is_null($field)) {
-            $field = new Field($this->translator);
-        }
-
-        $field->label($label);
-        return $field;
-    }
-
-    /**
      * Renders a widget
      * 
      * @param \Krystal\Widget\WidgetInterface $widget
-     * @param array $args Widget options
      * @return string
      */
     public function widget(WidgetInterface $widget)
