@@ -53,19 +53,16 @@ final class CookieBag implements CookieBagInterface, PersistentStorageInterface
      */
     private static function parseDomain($host)
     {
-        $delimiter = '.';
         $target = strtolower(trim($host));
-        $count = substr_count($target, $delimiter);
+        $parts = explode('.', $target);
 
-        if ($count === 2) {
-            if (strlen(explode($delimiter, $target)[1]) > 3) {
-                $target = explode($delimiter, $target, 2)[1];
-            }
-        } else if ($count > 2) {
-            $target = self::parseDomain(explode($delimiter, $target, 2)[1]);
+        if (count($parts) < 2) {
+            return $target;
         }
 
-        return $target;
+        // Take last two parts (covers most cases: example.com, co.uk, etc.)
+        $base = $parts[count($parts)-2] . '.' . $parts[count($parts)-1];
+        return '.' . $base;
     }
 
     /**
