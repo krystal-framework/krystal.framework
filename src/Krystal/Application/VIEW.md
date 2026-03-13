@@ -154,7 +154,8 @@ Determine whether a master layout is currently set.
 
     render(string $template, array $vars = []): string
 
-Render the requested template and wrap it in the layout (if set).
+Render the requested template and wrap it in the layout (if set). Throws `RuntimeException` if template not found.
+
 
 **Example**
 
@@ -168,7 +169,7 @@ Render any template from any module/theme independently (no layout applied).
 
 Example
 
-    $this->view->renderRaw('Mail', 'templates', 'welcome')
+    $this->view->renderRaw('Mail', 'my-theme', 'welcome')
 
 ### Check if template file exists
 
@@ -241,7 +242,7 @@ Build URL/path to file inside module’s Assets/ directory.
 
 Generates URL to given controllers action.
 
-Example
+**Example**
 
     <?= $this->url('Site:Profile', ['id' => 15]) ?>
 
@@ -283,7 +284,7 @@ Include one or more pre-defined plugins.
 
 **Usage example**
 
-    $this->view->getPluginBag()->load(['jquery', 'font-awesome']);
+    $this->view->getPluginBag()->load(['jquery', 'bootstrap']);
 
 
 ### Register plugin(s) at runtime
@@ -358,8 +359,8 @@ Manages reusable template fragments (pagination, alerts, sidebars, etc.) that ca
 
 ### Register shared partial directory
 
-    addPartialDir(string $dir): 
-    self addPartialDirs(array $dirs): self
+    addPartialDir(string $dir): self
+    addPartialDirs(array $dirs): self
 
 Add folder(s) where framework will search for partial files.
 
@@ -391,7 +392,7 @@ Get full filesystem path for a named partial (throws if not found).
 
     loadPartial(string $name, array $vars = []): void
 
-Include and output a registered partial (with optional extra variables).
+Include and output a registered partial (with optional extra variables). Throws `LogicException` if partial file not found.
 
 **Usage example**
 
@@ -442,6 +443,9 @@ and much more!
 
 ### Creating a widget – example
 
+Below is a minimal widget that retrieves the translator service from the container and returns a translated string.  
+Real-world widgets typically include data fetching (e.g. recent posts), conditional rendering, and more complex markup.
+
     <php
     
     namespace Site\View\Widget;
@@ -473,6 +477,10 @@ This means:
 
 ### Rendering a widget in a template
 
+Widgets are rendered directly inside templates using the `$this->widget()` method.  
+
+This allows you to embed dynamic, logic-driven components anywhere in your layout or view.
+
     <?php
     
     use Site\View\Widget\RecentPostsWidget;
@@ -486,6 +494,8 @@ This means:
 *Note: If your widget accepts parameters, you can pass them via constructor.*
 
 ## Widgets vs Partials
+
+Widgets and partials both provide reusable UI pieces, but they serve different needs: widgets handle logic + presentation, while partials focus on lightweight markup reuse.
 
 | Aspect                  | Widget                                      | Partial                                      |
 |-------------------------|---------------------------------------------|----------------------------------------------|
@@ -517,6 +527,7 @@ Both can be combined: *a widget can render a partial internally, or a partial ca
 
 ## Quick Tips & Best Practices
 
+-   Always escape user-controlled output in templates or services
 -   Always return the result of `render()` from controller actions
 -   Set layout once (bootstrap or base controller), not per action
 -   Use `@Module/` syntax in config — it makes refactoring easier
