@@ -113,8 +113,6 @@ Determine whether a variable has been assigned.
 
     $this->view->hasVariable('user');
 
-Whether view has at least one variable.
-
 ### Check if any variables are set
 
     $this->view->hasVariables(): bool

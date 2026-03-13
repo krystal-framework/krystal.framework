@@ -15,6 +15,26 @@ It is typically available in controllers as `$this->request->getCookieBag()`
        }
     }
 
+## Encryption Requirements
+
+To use encrypted cookie methods (`setEncrypted()` and `getEncrypted()`), you **must** configure a secret salt in your application configuration.
+
+The salt is a random, long string used to strengthen encryption.
+
+**Configuration**
+
+Add the following to `/config/app.php`:
+
+    'components' => [
+        'cookie' => [
+            'salt' => 'your-long-random-secret-string'
+        ]
+    ]
+
+**Important notes**
+
+- The salt should be unique, random, and kept secret (never commit it to version control)
+- If no salt is provided, calling `setEncrypted()` or `getEncrypted()` will throw a `RuntimeException`
 
 ## Check if any cookies exist
 
