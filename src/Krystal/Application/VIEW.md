@@ -1,3 +1,4 @@
+
 View
 ====
 
@@ -251,17 +252,6 @@ Example
 Return the name of the active theme.
 
 
-## Quick Tips & Best Practices
-
--   Always return the result of `render()` from controller actions
--   Set layout once (bootstrap or base controller), not per action
--   Use `@Module/` syntax in config — it makes refactoring easier
--   Prefer `loadPartial()` over inline includes for reusable blocks
--   Load plugins early (base controller or middleware) to avoid duplication
--   Use `renderRaw()` for emails, PDFs, HTML fragments
--   Keep partials small and logic-free (move logic to widgets or services)
-
-
 ## Plugin bag
 
 Central manager for grouping and loading CSS/JavaScript files under named plugins to avoid path duplication.
@@ -418,6 +408,120 @@ Render several partials in sequence.
     $this->loadPartials(['header-alert', 'sidebar-quick', 'footer-copyright']);
 
 
+## Widgets
+
+Widgets are reusable, self-contained UI components that combine **presentation** (markup) with **logic** (data fetching, conditionals, services). 
+
+They are similar to partials but meant for more complex behavior (e.g. database queries, service calls, dynamic content).
+
+Widgets are ideal for: 
+
+- Navigation menus 
+ - Pagination controls 
+ - Flash message blocks 
+ - Rating stars with averages 
+ - Recent posts / comments lists 
+
+and much more!
+
+**Key features** 
+
+- A widget must implement `Krystal\Widget\WidgetInterface` 
+- Rendered via `$this->widget(...)` in templates 
+- Can receive dependencies via the container and current request input
+
+**Widget Interface (minimal contract)**
+
+    interface WidgetInterface
+    {
+        public function render(
+            DependencyInjectionContainerInterface $container,
+            InputInterface $input
+        ): string;
+    }
+
+### Creating a widget – example
+
+    <php
+    
+    namespace Site\View\Widget;
+    
+    use Krystal\Widget\WidgetInterface;
+    use Krystal\InstanceManager\DependencyInjectionContainerInterface;
+    use Krystal\Application\InputInterface;
+    
+    final class RecentPostsWidget implements WidgetInterface
+    {
+        public function render(
+            DependencyInjectionContainerInterface $container,
+            InputInterface $input
+        ): string {
+            $translator  = $container->get('translator');
+        
+            return $translator->translate('This is my first widget');
+        }
+    }
 
 
+**Note** Inside a widget’s render() method, services retrieved via `$container->get('serviceName')` are **exactly the same instances** as those available in controllers via `$this->serviceName`.
+
+This means:
+
+-   You get the same shared service instances (e.g. database connection, translator, session, request, etc.)
+
+-   No need to re-inject or re-configure services — just use the container the same way you use properties in controllers
+
+### Rendering a widget in a template
+
+    <?php
+    
+    use Site\View\Widget\RecentPostsWidget;
+    
+    ?>
+    
+    <aside>
+        <?= $this->widget(new RecentPostsWidget()) ?>
+    </aside>
+
+*Note: If your widget accepts parameters, you can pass them via constructor.*
+
+## Widgets vs Partials
+
+| Aspect                  | Widget                                      | Partial                                      |
+|-------------------------|---------------------------------------------|----------------------------------------------|
+| **Main purpose**        | Encapsulated UI component with **logic + presentation** | Reusable **pure markup** fragment            |
+| **Contains logic?**     | Yes (data fetching, conditionals, services) | No / minimal (usually just HTML + variables) |
+| **Implements interface**| Yes (`WidgetInterface`)                     | No (just `.phtml` file)                      |
+| **Access method**       | `$this->widget(new MyWidget(...))`          | `$this->loadPartial('name', $vars)`          |
+| **Dependency injection**| Yes (via `$container->get()`)               | No (uses global `$this` helpers only)        |
+| **Typical use cases**   | Menus, pagination with logic, recent items, dashboard cards, rating blocks | Breadcrumbs, flash messages, form groups, footer snippets, static sidebars |
+| **Can fetch data?**     | Yes (services, database, API calls)         | No (data must be passed from controller)     |
+| **State / configuration**| Can have constructor params / state         | Stateless (only variables passed at render)  |
+| **Performance impact**  | Higher (logic execution)                    | Very low (just include + render)             |
+| **Best when**           | You need dynamic, reusable UI with behavior | You need clean, reusable HTML snippets       |
+
+**When to choose which?**
+
+- Use **Widget** if the component needs to:
+  - Fetch data
+  - Call services
+  - Have conditional rendering
+  - Accept runtime configuration
+
+- Use **Partial** if the component is:
+  - Should be very lightweight
+  - Only needs variables passed from controller
+
+Both can be combined: *a widget can render a partial internally, or a partial can include a widget.*
+
+
+## Quick Tips & Best Practices
+
+-   Always return the result of `render()` from controller actions
+-   Set layout once (bootstrap or base controller), not per action
+-   Use `@Module/` syntax in config — it makes refactoring easier
+-   Prefer `loadPartial()` over inline includes for reusable blocks
+-   Load plugins early (base controller or middleware) to avoid duplication
+-   Use `renderRaw()` for emails, PDFs, HTML fragments
+-   Keep partials small and logic-free (move logic to widgets or services)
 
