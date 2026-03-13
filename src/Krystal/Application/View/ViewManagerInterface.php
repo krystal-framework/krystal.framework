@@ -12,14 +12,6 @@ namespace Krystal\Application\View;
 interface ViewManagerInterface
 {
     /**
-     * Renders a field
-     * 
-     * @param string $label
-     * @return string
-     */
-    public function field($label);
-
-    /**
      * Returns translator's instance
      * 
      * @return \Krystal\I18n\Translator
