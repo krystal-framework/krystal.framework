@@ -1,7 +1,9 @@
 Cookies
 =======
 
-There's a built-in service called `CookieBag`, you can use to work with cookies. It's a part of request service, so you can access it by calling `getCookieBag()` on it. As a best practice you should only work with cookies in controllers only, since cookies are part of the HTTP request. As an example, it might look like this:
+The **CookieBag** service provides a clean, secure interface for reading from `$_COOKIE`, writing new cookies, removing them, and managing encrypted values.
+
+It is typically available in controllers as `$this->request->getCookieBag()`
 
     public function someAction()
     {
@@ -13,46 +15,145 @@ There's a built-in service called `CookieBag`, you can use to work with cookies.
        }
     }
 
-## Available methods
 
-### isEmpty()
+## Check if any cookies exist
 
-    \Krystal\Http\CookieBag::isEmpty()
+    isEmpty(): bool
 
-Checks whether there's at least one cookie has been set on client's machine. Return boolean.
+Determine whether the current request contains any cookies.
 
-### removeAll()
+**Example**
 
-    \Krystal\Http\CookieBag::removeAll()
+    if ($cookieBag->isEmpty()) {
+        // No cookies received in this request
+    }
 
-Removes all available cookies.
+## Get all cookies
 
-### getAll()
+    getAll(): array
 
-    \Krystal\Http\CookieBag::getAll()
+Retrieve the full array of cookies from the current request.
 
-Returns all available cookies.
+**Example**
 
-### set()
+    $cookies = $cookieBag->getAll();
+    print_r($cookies);
 
-    \Krystal\Http\CookieBag::set($key, $value, $ttl = 0, $path = '/', $secure = false, $httpOnly = false, $raw = false)
+## Check if a cookie exists
 
-Sets a new cookie. Its arguments are self-explanatory. The only one note, if `$ttl` is 0, that means that the cookie will be removed automatically, when user close a browser.
+    has(string $key): bool
 
-### get()
+Verify whether a specific cookie key is present in the current request.
 
-    \Krystal\Http\CookieBag::get($key)
+**Example**
 
-Returns cookie value by its associated key. If the target key doesn't exist, then `RuntimeException` will be thrown.
+    if ($cookieBag->has('theme')) {
+        // Theme preference is set
+    }
 
-### remove()
+## Check multiple cookies exist
 
-    \Krystal\Http\CookieBag::remove($key)
+    hasMany(array $keys): bool
 
-Removes a cookie by its associated key. Returns `true` if removed successfully, `false` if tried to remove non-existing cookie.
+Verify that all specified cookie keys are present.
 
-### has()
+**Example**
 
-    \Krystal\Http\CookieBag::has($key)
+    if ($cookieBag->hasMany(['user_id', 'session_token'])) {
+        // Proceed with authenticated logic
+    }
 
-Checks whether cookie exist.
+## Set a cookie
+
+    set(string $key, string $value, int $ttl = TimeHelper::YEAR, string $path = '/', bool $secure = false, bool $httpOnly = false, bool $raw = false): bool
+
+Set or update a cookie. The value becomes immediately available in the current request.
+
+    $this->cookieBag->set(
+        'theme',
+        'dark',
+        86000,
+        '/',
+        true,  // secure (HTTPS only)
+        true,  // httpOnly
+        false  // not raw
+    );
+
+Important notes
+
+- `$key` cannot contain dots (throws `UnexpectedValueException`)
+- `$value` and `$key` must be scalar types
+- Domain is automatically parsed from current host (supports subdomain sharing)
+- Returns true if `setcookie()` ran successfully (does not guarantee client acceptance)
+
+
+## Set an encrypted cookie
+
+    setEncrypted(string $key, string $value, int $ttl = TimeHelper::YEAR, string $path = '/', bool $secure = false, bool $httpOnly = false, bool $raw = false): bool
+
+Set a cookie with its value encrypted using the crypter.
+
+**Example**
+
+    $cookieBag->setEncrypted('token', $token, 8600);
+
+## Get a cookie value
+
+    get(string $key): string
+
+Retrieve the value of a cookie by its key. Throws `RuntimeException` if the key does not exist.
+
+**Example**
+
+    $theme = $cookieBag->get('theme'); // e.g. 'dark'
+
+Note
+
+Use `has()` first to avoid exceptions if the key may be missing.
+
+## Get encrypted cookie value
+
+    getEncrypted(string $key): string
+
+Retrieve and decrypt the value of an encrypted cookie.
+
+**Example**
+
+    $token = $cookieBag->getEncrypted('token');
+
+
+## Get or set cookie once (lazy initialization)
+
+    getOnce(string $key, Closure $callback): mixed
+
+Retrieve a cookie value, or compute and set it once if missing (useful for visitor IDs, preferences).
+
+**Example**
+
+    $visitorId = $cookieBag->getOnce('visitor_id', function () {
+        return uniqid('vis_', true);
+    });
+
+## Remove a single cookie
+
+    remove(string $key): bool
+
+Delete a cookie by expiring it in the past and removing it from the current request.
+
+**Example**
+
+    $cookieBag->remove('session_token');
+
+Note
+
+Returns true if the cookie existed and was removed.
+
+## Remove all cookies
+
+    removeAll(): bool
+
+Expire and remove all cookies from the client.
+
+**Example**
+
+    $cookieBag->removeAll(); // Clear all cookies on logout

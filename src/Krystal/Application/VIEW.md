@@ -493,7 +493,7 @@ This allows you to embed dynamic, logic-driven components anywhere in your layou
 
 *Note: If your widget accepts parameters, you can pass them via constructor.*
 
-## Widgets vs Partials
+### Widgets vs Partials
 
 Widgets and partials both provide reusable UI pieces, but they serve different needs: widgets handle logic + presentation, while partials focus on lightweight markup reuse.
 
