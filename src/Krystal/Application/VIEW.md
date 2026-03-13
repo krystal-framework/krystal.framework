@@ -1,198 +1,423 @@
 View
 ====
 
-The view service deals with template rendering work-flow and its available in controllers as `view` property. All templates must be located under `/{module}/View/Template/{theme}/`, where {module} is a name of particular module, and {theme} is a theme name which has been defined in configuration file. All template files must end with `.phtml` extension.
+The **View** service handles template rendering, variable management, asset paths, layout support, translation, and reusable UI fragments.  
 
-For example, suppose you have a template in `/module/Site/View/Template/home.phtml` and you want to render it in controller's `indexAction`. To do so, you'd simply call `render()` passing `home` as a first argument. That would look like so:
+It is available in every controller as `$this->view`.
 
-    public function indexAction()
+Inside view templates (.phtml files), it is directly accessible as `$this` (no need for `$this->view`).
+
+**Template Location & Naming Convention**
+
+All view templates **must** follow this structure:
+
+**{project root}/module/{ModuleName}/View/Template/{theme}/{template-name}.phtml**
+
+- `{ModuleName}` – the module the controller belongs to (e.g. `Site`, `Admin`, `Blog`)
+- `{theme}` – active theme name (set in configuration, default: `default`)
+- File extension: **always** `.phtml`
+
+**Example**
+
+File location:  
+`/module/Site/View/Template/default/dashboard.phtml`
+
+Controller usage:
+
+    public function dashboardAction()
     {
-    	return $this->view->render('home');
+        return $this->view->render('dashboard');
     }
 
-Obviously, the controller must belong to the same module.
-
-# Configuration
-
-The configuration stored under `view` key in `components`. It typically contains a nested array with the following keys:
-
-- theme - a name of the theme to be used, when doing render.
-- obfuscate - defines whether to compress an output or not.
-- plugins - an array of asset plugins. A plugin itself should contain a name of a plugin as a key with and a nested array of definitions as a value. Path definitions should contain `scripts` and `stylesheets` with an array of paths.
-
-For example, let's define `jquery` as a plugin:
-
-    'view' => array(
-    	'plugins' => array(
-    		'jquery' => array(
-    			'scripts' => array(
-    				'@Site/js/jquery.min.js'
-    			)
-    			// jquery has no stylesheets, so we can omit that
-    		)
-    	)
-    )
-
-And then in any controller, we can simply load that plugin, like so:
-
-    $this->view->getPluginBag()->load('jquery');
-
-Note, that prefixing a module name with `@` is just defining a path to assets folder for that module, so that instead of writing:
-
-    /module/Site/Assets/
-
-you can simply write it as
-
-    @Site/
+The argument 'dashboard' automatically resolves to dashboard.phtml in the current module + active theme.
 
 
-## Available methods
+## Configuration
 
-You can call these methods on `view` service in controllers and in directly in templates.
+View settings live under the view key in configuration file:
 
-## setComporess($compress)
+    'components' => [
+        'view' => [
+            'theme'     => 'default',               // string – active theme folder name
+            'obfuscate' => false,                   // bool – enable HTML compression/minification
+            'plugins'   => [                        // reusable asset bundles
+                'jquery' => [
+                    'scripts' => [
+                        '@Site/js/jquery-3.7.1.min.js',
+                    ],
+                ],
+                'bootstrap' => [
+                    'stylesheets' => [
+                        '@Site/css/bootstrap.min.css',
+                    ],
+                    'scripts' => [
+                        '@Site/js/bootstrap.bundle.min.js',
+                    ],
+                ],
+            ],
+        ],
+    ],
 
-Defines whether to compress outputting template at runtime.
+Important notes about @Module/ syntax
 
-## url($controller, ...)
+The @ prefix is a shortcut that resolves to:
 
-Generates URL to given controllers action.
+    @Site/ → /module/Site/Assets/
 
-## addVariable($name, $value)
+So @Site/js/app.js becomes /module/Site/Assets/js/app.js.
 
-Adds a variable to template.
 
-## addVariables($variables)
+## Variables
 
-Add variables to the template. That must be an array with names with their associated values.
+### Assign single variable
 
-## getTheme()
+    addVariable(string $name, mixed $value): self
 
-Returns current theme name.
+Pass one named value to the current template context.
 
-## asset($path, $module = null, $absolute = false)
+**Example**
 
-Returns a full-qualified asset path. The optional second `$module` argument defined whether to use current one or permanent one. The third `$absolute` boolean argument defines whether to return absolute or full path.
+    $this->view->addVariable('title', 'Dashboard')
 
-## moduleAsset($path, $module = null, $absolute = false)
 
-Returns a full-qualified asset path of a module itself (i.e the path to its `Assets` folder). The optional second `$module` argument defined whether to use current one or permanent one. The third `$absolute` boolean argument defines whether to return absolute or full path.
+### Assign multiple variables
 
-## setLayout($layout)
+    addVariables(array $vars): self
+
+Pass an array of values to the template at once.
+
+**Example**
+
+    $this->view->addVariables([
+       'version' => '1.0',
+       'system' => 'windows'
+    ]);
+
+### Retrieve variable with fallback
+    getVariable(string $name, $default = null): mixed
+
+Get a previously assigned variable, returning a default if missing.
+
+**Example**
+
+    <?= $this->view->getVariable('title', 'Untitled') ?>
+
+### Check if specific variable exists
+
+    hasVariable(string $name): bool
+
+Determine whether a variable has been assigned.
+
+**Example**
+
+    $this->view->hasVariable('user');
+
+Whether view has at least one variable.
+
+### Check if any variables are set
+
+    $this->view->hasVariables(): bool
+
+Verify if the view context contains at least one variable.
+
+
+## Layout
+
+### Set master layout template
+
+    setLayout(string $name, ?string $module = null): self
+
+Define which template will wrap the main content.
+
+**Example**
+
+    $this->view->setLayout('layout')
 
 Sets the master template.
 
-## disableLayout()
+### Disable layout for current render
 
-Disables the master template.
+    disableLayout(): self
 
-## hasLayout()
+Render content without applying any master layout.
 
-Determines whether a master template has been defined.
+### Check if layout is active
 
-## templateExists($template)
+    hasLayout(): bool
 
-Determines whether template exists.
+Determine whether a master layout is currently set.
 
-## show($string, $translate = true)
+## Rendering
 
-Prints a string. If second argument is true, then it would try to translate it.
+### Render template
 
-## render($template, array $vars = array())
+    render(string $template, array $vars = []): string
 
-Renders a template and returns it as a string. If a layout has been defined, it renders a template with defined layout.
+Render the requested template and wrap it in the layout (if set).
 
-## renderRaw($module, $theme, $template, array $vars = array())
+**Example**
 
-Renders a template as a layout from a module. This is useful if you want to render a file for email-attachement. 
-In fact, it's been added exactly for this purpose.
+    $this->view->render('home')
 
-## loadBlock($block)
+### Render any template without layout
 
-Loads a block. To learn more about defining blocks, refer to `BlockBag`.
+    renderRaw(string $module, string $theme, string $template, array $vars = [])
 
-## loadBlocks($array $blocks)
+Render any template from any module/theme independently (no layout applied).
 
-Loads many blocks at once.
+Example
 
-## translate($string)
+    $this->view->renderRaw('Mail', 'templates', 'welcome')
 
-Returns a translated string.
+### Check if template file exists
+
+    templateExists(string $template): bool
+
+Verify whether a template file is present on disk.
+
+**Example**
+
+    $this->view->templateExists($template)
 
 
-# Plugin bag
+## Output & Translation
 
-A view plugin is just a name with associated stylesheets and scripts. If you want to include one plugin in several places, that would lead to code duplication, since you have to write paths in those places. Plugin bag comes to the rescue! It would help you to manage asset paths.
-You can access its instance via `view` service (since its a part of view layer), by calling `getPluginBag()` method on it, that returns the `PluginBag`.
+### Echo string (with optional translation)
 
-Typically, plugins are defined in configuration file and included on demain in controllers.
+    show(string $string, bool $translate = true): void
 
-# Available methods
+Immediately echo a string (translated if requested).
 
-## appendStylesheet($stlysheet)
+**Example**
 
-Append a stylesheet file (that must URL path).
+    <?php $this->show('Error occurred') ?>
 
-## appendStylesheets(array $stylesheets)
+### Return translated string (supports placeholders)
 
-Append many stylesheet files at once. That must an array of URL paths to them.
+    translate(...$args): string
 
-## getStylesheets()
+Return translated text (supports sprintf-style placeholders).
 
-Returns an array of defined stylesheets.
+**Example**
 
-## appendScript($script)
+    <?= $this->translate('Hello %s!', $name) ?>
 
-Appends a script file. That must be a URL path.
 
-## appendScripts($scripts)
+### Compress the output
 
-Appends many scripts at once. That must an array of URL paths to them.
+    setCompress(bool $value): self
+    
+Control HTML minification/compression for the current response.
 
-## getScripts()
 
-Returns an array of defined script files.
 
-## register($collection)
+## Assets & URLs
 
-Registers a plugin at runtime. The `$collection` array itself must look like so:
+### Path to file in theme folder
 
-    array(
-    	'foo' => array(
-    		'scripts' => array(
-    			// ...
-    		),
-    		'stylesheets' => array(
-    			// ...
-    		)
-    	)
-    )
 
-## load(array|string $plugin)
+    asset(string $path, ?string $module = null, bool $absolute = false)
 
-Loads a plugin or a collection of plugins.
+Build URL/path to file inside current theme folder.
 
-# Block bag
+**Example**
 
-A template block (also known as partial view) represents a reusable template fragment. For example, that can be pagination block that you want to be shared with all another templates. A block is usually rendered inside templates via `loadBlock()` method, but we didn't learn how to register them before using. So let's learn that right now.
+    <img src="<?= $this->asset('images/logo.png') ?>">
 
-Since the block bag is a part of view service, its instance can be accessed via `getBlockBag()` method on it.
+### Path to file in module’s Assets/ folder
 
-# Available methods
+    moduleAsset(string $path, ?string $module = null, bool $absolute = false)
 
-## getBlockFile($name)
+Build URL/path to file inside module’s Assets/ directory.
 
-Returns a path of registered block by its name. If it can't find it, then a `LogicException` will be thrown.
+**Example**
 
-## addStaticBlock($baseDir, $name)
+    <script src="<?= $this->moduleAsset('js/app.js') ?>">
 
-Adds a static block to the stack. In case you want all modules to share one block, this method will register that block for you.
-The first `$baseDir` argument is a path to directory where named block is stored (name shouldn't contain `phtml` extension).
+### Generate route URL
 
-## setBlocksDir($dir)
+    url(...$args)
 
-Defines a shared directory path where all blocks are stored.
+Generates URL to given controllers action.
 
-## getBlocksDir()
+Example
 
-Returns shared blocks directory.
+    <?= $this->url('Site:Profile', ['id' => 15]) ?>
+
+### Get current theme name
+
+    getTheme(): string
+
+Return the name of the active theme.
+
+
+## Quick Tips & Best Practices
+
+-   Always return the result of `render()` from controller actions
+-   Set layout once (bootstrap or base controller), not per action
+-   Use `@Module/` syntax in config — it makes refactoring easier
+-   Prefer `loadPartial()` over inline includes for reusable blocks
+-   Load plugins early (base controller or middleware) to avoid duplication
+-   Use `renderRaw()` for emails, PDFs, HTML fragments
+-   Keep partials small and logic-free (move logic to widgets or services)
+
+
+## Plugin bag
+
+Central manager for grouping and loading CSS/JavaScript files under named plugins to avoid path duplication.
+
+**Access** 
+
+    $this->view->getPluginBag()
+
+
+**Typical pattern**
+
+    // Controller
+    $this->view->getPluginBag()->load('bootstrap');
+    
+    // Layout template
+    <?php foreach ($this->getPluginBag()->getStylesheets() as $css): ?>
+    <link rel="stylesheet" href="<?= $this->asset($css) ?>">
+    <?php endforeach; ?>
+    
+    <?php foreach ($this->getPluginBag()->getScripts() as $js): ?>
+    <script src="<?= $this->asset($js) ?>"></script>
+    <?php endforeach; ?>
+
+### Load plugin(s)
+
+    load(string|array $plugins): self
+
+Include one or more pre-defined plugins.
+
+**Usage example**
+
+    $this->view->getPluginBag()->load(['jquery', 'font-awesome']);
+
+
+### Register plugin(s) at runtime
+
+    register(array $collection): self
+
+Define new plugin(s) dynamically (outside config).
+
+**Usage example**
+
+    $this->view->getPluginBag()->register([
+        'datatables' => [
+            'stylesheets' => ['@Admin/css/datatables.min.css'],
+            'scripts'     => ['@Admin/js/datatables.min.js'],
+        ]
+    ]);
+
+### Add stylesheet(s)
+
+    appendStylesheet(string $url, bool $once = true): self 
+    appendStylesheets(array $urls, bool $once = true): self
+
+Manually append CSS file(s) to the collection.
+
+### Add script(s)
+
+    appendScript(string $url, bool $once = true): self 
+    appendScripts(array $urls, bool $once = true): self
+
+Manually append JavaScript file(s) to the collection.
+
+
+### Add stylesheet(s) to load last
+
+    appendLastStylesheet(string $url): self
+    appendLastStylesheets(array $urls): self
+
+Append CSS that should appear after others (overrides).
+
+### Add script(s) to load last
+
+    appendLastScript(string $url): self
+    appendLastScripts(array $urls): self
+
+Append JS that should execute last (initialization code).
+
+### Get all stylesheets / scripts
+
+    getStylesheets(): array 
+    getScripts(): array
+
+Retrieve collected asset paths (normal + last).
+
+
+## Partial bag
+
+Manages reusable template fragments (pagination, alerts, sidebars, etc.) that can be shared across multiple templates.
+
+**Access**
+
+    $this->view->getPartialBag()
+
+**Setup example** (bootstrap)
+
+    $this->view->getPartialBag()->addPartialDir(BASE_PATH . '/shared/partials');
+
+**Rendering example**
+
+    <?php $this->loadPartial('breadcrumbs') ?>
+    <?php $this->loadPartials(['flash-messages', 'footer-links']) ?>
+
+
+### Register shared partial directory
+
+    addPartialDir(string $dir): 
+    self addPartialDirs(array $dirs): self
+
+Add folder(s) where framework will search for partial files.
+
+**Usage example**
+
+    $this->view->getPartialBag()->addPartialDir(BASE_PATH . '/shared/partials');
+
+### Register static partial
+
+    addStaticPartial(string $baseDir, string $name): self
+
+Map exact file path to a partial name (useful for vendor/special files).
+
+**Usage example**
+
+    $this->view->getPartialBag()->addStaticPartial(
+        BASE_PATH . '/vendor/campaign/views',
+        'promo-banner'
+    );
+
+### Resolve partial file path
+
+    getPartialFile(string $name): string
+
+Get full filesystem path for a named partial (throws if not found).
+**Note** — normally called internally by loadPartial().
+
+### Load partial
+
+    loadPartial(string $name, array $vars = []): void
+
+Include and output a registered partial (with optional extra variables).
+
+**Usage example**
+
+    $this->loadPartial('user-card', ['user' => $profile, 'size' => 'lg']);
+
+### Load multiple partials
+
+    loadPartials(array $names): void
+
+Render several partials in sequence.
+
+**Example**
+
+    $this->loadPartials(['header-alert', 'sidebar-quick', 'footer-copyright']);
+
+
+
+
+
