@@ -76,9 +76,12 @@ To persist uploaded files, use the dedicated uploader component:
 
     <?php
     
+    namespace Site\Controller;
+
     use Krystal\Http\FileTransfer\FileUploader;
-    
-    class User
+    use Krystal\Application\Controller;
+
+    final class User extends AbstractController
     {
         public function upload()
         {
@@ -89,6 +92,10 @@ To persist uploaded files, use the dedicated uploader component:
                 
                 $uploader = new FileUploader();
                 $uploader->upload($destination, $files); // Returns boolean value
+
+                // Other methods
+                $uploader->getUploadedFiles(); // Returns array of uploaded files
+                $uploader->getFailedFiles(); // Returns array of failed files
             }
         }
     }
