@@ -10,6 +10,7 @@
 namespace Krystal\Http\FileTransfer;
 
 use LogicException;
+use RuntimeException;
 
 final class FileUploader implements FileUploaderInterface
 {
@@ -28,6 +29,20 @@ final class FileUploader implements FileUploaderInterface
     private $destinationAutoCreate;
 
     /**
+     * List of successfully uploaded files
+     * 
+     * @var array
+     */
+    private $uploaded = [];
+    
+    /**
+     * List of failed uploads
+     * 
+     * @var array
+     */
+    private $failed = [];
+
+    /**
      * State initialization
      * 
      * @param boolean $override Whether to override on collision
@@ -41,11 +56,31 @@ final class FileUploader implements FileUploaderInterface
     }
 
     /**
+     * Returns a list of files that failed to upload/move
+     * 
+     * @return array
+     */
+    public function getFailedFiles()
+    {
+        return $this->failed;
+    }
+
+    /**
+     * Returns a list of successfully uploaded files
+     * 
+     * @return array
+     */
+    public function getUploadedFiles()
+    {
+        return $this->uploaded;
+    }
+
+    /**
      * Upload files from the input
      * 
      * @param string $destination
      * @param array $files
-     * @throws \LogicException if at least one value in $files is not an instance of \Krystal\Http\FileTransfer\FileEntityInterface
+     * @throws \LogicException if at least one value in $files is not an instance of \Krystal\Http\FileTransfer\FileEntity
      * @return boolean
      */
     public function upload($destination, array $files)
@@ -54,14 +89,14 @@ final class FileUploader implements FileUploaderInterface
             if (!($file instanceof FileEntity)) {
                 // This should never occur, but it's always better not to rely on framework users
                 throw new LogicException(sprintf(
-                    'Each file entity must be an instance of \Krystal\Http\FileTransfer\FileInfoInterface, but received "%s"', gettype($file)
+                    'Each file entity must be an instance of \Krystal\Http\FileTransfer\FileEntity, but received "%s"', gettype($file)
                 ));
             }
 
             // Gotta ensure again, UPLOAD_ERR_OK means there are no errors
             if ($file->getError() == \UPLOAD_ERR_OK) {
                 // Start trying to move a file
-                if (!$this->move($destination, $file->getTmpName(), $file->getUniqueName())) {
+                if (!$this->moveSingleFile($destination, $file->getTmpName(), $file->getUniqueName())) {
                     return false;
                 }
             } else {
@@ -74,38 +109,42 @@ final class FileUploader implements FileUploaderInterface
     }
 
     /**
-     * Moves a singular file
+     * Moves a single file
      * 
      * @param string $destination
      * @param string $tmp
      * @param string $filename
      * @return boolean Depending on success
      */
-    private function move($destination, $tmp, $filename)
+    private function moveSingleFile($destination, $tmp, $filename)
     {
+        $destination = rtrim($destination, '/\\'); // Normalize path
+
         if (!is_dir($destination)) {
-            // We can either create it automatically
-            if ($this->destinationAutoCreate === true) {
-                // Then make a directory (recursively if needed)
-                @mkdir($destination, 0777, true);
-                
+            if ($this->destinationAutoCreate) {
+                if (!mkdir($destination, 0755, true) && !is_dir($destination)) {
+                    throw new RuntimeException(
+                        "Failed to create directory: $destination"
+                    );
+                }
             } else {
-                // Destination doesn't exist, and we shouldn't be creating it
-                throw new RuntimeException(sprintf(
-                    'Destination folder does not exist', $destination
-                ));
+                throw new RuntimeException("Destination directory does not exist: $destination");
             }
         }
 
         $target = sprintf('%s/%s', $destination, $filename);
 
         // If Remote file exists and we don't want to override it, so let's stop here
-        if (is_file($target)) {
-            if (!$this->override) {
-                return true;
-            }
+        if (is_file($target) && !$this->override) {
+            throw new RuntimeException("File already exists and overriding is disabled: $target");
         }
 
-        return move_uploaded_file($tmp, $target);
+        if (move_uploaded_file($tmp, $target)) {
+            $this->uploaded[] = $target;
+            return true;
+        } else {
+            $this->failed[] = $target;
+            return false;
+        }
     }
 }
