@@ -82,6 +82,8 @@ final class ShoppingCart
      */
     public function update($productId, array $attributes, array $updates)
     {
+        $productId = (string) $productId;
+
         $itemKey = $this->findItemKey($productId, $attributes);
 
         if ($itemKey === null) {
