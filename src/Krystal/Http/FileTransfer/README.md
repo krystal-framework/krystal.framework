@@ -45,21 +45,23 @@ Alternatively, files can be sent via JavaScript using FormData:
 
 ## Accessing uploaded file
 
-To access uploaded files, call the `getFiles()` method on the request service from within your controller:
+To access uploaded files, call the getFiles() method on the request service from within your controller. This returns an instance of `Krystal\Http\FileTransfer\FileEntity`.
 
     public function uploadAction()
     {
         // Get file instance from input named "document"
         $file = $this->request->getFiles('document');
-    
+        
         if ($file) {
             $file->getName();       // Original filename
             $file->getUniqueName(); // Unique filename (preserves extension)
             $file->getType();       // Guessed MIME type
+            $file->getMimeType();   // Verified MIME type (server-side check)
             $file->getTmpName();    // Temporary file path
             $file->getError();      // Native PHP upload error code
             $file->getSize();       // File size in bytes
-    
+            $file->getHumanSize();  // Formatted size (e.g., "200.00 KB")    
+            
             // ...
         }
     
@@ -69,6 +71,13 @@ To access uploaded files, call the `getFiles()` method on the request service fr
 If no file was uploaded, `getFiles()` returns an empty array.
 
 Regardless of input name or nesting depth, this method always returns a normalized and predictable collection of uploaded files, unlike the native `$_FILES` superglobal.
+
+Method Reference
+
+- getName(): Returns the original escaped name provided by the user.
+- getUniqueName(): Generates a cryptographically secure hex string . Use this for saving files to prevent filename collisions and hide sensitive original names.
+- getMimeType(): Unlike `getType()`, this inspects the "Magic Bytes" of the file on the server. This is essential for verifying that a .jpg isn't actually a hidden .php script.
+- getHumanSize(): Converts the raw byte count into a human-readable string (KB, MB, GB).
 
 ## Uploading a file
 

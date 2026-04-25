@@ -9,9 +9,10 @@
 
 namespace Krystal\Http\FileTransfer;
 
+use Krystal\Text\TextUtils;
+use Krystal\Filesystem\FileManager;
 use ArrayAccess;
 use BadMethodCallException;
-use Krystal\Text\TextUtils;
 
 final class FileEntity implements FileEntityInterface, ArrayAccess
 {
@@ -79,26 +80,6 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
     {
         $extension = pathinfo($this->getName(), \PATHINFO_EXTENSION);
         return strtolower($extension);
-    }
-
-    /**
-     * Returns unique name for uploaded file
-     * 
-     * @return string
-     */
-    public function getUniqueName()
-    {
-        $key = 'uniq';
-
-        // Lazy initialization
-        if (!isset($this->container[$key])) {
-            $extension = $this->getExtension();
-            $random = TextUtils::generateRandomString();
-
-            $this->container[$key] = $extension ? sprintf('%s.%s', $random, $extension) : $random;
-        }
-
-        return $this->container[$key];
     }
 
     /**
@@ -209,5 +190,53 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
     public function getSize()
     {
         return $this->container['size'];
+    }
+
+    /**
+     * Returns unique name for uploaded file
+     * 
+     * @return string
+     */
+    public function getUniqueName()
+    {
+        $key = 'uniq';
+
+        // Lazy initialization
+        if (!isset($this->container[$key])) {
+            $extension = $this->getExtension();
+            $random = TextUtils::generateRandomString();
+
+            $this->container[$key] = $extension ? sprintf('%s.%s', $random, $extension) : $random;
+        }
+
+        return $this->container[$key];
+    }
+
+    /**
+     * Returns a human-readable file size (e.g 10.5 MB)
+     * 
+     * @return string
+     */
+    public function getHumanSize()
+    {
+        return FileManager::humanSize($this->getSize());
+    }
+
+    /**
+     * Returns the actual MIME type of the file
+     * 
+     * @return string|boolean
+     */
+    public function getMimeType()
+    {
+        $target = $this->getTmpName();
+
+        if (is_file($target) && is_readable($target)) {
+            $finfo = new \finfo(\FILEINFO_MIME_TYPE);
+            return $finfo->file($target);
+        }
+
+        // Fallback to the type provided by the container if file isn't accessible
+        return $this->getType();
     }
 }
