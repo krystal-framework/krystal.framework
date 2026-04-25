@@ -204,7 +204,7 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
         // Lazy initialization
         if (!isset($this->container[$key])) {
             $extension = $this->getExtension();
-            $random = TextUtils::generateRandomString();
+            $random = TextUtils::randomHex();
 
             $this->container[$key] = $extension ? sprintf('%s.%s', $random, $extension) : $random;
         }
