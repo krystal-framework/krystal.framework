@@ -239,4 +239,28 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
         // Fallback to the type provided by the container if file isn't accessible
         return $this->getType();
     }
+
+    /**
+     * Moves a file to a new location
+     * 
+     * @param string $path Target directory
+     * @param string $name Optional new name. If not provided, getUniqueName() is used.
+     * @return boolean
+     */
+    public function move($path, $name = null)
+    {
+        // If name is not provided, generate a secure unique one
+        if ($name === null) {
+            $name = $this->getUniqueName();
+        }
+
+        $destination = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $name;
+
+        // Check if the upload was successful before moving
+        if ($this->getError() === \UPLOAD_ERR_OK && is_uploaded_file($this->getTmpName())) {
+            return move_uploaded_file($this->getTmpName(), $destination);
+        }
+
+        return false;
+    }
 }
