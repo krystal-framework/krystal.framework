@@ -129,6 +129,28 @@ class TextUtils
     }
 
     /**
+     * Generates a secure random hex string
+     * 
+     * @param int $length Length of the resulting string
+     * @return string
+     */
+    public static function randomHex($length = 32)
+    {
+        $bytes = (int) ($length / 2);
+
+        if (function_exists('random_bytes')) {
+            return bin2hex(random_bytes($bytes));
+        }
+
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            return bin2hex(openssl_random_pseudo_bytes($bytes));
+        }
+
+        // Failsafe
+        return substr(md5(uniqid(mt_rand(), true)), 0, $length);
+    }
+
+    /**
      * Generates a random string of a fixed length using a specified character set.
      *
      * Supported dictionary methods:

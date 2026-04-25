@@ -3,6 +3,18 @@ Text Utils
 
 Utility class for working with strings, providing a rich set of methods for common text operations.
 
+
+## Get random HEX
+
+Generates a cryptographically secure random filename while preserving the original file extension.
+
+    <?php
+    
+    use Krystal\Text\TextUtils;
+    
+    echo TextUtils::randomHex(32); // 5f32a9b1c8d7e6f0a4b3c2d1e0f9a8b7
+
+
 ## Contains
 
 Checks if a given substring exists within a string, compatible with both modern and legacy PHP versions.
