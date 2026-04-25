@@ -11,6 +11,7 @@ namespace Krystal\Http\FileTransfer;
 
 use ArrayAccess;
 use BadMethodCallException;
+use Krystal\Text\TextUtils;
 
 final class FileEntity implements FileEntityInterface, ArrayAccess
 {
@@ -92,16 +93,9 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
         // Lazy initialization
         if (!isset($this->container[$key])) {
             $extension = $this->getExtension();
+            $random = TextUtils::generateRandomString();
 
-            // If extension avaiable, use it
-            if ($extension) {
-                $name = sprintf('%s.%s', uniqid(), $extension);
-            } else {
-                // Otherwise just filename without extension
-                $name = uniqid();
-            }
-
-            $this->container[$key] = $name;
+            $this->container[$key] = $extension ? sprintf('%s.%s', $random, $extension) : $random;
         }
 
         return $this->container[$key];
@@ -148,7 +142,7 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
      */
     public function getName()
     {
-        return $this->container['name'];
+        return basename($this->container['name']);
     }
 
     /**
