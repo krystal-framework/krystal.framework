@@ -97,13 +97,61 @@ To keep your error messages looking professional, you can assign human-readable 
 The library ships with optimized, type-strict rules out of the box.
 
 
-| Rule     | Options                    | Default message template                          |
-|----------|----------------------------|---------------------------------------------------|
-| required | None                       | The :attribute field is required.                 |
-| email    | None                       | The :attribute must be a valid email address.     |
-| minlen   | ['min' => 5]               | The :attribute must be at least :min characters.  |
-| between  | ['min' => 10, 'max' => 20] | The :attribute must be between :min and :max.     |
-
+| Rule            | Options                                  | Default message template |
+|-----------------|------------------------------------------|--------------------------|
+| required        | None                                     | The :attribute field is required. |
+| email           | None                                     | The :attribute must be a valid email address. |
+| between         | ['min' => 10, 'max' => 20]               | The :attribute must be between :min and :max. |
+| even            | None                                     | The :attribute must be an even number. |
+| float           | None                                     | The :attribute must be a valid floating-point number. |
+| greaterthan     | ['min' => 0]                             | The :attribute must be strictly greater than :min. |
+| integer         | None                                     | The :attribute must be a valid integer. |
+| lessorequal     | ['max' => 100]                           | The :attribute must be less than or equal to :max. |
+| lessthan        | ['max' => 100]                           | The :attribute must be strictly less than :max. |
+| negative        | None                                     | The :attribute must be a negative number. |
+| numeric         | None                                     | The :attribute must be a valid number description. |
+| odd             | None                                     | The :attribute must be an odd number. |
+| positive        | None                                     | The :attribute must be a positive number. |
+| charset         | ['charset' => 'UTF-8']                   | The :attribute must conform to the specified :charset character encoding. |
+| contains        | ['needle' => 'phrase']                   | The :attribute must contain the sub-string phrase: :needle. |
+| endswith        | ['suffix' => 'value']                    | The :attribute must end with the specified suffix: :suffix. |
+| lowercase       | None                                     | The :attribute must contain lowercase characters only. |
+| minlength       | ['min' => 5]                             | The :attribute must be at least :min characters. |
+| maxlength       | ['max' => 255]                           | The :attribute must not exceed a maximum length of :max characters. |
+| nochar          | None                                     | The :attribute field payload must not contain any text characters. |
+| notags          | None                                     | The :attribute text string structure cannot contain HTML or XML tags. |
+| startswith      | ['prefix' => 'value']                    | The :attribute must start with the specified prefix: :prefix. |
+| uppercase       | None                                     | The :attribute must contain uppercase characters only. |
+| emptyvalue      | None                                     | The :attribute must evaluate to an empty structural state. |
+| notempty        | None                                     | The :attribute field must possess an active data state payload. |
+| notequals       | ['value' => 'restricted']                | The :attribute cannot equal the specified restricted entry option value. |
+| captcha         | ['expected' => 'secret']                 | The verification security captcha entry input value is incorrect. |
+| domain          | None                                     | The :attribute must match a valid network internet domain path description. |
+| emailpattern    | None                                     | The :attribute text string fails framework structural validation regex formats. |
+| identity        | ['value' => 'expected_match']            | The :attribute field value must be identical to the specified comparison target. |
+| ippattern       | None                                     | The :attribute field must resolve to a valid IPv4 or IPv6 infrastructure address. |
+| macaddress      | None                                     | The :attribute must match a valid hardware interface MAC address specification. |
+| regex           | ['pattern' => '/^pattern$/']             | The structural evaluation format criteria configured for :attribute is invalid. |
+| urlpattern      | None                                     | The :attribute must resolve to a fully qualified web URL path address. |
+| xdigit          | None                                     | The :attribute can consist of valid structural hexadecimal digits only. |
+| boolean         | None                                     | The :attribute field must resolve to a valid logical boolean state wrapper. |
+| callable        | None                                     | The passed payload structure inside :attribute is not executable by the engine. |
+| incollection    | ['collection' => [...]]                  | The selected :attribute choice is outside the validated compilation index list. |
+| json            | None                                     | The context parameters inside :attribute must constitute an un-broken JSON structure. |
+| serialized      | None                                     | The string stream in :attribute cannot be cleanly un-serialized into native data. |
+| unique          | ['pool' => [...]]                        | The value assigned to :attribute is duplicated and violates uniqueness constraints. |
+| dateformat      | ['format' => 'Y-m-d']                    | The calendar data format structure in :attribute does not match template: :format. |
+| dateformatmatch | ['target' => 'field', 'format' => 'Y-m-d'] | The chronological layout matching sequence between :attribute and :target failed. |
+| day             | None                                     | The value assigned to :attribute must represent a standard monthly day configuration. |
+| timestamp       | None                                     | The execution block :attribute must evaluate to a valid UNIX epoch timestamp coordinate. |
+| year            | None                                     | The provided timeline reference inside :attribute must match a 4-digit calendar year index. |
+| directorypath   | None                                     | The local execution system cannot locate a valid directory path target matching :attribute. |
+| extension       | ['allowed' => ['jpg', 'png']]            | The system rejected the file extension attached to the target payload parameter: :attribute. |
+| filepath        | None                                     | The localized storage map route configured inside :attribute is not an active target file. |
+| filereadable    | None                                     | The system does not possess structural file system authorization maps to read :attribute. |
+| filesize        | ['max' => 1048576]                       | The space configuration block constraints allocated to file processing payload :attribute exceeded maximum byte values. |
+| latitude        | None                                     | The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees. |
+| longitude       | None                                     | The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees. |
 
 ## Custom rules
 
