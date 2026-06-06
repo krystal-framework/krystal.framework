@@ -26,9 +26,16 @@ final class Router implements RouterInterface
      * 
      * @var array
      */
-    private $replacements = array(
+    private $replacements = [
         '(:var)' => '([^/]*)'
-    );
+    ];
+
+    /**
+     * Cache for compiled regular expressions
+     * 
+     * @var array
+     */
+    private $compiled = [];
 
     /**
      * Process redirect
@@ -39,12 +46,11 @@ final class Router implements RouterInterface
      */
     public function processRedirect($uri, array $map)
     {
-        foreach ($map as $old => $new) {
-            if ($uri == $old) {
-                header('HTTP/1.1 301 Moved Permanently'); 
-                header(sprintf('Location: %s', $new)); 
-                exit();
-            }
+        // O(1) Quick lookup instead of linear O(N) loop
+        if (isset($map[$uri])) {
+            header('HTTP/1.1 301 Moved Permanently'); 
+            header(sprintf('Location: %s', $map[$uri])); 
+            exit();
         }
     }
 
@@ -57,15 +63,23 @@ final class Router implements RouterInterface
      */
     public function match($segment, array $map)
     {
+        // Strip the query string before matching routes to prevent capturing query params 
+        // as endpoint arguments in Controller methods
+        if (($pos = strpos($segment, '?')) !== false) {
+            $segment = substr($segment, 0, $pos);
+        }
+
         foreach ($map as $index => $uriTemplate) {
-            $matches = array();
+            $matches = [];
+
             if (preg_match($this->createRegEx($uriTemplate), $segment, $matches) === 1) {
+                // Remove the full match to leave only the captured variables
                 $matchedURI = array_shift($matches);
 
                 $routeMatch = new RouteMatch();
                 $routeMatch->setMatchedUri($matchedURI)
-                            ->setMatchedUriTemplate($uriTemplate)
-                            ->setVariables($matches);
+                           ->setMatchedUriTemplate($uriTemplate)
+                           ->setVariables($matches);
 
                 return $routeMatch;
             }
@@ -83,12 +97,22 @@ final class Router implements RouterInterface
      */
     private function createRegEx($uriTemplate)
     {
-        $pattern = str_replace($this->getPlaceholders(), $this->getPatterns(), $uriTemplate);
+        // Return instantly if we already compiled this URI template
+        if (isset($this->compiled[$uriTemplate])) {
+            return $this->compiled[$uriTemplate];
+        }
 
-        // Match everything after question mark, if present
-        $pattern .= '(\?(.*))?';
+        // Quote the template to safely parse literal characters (e.g. dots, hyphens)
+        $pattern = preg_quote($uriTemplate, '~');
 
-        return '~^' . $pattern . '$~i';
+        // Quote placeholders so they match their quoted representation in the template
+        $placeholders = array_map(function($placeholder) {
+            return preg_quote($placeholder, '~');
+        }, $this->getPlaceholders());
+
+        $pattern = str_replace($placeholders, $this->getPatterns(), $pattern);
+
+        return $this->compiled[$uriTemplate] = '~^' . $pattern . '$~i';
     }
 
     /**
