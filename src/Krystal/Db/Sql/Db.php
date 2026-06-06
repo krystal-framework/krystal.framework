@@ -449,7 +449,7 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function paginateRaw($count, $page, $itemsPerPage)
     {
-        $this->paginator->tweak($count, $itemsPerPage, $page);
+        $this->paginator->tweak((int) $count, (int) $itemsPerPage, (int) $page);
         $this->limit($this->paginator->countOffset(), $this->paginator->getItemsPerPage());
 
         return $this;
@@ -1127,7 +1127,11 @@ final class Db implements DbInterface, RelationableServiceInterface
      */
     public function limit($offset, $amount = null)
     {
-        $this->queryBuilder->limit($offset, $amount);
+        if ($amount != null) {
+            $amount = (int) $amount;
+        }
+
+        $this->queryBuilder->limit((int) $offset, $amount);
         return $this;
     }
 
