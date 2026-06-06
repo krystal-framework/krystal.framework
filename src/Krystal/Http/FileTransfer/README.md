@@ -61,7 +61,7 @@ To access uploaded files, call the getFiles() method on the request service from
             $file->getError();      // Native PHP upload error code
             $file->getSize();       // File size in bytes
             $file->getHumanSize();  // Formatted size (e.g., "200.00 KB")
-            
+            $file->isDangerous();   // Security check
             // ...
         }
     
@@ -108,6 +108,35 @@ To persist uploaded files, use the dedicated uploader component:
             }
         }
     }
+
+## Check if file is dangerous
+
+Always call `$file->isDangerous()` before moving or processing any uploaded file.
+
+**Why & How**
+
+`$file->isDangerous()` protects against malicious uploads by checking:
+
+File extension against a deny-list (`.php`, `.htaccess`, etc.)
+Real MIME type using magic bytes (prevents disguised scripts)
+
+    $file = $this->request->getFiles('avatar');
+
+    // Basic
+    if ($file && $file->isDangerous()) {
+        // Dangerous file type detected!
+    }
+
+    // With extra extensions to verify
+    if ($file->isDangerous(['docm', 'xlsm', 'jar'])) { 
+        // Dangerous file type detected!
+    }
+
+    // Only check extension (skip MIME verification)
+    if ($file->isDangerous([], false)) {
+        // Dangerous file type detected!
+    }
+
 
 ## Moving a single file
 

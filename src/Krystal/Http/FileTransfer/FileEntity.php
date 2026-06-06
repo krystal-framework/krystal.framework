@@ -9,9 +9,9 @@
 
 namespace Krystal\Http\FileTransfer;
 
+use ArrayAccess;
 use Krystal\Text\TextUtils;
 use Krystal\Filesystem\FileManager;
-use ArrayAccess;
 use BadMethodCallException;
 
 final class FileEntity implements FileEntityInterface, ArrayAccess
@@ -21,7 +21,27 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
      * 
      * @var array
      */
-    private $container = array();
+    private $container = [];
+
+    /**
+     * List of dangerous file extensions (deny-list)
+     *
+     * @var array
+     */
+    private $dangerous = [
+        // PHP / Server-side
+        'php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'pht', 'inc', 'ctp', 'tpl',
+        // Other server scripts
+        'asp', 'aspx', 'jsp', 'cfm', 'cgi', 'pl', 'py', 'rb', 'perl', 'pm', 'lua', 'go'
+        // Executables
+        'exe', 'bat', 'cmd', 'com', 'sh', 'bash', 'ps1', 'psm1', 'vbs', 'hta', 'jar', 'elf', 'bin'
+        // Dangerous web / markup files
+        'html', 'htm', 'shtml', 'svg', 'xml',
+        // Config & sensitive files
+        'htaccess', 'htpasswd', 'ini', 'env', 'config', 'yaml', 'yml', 'sql',
+        // Others
+        'js', 'swf', 'reg', 'msi', 'scr'
+    ];
 
     /**
      * Sets an offset
@@ -72,6 +92,34 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
     }
 
     /**
+     * Checks if the file has a dangerous extension or MIME type
+     * 
+     * @param array $extraDangerous Extra extensions to verify
+     * @param boolean $mimeVerify Whether to also verify MIME type
+     * @return boolean
+     */
+    public function isDangerous(array $extraDangerous = [], $mimeVerify = true)
+    {
+        $all = array_merge($this->dangerous, $extraDangerous);
+        $result = in_array($this->getExtension(), $all, true);
+
+        if ($mimeVerify == true) {
+            $mime = $this->getMimeType();
+
+            if (!empty($mime)) {
+                // Block dangerous MIME types
+                if (strpos($mime, 'text/html') === 0 ||
+                    strpos($mime, 'application/x-php') === 0 ||
+                    strpos($mime, 'application/php') === 0) {
+                    return true;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns file extension
      * 
      * @return string
@@ -79,7 +127,7 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
     public function getExtension()
     {
         $extension = pathinfo($this->getName(), \PATHINFO_EXTENSION);
-        return strtolower($extension);
+        return strtolower(trim($extension));
     }
 
     /**
