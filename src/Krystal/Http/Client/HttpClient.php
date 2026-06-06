@@ -51,7 +51,7 @@ final class HttpClient implements HttpClientInterface
             $this->retryConfig = array_replace($this->retryConfig, $retryConfig);
         }
     }
-    
+
     /**
      * Creates appropriate cURL instance
      * 
@@ -104,7 +104,7 @@ final class HttpClient implements HttpClientInterface
                 CURLOPT_SSL_VERIFYHOST => 2,
                 CURLOPT_AUTOREFERER    => true,
                 CURLOPT_ENCODING       => '', // Accept all encodings
-                CURLOPT_USERAGENT      => 'Krystal HTTP Client (PHP 5.6+)',
+                CURLOPT_USERAGENT      => 'Krystal HTTP Client',
             ]);
 
             // Merge any extra options (useful for headers, auth, etc.)
