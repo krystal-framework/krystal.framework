@@ -9,6 +9,7 @@
 
 namespace Krystal\Validation;
 
+use InvalidArgumentException;
 use Krystal\Validation\PathResolver;
 use Krystal\Http\FileTransfer\FileEntity;
 use Krystal\I18n\Translator;
@@ -277,14 +278,21 @@ final class Validator
      * @param mixed $value Payload data item extracted from raw array structures
      * @param string $path Absolute concrete resolved location mapping parameter positions
      * @return bool True if verification check reports successful testing outcomes
+     * @throws \InvalidArgumentException If the requested rule is not registered in the target scope pool
      */
     private function executeRuleCallback(string $source, array $ruleConfig, $value, string $path): bool
     {
         $ruleName = $ruleConfig['rule'];
         $options = $ruleConfig['options'];
 
+        // Catch missing rules during active execution passes
         if (!$this->ruleRegistry->hasRule($source, $ruleName)) {
-            return true;
+            throw new InvalidArgumentException(sprintf(
+                'Validation error: The rule "%s" assigned to "%s" is not registered in the "%s" registry.',
+                $ruleName,
+                PathResolver::toBracketNotation($path),
+                $source
+            ));
         }
 
         $ruleMetadata = $this->ruleRegistry->getRule($source, $ruleName);
