@@ -372,8 +372,8 @@ return [
                 return false;
             }
             $format = isset($options['format']) ? (string) $options['format'] : 'Y-m-d';
-            $\DateTime = \DateTime::createFromFormat($format, (string) $value);
-            return $\DateTime && $\DateTime->format($format) === (string) $value;
+            $dt = \DateTime::createFromFormat($format, (string) $value);
+            return $dt && $dt->format($format) === (string) $value;
         },
         'message'  => 'The calendar data format structure in :attribute does not match template: :format.'
     ],
