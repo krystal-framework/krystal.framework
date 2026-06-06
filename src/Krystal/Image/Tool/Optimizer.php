@@ -9,7 +9,6 @@
 
 namespace Krystal\Image\Tool;
 
-use Krystal\Image\Processor\Imagick\ImagickProcessor;
 use Krystal\Image\Processor\GD\ImageProcessor;
 use Krystal\Filesystem\FileManager;
 
@@ -40,30 +39,11 @@ final class Optimizer
      * @param boolean $unlink Whether to remove old file
      * @return array
      */
-    public static function optimize($file, $quality = 50, $unlink = true)
+    public static function optimize($file, $quality = 80, $unlink = true)
     {
         // Stop immediatelly, if not supported
         if (!self::isSupported($file)) {
             return false;
-        }
-
-        // Check if AVIF available, first
-        if (class_exists('Imagick')) {
-            $output = FileManager::replaceExtension($file, 'avif');
-
-            $processor = new ImagickProcessor($file);
-            $processor->toAvif($quality)
-                      ->save($output);
-
-            if ($unlink === true) {
-                FileManager::rmfile($file);
-            }
-
-            return [
-                'output' => $output,
-                'success' => true,
-                'extension' => 'avif'
-            ];
         }
 
         // Now check, the WebP support
