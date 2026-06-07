@@ -237,22 +237,33 @@ final class Validator
         $dataSource = ($definition->getSource() === 'field') ? $this->data : $this->fileData;
         $resolvedPaths = PathResolver::expandWildcards($dataSource, $definition->getAttribute());
 
+        // 1. Helper to fetch custom message for "required"
+        $requiredMessage = null;
+
+        foreach ($definition->getRules() as $rule) {
+            if ($rule['rule'] === 'required' && isset($rule['message'])) {
+                $requiredMessage = $rule['message'];
+            }
+        }
+
         if (empty($resolvedPaths) && $definition->isRequired()) {
             $this->logError($definition->getAttribute(), $definition, [
                 'rule' => 'required',
-                'options' => []
+                'options' => [],
+                'message' => $requiredMessage // Pass the custom message here
             ], null);
             return;
         }
 
         foreach ($resolvedPaths as $path) {
             $value = PathResolver::getNestedValue($dataSource, $path);
-            
+
             if ($this->isEmpty($value)) {
                 if ($definition->isRequired()) {
                     $this->logError($path, $definition, [
                         'rule' => 'required',
-                        'options' => []
+                        'options' => [],
+                        'message' => $requiredMessage // Pass the custom message here
                     ], $value);
                 }
                 continue;
@@ -322,14 +333,12 @@ final class Validator
         $rule = $ruleConfig['rule'];
         $options = $ruleConfig['options'];
         $label = $this->resolveLabel($path, $definition, $value);
-        
+
         $messageTemplate = isset($ruleConfig['message']) ? $ruleConfig['message'] : null;
-        
+
         if ($messageTemplate === null) {
             $ruleMetadata = $this->ruleRegistry->getRule($definition->getSource(), $rule);
-            $messageTemplate = ($ruleMetadata !== null && isset($ruleMetadata['message']))
-                ? $ruleMetadata['message']
-                : "The :attribute field is invalid.";
+            $messageTemplate = ($ruleMetadata !== null && isset($ruleMetadata['message'])) ? $ruleMetadata['message'] : "The :attribute field is invalid.";
         }
 
         $message = $this->messageResolver->resolve($messageTemplate, $label, $value, $options);
