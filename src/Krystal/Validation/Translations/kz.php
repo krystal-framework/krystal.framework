@@ -72,6 +72,7 @@ return [
     'The localized storage map route configured inside :attribute is not an active target file.' => ':attribute ішінде теңшелген жергілікті сақтау бағыты белсенді нысаналы файл емес.',
     'The system does not possess structural file system authorization maps to read :attribute.' => 'Жүйеде :attribute файлын оқу үшін құрылымдық файлдық жүйе рұқсаттары жеткіліксіз.',
     'The space configuration block constraints allocated to file processing payload :attribute exceeded maximum byte values.' => ':attribute файлын өңдеу үшін бөлінген жад көлемінің шектеулері максималды байт мәндерінен асып кетті.',
+    'The :attribute must be an image (e.g., JPG, PNG, WEBP).' => ':attribute сурет болуы керек (мысалы: JPG, PNG, WEBP).',
 
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => ':attribute үшін географиялық проекция контексінің индекс координатасы -90 және 90 градус аралығында болуы керек.',

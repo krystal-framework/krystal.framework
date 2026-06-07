@@ -72,6 +72,7 @@ return [
     'The localized storage map route configured inside :attribute is not an active target file.' => ':attribute 中配置的本地化存储路由不是一个活跃的目标文件。',
     'The system does not possess structural file system authorization maps to read :attribute.' => '系统没有读取 :attribute 的文件系统权限。',
     'The space configuration block constraints allocated to file processing payload :attribute exceeded maximum byte values.' => '为文件处理载荷 :attribute 分配的存储空间限制超过了最大字节数。',
+    'The :attribute must be an image (e.g., JPG, PNG, WEBP).' => ':attribute 必须是图像 (例如: JPG, PNG, WEBP)。',
 
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => ':attribute 的地理投影上下文索引坐标必须在 -90 到 90 度之间。',

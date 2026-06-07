@@ -72,6 +72,7 @@ return [
     'The localized storage map route configured inside :attribute is not an active target file.' => 'Die in :attribute konfigurierte lokalisierte Speicherzuordnungsroute ist keine aktive Zieldatei.',
     'The system does not possess structural file system authorization maps to read :attribute.' => 'Dem System fehlen die strukturellen Dateisystem-Berechtigungszuordnungen, um :attribute zu lesen.',
     'The space configuration block constraints allocated to file processing payload :attribute exceeded maximum byte values.' => 'Die für die Dateiverarbeitungsnutzlast :attribute zugewiesenen Speicherplatzbeschränkungen haben die maximalen Bytewerte überschritten.',
+    'The :attribute must be an image (e.g., JPG, PNG, WEBP).' => 'Das :attribute muss ein Bild sein (z. B. JPG, PNG, WEBP).',
 
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => 'Die geografische Projektionskontext-Indexkoordinate für :attribute muss zwischen -90 und 90 Grad liegen.',

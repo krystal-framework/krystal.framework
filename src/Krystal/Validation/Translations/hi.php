@@ -72,6 +72,7 @@ return [
     'The localized storage map route configured inside :attribute is not an active target file.' => ':attribute में कॉन्फ़िगर किया गया स्थानीयकृत संग्रहण आवंटन मार्ग एक सक्रिय लक्ष्य फ़ाइल नहीं है।',
     'The system does not possess structural file system authorization maps to read :attribute.' => 'प्रणाली में :attribute को पढ़ने के लिए संरचनात्मक फ़ाइल-प्रणाली अनुमति असाइनमेंट की कमी है।',
     'The space configuration block constraints allocated to file processing payload :attribute exceeded maximum byte values.' => 'फ़ाइल प्रोसेसिंग पेलोड :attribute के लिए सौंपे गए स्टोरेज स्पेस प्रतिबंध अधिकतम बाइट मानों से अधिक हो गए हैं।',
+    'The :attribute must be an image (e.g., JPG, PNG, WEBP).' => ':attribute एक छवि होनी चाहिए (उदा. JPG, PNG, WEBP)।',
 
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => ':attribute के लिए भौगोलिक प्रक्षेपण संदर्भ अनुक्रमणिका निर्देशांक -90 और 90 डिग्री के बीच होना चाहिए।',

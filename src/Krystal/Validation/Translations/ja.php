@@ -72,6 +72,7 @@ return [
     'The localized storage map route configured inside :attribute is not an active target file.' => ':attributeに設定されたローカライズされたストレージ割り当てルートは、アクティブなターゲットファイルではありません。',
     'The system does not possess structural file system authorization maps to read :attribute.' => 'システムは、:attributeを読み取るための構造的なファイルシステム権限の割り当てを欠いています。',
     'The space configuration block constraints allocated to file processing payload :attribute exceeded maximum byte values.' => 'ファイル処理ペイロード:attributeに割り当てられたストレージスペースの制約が最大バイト値を超えました。',
+    'The :attribute must be an image (e.g., JPG, PNG, WEBP).' => 'attribute は画像である必要があります (例: JPG, PNG, WEBP)。',
 
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => ':attributeの地理的投影コンテキストインデックス座標は-90度から90度の間である必要があります。',
