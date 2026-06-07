@@ -425,19 +425,6 @@ return [
         'message'  => 'The local execution system cannot locate a valid directory path target matching :attribute.'
     ],
 
-    'extension' => [
-        'callback' => function ($value, array $options) {
-            if (!is_string($value)) {
-                return false;
-            }
-            $allowed = isset($options['allowed']) ? (array) $options['allowed'] : [];
-            // Fixed: Replaced nonexistent lowercase() function with native safe mb_strtolower()
-            $extension = mb_strtolower(pathinfo($value, PATHINFO_EXTENSION), 'UTF-8');
-            return in_array($extension, $allowed, true);
-        },
-        'message'  => 'The system rejected the file extension attached to the target payload parameter: :attribute.'
-    ],
-
     'filepath' => [
         'callback' => function ($value) {
             return is_string($value) && file_exists($value) && is_file($value);

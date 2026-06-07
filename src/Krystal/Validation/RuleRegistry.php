@@ -37,22 +37,25 @@ final class RuleRegistry
      */
     public function __construct()
     {
-        $this->registerBuiltInFieldRules();
+        $this->loadBuiltInRules();
     }
 
     /**
-     * Registers a batch collection of field checking rules inside the registry tracking pool.
+     * Registers a batch collection of default rules inside the registry tracking pool.
      *
-     * @param array $rules An array containing checking definitions mapped by rule identity names
      * @return void
      */
-    public function setBuiltInFieldRules(array $rules)
+    public function loadBuiltInRules()
     {
-        foreach ($rules as $name => $config) {
-            $this->fieldRules[$name] = [
-                'callback' => $config['callback'],
-                'message'  => $config['message']
-            ];
+        $fields = include(__DIR__ . '/Rules/fields.php');
+        $files = include(__DIR__ . '/Rules/files.php');
+
+        foreach ($fields as $name => $config) {
+            $this->registerFieldRule($name, $config['callback'], $config['message']);
+        }
+
+        foreach ($files as $name => $config) {
+            $this->registerFileRule($name, $config['callback'], $config['message']);
         }
     }
 
@@ -120,15 +123,5 @@ final class RuleRegistry
     {
         $pool = ($source === 'field') ? $this->fieldRules : $this->fileRules;
         return isset($pool[$name]) ? $pool[$name] : null;
-    }
-
-    /**
-     * Seeds default baseline text parameters and validation constraints into the local tracking arrays.
-     *
-     * @return void
-     */
-    private function registerBuiltInFieldRules()
-    {
-        $this->setBuiltInFieldRules(include(__DIR__ . '/rules.php'));
     }
 }

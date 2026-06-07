@@ -96,6 +96,7 @@ To keep your error messages looking professional, you can assign human-readable 
 
 The library ships with optimized, type-strict rules out of the box.
 
+### Field rules
 
 | Rule            | Options                                  | Default message template |
 |-----------------|------------------------------------------|--------------------------|
@@ -127,7 +128,6 @@ The library ships with optimized, type-strict rules out of the box.
 | notequals       | ['value' => 'restricted']                | The :attribute cannot equal the specified restricted entry option value. |
 | captcha         | ['expected' => 'secret']                 | The verification security captcha entry input value is incorrect. |
 | domain          | None                                     | The :attribute must match a valid network internet domain path description. |
-| emailpattern    | None                                     | The :attribute text string fails framework structural validation regex formats. |
 | identity        | ['value' => 'expected_match']            | The :attribute field value must be identical to the specified comparison target. |
 | ippattern       | None                                     | The :attribute field must resolve to a valid IPv4 or IPv6 infrastructure address. |
 | macaddress      | None                                     | The :attribute must match a valid hardware interface MAC address specification. |
@@ -152,6 +152,14 @@ The library ships with optimized, type-strict rules out of the box.
 | filesize        | ['max' => 1048576]                       | The space configuration block constraints allocated to file processing payload :attribute exceeded maximum byte values. |
 | latitude        | None                                     | The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees. |
 | longitude       | None                                     | The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees. |
+
+
+### File rules
+
+| Rule            | Options                                  | Default message template |
+|-----------------|------------------------------------------|--------------------------|
+| extension       | ['allowed' => 'pdf', 'doc']              | The system rejected the file extension attached to the target payload parameter: :attribute. |
+| image           | None                                     | The :attribute must be an image (e.g., JPG, PNG, WEBP). |
 
 ## Custom rules
 
