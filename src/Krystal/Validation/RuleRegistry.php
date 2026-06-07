@@ -45,7 +45,7 @@ final class RuleRegistry
      *
      * @return void
      */
-    public function loadBuiltInRules()
+    private function loadBuiltInRules()
     {
         $fields = include(__DIR__ . '/Rules/fields.php');
         $files = include(__DIR__ . '/Rules/files.php');
