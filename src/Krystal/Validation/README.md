@@ -35,7 +35,7 @@ Instantiate the validator with your data payload, define your field rules using 
 
     $validator->field('username')
               ->required()
-              ->addRule('minlen', null, ['min' => 4]);
+              ->addRule('minlength', null, ['min' => 4]);
 
     $validator->field('email')
               ->required()
@@ -43,7 +43,7 @@ Instantiate the validator with your data payload, define your field rules using 
 
     // This rule is skipped entirely because 'status' is empty and not required
     $validator->field('status')
-              ->addRule('minlen', 'Status is too short', ['min' => 3]);
+              ->addRule('minlength', 'Status is too short', ['min' => 3]);
 
     if ($validator->isPassed()) {
         // Data is valid, proceed safely
@@ -60,7 +60,7 @@ You can use the * wildcard to validate deep structures effortlessly.
         'company' => 'My company',
         'team' => [
             ['name' => 'Ansher', 'role' => 'Developer'],
-            ['name' => 'An',     'role' => 'Designer'] // Fails minlen
+            ['name' => 'An',     'role' => 'Designer'] // Fails minlength
         ]
     ];
 
@@ -69,7 +69,7 @@ You can use the * wildcard to validate deep structures effortlessly.
     // Validates 'name' inside every item in the 'team' array
     $validator->field('team.*.name')
             ->required()
-            ->addRule('minlen', 'The name must be at least :min chars.', ['min' => 3]);
+            ->addRule('minlength', 'The name must be at least :min chars.', ['min' => 3]);
 
 If the validation fails on the second employee, the engine automatically calculates the exact array position and outputs the error key formatted for your frontend inputs: `team[1][name]`.
 
