@@ -18,9 +18,6 @@ return [
 
     'extension' => [
         'callback' => function ($file, array $options) {
-            if (!is_string($value)) {
-                return false;
-            }
             $allowed = isset($options['allowed']) ? (array) $options['allowed'] : [];
             return in_array($file->getExtension(), $allowed, true);
         },
