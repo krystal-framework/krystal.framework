@@ -32,9 +32,9 @@ final class FileEntity implements FileEntityInterface, ArrayAccess
         // PHP / Server-side
         'php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'pht', 'inc', 'ctp', 'tpl',
         // Other server scripts
-        'asp', 'aspx', 'jsp', 'cfm', 'cgi', 'pl', 'py', 'rb', 'perl', 'pm', 'lua', 'go'
+        'asp', 'aspx', 'jsp', 'cfm', 'cgi', 'pl', 'py', 'rb', 'perl', 'pm', 'lua', 'go',
         // Executables
-        'exe', 'bat', 'cmd', 'com', 'sh', 'bash', 'ps1', 'psm1', 'vbs', 'hta', 'jar', 'elf', 'bin'
+        'exe', 'bat', 'cmd', 'com', 'sh', 'bash', 'ps1', 'psm1', 'vbs', 'hta', 'jar', 'elf', 'bin',
         // Dangerous web / markup files
         'html', 'htm', 'shtml', 'svg', 'xml',
         // Config & sensitive files
