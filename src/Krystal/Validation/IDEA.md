@@ -111,7 +111,8 @@ If the data fails the presence check, subsequent rules in that specific field lo
 
 ## Rule Registry and Callback Signatures
 
-Custom extension pools are managed through isolated execution registries. Callbacks receive rich architectural contexts to handle cross-field dependencies.
+1. Custom extension pools are managed through isolated execution registries. Callbacks receive rich architectural contexts to handle cross-field dependencies.
+2. To ensure structural integrity and prevent silent failures in validation chains, the engine must perform strict verification. When calling addRule('rule') on a field definition, if the specified rule identifier is not found within the registered rule pool, the engine must immediately throw an \InvalidArgumentException.
 
 ### Full Callback Signature
 
