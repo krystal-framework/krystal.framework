@@ -187,12 +187,15 @@ final class Translator implements TranslatorInterface
             $source = isset($this->dictionary[$module][$message]) ? $this->dictionary[$module][$message] : $message;
         } else {
             // Global look up
-            if (isset($this->dictionary[$message])) {
+            $source = $message; // Default to original
+
+            // 1. Try a direct flat lookup first, but ensure it's a string
+            if (isset($this->dictionary[$message]) && is_string($this->dictionary[$message])) {
                 $source = $this->dictionary[$message];
             } else {
-                // Fallback: try legacy module search
-                $source = $message;
-                foreach ($this->dictionary as $translations) {
+                // 2. Fallback: Iterate through modules
+                foreach ($this->dictionary as $key => $translations) {
+                    // Only process if it is a module (array) and contains the key
                     if (is_array($translations) && isset($translations[$message])) {
                         $source = $translations[$message];
                         break;
