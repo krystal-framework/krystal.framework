@@ -194,6 +194,25 @@ Error templates support automatic token replacements to make messages dynamic:
 
 Custom options — Any parameter passed in your options array (like :min or :extensions) is instantly injected. If an option is a flat array, it is automatically converted into a clean comma-separated string.
 
+## Internationalization
+
+The library supports full localization for all error messages and labels. You can inject a Translator instance to manage multi-language support across your entire application.
+
+    // Inside your controller
+    $validator->setTranslator($this->translator, 'zh');
+
+**Automatic Loading**
+
+The second parameter is optional. If you provide a locale code (e.g., 'zh'), the library will automatically attempt to load pre-packaged, built-in translation files for that specific language.
+
+**Global Scope**
+
+Once a translator is configured, all loaded translations are applied globally. This includes system-defined error templates, your custom user-defined messages, and field labels.
+
+**Built-in Locales**
+
+The library comes with ready-to-use translations for default messahe. The following locales are available: de, es, fr, hi, ja, kz, pt, ru, uz, and zh.
+
 ## Stopping on first error
 
 You can control whether the validator collects every single failure or stops immediately on the first error it runs into.

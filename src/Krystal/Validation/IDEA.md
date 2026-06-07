@@ -269,3 +269,24 @@ When validation checks fail, running `$validator->getErrors()` returns a multi-d
     ]
 ]
 ```
+
+## Automated Localization Lifecycle
+
+To facilitate rapid library adoption, the engine supports an "under-the-hood" mechanism for loading pre-packaged translation files. To maintain architectural purity and strict adherence to the Single Responsibility Principle, this logic is strictly decoupled from the Validator core.
+
+### 1. The TranslationLoader Utility
+
+The engine must delegate filesystem I/O to a dedicated TranslationLoader utility. This class acts as the bridge between the filesystem and the Translator service, ensuring that the validator remains agnostic of how translation files are stored or retrieved.
+
+Integrity Checks: The loader must strictly validate the `$locale` string against a regex `(/^[a-z_]+$/)` to prevent directory traversal attacks.
+Contract Enforcement: If a requested built-in file is missing or does not return an array, the loader must throw an `InvalidArgumentException`.
+
+### 2. Integration Signature
+
+The `setTranslator` method on the Validator class acts as the orchestrator for this lifecycle. It is the only point of contact between the high-level API and the translation loading utility.
+
+### 3. Filesystem Contract
+
+Translation files must return a flat associative array where the key is the raw, untranslated English template string (including placeholders), and the value is the localized target string.
+
+**Note on Security**: Under no circumstances should the Validator class itself perform include() or require() operations on filesystem paths. All filesystem interaction must be encapsulated within the TranslationLoader class to ensure centralized security auditing.
