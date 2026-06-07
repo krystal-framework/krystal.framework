@@ -74,6 +74,22 @@ You can use the * wildcard to validate deep structures effortlessly.
 If the validation fails on the second employee, the engine automatically calculates the exact array position and outputs the error key formatted for your frontend inputs: `team[1][name]`.
 
 
+## Enforcing presence
+
+By default, all rules are optional. If a targeted path does not exist, holds a null value, or evaluates as empty, execution skips subsequent rule chains. Use the `required()` method to force validation.
+
+    public function required(string $message = null, bool $flag = true): self
+
+- Conditional Logic: The `$flag` parameter allows you to toggle requirement dynamically at runtime. If you pass false, the requirement rule is ignored, allowing for conditional validation flows based on the state of other data.
+
+- Presence Enforcement: When `$flag` is true (default), the required rule is registered. If the data fails the presence check, subsequent rules are bypassed, and the error is logged.
+
+**Example**
+
+    // Only require the phone number if the user opts-in to SMS notifications
+    $validator->field('phone')
+              ->required(null, $profile['sms'] === true);
+
 ## Field labels
 
 To keep your error messages looking professional, you can assign human-readable labels to your input keys. If you don't define one, the library automatically cleans up the key name for you.

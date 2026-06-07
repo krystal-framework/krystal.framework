@@ -69,13 +69,18 @@ final class Definition
      * Marks the current definition target parameters as required during execution passes.
      *
      * @param string|null $message Custom failure text template to use instead of default definitions
-     * @return $this Returns the fluent instance for execution rule chain formatting
+     * @param bool $flag Whether the field should be required
+     * @return $this
      */
-    public function required(string $message = null): self
+    public function required(string $message = null, bool $flag = true): self
     {
-        $this->isRequired = true;
-        
-        return $this->addRule('required', $message);
+        $this->isRequired = $flag;
+
+        if ($flag) {
+            $this->addRule('required', $message);
+        }
+
+        return $this;
     }
 
     /**

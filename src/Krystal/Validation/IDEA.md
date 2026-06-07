@@ -102,8 +102,12 @@ A field path is skipped if its extracted value matches any of these conditions:
 To override the optional gatekeeper, the `required()` method forces validation execution regardless of content state.
 
 ```php
-public function required(string $message = null): self
+public function required(string $message = null, bool $flag = true): self
 ```
+
+- Dynamic Requirement Toggling: The method accepts an optional boolean `$flag`. If set to false, the requirement rule is not added to the definition, allowing for conditional validation flows based on runtime logic (e.g., toggling requirements based on the state of other inputs).
+
+- Enforcement: When `$flag` is true (default), the required rule is registered. If the data fails the presence check, subsequent rules in that specific field loop are bypassed, and the error is logged using the provided or default structural template message.
 
 If the data fails the presence check, subsequent rules in that specific field loop are bypassed, and the error is logged using the provided or default structural template message.
 
