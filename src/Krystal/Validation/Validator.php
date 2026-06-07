@@ -103,12 +103,17 @@ final class Validator
      * Links an internationalization component to resolve text translations.
      *
      * @param Translator $translator The translation asset service tracking localization changes
+     * @param string|null $locale Optional locale code to load built-in translations automatically
      * @return $this Context orchestrator instance reference tracking calls
      */
-    public function setTranslator(Translator $translator): self
+    public function setTranslator(Translator $translator, $locale = null): self
     {
+        if ($locale !== null) {
+            TranslationLoader::load($translator, $locale);
+        }
+
         $this->messageResolver->setTranslator($translator);
-        
+
         return $this;
     }
 
