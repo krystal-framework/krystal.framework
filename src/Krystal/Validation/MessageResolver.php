@@ -22,14 +22,14 @@ final class MessageResolver
     /**
      * An internationalization translator service dependency instance
      *
-     * @var Translator|null
+     * @var \Krystal\I18n\Translator|null
      */
     private $translator;
 
     /**
      * MessageResolver constructor.
      *
-     * @param Translator|null $translator An optional translator instance to manage multi-language updates
+     * @param \Krystal\I18n\Translator|null $translator An optional translator instance to manage multi-language updates
      */
     public function __construct(Translator $translator = null)
     {
@@ -39,7 +39,7 @@ final class MessageResolver
     /**
      * Injects an internationalization component to resolve string translations.
      *
-     * @param Translator $translator The structural translation handling service instance
+     * @param Krystal\I18n\Translator $translator The structural translation handling service instance
      * @return void
      */
     public function setTranslator(Translator $translator)
