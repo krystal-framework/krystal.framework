@@ -361,7 +361,8 @@ final class Validator
         }
 
         if (is_string($def) && $def !== '') {
-            return $def;
+            // Delegate to messageResolver, which holds the translator
+            return $this->messageResolver->translate($def);
         }
 
         $segments = explode('.', $path);

@@ -48,6 +48,22 @@ final class MessageResolver
     }
 
     /**
+     * Translates a given label or key using the injected translator.
+     * 
+     * @param string $key
+     * @return string
+     */
+    public function translate(string $key): string
+    {
+        // Ensure the translator is set; if not, return the key as-is.
+        if ($this->translator !== null) {
+            return $this->translator->translate($key);
+        }
+
+        return $key;
+    }
+
+    /**
      * Interpolates placeholder keys inside templates while safely converting flat array properties.
      *
      * @param string $template The base string message containing parameter insertion targets
@@ -60,7 +76,7 @@ final class MessageResolver
     public function resolve(string $template, string $label, $value, array $options): string
     {
         if ($this->translator !== null) {
-            $template = $this->translator->translate($template);
+            $template = $this->translate($template);
         }
 
         $resolvedValue = '[Object Data]';
