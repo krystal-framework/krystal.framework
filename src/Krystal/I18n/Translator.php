@@ -101,11 +101,10 @@ final class Translator implements TranslatorInterface
                 if (isset($translations[$message])) {
                     return true;
                 }
-
-                // Not found by default
-                return false;
             }
 
+            // Not found by default
+            return false;
         } else {
             return isset($this->dictionary[$module][$message]);
         }
@@ -188,14 +187,16 @@ final class Translator implements TranslatorInterface
             $source = isset($this->dictionary[$module][$message]) ? $this->dictionary[$module][$message] : $message;
         } else {
             // Global look up
-            foreach ($this->dictionary as $target => $translations) {
-                if (isset($translations[$message])) {
-                    $source = $translations[$message];
-
-                    // No reason to continue search, since we just found a translation
-                    break;
-                } else {
-                    $source = $message;
+            if (isset($this->dictionary[$message])) {
+                $source = $this->dictionary[$message];
+            } else {
+                // Fallback: try legacy module search
+                $source = $message;
+                foreach ($this->dictionary as $translations) {
+                    if (is_array($translations) && isset($translations[$message])) {
+                        $source = $translations[$message];
+                        break;
+                    }
                 }
             }
         }
