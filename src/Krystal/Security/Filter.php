@@ -31,18 +31,31 @@ class Filter implements Sanitizeable
         }
 
         switch ($filter) {
-            case self::FILTER_NONE;
+            case self::FILTER_SAFE_TAGS:
+                // Comprehensive white list of safe tags for text, formatting, structures, and tables
+                $allowedTags = '<p><br><b><strong><i><em><u><ul><ol><li><h1><h2><h3><h4><h5><h6><a><table><thead><tbody><tr><th><td><div><span><hr><blockquote><del><s><sub><sup><small><pre><code>';
+                return strip_tags((string)$value, $allowedTags);
+
+            case self::FILTER_NONE:
                 return $value;
+
             case self::FILTER_BOOL:
                 return (bool) $value;
+
             case self::FILTER_FLOAT:
                 return (float) $value;
+
             case self::FILTER_INT:
                 return (int) $value;
-            case self::FILTER_HTML || self::FILTER_TAGS:
+
+            case self::FILTER_HTML:
+            case self::FILTER_TAGS:
+                // Correct way to group multiple cases in a switch block
                 return self::stripTags($value);
+
             case self::FILTER_HTML_CHARS:
                 return self::specialChars($value);
+
             default:
                 throw new UnexpectedValueException('Unknown filter type provided');
         }
