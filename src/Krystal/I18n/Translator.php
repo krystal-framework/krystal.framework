@@ -216,11 +216,22 @@ final class Translator implements TranslatorInterface
      */
     private function translateInternal($source, array $arguments)
     {
+        // If there are no arguments, return the string immediately (protection against single %)
         if (empty($arguments)) {
             return $source;
-        } else {
+        }
+
+        // Check if there are any format specifiers in the string (%s, %d, %f, etc.)
+        // Exclude escaped percentages (%%)
+        $hasPlaceholders = preg_match('/(?<!%)(%[a-zA-Z])/', $source);
+
+        if ($hasPlaceholders) {
             return vsprintf($source, $arguments);
         }
+
+        // If arguments are passed, but there are no placeholders in the string,
+        // just return the string without throwing a vsprintf error
+        return $source;
     }
 
     /**
