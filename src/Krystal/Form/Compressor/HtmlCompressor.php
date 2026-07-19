@@ -9,7 +9,7 @@
 
 namespace Krystal\Form\Compressor;
 
-final class HtmlCompressor implements CompressorInterface
+final class HtmlCompressor
 {
     /**
      * Compresses the string
