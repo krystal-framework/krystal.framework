@@ -92,6 +92,37 @@ final class TableMaker
         $this->options = array_merge($this->options, $options);
         $this->translator = $translator;
         $this->filter = $filter;
+
+        $this->validateColumns();
+    }
+
+    /**
+     * Validates column configurations for duplicates
+     * 
+     * @return void
+     * @throws \LogicException
+     */
+    private function validateColumns()
+    {
+        if (!isset($this->options[self::GRID_PARAM_COLUMNS])) {
+            return;
+        }
+
+        $seen = array();
+
+        foreach ($this->options[self::GRID_PARAM_COLUMNS] as $configuration) {
+            if (isset($configuration[self::GRID_PARAM_COLUMN])) {
+                $column = $configuration[self::GRID_PARAM_COLUMN];
+
+                if (isset($seen[$column])) {
+                    throw new LogicException(
+                        sprintf('Duplicate column "%s" is defined in the grid configuration.', $column)
+                    );
+                }
+
+                $seen[$column] = true;
+            }
+        }
     }
 
     /**
