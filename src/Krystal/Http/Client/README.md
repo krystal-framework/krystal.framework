@@ -17,7 +17,7 @@ The Krystal HTTP Client is a robust HTTP client built on top of cURL. It provide
 
 - `$url` (string): The target URL
 - `$data` (array): Data to send (query params for GET/HEAD, body for others)
-- `$extra` (array): Additional cURL options (`CURLOPT_*` constants as keys)
+- `$extra` (array|Options): Additional cURL options or a high-level Options object.
 
 
 ## Usage
@@ -77,6 +77,55 @@ Add custom HTTP headers to your requests:
             'X-Custom-Header: value'
         ]
     ]);
+
+## Request Options
+
+Instead of dealing with raw cURL options (`CURLOPT_*`) and managing header arrays manually, the `Options` class provides a clean, high-level abstraction for configuring both global client defaults (via constructor) and per-request settings.
+
+### Supported Options
+
+- **`auth`** (array): Authentication settings.
+  - Supports Bearer token: `['type' => 'bearer', 'token' => 'your-token']`
+- **`headers`** (array): Associative array of custom headers (`'Header-Name' => 'value'`).
+- **`timeout`** (int): Request timeout in seconds (`CURLOPT_TIMEOUT`).
+- **`user_agent`** (string): Custom user agent string (`CURLOPT_USERAGENT`).
+
+### Global Configuration (Constructor)
+
+You can pass an `Options` instance directly into the `HttpClient` constructor to set global defaults for all requests made by that client:
+
+    <?php
+    
+    use Krystal\Http\Client\HttpClient;
+    use Krystal\Http\Client\Options;
+    
+    $client = new HttpClient(new Options([
+        'user_agent' => 'Krystal Client/1.0',
+        'headers'    => [
+            'X-Global-Header' => 'SharedAuthToken123'
+        ],
+        'timeout'    => 30
+    ]));
+
+### Per-Request Configuration
+
+You can also override or provide additional options per individual request by passing an `Options` instance as the third parameter:
+
+    <?php
+    
+    $options = new Options([
+        'auth' => [
+            'type'  => 'bearer',
+            'token' => 'my-secret-bearer-token-xyz'
+        ],
+        'headers' => [
+            'X-Custom-Header' => 'Customized one'
+        ],
+        'timeout' => 15
+    ]);
+    
+    $response = $client->get('https://api.example.com/protected', [], $options);
+
 
 ## JSON Requests
 
