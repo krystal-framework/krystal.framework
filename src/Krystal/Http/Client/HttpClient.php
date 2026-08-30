@@ -38,18 +38,40 @@ final class HttpClient implements HttpClientInterface
     /**
      * State initialization
      *
-     * @param array $options Default cURL options (will be merged with internal defaults)
-     * @param array $retryConfig Default retry settings (or empty array to disable retry globally)
+     * @param array|Options $options Default options (raw cURL or high-level Options)
+     * @param array $retryConfig Default retry settings
      */
-    public function __construct(array $options = [], array $retryConfig = [])
+    public function __construct($options = [], array $retryConfig = [])
     {
-        // Merge user-provided cURL defaults
-        $this->defaultOptions = array_replace($this->defaultOptions, $options);
+        // Resolve options whether passed as an array or an Options object
+        $resolvedOptions = $this->resolveExtraOptions($options);
 
-        // Merge / override retry defaults (if user wants global retry)
+        // Merge user-provided defaults with internal defaults
+        $this->defaultOptions = array_replace($this->defaultOptions, $resolvedOptions);
+
+        // Merge / override retry defaults
         if (!empty($retryConfig)) {
             $this->retryConfig = array_replace($this->retryConfig, $retryConfig);
         }
+    }
+
+    /**
+     * Resolves extra options whether passed as an array or an Options object
+     *
+     * @param array|Options $extra
+     * @return array
+     */
+    private function resolveExtraOptions($extra)
+    {
+        if ($extra instanceof Options) {
+            return $extra->resolve();
+        }
+
+        if (is_array($extra)) {
+            return (new Options($extra))->resolve();
+        }
+
+        return [];
     }
 
     /**
@@ -102,12 +124,14 @@ final class HttpClient implements HttpClientInterface
      *
      * @param string $url The URL to download
      * @param string $saveToPath Path to save the downloaded file
-     * @param array  $extra Extra cURL options
+     * @param array|Options $extra Extra options
      * @return bool true on success, false on failure (cURL error or non-2xx status)
      * @throws \RuntimeException If cannot open file for writing
      */
-    public function download($url, $saveToPath, array $extra = [])
+    public function download($url, $saveToPath, $extra = [])
     {
+        $resolvedExtra = $this->resolveExtraOptions($extra);
+
         // 1. Open a file pointer for writing
         $fp = fopen($saveToPath, 'w+');
 
@@ -133,9 +157,9 @@ final class HttpClient implements HttpClientInterface
             ];
 
             // Merge options: default options < download specific options < extra options (user wins)
-            $options = array_replace($this->defaultOptions, $downloadOptions, $extra);
+            $options = array_replace($this->defaultOptions, $downloadOptions, $resolvedExtra);
 
-            $mergedHeaders = $this->mergeHeaders([], $extra[CURLOPT_HTTPHEADER] ?? []);
+            $mergedHeaders = $this->mergeHeaders([], $resolvedExtra[CURLOPT_HTTPHEADER] ?? []);
             if (!empty($mergedHeaders)) {
                 $options[CURLOPT_HTTPHEADER] = $mergedHeaders;
             } else {
@@ -174,12 +198,12 @@ final class HttpClient implements HttpClientInterface
      * @param string $method
      * @param string $url Target URL
      * @param array $data Data to be sent
-     * @param array $extra Extra cURL options
+     * @param array|Options $extra Extra options
      * @throws \UnexpectedValueException If unknown HTTP method provided
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function request($method, $url, array $data = [], array $extra = [])
+    public function request($method, $url, array $data = [], $extra = [])
     {
         $method = strtoupper($method);
 
@@ -204,17 +228,14 @@ final class HttpClient implements HttpClientInterface
     /**
      * Perform a JSON request with automatic Content-Type header
      * 
-     * This method sends JSON data for methods that support request bodies (POST, PUT, PATCH, DELETE).
-     * It automatically sets the Content-Type and Accept headers to application/json.
-     * 
      * @param string $method HTTP method (POST, PUT, PATCH, DELETE)
      * @param string $url Target URL
      * @param array $data Data to encode as JSON
-     * @param array $extra Additional cURL options
+     * @param array|Options $extra Additional options
      * @throws \InvalidArgumentException If method doesn't exist or JSON encoding fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function jsonRequest($method, $url, array $data = [], array $extra = [])
+    public function jsonRequest($method, $url, array $data = [], $extra = [])
     {
         $method = strtoupper($method);
 
@@ -227,10 +248,12 @@ final class HttpClient implements HttpClientInterface
             ));
         }
 
+        $resolvedExtra = $this->resolveExtraOptions($extra);
+
         // Inject JSON headers cleanly into extra options
         $jsonHeaders = ['Content-Type: application/json', 'Accept: application/json'];
-        $existingExtraHeaders = $extra[CURLOPT_HTTPHEADER] ?? [];
-        $extra[CURLOPT_HTTPHEADER] = array_merge($jsonHeaders, $existingExtraHeaders);
+        $existingExtraHeaders = $resolvedExtra[CURLOPT_HTTPHEADER] ?? [];
+        $resolvedExtra[CURLOPT_HTTPHEADER] = array_merge($jsonHeaders, $existingExtraHeaders);
 
         // Encode data to JSON
         $json = json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -239,9 +262,9 @@ final class HttpClient implements HttpClientInterface
             throw new InvalidArgumentException('Failed to encode data to JSON: ' . json_last_error_msg());
         }
 
-        $extra[CURLOPT_POSTFIELDS] = $json;
+        $resolvedExtra[CURLOPT_POSTFIELDS] = $json;
 
-        return $this->{strtolower($method)}($url, [], $extra);
+        return $this->{strtolower($method)}($url, [], $resolvedExtra);
     }
 
     /**
@@ -249,11 +272,11 @@ final class HttpClient implements HttpClientInterface
      * 
      * @param string $url Target URL
      * @param array $data Query parameters
-     * @param array $extra Extra cURL options
+     * @param array|Options $extra Extra options
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function get($url, array $data = [], array $extra = [])
+    public function get($url, array $data = [], $extra = [])
     {
         if (!empty($data)) {
             $url = $this->appendQueryString($url, $data);
@@ -289,11 +312,11 @@ final class HttpClient implements HttpClientInterface
      * 
      * @param string $url Target URL
      * @param array $data POST data
-     * @param array $extra Extra cURL options
+     * @param array|Options $extra Extra options
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function post($url, array $data = [], array $extra = [])
+    public function post($url, array $data = [], $extra = [])
     {
         $options = [
             CURLOPT_URL => $url,
@@ -309,11 +332,11 @@ final class HttpClient implements HttpClientInterface
      * 
      * @param string $url Target URL
      * @param array $data PATCH data
-     * @param array $extra Extra cURL options
+     * @param array|Options $extra Extra options
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function patch($url, array $data = [], array $extra = [])
+    public function patch($url, array $data = [], $extra = [])
     {
         $options = [
             CURLOPT_URL => $url,
@@ -329,11 +352,11 @@ final class HttpClient implements HttpClientInterface
      * 
      * @param string $url Target URL
      * @param array $data DELETE data
-     * @param array $extra Extra cURL options
+     * @param array|Options $extra Extra options
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function delete($url, array $data = [], array $extra = [])
+    public function delete($url, array $data = [], $extra = [])
     {
         $options = [
             CURLOPT_URL => $url,
@@ -349,11 +372,11 @@ final class HttpClient implements HttpClientInterface
      * 
      * @param string $url Target URL
      * @param array $data PUT data
-     * @param array $extra Extra cURL options
+     * @param array|Options $extra Extra options
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function put($url, array $data = [], array $extra = [])
+    public function put($url, array $data = [], $extra = [])
     {
         $options = [
             CURLOPT_URL => $url,
@@ -369,11 +392,11 @@ final class HttpClient implements HttpClientInterface
      * 
      * @param string $url Target URL
      * @param array $data Query parameters
-     * @param array $extra Extra cURL options
+     * @param array|Options $extra Extra options
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function head($url, array $data = [], array $extra = [])
+    public function head($url, array $data = [], $extra = [])
     {
         if (!empty($data)) {
             $url = $this->appendQueryString($url, $data);
@@ -413,7 +436,7 @@ final class HttpClient implements HttpClientInterface
             'method'            => 'GET',
             'payload'           => [], // base body data for POST
             'query'             => [], // base query params (for GET or extra POST params)
-            'extra'             => [], // extra cURL options
+            'extra'             => [], // extra options
             'per_page'          => 100, // number of items per page (value)
             'max_pages'         => null,
             'data_key'          => 'data',
@@ -502,18 +525,20 @@ final class HttpClient implements HttpClientInterface
      * Execute cURL request with merged options
      *
      * @param array $methodOptions Method-specific options
-     * @param array $extraOptions User-provided extra options
+     * @param array|Options $extraOptions User-provided extra options
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    private function executeRequest(array $methodOptions, array $extraOptions = [])
+    private function executeRequest(array $methodOptions, $extraOptions = [])
     {
+        $resolvedExtra = $this->resolveExtraOptions($extraOptions);
+
         // Merge options: default options < method specific options < extra options (user wins)
-        $options = array_replace($this->defaultOptions, $methodOptions, $extraOptions);
+        $options = array_replace($this->defaultOptions, $methodOptions, $resolvedExtra);
 
         $mergedHeaders = $this->mergeHeaders(
             $methodOptions[CURLOPT_HTTPHEADER] ?? [],
-            $extraOptions[CURLOPT_HTTPHEADER] ?? []
+            $resolvedExtra[CURLOPT_HTTPHEADER] ?? []
         );
 
         if (!empty($mergedHeaders)) {

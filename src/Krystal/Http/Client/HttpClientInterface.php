@@ -17,78 +17,78 @@ interface HttpClientInterface
      * @param string $method HTTP method (GET, POST, PUT, PATCH, DELETE, HEAD)
      * @param string $url Target URL
      * @param array $data Data to be sent (query params for GET/HEAD, body for others)
-     * @param array $extra Extra cURL options (CURLOPT_* constants as keys)
+     * @param array|Options $extra Extra options (array or Options instance)
      * @throws \UnexpectedValueException If unknown HTTP method provided
      * @throws \RuntimeException If request fails
-     * @return string Response body (headers for HEAD requests)
+     * @return \Krystal\Http\Client\HttpResponse
      */
-    public function request($method, $url, array $data = array(), array $extra = array());
+    public function request($method, $url, array $data = [], $extra = []);
 
     /**
      * Performs HTTP GET request
      * 
      * @param string $url Target URL
      * @param array $data Query parameters
-     * @param array $extra Extra cURL options (CURLOPT_* constants as keys)
+     * @param array|Options $extra Extra options (array or Options instance)
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
-    public function get($url, array $data = array(), array $extra = array());
+    public function get($url, array $data = [], $extra = []);
 
     /**
      * Performs HTTP POST request
      * 
      * @param string $url Target URL
      * @param array $data POST data (form-encoded)
-     * @param array $extra Extra cURL options (CURLOPT_* constants as keys)
+     * @param array|Options $extra Extra options (array or Options instance)
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
-    public function post($url, array $data = array(), array $extra = array());
+    public function post($url, array $data = [], $extra = []);
 
     /**
      * Performs HTTP PATCH request
      * 
      * @param string $url Target URL
      * @param array $data PATCH data (form-encoded)
-     * @param array $extra Extra cURL options (CURLOPT_* constants as keys)
+     * @param array|Options $extra Extra options (array or Options instance)
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
-    public function patch($url, array $data = array(), array $extra = array());
+    public function patch($url, array $data = [], $extra = []);
 
     /**
      * Performs HTTP DELETE request
      * 
      * @param string $url Target URL
      * @param array $data DELETE data (form-encoded)
-     * @param array $extra Extra cURL options (CURLOPT_* constants as keys)
+     * @param array|Options $extra Extra options (array or Options instance)
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
-    public function delete($url, array $data = array(), array $extra = array());
+    public function delete($url, array $data = [], $extra = []);
 
     /**
      * Performs HTTP PUT request
      * 
      * @param string $url Target URL
      * @param array $data PUT data (form-encoded)
-     * @param array $extra Extra cURL options (CURLOPT_* constants as keys)
+     * @param array|Options $extra Extra options (array or Options instance)
      * @throws \RuntimeException If request fails
-     * @return string Response body
+     * @return \Krystal\Http\Client\HttpResponse
      */
-    public function put($url, array $data = array(), array $extra = array());
+    public function put($url, array $data = [], $extra = []);
 
     /**
      * Performs HTTP HEAD request
      * 
      * @param string $url Target URL
      * @param array $data Query parameters
-     * @param array $extra Extra cURL options (CURLOPT_* constants as keys)
+     * @param array|Options $extra Extra options (array or Options instance)
      * @throws \RuntimeException If request fails
-     * @return string Response headers (empty body)
+     * @return \Krystal\Http\Client\HttpResponse
      */
-    public function head($url, array $data = array(), array $extra = array());
+    public function head($url, array $data = [], $extra = []);
 
     /**
      * Set default cURL options
