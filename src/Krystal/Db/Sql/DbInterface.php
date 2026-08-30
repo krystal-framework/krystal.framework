@@ -11,7 +11,7 @@ namespace Krystal\Db\Sql;
 
 use PDO;
 
-interface DbInterface extends QueryBuilderInterface
+interface DbInterface
 {
     /**
      * Fetch all tables
