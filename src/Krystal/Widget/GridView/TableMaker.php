@@ -24,14 +24,14 @@ final class TableMaker
      * 
      * @var array
      */
-    private $data = array();
+    private $data = [];
 
     /**
      * Default table options
      * 
      * @var array
      */
-    private $options = array(
+    private $options = [
         'tableClass' => 'table table-hover table-bordered table-striped',
         'tableHeaderClass' => 'text-center',
         'tableDataClass' => 'text-center',
@@ -41,7 +41,7 @@ final class TableMaker
         'arrowDownIcon' => 'fas fa-angle-down',
         'arrowUpIcon' => 'fas fa-angle-up',
         'batch' => false // Whether to generate batch selection
-    );
+    ];
 
     /**
      * Any compliant translator instance
@@ -108,7 +108,7 @@ final class TableMaker
             return;
         }
 
-        $seen = array();
+        $seen = [];
 
         foreach ($this->options[self::GRID_PARAM_COLUMNS] as $configuration) {
             if (isset($configuration[self::GRID_PARAM_COLUMN])) {
@@ -163,19 +163,19 @@ final class TableMaker
         $columns = $this->options[self::GRID_PARAM_COLUMNS];
 
         if ($this->hasAtLeastOneFilter()) {
-            $head = $this->createTableHeader(array(
+            $head = $this->createTableHeader([
                 $this->createTopHeadingRow($columns),
                 $this->createBottomHeadingRow($columns)
-            ));
+            ]);
         } else {
-            $head = $this->createTableHeader(array(
+            $head = $this->createTableHeader([
                 $this->createTopHeadingRow($columns)
-            ));
+            ]);
         }
 
         $body = $this->createTableBody($this->createBodyRows($columns, $this->data));
 
-        return $this->createTable(array($head, $body))
+        return $this->createTable([$head, $body])
                     ->render();
     }
 
@@ -213,10 +213,10 @@ final class TableMaker
      */
     private function createTopHeadingRow(array $rows)
     {
-        $elements = array();
+        $elements = [];
 
         if ($this->options[self::GRID_PARAM_BATCH] === true) {
-            $checkbox = Element::checkbox(null, false, array(), false);
+            $checkbox = Element::checkbox(null, false, [], false);
             $elements[] = $this->createColumn(null, $checkbox);
         }
 
@@ -275,7 +275,7 @@ final class TableMaker
      */
     private function createBottomHeadingRow(array $rows)
     {
-        $elements = array();
+        $elements = [];
 
         if ($this->options[self::GRID_PARAM_BATCH] === true) {
             $elements[] = $this->createColumn(null, null);
@@ -301,21 +301,21 @@ final class TableMaker
                 $selected = $this->filter->get($inputName);
 
                 if (is_array($filter)) {
-                    $filter = array_replace(array('' => ''), $filter);
+                    $filter = array_replace(['' => ''], $filter);
                     $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected, $filter);
                     // If explicit boolean filter provided
                 } else if ($filter === 'boolean') {
-                    $options = array(
+                    $options = [
                         '0' => 'No',
                         '1' => 'Yes'
-                    );
+                    ];
 
                     // Translate boolean values on demand
                     if ($this->hasTranslator()) {
                         $options = $this->translator->translateArray($options);
                     }
 
-                    $filter = array_replace(array('' => ''), $options);
+                    $filter = array_replace(['' => ''], $options);
                     $elements[] = $this->createInput('createHeader', $row[self::GRID_PARAM_COLUMN], $name, $selected, $filter);
                     
                 } else {
@@ -343,7 +343,7 @@ final class TableMaker
      */
     private function createBodyRows($columns, array $data)
     {
-        $rows = array();
+        $rows = [];
 
         foreach ($data as $row) {
             $rows[] = $this->createBodyRow($columns, $row);
@@ -364,7 +364,7 @@ final class TableMaker
         $id = null;
 
         // Columns to be used when creating a row
-        $children = array();
+        $children = [];
 
         // Handle batch callback and state
         if ($this->options[self::GRID_PARAM_BATCH] === true) {
@@ -378,7 +378,7 @@ final class TableMaker
             }
 
             if ($batchRequired) {
-                $batchOutput = Element::checkbox($this->createInputName(self::GRID_PARAM_BATCH, $data[$this->getPkColumn()]), false, array(), false);
+                $batchOutput = Element::checkbox($this->createInputName(self::GRID_PARAM_BATCH, $data[$this->getPkColumn()]), false, [], false);
             } else {
                 $batchOutput = null;
             }
@@ -388,8 +388,8 @@ final class TableMaker
         // Done handling batch
 
         foreach ($columns as $configuration) {
-			$column = $configuration[self::GRID_PARAM_COLUMN];
-			$value = isset($data[$column]) ? $data[$column] : null;
+            $column = $configuration[self::GRID_PARAM_COLUMN];
+            $value = isset($data[$column]) ? $data[$column] : null;
 
             // Ignore if configuration for current column isn't provided
             if (!$this->hasColumnConfiguration($column)) {
@@ -402,7 +402,7 @@ final class TableMaker
             }
 
             // Grab column attributes if present
-            $tdAttributes = isset($configuration[self::GRID_PARAM_TD_ATTRIBUTES]) ? $configuration[self::GRID_PARAM_TD_ATTRIBUTES] : array();
+            $tdAttributes = isset($configuration[self::GRID_PARAM_TD_ATTRIBUTES]) ? $configuration[self::GRID_PARAM_TD_ATTRIBUTES] : [];
             $tdAttributes = self::parseAttributes($tdAttributes, $data);
 
             // Find out whether current row is editable or not
@@ -452,7 +452,7 @@ final class TableMaker
 
         // If action columns provided, then create action links
         if ($this->hasActions()) {
-            $links = array();
+            $links = [];
 
             foreach ($this->options[self::GRID_PARAM_ACTIONS] as $name => $callback) {
                 // Append only if callable type provided as a value
@@ -465,7 +465,7 @@ final class TableMaker
         }
 
         // Now append row attributes if defined
-        $trAttributes = array();
+        $trAttributes = [];
 
         if (isset($this->options[self::GRID_PARAM_ROW_ATTRS])) {
             $trAttributes = self::parseAttributes($this->options[self::GRID_PARAM_ROW_ATTRS], $data);
@@ -483,7 +483,7 @@ final class TableMaker
      */
     private static function parseAttributes(array $attributes, $data)
     {
-        $output = array();
+        $output = [];
 
         foreach ($attributes as $name => $value) {
             // If closure is provided, then execute it and get returned value
@@ -590,16 +590,16 @@ final class TableMaker
      * @param array $extra Extra options (i.e for select type - the options)
      * @return string
      */
-    private function createInput($method, $column, $name, $value, array $extra = array())
+    private function createInput($method, $column, $name, $value, array $extra = [])
     {
         $options = $this->findOptionsByColumn($column);
 
         // Input type. If not provided explicitly, use text
         $type = isset($options[self::GRID_PARAM_TYPE]) ? $options[self::GRID_PARAM_TYPE] : 'text';
 
-        $text = Element::dynamic($type, $name, $value, array('class' => $this->options['inputClass']), $extra);
+        $text = Element::dynamic($type, $name, $value, ['class' => $this->options['inputClass']], $extra);
 
-        return call_user_func(array($this, $method), null, $text);
+        return call_user_func([$this, $method], null, $text);
     }
 
     /**
@@ -611,7 +611,7 @@ final class TableMaker
      * @param string $text
      * @return \Krystal\Form\NodeElement
      */
-    private function createElement($type, $children = array(), array $attributes = array(), $text = null)
+    private function createElement($type, $children = [], array $attributes = [], $text = null)
     {
         $element = new NodeElement();
         $element->openTag($type);
@@ -622,7 +622,7 @@ final class TableMaker
 
         if (!empty($children)) {
             if ($children instanceof NodeElement) {
-                $children = array($children);
+                $children = [$children];
             }
 
             $element->appendChildren($children);
@@ -645,7 +645,7 @@ final class TableMaker
      */
     private function createIcon($class)
     {
-        return $this->createElement('i', array(), array('class' => $class), false);
+        return $this->createElement('i', [], ['class' => $class], false);
     }
 
     /**
@@ -656,7 +656,7 @@ final class TableMaker
      */
     private function createTable(array $children)
     {
-        return $this->createElement('table', $children, array('class' => $this->options['tableClass']));
+        return $this->createElement('table', $children, ['class' => $this->options['tableClass']]);
     }
 
     /**
@@ -688,7 +688,7 @@ final class TableMaker
      * @param array $attributes Optional attributes
      * @return \Krystal\Form\NodeElement
      */
-    private function createTableRow(array $children, $attributes = array())
+    private function createTableRow(array $children, $attributes = [])
     {
         return $this->createElement('tr', $children, $attributes);
     }
@@ -701,7 +701,7 @@ final class TableMaker
      */
     private function createTextHeader($text)
     {
-        return $this->createElement('th', array(), array('class' => $this->options['tableHeaderClass']), $text);
+        return $this->createElement('th', [], ['class' => $this->options['tableHeaderClass']], $text);
     }
 
     /**
@@ -712,7 +712,7 @@ final class TableMaker
      */
     private function createBodyHeader($text)
     {
-        return $this->createElement('td', array(), array('class' => $this->options['tableDataClass']), $text);
+        return $this->createElement('td', [], ['class' => $this->options['tableDataClass']], $text);
     }
 
     /**
@@ -722,9 +722,9 @@ final class TableMaker
      * @param string $text
      * @return \Krystal\Form\NodeElement
      */
-    private function createHeader($children = array(), $text = null)
+    private function createHeader($children = [], $text = null)
     {
-        return $this->createElement('th', $children, array('class' => $this->options['tableHeaderClass']), $text);
+        return $this->createElement('th', $children, ['class' => $this->options['tableHeaderClass']], $text);
     }
 
     /**
@@ -735,10 +735,10 @@ final class TableMaker
      * @param array $attributes Optional attributes to be merged
      * @return \Krystal\Form\NodeElement
      */
-    private function createColumn($children = array(), $text = null, array $attributes = array())
+    private function createColumn($children = [], $text = null, array $attributes = [])
     {
         $attributes = array_merge(
-            array('class' => $this->options['tableDataClass']),
+            ['class' => $this->options['tableDataClass']],
             $attributes
         );
 
