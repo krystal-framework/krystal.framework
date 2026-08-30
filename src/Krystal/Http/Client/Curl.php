@@ -26,7 +26,7 @@ class Curl implements CurlInterface
      *
      * @var array
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * State initialization
@@ -35,7 +35,7 @@ class Curl implements CurlInterface
      * @throws \RuntimeException if cURL extension is not installed
      * @return void
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         if (!function_exists('curl_init')) {
             throw new RuntimeException(
@@ -61,7 +61,7 @@ class Curl implements CurlInterface
             }
 
             $this->ch = $copy;
-            $this->errors = array(); // Also clone should reset errors
+            $this->errors = []; // Also clone should reset errors
         }
     }
 
@@ -104,7 +104,7 @@ class Curl implements CurlInterface
      * @throws \RuntimeException If failed to initialize
      * @return void
      */
-    public function init(array $options = array())
+    public function init(array $options = [])
     {
         $this->close();
         $this->ch = curl_init();
@@ -141,7 +141,7 @@ class Curl implements CurlInterface
             return;
         }
 
-        $this->errors = array();
+        $this->errors = [];
     }
 
     /**
@@ -152,7 +152,7 @@ class Curl implements CurlInterface
     public function exec()
     {
         $this->ensureInitialized();
-        $this->errors = array();
+        $this->errors = [];
 
         // Enable header capture
         $headers = [];
@@ -197,10 +197,10 @@ class Curl implements CurlInterface
         $statusCode = $info['http_code'] ?? 0;
 
         if ($result === false) {
-            $error = array(
+            $error = [
                 'code'    => curl_errno($this->ch),
                 'message' => curl_error($this->ch),
-            );
+            ];
 
             $this->errors[] = $error;
         } else {
@@ -362,7 +362,7 @@ class Curl implements CurlInterface
      */
     private function applyDefaults()
     {
-        $this->setOptions(array(
+        $this->setOptions([
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS      => 10,
@@ -373,7 +373,7 @@ class Curl implements CurlInterface
             CURLOPT_AUTOREFERER    => true,
             CURLOPT_ENCODING       => '', // Accept all encodings
             CURLOPT_USERAGENT      => 'Krystal HTTP Client (PHP 5.6+)'
-        ));
+        ]);
     }
 
     /**

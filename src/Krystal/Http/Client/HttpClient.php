@@ -27,13 +27,13 @@ final class HttpClient implements HttpClientInterface
      * 
      * @var array
      */
-    private $retryConfig = array(
-        'enabled'        => false, // retry disabled by default
-        'maxRetries'     => 3,
-        'retryStatuses'  => array(429, 502, 503, 504),
-        'backoffStrategy'=> array(0, 2, 8, 30),
-        'addJitter'      => true,
-    );
+    private $retryConfig = [
+        'enabled'         => false, // retry disabled by default
+        'maxRetries'      => 3,
+        'retryStatuses'   => [429, 502, 503, 504],
+        'backoffStrategy' => [0, 2, 8, 30],
+        'addJitter'       => true,
+    ];
 
     /**
      * State initialization
@@ -41,7 +41,7 @@ final class HttpClient implements HttpClientInterface
      * @param array $options Default cURL options (will be merged with internal defaults)
      * @param array $retryConfig Default retry settings (or empty array to disable retry globally)
      */
-    public function __construct(array $options = array(), array $retryConfig = array())
+    public function __construct(array $options = [], array $retryConfig = [])
     {
         // Merge user-provided cURL defaults
         $this->defaultOptions = array_replace($this->defaultOptions, $options);
@@ -179,7 +179,7 @@ final class HttpClient implements HttpClientInterface
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function request($method, $url, array $data = array(), array $extra = array())
+    public function request($method, $url, array $data = [], array $extra = [])
     {
         $method = strtoupper($method);
 
@@ -253,16 +253,16 @@ final class HttpClient implements HttpClientInterface
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function get($url, array $data = array(), array $extra = array())
+    public function get($url, array $data = [], array $extra = [])
     {
         if (!empty($data)) {
             $url = $this->appendQueryString($url, $data);
         }
 
-        $options = array(
+        $options = [
             CURLOPT_URL => $url,
             CURLOPT_HTTPGET => true
-        );
+        ];
 
         return $this->executeRequest($options, $extra);
     }
@@ -293,13 +293,13 @@ final class HttpClient implements HttpClientInterface
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function post($url, array $data = array(), array $extra = array())
+    public function post($url, array $data = [], array $extra = [])
     {
-        $options = array(
+        $options = [
             CURLOPT_URL => $url,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => $this->prepareFields($data)
-        );
+        ];
 
         return $this->executeRequest($options, $extra);
     }
@@ -313,13 +313,13 @@ final class HttpClient implements HttpClientInterface
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function patch($url, array $data = array(), array $extra = array())
+    public function patch($url, array $data = [], array $extra = [])
     {
-        $options = array(
+        $options = [
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'PATCH',
             CURLOPT_POSTFIELDS => $this->prepareFields($data)
-        );
+        ];
 
         return $this->executeRequest($options, $extra);
     }
@@ -333,13 +333,13 @@ final class HttpClient implements HttpClientInterface
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function delete($url, array $data = array(), array $extra = array())
+    public function delete($url, array $data = [], array $extra = [])
     {
-        $options = array(
+        $options = [
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_POSTFIELDS => $this->prepareFields($data)
-        );
+        ];
 
         return $this->executeRequest($options, $extra);
     }
@@ -353,13 +353,13 @@ final class HttpClient implements HttpClientInterface
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function put($url, array $data = array(), array $extra = array())
+    public function put($url, array $data = [], array $extra = [])
     {
-        $options = array(
+        $options = [
             CURLOPT_URL => $url,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => $this->prepareFields($data)
-        );
+        ];
 
         return $this->executeRequest($options, $extra);
     }
@@ -373,17 +373,17 @@ final class HttpClient implements HttpClientInterface
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    public function head($url, array $data = array(), array $extra = array())
+    public function head($url, array $data = [], array $extra = [])
     {
         if (!empty($data)) {
             $url = $this->appendQueryString($url, $data);
         }
 
-        $options = array(
+        $options = [
             CURLOPT_URL => $url,
             CURLOPT_NOBODY => true,
             CURLOPT_HEADER => true // Return headers
-        );
+        ];
 
         return $this->executeRequest($options, $extra);
     }
@@ -506,7 +506,7 @@ final class HttpClient implements HttpClientInterface
      * @throws \RuntimeException If request fails
      * @return \Krystal\Http\Client\HttpResponse
      */
-    private function executeRequest(array $methodOptions, array $extraOptions = array())
+    private function executeRequest(array $methodOptions, array $extraOptions = [])
     {
         // Merge options: default options < method specific options < extra options (user wins)
         $options = array_replace($this->defaultOptions, $methodOptions, $extraOptions);

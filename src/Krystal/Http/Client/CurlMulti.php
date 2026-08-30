@@ -24,7 +24,7 @@ final class CurlMulti
      *
      * @var array<string, Curl>
      */
-    private $handles = array();
+    private $handles = [];
 
     /**
      * State initialization
