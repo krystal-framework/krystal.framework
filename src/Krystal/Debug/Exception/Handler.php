@@ -36,11 +36,24 @@ final class Handler implements ExceptionHandlerInterface
     /**
      * Custom exception handler
      * 
-     * @param \Exception $exception
+     * @param \Exception|\Throwable $exception
      * @return void
      */
     public function handle($exception)
     {
+        if (PHP_SAPI === 'cli') {
+            $output = sprintf(
+                "\n[ERROR] Uncaught exception '%s' with message '%s'\nfile: %s:%d\n\n",
+                get_class($exception),
+                $exception->getMessage(),
+                $exception->getFile(),
+                $exception->getLine()
+            );
+
+            file_put_contents('php://stderr', $output);
+            return;
+        }
+
         $file = $exception->getFile();
         $line = $exception->getLine();
         $message = $exception->getMessage();
@@ -59,10 +72,10 @@ final class Handler implements ExceptionHandlerInterface
     /**
      * Registers custom exception handler
      * 
-     * @return void
+     * @return callable|null
      */
     public function register()
     {
-        return set_exception_handler(array($this, 'handle'));
+        return set_exception_handler([$this, 'handle']);
     }
 }
