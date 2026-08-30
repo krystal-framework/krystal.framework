@@ -1,0 +1,30 @@
+<?php echo '<?php'; ?>
+
+
+use Krystal\Db\Migration\MigrationInterface;
+use Krystal\Db\Sql\DbInterface;
+
+return new class implements MigrationInterface
+{
+    /**
+     * Run the migration
+     * 
+     * @param \Krystal\Db\Sql\DbInterface $db
+     * @return void
+     */
+    public function up(DbInterface $db)
+    {
+        //
+    }
+
+    /**
+     * Reverse the migration
+     * 
+     * @param \Krystal\Db\Sql\DbInterface $db
+     * @return void
+     */
+    public function down(DbInterface $db)
+    {
+        //
+    }
+};
