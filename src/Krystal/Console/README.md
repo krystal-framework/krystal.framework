@@ -49,6 +49,12 @@ Every command must extend the base `Command` class and implement two methods: `g
 Create an entry point file called `console.php` in the root of your project. Then create an `Application` instance, register your commands, and call `run()`.
 
     <?php
+
+    // Prevent access from web browser
+    if (PHP_SAPI !== 'cli') {
+        header('HTTP/1.1 403 Forbidden');
+        exit('This script can only be run from the command line.');
+    }
     
     require __DIR__ . '/vendor/autoload.php';
     
