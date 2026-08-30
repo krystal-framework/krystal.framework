@@ -10,7 +10,6 @@
 namespace Krystal\Db\Sql;
 
 use Krystal\InstanceManager\InstanceBuilder;
-use Krystal\Db\InvalidDatabaseConfigurationException;
 use Krystal\Db\Sql\QueryLogger;
 use Krystal\Db\Sql\QueryBuilder;
 use Krystal\Db\Sql\Db;
