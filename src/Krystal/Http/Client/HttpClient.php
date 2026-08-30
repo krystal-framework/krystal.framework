@@ -74,6 +74,30 @@ final class HttpClient implements HttpClientInterface
     }
 
     /**
+     * Safely merge default, method-specific, and extra headers with case-insensitive overriding.
+     * 
+     * @param array $methodHeaders
+     * @param array $extraHeaders
+     * @return array
+     */
+    private function mergeHeaders(array $methodHeaders = [], array $extraHeaders = [])
+    {
+        $defaultHeaders = $this->defaultOptions[CURLOPT_HTTPHEADER] ?? [];
+
+        $mergedHeaders = [];
+        foreach (array_merge($defaultHeaders, $methodHeaders, $extraHeaders) as $header) {
+            if (strpos($header, ':') !== false) {
+                list($name) = explode(':', $header, 2);
+                $mergedHeaders[strtolower(trim($name))] = $header;
+            } else {
+                $mergedHeaders[] = $header;
+            }
+        }
+
+        return array_values($mergedHeaders);
+    }
+
+    /**
      * Download a binary file and save it to disk
      *
      * @param string $url The URL to download
@@ -92,7 +116,8 @@ final class HttpClient implements HttpClientInterface
         }
 
         try {
-            $curl = $this->createCurl([
+            // Define the required download-specific options
+            $downloadOptions = [
                 CURLOPT_URL            => $url,
                 CURLOPT_FILE           => $fp,
                 CURLOPT_FOLLOWLOCATION => true,
@@ -103,20 +128,26 @@ final class HttpClient implements HttpClientInterface
                 CURLOPT_SSL_VERIFYPEER => true,
                 CURLOPT_SSL_VERIFYHOST => 2,
                 CURLOPT_AUTOREFERER    => true,
-                CURLOPT_ENCODING       => '', // Accept all encodings
+                CURLOPT_ENCODING       => '',
                 CURLOPT_USERAGENT      => 'Krystal HTTP Client',
-            ]);
+            ];
 
-            // Merge any extra options (useful for headers, auth, etc.)
-            if (!empty($extra)) {
-                $curl->setOptions($extra);
+            // Merge options: default options < download specific options < extra options (user wins)
+            $options = array_replace($this->defaultOptions, $downloadOptions, $extra);
+
+            $mergedHeaders = $this->mergeHeaders([], $extra[CURLOPT_HTTPHEADER] ?? []);
+            if (!empty($mergedHeaders)) {
+                $options[CURLOPT_HTTPHEADER] = $mergedHeaders;
+            } else {
+                unset($options[CURLOPT_HTTPHEADER]);
             }
 
+            $curl = $this->createCurl($options);
             $result = $curl->exec();
 
             // 2. Check for cURL-level errors
             if ($result->hasError()) {
-                $errorMsg = $result->getError(); // assuming getError() returns string or array
+                $errorMsg = $result->getError();
 
                 if (is_array($errorMsg)) {
                     $errorMsg = print_r($errorMsg, true);
@@ -196,12 +227,10 @@ final class HttpClient implements HttpClientInterface
             ));
         }
 
-        // Merge headers: default JSON headers < user headers (user wins)
+        // Inject JSON headers cleanly into extra options
         $jsonHeaders = ['Content-Type: application/json', 'Accept: application/json'];
-        $userHeaders = $extra[CURLOPT_HTTPHEADER] ?? [];
-
-        // Avoid potential header duplication
-        $extra[CURLOPT_HTTPHEADER] = array_unique(array_merge($jsonHeaders, $userHeaders));
+        $existingExtraHeaders = $extra[CURLOPT_HTTPHEADER] ?? [];
+        $extra[CURLOPT_HTTPHEADER] = array_merge($jsonHeaders, $existingExtraHeaders);
 
         // Encode data to JSON
         $json = json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -479,8 +508,19 @@ final class HttpClient implements HttpClientInterface
      */
     private function executeRequest(array $methodOptions, array $extraOptions = array())
     {
-        // Merge: method options < user options (user wins)
+        // Merge options: default options < method specific options < extra options (user wins)
         $options = array_replace($this->defaultOptions, $methodOptions, $extraOptions);
+
+        $mergedHeaders = $this->mergeHeaders(
+            $methodOptions[CURLOPT_HTTPHEADER] ?? [],
+            $extraOptions[CURLOPT_HTTPHEADER] ?? []
+        );
+
+        if (!empty($mergedHeaders)) {
+            $options[CURLOPT_HTTPHEADER] = $mergedHeaders;
+        } else {
+            unset($options[CURLOPT_HTTPHEADER]);
+        }
 
         $curl = $this->createCurl($options);
         $result = $curl->exec();
