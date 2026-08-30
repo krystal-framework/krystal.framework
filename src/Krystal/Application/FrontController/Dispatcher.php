@@ -14,6 +14,7 @@ use Krystal\Application\FrontController\DispatcherInterface;
 use Krystal\Application\Route\MapManagerInterface;
 use LogicException;
 use RuntimeException;
+use UnexpectedValueException;
 
 final class Dispatcher implements DispatcherInterface
 {
@@ -66,6 +67,7 @@ final class Dispatcher implements DispatcherInterface
      * @param array $options Route options
      * @throws \DomainException if controller's execution is halted
      * @throws \LogicException if controller hasn't expected action to execute
+     * @throws \UnexpectedValueException if controller response is not a string
      * @return string
      */
     public function call($class, $action, array $params = array(), array $options = array())
@@ -73,7 +75,19 @@ final class Dispatcher implements DispatcherInterface
         $controller = $this->controllerFactory->build($class, $action, $options);
 
         if (method_exists($controller, $action)) {
-            return call_user_func_array(array($controller, $action), $params);
+            $response = call_user_func_array(array($controller, $action), $params);
+
+            if (!is_string($response)) {
+                $receivedType = is_object($response) ? get_class($response) : gettype($response);
+                throw new UnexpectedValueException(sprintf(
+                    'Controller action %s::%s() must return a string, %s received.',
+                    $class,
+                    $action,
+                    $receivedType
+                ));
+            }
+
+            return $response;
         } else {
             throw new LogicException(sprintf(
                 'A %s controller must implement %s() method, because it has been defined in the map', $class, $action
