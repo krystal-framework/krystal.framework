@@ -75,8 +75,12 @@ final class Request implements RequestInterface
      */
     public function sslRedirect()
     {
+        if ($this->isCLI()) {
+            return;
+        }
+
         if (!$this->isSecure()) {
-            $redirect = 'https://' . $this->server['HTTP_HOST'] . $this->server['REQUEST_URI'];
+            $redirect = 'https://' . $this->getHost() . $this->getURI();
 
             header('HTTP/1.1 301 Moved Permanently');
             header('Location: ' . $redirect);
@@ -91,7 +95,7 @@ final class Request implements RequestInterface
      */
     public function isLocal()
     {
-        return $this->server['SERVER_ADDR'] === $this->getClientIP();
+        return isset($this->server['SERVER_ADDR']) && $this->server['SERVER_ADDR'] === $this->getClientIP();
     }
 
     /**
@@ -154,6 +158,8 @@ final class Request implements RequestInterface
      */
     public function getAll($separate = true)
     {
+        $data = array();
+
         if ($this->isPost()) {
             $data = $this->getPost();
         }
@@ -356,10 +362,9 @@ final class Request implements RequestInterface
             if (isset($this->server['HTTP_X_FORWARDED_FOR'])) {
                 return $this->server['HTTP_X_FORWARDED_FOR'];
             }
-
-        } else {
-            return $this->server['REMOTE_ADDR'];
         }
+
+        return isset($this->server['REMOTE_ADDR']) ? $this->server['REMOTE_ADDR'] : '127.0.0.1';
     }
 
     /**
@@ -379,7 +384,7 @@ final class Request implements RequestInterface
      */
     public function getRootDir()
     {
-        return $this->server['DOCUMENT_ROOT'];
+        return isset($this->server['DOCUMENT_ROOT']) ? $this->server['DOCUMENT_ROOT'] : '';
     }
 
     /**
@@ -389,7 +394,7 @@ final class Request implements RequestInterface
      */
     public function getHost()
     {
-        return $this->server['HTTP_HOST'];
+        return isset($this->server['HTTP_HOST']) ? $this->server['HTTP_HOST'] : 'localhost';
     }
 
     /**
@@ -399,7 +404,7 @@ final class Request implements RequestInterface
      */
     public function getServerIP()
     {
-        return $this->server['SERVER_ADDR'];
+        return isset($this->server['SERVER_ADDR']) ? $this->server['SERVER_ADDR'] : '127.0.0.1';
     }
 
     /**
@@ -409,7 +414,7 @@ final class Request implements RequestInterface
      */
     public function getMethod()
     {
-        return strtoupper($this->server['REQUEST_METHOD']);
+        return isset($this->server['REQUEST_METHOD']) ? strtoupper($this->server['REQUEST_METHOD']) : 'CLI';
     }
 
     /**
@@ -419,8 +424,16 @@ final class Request implements RequestInterface
      */
     public function getSubdomains()
     {
+        if (!isset($this->server['HTTP_HOST'])) {
+            return array();
+        }
+
         $current = $this->server['HTTP_HOST'];
         $parts = explode('.', $current);
+
+        if (count($parts) <= 2) {
+            return array();
+        }
 
         // two steps back
         array_pop($parts);
@@ -436,8 +449,16 @@ final class Request implements RequestInterface
      */
     public function getDomain()
     {
+        if (!isset($this->server['HTTP_HOST'])) {
+            return '';
+        }
+
         $current = $this->server['HTTP_HOST'];
         $parts = explode('.', $current);
+
+        if (count($parts) < 2) {
+            return $current;
+        }
 
         $zone = array_pop($parts);
         $provider = array_pop($parts);
@@ -452,6 +473,10 @@ final class Request implements RequestInterface
      */
     public function getLanguages()
     {
+        if (!isset($this->server['HTTP_ACCEPT_LANGUAGE'])) {
+            return array();
+        }
+
         $source = $this->server['HTTP_ACCEPT_LANGUAGE'];
 
         if (strpos($source, ',') !== false) {
@@ -469,7 +494,7 @@ final class Request implements RequestInterface
      */
     public function getLanguage()
     {
-        return substr($this->server['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        return isset($this->server['HTTP_ACCEPT_LANGUAGE']) ? substr($this->server['HTTP_ACCEPT_LANGUAGE'], 0, 2) : '';
     }
 
     /**
@@ -479,7 +504,7 @@ final class Request implements RequestInterface
      */
     public function getTimestamp()
     {
-        return $this->server['REQUEST_TIME'];
+        return isset($this->server['REQUEST_TIME']) ? $this->server['REQUEST_TIME'] : time();
     }
 
     /**
@@ -489,7 +514,7 @@ final class Request implements RequestInterface
      */
     public function getServerPort()
     {
-        return $this->server['SERVER_PORT'];
+        return isset($this->server['SERVER_PORT']) ? $this->server['SERVER_PORT'] : 80;
     }
 
     /**
@@ -509,7 +534,7 @@ final class Request implements RequestInterface
      */
     public function getRemotePort()
     {
-        return $this->server['REMOTE_PORT'];
+        return isset($this->server['REMOTE_PORT']) ? $this->server['REMOTE_PORT'] : 0;
     }
 
     /**
@@ -529,7 +554,7 @@ final class Request implements RequestInterface
      */
     public function getScriptLocation()
     {
-        return $this->server['SCRIPT_FILENAME'];
+        return isset($this->server['SCRIPT_FILENAME']) ? $this->server['SCRIPT_FILENAME'] : '';
     }
 
     /**
@@ -542,7 +567,8 @@ final class Request implements RequestInterface
         return (
             (!empty($this->server['HTTPS']) && $this->server['HTTPS'] != 'off') || 
             (!empty($this->server['HTTP_HTTPS']) && $this->server['HTTP_HTTPS'] != 'off') || 
-            $this->server['REQUEST_SCHEME'] == 'https' || $this->server['SERVER_PORT'] == 443
+            (isset($this->server['REQUEST_SCHEME']) && $this->server['REQUEST_SCHEME'] == 'https') || 
+            (isset($this->server['SERVER_PORT']) && $this->server['SERVER_PORT'] == 443)
         );
     }
 
@@ -563,7 +589,7 @@ final class Request implements RequestInterface
      */
     public function getURI()
     {
-        return $this->server['REQUEST_URI'];
+        return isset($this->server['REQUEST_URI']) ? $this->server['REQUEST_URI'] : '';
     }
 
     /**
@@ -583,7 +609,7 @@ final class Request implements RequestInterface
      */
     public function isFlash()
     {
-        return stripos($this->server['USER_AGENT'], 'Shockwave Flash') !== false;
+        return isset($this->server['USER_AGENT']) && stripos($this->server['USER_AGENT'], 'Shockwave Flash') !== false;
     }
 
     /**
