@@ -104,6 +104,8 @@ The key `tableClass` defines a class that generated table will have. If you omit
 
 The key `columns` expects a collection of arrays. Each array represents a column to be rendered in a table.
 
+**Notes**
+- If a duplicate column configuration is encountered, a `LogicException` is thrown.
 
 ### Cell attributes
 
@@ -272,7 +274,7 @@ For a dropdown filter instead of a text input, provide an associative array of v
 
 -   The array keys represent the actual values in your data.
 -   The array values are the display labels shown in the dropdown.
-
+-   If the select filter is empty (contains no values), it is not rendered.
 
 **Disabling sorting**
 
