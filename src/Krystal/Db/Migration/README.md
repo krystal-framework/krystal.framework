@@ -81,7 +81,9 @@ You can modify existing table structures by chaining fluent query builder method
 To execute commands, open your project terminal, navigate to the `bin` directory located at the root of your project folder (`cd bin`), and run your commands across all platforms:
 
 ### Creating a new migration file
-Generate a blank migration template file:
+Generate a blank migration template file. By default, migrations are stored in `data/migrations`, but you can target a custom directory using the `--path` option.
+
+The `--path` option accepts a path relative to the project root (e.g., `--path=module/Site/Migrations`).
 
     migrate migration:make CreateUsersTable
 
