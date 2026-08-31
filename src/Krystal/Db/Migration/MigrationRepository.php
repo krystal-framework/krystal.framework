@@ -12,7 +12,7 @@ namespace Krystal\Db\Migration;
 use Krystal\Db\Sql\DbInterface;
 use DateTime;
 
-class MigrationRepository implements MigrationRepositoryInterface
+final class MigrationRepository implements MigrationRepositoryInterface
 {
     /**
      * Database instance

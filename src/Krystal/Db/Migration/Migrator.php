@@ -12,7 +12,7 @@ namespace Krystal\Db\Migration;
 use Krystal\Db\Sql\DbInterface;
 use RuntimeException;
 
-class Migrator
+final class Migrator
 {
     /**
      * Migration repository instance

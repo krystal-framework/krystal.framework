@@ -16,7 +16,7 @@ use Krystal\Db\Migration\Command\Status;
 use Krystal\Db\Migration\Command\Make;
 use Krystal\Db\Sql\DbInterface;
 
-class MigrationRunner
+final class MigrationRunner
 {
     /**
      * Database instance
