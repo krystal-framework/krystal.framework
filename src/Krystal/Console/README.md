@@ -2,15 +2,6 @@ Console
 ===
 The Console component provides a simple and clean API for building command-line applications. It allows you to define commands, parse arguments and options, and write formatted output to the terminal.
 
-Import the required classes:
-
-    <?php
-    
-    use Krystal\Console\Application;
-    use Krystal\Console\Command;
-    use Krystal\Console\Input\InputInterface;
-    use Krystal\Console\Output\OutputInterface;
-
 ## Creating a command
 Every command must extend the base `Command` class and implement two methods: `getName()` and `execute()`.
 
@@ -65,7 +56,7 @@ Create an entry point file called `console.php` in the root of your project. The
     
     $app->add(new HelloCommand());
     
-    exit($app->run());
+    $app->run();
 
 You can now execute commands from the root of your project:
 
