@@ -235,11 +235,9 @@ final class Kernel implements KernelInterface
             // Custom exception handler should be registered on NON-AJAX requests only
             $server = $this->input->getServer();
 
-            if (!isset($server['HTTP_X_REQUESTED_WITH'])) {
-                // Custom exception handler
-                $excepetionHandler = new ExceptionHandler();
-                $excepetionHandler->register();
-            }
+            // Custom exception handler
+            $exceptionHandler = new ExceptionHandler($server);
+            $exceptionHandler->register();
 
             error_reporting(self::ERR_LEVEL_MAX);
             ini_set('display_errors', 1);

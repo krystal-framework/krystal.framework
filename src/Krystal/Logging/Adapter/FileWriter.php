@@ -60,7 +60,7 @@ final class FileWriter implements LogWriterInterface
 
         // Encode context data to JSON for logging
         $contextString = !empty($context) ? ' ' . json_encode($context) : '';
-        
+
         // Format the log line
         $formattedMessage = "[$date] Level: $level - $message$contextString" . PHP_EOL;
 
