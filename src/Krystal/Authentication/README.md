@@ -1,62 +1,139 @@
-
 Authentication
-==============
+===
+The Authentication component provides a simple, secure, and flexible service to manage user authentication in your application. It handles session management, secure **Remember Me** cookies, and Role-Based Access Control (RBAC) out of the box.
 
-Authentication component provides a service to manage authentication mechanism on your site. It's meant for controller actions only, so in order to activate it, you have to inherit `\Krystal\Application\Controller\AbstractAuthAwareController` rather than default `\Krystal\Application\Controller\AbstractController`. Usually you would want to make all controllers protected that belong to administration area of your site.
+To activate authentication features in your application, controllers should inherit from `\Krystal\Application\Controller\AbstractAuthAwareController` instead of the default `\Krystal\Application\Controller\AbstractController`. You can access the authentication manager directly in your controller actions via `$this->authManager`.
 
-Once you inherit `\Krystal\Application\Controller\AbstractAuthAwareController` controller, you have to implement 4 protected methods in a descendant:
+## Controller lifecycle hooks
+When inheriting from `AbstractAuthAwareController`, implement the following protected methods to customize the authentication lifecycle:
 
-## getAuthService()
+-   `getAuthService()` — Must return the authentication service instance.
+-   `onSuccess()` — Invoked automatically once a user successfully provides valid credentials.
+-   `onFailure()` — Invoked automatically when an unauthenticated user attempts to access a protected controller action.
+-   `onNoRights()` — Invoked automatically when an authenticated user attempts to access an area without the required permissions.
 
-Must return a service (we'll discuss it below)
+## The user provider
 
-## onSuccess()
+The framework needs to know how to fetch a user from your database. You provide this logic as a simple callable (a closure, a static method, or an invokable class) and register it with the AuthManager during your application's bootstrap phase.
 
-This method will be invoked automatically, once user enters valid credentials.
+The callable receives an identifier (either a string `$login` during login, or an int|string `$userId` during "Remember Me" validation) and must return an array with at least id, login, and `password_hash`. It can optionally include role and `remember_token_version`.
 
-## onFailure()
+    $userProvider = function ($identifier) use ($pdo) {
+        // Determine if searching by ID (Remember Me) or Login (Standard Login)
+        $column = is_numeric($identifier) ? 'id' : 'username';
+        
+        $stmt = $pdo->prepare("SELECT id, username AS login, password_hash, role, remember_token_version FROM users WHERE {$column} = ?");
+        $stmt->execute([$identifier]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $user ?: null;
+    };
+    
+    // Register it with the framework's auth manager
+    $this->authManager->setUserProvider($userProvider);
 
-This method will be invoked automatically if not-logged-in user tried to access protected area (i.e protected controller actions).
+## Basic usage in controllers
 
-## onNoRights()
+### Logging in
 
-This method will be invoked if when user tried to access an area he has no rights to.
+To authenticate a user, call `login()` with the submitted credentials and an optional **Remember Me** flag:
 
-# Writing the service
+    public function loginAction()
+    {
+        $login = $this->request->getPost('username');
+        $plainPassword = $this->request->getPost('password');
+        $rememberMe = (bool) $this->request->getPost('remember_me');
+    
+        if ($this->authManager->login($login, $plainPassword, $rememberMe)) {
+            // Success! User is logged in.
+            return $this->response->redirect('/dashboard');
+        } else {
+            // Failure. Show invalid credentials error.
+            return $this->view->render('auth/login', ['error' => 'Invalid credentials']);
+        }
+    }
 
-The service must implement `\Krystal\Authentication\UserAuthServiceInterface`:
+Note: If a password hash requires re-hashing due to algorithm updates, the framework detects this via `password_needs_rehash()`.
 
-## getId()
+### Checking authentication status
 
-Returns an id from storage.
+    public function dashboardAction()
+    {
+        if ($this->authManager->isLoggedIn()) {
+            $userId = $this->authManager->getId();
+            $userRole = $this->authManager->getRole();
+            $userLogin = $this->authManager->getLogin();
+            
+            // Retrieve full user payload
+            $fullUser = $this->authManager->getUser();
+            
+            return $this->render('dashboard', compact('fullUser'));
+        }
+        
+        return $this->redirect('/login');
+    }
 
-## getRole()
+### Logging out
 
-Returns a role from storage.
+To sign a user out and clear their session, call logout():
 
-## authenticate($login, $password, $remember, $hash = true)
+    public function logoutAction()
+    {
+        $this->authManager->logout();
+        return $this->response->redirect('/login');
+    }
 
-Performs an authentication. When implementing this method you would query a database against provided data.
+## Role-Based Access Control (RBAC)
+Restrict access to specific controller actions or routes based on user roles.
 
-## logout()
+### Using AuthManager::isAllowed()
+Check if the current user possesses one of the allowed roles:
 
-Logouts a user.
+    public function deletePostAction()
+    {
+        // Allow only 'admin' or 'moderator'
+        if (!$this->authManager->isAllowed(['admin', 'moderator'])) {
+            return $this->view->render('errors/403');
+        }
+    
+        // Proceed with action
+    }
 
-## isLoggedIn()
+### Route protection
 
-Determines whether a user is already logged in.
+Attach permission definitions directly within route configurations using `allow` or `disallow` directives:
 
-# RBAC
+    // Grant access exclusively to specific roles
+    '/admin/delete-post' => [
+        'controller' => 'Admin\PostController@delete',
+        'allow' => ['admin'],
+    ],
+    
+    // Deny access to specific roles (triggers onNoRights automatically)
+    '/admin/some-secured-action' => [
+        'controller' => 'SomeController@someAction',
+        'disallow' => ['reviewer'],
+    ]
 
-As soon as you define roles, you would want to protect some controller actions. Suppose you have a route that points to controller action which adds something to a database. In that case, you might want to allow all users that belong to "admin" group perform that action, and do forbid for the rest roles.
+## Advanced: invalidate all sessions
+Increment the `remember_token_version` column in your database to invalidate all active "Remember Me" tokens across every device without altering the user's password:
 
-Well, by default the RBAC protector allows everyone to perform actions. In order to disallow a particular group to perform desired controller action, you have to add `disallow` with associated route definition. That array must contain forbidden role names.
+    public function changePasswordAction()
+    {
+        $userId = $this->authManager->getId();
+        
+        // 1. Update password in database...
+        
+        // 2. Invalidate all existing sessions/tokens across devices
+        $stmt = $this->pdo->prepare("UPDATE users SET remember_token_version = remember_token_version + 1 WHERE id = ?");
+        $stmt->execute([$userId]);
+        
+        return $this->redirect('/dashboard');
+    }
 
-For example:
-
-'/admin/some-secured-action' => array(
-	'controller' => 'SomeController@someAction',
-	'disallow' => array('reviewer')
-)
-
-So if a user with his credentials logged as "reviewer" and navigated to `/admin/some-secured-action` then he won't be allowed to do that and the inherited method `onNoRights()` will be called automatically.
+## Built-in security
+-   **Session Fixation Prevention** — Session IDs automatically regenerate on successful login.
+-   **Timing Attack Mitigation** — Employs `hash_equals()` and strict comparisons (`===`) across hash checks.
+-   **Native Hashing** — Enforces standard `password_hash()` and `password_verify()`.
+-   **Stateless Token Verification** — Cookies contain HMAC-SHA256 signed payloads that auto-expire when `remember_token_version` changes.
+-   **Lightweight Sessions** — Restricts session data storage to essential keys (`id`, `login`, `role`).
