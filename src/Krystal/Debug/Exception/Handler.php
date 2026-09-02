@@ -54,13 +54,13 @@ final class Handler implements ExceptionHandlerInterface
     {
         // 1. Explicit JSON Accept header
         $accept = $this->server['HTTP_ACCEPT'] ?? '';
-        if (str_contains($accept, 'application/json') || str_contains($accept, 'text/json')) {
+        if (strpos($accept, 'application/json') !== false || strpos($accept, 'text/json') !== false) {
             return true;
         }
 
         // 2. Incoming request payload is JSON
         $contentType = $this->server['CONTENT_TYPE'] ?? '';
-        if (str_contains($contentType, 'application/json')) {
+        if (strpos($contentType, 'application/json') !== false) {
             return true;
         }
 
