@@ -7,7 +7,7 @@
       "source": "https://github.com/krystal-framework/krystal.framework"
   },
   "require": {
-    "php": ">=5.3",
+    "php": ">=7.0",
     "ext-mbstring": "*"
   },
   "config": {
@@ -21,7 +21,7 @@
   "authors": [
     {
       "name": "No Global State Lab",
-      "homepage": "http://krystal-framework.ml"
+      "homepage": "https://krystal-framework.dev"
     }
   ],
   "license": "BSD-3-Clause",
