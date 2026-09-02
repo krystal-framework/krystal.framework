@@ -110,7 +110,9 @@ final class Handler implements ExceptionHandlerInterface
                 header('Content-Type: application/json; charset=UTF-8');
             }
 
-            echo JsonSerializer::serialize([
+            $serializer = new JsonSerializer();
+
+            echo $serializer->serialize([
                 'success' => false,
                 'error' => [
                     'message' => $exception->getMessage(),
