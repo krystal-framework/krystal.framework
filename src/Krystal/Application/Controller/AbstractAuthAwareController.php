@@ -61,8 +61,6 @@ abstract class AbstractAuthAwareController extends AbstractController
     {
         $authService = $this->getAuthService();
 
-        $this->authManager->setAuthService($authService);
-
         if ($this->authActive === true) {
             if ($authService->isLoggedIn()) {
                 $this->onSuccess();

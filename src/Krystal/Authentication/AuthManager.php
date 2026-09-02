@@ -2,7 +2,7 @@
 
 /**
  * This file is part of the Krystal Framework
- * 
+ *
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -10,266 +10,250 @@
 namespace Krystal\Authentication;
 
 use Krystal\Session\SessionBagInterface;
-use Krystal\Authentication\Cookie\ReAuthInterface;
+use Krystal\Authentication\Cookie\RememberMeManager;
 use InvalidArgumentException;
-use LogicException;
 
 final class AuthManager implements AuthManagerInterface
 {
     /**
-     * Credentials storage
-     * 
+     * Namespace in session storage for authentication
+     *
+     * @const string
+     */
+    const AUTH_NAMESPACE = 'krystal_auth';
+
+    /**
+     * Session storage
+     *
      * @var \Krystal\Session\SessionBagInterface
      */
     private $sessionBag;
 
     /**
-     * Used to re-authenticate from storage
-     * 
-     * @var \Krystal\Authentication\Cookie\ReAuthInterface
+     * Remember me manager
+     *
+     * @var \Krystal\Authentication\Cookie\RememberMeManager
      */
-    private $reAuth;
+    private $rememberMe;
 
     /**
-     * Hash provider
-     * 
-     * @var \Krystal\Authentication\HashProvider
+     * Default user provider callback
+     *
+     * @var callable|null
      */
-    private $hashProvider;
+    private $userProvider;
 
     /**
-     * Authentication service
-     * 
-     * @var \Krystal\Authentication\UserAuthServiceInterface
+     * Cached user data for current request
+     *
+     * @var array|null
      */
-    private $authService;
-
-    /**
-     * Namespace in session storage for authentication
-     * 
-     * @const string
-     */
-    const AUTH_NAMESPACE = 'Krystal_AUTH';
+    private $currentUser;
 
     /**
      * State initialization
-     * 
+     *
      * @param \Krystal\Session\SessionBagInterface $sessionBag
-     * @param \Krystal\Authentication\Cookie\ReAuthInterface $reAuth
-     * @param \Krystal\Authentication\HashProviderInterface
+     * @param \Krystal\Authentication\Cookie\RememberMeManager $rememberMe
+     * @param callable|null $userProvider
      * @return void
      */
-    public function __construct(SessionBagInterface $sessionBag, ReAuthInterface $reAuth, HashProviderInterface $hashProvider)
-    {
+    public function __construct(
+        SessionBagInterface $sessionBag,
+        RememberMeManager $rememberMe,
+        $userProvider = null
+    ) {
+        if ($userProvider !== null && !is_callable($userProvider)) {
+            throw new InvalidArgumentException('User provider must be callable');
+        }
+
         $this->sessionBag = $sessionBag;
-        $this->reAuth = $reAuth;
-        $this->hashProvider = $hashProvider;
+        $this->rememberMe = $rememberMe;
+        $this->userProvider = $userProvider;
     }
 
     /**
-     * Defines match visitor
-     * 
-     * @param \Krystal\Authentication\UserAuthServiceInterface $authService
-     * @return void
-     */
-    public function setAuthService(UserAuthServiceInterface $authService)
-    {
-        $this->authService = $authService;
-    }
-
-    /**
-     * Stores user's id
-     * 
-     * @param string $id
+     * Sets or overrides the user provider at runtime
+     *
+     * @param callable $userProvider
      * @return \Krystal\Authentication\AuthManager
      */
-    public function storeId($id)
+    public function setUserProvider(callable $userProvider)
     {
-        $this->storeData('user_id', $id);
+        $this->userProvider = $userProvider;
         return $this;
     }
 
     /**
-     * Returns user's id
-     * 
-     * @return string
+     * Returns the currently configured user provider
+     *
+     * @return callable|null
+     */
+    public function getUserProvider()
+    {
+        return $this->userProvider;
+    }
+
+    /**
+     * Logs in a user
+     *
+     * @param string $login
+     * @param string $plainPassword
+     * @param boolean $remember
+     * @param callable|null $userProvider Optional override for this call only
+     * @return boolean
+     */
+    public function login($login, $plainPassword, $remember = false, callable $userProvider = null)
+    {
+        $provider = $userProvider !== null ? $userProvider : $this->resolveProvider();
+        $user = call_user_func($provider, $login);
+
+        if (!$user || !isset($user['password_hash']) || !password_verify($plainPassword, $user['password_hash'])) {
+            return false;
+        }
+
+        // Optional: rehash if needed
+        if (password_needs_rehash($user['password_hash'], PASSWORD_DEFAULT)) {
+            // You can trigger an event/callback here to update the hash in storage
+        }
+
+        $this->establishSession($user, $remember);
+        return true;
+    }
+
+    /**
+     * Checks if user is logged in
+     *
+     * @return boolean
+     */
+    public function isLoggedIn()
+    {
+        if ($this->sessionBag->has(self::AUTH_NAMESPACE)) {
+            return true;
+        }
+
+        $provider = $this->resolveProvider();
+        $user = $this->rememberMe->validateAndGetUser($provider);
+
+        if ($user) {
+            $this->establishSession($user, false);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns the currently authenticated user
+     *
+     * @return array|null
+     */
+    public function getUser()
+    {
+        if (!$this->isLoggedIn()) {
+            return null;
+        }
+
+        if ($this->currentUser === null) {
+            $this->currentUser = $this->sessionBag->get(self::AUTH_NAMESPACE);
+        }
+
+        return $this->currentUser;
+    }
+
+    /**
+     * Returns the user ID
+     *
+     * @return string|int|null
      */
     public function getId()
     {
-        return $this->getData('user_id');
+        $user = $this->getUser();
+        return $user ? $user['id'] : null;
     }
 
     /**
-     * Stores a role
-     * 
-     * @param string $role
-     * @return \Krystal\Authentication\AuthManager
-     */
-    public function storeRole($role)
-    {
-        $this->storeData('user_role', $role);
-        return $this;
-    }
-
-    /**
-     * Returns stored role
-     * 
-     * @return string
+     * Returns the user role
+     *
+     * @return string|null
      */
     public function getRole()
     {
-        return $this->getData('user_role');
+        $user = $this->getUser();
+        return $user && isset($user['role']) ? $user['role'] : null;
     }
 
     /**
-     * Stores the data into persistent storage
-     * 
-     * @param string $key
-     * @param mixed $value
-     * @return void
+     * Returns the user login
+     *
+     * @return string|null
      */
-    public function storeData($key, $value)
+    public function getLogin()
     {
-        $this->sessionBag->set($key, $value);
-        return $this;
+        $user = $this->getUser();
+        return $user ? $user['login'] : null;
     }
 
     /**
-     * Returns session data
-     * 
-     * @param string $key
-     * @param mixed $default Default value to be returned in case requested key doesn't exist
-     * @return mixed
-     */
-    public function getData($key, $default = false)
-    {
-        if ($this->sessionBag->has($key)){
-            return $this->sessionBag->get($key);
-        } else {
-            return $default;
-        }
-    }
-
-    /**
-     * Checks whether a data is stored in the storage
-     * 
-     * @return boolean
-     */
-    private function has()
-    {
-        return $this->sessionBag->has(self::AUTH_NAMESPACE);
-    }
-
-    /**
-     * Checks whether user is logged in
-     * 
-     * @return boolean
-     */
-    private function loggenIn()
-    {
-        if (!$this->has()) {
-            if (!($this->authService instanceof UserAuthServiceInterface)) {
-                // Not logged in
-                return false;
-            }
-
-            // Now try to find only in cookies, if found prepare a bag
-            if ($this->reAuth->isStored() && (!$this->has())) {
-                $userBag = $this->reAuth->getUserBag();
-            }
-
-            // If session namespace is filled up and at the same time data stored in cookies
-            if (($this->has() && $this->reAuth->isStored()) || $this->has()) {
-                $data = $this->sessionBag->get(self::AUTH_NAMESPACE);
-
-                $userBag = new UserBag();
-                $userBag->setLogin($data['login'])
-                        ->setPasswordHash($data['passwordHash']);
-            }
-
-            // If $userBag wasn't created so far, that means user isn't logged at all
-            if (!isset($userBag)) {
-                return false;
-            }
-
-            // Now let's invoke our defined match visitor
-            $authResult = $this->authService->authenticate($userBag->getLogin(), $userBag->getPasswordHash(), false, false);
-
-            if ($authResult == true) {
-                // Remember success, in order not to query on each request
-                $this->login($userBag->getLogin(), $userBag->getPasswordHash());
-                return true;
-            }
-
-            return false;
-
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Checks whether at least one role belongs to current session
-     * 
+     * Checks if user has any of the specified roles
+     *
      * @param array $roles
      * @return boolean
      */
     public function isAllowed(array $roles)
     {
-        return $this->isLoggedIn() && in_array($this->getRole(), $roles);
+        return $this->isLoggedIn() && in_array($this->getRole(), $roles, true);
     }
 
     /**
-     * Logins a user
-     * 
-     * @param string $login
-     * @param string $passwordHash
-     * @param boolean Whether to enable "remember me" functionality
-     * @return void
-     */
-    public function login($login, $passwordHash, $remember = false)
-    {
-        if ((bool) $remember == true) {
-            // Write to client's cookies
-            $this->reAuth->store($login, $passwordHash);
-        }
-
-        // Store it
-        $this->sessionBag->set(self::AUTH_NAMESPACE, array(
-            'login' => $login,
-            'passwordHash' => $passwordHash
-        ));
-    }
-
-    /**
-     * Checks whether user is logged in, only once
-     * 
-     * @return boolean
-     */
-    public function isLoggedIn()
-    {
-        static $result = null;
-
-        if (is_null($result)) {
-            $result = $this->loggenIn();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Erases all credentials
-     * 
+     * Logs out the user
+     *
      * @return void
      */
     public function logout()
     {
-        if ($this->has()) {
-            $this->sessionBag->remove(self::AUTH_NAMESPACE);
+        $this->sessionBag->remove(self::AUTH_NAMESPACE);
+        $this->rememberMe->clear();
+        $this->currentUser = null;
+    }
+
+    /**
+     * Resolves the user provider
+     *
+     * @return callable
+     */
+    private function resolveProvider()
+    {
+        if ($this->userProvider === null) {
+            throw new InvalidArgumentException('User provider is not configured. Call setUserProvider() first.');
         }
 
-        if ($this->reAuth->isStored()) {
-            $this->reAuth->clear();
+        return $this->userProvider;
+    }
+
+    /**
+     * Establishes the session and optionally creates remember-me cookie
+     *
+     * @param array $user
+     * @param boolean $remember
+     * @return void
+     */
+    private function establishSession(array $user, $remember)
+    {
+        $this->sessionBag->regenerate();
+
+        // Store only safe data in the session
+        $safeUser = array(
+            'id' => $user['id'],
+            'login' => $user['login'],
+            'role' => isset($user['role']) ? $user['role'] : 'user'
+        );
+
+        $this->sessionBag->set(self::AUTH_NAMESPACE, $safeUser);
+        $this->currentUser = $safeUser;
+
+        if ($remember) {
+            $this->rememberMe->createCookie($user);
         }
     }
 }
