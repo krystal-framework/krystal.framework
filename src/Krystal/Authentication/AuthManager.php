@@ -37,7 +37,9 @@ final class AuthManager implements AuthManagerInterface
     private $rememberMe;
 
     /**
-     * Default user provider callback
+     * Default user provider callback.
+     * Note: Receives (string $login) during login(), 
+     * and (int|string $userId) during Remember Me validation.
      *
      * @var callable|null
      */
@@ -103,7 +105,7 @@ final class AuthManager implements AuthManagerInterface
      * @param callable|null $userProvider Optional override for this call only
      * @return boolean
      */
-    public function login($login, $plainPassword, $remember = false, callable $userProvider = null)
+    public function login($login, $plainPassword, $remember = false, $userProvider = null)
     {
         $provider = $userProvider !== null ? $userProvider : $this->resolveProvider();
         $user = call_user_func($provider, $login);
@@ -243,11 +245,11 @@ final class AuthManager implements AuthManagerInterface
         $this->sessionBag->regenerate();
 
         // Store only safe data in the session
-        $safeUser = array(
+        $safeUser = [
             'id' => $user['id'],
             'login' => $user['login'],
             'role' => isset($user['role']) ? $user['role'] : 'user'
-        );
+        ];
 
         $this->sessionBag->set(self::AUTH_NAMESPACE, $safeUser);
         $this->currentUser = $safeUser;
