@@ -68,3 +68,5 @@ Include the following in your report (the more details, the faster we can respon
 - Potential impact (e.g. XSS, SQL injection, RCE, privilege escalation, data leak…)
 - Any suggested mitigation or fix (optional but very appreciated)
 - Your name/handle and contact info (if you want credit / acknowledgment)
+
+Krystal Framework is an independent open-source project unaffiliated with any other corporate entities utilizing the name.
