@@ -67,8 +67,8 @@ final class Dispatcher implements DispatcherInterface
      * @param array $options Route options
      * @throws \DomainException if controller's execution is halted
      * @throws \LogicException if controller hasn't expected action to execute
-     * @throws \UnexpectedValueException if controller response is not a string
-     * @return string
+     * @throws \UnexpectedValueException if controller response is an array or object
+     * @return mixed
      */
     public function call($class, $action, array $params = array(), array $options = array())
     {
@@ -77,13 +77,10 @@ final class Dispatcher implements DispatcherInterface
         if (method_exists($controller, $action)) {
             $response = call_user_func_array(array($controller, $action), $params);
 
-            if (!is_string($response)) {
-                $receivedType = is_object($response) ? get_class($response) : gettype($response);
+            if (is_array($response) || is_object($response)) {
                 throw new UnexpectedValueException(sprintf(
-                    'Controller action %s::%s() must return a string, %s received.',
-                    $class,
-                    $action,
-                    $receivedType
+                    'A controller action must return a scalar type or null, %s returned.',
+                    is_object($response) ? get_class($response) : gettype($response)
                 ));
             }
 
@@ -110,7 +107,7 @@ final class Dispatcher implements DispatcherInterface
      * 
      * @param string $notation (Controller@action syntax)
      * @param array $args Arguments to be passed to that controller's action
-     * @return string
+     * @return mixed
      */
     public function forward($notation, array $args = array())
     {
@@ -130,7 +127,7 @@ final class Dispatcher implements DispatcherInterface
      * 
      * @param string $matchedURITemplate
      * @param array $params URI arguments URI place-holders
-     * @return string The returned value of the controller action method
+     * @return mixed The returned value of the controller action method
      */
     public function render($matchedURITemplate, array $params = array())
     {
