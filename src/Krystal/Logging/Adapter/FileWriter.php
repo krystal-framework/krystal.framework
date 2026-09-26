@@ -9,6 +9,9 @@
 
 namespace Krystal\Logging\Adapter;
 
+use InvalidArgumentException;
+use RuntimeException;
+
 /**
  * Adapter for writing log messages to a file.
  */
@@ -30,17 +33,17 @@ final class FileWriter implements LogWriterInterface
     public function __construct($filePath)
     {
         if ($filePath === '') {
-            throw new InvalidArgumentException('Log file path cannot be empty');
+            throw new \InvalidArgumentException('Log file path cannot be empty');
         }
 
         $dir = dirname($filePath);
 
         if (!is_dir($dir) && !@mkdir($dir, 0755, true)) {
-            throw new RuntimeException("Cannot create log directory: $dir");
+            throw new \RuntimeException("Cannot create log directory: $dir");
         }
 
         if (!is_writable($dir)) {
-            throw new RuntimeException("Log directory is not writable: $dir");
+            throw new \RuntimeException("Log directory is not writable: $dir");
         }
 
         $this->filePath = $filePath;
@@ -49,12 +52,12 @@ final class FileWriter implements LogWriterInterface
     /**
      * Writes the log message to the file.
      *
-     * @param int $level The logging level.
+     * @param mixed $level The logging level.
      * @param string $message The log message.
      * @param array $context Contextual data array.
      * @return bool True on success, false on failure.
      */
-    public function write(int $level, string $message, array $context = []): bool
+    public function write($level, string $message, array $context = [])
     {
         $date = date('Y-m-d H:i:s');
 

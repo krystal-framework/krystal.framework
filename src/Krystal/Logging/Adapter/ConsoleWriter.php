@@ -17,12 +17,12 @@ final class ConsoleWriter implements LogWriterInterface
     /**
      * Writes the log message to the standard error stream.
      *
-     * @param int $level The logging level.
+     * @param mixed $level The logging level.
      * @param string $message The log message.
      * @param array $context Contextual data array.
      * @return bool True on success, false on failure.
      */
-    public function write(int $level, string $message, array $context = [])
+    public function write($level, string $message, array $context = [])
     {
         $formattedMessage = "[$level] $message" . PHP_EOL;
 

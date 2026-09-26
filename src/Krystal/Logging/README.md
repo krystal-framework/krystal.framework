@@ -6,6 +6,7 @@ Logging helps you track application behavior, diagnose bugs, and analyze perform
 
 ## Features
 
+-   **PSR-3 Compliant:** Implements standard interface contracts and string-based log levels.
 -   **Adapter Pattern:** Send logs to multiple destinations (files, console, etc.) simultaneously.
 -   **Factory Pattern:** Easily configure and initialize the logger via an array.
 -   **Standard Levels:** Supports all RFC 5424 logging levels.
@@ -100,16 +101,16 @@ Then use it in controllers like this
 
 The library supports the following levels (ordered from highest to lowest severity):
 
-| Method                        | Level | Description                                      |
-|-------------------------------|-------|--------------------------------------------------|
-| `$logger->emergency()`        | 0     | System is unusable.                              |
-| `$logger->alert()`            | 1     | Action must be taken immediately.                |
-| `$logger->critical()`         | 2     | Critical conditions.                             |
-| `$logger->error()`            | 3     | Runtime errors.                                  |
-| `$logger->warning()`          | 4     | Exceptional occurrences that are not errors.     |
-| `$logger->notice()`           | 5     | Normal but significant events.                   |
-| `$logger->info()`             | 6     | Interesting events.                              |
-| `$logger->debug()`            | 7     | Detailed debug information.                      |
+| Method                        | Level       | Description                                     |
+|-------------------------------|-------------|--------------------------------------------------|
+| `$logger->emergency()`        | emergency   | System is unusable.                              |
+| `$logger->alert()`            | alert       | Action must be taken immediately.                |
+| `$logger->critical()`         | critical    | Critical conditions.                             |
+| `$logger->error()`            | error       | Runtime errors.                                  |
+| `$logger->warning()`          | warning     | Exceptional occurrences that are not errors.     |
+| `$logger->notice()`           | notice      | Normal but significant events.                   |
+| `$logger->info()`             | info        | Interesting events.                              |
+| `$logger->debug()`            | debug       | Detailed debug information.                      |
 
 ## Creating Custom Adapters
 
@@ -121,9 +122,9 @@ To create a new adapter, implement the `Krystal\Logging\Adapter\LogWriterInterfa
     
     class SlackWriter implements LogWriterInterface
     {
-        public function write(int $level, string $message, array $context = []): bool
+        public function write($level, string $message, array $context = [])
         {
-            // Custom logic to send message to Slack
+            // ... Custom logic to send message to Slack
             return true;
         }
     }

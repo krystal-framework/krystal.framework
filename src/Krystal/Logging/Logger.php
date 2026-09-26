@@ -12,22 +12,12 @@ namespace Krystal\Logging;
 use Krystal\Logging\Adapter\LogWriterInterface;
 
 /**
- * Main Logger class that manages multiple writers (adapters).
+ * Main logger class that manages multiple writers (adapters).
  */
-final class Logger
+final class Logger implements LoggerInterface
 {
-    // Logging levels based on RFC 5424
-    const EMERGENCY = 0;
-    const ALERT     = 1;
-    const CRITICAL  = 2;
-    const ERROR     = 3;
-    const WARNING   = 4;
-    const NOTICE    = 5;
-    const INFO      = 6;
-    const DEBUG     = 7;
-
     /**
-     * A collection of writers
+     * A collection of log writers (adapters)
      * 
      * @var \Krystal\Logging\Adapter\LogWriterInterface[]
      */
@@ -45,115 +35,113 @@ final class Logger
     }
 
     /**
-     * Logs a message with a specific level and context.
+     * Logs with an arbitrary level.
      *
-     * @param int $level
-     * @param string $message
+     * @param mixed $level
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function log(int $level, string $message, array $context = [])
+    public function log($level, $message, array $context = [])
     {
         foreach ($this->writers as $writer) {
-            $writer->write($level, $message, $context);
+            $writer->write($level, (string) $message, $context);
         }
-
-        return true;
     }
 
     /**
      * System is unusable.
      * 
-     * @param string $message
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function emergency(string $message, array $context = [])
+    public function emergency($message, array $context = [])
     {
-        return $this->log(self::EMERGENCY, $message, $context);
+        $this->log(LogLevel::EMERGENCY, $message, $context);
     }
 
     /**
      * Action must be taken immediately.
      * 
-     * @param string $message
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function alert(string $message, array $context = [])
+    public function alert($message, array $context = [])
     {
-        return $this->log(self::ALERT, $message, $context);
+        $this->log(LogLevel::ALERT, $message, $context);
     }
 
     /**
      * Critical conditions.
      * 
-     * @param string $message
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function critical(string $message, array $context = [])
+    public function critical($message, array $context = [])
     {
-        return $this->log(self::CRITICAL, $message, $context);
+        $this->log(LogLevel::CRITICAL, $message, $context);
     }
 
     /**
      * Runtime errors that do not require immediate action but should typically be logged and monitored.
      * 
-     * @param string $message
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function error(string $message, array $context = [])
+    public function error($message, array $context = [])
     {
-        return $this->log(self::ERROR, $message, $context);
+        $this->log(LogLevel::ERROR, $message, $context);
     }
 
     /**
      * Exceptional occurrences that are not errors.
      * 
-     * @param string $message
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function warning(string $message, array $context = [])
+    public function warning($message, array $context = [])
     {
-        return $this->log(self::WARNING, $message, $context);
+        $this->log(LogLevel::WARNING, $message, $context);
     }
 
     /**
      * Normal but significant events.
      * 
-     * @param string $message
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function notice(string $message, array $context = [])
+    public function notice($message, array $context = [])
     {
-        return $this->log(self::NOTICE, $message, $context);
+        $this->log(LogLevel::NOTICE, $message, $context);
     }
 
     /**
      * Interesting events.
      * 
-     * @param string $message
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function info(string $message, array $context = [])
+    public function info($message, array $context = [])
     {
-        return $this->log(self::INFO, $message, $context);
+        $this->log(LogLevel::INFO, $message, $context);
     }
 
     /**
      * Detailed debug information.
      * 
-     * @param string $message
+     * @param string|\Stringable $message
      * @param array $context
-     * @return boolean
+     * @return void
      */
-    public function debug(string $message, array $context = [])
+    public function debug($message, array $context = [])
     {
-        return $this->log(self::DEBUG, $message, $context);
+        $this->log(LogLevel::DEBUG, $message, $context);
     }
 }
