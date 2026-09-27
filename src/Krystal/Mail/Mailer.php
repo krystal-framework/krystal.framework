@@ -48,22 +48,20 @@ final class Mailer
 
     /**
      * Sends an email message using the configured transport (SMTP or PHP mail).
-     *
+     * 
      * This method builds and dispatches an email message with support for:
-     * - Multiple recipients (array of addresses or single string)
+     * 
+     * - Multiple recipients (indexed lists or ['email' => 'Name'] pairs)
+     * - CC, BCC, and Reply-To addresses from configuration
      * - File attachments (paths or FileEntityInterface instances)
      * - HTML body with automatic plain-text alternative
      *
      * @param string|array $to One or more recipient email addresses.
-     *                         Can be a string for a single address or an array for multiple.
      * @param string $subject  The subject line of the email message.
      * @param string $body     The HTML body content of the email message.
      * @param array $files     Optional attachments.
-     *                         Each item can be either:
-     *                         - a string representing a file path, or
-     *                         - an instance of Krystal\Http\FileTransfer\FileEntityInterface.
      *
-     * @throws \PHPMailer\PHPMailer\Exception If the mailer encounters a transport or configuration error.
+     * @throws \PHPMailer\PHPMailer\Exception If the mailer encounters an error.
      *
      * @return boolean Returns TRUE on successful send, or FALSE on failure.
      */
@@ -73,32 +71,80 @@ final class Mailer
         $mail->Encoding = 'base64';
         $mail->CharSet = 'UTF-8';
 
-        // If we have SMTP transport turned on, then we'd use appropriate transport
-        if (isset($this->configuration['smtp']) && isset($this->configuration['smtp']['enabled']) && $this->configuration['smtp']['enabled'] == true) {
-            //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
-            $mail->isSMTP(); //Send using SMTP
+        // SMTP transport configuration
+        if (isset($this->configuration['smtp']['enabled']) && $this->configuration['smtp']['enabled'] === true) {
+            $mail->isSMTP();
+            $mail->Host = $this->configuration['smtp']['host'] ?? 'localhost';
 
-            $mail->Host = $this->configuration['smtp']['host']; //Set the SMTP server to send through
-
-            // Enable SMTP authentication, if required
             if (isset($this->configuration['smtp']['username'], $this->configuration['smtp']['password'])) {
                 $mail->SMTPAuth = true;
-                $mail->Username = $this->configuration['smtp']['username']; // SMTP username
-                $mail->Password = $this->configuration['smtp']['password']; // SMTP password
+                $mail->Username = $this->configuration['smtp']['username'];
+                $mail->Password = $this->configuration['smtp']['password'];
             }
 
-            $mail->SMTPSecure = $this->configuration['smtp']['protocol']; // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port = $this->configuration['smtp']['port']; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+            if (isset($this->configuration['smtp']['protocol'])) {
+                $mail->SMTPSecure = $this->configuration['smtp']['protocol'];
+            }
+
+            if (isset($this->configuration['smtp']['port'])) {
+                $mail->Port = $this->configuration['smtp']['port'];
+            }
+
+            if (isset($this->configuration['smtp']['options'])) {
+                $mail->SMTPOptions = $this->configuration['smtp']['options'];
+            }
         }
 
-        $mail->setFrom($this->configuration['from'], $this->configuration['from']);
+        // Sender details
+        $fromEmail = $this->configuration['from'] ?? '';
+        $fromName = $this->configuration['from_name'] ?? '';
+        $mail->setFrom($fromEmail, $fromName);
 
-        // if files provided, then attach them
+        // Reply-To configuration
+        if (isset($this->configuration['reply_to'])) {
+            if (is_array($this->configuration['reply_to'])) {
+                foreach ($this->configuration['reply_to'] as $email => $name) {
+                    if (is_string($email)) {
+                        $mail->addReplyTo($email, $name);
+                    } else {
+                        $mail->addReplyTo($name);
+                    }
+                }
+            } else {
+                $mail->addReplyTo($this->configuration['reply_to']);
+            }
+        }
+
+        // CC configuration
+        if (isset($this->configuration['cc'])) {
+            $ccList = (array) $this->configuration['cc'];
+            foreach ($ccList as $key => $value) {
+                if (is_string($key)) {
+                    $mail->addCC($key, $value);
+                } else {
+                    $mail->addCC($value);
+                }
+            }
+        }
+
+        // BCC configuration
+        if (isset($this->configuration['bcc'])) {
+            $bccList = (array) $this->configuration['bcc'];
+            foreach ($bccList as $key => $value) {
+                if (is_string($key)) {
+                    $mail->addBCC($key, $value);
+                } else {
+                    $mail->addBCC($value);
+                }
+            }
+        }
+
+        // File attachments
         if (!empty($files)) {
-            foreach ($files as $name => $file) {
+            foreach ($files as $file) {
                 if ($file instanceof FileEntityInterface) {
                     $mail->addAttachment($file->getTmpName(), $file->getName());
-                } else {
+                } elseif (is_string($file) && file_exists($file)) {
                     $mail->addAttachment($file);
                 }
             }
@@ -106,9 +152,14 @@ final class Mailer
 
         $mail->isHTML(true);
 
+        // Recipients
         if (is_array($to)) {
-            foreach ($to as $receiver) {
-                $mail->addAddress($receiver);
+            foreach ($to as $key => $value) {
+                if (is_string($key)) {
+                    $mail->addAddress($key, $value);
+                } else {
+                    $mail->addAddress($value);
+                }
             }
         } else {
             $mail->addAddress($to);
@@ -116,6 +167,7 @@ final class Mailer
 
         $mail->Subject = $subject;
         $mail->Body = $body;
+        $mail->AltBody = strip_tags($body);
 
         return $mail->send();
     }
