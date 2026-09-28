@@ -119,6 +119,13 @@ return [
     ],
 
     // Expanded string and charset rules
+    'alpha' => [
+        'callback' => function ($value) {
+            return is_string($value) && preg_match('/^\p{L}+$/u', $value);
+        },
+        'message'  => 'The :attribute must contain only letters.'
+    ],
+
     'charset' => [
         'callback' => function ($value, array $options) {
             $encoding = isset($options['charset']) ? (string) $options['charset'] : 'UTF-8';

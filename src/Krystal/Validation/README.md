@@ -118,6 +118,7 @@ The library ships with optimized, type-strict rules out of the box.
 |-----------------|------------------------------------------|--------------------------|
 | required        | None                                     | The :attribute field is required. |
 | email           | None                                     | The :attribute must be a valid email address. |
+| alpha           | None                                     | The :attribute must contain only letters. |
 | between         | ['min' => 10, 'max' => 20]               | The :attribute must be between :min and :max. |
 | even            | None                                     | The :attribute must be an even number. |
 | float           | None                                     | The :attribute must be a valid floating-point number. |
