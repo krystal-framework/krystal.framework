@@ -9,6 +9,8 @@
 
 namespace Krystal\Validation;
 
+use Closure;
+use LogicException;
 use InvalidArgumentException;
 use Krystal\Validation\PathResolver;
 use Krystal\Http\FileTransfer\FileEntity;
@@ -287,14 +289,14 @@ final class Validator
     }
 
     /**
-     * Executes the validation rule callback by matching context pools.
+     * Executes the validation rule callback by matching context pools safely.
      *
      * @param string $source Identifying scope channel targeting field or file loops
      * @param array $ruleConfig Operational metadata configuration tracking parameters
      * @param mixed $value Payload data item extracted from raw array structures
      * @param string $path Absolute concrete resolved location mapping parameter positions
      * @return bool True if verification check reports successful testing outcomes
-     * @throws \InvalidArgumentException If the requested rule is not registered in the target scope pool
+     * @throws \InvalidArgumentException If the requested rule is not registered or callback is invalid
      */
     private function executeRuleCallback(string $source, array $ruleConfig, $value, string $path): bool
     {
@@ -313,7 +315,15 @@ final class Validator
 
         $ruleMetadata = $this->ruleRegistry->getRule($source, $ruleName);
         $callback = $ruleMetadata['callback'];
-        
+
+        // Prevent string callbacks from accidentally calling native global PHP functions (like link, trim, etc.)
+        if (is_string($callback)) {
+            throw new LogicException(sprintf(
+                'Validation error: Rule "%s" must use a closure or valid array callable, string function references are not supported to prevent global function collisions.',
+                $ruleName
+            ));
+        }
+
         $arguments = [$value, $options, $this->data, $this->fileData, $path];
 
         return (bool) $callback(...$arguments);
@@ -365,7 +375,7 @@ final class Validator
     {
         $def = $definition->getLabelDefinition();
 
-        if (is_callable($def)) {
+        if ($def instanceof Closure || (is_array($def) && is_callable($def))) {
             return (string) $def($path, $value);
         }
 
