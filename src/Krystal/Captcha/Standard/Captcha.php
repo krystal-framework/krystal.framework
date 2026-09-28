@@ -80,6 +80,16 @@ final class Captcha implements CaptchaInterface
     }
 
     /**
+     * Returns CAPTCHA answer
+     * 
+     * @return string
+     */
+    public function getAnswer()
+    {
+        return $this->storage->get();
+    }
+
+    /**
      * Checks whether CAPTCHA answer is valid
      * Should be always called after rendering
      * 
@@ -89,7 +99,7 @@ final class Captcha implements CaptchaInterface
     public function isValid($answer)
     {
         // Compare shouldn't be strict, since we might compare a string against a number
-        if ($this->storage->get() == $answer) {
+        if ($this->getAnswer() == $answer) {
             return true;
         } else {
             $this->error = 'Invalid answer provided';

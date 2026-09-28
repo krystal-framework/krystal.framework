@@ -27,6 +27,13 @@ interface CaptchaInterface
     public function getError();
 
     /**
+     * Returns CAPTCHA answer
+     * 
+     * @return string
+     */
+    public function getAnswer();
+
+    /**
      * Checks whether answer to the CAPTCHA is valid
      * Should be always called after rendering
      * 
