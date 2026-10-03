@@ -56,7 +56,7 @@ final class StringTemplate
     public static function template($input, array $vars = array())
     {
         foreach ($vars as $key => $value) {
-          	if ($value != null) {
+            if ($value !== null) {
 	            $input = str_replace(self::wrap($key), $value, $input);
             }
         }
