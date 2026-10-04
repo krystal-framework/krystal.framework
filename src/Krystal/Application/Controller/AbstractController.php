@@ -14,6 +14,7 @@ use Krystal\Application\View\Resolver\ModuleResolver;
 use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Db\Filter\FilterInvoker;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Validation\Validator;
 use RuntimeException;
 
 abstract class AbstractController
@@ -100,6 +101,29 @@ abstract class AbstractController
     final protected function createValidator(array $params)
     {
         return $this->validatorFactory->build($params);
+    }
+
+    /**
+     * Creates and returns a validator instance
+     * 
+     * @param array $data Input data for validation (defaults to current request POST if empty)
+     * @param array $files Uploaded files (defaults to current request files if empty)
+     * @return \Krystal\Validate\Validator
+     */
+    final protected function createValidation(array $data = [], array $files = [])
+    {
+        if (empty($data)) {
+            $data = $this->request->getPost();
+        }
+
+        if (empty($files)) {
+            $files = $this->request->getFiles();
+        }
+
+        $validator = (new Validator($data,$files))
+        $validator->setTranslator($this->translator, $this->appConfig->getLanguage());
+
+        return $validator;
     }
 
     /**

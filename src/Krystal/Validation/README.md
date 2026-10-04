@@ -51,6 +51,34 @@ Instantiate the validator with your data payload, define your field rules using 
         $errors = $validator->getErrors();
     }
 
+## Shortcut method
+
+When working inside framework controllers, you don't need to manually instantiate `new Validator($data)` and bind the translator every time. Controllers provide a built-in shortcut method: `createValidation()`.
+
+    protected function createValidation(array $data = [], array $files = [])
+
+Automatic payload binding: If `$data` or `$files` are left empty, it automatically pulls the payload directly from `$this->request->getPost()` and `$this->request->getFiles()`.
+
+Automatic translation setup: It instantly injects your application's active translator and language configuration out of the box.
+
+**Example usage in a controller:**
+
+    public function saveAction()
+    {
+        $validator = $this->createValidation();
+
+        $validator->field('title')
+                  ->required()
+                  ->addRule('minlength', null, ['min' => 3]);
+
+        if ($validator->isPassed()) {
+            // Save data safely...
+        } else {
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
+        }
+    }
 
 ## Nested data and wildcards
 
