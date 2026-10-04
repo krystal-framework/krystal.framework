@@ -132,9 +132,8 @@ To keep your error messages looking professional, you can assign human-readable 
         });
 
     // 3. Automatic fallback
-    // If no label is given, this naturally reads as "Billing" in errors
+    // If no label is given, this naturally reads as "Zipcode" in errors
     $validator->field('billing.address.zipcode')->required();
-
 
 ## Built-in rules
 

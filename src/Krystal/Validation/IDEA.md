@@ -55,7 +55,7 @@ Data entry is initiated using the `field()` method, which targets standard multi
 public function field(string $attribute, $label = null): FieldDefinition
 ```
 
-- **Label Evaluation Queue:** If the `$label` parameter is omitted, the engine falls back to extracting the top-level segment of the notation string and applying `ucfirst()`.
+- **Label Evaluation Queue:** If the `$label` parameter is omitted, the engine falls back to extracting the **last** segment of the notation string and applying `ucfirst()`.
 - **Fluent Overrides:** Labels can be lazily or dynamically configured via a chained `label()` modifier method on the fluid definition instance.
 
 ```php

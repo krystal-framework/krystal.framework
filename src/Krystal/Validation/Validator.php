@@ -385,6 +385,6 @@ final class Validator
         }
 
         $segments = explode('.', $path);
-        return ucfirst($segments[0]);
+        return ucfirst(end($segments));
     }
 }
