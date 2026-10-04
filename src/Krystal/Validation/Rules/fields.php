@@ -7,6 +7,8 @@
  * the license file that was distributed with this source code.
  */
 
+use Krystal\Serializer\JsonSerializer;
+
 return [
     // Core framework rules
     'required' => [
@@ -344,8 +346,9 @@ return [
             if (!is_string($value) || trim($value) === '') {
                 return false;
             }
-            // Optimization: uses zero-allocation native validation engine
-            return json_validate($value);
+
+            $serialize = new JsonSerializer();
+            return $serialize->isSerialized($value);
         },
         'message'  => 'The context parameters inside :attribute must constitute an un-broken JSON structure.'
     ],
