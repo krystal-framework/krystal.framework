@@ -120,7 +120,7 @@ abstract class AbstractController
             $files = $this->request->getFiles();
         }
 
-        $validator = (new Validator($data,$files))
+        $validator = (new Validator($data,$files));
         $validator->setTranslator($this->translator, $this->appConfig->getLanguage());
 
         return $validator;
