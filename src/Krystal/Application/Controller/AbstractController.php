@@ -93,17 +93,6 @@ abstract class AbstractController
     }
 
     /**
-     * Creates validation instance
-     * 
-     * @param array $config
-     * @return \Krystal\Validate\ValidatorChain
-     */
-    final protected function createValidator(array $params)
-    {
-        return $this->validatorFactory->build($params);
-    }
-
-    /**
      * Creates and returns a validator instance
      * 
      * @param array $data Input data for validation (defaults to current request POST if empty)
