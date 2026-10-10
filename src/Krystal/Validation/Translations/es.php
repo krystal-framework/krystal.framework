@@ -77,4 +77,13 @@ return [
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => 'La coordenada del índice de contexto de proyección geográfica para :attribute debe estar entre -90 y 90 grados.',
     'The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees.' => 'La coordenada del índice de contexto de proyección geográfica para :attribute debe estar entre -180 y 180 grados.',
+
+    // Financial and identity validators
+    'The :attribute must be a valid credit card number.' => 'El campo :attribute debe ser un número de tarjeta de crédito válido.',
+    'The :attribute must be a valid US Social Security Number.' => 'El campo :attribute debe ser un número de Seguro Social de EE. UU. válido.',
+    'The :attribute must be a valid International Bank Account Number (IBAN).' => 'El campo :attribute debe ser un Número de Cuenta Bancaria Internacional (IBAN) válido.',
+    'The :attribute must be a valid Bank Identifier Code (BIC).' => 'El campo :attribute debe ser un Código de Identificación Bancaria (BIC) válido.',
+    'The :attribute must be a valid international telephone number.' => 'El campo :attribute debe ser un número de teléfono internacional válido.',
+    'The :attribute must be a valid color code (hex, RGB, RGBA, HSL, HSLA, or named color).' => 'El campo :attribute debe ser un código de color válido (hex, RGB, RGBA, HSL, HSLA o color con nombre).',
+    'The :attribute must be a valid URL slug (lowercase alphanumeric, dashes, and underscores only).' => 'El campo :attribute debe ser un slug de URL válido (solo minúsculas, números, guiones y guiones bajos).',
 ];

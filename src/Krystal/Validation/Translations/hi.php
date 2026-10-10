@@ -77,4 +77,13 @@ return [
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => ':attribute के लिए भौगोलिक प्रक्षेपण संदर्भ अनुक्रमणिका निर्देशांक -90 और 90 डिग्री के बीच होना चाहिए।',
     'The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees.' => ':attribute के लिए भौगोलिक प्रक्षेपण संदर्भ अनुक्रमणिका निर्देशांक -180 और 180 डिग्री के बीच होना चाहिए।',
+
+    // Financial and identity validators
+    'The :attribute must be a valid credit card number.' => ':attribute फ़ील्ड एक वैध क्रेडिट कार्ड नंबर होना चाहिए।',
+    'The :attribute must be a valid US Social Security Number.' => ':attribute फ़ील्ड एक वैध अमेरिकी सामाजिक सुरक्षा संख्या होनी चाहिए।',
+    'The :attribute must be a valid International Bank Account Number (IBAN).' => ':attribute फ़ील्ड एक वैध अंतर्राष्ट्रीय बैंक खाता संख्या (IBAN) होनी चाहिए।',
+    'The :attribute must be a valid Bank Identifier Code (BIC).' => ':attribute फ़ील्ड एक वैध बैंक पहचान कोड (BIC) होना चाहिए।',
+    'The :attribute must be a valid international telephone number.' => ':attribute फ़ील्ड एक वैध अंतर्राष्ट्रीय टेलीफ़ोन नंबर होना चाहिए।',
+    'The :attribute must be a valid color code (hex, RGB, RGBA, HSL, HSLA, or named color).' => ':attribute फ़ील्ड एक वैध रंग कोड होना चाहिए (हेक्स, RGB, RGBA, HSL, HSLA, या नामित रंग)।',
+    'The :attribute must be a valid URL slug (lowercase alphanumeric, dashes, and underscores only).' => ':attribute फ़ील्ड एक वैध URL स्लग होना चाहिए (केवल छोटे अक्षर, अंक, डैश और अंडरस्कोर)।',    
 ];

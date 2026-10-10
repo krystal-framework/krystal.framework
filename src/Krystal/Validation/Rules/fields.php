@@ -479,4 +479,244 @@ return [
         },
         'message'  => 'The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees.'
     ],
+    
+    // Financial and identity validators
+    'creditcard' => [
+        'callback' => function ($value, array $options) {
+            if (!is_scalar($value)) {
+                return false;
+            }
+            
+            $number = preg_replace('/\D/', '', (string) $value);
+            
+            if (strlen($number) < 13 || strlen($number) > 19) {
+                return false;
+            }
+            
+            // Luhn algorithm
+            $sum = 0;
+            $length = strlen($number);
+            $parity = $length % 2;
+            
+            for ($i = 0; $i < $length; $i++) {
+                $digit = (int) $number[$i];
+                
+                if ($i % 2 === $parity) {
+                    $digit *= 2;
+                    if ($digit > 9) {
+                        $digit -= 9;
+                    }
+                }
+                
+                $sum += $digit;
+            }
+            
+            return $sum % 10 === 0;
+        },
+        'message'  => 'The :attribute must be a valid credit card number.'
+    ],
+
+    'ssn' => [
+        'callback' => function ($value) {
+            if (!is_scalar($value)) {
+                return false;
+            }
+            
+            $ssn = (string) $value;
+            
+            // Standard format: XXX-XX-XXXX or XXXXXXXXX
+            if (!preg_match('/^(\d{3})-?(\d{2})-?(\d{4})$/', $ssn, $matches)) {
+                return false;
+            }
+            
+            $area = (int) $matches[1];
+            $group = (int) $matches[2];
+            $serial = (int) $matches[3];
+            
+            // Invalid area numbers
+            if ($area === 0 || $area === 666 || $area >= 900) {
+                return false;
+            }
+            
+            // Invalid group
+            if ($group === 0) {
+                return false;
+            }
+            
+            // Invalid serial
+            if ($serial === 0) {
+                return false;
+            }
+            
+            return true;
+        },
+        'message'  => 'The :attribute must be a valid US Social Security Number.'
+    ],
+
+    'iban' => [
+        'callback' => function ($value) {
+            if (!is_scalar($value)) {
+                return false;
+            }
+            
+            $iban = strtoupper(str_replace(' ', '', (string) $value));
+            
+            // Basic format check: 2 letters, 2 digits, then alphanumeric
+            if (!preg_match('/^[A-Z]{2}\d{2}[A-Z0-9]+$/', $iban)) {
+                return false;
+            }
+            
+            // Length check (15-34 characters per ISO 13616)
+            $length = strlen($iban);
+            if ($length < 15 || $length > 34) {
+                return false;
+            }
+            
+            // Move first 4 characters to the end
+            $rearranged = substr($iban, 4) . substr($iban, 0, 4);
+            
+            // Replace letters with numbers (A=10, B=11, ..., Z=35)
+            $numeric = '';
+            for ($i = 0; $i < strlen($rearranged); $i++) {
+                $char = $rearranged[$i];
+                if (ctype_alpha($char)) {
+                    $numeric .= (string) (ord($char) - ord('A') + 10);
+                } else {
+                    $numeric .= $char;
+                }
+            }
+            
+            // Calculate mod 97 using string math to handle large numbers
+            $remainder = 0;
+            for ($i = 0; $i < strlen($numeric); $i++) {
+                $remainder = ($remainder * 10 + (int) $numeric[$i]) % 97;
+            }
+            
+            return $remainder === 1;
+        },
+        'message'  => 'The :attribute must be a valid International Bank Account Number (IBAN).'
+    ],
+
+    'bic' => [
+        'callback' => function ($value) {
+            if (!is_scalar($value)) {
+                return false;
+            }
+            
+            $bic = strtoupper((string) $value);
+            
+            // BIC format: 4 letters (bank) + 2 letters (country) + 2 alphanumeric (location) + optional 3 alphanumeric (branch)
+            // Total: 8 or 11 characters
+            if (!preg_match('/^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$/', $bic)) {
+                return false;
+            }
+            
+            return true;
+        },
+        'message'  => 'The :attribute must be a valid Bank Identifier Code (BIC).'
+    ],
+
+    'phone' => [
+        'callback' => function ($value, array $options) {
+            if (!is_scalar($value)) {
+                return false;
+            }
+            
+            $phone = trim((string) $value);
+            
+            // Allow optional custom pattern
+            if (isset($options['pattern']) && is_string($options['pattern']) && $options['pattern'] !== '') {
+                return (bool) preg_match($options['pattern'], $phone);
+            }
+            
+            // Default: ITU-T E.164 format
+            // + followed by 1-15 digits (country code + subscriber number)
+            // Also accept without leading + for domestic formats with separators
+            $cleaned = preg_replace('/[\s\-\(\)\.]/', '', $phone);
+            
+            // E.164 strict format
+            if (preg_match('/^\+[1-9]\d{1,14}$/', $cleaned)) {
+                return true;
+            }
+            
+            // Local format with optional + and separators (7-15 digits)
+            $digitsOnly = preg_replace('/\D/', '', $phone);
+            $digitCount = strlen($digitsOnly);
+            
+            return $digitCount >= 7 && $digitCount <= 15;
+        },
+        'message'  => 'The :attribute must be a valid international telephone number.'
+    ],
+
+    'color' => [
+        'callback' => function ($value) {
+            if (!is_scalar($value)) {
+                return false;
+            }
+            
+            $color = trim((string) $value);
+            
+            // Hexadecimal: #fff, #ffffff, #ffff, #ffffffff (with or without #)
+            if (preg_match('/^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $color)) {
+                return true;
+            }
+            
+            // RGB: rgb(255, 255, 255) or rgb(255,255,255)
+            if (preg_match('/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/i', $color, $matches)) {
+                return (int) $matches[1] <= 255 && (int) $matches[2] <= 255 && (int) $matches[3] <= 255;
+            }
+            
+            // RGBA: rgba(255, 255, 255, 0.5) or rgba(255,255,255,0.5)
+            if (preg_match('/^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*([01]|0?\.\d+)\s*\)$/i', $color, $matches)) {
+                return (int) $matches[1] <= 255 && (int) $matches[2] <= 255 && (int) $matches[3] <= 255;
+            }
+            
+            // HSL: hsl(360, 100%, 50%)
+            if (preg_match('/^hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*\)$/i', $color, $matches)) {
+                return (int) $matches[1] <= 360 && (int) $matches[2] <= 100 && (int) $matches[3] <= 100;
+            }
+            
+            // HSLA: hsla(360, 100%, 50%, 0.5)
+            if (preg_match('/^hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*([01]|0?\.\d+)\s*\)$/i', $color, $matches)) {
+                return (int) $matches[1] <= 360 && (int) $matches[2] <= 100 && (int) $matches[3] <= 100;
+            }
+            
+            // Named colors (basic set)
+            $namedColors = [
+                'black', 'white', 'red', 'green', 'blue', 'yellow', 'cyan', 'magenta',
+                'gray', 'grey', 'orange', 'purple', 'brown', 'pink', 'lime', 'navy',
+                'teal', 'olive', 'maroon', 'aqua', 'silver', 'fuchsia'
+            ];
+            
+            if (in_array(strtolower($color), $namedColors, true)) {
+                return true;
+            }
+            
+            return false;
+        },
+        'message'  => 'The :attribute must be a valid color code (hex, RGB, RGBA, HSL, HSLA, or named color).'
+    ],
+
+    'slug' => [
+        'callback' => function ($value, array $options) {
+            if (!is_scalar($value)) {
+                return false;
+            }
+            
+            $slug = (string) $value;
+            
+            if ($slug === '') {
+                return false;
+            }
+            
+            // Default pattern: lowercase alphanumeric with dashes and underscores
+            // Allow custom pattern if provided
+            $pattern = isset($options['pattern']) && is_string($options['pattern']) && $options['pattern'] !== ''
+                ? $options['pattern']
+                : '/^[a-z0-9]+(?:[-_][a-z0-9]+)*$/';
+            
+            return (bool) preg_match($pattern, $slug);
+        },
+        'message'  => 'The :attribute must be a valid URL slug (lowercase alphanumeric, dashes, and underscores only).'
+    ],    
 ];

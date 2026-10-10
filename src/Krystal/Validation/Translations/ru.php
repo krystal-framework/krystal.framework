@@ -77,4 +77,13 @@ return [
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => 'Координата индекса контекста географической проекции для :attribute должна быть от -90 до 90 градусов.',
     'The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees.' => 'Координата индекса контекста географической проекции для :attribute должна быть от -180 до 180 градусов.',
+    
+    // Financial and identity validators
+    'The :attribute must be a valid credit card number.' => 'Поле :attribute должно быть действительным номером кредитной карты.',
+    'The :attribute must be a valid US Social Security Number.' => 'Поле :attribute должно быть действительным номером социального страхования США.',
+    'The :attribute must be a valid International Bank Account Number (IBAN).' => 'Поле :attribute должно быть действительным международным номером банковского счёта (IBAN).',
+    'The :attribute must be a valid Bank Identifier Code (BIC).' => 'Поле :attribute должно быть действительным банковским идентификационным кодом (BIC).',
+    'The :attribute must be a valid international telephone number.' => 'Поле :attribute должно быть действительным международным номером телефона.',
+    'The :attribute must be a valid color code (hex, RGB, RGBA, HSL, HSLA, or named color).' => 'Поле :attribute должно быть действительным кодом цвета (hex, RGB, RGBA, HSL, HSLA или именованный цвет).',
+    'The :attribute must be a valid URL slug (lowercase alphanumeric, dashes, and underscores only).' => 'Поле :attribute должно быть действительным URL-слагом (только строчные буквы, цифры, дефисы и подчёркивания).',
 ];

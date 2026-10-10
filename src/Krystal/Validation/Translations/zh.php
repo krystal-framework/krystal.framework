@@ -77,4 +77,13 @@ return [
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => ':attribute 的地理投影上下文索引坐标必须在 -90 到 90 度之间。',
     'The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees.' => ':attribute 的地理投影上下文索引坐标必须在 -180 到 180 度之间。',
+    
+    // Financial and identity validators
+    'The :attribute must be a valid credit card number.' => ':attribute 必须是一个有效的信用卡号。',
+    'The :attribute must be a valid US Social Security Number.' => ':attribute 必须是一个有效的美国社会安全号码。',
+    'The :attribute must be a valid International Bank Account Number (IBAN).' => ':attribute 必须是一个有效的国际银行账号 (IBAN)。',
+    'The :attribute must be a valid Bank Identifier Code (BIC).' => ':attribute 必须是一个有效的银行识别码 (BIC)。',
+    'The :attribute must be a valid international telephone number.' => ':attribute 必须是一个有效的国际电话号码。',
+    'The :attribute must be a valid color code (hex, RGB, RGBA, HSL, HSLA, or named color).' => ':attribute 必须是一个有效的颜色代码（十六进制、RGB、RGBA、HSL、HSLA 或命名颜色）。',
+    'The :attribute must be a valid URL slug (lowercase alphanumeric, dashes, and underscores only).' => ':attribute 必须是一个有效的 URL 别名（仅限小写字母、数字、连字符和下划线）。',    
 ];

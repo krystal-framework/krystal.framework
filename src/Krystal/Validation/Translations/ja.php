@@ -77,4 +77,13 @@ return [
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => ':attributeの地理的投影コンテキストインデックス座標は-90度から90度の間である必要があります。',
     'The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees.' => ':attributeの地理的投影コンテキストインデックス座標は-180度から180度の間である必要があります。',
+
+    // Financial and identity validators
+    'The :attribute must be a valid credit card number.' => ':attributeフィールドは有効なクレジットカード番号である必要があります。',
+    'The :attribute must be a valid US Social Security Number.' => ':attributeフィールドは有効な米国社会保障番号である必要があります。',
+    'The :attribute must be a valid International Bank Account Number (IBAN).' => ':attributeフィールドは有効な国際銀行口座番号（IBAN）である必要があります。',
+    'The :attribute must be a valid Bank Identifier Code (BIC).' => ':attributeフィールドは有効な銀行識別コード（BIC）である必要があります。',
+    'The :attribute must be a valid international telephone number.' => ':attributeフィールドは有効な国際電話番号である必要があります。',
+    'The :attribute must be a valid color code (hex, RGB, RGBA, HSL, HSLA, or named color).' => ':attributeフィールドは有効なカラーコード（hex、RGB、RGBA、HSL、HSLA、または名前付きカラー）である必要があります。',
+    'The :attribute must be a valid URL slug (lowercase alphanumeric, dashes, and underscores only).' => ':attributeフィールドは有効なURLスラッグ（小文字の英数字、ハイフン、アンダースコアのみ）である必要があります。',    
 ];

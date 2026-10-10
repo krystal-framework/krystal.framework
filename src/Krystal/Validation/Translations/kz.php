@@ -77,4 +77,13 @@ return [
     // Geospatial coordinate checking schemas
     'The geographical projection context index coordinate for :attribute must fall between -90 and 90 degrees.' => ':attribute үшін географиялық проекция контексінің индекс координатасы -90 және 90 градус аралығында болуы керек.',
     'The geographical projection context index coordinate for :attribute must fall between -180 and 180 degrees.' => ':attribute үшін географиялық проекция контексінің индекс координатасы -180 және 180 градус аралығында болуы керек.',
+    
+    // Financial and identity validators
+    'The :attribute must be a valid credit card number.' => ':attribute өрісі жарамды несие картасының нөмірі болуы керек.',
+    'The :attribute must be a valid US Social Security Number.' => ':attribute өрісі жарамды АҚШ әлеуметтік қамсыздандыру нөмірі болуы керек.',
+    'The :attribute must be a valid International Bank Account Number (IBAN).' => ':attribute өрісі жарамды халықаралық банк шотының нөмірі (IBAN) болуы керек.',
+    'The :attribute must be a valid Bank Identifier Code (BIC).' => ':attribute өрісі жарамды банк сәйкестендіру коды (BIC) болуы керек.',
+    'The :attribute must be a valid international telephone number.' => ':attribute өрісі жарамды халықаралық телефон нөмірі болуы керек.',
+    'The :attribute must be a valid color code (hex, RGB, RGBA, HSL, HSLA, or named color).' => ':attribute өрісі жарамды түс коды болуы керек (hex, RGB, RGBA, HSL, HSLA немесе атаулы түс).',
+    'The :attribute must be a valid URL slug (lowercase alphanumeric, dashes, and underscores only).' => ':attribute өрісі жарамды URL slug болуы керек (тек кіші әріптер, сандар, сызықшалар және астыңғы сызықтар).',    
 ];
