@@ -151,7 +151,7 @@ final class ModuleManager implements ModuleManagerInterface
      */
     public function isCoreModules(array $modules)
     {
-        return $this->getCoreBag()->isCoreModules($module);
+        return $this->getCoreBag()->isCoreModules($modules);
     }
 
     /**

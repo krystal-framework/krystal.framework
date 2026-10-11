@@ -34,18 +34,18 @@ News/
 
 When fetching raw data from a mapper, it's best to convert it into safe, object-oriented entities before passing it to templates. This protects against XSS, ensures consistent data shape, and makes templates cleaner.
 
-Extend `AbstractManager` and implement `toEntity()` to transform each row:
+Extend `AbstractService` and implement `toEntity()` to transform each row:
 
 
     <?php
     
     namespace Book\Service;
     
-    use Krystal\Application\Model\AbstractManager;
+    use Krystal\Application\Model\AbstractService;
     use Krystal\Stdlib\VirtualEntity;
     use Book\Storage\MySQL\BookMapper;
     
-    final class BookService extends AbstractManager
+    final class BookService extends AbstractService
     {
         private BookMapper $mapper;
     
