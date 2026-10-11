@@ -20,6 +20,16 @@ use RuntimeException;
 abstract class AbstractController
 {
     /**
+     * Middleware declared by this controller.
+     *
+     * Subclasses override this property to declare middleware that applies
+     * to every action dispatched to this controller.
+     *
+     * @var array<int, string>
+     */
+    protected $middlewares = [];
+
+    /**
      * Service Locator
      * 
      * @var \Krystal\InstanceManager\ServiceLocatorInterface
@@ -60,6 +70,16 @@ abstract class AbstractController
         $this->serviceLocator = $serviceLocator;
         $this->moduleName = $moduleName;
         $this->options = $options;
+    }
+
+    /**
+     * Returns middleware declared by this controller.
+     *
+     * @return array<int, string>
+     */
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
     }
 
     /**

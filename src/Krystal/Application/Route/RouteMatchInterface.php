@@ -12,6 +12,21 @@ namespace Krystal\Application\Route;
 interface RouteMatchInterface
 {
     /**
+     * Defines middleware for this route
+     *
+     * @param array<int, string> $middleware
+     * @return \Krystal\Application\Route\RouteMatch
+     */
+    public function setMiddleware(array $middleware);
+
+    /**
+     * Returns middleware declared for this route
+     *
+     * @return array<int, string>
+     */
+    public function getMiddleware(): array;
+
+    /**
      * Defines matched URI
      * 
      * @param string $matchedURI

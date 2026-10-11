@@ -12,6 +12,13 @@ namespace Krystal\Application\Route;
 interface MapManagerInterface
 {
     /**
+     * Returns the full route map (template => options)
+     *
+     * @return array
+     */
+    public function getMap();
+
+    /**
      * Converts route notation to PSR-compliant
      * 
      * @param string $notation Route's notation

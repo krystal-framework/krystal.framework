@@ -9,8 +9,6 @@
 
 namespace Krystal\Application\Route;
 
-use RuntimeException;
-
 final class UrlBuilder implements UrlBuilderInterface
 {
     /**

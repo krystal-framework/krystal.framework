@@ -9,7 +9,6 @@
 
 namespace Krystal\Application\Route;
 
-use Krystal\Stdlib\ArrayUtils;
 use RuntimeException;
 
 final class MapManager implements MapManagerInterface
@@ -148,6 +147,16 @@ final class MapManager implements MapManagerInterface
     public function getURIMap()
     {
         return array_keys($this->map);
+    }
+
+    /**
+     * Returns the full route map (template => options)
+     *
+     * @return array
+     */
+    public function getMap()
+    {
+        return $this->map;
     }
 
     /**

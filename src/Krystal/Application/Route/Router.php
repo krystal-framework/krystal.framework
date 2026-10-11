@@ -69,17 +69,21 @@ final class Router implements RouterInterface
             $segment = substr($segment, 0, $pos);
         }
 
-        foreach ($map as $index => $uriTemplate) {
+        foreach ($map as $uriTemplate => $options) {
             $matches = [];
 
             if (preg_match($this->createRegEx($uriTemplate), $segment, $matches) === 1) {
-                // Remove the full match to leave only the captured variables
                 $matchedURI = array_shift($matches);
 
                 $routeMatch = new RouteMatch();
                 $routeMatch->setMatchedUri($matchedURI)
                            ->setMatchedUriTemplate($uriTemplate)
                            ->setVariables($matches);
+
+                // Attach middleware from route options, if present
+                if (isset($options['middleware']) && is_array($options['middleware'])) {
+                    $routeMatch->setMiddleware($options['middleware']);
+                }
 
                 return $routeMatch;
             }

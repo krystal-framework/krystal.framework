@@ -9,15 +9,26 @@
 
 namespace Krystal\Application\FrontController;
 
+use Krystal\Application\Controller\AbstractController;
+
 interface ControllerFactoryInterface
 {
     /**
-     * Builds a controller instance
-     * 
-     * @param string $controller PSR-0 Compliant path
-     * @param string $action Method to be invoked on controller
-     * @param array $options Route options passed to corresponding controller
+     * Creates a controller instance without initializing it.
+     *
+     * @param string $controller
+     * @param array $options
      * @return \Krystal\Application\Controller\AbstractController
      */
-    public function build($controller, $action, array $options);
+    public function create($controller, array $options = array()): AbstractController;
+
+    /**
+     * Creates and initializes a controller in a single call.
+     *
+     * @param string $controller
+     * @param string $action
+     * @param array $options
+     * @return \Krystal\Application\Controller\AbstractController
+     */
+    public function build($controller, $action, array $options = array()): AbstractController;
 }

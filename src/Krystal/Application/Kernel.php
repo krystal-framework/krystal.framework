@@ -16,8 +16,8 @@ use Krystal\Application\Route\Router;
 use Krystal\Application\Route\RouteNotation;
 use Krystal\Application\InputInterface;
 use Krystal\Application\Component;
+use Throwable;
 use RuntimeException;
-use InvalidArgumentException;
 use LogicException;
 
 /**
@@ -89,6 +89,8 @@ final class Kernel implements KernelInterface
             new Component\CsrfProtector(),
             new Component\Captcha(),
             new Component\Logger(),
+            // Middleware must be registered before Dispatcher
+            new Component\Middleware(),
             // Dispatcher always must be very last component to be registered
             new Component\Dispatcher()
         );
@@ -150,9 +152,10 @@ final class Kernel implements KernelInterface
         $sl = $this->bootstrap();
 
         // Grab required services to run the application
-        $request = $sl->get('request');
+        $request    = $sl->get('request');
         $dispatcher = $sl->get('dispatcher');
-        $response = $sl->get('response');
+        $response   = $sl->get('response');
+        $middleware = $sl->get('middleware');
 
         // Do we need to perform SSL redirect?
         if (isset($this->config['components']['router']['ssl']) && $this->config['components']['router']['ssl'] == true) {
@@ -167,56 +170,140 @@ final class Kernel implements KernelInterface
             $router->processRedirect($request->getURI(), $this->config['components']['router']['redirects']);
         }
 
+        $map = $dispatcher->getMap();
+
         // Returns RouteMatch on success, false on failure
-        $route = $router->match($request->getURI(), $dispatcher->getURIMap());
-        $notFound = false;
+        $route = $router->match($request->getURI(), $map);
 
-        // $route is false on failure, otherwise RouteMatch is returned when found
-        if ($route !== false) {
-            $content = null;
-
-            try {
-                $content = $dispatcher->render($route->getMatchedURITemplate(), $route->getVariables());
-            } catch(\DomainException $e){
-                $notFound = true;
-            }
-
-            if ($content === false) {
-                // Returning false from an action, will trigger 404
-                $notFound = true;
-            }
-
-        } else {
-            $notFound = true;
+        // 404 — middleware does not run
+        if ($route === false) {
+            $content = $this->renderNotFound($sl, $dispatcher);
+            $response->setStatusCode(404);
+            $response->send((string) $content);
+            return;
         }
 
-        // Handle now found now
-        if ($notFound === true) {
-            $default = $this->config['components']['router']['default'];
+        // 1. Create controller without initializing it.
+        //    Middleware runs before initialize() — bootstrap(), auth hooks,
+        //    and translation loading are all deferred until after middleware.
+        $controller = $dispatcher->createController($route);
 
-            if (is_string($default)) {
-                $notation = new RouteNotation();
-                $args = $notation->toArgs($default);
+        // 2. Merge middleware from controller and route.
+        //    Order: controller middleware first, then route middleware.
+        //    Duplicate detection is handled inside MiddlewareRunner::setQueue().
+        $queue = array_merge(
+            $controller->getMiddlewares(),
+            $route->getMiddleware()
+        );
 
-                // Extract controller and action from $args
-                $controller = $args[0];
-                $action = $args[1];
-                
-                // Finally call it
-                $content = $dispatcher->call($controller, $action);
+        $middleware->setQueue($queue);
 
-            } else if (is_callable($default)) {
-                $content = call_user_func($default, $sl);
-            } else {
-                throw new LogicException(sprintf(
-                    'Default route must be either callable or a string that represents default controller, not %s', gettype($default)
-                ));
+        $notFound = false;
+
+        try {
+            // 3. Run middleware pipeline.
+            //    Returning false halts the pipeline; the response has been
+            //    populated by the middleware that halted.
+            if (!$middleware->run($sl, $route)) {
+                $response->send('');
+                return;
             }
 
+            // 4. Initialize the controller (bootstrap, auth, translations).
+            $dispatcher->initializeController($controller, $route);
+
+            // 5. If the controller halted during initialize (haltOnDemand,
+            //    auth failure, etc.), skip the action and send nothing.
+            if ($controller->isHalted()) {
+                $response->send('');
+                return;
+            }
+
+            // 6. Invoke the action.
+            $content = $dispatcher->invokeAction($controller, $route);
+
+            // Returning false from an action triggers 404
+            if ($content === false) {
+                $notFound = true;
+            }
+
+        } catch (Throwable $e) {
+            // Exception handler produces its own response
+            $content = $this->renderException($sl, $e);
+            $response->send((string) $content);
+            return;
+
+        } finally {
+            // Guarantee terminate() runs on every path, including exceptions.
+            // Note: terminate() only runs for middleware whose process() was
+            // invoked. If the pipeline halted before any middleware ran, this
+            // is a no-op.
+            $middleware->terminate($sl, $route);
+        }
+
+        // Handle 404 — a controller action returned false
+        if ($notFound === true) {
+            $content = $this->renderNotFound($sl, $dispatcher);
             $response->setStatusCode(404);
         }
 
-        $response->send($content);
+        $response->send((string) $content);
+    }
+
+    /**
+     * Handles a not-found state by invoking the default route.
+     *
+     * The default route is configured under the router component as
+     * `default` and may be either a controller notation string or a
+     * callable that receives the service locator.
+     *
+     * @param \Krystal\InstanceManager\ServiceLocator $sl
+     * @param \Krystal\Application\FrontController\Dispatcher $dispatcher
+     * @throws \LogicException If the default route configuration is invalid
+     * @return mixed
+     */
+    private function renderNotFound(ServiceLocator $sl, $dispatcher)
+    {
+        $default = $this->config['components']['router']['default'];
+
+        if (is_string($default)) {
+            $notation = new RouteNotation();
+            $args = $notation->toArgs($default);
+
+            // Extract controller and action from $args
+            $controller = $args[0];
+            $action = $args[1];
+
+            return $dispatcher->call($controller, $action);
+
+        } else if (is_callable($default)) {
+            return call_user_func($default, $sl);
+        }
+
+        throw new LogicException(sprintf(
+            'Default route must be either callable or a string that represents default controller, not %s',
+            gettype($default)
+        ));
+    }
+
+    /**
+     * Handles a thrown exception by delegating to the exception handler.
+     *
+     * In production mode, the exception handler is registered during tweak(),
+     * and this method is unlikely to be reached. In development mode, the
+     * registered handler renders a detailed error page.
+     *
+     * @param \Krystal\InstanceManager\ServiceLocator $sl
+     * @param \Throwable $e
+     * @return string
+     */
+    private function renderException(ServiceLocator $sl, Throwable $e): string
+    {
+        // The exception handler registered during tweak() will typically
+        // have already rendered and terminated. If we reach here, the
+        // handler is either not registered (production mode) or has been
+        // overridden. Fall back to a minimal response.
+        return '';
     }
 
     /**

@@ -10,14 +10,14 @@
 namespace Krystal\Application\FrontController;
 
 use Krystal\InstanceManager\ServiceLocatorInterface;
+use Krystal\Application\Controller\AbstractController;
 use RuntimeException;
-use DomainException;
 
 final class ControllerFactory implements ControllerFactoryInterface
 {
     /**
-     * Service locator
-     *  
+     * Service locator to be injected into every controller
+     * 
      * @var \Krystal\InstanceManager\ServiceLocatorInterface
      */
     private $serviceLocator;
@@ -34,42 +34,54 @@ final class ControllerFactory implements ControllerFactoryInterface
     }
 
     /**
-     * Builds a controller instance
-     * 
-     * @param string $controller PSR-0 Compliant path
-     * @param string $action Method to be invoked on controller
-     * @param array $options Route options passed to corresponding controller
+     * Creates a controller instance without initializing it.
+     *
+     * The controller is constructed with its dependencies but its
+     * initialize() method is not called. This is the entry point used
+     * by the middleware-aware dispatch flow.
+     *
+     * @param string $controller PSR-0 compliant controller class name
+     * @param array $options Route options passed to the controller
+     * @throws \RuntimeException if the class does not exist
      * @return \Krystal\Application\Controller\AbstractController
      */
-    public function build($controller, $action, array $options)
+    public function create($controller, array $options = array()): AbstractController
     {
         $class = Ns::normalize($controller);
 
-        // PSR-0 Autoloader will do its own job by default when calling class_exists() function
-        if (class_exists($class)) {
-
-            // Target module which is going to be instantiated
-            $module = Ns::extractVendorNs($controller);
-            $controller = new $class($this->serviceLocator, $module, $options);
-
-            if (method_exists($controller, 'initialize')) {
-                $controller->initialize($action);
-
-                if ($controller->isHalted()) {
-                    throw new DomainException('Controller halted its execution due to route options mismatch');
-                }
-
-                return $controller;
-
-            } else {
-                throw new RuntimeException('A base controller must be inherited');
-            }
-
-        } else {
-            // A name does not match PSR-0
-            trigger_error(sprintf(
-                'Controller does not exist : "%s" or it does not match PSR-0', $class), E_USER_ERROR
-            );
+        if (!class_exists($class)) {
+            throw new RuntimeException(sprintf(
+                'Controller class "%s" does not exist or does not match PSR-0 naming convention.',
+                $class
+            ));
         }
+
+        $module = Ns::extractVendorNs($controller);
+
+        return new $class($this->serviceLocator, $module, $options);
+    }
+
+    /**
+     * Builds a controller and initializes it in a single call.
+     *
+     * This is the legacy entry point. It constructs the controller and
+     * immediately invokes initialize(), which runs bootstrap(), auth
+     * checks, and translation loading.
+     *
+     * Note: controllers that halt during initialize() (via haltOnDemand()
+     * or auth hooks) will have isHalted() return true after this call.
+     * Callers are responsible for checking isHalted() and short-circuiting.
+     *
+     * @param string $controller PSR-0 compliant controller class name
+     * @param string $action Action name (used for initialize)
+     * @param array $options Route options passed to the controller
+     * @return \Krystal\Application\Controller\AbstractController
+     */
+    public function build($controller, $action, array $options = array()): AbstractController
+    {
+        $instance = $this->create($controller, $options);
+        $instance->initialize($action);
+
+        return $instance;
     }
 }

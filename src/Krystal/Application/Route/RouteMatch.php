@@ -12,6 +12,13 @@ namespace Krystal\Application\Route;
 final class RouteMatch implements RouteMatchInterface
 {
     /**
+     * Middleware declared for the matched route
+     *
+     * @var array<int, string>
+     */
+    private $middleware = [];
+
+    /**
      * Matched URI itself
      * 
      * @var string
@@ -37,7 +44,29 @@ final class RouteMatch implements RouteMatchInterface
      * 
      * @var array
      */
-    private $variables = array();
+    private $variables = [];
+
+    /**
+     * Defines middleware for this route
+     *
+     * @param array<int, string> $middleware
+     * @return \Krystal\Application\Route\RouteMatch
+     */
+    public function setMiddleware(array $middleware)
+    {
+        $this->middleware = $middleware;
+        return $this;
+    }
+
+    /**
+     * Returns middleware declared for this route
+     *
+     * @return array<int, string>
+     */
+    public function getMiddleware(): array
+    {
+        return $this->middleware;
+    }
 
     /**
      * Defines a matched URI

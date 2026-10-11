@@ -9,8 +9,6 @@
 
 namespace Krystal\Application;
 
-use Krystal\Application\App;
-
 abstract class KernelFactory
 {
     /**
