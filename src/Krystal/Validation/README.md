@@ -141,8 +141,6 @@ The library ships with optimized, type-strict rules out of the box.
 
 ### Field rules
 
-### Field rules
-
 | Rule            | Options                                  | Default message template |
 |-----------------|------------------------------------------|--------------------------|
 | required        | `None`                                   | The :attribute field is required. |
