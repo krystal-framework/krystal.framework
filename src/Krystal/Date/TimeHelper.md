@@ -18,6 +18,50 @@ Provides predefined time-related constants in seconds for convenience, including
     echo TimeHelper::MONTH;
     echo TimeHelper::YEAR;
 
+## Getting relative time
+
+Returns a relative-time description for a timestamp. The result is split into a `pattern` and a `value` so the caller can translate and pluralize it.
+
+- `pattern` — a ready-to-display string (`'just now'`, an absolute date) **or** a template containing one `%d` placeholder.
+- `value` — `null` when `pattern` is ready to display, otherwise the integer to substitute into `%d`.
+
+Accepts either a UNIX timestamp or any string understood by `strtotime()`. If parsing fails, an empty `pattern` and `null` `value` are returned.
+
+    use Krystal\Date\TimeHelper;
+
+    $result = TimeHelper::relativeTimePattern('2025-03-01 10:00:00');
+
+    if ($result['value'] === null) {
+        echo $result['pattern']; // "just now", or e.g. "Mar 4, 2025 14:30"
+    } else {
+        echo sprintf($result['pattern'], $result['value']); // e.g. "5 minutes ago"
+    }
+
+Thresholds are coarse and fixed — they are **not** calendar-aware:
+
+| Difference from now | `pattern` | `value` |
+|---|---|---|
+| < 1 minute | `'just now'` | `null` |
+| < 1 hour | `'%d minutes ago'` | minutes |
+| < 1 day | `'%d hours ago'` | hours |
+| < 30 days | `'%d days ago'` | days |
+| otherwise, or **future** | absolute date, e.g. `'Mar 4, 2025 14:30'` | `null` |
+
+A **future** timestamp does not produce a relative description — it falls through to the absolute date branch. The 30-day month cutoff and the 365-day year constant are approximations; for calendar-accurate output, use `DateTime::diff()` directly.
+
+The optional second argument overrides the current time. Leave it `null` in normal code; pass it in tests for a deterministic result:
+
+    $result = TimeHelper::relativeTimePattern(1709287200, 1709287260);
+    // ['pattern' => '%d minutes ago', 'value' => 1]
+
+The caller is responsible for pluralization and localization:
+
+    $text = $result['value'] === 1
+        ? 'a minute ago'
+        : sprintf('%d minutes ago', $result['value']);
+
+    // Translation (gettext-style)
+    $text = sprintf(_($result['pattern']), $result['value']);
 
 ## Getting copyright year
 

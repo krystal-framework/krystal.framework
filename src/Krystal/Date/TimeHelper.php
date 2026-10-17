@@ -18,10 +18,76 @@ abstract class TimeHelper
 {
     const MINUTE = 60;
     const SECOND = 1;
+    const HOUR = 3600;
     const DAY = 86400;
     const WEEK = 604800;
     const MONTH = 2592000;
     const YEAR = 31536000;
+
+    /**
+     * Returns a relative-time pattern and the value that fills it
+     *
+     * When `value` is null, `pattern` is a ready-to-display string.
+     * When `value` is an int, `pattern` has a single `%d` placeholder.
+     * Pluralization is left to the caller.
+     *
+     * @param string|int $timestamp
+     * @param int|null $now Overrides time(); pass in tests for determinism
+     * @return array ['pattern' => string, 'value' => int|null]
+     */
+    public static function relativeTimePattern($timestamp, $now = null)
+    {
+        $ts = is_numeric($timestamp) ? (int) $timestamp : strtotime($timestamp);
+
+        if ($ts === false) {
+            return [
+                'pattern' => '',
+                'value' => null
+            ];
+        }
+
+        if ($now === null) {
+            $now = time();
+        }
+
+        $diff = $now - $ts;
+
+        if ($diff >= 0) {
+            if ($diff < TimeHelper::MINUTE) {
+                return [
+                    'pattern' => 'just now',
+                    'value' => null
+                ];
+            }
+
+            if ($diff < TimeHelper::HOUR) {
+                return [
+                    'pattern' => '%d minutes ago',
+                    'value' => (int) ($diff / 60)
+                ];
+            }
+
+            if ($diff < TimeHelper::DAY) {
+                return [
+                    'pattern' => '%d hours ago',
+                    'value' => (int) ($diff / 3600)
+                ];
+            }
+
+            // Coarse approximation: 30 days ≈ 1 month. Not calendar-aware.
+            if ($diff < TimeHelper::MONTH) {
+                return [
+                    'pattern' => '%d days ago',
+                    'value' => (int) ($diff / TimeHelper::DAY)
+                ];
+            }
+        }
+
+        return [
+            'pattern' => date('M j, Y H:i', $ts),
+            'value' => null
+        ];
+    }
 
     /**
      * Returns a copyright year or year range from the given start year up to the current year.
