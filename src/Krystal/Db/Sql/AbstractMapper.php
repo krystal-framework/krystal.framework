@@ -180,6 +180,25 @@ abstract class AbstractMapper
     }
 
     /**
+     * Runs a callable inside a database transaction
+     *
+     * Convenience wrapper around Db::transaction(). Lets services that
+     * already hold a mapper instance start transactions without needing
+     * a direct reference to the underlying Db service.
+     *
+     * Both mappers sharing the same Db connection are inside the same
+     * transaction, so cross-mapper operations are atomic.
+     *
+     * @param callable $callback
+     * @throws \Throwable Rethrown from the callback on failure
+     * @return mixed The return value of the callback on success
+     */
+    final public function wrapTransaction(callable $callback)
+    {
+        return $this->db->transaction($callback);
+    }
+
+    /**
      * Determines whether column value already exists
      * 
      * @param string $column Column name

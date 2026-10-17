@@ -390,7 +390,7 @@ Appends `INSERT INTO table (...) VALUES (...)`. An example:
     
     $this->db->insert('users', $data)
 
-This will call will generate the following query:
+This call will generate the following query:
 
     INSERT INTO users (name, age) VALUES ('Dave', '23')
 
@@ -731,31 +731,65 @@ Now you can simply call `getPaginator()` on a mapper, since `paginate()` method 
 
 # Transactions
 
-There are four methods to handle transaction. In case you use MySQL, remember that transactions aren't supported by MyISAM engine. If you plain to use them, make sure your tables are managed by InnoDB engine.
+There are five methods to handle transactions. In case you use MySQL, remember that transactions aren't supported by MyISAM engine. If you plan to use them, make sure your tables are managed by InnoDB engine.
 
-# beginTransaction()
+## beginTransaction()
 
     \Krystal\Db\Sql\Db\beginTransaction()
 
 Initiates a new transaction. Returns true on success, false on failure
 
-# inTransaction()
+## inTransaction()
 
     \Krystal\Db\Sql\Db\inTransaction()
 
 Checks if inside a transaction. Returns true if inside, false if not
 
-# commit()
+## commit()
 
     \Krystal\Db\Sql\Db\commit()
 
 Commits a transaction. Returns true on success, false on failure.
 
-# rollBack()
+## rollBack()
 
     \Krystal\Db\Sql\Db\rollBack()
 
 Rolls back a transaction. If no transaction is active, then it would throw `\PDOException`. Returns true on success, false on failure.
+
+## transaction()
+
+    \Krystal\Db\Sql\Db::transaction(callable $callback)
+
+Runs a callable inside a database transaction and returns whatever the callable returns. This is the recommended way to wrap multiple statements in a single atomic unit, as it guarantees that `commit()` is always paired with a `rollBack()` on failure.
+
+The callable receives no arguments. If it completes normally, the transaction is committed; if it throws, the transaction is rolled back and the exception is re-thrown so the caller can handle it.
+
+Nested transactions are not supported. If a transaction is already active when `transaction()` is called, the callable is executed **inline** — no new transaction is opened and nothing is committed. The outer transaction remains the owner of the atomicity boundary. This means you can safely call `transaction()` from lower-level methods without worrying about whether an outer transaction is already in progress.
+
+For example:
+
+    $this->db->transaction(function () {
+        $this->db->insert('users', array(
+            'name' => 'Dave',
+            'age' => '24'
+        ))->execute();
+
+        $this->db->update('accounts', array('balance' => 100))
+                 ->whereEquals('user_id', '1')
+                 ->execute();
+    });
+
+If either statement throws, both are rolled back. If both succeed, the transaction is committed and `transaction()` returns the callable's return value (which is `null` in the example above).
+
+A callable that returns a value:
+
+    $newId = $this->db->transaction(function () {
+        $this->db->insert('users', array('name' => 'Dave'))->execute();
+        return $this->db->getLastInsertId();
+    });
+
+Note that on failure, a transaction's `commit()` is **not** attempted after a rollback — `transaction()` re-checks `inTransaction()` before rolling back so a failed `commit()` that already closed the transaction does not trigger a second exception.
 
 # Shortcuts
 
@@ -784,7 +818,7 @@ It must return a name of primary key in your table. Often it's called `id`
 Alright, now let's explore each shortcut method.
 
 
-# findByPk()
+## findByPk()
 
     \Krystal\Db\Sql\AbstractMapper::findByPk($id)
 
@@ -795,7 +829,7 @@ Finds a row by its associated id, selecting all columns and returning an array. 
              ->whereEquals($this->getPk(), $id)
              ->query()
 
-# findColumnByPk()
+## findColumnByPk()
 
     \Krystal\Db\Sql\AbstractMapper::findColumnByPk($id, $column)
 
@@ -808,7 +842,7 @@ It's an equivalent to:
 			 ->whereEquals($this->getPk(), $id)
 			 ->query($column);
 
-# getLastPk()
+## getLastPk()
 
     \Krystal\Db\Sql\AbstractMapper::getLastPk()
 
@@ -820,14 +854,14 @@ Returns a maximal value of PK. It's an equivalent to:
     		 ->query('last')
 
 
-# persist()
+## persist()
 
     \Krystal\Db\Sql\AbstractMapper::persist(array $data)
 
 This method updates an existing record or inserts a new one. If it can find a PK's name in `$data` 's key which is not empty, it will update a record. Otherwise it will insert a new one.
 
 
-# updateColumnByPk()
+## updateColumnByPk()
 
     \Krystal\Db\Sql\AbstractMapper::updateColumnByPk()($pk, $column, $value)
 
@@ -838,7 +872,7 @@ Updates a single column by associated id in a table. This is an equivalent to th
     		->execute();
 
 
-# incrementColumnByPk()
+## incrementColumnByPk()
 
 
      \Krystal\Db\Sql\AbstractMapper::incrementColumnByPk($pk, $column, $step = 1)
@@ -849,7 +883,7 @@ Increments a value of a numeric column. This is an equivalent to:
     		->whereEquals($this->getPk(), $pk)
     		->execute();
 
-# decrementColumnByPk()
+## decrementColumnByPk()
 
     \Krystal\Db\Sql\AbstractMapper::decrementColumnByPk($pk, $column, $step = 1)
 
@@ -859,16 +893,38 @@ Decrements a value of a numeric column. This is an equivalent to:
     		->whereEquals($this->getPk(), $pk)
     		->execute();
 
+## wrapTransaction()
+
+    \Krystal\Db\Sql\AbstractMapper::wrapTransaction(callable $callback)
+
+Convenience wrapper around `Db::transaction()`. It lets code that already holds a mapper instance start a transaction without needing a direct reference to the underlying `Db` service. The callback receives no arguments and its return value is passed through; on exception the transaction is rolled back and the exception is re-thrown (see `Db::transaction()` for the exact semantics, including the inline behaviour for nested calls).
+
+Because all mappers that share the same `Db` connection share the same transaction, operations across multiple mappers are atomic when wrapped this way.
+
+For example:
+
+    // Inside a service that holds $users and $profiles mappers
+    $this->users->wrapTransaction(function () use ($users, $profiles, $data) {
+        $users->persist($data);
+
+        $profiles->insertIntoJunction(
+            'profile_tags',
+            $data['id'],
+            array(1, 2, 3)
+        );
+    });
+
+If any statement throws, the whole block is rolled back — including the insert into the junction table.
 
 # Debugging
 
 Sometimes you might want to determine what queries were executed or how a current query looks like.
 
-# Current query
+## Current query
 
 To view current query, you can simply do `echo $this->db`, since the database object implements `__toString()` method.
 
-# Query logger
+## Query logger
 
 Query logger can be accessed like, `$this->db->getQueryLogger()` and it has two available methods.
 

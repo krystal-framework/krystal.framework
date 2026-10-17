@@ -264,6 +264,49 @@ final class Db implements DbInterface, RelationableServiceInterface
     }
 
     /**
+     * Runs a callable inside a database transaction
+     *
+     * The callable receives no arguments and must return whatever the
+     * transaction should return on success. If the callable throws, the
+     * transaction is rolled back and the exception is re-thrown so the
+     * caller can decide how to handle it.
+     *
+     * Nested transactions are not supported. If a transaction is already
+     * active when this method is called, the callable is executed inline
+     * without opening a new transaction and without committing — the
+     * outer transaction remains the owner of the atomicity boundary.
+     *
+     * @param callable $callback
+     * @throws \Throwable Rethrown from the callback on failure
+     * @return mixed The return value of the callback on success
+     */
+    public function transaction(callable $callback)
+    {
+        // Nested calls just run inline — the outer transaction owns atomicity
+        if ($this->inTransaction()) {
+            return $callback();
+        }
+
+        $this->beginTransaction();
+
+        try {
+            $result = $callback();
+            $this->commit();
+
+            return $result;
+
+        } catch (\Throwable $exception) {
+            // If commit failed and already closed the transaction, avoid
+            // calling rollBack() which would throw a second exception
+            if ($this->inTransaction()) {
+                $this->rollBack();
+            }
+
+            throw $exception;
+        }
+    }
+
+    /**
      * Prepared raw data before a command is executed
      * 
      * @param array $data

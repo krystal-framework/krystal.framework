@@ -73,6 +73,15 @@ interface DbInterface
     public function rollBack();
 
     /**
+     * Runs a callable inside a database transaction
+     *
+     * @param callable $callback
+     * @throws \Throwable Rethrown from the callback on failure
+     * @return mixed The return value of the callback on success
+     */
+    public function transaction(callable $callback);
+
+    /**
      * Paginates a result-set without automatic query guessing
      * 
      * @param integer $count
