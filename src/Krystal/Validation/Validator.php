@@ -380,11 +380,13 @@ final class Validator
         }
 
         if (is_string($def) && $def !== '') {
-            // Delegate to messageResolver, which holds the translator
             return $this->messageResolver->translate($def);
         }
 
         $segments = explode('.', $path);
-        return ucfirst(end($segments));
+        $label = ucfirst(end($segments));
+
+        // Translate the auto-generated fallback too
+        return $this->messageResolver->translate($label);
     }
 }
